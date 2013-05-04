@@ -1,0 +1,12 @@
+<aiml:aiml  version="1.1"
+            xmlns:aiml="http://alicebot.org/2001/AIML">
+   <aiml:topic name="demonstration *">
+      <aiml:category>
+         <aiml:pattern>* EXAMPLE</aiml:pattern>
+         <aiml:template>
+            This is just an example, <get name="username"/>.
+            <aiml:exciting-new-1.1-feature/>
+         </aiml:template>
+      </aiml:category>
+   </aiml:topic>
+</aiml:aiml>
