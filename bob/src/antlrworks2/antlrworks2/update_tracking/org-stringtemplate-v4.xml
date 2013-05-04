@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.stringtemplate.v4/4">
+    <module_version install_time="1358958618863" last="true" origin="installer" specification_version="4.0.7">
+        <file crc="3729510222" name="config/Modules/org-stringtemplate-v4.xml"/>
+        <file crc="1228916753" name="modules/org-stringtemplate-v4.jar"/>
+    </module_version>
+</module>

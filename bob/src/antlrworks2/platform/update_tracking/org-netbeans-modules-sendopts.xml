@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.netbeans.modules.sendopts/2">
+    <module_version install_time="1358602626835" last="true" origin="installer" specification_version="2.26">
+        <file crc="1151729294" name="config/Modules/org-netbeans-modules-sendopts.xml"/>
+        <file crc="2218603881" name="modules/org-netbeans-modules-sendopts.jar"/>
+    </module_version>
+</module>

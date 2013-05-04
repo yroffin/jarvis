@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.netbeans.modules.netserver">
+    <module_version install_time="1358602787285" last="true" origin="installer" specification_version="1.4">
+        <file crc="2146990854" name="config/Modules/org-netbeans-modules-netserver.xml"/>
+        <file crc="4270868591" name="modules/org-netbeans-modules-netserver.jar"/>
+    </module_version>
+</module>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.netbeans.modules.masterfs.windows">
+    <module_version install_time="1358602652307" last="true" origin="installer" specification_version="1.5">
+        <file crc="3787855654" name="config/Modules/org-netbeans-modules-masterfs-windows.xml"/>
+        <file crc="2890304239" name="modules/org-netbeans-modules-masterfs-windows.jar"/>
+    </module_version>
+</module>

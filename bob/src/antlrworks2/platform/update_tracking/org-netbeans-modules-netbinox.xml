@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.netbeans.modules.netbinox">
+    <module_version install_time="1358602653044" last="true" origin="installer" specification_version="1.30">
+        <file crc="3687918437" name="config/Modules/org-netbeans-modules-netbinox.xml"/>
+        <file crc="1507257544" name="modules/ext/org.eclipse.osgi_3.8.0.v20120529-1548.jar"/>
+        <file crc="16656288" name="modules/org-netbeans-modules-netbinox.jar"/>
+    </module_version>
+</module>

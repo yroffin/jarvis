@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.netbeans.core.nativeaccess/1">
+    <module_version install_time="1358602642533" last="true" origin="installer" specification_version="1.20">
+        <file crc="1655700674" name="config/Modules/org-netbeans-core-nativeaccess.xml"/>
+        <file crc="1565356142" name="modules/ext/platform-3.4.0.jar"/>
+        <file crc="1079837530" name="modules/org-netbeans-core-nativeaccess.jar"/>
+    </module_version>
+</module>

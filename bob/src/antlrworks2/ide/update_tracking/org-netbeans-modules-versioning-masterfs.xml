@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.netbeans.modules.versioning.masterfs">
+    <module_version install_time="1358602879069" last="true" origin="installer" specification_version="1.5">
+        <file crc="4118560139" name="config/Modules/org-netbeans-modules-versioning-masterfs.xml"/>
+        <file crc="1714146270" name="modules/org-netbeans-modules-versioning-masterfs.jar"/>
+    </module_version>
+</module>

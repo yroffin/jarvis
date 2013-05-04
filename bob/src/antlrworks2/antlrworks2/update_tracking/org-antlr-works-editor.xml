@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.antlr.works.editor/2">
+    <module_version install_time="1358958649171" last="true" origin="installer" specification_version="2.0.0.1">
+        <file crc="2133970507" name="config/Modules/org-antlr-works-editor.xml"/>
+        <file crc="3759912462" name="modules/org-antlr-works-editor.jar"/>
+    </module_version>
+</module>

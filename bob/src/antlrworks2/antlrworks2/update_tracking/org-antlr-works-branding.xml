@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.antlr.works.branding/2">
+    <module_version install_time="1358958618223" last="true" origin="installer" specification_version="2.0">
+        <file crc="3236570627" name="config/Modules/org-antlr-works-branding.xml"/>
+        <file crc="3883485283" name="modules/org-antlr-works-branding.jar"/>
+    </module_version>
+</module>

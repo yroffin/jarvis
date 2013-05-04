@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="com.tvl.modules.editor.completion/1">
+    <module_version install_time="1358958616310" last="true" origin="installer" specification_version="1.0">
+        <file crc="662116836" name="config/Modules/com-tvl-modules-editor-completion.xml"/>
+        <file crc="2024366900" name="modules/com-tvl-modules-editor-completion.jar"/>
+    </module_version>
+</module>

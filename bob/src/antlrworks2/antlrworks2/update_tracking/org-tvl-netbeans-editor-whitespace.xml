@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.tvl.netbeans.editor.whitespace">
+    <module_version install_time="1358958652206" last="true" origin="installer" specification_version="1.0">
+        <file crc="995820350" name="config/Modules/org-tvl-netbeans-editor-whitespace.xml"/>
+        <file crc="248788321" name="modules/org-tvl-netbeans-editor-whitespace.jar"/>
+    </module_version>
+</module>
