@@ -35,6 +35,11 @@
 				<configuration>
 					<sourceDirectory>src</sourceDirectory>
 					<verbose>true</verbose>
+					<arguments>
+						<argument>-package</argument>
+						<argument>org.jarvis.main.antlr4</argument>
+					</arguments>
+					<outputDirectory>${project.build.directory}/generated-sources/antlr4/org/jarvis</outputDirectory>
 				</configuration>
 				<executions>
 					<execution>
