@@ -19,6 +19,7 @@ package org.jarvis.main.parser;
 import java.io.IOException;
 
 import org.antlr.v4.runtime.ANTLRFileStream;
+import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.jarvis.main.antlr4.aimlLexer;
@@ -30,30 +31,42 @@ import org.slf4j.LoggerFactory;
 public class AimlLexerImpl extends aimlLexer {
 	Logger logger = LoggerFactory.getLogger(AimlLexerImpl.class);
 
+	/**
+	 * default constructor
+	 * @param input
+	 */
 	public AimlLexerImpl(CharStream input) {
 		super(input);
 	}
 
-	protected static CommonTokenStream getTokens(String filename)
+	/**
+	 * build from file
+	 * @param filename
+	 * @param encoding 
+	 * @return
+	 * @throws AimlParsingError
+	 */
+	protected static CommonTokenStream getTokens(String filename, String encoding)
 			throws AimlParsingError {
 		AimlLexerImpl lexer;
 		try {
-			lexer = new AimlLexerImpl(new ANTLRFileStream(filename, "UTF8"));
+			lexer = new AimlLexerImpl(new ANTLRFileStream(filename, encoding));
 		} catch (IOException e) {
 			throw new AimlParsingError(e);
 		}
 		return new CommonTokenStream(lexer);
 	}
 
+	/**
+	 * build from string
+	 * @param data
+	 * @return
+	 * @throws AimlParsingError
+	 */
 	protected static CommonTokenStream getTokensFromString(String data)
 			throws AimlParsingError {
 		AimlLexerImpl lexer;
-		try {
-			lexer = new AimlLexerImpl(new ANTLRFileStream(data));
-		} catch (IOException e) {
-			e.printStackTrace();
-			throw new AimlParsingError(e);
-		}
+		lexer = new AimlLexerImpl(new ANTLRInputStream(data));
 		return new CommonTokenStream(lexer);
 	}
 

@@ -17,8 +17,13 @@
 package org.jarvis.main.parser;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 import java.util.Stack;
 
+import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.RecognitionException;
 import org.jarvis.main.antlr4.aimlParser;
 import org.jarvis.main.exception.AimlParsingError;
@@ -28,6 +33,7 @@ import org.jarvis.main.model.parser.IAimlRepository;
 import org.jarvis.main.model.parser.IAimlTopic;
 import org.jarvis.main.model.parser.impl.AimlCategory;
 import org.jarvis.main.model.parser.impl.AimlPattern;
+import org.jarvis.main.model.parser.impl.AimlProperty;
 import org.jarvis.main.model.parser.impl.AimlRepository;
 import org.jarvis.main.model.parser.impl.AimlTemplate;
 import org.jarvis.main.model.parser.impl.AimlTopic;
@@ -45,21 +51,35 @@ public class AimlParserImpl extends aimlParser {
 	 */
 	private IAimlRepository repository = null;
 
+	public IAimlRepository getRepository() {
+		return repository;
+	}
+
 	private IAimlTopic currentTopic;
 	private IAimlCategory currentCategory;
 	private AimlTemplate currentTemplate;
 	private AimlPattern currentPattern;
+	private List<AimlProperty> currentAttributes = new ArrayList<AimlProperty>();
 
 	Stack<IAimlPcDataListener> pcdata = new Stack<IAimlPcDataListener>();
 
 	/**
 	 * default construtor
 	 * @param filename
+	 * @param encoding 
 	 * @throws AimlParsingError
 	 */
-	public AimlParserImpl(File filename) throws AimlParsingError {
-		super(AimlLexerImpl.getTokens(filename.getAbsolutePath()));
+	private AimlParserImpl(File filename, String encoding) throws AimlParsingError {
+		super(AimlLexerImpl.getTokens(filename.getAbsolutePath(), encoding));
 		lexer = (AimlLexerImpl) _input.getTokenSource();
+	}
+
+	/**
+	 * another default constructor
+	 * @param local
+	 */
+	private AimlParserImpl(CommonTokenStream local) {
+		super(local);
 	}
 
 	/**
@@ -67,13 +87,45 @@ public class AimlParserImpl extends aimlParser {
 	 * @return
 	 * @throws AimlParsingError
 	 */
-	public IAimlRepository parse() throws AimlParsingError {
+	public static IAimlRepository parse(File filename) throws AimlParsingError {
 		try {
-			document();
-			return repository;
+			/**
+			 * find encoding
+			 */
+			String encoding = "UTF8";
+			try {
+				Scanner scan = new Scanner(filename);
+				CommonTokenStream local = AimlLexerImpl.getTokensFromString(scan.nextLine());
+				scan.close();
+				AimlParserImpl parser = new AimlParserImpl(local);
+				parser.header();
+				for(AimlProperty p : parser.currentAttributes) {
+					if("encoding".compareTo(p.getKey()) == 0) {
+						encoding = p.getValue();
+					}
+				}
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+				throw new AimlParsingError(e);
+			}
+			/**
+			 * parse all file
+			 */
+			AimlParserImpl parser = new AimlParserImpl(filename, encoding);
+			parser.document();
+			return parser.getRepository();
 		} catch (RecognitionException e) {
 			throw new AimlParsingError(e);
 		}
+	}
+
+	
+	@Override
+	public void onAttribute(String key, String value) {
+		if(logger.isDebugEnabled()) {
+			logger.debug("onAttribute - [" + key + " = " + value + "]");
+		}
+		currentAttributes.add(new AimlProperty(key, value));
 	}
 
 	@Override
