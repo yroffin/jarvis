@@ -22,4 +22,6 @@ public interface IAimlCategory {
 
 	void setPattern(IAimlPattern e);
 
+	void add(IAimlCategoryElement e);
+
 }

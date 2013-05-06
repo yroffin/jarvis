@@ -28,14 +28,19 @@ import org.antlr.v4.runtime.RecognitionException;
 import org.jarvis.main.antlr4.aimlParser;
 import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.model.parser.IAimlCategory;
+import org.jarvis.main.model.parser.IAimlCategoryElement;
+import org.jarvis.main.model.parser.IAimlPattern;
 import org.jarvis.main.model.parser.IAimlPcDataListener;
 import org.jarvis.main.model.parser.IAimlRepository;
+import org.jarvis.main.model.parser.IAimlTemplate;
+import org.jarvis.main.model.parser.IAimlThat;
 import org.jarvis.main.model.parser.IAimlTopic;
 import org.jarvis.main.model.parser.impl.AimlCategory;
 import org.jarvis.main.model.parser.impl.AimlPattern;
 import org.jarvis.main.model.parser.impl.AimlProperty;
 import org.jarvis.main.model.parser.impl.AimlRepository;
 import org.jarvis.main.model.parser.impl.AimlTemplate;
+import org.jarvis.main.model.parser.impl.AimlThat;
 import org.jarvis.main.model.parser.impl.AimlTopic;
 
 import org.slf4j.Logger;
@@ -57,8 +62,10 @@ public class AimlParserImpl extends aimlParser {
 
 	private IAimlTopic currentTopic;
 	private IAimlCategory currentCategory;
-	private AimlTemplate currentTemplate;
-	private AimlPattern currentPattern;
+	private IAimlTemplate currentTemplate;
+	private IAimlPattern currentPattern;
+	private IAimlThat currentThat;
+
 	private List<AimlProperty> currentAttributes = new ArrayList<AimlProperty>();
 
 	Stack<IAimlPcDataListener> pcdata = new Stack<IAimlPcDataListener>();
@@ -158,7 +165,11 @@ public class AimlParserImpl extends aimlParser {
 			case PATTERN:
 				handleOpenTagPattern(value);
 				break;
+			case THAT:
+				handleOpenTagThat(value);
+				break;
 		default:
+			logger.warn("Unknown tag element : " + value);
 			break;
 		}
 	}
@@ -180,6 +191,9 @@ public class AimlParserImpl extends aimlParser {
 				break;
 			case PATTERN:
 				handleCloseTagPattern(value);
+				break;
+			case THAT:
+				handleCloseTagThat(value);
 				break;
 		default:
 			break;
@@ -251,6 +265,19 @@ public class AimlParserImpl extends aimlParser {
 		pcdata.push(local);
 	}
 
+	private void handleOpenTagThat(String value) {
+		if(logger.isDebugEnabled()) {
+			logger.debug("handleOpenTagThat - " + value);
+		}
+		AimlThat local = new AimlThat();
+		IAimlCategoryElement element = local;
+		currentThat = local;
+		if(currentCategory != null) {
+			currentCategory.add(element);
+		}
+		pcdata.push(local);
+	}
+
 	/**
 	 * close aiml tag
 	 * @param value
@@ -291,6 +318,14 @@ public class AimlParserImpl extends aimlParser {
 			logger.debug("handleCloseTagPattern - " + value);
 		}
 		currentPattern = null;
+		pcdata.pop();
+	}
+
+	private void handleCloseTagThat(String value) {
+		if(logger.isDebugEnabled()) {
+			logger.debug("handleCloseTagThat - " + value);
+		}
+		currentThat = null;
 		pcdata.pop();
 	}
 }

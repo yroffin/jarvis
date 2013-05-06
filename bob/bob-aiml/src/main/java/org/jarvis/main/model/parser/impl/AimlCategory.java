@@ -16,15 +16,21 @@
 
 package org.jarvis.main.model.parser.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jarvis.main.model.parser.IAimlCategory;
 import org.jarvis.main.model.parser.IAimlPattern;
 import org.jarvis.main.model.parser.IAimlPcDataListener;
 import org.jarvis.main.model.parser.IAimlTemplate;
+import org.jarvis.main.model.parser.IAimlCategoryElement;
 
 public class AimlCategory implements IAimlCategory, IAimlPcDataListener {
 
 	IAimlTemplate template;
 	IAimlPattern pattern;
+	
+	List<IAimlCategoryElement> elements = new ArrayList<IAimlCategoryElement>();
 	
 	@Override
 	public void setTemplate(IAimlTemplate e) {
@@ -39,7 +45,7 @@ public class AimlCategory implements IAimlCategory, IAimlPcDataListener {
 	@Override
 	public String toString() {
 		return "AimlCategory [template=" + template + ", pattern=" + pattern
-				+ "]";
+				+ ", elements=" + elements + "]";
 	}
 
 	@Override
@@ -47,6 +53,11 @@ public class AimlCategory implements IAimlCategory, IAimlPcDataListener {
 		/**
 		 * nothing todo with any PCDATA at top level
 		 */
+	}
+
+	@Override
+	public void add(IAimlCategoryElement e) {
+		elements.add(e);		
 	}
 
 }

@@ -22,6 +22,11 @@ import org.jarvis.main.model.parser.IAimlTemplate;
 public class AimlTemplate implements IAimlTemplate, IAimlPcDataListener {
 	
 	@Override
+	public String toString() {
+		return "AimlTemplate []";
+	}
+
+	@Override
 	public void add(String value) {
 		/**
 		 * nothing todo with any PCDATA at top level

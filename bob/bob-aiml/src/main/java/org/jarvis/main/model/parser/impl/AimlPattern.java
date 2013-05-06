@@ -22,7 +22,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class AimlPattern implements IAimlPattern, IAimlPcDataListener {
-	Logger logger = LoggerFactory.getLogger(AimlPattern.class);
+	protected Logger logger = LoggerFactory.getLogger(AimlPattern.class);
+
+	@Override
+	public String toString() {
+		return "AimlPattern []";
+	}
 
 	@Override
 	public void add(String value) {
