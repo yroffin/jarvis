@@ -7,7 +7,7 @@ grammar aiml;
 
 @parser::members {
     boolean opened = false;
-    public enum router {AIML,TEMPLATE,TOPIC,CATEGORY,PATTERN,GET,UNKNOWN};
+    public enum router {AIML,TEMPLATE,TOPIC,CATEGORY,PATTERN,GET,SRAI,UNKNOWN};
     public router decode(String value) {
         if("aiml".compareTo(value)==0) return router.AIML;
         if("template".compareTo(value)==0) return router.TEMPLATE;
@@ -15,16 +15,28 @@ grammar aiml;
         if("category".compareTo(value)==0) return router.CATEGORY;
         if("pattern".compareTo(value)==0) return router.PATTERN;
         if("get".compareTo(value)==0) return router.GET;
+        if("srai".compareTo(value)==0) return router.SRAI;
         return router.UNKNOWN;
     }
     public void onOpenTag(String value) {
-        System.err.println("must be overriden !!!");
+        /**
+         * must be overriden
+         */
     }
     public void onCloseTag(String value) {
-        System.err.println("must be overriden !!!");
+        /**
+         * must be overriden
+         */
     }
     public void onPcData(String value) {
-        System.err.println("must be overriden !!!");
+        /**
+         * must be overriden
+         */
+    }
+    public void onAttribute(String key, String value) {
+        /**
+         * must be overriden
+         */
     }
 }
 
@@ -36,28 +48,30 @@ tokens {
     AIML
 }
 
-document  : element ;
- 
+document  : header element ;
+
+header
+    : TAG_START_HEADER (attribute)+ TAG_END_HEADER
+    ;
+
 element
-    : startTag
-        (element
-        | PCDATA {onPcData($PCDATA.text);}
-        )*
-        endTag
+    : startTag (pcData | element)* endTag
     | emptyElement
     ;
 
+pcData : PCDATA {onPcData($PCDATA.text);}
+       ;
+
 startTag  : TAG_START_OPEN namedspace? aimlOpenTag (attribute)* {onOpenTag($aimlOpenTag.text);} TAG_CLOSE ;
 
-attribute  : genericAttrId ATTR_EQ ATTR_VALUE ;
+attribute  : genericAttrId ATTR_EQ ATTR_VALUE {onAttribute($genericAttrId.text, $ATTR_VALUE.text);};
 
 endTag :  TAG_END_OPEN namedspace? aimlCloseTag {onCloseTag($aimlCloseTag.text);} TAG_CLOSE ;
 
 emptyElement : TAG_START_OPEN namedspace? aimlEmptyTag {onOpenTag($aimlEmptyTag.text);} (attribute)* {onCloseTag($aimlEmptyTag.text);} TAG_EMPTY_CLOSE ;
 
 genericAttrId
-    :
-      namedspace? aimlAttribute
+    : namedspace? aimlAttribute
     ;
 
 namedspace
@@ -80,13 +94,18 @@ aimlEmptyTag
     : NAMECHAR
     ;
 
+COMMENT : '<!--' .*? '-->' -> skip ;
+
 LETTERS
     : ('a'..'z'| 'A'..'Z')+ SEMICOLON
     ;
 
 NAMECHAR
-    : (LETTER | DIGIT | '.' | '-')+
+    : { tagMode }? (LETTER | DIGIT | '.' | '-')+
     ;
+
+TAG_START_HEADER : '<?xml' { tagMode = true; };
+TAG_END_HEADER : { tagMode }? '?>' (' '|'\r'|'\t'|'\u000C'|'\n')* { tagMode = false; };
 
 TAG_START_OPEN : '<' { tagMode = true; } ;
 TAG_END_OPEN : '</' { tagMode = true; } ;
@@ -116,6 +135,6 @@ fragment LETTER
     | 'A'..'Z'
     ;
 
-WS  :  { tagMode }?
-       (' '|'\r'|'\t'|'\u000C'|'\n') ->skip
-;
+WS
+    : { tagMode }? (' '|'\r'|'\t'|'\u000C'|'\n') ->skip
+    ;
