@@ -22,6 +22,7 @@ import org.antlr.v4.runtime.ANTLRFileStream;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.jarvis.main.antlr4.aimlLexer;
+import org.jarvis.main.exception.AimlParsingError;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

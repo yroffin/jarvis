@@ -1,4 +1,4 @@
-package org.jarvis.main.parser;
+package org.jarvis.main.exception;
 
 import java.io.IOException;
 

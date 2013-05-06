@@ -21,6 +21,7 @@ import java.util.Stack;
 
 import org.antlr.v4.runtime.RecognitionException;
 import org.jarvis.main.antlr4.aimlParser;
+import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.model.parser.IAimlCategory;
 import org.jarvis.main.model.parser.IAimlPcDataListener;
 import org.jarvis.main.model.parser.IAimlRepository;
