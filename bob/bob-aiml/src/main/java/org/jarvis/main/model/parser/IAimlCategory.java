@@ -16,10 +16,12 @@
 
 package org.jarvis.main.model.parser;
 
-public interface IAimlCategory {
+public interface IAimlCategory extends IAimlPcDataListener {
 
 	void setTemplate(IAimlTemplate e);
 
 	void setPattern(IAimlPattern e);
+
+	void add(IAimlCategoryElement e);
 
 }

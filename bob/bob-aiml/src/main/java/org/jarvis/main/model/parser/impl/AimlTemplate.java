@@ -16,15 +16,28 @@
 
 package org.jarvis.main.model.parser.impl;
 
-import org.jarvis.main.model.parser.IAimlPcDataListener;
-import org.jarvis.main.model.parser.IAimlTemplate;
+import java.util.ArrayList;
+import java.util.List;
 
-public class AimlTemplate implements IAimlTemplate, IAimlPcDataListener {
+import org.jarvis.main.model.parser.IAimlTemplate;
+import org.jarvis.main.model.parser.IAimlTemplateElement;
+
+public class AimlTemplate implements IAimlTemplate {
 	
+	private List<IAimlTemplateElement> elements = new ArrayList<IAimlTemplateElement>();
+
 	@Override
 	public void add(String value) {
-		/**
-		 * nothing todo with any PCDATA at top level
-		 */
+		elements.add(new AimlData(value));
+	}
+
+	@Override
+	public void add(IAimlTemplateElement e) {
+		elements.add(e);
+	}
+
+	@Override
+	public String toString() {
+		return "\n\t\t\tAimlTemplate [elements=" + elements + "]";
 	}
 }

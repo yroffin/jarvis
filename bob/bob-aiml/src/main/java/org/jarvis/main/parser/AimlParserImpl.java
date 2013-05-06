@@ -28,14 +28,23 @@ import org.antlr.v4.runtime.RecognitionException;
 import org.jarvis.main.antlr4.aimlParser;
 import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.model.parser.IAimlCategory;
+import org.jarvis.main.model.parser.IAimlCategoryElement;
+import org.jarvis.main.model.parser.IAimlGet;
+import org.jarvis.main.model.parser.IAimlPattern;
 import org.jarvis.main.model.parser.IAimlPcDataListener;
 import org.jarvis.main.model.parser.IAimlRepository;
+import org.jarvis.main.model.parser.IAimlSrai;
+import org.jarvis.main.model.parser.IAimlTemplate;
+import org.jarvis.main.model.parser.IAimlThat;
 import org.jarvis.main.model.parser.IAimlTopic;
 import org.jarvis.main.model.parser.impl.AimlCategory;
+import org.jarvis.main.model.parser.impl.AimlGet;
 import org.jarvis.main.model.parser.impl.AimlPattern;
 import org.jarvis.main.model.parser.impl.AimlProperty;
 import org.jarvis.main.model.parser.impl.AimlRepository;
+import org.jarvis.main.model.parser.impl.AimlSrai;
 import org.jarvis.main.model.parser.impl.AimlTemplate;
+import org.jarvis.main.model.parser.impl.AimlThat;
 import org.jarvis.main.model.parser.impl.AimlTopic;
 
 import org.slf4j.Logger;
@@ -57,11 +66,17 @@ public class AimlParserImpl extends aimlParser {
 
 	private IAimlTopic currentTopic;
 	private IAimlCategory currentCategory;
-	private AimlTemplate currentTemplate;
-	private AimlPattern currentPattern;
+	private IAimlTemplate currentTemplate;
+	private IAimlPattern currentPattern;
+	private IAimlThat currentThat;
+	private IAimlSrai currentSrai;
+	private IAimlGet currentGet;
+
 	private List<AimlProperty> currentAttributes = new ArrayList<AimlProperty>();
 
 	Stack<IAimlPcDataListener> pcdata = new Stack<IAimlPcDataListener>();
+
+	private static boolean debugParsing = false;
 
 	/**
 	 * default construtor
@@ -119,10 +134,9 @@ public class AimlParserImpl extends aimlParser {
 		}
 	}
 
-	
 	@Override
 	public void onAttribute(String key, String value) {
-		if(logger.isDebugEnabled()) {
+		if(logger.isDebugEnabled() && debugParsing) {
 			logger.debug("onAttribute - [" + key + " = " + value + "]");
 		}
 		currentAttributes.add(new AimlProperty(key, value));
@@ -130,7 +144,7 @@ public class AimlParserImpl extends aimlParser {
 
 	@Override
 	public void onPcData(String value) {
-		if(logger.isDebugEnabled()) {
+		if(logger.isDebugEnabled() && debugParsing) {
 			logger.debug("onPcData - [" + value + "]");
 		}
 		/**
@@ -142,6 +156,9 @@ public class AimlParserImpl extends aimlParser {
 
 	@Override
 	public void onOpenTag(String value) {
+		if(logger.isDebugEnabled() && debugParsing) {
+			logger.debug("onOpenTag - " + value);
+		}
 		switch(decode(value)) {
 			case AIML:
 				handleOpenTagAiml(value);
@@ -158,13 +175,26 @@ public class AimlParserImpl extends aimlParser {
 			case PATTERN:
 				handleOpenTagPattern(value);
 				break;
+			case THAT:
+				handleOpenTagThat(value);
+				break;
+			case SRAI:
+				handleOpenTagSrai(value);
+				break;
+			case GET:
+				handleOpenTagGet(value);
+				break;
 		default:
+			// logger.warn("Unknown tag element : " + value);
 			break;
 		}
 	}
 
 	@Override
 	public void onCloseTag(String value) {
+		if(logger.isDebugEnabled() && debugParsing) {
+			logger.debug("onCloseTag - " + value);
+		}
 		switch(decode(value)) {
 			case AIML:
 				handleCloseTagAiml(value);
@@ -181,15 +211,33 @@ public class AimlParserImpl extends aimlParser {
 			case PATTERN:
 				handleCloseTagPattern(value);
 				break;
+			case THAT:
+				handleCloseTagThat(value);
+				break;
+			case SRAI:
+				handleCloseTagSrai(value);
+				break;
+			case GET:
+				handleCloseTagGet(value);
+				break;
 		default:
 			break;
 		}
+		/**
+		 * attributes parsing is clear
+		 * on tag close
+		 */
+		currentAttributes.clear();
 	}
 
-	private void handleOpenTagAiml(String value) {
-		if(logger.isDebugEnabled()) {
-			logger.debug("handleOpenTagAiml - " + value);
-		}
+	/**
+	 * An AIML object is represented by an aiml:aiml element in an XML document.
+	 * The aiml:aiml element may contain the following types of elements:
+	 * - aiml:topic
+	 * - aiml:category
+	 * @param tagname
+	 */
+	private void handleOpenTagAiml(String tagname) {
 		/**
 		 * create default repository on aiml tag detection
 		 * attributes must be handle next 
@@ -199,20 +247,25 @@ public class AimlParserImpl extends aimlParser {
 		pcdata.push(local);
 	}
 
-	private void handleOpenTagTopic(String value) {
-		if(logger.isDebugEnabled()) {
-			logger.debug("handleOpenTagTopic - " + value);
-		}
+	/**
+	 * A topic is an optional top-level element that contains category elements.
+	 * A topic element has a required name attribute that must contain a simple pattern expression.
+	 * A topic element may contain one or more category elements.
+	 * @param tagname
+	 */
+	private void handleOpenTagTopic(String tagname) {
 		AimlTopic local = new AimlTopic();
 		currentTopic = local;
 		repository.addTopic(currentTopic);
 		pcdata.push(local);
 	}
 
+	/**
+	 * A category is a top-level (or second-level, if contained within a topic) element that contains exactly one pattern and exactly one template.
+	 * A category does not have any attributes.
+	 * @param value
+	 */
 	private void handleOpenTagCategory(String value) {
-		if(logger.isDebugEnabled()) {
-			logger.debug("handleOpenTagCategory - " + value);
-		}
 		AimlCategory local = new AimlCategory();
 		currentCategory = local;
 		if(currentTopic != null) {
@@ -227,22 +280,12 @@ public class AimlParserImpl extends aimlParser {
 		pcdata.push(local);
 	}
 
-	private void handleOpenTagTemplate(String value) {
-		if(logger.isDebugEnabled()) {
-			logger.debug("handleOpenTagTemplate - " + value);
-		}
-		AimlTemplate local = new AimlTemplate();
-		currentTemplate = local;
-		if(currentCategory != null) {
-			currentCategory.setTemplate(currentTemplate);
-		}
-		pcdata.push(local);
-	}
-
+	/**
+	 * A pattern is an element whose content is a mixed pattern expression. Exactly one pattern must appear in each category. The pattern must always be the first child element of the category.
+	 * A pattern does not have any attributes.
+	 * @param value
+	 */
 	private void handleOpenTagPattern(String value) {
-		if(logger.isDebugEnabled()) {
-			logger.debug("handleOpenTagPattern - " + value);
-		}
 		AimlPattern local = new AimlPattern();
 		currentPattern = local;
 		if(currentCategory != null) {
@@ -252,45 +295,118 @@ public class AimlParserImpl extends aimlParser {
 	}
 
 	/**
+	 * The pattern-side that element is a special type of pattern element used for context matching. The pattern-side that is optional in a category, but if it occurs it must occur no more than once, and must immediately follow the pattern and immediately precede the template.
+	 * A pattern-side that element contains a simple pattern expression.
+	 * @param value
+	 */
+	private void handleOpenTagThat(String value) {
+		AimlThat local = new AimlThat();
+		IAimlCategoryElement element = local;
+		currentThat = local;
+		if(currentCategory != null) {
+			currentCategory.add(element);
+		}
+		pcdata.push(currentThat);
+	}
+
+	/**
+	 * The srai element instructs the AIML interpreter to pass the result of processing the contents of the srai element to the AIML matching loop,
+	 * as if the input had been produced by the user (this includes stepping through the entire input normalization process). The srai element does not have any attributes.
+	 * It may contain any AIML template elements.
+	 * @param value
+	 */
+	private void handleOpenTagSrai(String value) {
+		AimlSrai local = new AimlSrai();
+		IAimlCategoryElement element = local;
+		currentSrai = local;
+		if(currentCategory != null) {
+			currentCategory.add(element);
+		}
+		pcdata.push(currentSrai);
+	}
+
+	/**
+	 * A template is an element that appears within category elements.
+	 * The template must follow the pattern-side that element, if it exists; otherwise, it follows the pattern element.
+	 * A template does not have any attributes.
+	 * @param value
+	 */
+	private void handleOpenTagTemplate(String value) {
+		AimlTemplate local = new AimlTemplate();
+		currentTemplate = local;
+		if(currentCategory != null) {
+			currentCategory.setTemplate(currentTemplate);
+		}
+		pcdata.push(local);
+	}
+
+	private void handleOpenTagGet(String value) {
+		AimlGet local = new AimlGet();
+		currentGet = local;
+		if(currentTemplate != null) {
+			currentTemplate.add(currentGet);
+		}
+		pcdata.push(local);
+	}
+
+	/**
 	 * close aiml tag
 	 * @param value
 	 */
 	private void handleCloseTagAiml(String value) {
-		if(logger.isDebugEnabled()) {
-			logger.debug("handleCloseTagAiml - " + value);
-		}
 		pcdata.pop();
 	}
 
 	private void handleCloseTagTopic(String value) {
-		if(logger.isDebugEnabled()) {
-			logger.debug("handleCloseTagTopic - " + value);
-		}
 		currentTopic = null;
 		pcdata.pop();
 	}
 
 	private void handleCloseTagCategory(String value) {
-		if(logger.isDebugEnabled()) {
-			logger.debug("handleCloseTagCategory - " + value);
-		}
 		currentCategory = null;
 		pcdata.pop();
 	}
 
+	private void handleCloseTagPattern(String value) {
+		currentPattern = null;
+		pcdata.pop();
+	}
+
+	private void handleCloseTagThat(String value) {
+		currentThat = null;
+		pcdata.pop();
+	}
+
+	private void handleCloseTagSrai(String value) {
+		currentSrai = null;
+		pcdata.pop();
+	}
+
 	private void handleCloseTagTemplate(String value) {
-		if(logger.isDebugEnabled()) {
-			logger.debug("handleCloseTagTemplate - " + value);
-		}
 		currentTemplate = null;
 		pcdata.pop();
 	}
 
-	private void handleCloseTagPattern(String value) {
-		if(logger.isDebugEnabled()) {
-			logger.debug("handleCloseTagPattern - " + value);
-		}
-		currentPattern = null;
+	private void handleCloseTagGet(String value) {
+		/**
+		 * attributes resolution
+		 */
+		currentGet.setName(findKeyInAttributes("name"));
+		currentGet = null;
 		pcdata.pop();
+	}
+
+	/**
+	 * utility
+	 * @param key
+	 * @return
+	 */
+	private String findKeyInAttributes(String key) {
+		for(AimlProperty element : currentAttributes) {
+			if(element.getKey().compareTo(key)==0) {
+				return element.getValue();
+			}
+		}
+		return null;
 	}
 }

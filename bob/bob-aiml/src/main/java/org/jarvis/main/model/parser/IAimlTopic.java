@@ -16,7 +16,7 @@
 
 package org.jarvis.main.model.parser;
 
-public interface IAimlTopic {
+public interface IAimlTopic extends IAimlPcDataListener {
 
 	void addCategory(IAimlCategory currentCategory);
 

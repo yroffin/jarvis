@@ -16,16 +16,26 @@
 
 package org.jarvis.main.model.parser.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jarvis.main.model.parser.IAimlPattern;
-import org.jarvis.main.model.parser.IAimlPcDataListener;
+import org.jarvis.main.model.parser.IAimlPatternElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class AimlPattern implements IAimlPattern, IAimlPcDataListener {
-	Logger logger = LoggerFactory.getLogger(AimlPattern.class);
+public class AimlPattern implements IAimlPattern {
+	protected Logger logger = LoggerFactory.getLogger(AimlPattern.class);
+
+	private List<IAimlPatternElement> elements = new ArrayList<IAimlPatternElement>();
 
 	@Override
 	public void add(String value) {
-		logger.info("PCDATA: " + value.replace("\n", ""));
+		elements.add(new AimlData(value));
+	}
+
+	@Override
+	public String toString() {
+		return "\n\t\t\tAimlPattern [elements=" + elements + "]";
 	}
 }

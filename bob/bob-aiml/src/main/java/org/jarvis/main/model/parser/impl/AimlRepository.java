@@ -20,11 +20,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jarvis.main.model.parser.IAimlCategory;
-import org.jarvis.main.model.parser.IAimlPcDataListener;
 import org.jarvis.main.model.parser.IAimlRepository;
 import org.jarvis.main.model.parser.IAimlTopic;
 
-public class AimlRepository implements IAimlRepository, IAimlPcDataListener {
+public class AimlRepository implements IAimlRepository {
 
 	private List<IAimlTopic> topics = new ArrayList<IAimlTopic>();
 	private List<IAimlCategory> categories = new ArrayList<IAimlCategory>();
