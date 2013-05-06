@@ -2,6 +2,7 @@ package org.jarvis.main.parser;
 
 import java.io.File;
 
+import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.model.parser.IAimlRepository;
 import org.junit.Test;
 
