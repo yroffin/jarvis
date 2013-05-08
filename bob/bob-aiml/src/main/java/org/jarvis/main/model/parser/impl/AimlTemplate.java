@@ -16,20 +16,23 @@
 
 package org.jarvis.main.model.parser.impl;
 
-import org.jarvis.main.model.parser.IAimlPcDataListener;
+import org.jarvis.main.model.parser.IAimlElement;
 import org.jarvis.main.model.parser.IAimlTemplate;
 
-public class AimlTemplate implements IAimlTemplate, IAimlPcDataListener {
+public class AimlTemplate extends AimlElementContainer implements IAimlTemplate {
 	
 	@Override
 	public String toString() {
-		return "AimlTemplate []";
+		return "\n\t\t\tAimlTemplate [elements=" + elements + "]";
 	}
 
 	@Override
-	public void add(String value) {
-		/**
-		 * nothing todo with any PCDATA at top level
-		 */
+	public StringBuilder toAiml(StringBuilder render) {
+		render.append("<template>");
+		for(IAimlElement e : elements) {
+			e.toAiml(render);
+		}
+		render.append("</template>");
+		return render;
 	}
 }

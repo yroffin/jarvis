@@ -20,14 +20,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jarvis.main.model.parser.IAimlCategory;
-import org.jarvis.main.model.parser.IAimlPcDataListener;
 import org.jarvis.main.model.parser.IAimlRepository;
 import org.jarvis.main.model.parser.IAimlTopic;
+import org.jarvis.main.model.parser.IAimlXml;
 
-public class AimlRepository implements IAimlRepository, IAimlPcDataListener {
+public class AimlRepository extends AimlElementContainer implements IAimlRepository {
 
 	private List<IAimlTopic> topics = new ArrayList<IAimlTopic>();
 	private List<IAimlCategory> categories = new ArrayList<IAimlCategory>();
+	private IAimlXml root;
+
+	@Override
+	public void setRoot(IAimlXml root) {
+		this.root = root;
+	}
 
 	@Override
 	public void addCategory(IAimlCategory e) {
@@ -40,16 +46,22 @@ public class AimlRepository implements IAimlRepository, IAimlPcDataListener {
 	}
 
 	@Override
+	public StringBuilder toAiml(StringBuilder render) {
+		root.toAiml(render);
+		render.append("<aiml version=\"1.0\">\n");
+		for(IAimlTopic e : topics) {
+			e.toAiml(render);
+		}
+		for(IAimlCategory e : categories) {
+			e.toAiml(render);
+		}
+		render.append("</aiml>\n");
+		return render;
+	}
+
+	@Override
 	public String toString() {
 		return "AimlRepository [topics=" + topics + ", categories="
 				+ categories + "]";
 	}
-
-	@Override
-	public void add(String value) {
-		/**
-		 * nothing todo with any PCDATA at top level
-		 */
-	}
-
 }

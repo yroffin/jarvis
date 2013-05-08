@@ -18,6 +18,7 @@ package org.jarvis.main.exception;
 
 import java.io.IOException;
 
+import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.RecognitionException;
 
 public class AimlParsingError extends Exception {
@@ -33,6 +34,10 @@ public class AimlParsingError extends Exception {
 
 	public AimlParsingError(RecognitionException e) {
 		super(e);
+	}
+
+	public AimlParsingError(ParserRuleContext context) {
+		super(context.toString());
 	}
 
 }

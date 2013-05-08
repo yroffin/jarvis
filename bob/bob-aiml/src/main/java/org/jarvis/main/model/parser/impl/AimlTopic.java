@@ -20,10 +20,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jarvis.main.model.parser.IAimlCategory;
-import org.jarvis.main.model.parser.IAimlPcDataListener;
+import org.jarvis.main.model.parser.IAimlElement;
 import org.jarvis.main.model.parser.IAimlTopic;
 
-public class AimlTopic implements IAimlTopic, IAimlPcDataListener {
+public class AimlTopic extends AimlElementContainer implements IAimlTopic {
 
 	private List<IAimlCategory> categories = new ArrayList<IAimlCategory>();
 
@@ -34,14 +34,21 @@ public class AimlTopic implements IAimlTopic, IAimlPcDataListener {
 
 	@Override
 	public String toString() {
-		return "AimlTopic [categories=" + categories + "]";
+		return "\n\t\tAimlTopic [categories=" + categories + "]";
 	}
 
 	@Override
-	public void add(String value) {
-		/**
-		 * nothing todo with any PCDATA at top level
-		 */
+	public StringBuilder toAiml(StringBuilder render) {
+		if(elements.size() == 0) {
+			render.append("<topic/>");
+		} else {
+			render.append("<topic>");
+			for(IAimlElement e : elements) {
+				e.toAiml(render);
+			}
+			render.append("</topic>");
+		}
+		return render;
 	}
 
 }

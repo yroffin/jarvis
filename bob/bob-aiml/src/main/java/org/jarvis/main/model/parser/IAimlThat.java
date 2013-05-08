@@ -1,5 +1,5 @@
 package org.jarvis.main.model.parser;
 
-public interface IAimlThat {
+public interface IAimlThat extends IAimlElement, IAimlPcDataListener {
 
 }

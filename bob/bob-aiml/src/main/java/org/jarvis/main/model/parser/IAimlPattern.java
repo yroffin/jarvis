@@ -16,6 +16,6 @@
 
 package org.jarvis.main.model.parser;
 
-public interface IAimlPattern {
+public interface IAimlPattern extends IAimlElement, IAimlPcDataListener, IAimlRender {
 
 }

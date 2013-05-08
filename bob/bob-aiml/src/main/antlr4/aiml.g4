@@ -7,7 +7,7 @@ grammar aiml;
 
 @parser::members {
     boolean opened = false;
-    public enum router {AIML,TEMPLATE,TOPIC,CATEGORY,PATTERN,GET,SRAI,THAT,UNKNOWN};
+    public enum router {AIML,BR,STAR,A,BOT,CONDITION,PERSON2,ID,VERSION,TEMPLATE,TOPIC,CATEGORY,PATTERN,PERSON,GET,INPUT,SET,SRAI,THAT,RANDOM,LI,FORMAL,THINK,UNKNOWN};
     public router decode(String value) {
         if("aiml".compareTo(value)==0) return router.AIML;
         if("template".compareTo(value)==0) return router.TEMPLATE;
@@ -17,6 +17,21 @@ grammar aiml;
         if("get".compareTo(value)==0) return router.GET;
         if("srai".compareTo(value)==0) return router.SRAI;
         if("that".compareTo(value)==0) return router.THAT;
+        if("random".compareTo(value)==0) return router.RANDOM;
+        if("li".compareTo(value)==0) return router.LI;
+        if("formal".compareTo(value)==0) return router.FORMAL;
+        if("think".compareTo(value)==0) return router.THINK;
+        if("set".compareTo(value)==0) return router.SET;
+        if("input".compareTo(value)==0) return router.INPUT;
+        if("person".compareTo(value)==0) return router.PERSON;
+        if("Br".compareTo(value)==0) return router.BR;
+        if("star".compareTo(value)==0) return router.STAR;
+        if("a".compareTo(value)==0) return router.A;
+        if("bot".compareTo(value)==0) return router.BOT;
+        if("condition".compareTo(value)==0) return router.CONDITION;
+        if("person2".compareTo(value)==0) return router.PERSON2;
+        if("id".compareTo(value)==0) return router.ID;
+        if("version".compareTo(value)==0) return router.VERSION;
         return router.UNKNOWN;
     }
     public void onOpenTag(String value) {
@@ -63,7 +78,7 @@ element
 pcData : PCDATA {onPcData($PCDATA.text);}
        ;
 
-startTag  : TAG_START_OPEN namedspace? aimlOpenTag (attribute)* {onOpenTag($aimlOpenTag.text);} TAG_CLOSE ;
+startTag  : TAG_START_OPEN namedspace? aimlOpenTag {onOpenTag($aimlOpenTag.text);} (attribute)* TAG_CLOSE ;
 
 attribute  : genericAttrId ATTR_EQ ATTR_VALUE {onAttribute($genericAttrId.text, $ATTR_VALUE.text);};
 

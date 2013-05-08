@@ -16,10 +16,8 @@
 
 package org.jarvis.main.model.parser;
 
-public interface IAimlRepository {
-
+public interface IAimlRepository extends IAimlElement, IAimlPcDataListener, IAimlRender {
 	void addCategory(IAimlCategory currentCategory);
-
 	void addTopic(IAimlTopic currentTopic);
-
+	void setRoot(IAimlXml root);
 }

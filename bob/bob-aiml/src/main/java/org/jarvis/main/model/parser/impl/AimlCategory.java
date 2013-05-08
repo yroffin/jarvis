@@ -16,21 +16,15 @@
 
 package org.jarvis.main.model.parser.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.jarvis.main.model.parser.IAimlCategory;
+import org.jarvis.main.model.parser.IAimlElement;
 import org.jarvis.main.model.parser.IAimlPattern;
-import org.jarvis.main.model.parser.IAimlPcDataListener;
 import org.jarvis.main.model.parser.IAimlTemplate;
-import org.jarvis.main.model.parser.IAimlCategoryElement;
 
-public class AimlCategory implements IAimlCategory, IAimlPcDataListener {
+public class AimlCategory extends AimlElementContainer implements IAimlCategory {
 
-	IAimlTemplate template;
-	IAimlPattern pattern;
-	
-	List<IAimlCategoryElement> elements = new ArrayList<IAimlCategoryElement>();
+	private IAimlTemplate template;
+	private IAimlPattern pattern;
 	
 	@Override
 	public void setTemplate(IAimlTemplate e) {
@@ -44,20 +38,17 @@ public class AimlCategory implements IAimlCategory, IAimlPcDataListener {
 
 	@Override
 	public String toString() {
-		return "AimlCategory [template=" + template + ", pattern=" + pattern
+		return "\n\t\tAimlCategory [template=" + template + ", pattern=" + pattern
 				+ ", elements=" + elements + "]";
 	}
 
 	@Override
-	public void add(String value) {
-		/**
-		 * nothing todo with any PCDATA at top level
-		 */
+	public StringBuilder toAiml(StringBuilder render) {
+		render.append("<category>");
+		for(IAimlElement e : elements) {
+			e.toAiml(render);
+		}
+		render.append("</category>\n");
+		return render;
 	}
-
-	@Override
-	public void add(IAimlCategoryElement e) {
-		elements.add(e);		
-	}
-
 }
