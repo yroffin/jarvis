@@ -1,11 +1,14 @@
 package org.jarvis.main.model.parser.category.impl;
 
-import org.jarvis.main.model.parser.IAimlElement;
+import org.jarvis.main.model.parser.IAimlProperty;
 import org.jarvis.main.model.parser.category.IAimlSet;
 import org.jarvis.main.model.parser.impl.AimlElementContainer;
-import org.jarvis.main.model.parser.impl.AimlProperty;
 
 public class AimlSetImpl extends AimlElementContainer implements IAimlSet {
+
+	public AimlSetImpl() {
+		super("set");
+	}
 
 	private String name;
 
@@ -15,26 +18,12 @@ public class AimlSetImpl extends AimlElementContainer implements IAimlSet {
 	}
 
 	@Override
-	public void add(AimlProperty value) {
-		if(value.getKey().compareTo("name")==0) name = value.getValue();		
+	public void add(IAimlProperty value) {
+		if(value.getKey().compareTo("name")==0) name = accept(value);		
 	}
 
 	@Override
 	public String toString() {
 		return "\n\t\t\t\tAimlSet [elements=" + elements + ", name=" + name + "]";
-	}
-
-	@Override
-	public StringBuilder toAiml(StringBuilder render) {
-		if(elements.size() == 0) {
-			render.append("<set name=\"" + name + "\"/>");
-		} else {
-			render.append("<set name=\"" + name + "\">");
-			for(IAimlElement e : elements) {
-				e.toAiml(render);
-			}
-			render.append("</set>");
-		}
-		return render;
 	}
 }

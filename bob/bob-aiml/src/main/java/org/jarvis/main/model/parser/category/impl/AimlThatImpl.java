@@ -1,20 +1,23 @@
 package org.jarvis.main.model.parser.category.impl;
 
 import org.jarvis.main.model.parser.IAimlProperty;
-import org.jarvis.main.model.parser.category.IAimlInput;
+import org.jarvis.main.model.parser.category.IAimlThat;
 import org.jarvis.main.model.parser.impl.AimlElementContainer;
 
-public class AimlInputImpl extends AimlElementContainer implements IAimlInput {
+public class AimlThatImpl extends AimlElementContainer implements IAimlThat {
 
-	public AimlInputImpl() {
-		super("input");
+	public AimlThatImpl() {
+		super("that");
 	}
 
 	private String index;
 
-	@Override
+	public String getIndex() {
+		return index;
+	}
+
 	public void setIndex(String index) {
-		this.index = index;		
+		this.index = index;
 	}
 
 	@Override
@@ -24,6 +27,6 @@ public class AimlInputImpl extends AimlElementContainer implements IAimlInput {
 
 	@Override
 	public String toString() {
-		return "\n\t\t\t\tAimlInput [elements=" + elements + ", index=" + index + "]";
+		return "\n\t\t\t\tAimlThat [elements=" + elements + "]";
 	}
 }

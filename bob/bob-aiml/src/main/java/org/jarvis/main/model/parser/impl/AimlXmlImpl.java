@@ -1,10 +1,13 @@
-package org.jarvis.main.model.parser.category.impl;
+package org.jarvis.main.model.parser.impl;
 
+import org.jarvis.main.model.parser.IAimlProperty;
 import org.jarvis.main.model.parser.IAimlXml;
-import org.jarvis.main.model.parser.impl.AimlElementContainer;
-import org.jarvis.main.model.parser.impl.AimlProperty;
 
 public class AimlXmlImpl extends AimlElementContainer implements IAimlXml {
+
+	public AimlXmlImpl() {
+		super("xml");
+	}
 
 	private String version;
 	private String encoding;
@@ -14,9 +17,9 @@ public class AimlXmlImpl extends AimlElementContainer implements IAimlXml {
 	}
 
 	@Override
-	public void add(AimlProperty value) {
-		if(value.getKey().compareTo("version")==0) version = value.getValue();		
-		if(value.getKey().compareTo("encoding")==0) encoding = value.getValue();		
+	public void add(IAimlProperty value) {
+		if(value.getKey().compareTo("version")==0) version = accept(value);		
+		if(value.getKey().compareTo("encoding")==0) encoding = accept(value);		
 	}
 
 	@Override

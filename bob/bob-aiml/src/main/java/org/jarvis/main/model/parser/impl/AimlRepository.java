@@ -26,6 +26,10 @@ import org.jarvis.main.model.parser.IAimlXml;
 
 public class AimlRepository extends AimlElementContainer implements IAimlRepository {
 
+	public AimlRepository() {
+		super("aiml");
+	}
+
 	private List<IAimlTopic> topics = new ArrayList<IAimlTopic>();
 	private List<IAimlCategory> categories = new ArrayList<IAimlCategory>();
 	private IAimlXml root;
@@ -63,5 +67,10 @@ public class AimlRepository extends AimlElementContainer implements IAimlReposit
 	public String toString() {
 		return "AimlRepository [topics=" + topics + ", categories="
 				+ categories + "]";
+	}
+
+	@Override
+	public IAimlXml getRoot() {
+		return root;
 	}
 }

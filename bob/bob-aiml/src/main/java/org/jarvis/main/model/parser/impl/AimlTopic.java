@@ -20,10 +20,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jarvis.main.model.parser.IAimlCategory;
-import org.jarvis.main.model.parser.IAimlElement;
 import org.jarvis.main.model.parser.IAimlTopic;
 
 public class AimlTopic extends AimlElementContainer implements IAimlTopic {
+
+	public AimlTopic() {
+		super("topic");
+	}
 
 	private List<IAimlCategory> categories = new ArrayList<IAimlCategory>();
 
@@ -36,19 +39,4 @@ public class AimlTopic extends AimlElementContainer implements IAimlTopic {
 	public String toString() {
 		return "\n\t\tAimlTopic [categories=" + categories + "]";
 	}
-
-	@Override
-	public StringBuilder toAiml(StringBuilder render) {
-		if(elements.size() == 0) {
-			render.append("<topic/>");
-		} else {
-			render.append("<topic>");
-			for(IAimlElement e : elements) {
-				e.toAiml(render);
-			}
-			render.append("</topic>");
-		}
-		return render;
-	}
-
 }

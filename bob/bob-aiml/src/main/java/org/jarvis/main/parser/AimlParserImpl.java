@@ -18,8 +18,6 @@ package org.jarvis.main.parser;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Stack;
@@ -30,12 +28,7 @@ import org.jarvis.main.antlr4.aimlParser;
 import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.model.parser.IAimlCategory;
 import org.jarvis.main.model.parser.IAimlElement;
-import org.jarvis.main.model.parser.IAimlGet;
-import org.jarvis.main.model.parser.IAimlPattern;
 import org.jarvis.main.model.parser.IAimlRepository;
-import org.jarvis.main.model.parser.IAimlSrai;
-import org.jarvis.main.model.parser.IAimlTemplate;
-import org.jarvis.main.model.parser.IAimlThat;
 import org.jarvis.main.model.parser.IAimlTopic;
 import org.jarvis.main.model.parser.IAimlXml;
 import org.jarvis.main.model.parser.category.IAimlA;
@@ -43,14 +36,19 @@ import org.jarvis.main.model.parser.category.IAimlBot;
 import org.jarvis.main.model.parser.category.IAimlBr;
 import org.jarvis.main.model.parser.category.IAimlCondition;
 import org.jarvis.main.model.parser.category.IAimlFormal;
+import org.jarvis.main.model.parser.category.IAimlGet;
 import org.jarvis.main.model.parser.category.IAimlId;
 import org.jarvis.main.model.parser.category.IAimlInput;
 import org.jarvis.main.model.parser.category.IAimlLi;
+import org.jarvis.main.model.parser.category.IAimlPattern;
 import org.jarvis.main.model.parser.category.IAimlPerson;
 import org.jarvis.main.model.parser.category.IAimlPerson2;
 import org.jarvis.main.model.parser.category.IAimlRandom;
 import org.jarvis.main.model.parser.category.IAimlSet;
+import org.jarvis.main.model.parser.category.IAimlSrai;
 import org.jarvis.main.model.parser.category.IAimlStar;
+import org.jarvis.main.model.parser.category.IAimlTemplate;
+import org.jarvis.main.model.parser.category.IAimlThat;
 import org.jarvis.main.model.parser.category.IAimlThink;
 import org.jarvis.main.model.parser.category.IAimlVersion;
 import org.jarvis.main.model.parser.category.impl.AimlAImpl;
@@ -58,26 +56,26 @@ import org.jarvis.main.model.parser.category.impl.AimlBotImpl;
 import org.jarvis.main.model.parser.category.impl.AimlBrImpl;
 import org.jarvis.main.model.parser.category.impl.AimlConditionImpl;
 import org.jarvis.main.model.parser.category.impl.AimlFormalImpl;
+import org.jarvis.main.model.parser.category.impl.AimlGetImpl;
 import org.jarvis.main.model.parser.category.impl.AimlInputImpl;
 import org.jarvis.main.model.parser.category.impl.AimlIdImpl;
 import org.jarvis.main.model.parser.category.impl.AimlLiImpl;
+import org.jarvis.main.model.parser.category.impl.AimlPattern;
 import org.jarvis.main.model.parser.category.impl.AimlPerson2Impl;
 import org.jarvis.main.model.parser.category.impl.AimlPersonImpl;
 import org.jarvis.main.model.parser.category.impl.AimlRandomImpl;
 import org.jarvis.main.model.parser.category.impl.AimlSetImpl;
+import org.jarvis.main.model.parser.category.impl.AimlSraiImpl;
 import org.jarvis.main.model.parser.category.impl.AimlStarImpl;
+import org.jarvis.main.model.parser.category.impl.AimlTemplateImpl;
+import org.jarvis.main.model.parser.category.impl.AimlThatImpl;
 import org.jarvis.main.model.parser.category.impl.AimlThinkImpl;
 import org.jarvis.main.model.parser.category.impl.AimlVersionImpl;
-import org.jarvis.main.model.parser.category.impl.AimlXmlImpl;
 import org.jarvis.main.model.parser.impl.AimlCategory;
-import org.jarvis.main.model.parser.impl.AimlGet;
-import org.jarvis.main.model.parser.impl.AimlPattern;
 import org.jarvis.main.model.parser.impl.AimlProperty;
 import org.jarvis.main.model.parser.impl.AimlRepository;
-import org.jarvis.main.model.parser.impl.AimlSrai;
-import org.jarvis.main.model.parser.impl.AimlTemplate;
-import org.jarvis.main.model.parser.impl.AimlThat;
 import org.jarvis.main.model.parser.impl.AimlTopic;
+import org.jarvis.main.model.parser.impl.AimlXmlImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -92,6 +90,10 @@ public class AimlParserImpl extends aimlParser {
 	private IAimlXml root = null;
 	private IAimlRepository repository = null;
 
+	private StackAiml stack = new StackAiml();
+
+	private static boolean debugParsing = false;
+
 	public IAimlRepository getRepository() {
 		return repository;
 	}
@@ -99,74 +101,10 @@ public class AimlParserImpl extends aimlParser {
 	private class StackAiml {
 		private Stack<IAimlElement> stack = new Stack<IAimlElement>();
 
-		public IAimlTopic findTopic() {
-			for (int index = stack.size() - 1; index >= 0; index--) {
-				if (stack.get(index).getClass() == AimlTopic.class)
-					return (IAimlTopic) stack.get(index);
-			}
-			return null;
-		}
-
 		public IAimlCategory findCategory() {
 			for (int index = stack.size() - 1; index >= 0; index--) {
 				if (stack.get(index).getClass() == AimlCategory.class)
 					return (IAimlCategory) stack.get(index);
-			}
-			return null;
-		}
-
-		public IAimlTemplate findTemplate() {
-			for (int index = stack.size() - 1; index >= 0; index--) {
-				if (stack.get(index).getClass() == AimlTemplate.class)
-					return (IAimlTemplate) stack.get(index);
-			}
-			return null;
-		}
-
-		public IAimlRandom findRandom() {
-			for (int index = stack.size() - 1; index >= 0; index--) {
-				if (stack.get(index).getClass() == AimlRandomImpl.class)
-					return (IAimlRandom) stack.get(index);
-			}
-			return null;
-		}
-
-		public IAimlFormal findFormal() {
-			for (int index = stack.size() - 1; index >= 0; index--) {
-				if (stack.get(index).getClass() == AimlFormalImpl.class)
-					return (IAimlFormal) stack.get(index);
-			}
-			return null;
-		}
-
-		public IAimlThink findThink() {
-			for (int index = stack.size() - 1; index >= 0; index--) {
-				if (stack.get(index).getClass() == AimlThinkImpl.class)
-					return (IAimlThink) stack.get(index);
-			}
-			return null;
-		}
-
-		public IAimlGet findGet() {
-			for (int index = stack.size() - 1; index >= 0; index--) {
-				if (stack.get(index).getClass() == AimlGet.class)
-					return (IAimlGet) stack.get(index);
-			}
-			return null;
-		}
-
-		public IAimlInput findInput() {
-			for (int index = stack.size() - 1; index >= 0; index--) {
-				if (stack.get(index).getClass() == AimlInputImpl.class)
-					return (IAimlInput) stack.get(index);
-			}
-			return null;
-		}
-
-		public IAimlSet findSet() {
-			for (int index = stack.size() - 1; index >= 0; index--) {
-				if (stack.get(index).getClass() == AimlSetImpl.class)
-					return (IAimlSet) stack.get(index);
 			}
 			return null;
 		}
@@ -197,7 +135,7 @@ public class AimlParserImpl extends aimlParser {
 		}
 
 		public IAimlTemplate pushTemplate() {
-			AimlTemplate e = new AimlTemplate();
+			AimlTemplateImpl e = new AimlTemplateImpl();
 			findCategory().setTemplate(e);
 			stack.lastElement().add(e);
 			stack.push(e);
@@ -213,21 +151,21 @@ public class AimlParserImpl extends aimlParser {
 		}
 
 		public IAimlThat pushThat() {
-			AimlThat e = new AimlThat();
+			AimlThatImpl e = new AimlThatImpl();
 			stack.lastElement().add(e);
 			stack.push(e);
 			return e;
 		}
 
 		public IAimlSrai pushSrai() {
-			AimlSrai e = new AimlSrai();
+			AimlSraiImpl e = new AimlSraiImpl();
 			stack.lastElement().add(e);
 			stack.push(e);
 			return e;
 		}
 
 		public IAimlGet pushGet() {
-			AimlGet e = new AimlGet();
+			AimlGetImpl e = new AimlGetImpl();
 			stack.lastElement().add(e);
 			stack.push(e);
 			return e;
@@ -358,11 +296,6 @@ public class AimlParserImpl extends aimlParser {
 		}
 	}
 
-	private StackAiml stack = new StackAiml();
-	private List<AimlProperty> currentAttributes = new ArrayList<AimlProperty>();
-
-	private static boolean debugParsing = false;
-
 	/**
 	 * default construtor
 	 * 
@@ -405,12 +338,14 @@ public class AimlParserImpl extends aimlParser {
 						.getTokensFromString(scan.nextLine());
 				scan.close();
 				AimlParserImpl parser = new AimlParserImpl(local);
+				parser.setRepository(new AimlRepository());
+				parser.getRepository().setRoot(parser.getRoot());
 				parser.header();
-				for (AimlProperty p : parser.currentAttributes) {
-					if ("encoding".compareTo(p.getKey()) == 0) {
-						encoding = p.getValue();
-					}
-				}
+				/**
+				 * find encoding
+				 */
+				String enc = parser.getRepository().getRoot().get("encoding");
+				if(enc != null) encoding = enc;
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 				throw new AimlParsingError(e);
@@ -426,12 +361,19 @@ public class AimlParserImpl extends aimlParser {
 		}
 	}
 
+	private IAimlXml getRoot() {
+		return root;
+	}
+
+	private void setRepository(AimlRepository aimlRepository) {
+		repository = aimlRepository;
+	}
+
 	@Override
 	public void onAttribute(String key, String value) {
 		if (logger.isDebugEnabled() && debugParsing) {
 			logger.debug("onAttribute - [" + key + " = " + value + "]");
 		}
-		currentAttributes.add(new AimlProperty(key, value));
 		stack.add(new AimlProperty(key, value));
 	}
 
@@ -532,18 +474,7 @@ public class AimlParserImpl extends aimlParser {
 		if (logger.isDebugEnabled() && debugParsing) {
 			logger.debug("onCloseTag - " + value);
 		}
-
-		if (decode(value) != router.UNKNOWN) {
-			/**
-			 * TODO leave this protection
-			 */
-			stack.pop();
-
-			/**
-			 * attributes parsing is clear on tag close
-			 */
-			currentAttributes.clear();
-		}
+		stack.pop();
 	}
 
 	/**
@@ -694,20 +625,5 @@ public class AimlParserImpl extends aimlParser {
 	 */
 	private void handleOpenTagSet(String value) {
 		stack.pushSet();
-	}
-
-	/**
-	 * utility
-	 * 
-	 * @param key
-	 * @return
-	 */
-	private String findKeyInAttributes(String key) {
-		for (AimlProperty element : currentAttributes) {
-			if (element.getKey().compareTo(key) == 0) {
-				return element.getValue();
-			}
-		}
-		return null;
 	}
 }

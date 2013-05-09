@@ -14,7 +14,9 @@
  *   limitations under the License.
  */
 
-package org.jarvis.main.model.parser;
+package org.jarvis.main.model.parser.category;
 
-public interface IAimlTemplate extends IAimlElement, IAimlPcDataListener, IAimlRender {
+import org.jarvis.main.model.parser.IAimlElement;
+
+public interface IAimlTemplate extends IAimlElement {
 }
