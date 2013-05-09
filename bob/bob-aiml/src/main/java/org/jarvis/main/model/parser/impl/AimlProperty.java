@@ -2,7 +2,9 @@ package org.jarvis.main.model.parser.impl;
 
 import java.util.Map.Entry;
 
-public class AimlProperty implements Entry<String,String> {
+import org.jarvis.main.model.parser.IAimlProperty;
+
+public class AimlProperty implements Entry<String,String>, IAimlProperty {
 	private String key;
     private String value;
 

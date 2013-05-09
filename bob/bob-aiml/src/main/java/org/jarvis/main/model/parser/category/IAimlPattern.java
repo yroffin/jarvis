@@ -14,28 +14,10 @@
  *   limitations under the License.
  */
 
-package org.jarvis.main.model.parser.impl;
+package org.jarvis.main.model.parser.category;
 
 import org.jarvis.main.model.parser.IAimlElement;
-import org.jarvis.main.model.parser.IAimlPattern;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-public class AimlPattern extends AimlElementContainer implements IAimlPattern {
-	protected Logger logger = LoggerFactory.getLogger(AimlPattern.class);
+public interface IAimlPattern extends IAimlElement {
 
-	@Override
-	public String toString() {
-		return "\n\t\t\tAimlPattern [elements=" + elements + "]";
-	}
-
-	@Override
-	public StringBuilder toAiml(StringBuilder render) {
-		render.append("<pattern>");
-		for(IAimlElement e : elements) {
-			e.toAiml(render);
-		}
-		render.append("</pattern>");
-		return render;
-	}
 }

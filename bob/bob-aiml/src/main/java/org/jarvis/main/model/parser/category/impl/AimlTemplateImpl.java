@@ -14,25 +14,19 @@
  *   limitations under the License.
  */
 
-package org.jarvis.main.model.parser.impl;
+package org.jarvis.main.model.parser.category.impl;
 
-import org.jarvis.main.model.parser.IAimlElement;
-import org.jarvis.main.model.parser.IAimlTemplate;
+import org.jarvis.main.model.parser.category.IAimlTemplate;
+import org.jarvis.main.model.parser.impl.AimlElementContainer;
 
-public class AimlTemplate extends AimlElementContainer implements IAimlTemplate {
+public class AimlTemplateImpl extends AimlElementContainer implements IAimlTemplate {
 	
-	@Override
-	public String toString() {
-		return "\n\t\t\tAimlTemplate [elements=" + elements + "]";
+	public AimlTemplateImpl() {
+		super("template");
 	}
 
 	@Override
-	public StringBuilder toAiml(StringBuilder render) {
-		render.append("<template>");
-		for(IAimlElement e : elements) {
-			e.toAiml(render);
-		}
-		render.append("</template>");
-		return render;
+	public String toString() {
+		return "\n\t\t\tAimlTemplate [elements=" + elements + "]";
 	}
 }

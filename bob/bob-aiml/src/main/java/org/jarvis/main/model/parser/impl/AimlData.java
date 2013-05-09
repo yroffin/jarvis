@@ -10,6 +10,7 @@ public class AimlData extends AimlElementContainer {
 	 * @param value
 	 */
 	public AimlData(String value) {
+		super("PCDATA");
 		this.value = value;
 	}
 

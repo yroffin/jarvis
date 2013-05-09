@@ -18,10 +18,14 @@ package org.jarvis.main.model.parser.impl;
 
 import org.jarvis.main.model.parser.IAimlCategory;
 import org.jarvis.main.model.parser.IAimlElement;
-import org.jarvis.main.model.parser.IAimlPattern;
-import org.jarvis.main.model.parser.IAimlTemplate;
+import org.jarvis.main.model.parser.category.IAimlPattern;
+import org.jarvis.main.model.parser.category.IAimlTemplate;
 
 public class AimlCategory extends AimlElementContainer implements IAimlCategory {
+
+	public AimlCategory() {
+		super("category");
+	}
 
 	private IAimlTemplate template;
 	private IAimlPattern pattern;
@@ -44,11 +48,19 @@ public class AimlCategory extends AimlElementContainer implements IAimlCategory 
 
 	@Override
 	public StringBuilder toAiml(StringBuilder render) {
-		render.append("<category>");
-		for(IAimlElement e : elements) {
-			e.toAiml(render);
+		if(elements.size() == 0) {
+			render.append("<" + tag);
+			properties(render);
+			render.append("/>\n");
+		} else {
+			render.append("<" + tag);
+			properties(render);
+			render.append(">");
+			for(IAimlElement e : elements) {
+				e.toAiml(render);
+			}
+			render.append("</" + tag + ">\n");
 		}
-		render.append("</category>\n");
 		return render;
 	}
 }
