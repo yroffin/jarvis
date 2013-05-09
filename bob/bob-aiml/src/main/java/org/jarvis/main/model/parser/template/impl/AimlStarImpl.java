@@ -1,7 +1,7 @@
-package org.jarvis.main.model.parser.category.impl;
+package org.jarvis.main.model.parser.template.impl;
 
-import org.jarvis.main.model.parser.category.IAimlStar;
 import org.jarvis.main.model.parser.impl.AimlElementContainer;
+import org.jarvis.main.model.parser.template.IAimlStar;
 
 public class AimlStarImpl extends AimlElementContainer implements IAimlStar {
 

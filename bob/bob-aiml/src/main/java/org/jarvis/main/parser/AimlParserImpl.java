@@ -38,7 +38,6 @@ import org.jarvis.main.model.parser.category.IAimlCondition;
 import org.jarvis.main.model.parser.category.IAimlFormal;
 import org.jarvis.main.model.parser.category.IAimlGet;
 import org.jarvis.main.model.parser.category.IAimlId;
-import org.jarvis.main.model.parser.category.IAimlInput;
 import org.jarvis.main.model.parser.category.IAimlLi;
 import org.jarvis.main.model.parser.category.IAimlPattern;
 import org.jarvis.main.model.parser.category.IAimlPerson;
@@ -46,7 +45,6 @@ import org.jarvis.main.model.parser.category.IAimlPerson2;
 import org.jarvis.main.model.parser.category.IAimlRandom;
 import org.jarvis.main.model.parser.category.IAimlSet;
 import org.jarvis.main.model.parser.category.IAimlSrai;
-import org.jarvis.main.model.parser.category.IAimlStar;
 import org.jarvis.main.model.parser.category.IAimlTemplate;
 import org.jarvis.main.model.parser.category.IAimlThat;
 import org.jarvis.main.model.parser.category.IAimlThink;
@@ -57,7 +55,6 @@ import org.jarvis.main.model.parser.category.impl.AimlBrImpl;
 import org.jarvis.main.model.parser.category.impl.AimlConditionImpl;
 import org.jarvis.main.model.parser.category.impl.AimlFormalImpl;
 import org.jarvis.main.model.parser.category.impl.AimlGetImpl;
-import org.jarvis.main.model.parser.category.impl.AimlInputImpl;
 import org.jarvis.main.model.parser.category.impl.AimlIdImpl;
 import org.jarvis.main.model.parser.category.impl.AimlLiImpl;
 import org.jarvis.main.model.parser.category.impl.AimlPattern;
@@ -66,9 +63,8 @@ import org.jarvis.main.model.parser.category.impl.AimlPersonImpl;
 import org.jarvis.main.model.parser.category.impl.AimlRandomImpl;
 import org.jarvis.main.model.parser.category.impl.AimlSetImpl;
 import org.jarvis.main.model.parser.category.impl.AimlSraiImpl;
-import org.jarvis.main.model.parser.category.impl.AimlStarImpl;
 import org.jarvis.main.model.parser.category.impl.AimlTemplateImpl;
-import org.jarvis.main.model.parser.category.impl.AimlThatImpl;
+import org.jarvis.main.model.parser.category.impl.AimlThatCategoryImpl;
 import org.jarvis.main.model.parser.category.impl.AimlThinkImpl;
 import org.jarvis.main.model.parser.category.impl.AimlVersionImpl;
 import org.jarvis.main.model.parser.impl.AimlCategory;
@@ -76,6 +72,12 @@ import org.jarvis.main.model.parser.impl.AimlProperty;
 import org.jarvis.main.model.parser.impl.AimlRepository;
 import org.jarvis.main.model.parser.impl.AimlTopic;
 import org.jarvis.main.model.parser.impl.AimlXmlImpl;
+import org.jarvis.main.model.parser.pattern.impl.AimlThatPatternImpl;
+import org.jarvis.main.model.parser.template.IAimlStar;
+import org.jarvis.main.model.parser.template.impl.AimlInputImpl;
+import org.jarvis.main.model.parser.template.impl.AimlStarImpl;
+import org.jarvis.main.model.parser.template.impl.AimlThatTemplateImpl;
+import org.jarvis.main.model.parser.template.impl.IAimlInput;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -90,7 +92,7 @@ public class AimlParserImpl extends aimlParser {
 	private IAimlXml root = null;
 	private IAimlRepository repository = null;
 
-	private StackAiml stack = new StackAiml();
+	private StackAimlElement stackElements = new StackAimlElement();
 
 	private static boolean debugParsing = false;
 
@@ -98,60 +100,149 @@ public class AimlParserImpl extends aimlParser {
 		return repository;
 	}
 
-	private class StackAiml {
-		private Stack<IAimlElement> stack = new Stack<IAimlElement>();
+	private class StackAimlStructure {
+		protected Stack<IAimlElement> stack = new Stack<IAimlElement>();
 
-		public IAimlCategory findCategory() {
-			for (int index = stack.size() - 1; index >= 0; index--) {
-				if (stack.get(index).getClass() == AimlCategory.class)
-					return (IAimlCategory) stack.get(index);
-			}
-			return null;
+		protected IAimlXml push(AimlXmlImpl e) {
+			stack.push(e);
+			return e;
 		}
 
-		public IAimlElement pop() {
+		protected IAimlRepository push(AimlRepository e) {
+			stack.push(e);
+			return e;
+		}
+
+		protected IAimlTopic push(AimlTopic e) {
+			stack.lastElement().add(e);
+			stack.push(e);
+			return e;
+		}
+
+		protected IAimlCategory push(AimlCategory e) {
+			stack.lastElement().add(e);
+			stack.push(e);
+			return e;
+		}
+
+		protected IAimlTemplate push(AimlTemplateImpl e) {
+			stack.lastElement().add(e);
+			stack.push(e);
+			return e;
+		}
+
+		protected IAimlPattern push(AimlPattern e) {
+			stack.lastElement().add(e);
+			stack.push(e);
+			return e;
+		}
+
+		public void add(String value) {
+			try {
+				stack.lastElement().add(value);
+			} catch (NoSuchElementException e) {
+				/**
+				 * TODO handle with exception throw
+				 */
+				logger.error("Internal error");
+			}
+		}
+
+		public void add(AimlProperty value) {
+			try {
+				stack.lastElement().add(value);
+			} catch (NoSuchElementException e) {
+				/**
+				 * TODO handle with exception throw
+				 */
+				logger.error("Internal error");
+			}
+		}
+
+		public IAimlElement lastElement() {
+			return stack.lastElement();
+		}
+
+		protected IAimlElement pop(String tagName) {
 			return stack.pop();
 		}
+	}
 
+	private class StackAimlElement extends StackAimlStructure {
+		private StackAimlStructure filter = new StackAimlStructure();
+		
+		@Override
+		public IAimlElement pop(String tagName) {
+			IAimlElement result = super.pop(tagName);
+			/**
+			 * only pop specific tag name in
+			 * filter structure
+			 */
+			if(    "xml".compareTo(tagName) == 0
+				|| "aiml".compareTo(tagName) == 0
+				|| "category".compareTo(tagName) == 0
+				|| "template".compareTo(tagName) == 0
+				|| "pattern".compareTo(tagName) == 0) {
+				filter.pop(tagName);
+			}
+			return result;
+		}
+
+		@Override
+		public IAimlXml push(AimlXmlImpl e) {
+			super.push(e);
+			filter.push(new AimlXmlImpl());
+			return e;
+		}
+
+		@Override
 		public IAimlRepository push(AimlRepository e) {
-			stack.push(e);
+			super.push(e);
+			filter.push(new AimlRepository());
 			return e;
 		}
 
-		public IAimlTopic pushTopic() {
-			AimlTopic e = new AimlTopic();
-			repository.addTopic(e);
+		@Override
+		public IAimlTopic push(AimlTopic e) {
+			super.push(e);
+			filter.push(new AimlTopic());
+			return e;
+		}
+
+		@Override
+		public IAimlCategory push(AimlCategory e) {
+			super.push(e);
+			filter.push(new AimlCategory());
+			return e;
+		}
+
+		@Override
+		public IAimlTemplate push(AimlTemplateImpl e) {
+			super.push(e);
+			filter.push(new AimlTemplateImpl());
+			return e;
+		}
+
+		@Override
+		public IAimlPattern push(AimlPattern e) {
+			super.push(e);
+			filter.push(new AimlPattern());
+			return e;
+		}
+
+		public IAimlThat push(AimlThatCategoryImpl e) {
 			stack.lastElement().add(e);
 			stack.push(e);
 			return e;
 		}
 
-		public IAimlCategory pushCategory() {
-			AimlCategory e = new AimlCategory();
-			repository.addCategory(e);
+		public IAimlThat push(AimlThatPatternImpl e) {
 			stack.lastElement().add(e);
 			stack.push(e);
 			return e;
 		}
 
-		public IAimlTemplate pushTemplate() {
-			AimlTemplateImpl e = new AimlTemplateImpl();
-			findCategory().setTemplate(e);
-			stack.lastElement().add(e);
-			stack.push(e);
-			return e;
-		}
-
-		public IAimlPattern pushPattern() {
-			AimlPattern e = new AimlPattern();
-			findCategory().setPattern(e);
-			stack.lastElement().add(e);
-			stack.push(e);
-			return e;
-		}
-
-		public IAimlThat pushThat() {
-			AimlThatImpl e = new AimlThatImpl();
+		public IAimlThat push(AimlThatTemplateImpl e) {
 			stack.lastElement().add(e);
 			stack.push(e);
 			return e;
@@ -265,31 +356,8 @@ public class AimlParserImpl extends aimlParser {
 			return e;
 		}
 
-		public IAimlXml push(AimlXmlImpl e) {
-			stack.push(e);
-			return e;
-		}
-
-		public void add(String value) {
-			try {
-				stack.lastElement().add(value);
-			} catch (NoSuchElementException e) {
-				/**
-				 * TODO handle with exception throw
-				 */
-				logger.error("Internal error");
-			}
-		}
-
-		public void add(AimlProperty value) {
-			try {
-				stack.lastElement().add(value);
-			} catch (NoSuchElementException e) {
-				/**
-				 * TODO handle with exception throw
-				 */
-				logger.error("Internal error");
-			}
+		public StackAimlStructure getFilter() {
+			return filter;
 		}
 	}
 
@@ -304,7 +372,7 @@ public class AimlParserImpl extends aimlParser {
 			throws AimlParsingError {
 		super(AimlLexerImpl.getTokens(filename.getAbsolutePath(), encoding));
 		lexer = (AimlLexerImpl) _input.getTokenSource();
-		root = stack.push(new AimlXmlImpl());
+		root = stackElements.push(new AimlXmlImpl());
 	}
 
 	/**
@@ -314,7 +382,7 @@ public class AimlParserImpl extends aimlParser {
 	 */
 	private AimlParserImpl(CommonTokenStream local) {
 		super(local);
-		root = stack.push(new AimlXmlImpl());
+		root = stackElements.push(new AimlXmlImpl());
 	}
 
 	/**
@@ -371,7 +439,7 @@ public class AimlParserImpl extends aimlParser {
 		if (logger.isDebugEnabled() && debugParsing) {
 			logger.debug("onAttribute - [" + key + " = " + value + "]");
 		}
-		stack.add(new AimlProperty(key, value));
+		stackElements.add(new AimlProperty(key, value));
 	}
 
 	@Override
@@ -382,7 +450,7 @@ public class AimlParserImpl extends aimlParser {
 		/**
 		 * register this new PCDATA element to current receiver
 		 */
-		stack.add(value);
+		stackElements.add(value);
 	}
 
 	@Override
@@ -428,37 +496,37 @@ public class AimlParserImpl extends aimlParser {
 			handleOpenTagFormal(value);
 			break;
 		case INPUT:
-			stack.push(new AimlInputImpl());
+			stackElements.push(new AimlInputImpl());
 			break;
 		case PERSON:
-			stack.push(new AimlPersonImpl());
+			stackElements.push(new AimlPersonImpl());
 			break;
 		case THINK:
-			stack.push(new AimlThinkImpl());
+			stackElements.push(new AimlThinkImpl());
 			break;
 		case BR:
-			stack.push(new AimlBrImpl());
+			stackElements.push(new AimlBrImpl());
 			break;
 		case STAR:
-			stack.push(new AimlStarImpl());
+			stackElements.push(new AimlStarImpl());
 			break;
 		case A:
-			stack.push(new AimlAImpl());
+			stackElements.push(new AimlAImpl());
 			break;
 		case BOT:
-			stack.push(new AimlBotImpl());
+			stackElements.push(new AimlBotImpl());
 			break;
 		case CONDITION:
-			stack.push(new AimlConditionImpl());
+			stackElements.push(new AimlConditionImpl());
 			break;
 		case PERSON2:
-			stack.push(new AimlPerson2Impl());
+			stackElements.push(new AimlPerson2Impl());
 			break;
 		case ID:
-			stack.push(new AimlIdImpl());
+			stackElements.push(new AimlIdImpl());
 			break;
 		case VERSION:
-			stack.push(new AimlVersionImpl());
+			stackElements.push(new AimlVersionImpl());
 			break;
 		default:
 			logger.warn("Unknown tag element : " + value);
@@ -471,7 +539,7 @@ public class AimlParserImpl extends aimlParser {
 		if (logger.isDebugEnabled() && debugParsing) {
 			logger.debug("onCloseTag - " + value);
 		}
-		stack.pop();
+		stackElements.pop(value);
 	}
 
 	/**
@@ -486,7 +554,7 @@ public class AimlParserImpl extends aimlParser {
 		 * create default repository on aiml tag detection attributes must be
 		 * handle next
 		 */
-		repository = stack.push(new AimlRepository());
+		repository = stackElements.push(new AimlRepository());
 		repository.setRoot(root);
 	}
 
@@ -499,7 +567,8 @@ public class AimlParserImpl extends aimlParser {
 	 * @param tagname
 	 */
 	private void handleOpenTagTopic(String tagname) {
-		stack.pushTopic();
+		IAimlTopic local = stackElements.push(new AimlTopic());
+		repository.addTopic(local);
 	}
 
 	/**
@@ -510,7 +579,8 @@ public class AimlParserImpl extends aimlParser {
 	 * @param value
 	 */
 	private void handleOpenTagCategory(String value) {
-		stack.pushCategory();
+		IAimlCategory local = stackElements.push(new AimlCategory());
+		repository.addCategory(local);
 	}
 
 	/**
@@ -522,7 +592,7 @@ public class AimlParserImpl extends aimlParser {
 	 * @param value
 	 */
 	private void handleOpenTagPattern(String value) {
-		stack.pushPattern();
+		stackElements.push(new AimlPattern());
 	}
 
 	/**
@@ -535,7 +605,28 @@ public class AimlParserImpl extends aimlParser {
 	 * @param value
 	 */
 	private void handleOpenTagThat(String value) {
-		stack.pushThat();
+		/**
+		 * allocate that on category side, or template side
+		 * according to the parsing context
+		 */
+		if(stackElements.getFilter().lastElement().getClass() == AimlTemplateImpl.class) {
+			stackElements.push(new AimlThatTemplateImpl());
+			return;
+		}
+		if(stackElements.getFilter().lastElement().getClass() == AimlPattern.class) {
+			stackElements.push(new AimlThatPatternImpl());
+			return;
+		}
+		if(stackElements.getFilter().lastElement().getClass() == AimlCategory.class) {
+			stackElements.push(new AimlThatCategoryImpl());
+			return;
+		}
+
+		logger.error("Element cannot be null");
+		/**
+		 * TODO
+		 * error management
+		 */
 	}
 
 	/**
@@ -548,7 +639,7 @@ public class AimlParserImpl extends aimlParser {
 	 * @param value
 	 */
 	private void handleOpenTagSrai(String value) {
-		stack.pushSrai();
+		stackElements.pushSrai();
 	}
 
 	/**
@@ -560,7 +651,7 @@ public class AimlParserImpl extends aimlParser {
 	 * @param value
 	 */
 	private void handleOpenTagRandom(String value) {
-		stack.pushRandom();
+		stackElements.pushRandom();
 	}
 
 	/**
@@ -573,7 +664,7 @@ public class AimlParserImpl extends aimlParser {
 	 * @param value
 	 */
 	private void handleOpenTagFormal(String value) {
-		stack.pushFormal();
+		stackElements.pushFormal();
 	}
 
 	/**
@@ -585,7 +676,7 @@ public class AimlParserImpl extends aimlParser {
 	 * @param value
 	 */
 	private void handleOpenTagLi(String value) {
-		stack.pushLi();
+		stackElements.pushLi();
 	}
 
 	/**
@@ -597,7 +688,7 @@ public class AimlParserImpl extends aimlParser {
 	 * @param value
 	 */
 	private void handleOpenTagTemplate(String value) {
-		stack.pushTemplate();
+		stackElements.push(new AimlTemplateImpl());
 	}
 
 	/**
@@ -609,7 +700,7 @@ public class AimlParserImpl extends aimlParser {
 	 * @param value
 	 */
 	private void handleOpenTagGet(String value) {
-		stack.pushGet();
+		stackElements.pushGet();
 	}
 
 	/**
@@ -621,6 +712,6 @@ public class AimlParserImpl extends aimlParser {
 	 * @param value
 	 */
 	private void handleOpenTagSet(String value) {
-		stack.pushSet();
+		stackElements.pushSet();
 	}
 }

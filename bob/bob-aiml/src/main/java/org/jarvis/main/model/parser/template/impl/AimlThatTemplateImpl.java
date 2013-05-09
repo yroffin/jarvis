@@ -1,12 +1,12 @@
-package org.jarvis.main.model.parser.category.impl;
+package org.jarvis.main.model.parser.template.impl;
 
 import org.jarvis.main.model.parser.IAimlProperty;
 import org.jarvis.main.model.parser.category.IAimlThat;
 import org.jarvis.main.model.parser.impl.AimlElementContainer;
 
-public class AimlThatImpl extends AimlElementContainer implements IAimlThat {
+public class AimlThatTemplateImpl extends AimlElementContainer implements IAimlThat {
 
-	public AimlThatImpl() {
+	public AimlThatTemplateImpl() {
 		super("that");
 	}
 
@@ -27,6 +27,6 @@ public class AimlThatImpl extends AimlElementContainer implements IAimlThat {
 
 	@Override
 	public String toString() {
-		return "\n\t\t\t\tAimlThat [elements=" + elements + "]";
+		return "\n\t\t\t\tAimlTemplateSideThat [elements=" + elements + "]";
 	}
 }
