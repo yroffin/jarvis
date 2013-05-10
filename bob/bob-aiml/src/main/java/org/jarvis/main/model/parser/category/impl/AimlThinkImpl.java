@@ -11,6 +11,6 @@ public class AimlThinkImpl extends AimlElementContainer implements IAimlThink {
 
 	@Override
 	public String toString() {
-		return "\n\t\t\t\tAimlRandom [elements=" + elements + "]";
+		return "\n\t\t\t\tAimlThink [elements=" + elements + "]";
 	}
 }

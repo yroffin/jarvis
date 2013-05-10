@@ -1,8 +1,8 @@
-package org.jarvis.main.model.parser.category.impl;
+package org.jarvis.main.model.parser.template.impl;
 
 import org.jarvis.main.model.parser.IAimlProperty;
-import org.jarvis.main.model.parser.category.IAimlSet;
 import org.jarvis.main.model.parser.impl.AimlElementContainer;
+import org.jarvis.main.model.parser.template.IAimlSet;
 
 public class AimlSetImpl extends AimlElementContainer implements IAimlSet {
 

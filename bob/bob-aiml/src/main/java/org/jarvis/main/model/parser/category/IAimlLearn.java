@@ -18,20 +18,16 @@ package org.jarvis.main.model.parser.category;
 import org.jarvis.main.model.parser.IAimlElement;
 
 /**
- * The think element instructs the AIML interpreter to perform all usual
- * processing of its contents, but to not return any value, regardless of
- * whether the contents produce output.
- * 
- * The think element has no attributes. It may contain any AIML template
- * elements.
+ * The learn element instructs the AIML interpreter to retrieve a resource
+ * specified by a URI, and to process its AIML object contents.
  * 
  * <!-- Category: aiml-template-elements -->
  * 
- * <aiml:think>
+ * <aiml:learn>
  * 
- * <!-- Contents: aiml-template-elements -->
+ * <!-- Contents: uri-reference - ->
  * 
- * </aiml:think>
+ * </aiml:learn>
  */
-public interface IAimlThink extends IAimlElement {
+public interface IAimlLearn extends IAimlElement {
 }

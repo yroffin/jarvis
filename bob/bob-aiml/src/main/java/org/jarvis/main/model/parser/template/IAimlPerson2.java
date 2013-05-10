@@ -27,6 +27,29 @@ import org.jarvis.main.model.parser.IAimlElement;
  * <!-- Category: aiml-template-elements -->
  * 
  * <aiml:person2/>
+ * 
+ * The person2 element instructs the AIML interpreter to:
+ * 
+ * replace words with first-person aspect in the result of processing the
+ * contents of the person2 element with words with the
+ * grammatically-corresponding third-person aspect; and replace words with
+ * third-person aspect in the result of processing the contents of the person2
+ * element with words with the grammatically-corresponding first-person aspect.
+ * The definition of "grammatically-corresponding" is left up to the
+ * implementation.
+ * 
+ * <!-- Category: aiml-template-elements -->
+ * 
+ * <aiml:person2>
+ * 
+ * <!-- Contents: aiml-template-elements -->
+ * 
+ * </aiml:person2>
+ * 
+ * Historically, implementations of person2 have dealt with pronouns, likely due
+ * to the fact that most AIML has been written in English. However, the decision
+ * about whether to transform the person2 aspect of other words is left up to
+ * the implementation.
  */
 public interface IAimlPerson2 extends IAimlElement {
 }

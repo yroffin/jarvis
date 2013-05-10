@@ -13,25 +13,19 @@
  *  See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-package org.jarvis.main.model.parser.category;
+package org.jarvis.main.model.parser.template.impl;
 
-import org.jarvis.main.model.parser.IAimlElement;
+import org.jarvis.main.model.parser.impl.AimlElementContainer;
+import org.jarvis.main.model.parser.template.IAimlGender;
 
-/**
- * The think element instructs the AIML interpreter to perform all usual
- * processing of its contents, but to not return any value, regardless of
- * whether the contents produce output.
- * 
- * The think element has no attributes. It may contain any AIML template
- * elements.
- * 
- * <!-- Category: aiml-template-elements -->
- * 
- * <aiml:think>
- * 
- * <!-- Contents: aiml-template-elements -->
- * 
- * </aiml:think>
- */
-public interface IAimlThink extends IAimlElement {
+public class AimlGenderImpl extends AimlElementContainer implements IAimlGender {
+
+	public AimlGenderImpl() {
+		super("gender");
+	}
+
+	@Override
+	public String toString() {
+		return "\n\t\t\t\tAimlGender [elements=" + elements + "]";
+	}
 }

@@ -13,9 +13,23 @@
  *  See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-package org.jarvis.main.model.parser.category;
+package org.jarvis.main.model.parser.template;
 
 import org.jarvis.main.model.parser.IAimlElement;
 
+/**
+ * The random element instructs the AIML interpreter to return exactly one of
+ * its contained li elements randomly. The random element must contain one or
+ * more li elements of type defaultListItem, and cannot contain any other
+ * elements.
+ * 
+ * <!-- Category: aiml-template-elements -->
+ * 
+ * <aiml:random>
+ * 
+ * <!-- Contents: default-list-item+ -->
+ * 
+ * </aiml:random>
+ */
 public interface IAimlRandom extends IAimlElement {
 }
