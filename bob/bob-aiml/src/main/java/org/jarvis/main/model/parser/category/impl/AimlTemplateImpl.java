@@ -21,6 +21,13 @@ import org.jarvis.main.model.parser.impl.AimlElementContainer;
 
 public class AimlTemplateImpl extends AimlElementContainer implements IAimlTemplate {
 	
+	/**
+	 * The pattern-side that element is a special type of pattern element used
+	 * for context matching. The pattern-side that is optional in a category,
+	 * but if it occurs it must occur no more than once, and must immediately
+	 * follow the pattern and immediately precede the template. A pattern-side
+	 * that element contains a simple pattern expression.
+	 */
 	public AimlTemplateImpl() {
 		super("template");
 	}

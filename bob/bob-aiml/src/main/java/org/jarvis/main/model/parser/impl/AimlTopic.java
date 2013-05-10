@@ -24,6 +24,12 @@ import org.jarvis.main.model.parser.IAimlTopic;
 
 public class AimlTopic extends AimlElementContainer implements IAimlTopic {
 
+	/**
+	 * A topic is an optional top-level element that contains category elements.
+	 * A topic element has a required name attribute that must contain a simple
+	 * pattern expression. A topic element may contain one or more category
+	 * elements.
+	 */
 	public AimlTopic() {
 		super("topic");
 	}

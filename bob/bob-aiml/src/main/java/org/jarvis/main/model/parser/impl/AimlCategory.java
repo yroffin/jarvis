@@ -23,6 +23,11 @@ import org.jarvis.main.model.parser.category.IAimlTemplate;
 
 public class AimlCategory extends AimlElementContainer implements IAimlCategory {
 
+	/**
+	 * A category is a top-level (or second-level, if contained within a topic)
+	 * element that contains exactly one pattern and exactly one template. A
+	 * category does not have any attributes.
+	 */
 	public AimlCategory() {
 		super("category");
 	}

@@ -26,6 +26,11 @@ import org.jarvis.main.model.parser.IAimlXml;
 
 public class AimlRepository extends AimlElementContainer implements IAimlRepository {
 
+	/**
+	 * An AIML object is represented by an aiml:aiml element in an XML document.
+	 * The aiml:aiml element may contain the following types of elements: -
+	 * aiml:topic - aiml:category
+	 */
 	public AimlRepository() {
 		super("aiml");
 	}

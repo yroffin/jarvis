@@ -18,5 +18,11 @@ package org.jarvis.main.model.parser.category;
 
 import org.jarvis.main.model.parser.IAimlElement;
 
+/**
+ * A template is an element that appears within category elements. The template must follow the pattern-side that element, if it exists; otherwise, it follows the pattern element.
+ * A template does not have any attributes.
+ * 
+ * An atomic template element in AIML indicates to an AIML interpreter that it must return a value according to the functional meaning of the element. Atomic elements do not have any content.
+ */
 public interface IAimlTemplate extends IAimlElement {
 }

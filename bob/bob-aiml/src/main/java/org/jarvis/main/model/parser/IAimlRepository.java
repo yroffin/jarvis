@@ -16,6 +16,11 @@
 
 package org.jarvis.main.model.parser;
 
+/**
+ * An AIML object is represented by an aiml:aiml element in an XML document.
+ * The aiml:aiml element may contain the following types of elements: -
+ * aiml:topic - aiml:category
+*/
 public interface IAimlRepository extends IAimlElement {
 	void addCategory(IAimlCategory currentCategory);
 	void addTopic(IAimlTopic currentTopic);
