@@ -32,12 +32,17 @@ public class AimlCategory extends AimlElementContainer implements IAimlCategory 
 		super("category");
 	}
 
-	private IAimlTemplate template;
-	private IAimlPattern pattern;
-	
+	private IAimlTemplate	template;
+	private IAimlPattern	pattern;
+
+	@Override
+	public IAimlPattern getPattern() {
+		return pattern;
+	}
+
 	@Override
 	public void setTemplate(IAimlTemplate e) {
-		template = e;		
+		template = e;
 	}
 
 	@Override
@@ -47,13 +52,13 @@ public class AimlCategory extends AimlElementContainer implements IAimlCategory 
 
 	@Override
 	public String toString() {
-		return "\n\t\tAimlCategory [template=" + template + ", pattern=" + pattern
-				+ ", elements=" + elements + "]";
+		return "\n\t\tAimlCategory [template=" + template + ", pattern="
+				+ pattern + ", elements=" + elements + "]";
 	}
 
 	@Override
 	public StringBuilder toAiml(StringBuilder render) {
-		if(elements.size() == 0) {
+		if (elements.size() == 0) {
 			render.append("<" + tag);
 			properties(render);
 			render.append("/>\n");
@@ -61,7 +66,7 @@ public class AimlCategory extends AimlElementContainer implements IAimlCategory 
 			render.append("<" + tag);
 			properties(render);
 			render.append(">");
-			for(IAimlElement e : elements) {
+			for (IAimlElement e : elements) {
 				e.toAiml(render);
 			}
 			render.append("</" + tag + ">\n");

@@ -7,12 +7,18 @@ import org.jarvis.main.model.parser.IAimlElement;
 import org.jarvis.main.model.parser.IAimlProperty;
 
 public abstract class AimlElementContainer implements IAimlElement {
-	protected List<IAimlProperty> props   = new ArrayList<IAimlProperty>();
-	protected List<IAimlElement> elements = new ArrayList<IAimlElement>();
-	protected String tag;
+	protected List<IAimlProperty>	props		= new ArrayList<IAimlProperty>();
+	protected List<IAimlElement>	elements	= new ArrayList<IAimlElement>();
+
+	protected String				tag;
 
 	public AimlElementContainer(String tag) {
 		this.tag = tag;
+	}
+
+	@Override
+	public List<IAimlElement> getElements() {
+		return elements;
 	}
 
 	@Override
@@ -29,7 +35,8 @@ public abstract class AimlElementContainer implements IAimlElement {
 	public void add(IAimlProperty value) {
 		/**
 		 * no property by default
-		 * @return 
+		 * 
+		 * @return
 		 */
 	}
 
@@ -38,15 +45,16 @@ public abstract class AimlElementContainer implements IAimlElement {
 		return e.getValue();
 	}
 
+	@Override
 	public String get(String key) {
-		for(IAimlProperty p : props) {
-			if(p.getKey().compareTo(key) == 0) return p.getValue();
+		for (IAimlProperty p : props) {
+			if (p.getKey().compareTo(key) == 0) return p.getValue();
 		}
 		return null;
 	}
 
 	protected StringBuilder properties(StringBuilder render) {
-		for(IAimlProperty e : props) {
+		for (IAimlProperty e : props) {
 			render.append(" " + e.getKey() + "=\"" + e.getValue() + "\"");
 		}
 		return render;
@@ -54,7 +62,7 @@ public abstract class AimlElementContainer implements IAimlElement {
 
 	@Override
 	public StringBuilder toAiml(StringBuilder render) {
-		if(elements.size() == 0) {
+		if (elements.size() == 0) {
 			render.append("<" + tag);
 			properties(render);
 			render.append("/>");
@@ -62,7 +70,7 @@ public abstract class AimlElementContainer implements IAimlElement {
 			render.append("<" + tag);
 			properties(render);
 			render.append(">");
-			for(IAimlElement e : elements) {
+			for (IAimlElement e : elements) {
 				e.toAiml(render);
 			}
 			render.append("</" + tag + ">");

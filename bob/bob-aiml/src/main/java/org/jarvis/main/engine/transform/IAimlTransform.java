@@ -14,15 +14,16 @@
  *   limitations under the License.
  */
 
-package org.jarvis.main.model.parser;
+package org.jarvis.main.engine.transform;
 
-import org.jarvis.main.model.parser.category.IAimlPattern;
-import org.jarvis.main.model.parser.category.IAimlTemplate;
+import java.util.List;
 
-public interface IAimlCategory extends IAimlElement {
-	public void setPattern(IAimlPattern e);
+import org.jarvis.main.exception.AimlParsingError;
+import org.jarvis.main.model.parser.IAimlElement;
+import org.jarvis.main.model.transform.ITransformedItem;
 
-	public IAimlPattern getPattern();
+public interface IAimlTransform {
+	public ITransformedItem transform(String data) throws AimlParsingError;
 
-	public void setTemplate(IAimlTemplate e);
+	public ITransformedItem transform(List<IAimlElement> elements);
 }

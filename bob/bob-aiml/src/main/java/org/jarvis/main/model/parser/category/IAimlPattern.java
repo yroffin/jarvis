@@ -16,8 +16,10 @@
 
 package org.jarvis.main.model.parser.category;
 
+import java.util.List;
+
 import org.jarvis.main.model.parser.IAimlElement;
 
 public interface IAimlPattern extends IAimlElement {
-
+	List<IAimlElement> getElements();
 }

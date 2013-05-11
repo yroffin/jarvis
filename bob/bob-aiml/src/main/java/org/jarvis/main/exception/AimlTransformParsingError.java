@@ -14,15 +14,30 @@
  *   limitations under the License.
  */
 
-package org.jarvis.main.model.parser;
+package org.jarvis.main.exception;
 
-import org.jarvis.main.model.parser.category.IAimlPattern;
-import org.jarvis.main.model.parser.category.IAimlTemplate;
+import java.io.IOException;
 
-public interface IAimlCategory extends IAimlElement {
-	public void setPattern(IAimlPattern e);
+import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.RecognitionException;
 
-	public IAimlPattern getPattern();
+public class AimlTransformParsingError extends Exception {
 
-	public void setTemplate(IAimlTemplate e);
+	/**
+	 * default serial id
+	 */
+	private static final long serialVersionUID = 6352462504214710201L;
+
+	public AimlTransformParsingError(IOException e) {
+		super(e);
+	}
+
+	public AimlTransformParsingError(RecognitionException e) {
+		super(e);
+	}
+
+	public AimlTransformParsingError(ParserRuleContext context) {
+		super(context.toString());
+	}
+
 }

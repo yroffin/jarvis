@@ -24,7 +24,8 @@ import org.jarvis.main.model.parser.IAimlRepository;
 import org.jarvis.main.model.parser.IAimlTopic;
 import org.jarvis.main.model.parser.IAimlXml;
 
-public class AimlRepository extends AimlElementContainer implements IAimlRepository {
+public class AimlRepository extends AimlElementContainer implements
+		IAimlRepository {
 
 	/**
 	 * An AIML object is represented by an aiml:aiml element in an XML document.
@@ -33,11 +34,22 @@ public class AimlRepository extends AimlElementContainer implements IAimlReposit
 	 */
 	public AimlRepository() {
 		super("aiml");
+		root = new AimlXmlImpl();
 	}
 
-	private List<IAimlTopic> topics = new ArrayList<IAimlTopic>();
-	private List<IAimlCategory> categories = new ArrayList<IAimlCategory>();
-	private IAimlXml root;
+	private final List<IAimlTopic>		topics		= new ArrayList<IAimlTopic>();
+	private final List<IAimlCategory>	categories	= new ArrayList<IAimlCategory>();
+	private IAimlXml					root;
+
+	@Override
+	public List<IAimlTopic> getTopics() {
+		return topics;
+	}
+
+	@Override
+	public List<IAimlCategory> getCategories() {
+		return categories;
+	}
 
 	@Override
 	public void setRoot(IAimlXml root) {
@@ -58,10 +70,10 @@ public class AimlRepository extends AimlElementContainer implements IAimlReposit
 	public StringBuilder toAiml(StringBuilder render) {
 		root.toAiml(render);
 		render.append("<aiml version=\"1.0\">\n");
-		for(IAimlTopic e : topics) {
+		for (IAimlTopic e : topics) {
 			e.toAiml(render);
 		}
-		for(IAimlCategory e : categories) {
+		for (IAimlCategory e : categories) {
 			e.toAiml(render);
 		}
 		render.append("</aiml>\n");
