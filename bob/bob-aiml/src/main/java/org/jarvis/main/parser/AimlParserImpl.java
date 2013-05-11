@@ -127,12 +127,22 @@ public class AimlParserImpl extends aimlParser {
 		}
 
 		protected IAimlTemplate push(AimlTemplateImpl e) {
+			/**
+			 * template is always a category child
+			 */
+			IAimlCategory cat = (IAimlCategory) stack.lastElement();
+			cat.setTemplate(e);
 			stack.lastElement().add(e);
 			stack.push(e);
 			return e;
 		}
 
 		protected IAimlPattern push(AimlPattern e) {
+			/**
+			 * pattern is always a category child
+			 */
+			IAimlCategory cat = (IAimlCategory) stack.lastElement();
+			cat.setPattern(e);
 			stack.lastElement().add(e);
 			stack.push(e);
 			return e;

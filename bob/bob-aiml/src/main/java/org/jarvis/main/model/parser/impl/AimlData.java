@@ -2,7 +2,7 @@ package org.jarvis.main.model.parser.impl;
 
 public class AimlData extends AimlElementContainer {
 
-	private String value;
+	private final String	value;
 
 	/**
 	 * default constructor
@@ -18,6 +18,11 @@ public class AimlData extends AimlElementContainer {
 	public String toString() {
 		return "\n\t\t\t\tIAimlData ["
 				+ value.replace("\n", "").replace("\r", "") + "]";
+	}
+
+	@Override
+	public void answer(String star, String that, StringBuilder render) {
+		render.append(value.replace("*", star).trim());
 	}
 
 	@Override

@@ -9,8 +9,8 @@ public class AimlXmlImpl extends AimlElementContainer implements IAimlXml {
 		super("xml");
 	}
 
-	private String version;
-	private String encoding;
+	private String	version		= "1.0";
+	private String	encoding	= "UTF8";
 
 	@Override
 	public void add(String value) {
@@ -18,8 +18,8 @@ public class AimlXmlImpl extends AimlElementContainer implements IAimlXml {
 
 	@Override
 	public void add(IAimlProperty value) {
-		if(value.getKey().compareTo("version")==0) version = accept(value);		
-		if(value.getKey().compareTo("encoding")==0) encoding = accept(value);		
+		if (value.getKey().compareTo("version") == 0) version = accept(value);
+		if (value.getKey().compareTo("encoding") == 0) encoding = accept(value);
 	}
 
 	@Override
@@ -30,7 +30,8 @@ public class AimlXmlImpl extends AimlElementContainer implements IAimlXml {
 
 	@Override
 	public StringBuilder toAiml(StringBuilder render) {
-		render.append("<?xml version=\"" + version + "\" encoding=\"" + encoding + "\" ?>\n");
+		render.append("<?xml version=\"" + version + "\" encoding=\""
+				+ encoding + "\" ?>\n");
 		return render;
 	}
 }

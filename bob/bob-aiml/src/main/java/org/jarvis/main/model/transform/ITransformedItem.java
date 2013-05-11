@@ -14,12 +14,35 @@
  *   limitations under the License.
  */
 
-package org.jarvis.main.model.parser.category;
+package org.jarvis.main.model.transform;
 
 import java.util.List;
 
-import org.jarvis.main.model.parser.IAimlElement;
+public interface ITransformedItem {
 
-public interface IAimlPattern extends IAimlElement {
-	List<IAimlElement> getElements();
+	public void add(String upperCase);
+
+	public int size();
+
+	public String get(int index);
+
+	public List<String> getElements();
+
+	/**
+	 * compute scoring
+	 * 
+	 * @param compare
+	 * @return
+	 */
+	public int score(ITransformedItem compare);
+
+	/**
+	 * build star value
+	 * 
+	 * @param compare
+	 * @param sb
+	 * @return
+	 */
+	public StringBuilder star(ITransformedItem compare, StringBuilder sb);
+
 }

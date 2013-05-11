@@ -20,6 +20,7 @@ import org.jarvis.main.model.parser.IAimlCategory;
 import org.jarvis.main.model.parser.IAimlElement;
 import org.jarvis.main.model.parser.category.IAimlPattern;
 import org.jarvis.main.model.parser.category.IAimlTemplate;
+import org.jarvis.main.model.transform.ITransformedItem;
 
 public class AimlCategory extends AimlElementContainer implements IAimlCategory {
 
@@ -32,12 +33,18 @@ public class AimlCategory extends AimlElementContainer implements IAimlCategory 
 		super("category");
 	}
 
-	private IAimlTemplate template;
-	private IAimlPattern pattern;
-	
+	private IAimlTemplate		template;
+	private IAimlPattern		pattern;
+	private ITransformedItem	transformation;
+
+	@Override
+	public IAimlPattern getPattern() {
+		return pattern;
+	}
+
 	@Override
 	public void setTemplate(IAimlTemplate e) {
-		template = e;		
+		template = e;
 	}
 
 	@Override
@@ -46,14 +53,33 @@ public class AimlCategory extends AimlElementContainer implements IAimlCategory 
 	}
 
 	@Override
+	public void setTransformedPattern(ITransformedItem transform) {
+		transformation = transform;
+	}
+
+	@Override
+	public ITransformedItem getTransformedPattern() {
+		return transformation;
+	}
+
+	@Override
+	public String answer(String star, String that) {
+		StringBuilder render = new StringBuilder();
+		for (IAimlElement element : template.getElements()) {
+			element.answer(star, that, render);
+		}
+		return render.toString();
+	}
+
+	@Override
 	public String toString() {
-		return "\n\t\tAimlCategory [template=" + template + ", pattern=" + pattern
-				+ ", elements=" + elements + "]";
+		return "\n\t\tAimlCategory [template=" + template + ", pattern="
+				+ pattern + ", elements=" + elements + "]";
 	}
 
 	@Override
 	public StringBuilder toAiml(StringBuilder render) {
-		if(elements.size() == 0) {
+		if (elements.size() == 0) {
 			render.append("<" + tag);
 			properties(render);
 			render.append("/>\n");
@@ -61,7 +87,7 @@ public class AimlCategory extends AimlElementContainer implements IAimlCategory 
 			render.append("<" + tag);
 			properties(render);
 			render.append(">");
-			for(IAimlElement e : elements) {
+			for (IAimlElement e : elements) {
 				e.toAiml(render);
 			}
 			render.append("</" + tag + ">\n");

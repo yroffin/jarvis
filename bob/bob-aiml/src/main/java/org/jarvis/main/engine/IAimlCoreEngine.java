@@ -14,12 +14,33 @@
  *   limitations under the License.
  */
 
-package org.jarvis.main.model.parser.category;
+package org.jarvis.main.engine;
 
+import java.io.File;
 import java.util.List;
 
-import org.jarvis.main.model.parser.IAimlElement;
+import org.jarvis.main.exception.AimlParsingError;
 
-public interface IAimlPattern extends IAimlElement {
-	List<IAimlElement> getElements();
+public interface IAimlCoreEngine {
+	/**
+	 * add a new file in system
+	 * 
+	 * @param resource
+	 * @return
+	 */
+	public void register(File resource);
+
+	/**
+	 * parse the resources
+	 */
+	public void parse() throws AimlParsingError;
+
+	/**
+	 * implement default bot behaviour
+	 * 
+	 * @param sentence
+	 * @return
+	 * @throws AimlParsingError
+	 */
+	public List<String> ask(String sentence) throws AimlParsingError;
 }
