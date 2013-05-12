@@ -16,10 +16,15 @@
 
 package org.jarvis.main.model.parser.impl;
 
+import java.util.List;
+
+import org.jarvis.main.engine.IAimlCoreEngine;
+import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.model.parser.IAimlCategory;
 import org.jarvis.main.model.parser.IAimlElement;
 import org.jarvis.main.model.parser.category.IAimlPattern;
 import org.jarvis.main.model.parser.category.IAimlTemplate;
+import org.jarvis.main.model.transform.ITransformedItem;
 
 public class AimlCategory extends AimlElementContainer implements IAimlCategory {
 
@@ -32,8 +37,9 @@ public class AimlCategory extends AimlElementContainer implements IAimlCategory 
 		super("category");
 	}
 
-	private IAimlTemplate	template;
-	private IAimlPattern	pattern;
+	private IAimlTemplate		template;
+	private IAimlPattern		pattern;
+	private ITransformedItem	transformation;
 
 	@Override
 	public IAimlPattern getPattern() {
@@ -48,6 +54,25 @@ public class AimlCategory extends AimlElementContainer implements IAimlCategory 
 	@Override
 	public void setPattern(IAimlPattern e) {
 		pattern = e;
+	}
+
+	@Override
+	public void setTransformedPattern(ITransformedItem transform) {
+		transformation = transform;
+	}
+
+	@Override
+	public ITransformedItem getTransformedPattern() {
+		return transformation;
+	}
+
+	@Override
+	public StringBuilder answer(IAimlCoreEngine engine, List<String> star,
+			String that, StringBuilder render) throws AimlParsingError {
+		for (IAimlElement element : template.getElements()) {
+			element.answer(engine, star, that, render);
+		}
+		return render;
 	}
 
 	@Override

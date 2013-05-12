@@ -17,10 +17,28 @@
 package org.jarvis.main.engine;
 
 import java.io.File;
+import java.util.List;
 
 import org.jarvis.main.exception.AimlParsingError;
 
 public interface IAimlCoreEngine {
+	/**
+	 * properties get
+	 * 
+	 * @param key
+	 * @return
+	 */
+	public Object get(String key);
+
+	/**
+	 * property set
+	 * 
+	 * @param key
+	 * @param value
+	 * @return
+	 */
+	public Object set(String key, Object value);
+
 	/**
 	 * add a new file in system
 	 * 
@@ -39,6 +57,7 @@ public interface IAimlCoreEngine {
 	 * 
 	 * @param sentence
 	 * @return
+	 * @throws AimlParsingError
 	 */
-	public String ask(String sentence);
+	public List<String> ask(String sentence) throws AimlParsingError;
 }

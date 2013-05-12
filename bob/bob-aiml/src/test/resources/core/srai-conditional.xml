@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="1.0">
+	<category>
+	<pattern>WHO IS HE</pattern>
+	<template><srai>WHOISHE <get name="he"/></srai></template>
+	</category>
+	
+	<category>
+	<pattern>WHOISHE *</pattern>
+	<template>He is <get name="he"/>.</template>
+	</category>
+	
+	<category>
+	<pattern>WHOISHE UNKNOWN</pattern>
+	<template>I don’t know who he is.</template>
+	</category>
+</aiml>

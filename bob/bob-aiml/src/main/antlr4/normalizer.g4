@@ -21,6 +21,48 @@ grammar normalizer;
     public void onNewAbrev(String value) {
         System.out.println("onNewAbrev - ["+value+"]");
     }
+<<<<<<< HEAD
+    public void onNewStar(String value) {
+        System.out.println("onNewStar - ["+value+"]");
+    }
+}
+
+@lexer::members {
+}
+
+tokens {
+}
+
+document : (sentence (DOT|QUESTIONMARK|EXCLAIM)?)+ EOF;
+
+sentence : {onNewSentence();} word+;
+
+word
+    : simpleword
+    | star
+    | filename
+    | url
+    | abrev
+    | misc;
+
+simpleword : SIMPLEWORD {onNewWord($SIMPLEWORD.text);};
+filename : FILENAME {onNewFilename($FILENAME.text);};
+url : URL {onNewUrl($URL.text);};
+star : STAR {onNewStar($STAR.text);};
+abrev : ABREV {onNewAbrev($ABREV.text);};
+misc : COMMA | SEMICOLON | MINUS | LPARENT | RPARENT | COTE;
+
+DOT: '.';
+QUESTIONMARK: '?';
+EXCLAIM: '!';
+COMMA: ',';
+SEMICOLON: ':';
+MINUS: '-';
+LPARENT: '(';
+RPARENT: ')';
+COTE: '\'';
+STAR: '*';
+=======
 }
 
 @lexer::members {
@@ -55,6 +97,7 @@ MINUS: '-';
 LPARENT: '(';
 RPARENT: ')';
 COTE: '\'';
+>>>>>>> branch 'master' of git@github.com:yroffin/jarvis.git
 
 COMMENT : '<!--' .*? '-->' -> skip ;
 

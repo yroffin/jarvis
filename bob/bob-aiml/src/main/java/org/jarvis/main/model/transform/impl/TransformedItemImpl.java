@@ -19,16 +19,30 @@ package org.jarvis.main.model.transform.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jarvis.main.engine.AimlScoreTest;
 import org.jarvis.main.model.transform.ITransformedItem;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TransformedItemImpl implements ITransformedItem {
 
-	private final List<List<String>>	elements	= new ArrayList<List<String>>();
-	private List<String>				current		= null;
+	private final Logger		logger		= LoggerFactory
+													.getLogger(AimlScoreTest.class);
+	private final List<String>	elements	= new ArrayList<String>();
+
+	public TransformedItemImpl() {
+
+	}
+
+	public TransformedItemImpl(String initial) {
+		for (String e : initial.split(" ")) {
+			elements.add(e);
+		}
+	}
 
 	@Override
 	public void add(String s) {
-		current.add(s);
+		elements.add(s);
 	}
 
 	@Override
@@ -38,17 +52,129 @@ public class TransformedItemImpl implements ITransformedItem {
 
 	@Override
 	public String get(int index) {
+		return elements.get(index);
+	}
+
+	@Override
+	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		for (String e : elements.get(index)) {
+		for (String e : elements) {
 			if (sb.length() == 0) sb.append(e);
 			else sb.append(" " + e);
 		}
 		return sb.toString();
 	}
 
+	/**
+	 * intersect
+	 * 
+	 * @param list1
+	 * @param list2
+	 * @return
+	 */
+	private List<Integer> intersection(List<String> list1, List<String> list2) {
+		List<Integer> list = new ArrayList<Integer>();
+
+		for (String t : list1) {
+			if (list2.contains(t)) {
+				list.add(list2.indexOf(t));
+			} else {
+				list.add(-1);
+			}
+		}
+
+		return list;
+	}
+
 	@Override
-	public void add() {
-		current = new ArrayList<String>();
-		elements.add(current);
+	public List<String> getElements() {
+		return elements;
+	}
+
+	@Override
+	public int score(ITransformedItem compare) {
+		/**
+		 * empty input are ignored
+		 */
+		if (size() == 0) return -1;
+		if (size() < compare.getElements().size()) return -1;
+
+		/**
+		 * build intersection between the two lists
+		 */
+		List<Integer> list = intersection(elements, compare.getElements());
+		if (list.size() == 0) return -1;
+
+		int score = 0;
+
+		/**
+		 * now in compare list ... each unmatched items must be a STAR
+		 */
+		int index = 0;
+		for (; index < size(); index++) {
+			/**
+			 * find first matched element
+			 */
+			for (; index < size() && list.get(index) >= 0; score++, index++)
+				;
+			/**
+			 * current must be a STAR
+			 */
+			if (index < compare.getElements().size()
+					&& "*".compareTo(compare.getElements().get(index)) != 0) return -1;
+			score++;
+			for (; index < size() && list.get(index) < 0; index++)
+				;
+			score++;
+		}
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("Pattern: " + compare + " Score: " + score);
+		}
+		return score;
+	}
+
+	@Override
+	public List<String> star(ITransformedItem compare, List<String> sb) {
+		/**
+		 * empty input are ignored
+		 */
+		if (size() == 0) return null;
+
+		/**
+		 * build intersection between the two lists
+		 */
+		List<Integer> list = intersection(elements, compare.getElements());
+		if (list.size() == 0) return null;
+
+		int index = 0;
+		StringBuilder current = new StringBuilder();
+		for (int star : list) {
+			if (star == -1) {
+				if (current.length() > 0) current.append(" ");
+				current.append(elements.get(index).toLowerCase());
+			}
+			if (index > 0 && star != -1 && current.length() > 0) {
+				/**
+				 * flush
+				 */
+				sb.add(current.toString());
+				current.setLength(0);
+			}
+			index++;
+		}
+
+		/**
+		 * flush
+		 */
+		if (current.length() > 0) {
+			sb.add(current.toString());
+		}
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("Input:" + elements);
+			logger.debug("Pattern: " + compare + " Star: " + sb.toString());
+		}
+		return sb;
 	}
 }

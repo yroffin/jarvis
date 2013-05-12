@@ -16,7 +16,10 @@
 
 package org.jarvis.main.engine;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.File;
+import java.util.List;
 
 import org.jarvis.main.engine.impl.AimlCoreEngineImpl;
 import org.jarvis.main.exception.AimlParsingError;
@@ -40,8 +43,34 @@ public class AimlCoreEngineTest {
 
 	@Test
 	public void testSimpleCoreSystem() throws AimlParsingError {
-		String answer = instance("src/test/resources/core/default.xml").ask(
-				"hello");
-		// assertEquals(answer, "hello, there !");
+		List<String> answer = instance("src/test/resources/core/default.xml")
+				.ask("hello");
+		assertEquals("Hi there!", answer.get(0));
+	}
+
+	@Test
+	public void testSimpleCoreSystemAlt() throws AimlParsingError {
+		IAimlCoreEngine engine = instance("src/test/resources/core/default.xml");
+		List<String> answer = null;
+		for (int i = 0; i < 100; i++) {
+			answer = engine.ask("any");
+			boolean a = "What is your favorite movie?".compareTo(answer.get(0)) == 0;
+			boolean b = "What is your name?".compareTo(answer.get(0)) == 0;
+			boolean c = "Will you buy me a drink?".compareTo(answer.get(0)) == 0;
+			assertEquals(a || b || c, true);
+		}
+	}
+
+	@Test
+	public void testSimpleCoreSystemSay() throws AimlParsingError {
+		IAimlCoreEngine engine = instance("src/test/resources/core/default.xml");
+		List<String> answer = null;
+		for (int i = 0; i < 10; i++) {
+			answer = engine.ask("say a b or c");
+			boolean a = "a".compareTo(answer.get(0)) == 0;
+			boolean b = "b".compareTo(answer.get(0)) == 0;
+			boolean c = "c".compareTo(answer.get(0)) == 0;
+			assertEquals(answer.get(0), a || b || c, true);
+		}
 	}
 }

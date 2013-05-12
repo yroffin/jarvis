@@ -16,6 +16,8 @@
 
 package org.jarvis.main.model.transform;
 
+import java.util.List;
+
 public interface ITransformedItem {
 
 	public void add(String upperCase);
@@ -24,6 +26,22 @@ public interface ITransformedItem {
 
 	public String get(int index);
 
-	public void add();
+	public List<String> getElements();
 
+	/**
+	 * compute scoring
+	 * 
+	 * @param compare
+	 * @return
+	 */
+	public int score(ITransformedItem compare);
+
+	/**
+	 * build star value
+	 * 
+	 * @param compare
+	 * @param sb
+	 * @return
+	 */
+	public List<String> star(ITransformedItem compare, List<String> sb);
 }

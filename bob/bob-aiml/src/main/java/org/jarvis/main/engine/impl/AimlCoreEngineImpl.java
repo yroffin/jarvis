@@ -18,28 +18,53 @@ package org.jarvis.main.engine.impl;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Stack;
 
 import org.jarvis.main.engine.IAimlCoreEngine;
+import org.jarvis.main.engine.transform.IAimlScore;
 import org.jarvis.main.engine.transform.IAimlTransform;
+import org.jarvis.main.engine.transform.impl.AimlScoreImpl;
 import org.jarvis.main.engine.transform.impl.AimlTranformImpl;
 import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.model.parser.IAimlCategory;
 import org.jarvis.main.model.parser.IAimlRepository;
 import org.jarvis.main.model.parser.IAimlTopic;
 import org.jarvis.main.model.parser.impl.AimlRepository;
+import org.jarvis.main.model.transform.ITransformedItem;
 import org.jarvis.main.parser.AimlParserImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class AimlCoreEngineImpl implements IAimlCoreEngine {
 
-	protected Logger				logger		= LoggerFactory
-														.getLogger(AimlCoreEngineImpl.class);
+	protected Logger					logger		= LoggerFactory
+															.getLogger(AimlCoreEngineImpl.class);
 
-	private final IAimlRepository	aiml		= new AimlRepository();
-	private final IAimlTransform	transformer	= new AimlTranformImpl();
-	private final List<File>		resources	= new ArrayList<File>();
+	private final IAimlRepository		aiml		= new AimlRepository();
+	private final IAimlTransform		transformer	= new AimlTranformImpl();
+	private final List<File>			resources	= new ArrayList<File>();
+	private final Stack<IAimlCategory>	stack		= new Stack<IAimlCategory>();
+
+	private final Map<String, Object>	properties	= new HashMap<String, Object>();
+
+	@Override
+	public Object get(String key) {
+		return properties.get(key);
+	}
+
+	@Override
+	public Object set(String key, Object value) {
+		return properties.put(key, value);
+	}
+
+	/**
+	 * last answer
+	 */
+	private String	that	= "";
 
 	@Override
 	public void register(File resource) {
@@ -67,16 +92,72 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 		}
 
 		/**
-		 * transformation
+		 * transformation on all category for optimisation during runtime
 		 */
-		for (IAimlCategory cat : result.getCategories()) {
-			transformer.transform(cat.getPattern().getElements());
+		for (IAimlCategory cat : aiml.getCategories()) {
+			/**
+			 * optimisation : transformation on categories only deal with the
+			 * first sentence
+			 */
+			cat.setTransformedPattern(transformer.transform(
+					cat.getPattern().getElements()).get(0));
 		}
 	}
 
 	@Override
-	public String ask(String sentence) {
+	public List<String> ask(String sentence) throws AimlParsingError {
+		List<String> result = new ArrayList<String>();
+		/**
+		 * transform user sentence into common tranform state
+		 */
+		List<ITransformedItem> tx = transformer.transform(sentence);
+		for (ITransformedItem s : tx) {
+			result.add(ask(s));
+		}
+		/**
+		 * that become the last computed item
+		 */
+		if (logger.isDebugEnabled()) {
+			logger.debug("That: " + that);
+			logger.debug("Answer: " + result);
+		}
+		that = result.get(result.size() - 1);
+		return result;
+	}
+
+	private String ask(ITransformedItem sentence) throws AimlParsingError {
+		List<IAimlScore> found = new ArrayList<IAimlScore>();
+		/**
+		 * find the category with pattern match algorithm based on scoring
+		 */
+		for (IAimlCategory cat : aiml.getCategories()) {
+			/**
+			 * ignore stacked category
+			 */
+			if (stack.contains(cat)) continue;
+
+			int score = sentence.score(cat.getTransformedPattern());
+			if (score >= 0) {
+				found.add(new AimlScoreImpl(score, cat));
+			}
+		}
+		Collections.sort(found);
 		logger.info("Ask for : " + sentence);
-		return sentence;
+		if (found.size() > 0) {
+			IAimlCategory category = found.get(0).getValue();
+			/**
+			 * identify star value
+			 */
+			stack.push(category);
+			String result = category
+					.answer(this,
+							sentence.star(category.getTransformedPattern(),
+									new ArrayList<String>()), that,
+							new StringBuilder()).toString();
+			stack.pop();
+			return result;
+		} else {
+			return "no anwser";
+		}
 	}
 }

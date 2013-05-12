@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="1.0">
+	<category>
+		<pattern>WHO IS *</pattern>
+		<template><star /> is someone, but i don't know him.</template>
+	</category>
+	<category>
+		<pattern>DO YOU KNOW WHO * IS</pattern>
+		<template><srai>WHO IS <star /></srai></template>
+	</category>
+</aiml>

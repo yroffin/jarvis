@@ -3,6 +3,8 @@ package org.jarvis.main.model.parser.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jarvis.main.engine.IAimlCoreEngine;
+import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.model.parser.IAimlElement;
 import org.jarvis.main.model.parser.IAimlProperty;
 
@@ -56,6 +58,15 @@ public abstract class AimlElementContainer implements IAimlElement {
 	protected StringBuilder properties(StringBuilder render) {
 		for (IAimlProperty e : props) {
 			render.append(" " + e.getKey() + "=\"" + e.getValue() + "\"");
+		}
+		return render;
+	}
+
+	@Override
+	public StringBuilder answer(IAimlCoreEngine engine, List<String> star,
+			String that, StringBuilder render) throws AimlParsingError {
+		for (IAimlElement element : elements) {
+			element.answer(engine, star, that, render);
 		}
 		return render;
 	}

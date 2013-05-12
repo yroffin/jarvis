@@ -20,6 +20,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.jarvis.main.engine.transform.IAimlTransform;
@@ -101,9 +102,9 @@ public class AimlTranformTest {
 		int output = 0;
 		for (int i = 0; i < inputs.length; i++) {
 			logger.info("Parsing [" + inputs[i] + "]");
-			ITransformedItem trans = tx.transform(inputs[i]);
+			List<ITransformedItem> trans = tx.transform(inputs[i]);
 			for (int j = 0; j < trans.size(); j++) {
-				assertEquals(outputs[output++], trans.get(j));
+				assertEquals(outputs[output++], trans.get(j).toString());
 			}
 		}
 	}

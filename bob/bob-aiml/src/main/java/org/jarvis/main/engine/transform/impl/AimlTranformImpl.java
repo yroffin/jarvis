@@ -32,22 +32,26 @@ public class AimlTranformImpl implements IAimlTransform {
 										.getLogger(AimlTranformImpl.class);
 
 	@Override
-	public ITransformedItem transform(List<IAimlElement> elements) {
+	public List<ITransformedItem> transform(List<IAimlElement> elements)
+			throws AimlParsingError {
 		StringBuilder render = new StringBuilder();
 		StringBuilder transform = new StringBuilder();
 		for (IAimlElement element : elements) {
 			transform.setLength(0);
 			if (element.getClass() == AimlData.class) {
 				element.toAiml(transform);
-				render.append(transform.toString().toUpperCase());
+				render.append(transform.toString());
 			}
 		}
-		logger.debug(render.toString());
-		return null;
+		if (logger.isDebugEnabled()) {
+			logger.debug("[TRANSFORM] => " + transform(render.toString()));
+		}
+		return transform(render.toString());
 	}
 
 	@Override
-	public ITransformedItem transform(String data) throws AimlParsingError {
+	public List<ITransformedItem> transform(String data)
+			throws AimlParsingError {
 		IAimlTransformParser parser = new AimlTransformParserImpl(data);
 		return parser.parse();
 	}

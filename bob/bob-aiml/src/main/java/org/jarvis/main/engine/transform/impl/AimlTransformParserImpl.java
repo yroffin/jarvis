@@ -17,6 +17,8 @@
 package org.jarvis.main.engine.transform.impl;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.antlr.v4.runtime.RecognitionException;
 import org.jarvis.main.antlr4.normalizerParser;
@@ -63,23 +65,31 @@ public class AimlTransformParserImpl extends normalizerParser implements
 		lexer = (AimlTransformLexerImpl) _input.getTokenSource();
 	}
 
-	private static boolean	parsingDebug	= true;
-
-	@Override
-	public void onNewWord(String value) {
-		super.onNewWord(value);
-		if (logger.isDebugEnabled() && parsingDebug) {
-			logger.debug("onNewWord [" + value + "]");
-		}
-		tx.add(value.toUpperCase());
-	}
+	private static boolean	parsingDebug	= false;
 
 	@Override
 	public void onNewSentence() {
 		if (logger.isDebugEnabled() && parsingDebug) {
 			logger.debug("onNewSentence");
 		}
-		tx.add();
+		last = new TransformedItemImpl();
+		tx.add(last);
+	}
+
+	@Override
+	public void onNewStar(String value) {
+		if (logger.isDebugEnabled() && parsingDebug) {
+			logger.debug("onNewStar [" + value + "]");
+		}
+		last.add(value.toUpperCase());
+	}
+
+	@Override
+	public void onNewWord(String value) {
+		if (logger.isDebugEnabled() && parsingDebug) {
+			logger.debug("onNewWord [" + value + "]");
+		}
+		last.add(value.toUpperCase());
 	}
 
 	@Override
@@ -87,7 +97,7 @@ public class AimlTransformParserImpl extends normalizerParser implements
 		if (logger.isDebugEnabled() && parsingDebug) {
 			logger.debug("onNewFilename [" + value + "]");
 		}
-		tx.add(value.toUpperCase().replace(".", " DOT "));
+		last.add(value.toUpperCase().replace(".", " DOT "));
 	}
 
 	@Override
@@ -95,7 +105,7 @@ public class AimlTransformParserImpl extends normalizerParser implements
 		if (logger.isDebugEnabled() && parsingDebug) {
 			logger.debug("onNewUrl [" + value + "]");
 		}
-		tx.add(value.toUpperCase().replace("://", " ").replace(".", " DOT "));
+		last.add(value.toUpperCase().replace("://", " ").replace(".", " DOT "));
 	}
 
 	@Override
@@ -103,16 +113,17 @@ public class AimlTransformParserImpl extends normalizerParser implements
 		if (logger.isDebugEnabled() && parsingDebug) {
 			logger.debug("onNewAbrev [" + value + "]");
 		}
-		tx.add(value.toUpperCase().replace("THAT'S", "THAT IS")
+		last.add(value.toUpperCase().replace("THAT'S", "THAT IS")
 				.replace("DON'T", "DO NOT"));
 	}
 
-	private ITransformedItem	tx	= null;
+	private ITransformedItem		last;
+	private List<ITransformedItem>	tx	= null;
 
 	@Override
-	public ITransformedItem parse() throws AimlParsingError {
+	public List<ITransformedItem> parse() throws AimlParsingError {
 		try {
-			tx = new TransformedItemImpl();
+			tx = new ArrayList<ITransformedItem>();
 			document();
 			return tx;
 		} catch (RecognitionException e) {

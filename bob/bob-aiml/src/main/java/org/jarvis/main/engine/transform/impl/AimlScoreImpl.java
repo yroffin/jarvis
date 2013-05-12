@@ -14,20 +14,40 @@
  *   limitations under the License.
  */
 
-package org.jarvis.main.model.parser;
+package org.jarvis.main.engine.transform.impl;
 
-import org.jarvis.main.model.parser.category.IAimlPattern;
-import org.jarvis.main.model.parser.category.IAimlTemplate;
-import org.jarvis.main.model.transform.ITransformedItem;
+import org.jarvis.main.engine.transform.IAimlScore;
+import org.jarvis.main.model.parser.IAimlCategory;
 
-public interface IAimlCategory extends IAimlElement {
-	public void setPattern(IAimlPattern e);
+public class AimlScoreImpl implements IAimlScore {
 
-	public IAimlPattern getPattern();
+	int				key;
+	IAimlCategory	category;
 
-	public void setTemplate(IAimlTemplate e);
+	/**
+	 * constructor
+	 * 
+	 * @param key
+	 * @param category
+	 */
+	public AimlScoreImpl(int key, IAimlCategory category) {
+		this.key = key;
+		this.category = category;
+	}
 
-	public void setTransformedPattern(ITransformedItem transform);
+	@Override
+	public int compareTo(IAimlScore o) {
+		return o.getKey() - getKey();
+	}
 
-	public ITransformedItem getTransformedPattern();
+	@Override
+	public int getKey() {
+		return key;
+	}
+
+	@Override
+	public IAimlCategory getValue() {
+		return category;
+	}
+
 }

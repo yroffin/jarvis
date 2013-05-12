@@ -16,11 +16,13 @@
 
 package org.jarvis.main.engine.transform;
 
+import java.util.List;
+
 import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.model.transform.ITransformedItem;
 
 public interface IAimlTransformParser {
 
-	public ITransformedItem parse() throws AimlParsingError;
+	public List<ITransformedItem> parse() throws AimlParsingError;
 
 }

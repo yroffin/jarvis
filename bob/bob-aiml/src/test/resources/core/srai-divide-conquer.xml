@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="1.0">
+	<category>
+		<pattern>YES *</pattern>
+		<template>Divide and Conquer: <srai>YES</srai> and <srai><star/></srai></template>
+	</category>
+	<category>
+		<pattern>*</pattern>
+		<template>Catch All : <star /></template>
+	</category>
+	<category>
+		<pattern>YES</pattern>
+		<template>Catch YES</template>
+	</category>
+</aiml>

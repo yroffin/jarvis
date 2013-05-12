@@ -23,7 +23,9 @@ import org.jarvis.main.model.parser.IAimlElement;
 import org.jarvis.main.model.transform.ITransformedItem;
 
 public interface IAimlTransform {
-	public ITransformedItem transform(String data) throws AimlParsingError;
+	public List<ITransformedItem> transform(String data)
+			throws AimlParsingError;
 
-	public ITransformedItem transform(List<IAimlElement> elements);
+	public List<ITransformedItem> transform(List<IAimlElement> elements)
+			throws AimlParsingError;
 }
