@@ -2,6 +2,9 @@ package org.jarvis.main.model.parser;
 
 import java.util.List;
 
+import org.jarvis.main.engine.IAimlCoreEngine;
+import org.jarvis.main.exception.AimlParsingError;
+
 public interface IAimlElement extends IAimlRender {
 	public void add(String value);
 
@@ -16,11 +19,14 @@ public interface IAimlElement extends IAimlRender {
 	/**
 	 * compute an answer
 	 * 
+	 * @param engine
 	 * @param star
 	 * @param that
 	 * @param render
+	 * @throws AimlParsingError
 	 */
-	public void answer(String star, String that, StringBuilder render);
+	public StringBuilder answer(IAimlCoreEngine engine, List<String> star,
+			String that, StringBuilder render) throws AimlParsingError;
 
 	@Override
 	public StringBuilder toAiml(StringBuilder render);

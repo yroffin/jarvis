@@ -31,10 +31,12 @@ import org.slf4j.LoggerFactory;
 
 public class AimlTransformParserImpl extends normalizerParser implements
 		IAimlTransformParser {
-	Logger								logger	= LoggerFactory
-														.getLogger(AimlTransformParserImpl.class);
+	Logger								logger				= LoggerFactory
+																	.getLogger(AimlTransformParserImpl.class);
 
-	protected AimlTransformLexerImpl	lexer	= null;
+	private static final String			CONST_UNDERSCORE	= "_";
+	private static final String			CONST_STAR			= "*";
+	protected AimlTransformLexerImpl	lexer				= null;
 
 	/**
 	 * AIML model
@@ -81,7 +83,15 @@ public class AimlTransformParserImpl extends normalizerParser implements
 		if (logger.isDebugEnabled() && parsingDebug) {
 			logger.debug("onNewStar [" + value + "]");
 		}
-		last.add(value.toUpperCase());
+		last.add(CONST_STAR);
+	}
+
+	@Override
+	public void onNewUnderscore(String value) {
+		if (logger.isDebugEnabled() && parsingDebug) {
+			logger.debug("onNewUnderscore [" + value + "]");
+		}
+		last.add(CONST_UNDERSCORE);
 	}
 
 	@Override
@@ -124,7 +134,14 @@ public class AimlTransformParserImpl extends normalizerParser implements
 	public List<ITransformedItem> parse() throws AimlParsingError {
 		try {
 			tx = new ArrayList<ITransformedItem>();
-			document();
+			if (_input.getText().length() > 0) {
+				document();
+			} else {
+				/**
+				 * empty document
+				 */
+				onNewSentence();
+			}
 			return tx;
 		} catch (RecognitionException e) {
 			throw new AimlParsingError(e);

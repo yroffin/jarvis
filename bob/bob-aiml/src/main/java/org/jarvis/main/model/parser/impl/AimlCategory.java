@@ -16,10 +16,15 @@
 
 package org.jarvis.main.model.parser.impl;
 
+import java.util.List;
+
+import org.jarvis.main.engine.IAimlCoreEngine;
+import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.model.parser.IAimlCategory;
 import org.jarvis.main.model.parser.IAimlElement;
 import org.jarvis.main.model.parser.category.IAimlPattern;
 import org.jarvis.main.model.parser.category.IAimlTemplate;
+import org.jarvis.main.model.parser.category.IAimlThat;
 import org.jarvis.main.model.transform.ITransformedItem;
 
 public class AimlCategory extends AimlElementContainer implements IAimlCategory {
@@ -35,7 +40,13 @@ public class AimlCategory extends AimlElementContainer implements IAimlCategory 
 
 	private IAimlTemplate		template;
 	private IAimlPattern		pattern;
-	private ITransformedItem	transformation;
+	private IAimlThat			that;
+
+	/**
+	 * optimisation
+	 */
+	private ITransformedItem	transPattern;
+	private ITransformedItem	transThat;
 
 	@Override
 	public IAimlPattern getPattern() {
@@ -53,22 +64,47 @@ public class AimlCategory extends AimlElementContainer implements IAimlCategory 
 	}
 
 	@Override
+	public void setThat(IAimlThat e) {
+		that = e;
+	}
+
+	@Override
+	public IAimlThat getThat() {
+		return that;
+	}
+
+	@Override
+	public boolean hasThat() {
+		return that != null;
+	}
+
+	@Override
 	public void setTransformedPattern(ITransformedItem transform) {
-		transformation = transform;
+		transPattern = transform;
 	}
 
 	@Override
 	public ITransformedItem getTransformedPattern() {
-		return transformation;
+		return transPattern;
 	}
 
 	@Override
-	public String answer(String star, String that) {
-		StringBuilder render = new StringBuilder();
+	public void setTransformedThat(ITransformedItem transform) {
+		transThat = transform;
+	}
+
+	@Override
+	public ITransformedItem getTransformedThat() {
+		return transThat;
+	}
+
+	@Override
+	public StringBuilder answer(IAimlCoreEngine engine, List<String> star,
+			String that, StringBuilder render) throws AimlParsingError {
 		for (IAimlElement element : template.getElements()) {
-			element.answer(star, that, render);
+			element.answer(engine, star, that, render);
 		}
-		return render.toString();
+		return render;
 	}
 
 	@Override

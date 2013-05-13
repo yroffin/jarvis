@@ -1,5 +1,9 @@
 package org.jarvis.main.model.parser.category.impl;
 
+import java.util.List;
+
+import org.jarvis.main.engine.IAimlCoreEngine;
+import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.model.parser.IAimlProperty;
 import org.jarvis.main.model.parser.category.IAimlBot;
 import org.jarvis.main.model.parser.impl.AimlElementContainer;
@@ -10,7 +14,7 @@ public class AimlBotImpl extends AimlElementContainer implements IAimlBot {
 		super("bot");
 	}
 
-	private String name;
+	private String	name;
 
 	public String getName() {
 		return name;
@@ -22,7 +26,18 @@ public class AimlBotImpl extends AimlElementContainer implements IAimlBot {
 
 	@Override
 	public void add(IAimlProperty value) {
-		if(value.getKey().compareTo("name")==0) name = accept(value);		
+		if (value.getKey().compareTo("name") == 0) name = accept(value);
+	}
+
+	@Override
+	public StringBuilder answer(IAimlCoreEngine engine, List<String> star,
+			String that, StringBuilder render) throws AimlParsingError {
+		if (name == null) {
+			render.append("");
+		} else {
+			render.append(engine.getBot(name));
+		}
+		return render;
 	}
 
 	@Override

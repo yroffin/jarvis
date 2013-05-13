@@ -21,7 +21,44 @@ import java.util.List;
 
 import org.jarvis.main.exception.AimlParsingError;
 
+/**
+ * AIML engine
+ */
 public interface IAimlCoreEngine {
+	/**
+	 * bot properties
+	 * 
+	 * @param key
+	 * @return
+	 */
+	public Object getBot(String key);
+
+	/**
+	 * bot properties
+	 * 
+	 * @param key
+	 * @param value
+	 * @return
+	 */
+	public Object setBot(String key, Object value);
+
+	/**
+	 * properties get
+	 * 
+	 * @param key
+	 * @return
+	 */
+	public Object get(String key);
+
+	/**
+	 * property set
+	 * 
+	 * @param key
+	 * @param value
+	 * @return
+	 */
+	public Object set(String key, Object value);
+
 	/**
 	 * add a new file in system
 	 * 

@@ -43,6 +43,5 @@ public interface ITransformedItem {
 	 * @param sb
 	 * @return
 	 */
-	public StringBuilder star(ITransformedItem compare, StringBuilder sb);
-
+	public List<String> star(ITransformedItem compare, List<String> sb);
 }

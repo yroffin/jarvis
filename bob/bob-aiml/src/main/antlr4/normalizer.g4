@@ -21,9 +21,11 @@ grammar normalizer;
     public void onNewAbrev(String value) {
         System.out.println("onNewAbrev - ["+value+"]");
     }
-<<<<<<< HEAD
     public void onNewStar(String value) {
         System.out.println("onNewStar - ["+value+"]");
+    }
+    public void onNewUnderscore(String value) {
+        System.out.println("onNewUnderscore - ["+value+"]");
     }
 }
 
@@ -40,6 +42,7 @@ sentence : {onNewSentence();} word+;
 word
     : simpleword
     | star
+    | underscore
     | filename
     | url
     | abrev
@@ -49,8 +52,9 @@ simpleword : SIMPLEWORD {onNewWord($SIMPLEWORD.text);};
 filename : FILENAME {onNewFilename($FILENAME.text);};
 url : URL {onNewUrl($URL.text);};
 star : STAR {onNewStar($STAR.text);};
+underscore : UNDERSCORE {onNewUnderscore($UNDERSCORE.text);};
 abrev : ABREV {onNewAbrev($ABREV.text);};
-misc : COMMA | SEMICOLON | MINUS | LPARENT | RPARENT | COTE;
+misc : COMMA | SEMICOLON | MINUS | LPARENT | RPARENT | COTE | BCOTE;
 
 DOT: '.';
 QUESTIONMARK: '?';
@@ -61,43 +65,9 @@ MINUS: '-';
 LPARENT: '(';
 RPARENT: ')';
 COTE: '\'';
+BCOTE: '’';
 STAR: '*';
-=======
-}
-
-@lexer::members {
-}
-
-tokens {
-}
-
-document : (sentence (DOT|QUESTIONMARK|EXCLAIM)?)+ EOF;
-
-sentence : {onNewSentence();} word+;
-
-word
-    : simpleword
-    | filename
-    | url
-    | abrev
-    | misc;
-
-simpleword : SIMPLEWORD {onNewWord($SIMPLEWORD.text);};
-filename : FILENAME {onNewFilename($FILENAME.text);};
-url : URL {onNewUrl($URL.text);};
-abrev : ABREV {onNewAbrev($ABREV.text);};
-misc : COMMA | SEMICOLON | MINUS | LPARENT | RPARENT | COTE;
-
-DOT: '.';
-QUESTIONMARK: '?';
-EXCLAIM: '!';
-COMMA: ',';
-SEMICOLON: ':';
-MINUS: '-';
-LPARENT: '(';
-RPARENT: ')';
-COTE: '\'';
->>>>>>> branch 'master' of git@github.com:yroffin/jarvis.git
+UNDERSCORE: '_';
 
 COMMENT : '<!--' .*? '-->' -> skip ;
 

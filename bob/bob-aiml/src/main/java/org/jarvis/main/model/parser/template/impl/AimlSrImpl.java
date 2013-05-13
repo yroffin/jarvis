@@ -16,16 +16,16 @@
 package org.jarvis.main.model.parser.template.impl;
 
 import org.jarvis.main.model.parser.impl.AimlElementContainer;
-import org.jarvis.main.model.parser.template.system.IAimlSize;
+import org.jarvis.main.model.parser.template.IAimlSr;
 
-public class AimlSrImpl extends AimlElementContainer implements IAimlSize {
+public class AimlSrImpl extends AimlElementContainer implements IAimlSr {
 
 	public AimlSrImpl() {
-		super("size");
+		super("sr");
 	}
 
 	@Override
 	public String toString() {
-		return "\n\t\t\t\tAimlSizeShortcut [elements=" + elements + "]";
+		return "\n\t\t\t\tAimlSrShortcut [elements=" + elements + "]";
 	}
 }

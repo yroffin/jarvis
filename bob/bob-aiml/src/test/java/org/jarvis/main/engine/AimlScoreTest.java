@@ -18,6 +18,8 @@ package org.jarvis.main.engine;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+
 import org.jarvis.main.model.transform.impl.TransformedItemImpl;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -27,12 +29,31 @@ public class AimlScoreTest {
 	Logger	logger	= LoggerFactory.getLogger(AimlScoreTest.class);
 
 	@Test
+	public void testSimpleScoreUnderscore1() {
+		TransformedItemImpl a = new TransformedItemImpl(
+				"DO YOU KNOW WHO BOB IS ALICE");
+		TransformedItemImpl b = new TransformedItemImpl("_ ALICE");
+		assertEquals(2, a.score(b));
+		assertEquals("[do you know who bob is]",
+				a.star(b, new ArrayList<String>()).toString());
+	}
+
+	@Test
+	public void testSimpleScoreUnderscore2() {
+		TransformedItemImpl a = new TransformedItemImpl("ALICE IS AT THE TOP");
+		TransformedItemImpl b = new TransformedItemImpl("ALICE _");
+		assertEquals(2, a.score(b));
+		assertEquals("[is at the top]", a.star(b, new ArrayList<String>())
+				.toString());
+	}
+
+	@Test
 	public void testSimpleScoreSystem1() {
 		TransformedItemImpl a = new TransformedItemImpl(
 				"DO YOU KNOW WHO BOB IS");
 		TransformedItemImpl b = new TransformedItemImpl("DO YOU KNOW WHO * IS");
 		assertEquals(6, a.score(b));
-		assertEquals("bob", a.star(b, new StringBuilder()).toString());
+		assertEquals("[bob]", a.star(b, new ArrayList<String>()).toString());
 	}
 
 	@Test
@@ -41,7 +62,7 @@ public class AimlScoreTest {
 				"DO YOU KNOW WHO BOB IS");
 		TransformedItemImpl b = new TransformedItemImpl("DO * IS");
 		assertEquals(3, a.score(b));
-		assertEquals("you know who bob", a.star(b, new StringBuilder())
+		assertEquals("[you know who bob]", a.star(b, new ArrayList<String>())
 				.toString());
 	}
 
@@ -51,7 +72,8 @@ public class AimlScoreTest {
 				"DO YOU KNOW WHO BOB IS");
 		TransformedItemImpl b = new TransformedItemImpl("DO YOU * WHO * IS");
 		assertEquals(6, a.score(b));
-		assertEquals("know bob", a.star(b, new StringBuilder()).toString());
+		assertEquals("[know, bob]", a.star(b, new ArrayList<String>())
+				.toString());
 	}
 
 	@Test
@@ -59,9 +81,9 @@ public class AimlScoreTest {
 		TransformedItemImpl a = new TransformedItemImpl(
 				"DO YOU KNOW WHO BOB IS");
 		TransformedItemImpl b = new TransformedItemImpl("*");
-		assertEquals(2, a.score(b));
-		assertEquals("do you know who bob is", a.star(b, new StringBuilder())
-				.toString());
+		assertEquals(1, a.score(b));
+		assertEquals("[do you know who bob is]",
+				a.star(b, new ArrayList<String>()).toString());
 	}
 
 	@Test

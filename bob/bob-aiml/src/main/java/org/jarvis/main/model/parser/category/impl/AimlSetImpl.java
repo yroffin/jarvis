@@ -5,13 +5,13 @@ import java.util.List;
 import org.jarvis.main.engine.IAimlCoreEngine;
 import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.model.parser.IAimlProperty;
-import org.jarvis.main.model.parser.category.IAimlGet;
+import org.jarvis.main.model.parser.category.IAimlSet;
 import org.jarvis.main.model.parser.impl.AimlElementContainer;
 
-public class AimlGetImpl extends AimlElementContainer implements IAimlGet {
+public class AimlSetImpl extends AimlElementContainer implements IAimlSet {
 
-	public AimlGetImpl() {
-		super("get");
+	public AimlSetImpl() {
+		super("set");
 	}
 
 	private String	name;
@@ -29,17 +29,16 @@ public class AimlGetImpl extends AimlElementContainer implements IAimlGet {
 	@Override
 	public StringBuilder answer(IAimlCoreEngine engine, List<String> star,
 			String that, StringBuilder render) throws AimlParsingError {
-		if (name == null) {
-			render.append("unknown");
-		} else {
-			render.append(engine.get(name));
-		}
+		String set = super.answer(engine, star, that, new StringBuilder())
+				.toString();
+		engine.set(name, set);
+		render.append(set);
 		return render;
 	}
 
 	@Override
 	public String toString() {
-		return "\n\t\t\t\tAimlGet [elements=" + elements + ", name=" + name
+		return "\n\t\t\t\tAimlSet [elements=" + elements + ", name=" + name
 				+ "]";
 	}
 }

@@ -7,7 +7,7 @@ grammar aiml;
 
 @parser::members {
     boolean opened = false;
-    public enum router {AIML,BR,STAR,A,BOT,CONDITION,PERSON2,ID,VERSION,TEMPLATE,TOPIC,CATEGORY,PATTERN,PERSON,GET,INPUT,SET,SRAI,THAT,RANDOM,LI,FORMAL,THINK,UNKNOWN};
+    public enum router {AIML,BR,STAR,A,BOT,CONDITION,PERSON2,ID,VERSION,TEMPLATE,TOPIC,CATEGORY,PATTERN,PERSON,GET,INPUT,SET,SR,SRAI,THAT,RANDOM,LI,FORMAL,THINK,UNKNOWN};
     public router decode(String value) {
         if("aiml".compareTo(value)==0) return router.AIML;
         if("template".compareTo(value)==0) return router.TEMPLATE;
@@ -16,6 +16,7 @@ grammar aiml;
         if("pattern".compareTo(value)==0) return router.PATTERN;
         if("get".compareTo(value)==0) return router.GET;
         if("srai".compareTo(value)==0) return router.SRAI;
+        if("sr".compareTo(value)==0) return router.SR;
         if("that".compareTo(value)==0) return router.THAT;
         if("random".compareTo(value)==0) return router.RANDOM;
         if("li".compareTo(value)==0) return router.LI;

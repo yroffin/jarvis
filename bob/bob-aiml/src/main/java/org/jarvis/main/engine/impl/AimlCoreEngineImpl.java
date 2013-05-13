@@ -18,8 +18,10 @@ package org.jarvis.main.engine.impl;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Stack;
 
 import org.jarvis.main.engine.IAimlCoreEngine;
 import org.jarvis.main.engine.transform.IAimlScore;
@@ -32,23 +34,51 @@ import org.jarvis.main.model.parser.IAimlRepository;
 import org.jarvis.main.model.parser.IAimlTopic;
 import org.jarvis.main.model.parser.impl.AimlRepository;
 import org.jarvis.main.model.transform.ITransformedItem;
+import org.jarvis.main.model.transform.impl.TransformedItemImpl;
 import org.jarvis.main.parser.AimlParserImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class AimlCoreEngineImpl implements IAimlCoreEngine {
 
-	protected Logger				logger		= LoggerFactory
-														.getLogger(AimlCoreEngineImpl.class);
+	protected Logger					logger		= LoggerFactory
+															.getLogger(AimlCoreEngineImpl.class);
 
-	private final IAimlRepository	aiml		= new AimlRepository();
-	private final IAimlTransform	transformer	= new AimlTranformImpl();
-	private final List<File>		resources	= new ArrayList<File>();
+	private final IAimlRepository		aiml		= new AimlRepository();
+	private final IAimlTransform		transformer	= new AimlTranformImpl();
+	private final List<File>			resources	= new ArrayList<File>();
+	private final Stack<IAimlCategory>	stack		= new Stack<IAimlCategory>();
+
+	private final Map<String, Object>	bot			= new HashMap<String, Object>();
+	private final Map<String, Object>	properties	= new HashMap<String, Object>();
+
+	@Override
+	public Object getBot(String key) {
+		return bot.get(key);
+	}
+
+	@Override
+	public Object setBot(String key, Object value) {
+		logger.info("set (bot)" + key + " to " + value);
+		return bot.put(key, value);
+	}
+
+	@Override
+	public Object get(String key) {
+		return properties.get(key);
+	}
+
+	@Override
+	public Object set(String key, Object value) {
+		logger.info("set " + key + " to " + value);
+		return properties.put(key, value);
+	}
 
 	/**
 	 * last answer
 	 */
-	private String					that		= "";
+	private String				that			= null;
+	private ITransformedItem	thatTransformed	= new TransformedItemImpl("");
 
 	@Override
 	public void register(File resource) {
@@ -85,6 +115,10 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 			 */
 			cat.setTransformedPattern(transformer.transform(
 					cat.getPattern().getElements()).get(0));
+			if (cat.hasThat()) {
+				cat.setTransformedThat(transformer.transform(
+						cat.getThat().getElements()).get(0));
+			}
 		}
 	}
 
@@ -103,33 +137,59 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 		 */
 		if (logger.isDebugEnabled()) {
 			logger.debug("That: " + that);
+			logger.debug("That (tx): " + thatTransformed);
 			logger.debug("Answer: " + result);
 		}
 		that = result.get(result.size() - 1);
+		thatTransformed = transformer.transform(that).get(result.size() - 1);
 		return result;
 	}
 
 	private String ask(ITransformedItem sentence) throws AimlParsingError {
-		List<IAimlScore> found = new ArrayList<IAimlScore>();
+		IAimlScore found = null;
 		/**
 		 * find the category with pattern match algorithm based on scoring
 		 */
-		for (IAimlCategory cat : aiml.getCategories()) {
-			int score = sentence.score(cat.getTransformedPattern());
+		for (int iCat = 0; iCat < aiml.getCategories().size() && found == null; iCat++) {
+			IAimlCategory cat = aiml.getCategories().get(iCat);
+			/**
+			 * ignore stacked category
+			 */
+			if (stack.contains(cat)) continue;
+
+			ITransformedItem toScore = cat.getTransformedPattern();
+			int score = sentence.score(toScore);
+			/**
+			 * handle that element - if score is ok - category have that element
+			 * - current that is not null
+			 */
 			if (score >= 0) {
-				found.add(new AimlScoreImpl(score, cat));
+				if (cat.hasThat() && that != null) {
+					int thatScore = thatTransformed.score(cat
+							.getTransformedThat());
+					if (thatScore > 0) {
+						found = new AimlScoreImpl(score + thatScore, cat);
+					}
+				} else {
+					found = new AimlScoreImpl(score, cat);
+				}
 			}
 		}
-		Collections.sort(found);
+
 		logger.info("Ask for : " + sentence);
-		if (found.size() > 0) {
-			IAimlCategory category = found.get(0).getValue();
+		if (found != null) {
+			IAimlCategory category = found.getValue();
 			/**
 			 * identify star value
 			 */
-			return category.answer(
-					sentence.star(category.getTransformedPattern(),
-							new StringBuilder()).toString(), that);
+			stack.push(category);
+			String result = category
+					.answer(this,
+							sentence.star(category.getTransformedPattern(),
+									new ArrayList<String>()), that,
+							new StringBuilder()).toString();
+			stack.pop();
+			return result;
 		} else {
 			return "no anwser";
 		}

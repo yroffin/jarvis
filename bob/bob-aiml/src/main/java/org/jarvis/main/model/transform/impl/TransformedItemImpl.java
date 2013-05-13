@@ -19,16 +19,19 @@ package org.jarvis.main.model.transform.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jarvis.main.engine.AimlScoreTest;
 import org.jarvis.main.model.transform.ITransformedItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class TransformedItemImpl implements ITransformedItem {
 
+	private static final String	STAR		= "*";
+	private static final String	UNDERSCORE	= "_";
+
 	private final Logger		logger		= LoggerFactory
-													.getLogger(AimlScoreTest.class);
+													.getLogger(TransformedItemImpl.class);
 	private final List<String>	elements	= new ArrayList<String>();
+	private static boolean		debugScore	= false;
 
 	public TransformedItemImpl() {
 
@@ -72,14 +75,41 @@ public class TransformedItemImpl implements ITransformedItem {
 	 * @param list2
 	 * @return
 	 */
-	private List<Integer> intersection(List<String> list1, List<String> list2) {
+	private List<Integer> minus(List<String> left, List<String> right) {
 		List<Integer> list = new ArrayList<Integer>();
 
-		for (String t : list1) {
-			if (list2.contains(t)) {
-				list.add(list2.indexOf(t));
+		int star = 0;
+		for (String t : left) {
+			if (right.contains(t)) {
+				list.add(left.indexOf(t));
+				star = 0;
 			} else {
-				list.add(-1);
+				star++;
+				if (star == 1) list.add(-1);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * intersect
+	 * 
+	 * @param left
+	 * @param right
+	 * @return
+	 */
+	private List<Integer> intersection(List<String> left, List<String> right) {
+		List<Integer> list = new ArrayList<Integer>();
+
+		int star = 0;
+		for (String t : left) {
+			if (right.contains(t)) {
+				list.add(left.indexOf(t));
+				star = 0;
+			} else {
+				star++;
+				list.add(-star);
 			}
 		}
 
@@ -97,34 +127,43 @@ public class TransformedItemImpl implements ITransformedItem {
 		 * empty input are ignored
 		 */
 		if (size() == 0) return -1;
+		if (compare.getElements().size() == 0) return -1;
 
 		/**
 		 * build intersection between the two lists
 		 */
-		List<Integer> list = intersection(elements, compare.getElements());
-		if (list.size() == 0) return -1;
+		List<Integer> minus = minus(elements, compare.getElements());
+		if (minus.size() == 0) return -1;
+		if (compare.getElements().size() != minus.size()) return -1;
 
 		int score = 0;
 
 		/**
 		 * now in compare list ... each unmatched items must be a STAR
 		 */
-		int index = 0;
-		for (; index < size(); index++) {
-			/**
-			 * find first matched element
-			 */
-			for (; index < size() && list.get(index) >= 0; score++, index++)
-				;
-			/**
-			 * current must be a STAR
-			 */
-			if (index < size()
-					&& "*".compareTo(compare.getElements().get(index)) != 0) return -1;
-			score++;
-			for (; index < size() && list.get(index) < 0; index++)
-				;
-			score++;
+		List<String> compared = compare.getElements();
+
+		if (logger.isDebugEnabled() && debugScore) {
+			logger.debug("Elements: " + elements);
+			logger.debug("Compared: " + compared);
+			logger.debug("Intersect: " + minus);
+		}
+
+		for (int ii = 0; ii < minus.size(); ii++) {
+			if (minus.get(ii) < 0) {
+				/**
+				 * compared must be STAR or UNDERSCORE
+				 */
+				if (!(compared.get(ii).compareTo(STAR) == 0 || compared.get(ii)
+						.compareTo(UNDERSCORE) == 0)) return -1;
+				score++;
+			} else {
+				/**
+				 * must be equal
+				 */
+				if (compared.get(ii).compareTo(get(minus.get(ii))) != 0) return -1;
+				score++;
+			}
 		}
 
 		if (logger.isDebugEnabled()) {
@@ -134,7 +173,7 @@ public class TransformedItemImpl implements ITransformedItem {
 	}
 
 	@Override
-	public StringBuilder star(ITransformedItem compare, StringBuilder sb) {
+	public List<String> star(ITransformedItem compare, List<String> sb) {
 		/**
 		 * empty input are ignored
 		 */
@@ -147,17 +186,33 @@ public class TransformedItemImpl implements ITransformedItem {
 		if (list.size() == 0) return null;
 
 		int index = 0;
+		StringBuilder current = new StringBuilder();
 		for (int star : list) {
-			if (star == -1) {
-				if (sb.length() > 0) sb.append(" ");
-				sb.append(elements.get(index).toLowerCase());
+			if (star < 0) {
+				if (current.length() > 0) current.append(" ");
+				current.append(elements.get(index).toLowerCase());
+			}
+			if (index > 0 && star >= 0 && current.length() > 0) {
+				/**
+				 * flush
+				 */
+				sb.add(current.toString());
+				current.setLength(0);
 			}
 			index++;
 		}
 
+		/**
+		 * flush
+		 */
+		if (current.length() > 0) {
+			sb.add(current.toString());
+		}
+
 		if (logger.isDebugEnabled()) {
 			logger.debug("Input:" + elements);
-			logger.debug("Pattern: " + compare + " Star: " + sb.toString());
+			logger.debug("Pattern: " + compare + " Star/Underscore: "
+					+ sb.toString());
 		}
 		return sb;
 	}

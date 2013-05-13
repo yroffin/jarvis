@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="1.0">
+	<category>
+	<pattern>MOTHER</pattern> 
+	<template> Tell me more about your family. </template>
+	</category>
+	
+	<category>
+	<pattern>* MOTHER</pattern> 
+	<template><srai>MOTHER</srai></template>
+	</category>
+	
+	<category>
+	<pattern>MOTHER *</pattern>
+	<template><srai>MOTHER</srai></template>
+	</category>
+	
+	<category>
+	<pattern>* MOTHER *</pattern>
+	<template><srai>MOTHER</srai></template>
+	</category>
+</aiml>

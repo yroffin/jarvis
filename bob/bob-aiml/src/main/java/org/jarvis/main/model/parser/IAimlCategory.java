@@ -18,6 +18,7 @@ package org.jarvis.main.model.parser;
 
 import org.jarvis.main.model.parser.category.IAimlPattern;
 import org.jarvis.main.model.parser.category.IAimlTemplate;
+import org.jarvis.main.model.parser.category.IAimlThat;
 import org.jarvis.main.model.transform.ITransformedItem;
 
 public interface IAimlCategory extends IAimlElement {
@@ -29,7 +30,15 @@ public interface IAimlCategory extends IAimlElement {
 
 	public void setTransformedPattern(ITransformedItem transform);
 
+	public void setThat(IAimlThat e);
+
+	public IAimlThat getThat();
+
 	public ITransformedItem getTransformedPattern();
 
-	public String answer(String star, String that);
+	public boolean hasThat();
+
+	public void setTransformedThat(ITransformedItem transform);
+
+	public ITransformedItem getTransformedThat();
 }

@@ -37,6 +37,7 @@ import org.jarvis.main.model.parser.category.IAimlBr;
 import org.jarvis.main.model.parser.category.IAimlGet;
 import org.jarvis.main.model.parser.category.IAimlLi;
 import org.jarvis.main.model.parser.category.IAimlPattern;
+import org.jarvis.main.model.parser.category.IAimlSet;
 import org.jarvis.main.model.parser.category.IAimlSrai;
 import org.jarvis.main.model.parser.category.IAimlTemplate;
 import org.jarvis.main.model.parser.category.IAimlThat;
@@ -47,6 +48,7 @@ import org.jarvis.main.model.parser.category.impl.AimlBrImpl;
 import org.jarvis.main.model.parser.category.impl.AimlGetImpl;
 import org.jarvis.main.model.parser.category.impl.AimlLiImpl;
 import org.jarvis.main.model.parser.category.impl.AimlPattern;
+import org.jarvis.main.model.parser.category.impl.AimlSetImpl;
 import org.jarvis.main.model.parser.category.impl.AimlSraiImpl;
 import org.jarvis.main.model.parser.category.impl.AimlTemplateImpl;
 import org.jarvis.main.model.parser.category.impl.AimlThatCategoryImpl;
@@ -61,7 +63,7 @@ import org.jarvis.main.model.parser.template.IAimlInput;
 import org.jarvis.main.model.parser.template.IAimlPerson;
 import org.jarvis.main.model.parser.template.IAimlPerson2;
 import org.jarvis.main.model.parser.template.IAimlRandom;
-import org.jarvis.main.model.parser.template.IAimlSet;
+import org.jarvis.main.model.parser.template.IAimlSr;
 import org.jarvis.main.model.parser.template.IAimlStar;
 import org.jarvis.main.model.parser.template.condition.IAimlCondition;
 import org.jarvis.main.model.parser.template.condition.impl.AimlBlockConditionImpl;
@@ -71,7 +73,7 @@ import org.jarvis.main.model.parser.template.impl.AimlInputImpl;
 import org.jarvis.main.model.parser.template.impl.AimlPerson2Impl;
 import org.jarvis.main.model.parser.template.impl.AimlPersonImpl;
 import org.jarvis.main.model.parser.template.impl.AimlRandomImpl;
-import org.jarvis.main.model.parser.template.impl.AimlSetImpl;
+import org.jarvis.main.model.parser.template.impl.AimlSrImpl;
 import org.jarvis.main.model.parser.template.impl.AimlStarImpl;
 import org.jarvis.main.model.parser.template.impl.AimlThatTemplateImpl;
 import org.jarvis.main.model.parser.template.system.IAimlId;
@@ -240,6 +242,11 @@ public class AimlParserImpl extends aimlParser {
 		}
 
 		public IAimlThat push(AimlThatCategoryImpl e) {
+			/**
+			 * that is always a category child
+			 */
+			IAimlCategory cat = (IAimlCategory) stack.lastElement();
+			cat.setThat(e);
 			stack.lastElement().add(e);
 			stack.push(e);
 			return e;
@@ -356,6 +363,12 @@ public class AimlParserImpl extends aimlParser {
 		}
 
 		public IAimlFormal push(AimlFormalImpl e) {
+			stack.lastElement().add(e);
+			stack.push(e);
+			return e;
+		}
+
+		public IAimlSr push(AimlSrImpl e) {
 			stack.lastElement().add(e);
 			stack.push(e);
 			return e;
@@ -620,6 +633,9 @@ public class AimlParserImpl extends aimlParser {
 				break;
 			case A:
 				stackElements.push(new AimlAImpl());
+				break;
+			case SR:
+				stackElements.push(new AimlSrImpl());
 				break;
 			case BOT:
 				stackElements.push(new AimlBotImpl());
