@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry including="**/*.java" kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="resources"/>
 	<classpathentry kind="src" path="src/test/resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="var" path="M2_REPO/org/mobicents/external/freetts/cmu_us_kal/1.0/cmu_us_kal-1.0.jar"/>
@@ -16,6 +17,6 @@
 	<classpathentry kind="var" path="M2_REPO/org/slf4j/slf4j-api/1.7.2/slf4j-api-1.7.2.jar"/>
 	<classpathentry kind="var" path="M2_REPO/ch/qos/cal10n/cal10n-api/0.7.4/cal10n-api-0.7.4.jar"/>
 	<classpathentry kind="var" path="M2_REPO/ch/qos/logback/logback-classic/1.0.7/logback-classic-1.0.7.jar" sourcepath="M2_REPO/ch/qos/logback/logback-classic/1.0.7/logback-classic-1.0.7-sources.jar"/>
-	<classpathentry kind="lib" path="/bob-sphinx4-jsapi/src/main/resources/jsapi-1.0.jar"/>
+	<classpathentry kind="lib" path="resources/jsapi.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

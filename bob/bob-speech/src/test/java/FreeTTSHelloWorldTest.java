@@ -37,7 +37,7 @@ public class FreeTTSHelloWorldTest extends TestCase {
 
 		MbrolaVoiceDirectory toto;
 		System.getProperties().put("freetts.voices",
-				"de.dfki.lt.freetts.en.us.MbrolaVoice.class");
+				"org.jarvis.main.speech.MbrolaVoiceDirectory.class");
 
 		listAllVoices();
 

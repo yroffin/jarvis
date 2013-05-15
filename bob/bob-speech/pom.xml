@@ -4,6 +4,7 @@
     <groupId>org.yroffin.com.bob</groupId>
     <artifactId>bob</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <relativePath>..</relativePath>
   </parent>
   <artifactId>bob-speech</artifactId>
   <dependencies>
