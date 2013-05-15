@@ -8,12 +8,12 @@
 
 	<dependencies>
 		<!-- junit -->
-	  	<dependency>
-	  		<groupId>junit</groupId>
-	  		<artifactId>junit</artifactId>
-	  		<version>4.11</version>
-	  		<scope>test</scope>
-	  	</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
 
 		<!-- logback feature -->
 		<dependency>
@@ -39,13 +39,23 @@
 		</dependency>
 	</dependencies>
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
 	<modules>
-		<module>bob-speech</module>
-		<module>bob-freetts</module>
-		<module>bob-aiml</module>
-		<module>bob-sphinx4</module>
-		<module>bob-sphinx4-tools</module>
-		<module>bob-sphinx4-jsapi</module>
-		<module>bob-sphinx4-jsapi2</module>
+		<module>jarvis-aiml</module>
+		<module>jarvis-freetts</module>
+		<module>jarvis-core</module>
 	</modules>
 </project>
