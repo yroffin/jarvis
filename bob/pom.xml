@@ -43,5 +43,9 @@
 		<module>bob-speech</module>
 		<module>bob-freetts</module>
 		<module>bob-aiml</module>
+		<module>bob-sphinx4</module>
+		<module>bob-sphinx4-tools</module>
+		<module>bob-sphinx4-jsapi</module>
+		<module>bob-sphinx4-jsapi2</module>
 	</modules>
 </project>
