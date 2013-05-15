@@ -68,4 +68,36 @@ public class AimlKnockTest {
 		answer = engine.ask("Orange you glad I didn’t say banana.");
 		assertEquals("Ha ha very funny, Nancy.", answer.get(0));
 	}
+
+	/**
+	 * Alice BOT
+	 * 
+	 * @throws AimlParsingError
+	 */
+	@Test
+	public void testSimpleKnock1() throws AimlParsingError {
+		IAimlCoreEngine engine = instance("src/test/resources/core/knock/input.aiml");
+		List<String> answer = null;
+
+		engine.set("name", "Nancy");
+		answer = engine.ask("Knock knock.");
+		assertEquals("Who is there?", answer.get(0));
+		answer = engine.ask("Banana. Knock knock.");
+		assertEquals("Banana who?", answer.get(0));
+		assertEquals("Who is there?", answer.get(1));
+		answer = engine.ask("Banana.");
+		assertEquals("Banana who?", answer.get(0));
+		answer = engine.ask("Knock knock.");
+		assertEquals("Who is there?", answer.get(0));
+		answer = engine.ask("Orange.");
+		assertEquals("Orange who?", answer.get(0));
+		answer = engine.ask("Orange you glad I didn’t say banana.");
+
+		answer = engine.ask("What i said at first ?");
+		assertEquals("Your previous input was Knock knock.", answer.get(0));
+		answer = engine.ask("What i said at second ?");
+		assertEquals("Your previous input was Banana.", answer.get(0));
+		answer = engine.ask("What i said at second, second sentence ?");
+		assertEquals("Your previous input was Knock knock.", answer.get(0));
+	}
 }

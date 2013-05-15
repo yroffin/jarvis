@@ -22,6 +22,15 @@ public interface ITransformedItem {
 
 	public void add(String upperCase);
 
+	/**
+	 * add original raw value
+	 * 
+	 * @param value
+	 */
+	public void addRaw(String value);
+
+	public String getRaw();
+
 	public int size();
 
 	public String get(int index);

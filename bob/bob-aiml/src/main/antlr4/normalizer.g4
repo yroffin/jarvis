@@ -27,6 +27,9 @@ grammar normalizer;
     public void onNewUnderscore(String value) {
         System.out.println("onNewUnderscore - ["+value+"]");
     }
+    public void onNewMisc(String value) {
+        System.out.println("onNewMisc - ["+value+"]");
+    }
 }
 
 @lexer::members {
@@ -46,7 +49,7 @@ word
     | filename
     | url
     | abrev
-    | misc;
+    | misc {onNewMisc($misc.text);};
 
 simpleword : SIMPLEWORD {onNewWord($SIMPLEWORD.text);};
 filename : FILENAME {onNewFilename($FILENAME.text);};

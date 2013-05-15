@@ -84,6 +84,7 @@ public class AimlTransformParserImpl extends normalizerParser implements
 			logger.debug("onNewStar [" + value + "]");
 		}
 		last.add(CONST_STAR);
+		last.addRaw(CONST_STAR);
 	}
 
 	@Override
@@ -92,6 +93,7 @@ public class AimlTransformParserImpl extends normalizerParser implements
 			logger.debug("onNewUnderscore [" + value + "]");
 		}
 		last.add(CONST_UNDERSCORE);
+		last.addRaw(CONST_UNDERSCORE);
 	}
 
 	@Override
@@ -100,6 +102,7 @@ public class AimlTransformParserImpl extends normalizerParser implements
 			logger.debug("onNewWord [" + value + "]");
 		}
 		last.add(value.toUpperCase());
+		last.addRaw(value);
 	}
 
 	@Override
@@ -108,6 +111,7 @@ public class AimlTransformParserImpl extends normalizerParser implements
 			logger.debug("onNewFilename [" + value + "]");
 		}
 		last.add(value.toUpperCase().replace(".", " DOT "));
+		last.addRaw(value);
 	}
 
 	@Override
@@ -116,6 +120,7 @@ public class AimlTransformParserImpl extends normalizerParser implements
 			logger.debug("onNewUrl [" + value + "]");
 		}
 		last.add(value.toUpperCase().replace("://", " ").replace(".", " DOT "));
+		last.addRaw(value);
 	}
 
 	@Override
@@ -125,6 +130,15 @@ public class AimlTransformParserImpl extends normalizerParser implements
 		}
 		last.add(value.toUpperCase().replace("THAT'S", "THAT IS")
 				.replace("DON'T", "DO NOT"));
+		last.addRaw(value);
+	}
+
+	@Override
+	public void onNewMisc(String value) {
+		if (logger.isDebugEnabled() && parsingDebug) {
+			logger.debug("onNewMisc [" + value + "]");
+		}
+		last.addRaw(value);
 	}
 
 	private ITransformedItem		last;

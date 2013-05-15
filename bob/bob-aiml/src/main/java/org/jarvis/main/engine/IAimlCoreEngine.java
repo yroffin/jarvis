@@ -18,6 +18,7 @@ package org.jarvis.main.engine;
 
 import java.io.File;
 import java.util.List;
+import java.util.Stack;
 
 import org.jarvis.main.exception.AimlParsingError;
 
@@ -80,4 +81,11 @@ public interface IAimlCoreEngine {
 	 * @throws AimlParsingError
 	 */
 	public List<String> ask(String sentence) throws AimlParsingError;
+
+	/**
+	 * all user inputs
+	 * 
+	 * @return
+	 */
+	public Stack<List<String>> getUserInputs();
 }

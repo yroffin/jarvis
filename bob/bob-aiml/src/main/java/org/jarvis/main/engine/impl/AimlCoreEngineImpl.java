@@ -48,6 +48,12 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 	private final IAimlTransform		transformer	= new AimlTranformImpl();
 	private final List<File>			resources	= new ArrayList<File>();
 	private final Stack<IAimlCategory>	stack		= new Stack<IAimlCategory>();
+	private final Stack<List<String>>	userInputs	= new Stack<List<String>>();
+
+	@Override
+	public Stack<List<String>> getUserInputs() {
+		return userInputs;
+	}
 
 	private final Map<String, Object>	bot			= new HashMap<String, Object>();
 	private final Map<String, Object>	properties	= new HashMap<String, Object>();
@@ -124,25 +130,33 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 
 	@Override
 	public List<String> ask(String sentence) throws AimlParsingError {
-		List<String> result = new ArrayList<String>();
+		List<String> inputs = new ArrayList<String>();
+		List<String> answers = new ArrayList<String>();
 		/**
 		 * transform user sentence into common tranform state
 		 */
 		List<ITransformedItem> tx = transformer.transform(sentence);
 		for (ITransformedItem s : tx) {
-			result.add(ask(s));
+			answers.add(ask(s));
+			inputs.add(s.getRaw());
 		}
+		/**
+		 * log conversation
+		 */
+		getUserInputs().push(inputs);
 		/**
 		 * that become the last computed item
 		 */
 		if (logger.isDebugEnabled()) {
 			logger.debug("That: " + that);
 			logger.debug("That (tx): " + thatTransformed);
-			logger.debug("Answer: " + result);
+			logger.debug("Answer: " + answers);
+			logger.debug("Inputs: " + getUserInputs());
 		}
-		that = result.get(result.size() - 1);
-		thatTransformed = transformer.transform(that).get(result.size() - 1);
-		return result;
+		that = answers.get(answers.size() - 1);
+		List<ITransformedItem> txs = transformer.transform(that);
+		thatTransformed = txs.get(txs.size() - 1);
+		return answers;
 	}
 
 	private String ask(ITransformedItem sentence) throws AimlParsingError {

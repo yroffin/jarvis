@@ -31,6 +31,7 @@ public class TransformedItemImpl implements ITransformedItem {
 	private final Logger		logger		= LoggerFactory
 													.getLogger(TransformedItemImpl.class);
 	private final List<String>	elements	= new ArrayList<String>();
+	private final List<String>	raws		= new ArrayList<String>();
 	private static boolean		debugScore	= false;
 
 	public TransformedItemImpl() {
@@ -51,6 +52,21 @@ public class TransformedItemImpl implements ITransformedItem {
 	@Override
 	public int size() {
 		return elements.size();
+	}
+
+	@Override
+	public void addRaw(String value) {
+		raws.add(value);
+	}
+
+	@Override
+	public String getRaw() {
+		StringBuilder sb = new StringBuilder();
+		for (String value : raws) {
+			if (sb.length() > 1) sb.append(" ");
+			sb.append(value);
+		}
+		return sb.toString();
 	}
 
 	@Override

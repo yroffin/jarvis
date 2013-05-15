@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<aiml version="1.0">
+<category>
+<pattern>KNOCK KNOCK</pattern>
+<template>Who is there?</template>
+</category>
+
+<category>
+<pattern>*</pattern>
+<that>WHO IS THERE</that>
+<template><person/> who?</template>
+</category>
+
+<category>
+<pattern>*</pattern>
+<that>* WHO</that>
+<template>Ha ha very funny, <get name="name"/>.</template>
+</category>
+
+<category>
+<pattern>WHAT I SAID AT FIRST</pattern>
+<template>Your previous input was <input/>.</template>
+</category><
+
+<category>
+<pattern>WHAT I SAID AT SECOND</pattern>
+<template>Your previous input was <input index = "2,1" />.</template>
+</category>
+
+<category>
+<pattern>WHAT I SAID AT SECOND, SECOND SENTENCE</pattern>
+<template>Your previous input was <input index = "2,2" />.</template>
+</category>
+
+</aiml>
