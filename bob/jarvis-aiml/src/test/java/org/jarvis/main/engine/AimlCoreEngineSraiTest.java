@@ -64,7 +64,7 @@ public class AimlCoreEngineSraiTest {
 	 */
 	@Test
 	public void testSimpleSraiReduction() throws AimlParsingError {
-		IAimlCoreEngine engine = instance("src/test/resources/core/srai-reduction.xml");
+		IAimlCoreEngine engine = instance("src/test/resources/core/srai/srai-reduction.xml");
 		List<IAimlHistory> answer = null;
 
 		answer = engine.ask("who is bruno ?");
@@ -90,12 +90,12 @@ public class AimlCoreEngineSraiTest {
 	 */
 	@Test
 	public void testSimpleSraiDivideAndConquer() throws AimlParsingError {
-		IAimlCoreEngine engine = instance("src/test/resources/core/srai-divide-conquer.xml");
+		IAimlCoreEngine engine = instance("src/test/resources/core/srai/srai-divide-conquer.xml");
 		List<IAimlHistory> answer = null;
 
 		answer = engine.ask("yes mister");
 		assertEquals(
-				"Divide and Conquer: Catch All : yes and Catch All : mister",
+				"Divide and Conquer: Catch All: yes and Catch All: mister",
 				answer.get(0).getAnswer());
 	}
 
@@ -109,7 +109,7 @@ public class AimlCoreEngineSraiTest {
 	 */
 	@Test
 	public void testSimpleSraiSynonym() throws AimlParsingError {
-		IAimlCoreEngine engine = instance("src/test/resources/core/srai-synonym.xml");
+		IAimlCoreEngine engine = instance("src/test/resources/core/srai/srai-synonym.xml");
 		List<IAimlHistory> answer = null;
 
 		answer = engine.ask("hola");
@@ -126,7 +126,7 @@ public class AimlCoreEngineSraiTest {
 	 */
 	@Test
 	public void testSimpleSraiGrammar() throws AimlParsingError {
-		IAimlCoreEngine engine = instance("src/test/resources/core/srai-grammar.xml");
+		IAimlCoreEngine engine = instance("src/test/resources/core/srai/srai-grammar.xml");
 		List<IAimlHistory> answer = null;
 
 		answer = engine.ask("your a sheep");
@@ -147,7 +147,7 @@ public class AimlCoreEngineSraiTest {
 	 */
 	@Test
 	public void testSimpleSraiKeyword() throws AimlParsingError {
-		IAimlCoreEngine engine = instance("src/test/resources/core/srai-keyword.xml");
+		IAimlCoreEngine engine = instance("src/test/resources/core/srai/srai-keyword.xml");
 		List<IAimlHistory> answer = null;
 
 		answer = engine.ask("something about my mother");
@@ -172,7 +172,7 @@ public class AimlCoreEngineSraiTest {
 	 */
 	@Test
 	public void testSimpleSraiCond() throws AimlParsingError {
-		IAimlCoreEngine engine = instance("src/test/resources/core/srai-conditional.xml");
+		IAimlCoreEngine engine = instance("src/test/resources/core/srai/srai-conditional.xml");
 		List<IAimlHistory> answer = null;
 
 		answer = engine.ask("who is he");

@@ -20,7 +20,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.antlr.v4.runtime.BailErrorStrategy;
+import org.antlr.v4.runtime.DiagnosticErrorListener;
+import org.antlr.v4.runtime.Parser;
 import org.antlr.v4.runtime.RecognitionException;
+import org.antlr.v4.runtime.Recognizer;
 import org.jarvis.main.antlr4.normalizerParser;
 import org.jarvis.main.engine.transform.IAimlTransformParser;
 import org.jarvis.main.exception.AimlParsingError;
@@ -31,12 +35,11 @@ import org.slf4j.LoggerFactory;
 
 public class AimlTransformParserImpl extends normalizerParser implements
 		IAimlTransformParser {
-	Logger								logger				= LoggerFactory
-																	.getLogger(AimlTransformParserImpl.class);
+	Logger logger = LoggerFactory.getLogger(AimlTransformParserImpl.class);
 
-	private static final String			CONST_UNDERSCORE	= "_";
-	private static final String			CONST_STAR			= "*";
-	protected AimlTransformLexerImpl	lexer				= null;
+	private static final String CONST_UNDERSCORE = "_";
+	private static final String CONST_STAR = "*";
+	protected AimlTransformLexerImpl lexer = null;
 
 	/**
 	 * AIML model
@@ -67,7 +70,7 @@ public class AimlTransformParserImpl extends normalizerParser implements
 		lexer = (AimlTransformLexerImpl) _input.getTokenSource();
 	}
 
-	private static boolean	parsingDebug	= false;
+	private static boolean parsingDebug = false;
 
 	@Override
 	public void onNewSentence() {
@@ -141,12 +144,48 @@ public class AimlTransformParserImpl extends normalizerParser implements
 		last.addRaw(value);
 	}
 
-	private ITransformedItem		last;
-	private List<ITransformedItem>	tx	= null;
+	private ITransformedItem last;
+	private List<ITransformedItem> tx = null;
+
+	private class DiagnosticErrorListenerImpl extends DiagnosticErrorListener {
+
+		@Override
+		public void syntaxError(Recognizer<?, ?> recognizer,
+				Object offendingSymbol, int line, int charPositionInLine,
+				String msg, RecognitionException e) {
+			super.syntaxError(recognizer, offendingSymbol, line,
+					charPositionInLine, msg, e);
+			logger.error("line " + line + " char position "
+					+ charPositionInLine + " : " + msg);
+			iLexerError++;
+		}
+
+	}
+
+	private class DefaultErrorStrategyImpl extends BailErrorStrategy {
+
+		@Override
+		public void reportError(Parser recognizer, RecognitionException e)
+				throws RecognitionException {
+			super.reportError(recognizer, e);
+			logger.error(e.getMessage());
+			iParserError++;
+		}
+
+	}
+
+	int iLexerError = 0;
+	int iParserError = 0;
 
 	@Override
 	public List<ITransformedItem> parse() throws AimlParsingError {
 		try {
+			iLexerError = 0;
+			iParserError = 0;
+
+			lexer.addErrorListener(new DiagnosticErrorListenerImpl());
+			setErrorHandler(new DefaultErrorStrategyImpl());
+
 			tx = new ArrayList<ITransformedItem>();
 			if (_input.getText().length() > 0) {
 				document();
@@ -156,6 +195,9 @@ public class AimlTransformParserImpl extends normalizerParser implements
 				 */
 				onNewSentence();
 			}
+
+			if (iLexerError > 0 || iParserError > 0) { throw new AimlParsingError(
+					"Errors, during parsing"); }
 			return tx;
 		} catch (RecognitionException e) {
 			throw new AimlParsingError(e);

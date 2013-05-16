@@ -4,16 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jarvis.main.engine.IAimlCoreEngine;
+import org.jarvis.main.engine.impl.transform.AimlTranformImpl;
+import org.jarvis.main.engine.transform.IAimlTransform;
 import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.model.parser.IAimlElement;
 import org.jarvis.main.model.parser.IAimlProperty;
 import org.jarvis.main.model.parser.history.IAimlHistory;
+import org.jarvis.main.model.transform.ITransformedItem;
 
 public abstract class AimlElementContainer implements IAimlElement {
 	protected List<IAimlProperty> props = new ArrayList<IAimlProperty>();
 	protected List<IAimlElement> elements = new ArrayList<IAimlElement>();
+	private final IAimlTransform transformer = new AimlTranformImpl();
 
 	protected String tag;
+	private List<ITransformedItem> cache = null;
 
 	public AimlElementContainer(String tag) {
 		this.tag = tag;
@@ -26,7 +31,14 @@ public abstract class AimlElementContainer implements IAimlElement {
 
 	@Override
 	public void add(String value) {
-		elements.add(new AimlData(value));
+		elements.add(new AimlDataImpl(value, true));
+	}
+
+	@Override
+	public List<ITransformedItem> getTransforms() throws AimlParsingError {
+		if (cache != null) return cache;
+		cache = transformer.transform(elements);
+		return cache;
 	}
 
 	@Override

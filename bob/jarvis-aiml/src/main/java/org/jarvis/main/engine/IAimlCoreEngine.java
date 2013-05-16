@@ -21,12 +21,20 @@ import java.util.List;
 import java.util.Stack;
 
 import org.jarvis.main.exception.AimlParsingError;
+import org.jarvis.main.model.parser.IAimlCategory;
 import org.jarvis.main.model.parser.history.IAimlHistory;
 
 /**
  * AIML engine
  */
 public interface IAimlCoreEngine {
+	/**
+	 * the categories currently loaded
+	 * 
+	 * @return
+	 */
+	public List<IAimlCategory> getCategories();
+
 	/**
 	 * bot properties
 	 * 

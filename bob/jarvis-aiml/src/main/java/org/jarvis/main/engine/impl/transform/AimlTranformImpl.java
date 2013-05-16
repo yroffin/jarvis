@@ -21,7 +21,7 @@ import java.util.List;
 import org.jarvis.main.engine.transform.IAimlTransform;
 import org.jarvis.main.engine.transform.IAimlTransformParser;
 import org.jarvis.main.exception.AimlParsingError;
-import org.jarvis.main.model.impl.parser.AimlData;
+import org.jarvis.main.model.impl.parser.AimlDataImpl;
 import org.jarvis.main.model.parser.IAimlElement;
 import org.jarvis.main.model.transform.ITransformedItem;
 import org.slf4j.Logger;
@@ -38,7 +38,7 @@ public class AimlTranformImpl implements IAimlTransform {
 		StringBuilder transform = new StringBuilder();
 		for (IAimlElement element : elements) {
 			transform.setLength(0);
-			if (element.getClass() == AimlData.class) {
+			if (element.getClass() == AimlDataImpl.class) {
 				element.toAiml(transform);
 				render.append(transform.toString());
 			}

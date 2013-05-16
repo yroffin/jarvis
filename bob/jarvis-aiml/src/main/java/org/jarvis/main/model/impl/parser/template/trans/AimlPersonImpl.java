@@ -1,4 +1,4 @@
-package org.jarvis.main.model.impl.parser.template.format;
+package org.jarvis.main.model.impl.parser.template.trans;
 
 import java.util.List;
 
@@ -6,17 +6,16 @@ import org.jarvis.main.engine.IAimlCoreEngine;
 import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.model.impl.parser.AimlElementContainer;
 import org.jarvis.main.model.parser.history.IAimlHistory;
-import org.jarvis.main.model.parser.template.format.IAimlUppercase;
+import org.jarvis.main.model.parser.template.trans.IAimlPerson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class AimlUppercaseImpl extends AimlElementContainer implements
-		IAimlUppercase {
+public class AimlPersonImpl extends AimlElementContainer implements IAimlPerson {
 
-	protected Logger logger = LoggerFactory.getLogger(AimlUppercaseImpl.class);
+	protected Logger logger = LoggerFactory.getLogger(AimlPersonImpl.class);
 
-	public AimlUppercaseImpl() {
-		super("uppercase");
+	public AimlPersonImpl() {
+		super("person");
 	}
 
 	@Override
@@ -31,12 +30,14 @@ public class AimlUppercaseImpl extends AimlElementContainer implements
 				logger.warn(e.getMessage());
 			}
 			if (sb != null) {
-				render.append(sb.substring(0).toUpperCase());
+				render.append(sb.substring(0, 1).toUpperCase()
+						+ sb.substring(1).toLowerCase());
 			}
 		} else {
 			if (star.size() > 0) {
 				for (String value : star) {
-					render.append(value.substring(0).toUpperCase());
+					render.append(value.substring(0, 1).toUpperCase()
+							+ value.substring(1).toLowerCase());
 				}
 			}
 		}
@@ -45,6 +46,6 @@ public class AimlUppercaseImpl extends AimlElementContainer implements
 
 	@Override
 	public String toString() {
-		return "\n\t\t\t\tAimlUppercase [elements=" + elements + "]";
+		return "\n\t\t\t\tAimlRandom [elements=" + elements + "]";
 	}
 }

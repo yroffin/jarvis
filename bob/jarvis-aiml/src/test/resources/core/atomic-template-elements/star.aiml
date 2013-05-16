@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<aiml version="1.0">
+
+<category>
+<pattern>Repeat *</pattern>
+<template>you, want me to repeat <star /> ?</template>
+</category>
+
+<category>
+<pattern>Yes repeat this now *</pattern>
+<that>you, want me to repeat *</that>
+<template>Ok for "<that />" ?</template>
+</category>
+
+</aiml>

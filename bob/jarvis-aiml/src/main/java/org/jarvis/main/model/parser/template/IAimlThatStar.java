@@ -36,4 +36,8 @@ import org.jarvis.main.model.parser.IAimlElement;
  * <aiml:thatstar index = single-integer-index />
  */
 public interface IAimlThatStar extends IAimlElement {
+
+	int getIndex();
+
+	void setIndex(int index);
 }

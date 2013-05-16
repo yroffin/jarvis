@@ -21,8 +21,9 @@ import org.jarvis.main.model.parser.category.IAimlPattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class AimlPattern extends AimlElementContainer implements IAimlPattern {
-	protected Logger logger = LoggerFactory.getLogger(AimlPattern.class);
+public class AimlPatternImpl extends AimlElementContainer implements
+		IAimlPattern {
+	protected Logger logger = LoggerFactory.getLogger(AimlPatternImpl.class);
 
 	/**
 	 * A pattern is an element whose content is a mixed pattern expression.
@@ -30,7 +31,7 @@ public class AimlPattern extends AimlElementContainer implements IAimlPattern {
 	 * be the first child element of the category. A pattern does not have any
 	 * attributes.
 	 */
-	public AimlPattern() {
+	public AimlPatternImpl() {
 		super("pattern");
 	}
 

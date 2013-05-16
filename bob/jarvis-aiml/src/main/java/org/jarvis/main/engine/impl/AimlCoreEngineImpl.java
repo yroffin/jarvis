@@ -234,4 +234,9 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 			return "no anwser";
 		}
 	}
+
+	@Override
+	public List<IAimlCategory> getCategories() {
+		return aiml.getCategories();
+	}
 }

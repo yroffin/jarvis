@@ -28,6 +28,10 @@ public class AimlParsingError extends Exception {
 	 */
 	private static final long serialVersionUID = 6352462504214710201L;
 
+	public AimlParsingError(String e) {
+		super(e);
+	}
+
 	public AimlParsingError(IOException e) {
 		super(e);
 	}

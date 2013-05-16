@@ -57,7 +57,7 @@ url : URL {onNewUrl($URL.text);};
 star : STAR {onNewStar($STAR.text);};
 underscore : UNDERSCORE {onNewUnderscore($UNDERSCORE.text);};
 abrev : ABREV {onNewAbrev($ABREV.text);};
-misc : COMMA | SEMICOLON | MINUS | LPARENT | RPARENT | COTE | BCOTE;
+misc : COMMA | MINUS | LPARENT | RPARENT | COTE | BCOTE | DCOTE | EQUAL;
 
 DOT: '.';
 QUESTIONMARK: '?';
@@ -67,15 +67,17 @@ SEMICOLON: ':';
 MINUS: '-';
 LPARENT: '(';
 RPARENT: ')';
+DCOTE: '"';
 COTE: '\'';
 BCOTE: '’';
+EQUAL: '=';
 STAR: '*';
 UNDERSCORE: '_';
 
 COMMENT : '<!--' .*? '-->' -> skip ;
 
 SIMPLEWORD
-    : LETTERS+
+    : (LETTERS|DIGIT|SEMICOLON)+
     ;
 
 FILENAME

@@ -6,7 +6,7 @@
 	</category>
 	<category>
 		<pattern>*</pattern>
-		<template>Catch All : <star /></template>
+		<template>Catch All: <star /></template>
 	</category>
 	<category>
 		<pattern>YES</pattern>

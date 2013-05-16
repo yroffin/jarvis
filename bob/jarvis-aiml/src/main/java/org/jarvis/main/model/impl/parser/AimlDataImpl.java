@@ -5,19 +5,37 @@ import java.util.List;
 import org.jarvis.main.engine.IAimlCoreEngine;
 import org.jarvis.main.model.parser.history.IAimlHistory;
 
-public class AimlData extends AimlElementContainer {
+public class AimlDataImpl extends AimlElementContainer {
 
 	private static final CharSequence STAR = "*";
 	private final String value;
+
+	private boolean starTransformation = true;
 
 	/**
 	 * default constructor
 	 * 
 	 * @param value
 	 */
-	public AimlData(String value) {
+	public AimlDataImpl(String value) {
 		super("PCDATA");
 		this.value = value;
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	/**
+	 * alternate constructor
+	 * 
+	 * @param value
+	 * @param starTransformation
+	 */
+	public AimlDataImpl(String value, boolean starTransformation) {
+		super("PCDATA");
+		this.value = value;
+		this.starTransformation = starTransformation;
 	}
 
 	@Override
@@ -29,7 +47,7 @@ public class AimlData extends AimlElementContainer {
 	@Override
 	public StringBuilder answer(IAimlCoreEngine engine, List<String> star,
 			IAimlHistory that, StringBuilder render) {
-		if (star.size() > 0) {
+		if (star.size() > 0 && starTransformation) {
 			/**
 			 * * is only replace by first star element use <star /> with index
 			 * for alternate star element

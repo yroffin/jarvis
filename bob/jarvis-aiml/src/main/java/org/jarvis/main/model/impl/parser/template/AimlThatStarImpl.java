@@ -15,30 +15,65 @@
  */
 package org.jarvis.main.model.impl.parser.template;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.jarvis.main.engine.IAimlCoreEngine;
+import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.model.impl.parser.AimlElementContainer;
 import org.jarvis.main.model.parser.IAimlProperty;
+import org.jarvis.main.model.parser.category.IAimlThat;
+import org.jarvis.main.model.parser.history.IAimlHistory;
 import org.jarvis.main.model.parser.template.IAimlThatStar;
+import org.jarvis.main.model.transform.ITransformedItem;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AimlThatStarImpl extends AimlElementContainer implements
 		IAimlThatStar {
 
-	public AimlThatStarImpl() {
+	protected Logger logger = LoggerFactory.getLogger(AimlThatStarImpl.class);
+	private final IAimlThat thatElement;
+
+	public AimlThatStarImpl(IAimlThat that) {
 		super("thatstar");
+		this.thatElement = that;
 	}
 
-	private String	index;
+	private int index;
 
-	public String getIndex() {
+	@Override
+	public int getIndex() {
 		return index;
 	}
 
-	public void setIndex(String index) {
+	@Override
+	public void setIndex(int index) {
 		this.index = index;
 	}
 
 	@Override
 	public void add(IAimlProperty value) {
-		if (value.getKey().compareTo("index") == 0) index = accept(value);
+		if (value.getKey().compareTo("index") == 0) index = Integer
+				.parseInt(accept(value));
+	}
+
+	@Override
+	public StringBuilder answer(IAimlCoreEngine engine, List<String> star,
+			IAimlHistory that, StringBuilder render) {
+		List<ITransformedItem> list = null;
+		try {
+			list = thatElement.getTransforms();
+		} catch (AimlParsingError e) {
+			e.printStackTrace();
+			logger.warn(e.getMessage());
+		}
+		List<String> local = that.getTransformedAnswer().star(list.get(0),
+				new ArrayList<String>());
+		if (local.size() > 0 && index < local.size()) {
+			render.append(local.get(index));
+		}
+		return render;
 	}
 
 	@Override

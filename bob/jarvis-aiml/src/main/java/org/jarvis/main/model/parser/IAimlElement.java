@@ -5,6 +5,7 @@ import java.util.List;
 import org.jarvis.main.engine.IAimlCoreEngine;
 import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.model.parser.history.IAimlHistory;
+import org.jarvis.main.model.transform.ITransformedItem;
 
 public interface IAimlElement extends IAimlRender {
 	public void add(String value);
@@ -16,6 +17,14 @@ public interface IAimlElement extends IAimlRender {
 	public String get(String key);
 
 	public List<IAimlElement> getElements();
+
+	/**
+	 * get untransformed PCDATA element
+	 * 
+	 * @return
+	 * @throws AimlParsingError
+	 */
+	public List<ITransformedItem> getTransforms() throws AimlParsingError;
 
 	/**
 	 * compute an answer

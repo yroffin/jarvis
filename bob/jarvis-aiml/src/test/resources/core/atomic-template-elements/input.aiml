@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<aiml version="1.0">
+	<topic name = "a simple topic">
+		<category>
+			<pattern>Repeat *</pattern>
+			<template>Ok x a b c</template>
+		</category>
+		<category>
+			<pattern>What i've said ?</pattern>
+			<that>Ok x *</that>
+			<template>You just said <input />. That was <thatstar />.</template>
+		</category>
+	</aiml>
+</topic>

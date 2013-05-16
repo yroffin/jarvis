@@ -7,7 +7,7 @@ grammar aiml;
 
 @parser::members {
     boolean opened = false;
-    public enum router {AIML,BR,STAR,A,BOT,CONDITION,PERSON2,ID,VERSION,TEMPLATE,TOPIC,CATEGORY,PATTERN,PERSON,GET,INPUT,SET,SR,SRAI,THAT,RANDOM,LI,FORMAL,THINK,UNKNOWN};
+    public enum router {UPPER,LOWER,SIZE,DATE,AIML,BR,STAR,A,BOT,CONDITION,PERSON2,ID,VERSION,TEMPLATE,TOPIC,CATEGORY,PATTERN,PERSON,GET,INPUT,SET,SR,SRAI,THAT,RANDOM,LI,FORMAL,THINK,THATSTAR,TOPICSTAR,UNKNOWN};
     public router decode(String value) {
         if("aiml".compareTo(value)==0) return router.AIML;
         if("template".compareTo(value)==0) return router.TEMPLATE;
@@ -33,6 +33,12 @@ grammar aiml;
         if("person2".compareTo(value)==0) return router.PERSON2;
         if("id".compareTo(value)==0) return router.ID;
         if("version".compareTo(value)==0) return router.VERSION;
+        if("thatstar".compareTo(value)==0) return router.THATSTAR;
+        if("topicstar".compareTo(value)==0) return router.TOPICSTAR;
+        if("date".compareTo(value)==0) return router.DATE;
+        if("size".compareTo(value)==0) return router.SIZE;
+        if("uppercase".compareTo(value)==0) return router.UPPER;
+        if("lowercase".compareTo(value)==0) return router.LOWER;
         return router.UNKNOWN;
     }
     public void onOpenTag(String value) {

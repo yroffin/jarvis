@@ -23,7 +23,11 @@ import java.util.Scanner;
 import java.util.Stack;
 
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.DefaultErrorStrategy;
+import org.antlr.v4.runtime.DiagnosticErrorListener;
+import org.antlr.v4.runtime.Parser;
 import org.antlr.v4.runtime.RecognitionException;
+import org.antlr.v4.runtime.Recognizer;
 import org.jarvis.main.antlr4.aimlParser;
 import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.model.impl.parser.AimlCategory;
@@ -36,7 +40,7 @@ import org.jarvis.main.model.impl.parser.category.AimlBotImpl;
 import org.jarvis.main.model.impl.parser.category.AimlBrImpl;
 import org.jarvis.main.model.impl.parser.category.AimlGetImpl;
 import org.jarvis.main.model.impl.parser.category.AimlLiImpl;
-import org.jarvis.main.model.impl.parser.category.AimlPattern;
+import org.jarvis.main.model.impl.parser.category.AimlPatternImpl;
 import org.jarvis.main.model.impl.parser.category.AimlSetImpl;
 import org.jarvis.main.model.impl.parser.category.AimlSraiImpl;
 import org.jarvis.main.model.impl.parser.category.AimlTemplateImpl;
@@ -44,16 +48,21 @@ import org.jarvis.main.model.impl.parser.category.AimlThatCategoryImpl;
 import org.jarvis.main.model.impl.parser.category.AimlThinkImpl;
 import org.jarvis.main.model.impl.parser.pattern.AimlThatPatternImpl;
 import org.jarvis.main.model.impl.parser.template.AimlInputImpl;
-import org.jarvis.main.model.impl.parser.template.AimlPerson2Impl;
-import org.jarvis.main.model.impl.parser.template.AimlPersonImpl;
 import org.jarvis.main.model.impl.parser.template.AimlRandomImpl;
-import org.jarvis.main.model.impl.parser.template.AimlSrImpl;
 import org.jarvis.main.model.impl.parser.template.AimlStarImpl;
+import org.jarvis.main.model.impl.parser.template.AimlThatStarImpl;
 import org.jarvis.main.model.impl.parser.template.AimlThatTemplateImpl;
+import org.jarvis.main.model.impl.parser.template.AimlTopicStarImpl;
 import org.jarvis.main.model.impl.parser.template.condition.AimlBlockConditionImpl;
 import org.jarvis.main.model.impl.parser.template.format.AimlFormalImpl;
+import org.jarvis.main.model.impl.parser.template.format.AimlLowercaseImpl;
+import org.jarvis.main.model.impl.parser.template.format.AimlUppercaseImpl;
+import org.jarvis.main.model.impl.parser.template.system.AimlDateImpl;
 import org.jarvis.main.model.impl.parser.template.system.AimlIdImpl;
+import org.jarvis.main.model.impl.parser.template.system.AimlSizeImpl;
 import org.jarvis.main.model.impl.parser.template.system.AimlVersionImpl;
+import org.jarvis.main.model.impl.parser.template.trans.AimlPerson2Impl;
+import org.jarvis.main.model.impl.parser.template.trans.AimlPersonImpl;
 import org.jarvis.main.model.parser.IAimlCategory;
 import org.jarvis.main.model.parser.IAimlElement;
 import org.jarvis.main.model.parser.IAimlRepository;
@@ -71,40 +80,44 @@ import org.jarvis.main.model.parser.category.IAimlTemplate;
 import org.jarvis.main.model.parser.category.IAimlThat;
 import org.jarvis.main.model.parser.category.IAimlThink;
 import org.jarvis.main.model.parser.template.IAimlInput;
-import org.jarvis.main.model.parser.template.IAimlPerson;
-import org.jarvis.main.model.parser.template.IAimlPerson2;
 import org.jarvis.main.model.parser.template.IAimlRandom;
-import org.jarvis.main.model.parser.template.IAimlSr;
 import org.jarvis.main.model.parser.template.IAimlStar;
+import org.jarvis.main.model.parser.template.IAimlThatStar;
+import org.jarvis.main.model.parser.template.IAimlTopicStar;
 import org.jarvis.main.model.parser.template.condition.IAimlCondition;
 import org.jarvis.main.model.parser.template.format.IAimlFormal;
+import org.jarvis.main.model.parser.template.format.IAimlLowercase;
+import org.jarvis.main.model.parser.template.format.IAimlUppercase;
+import org.jarvis.main.model.parser.template.system.IAimlDate;
 import org.jarvis.main.model.parser.template.system.IAimlId;
+import org.jarvis.main.model.parser.template.system.IAimlSize;
 import org.jarvis.main.model.parser.template.system.IAimlVersion;
+import org.jarvis.main.model.parser.template.trans.IAimlPerson;
+import org.jarvis.main.model.parser.template.trans.IAimlPerson2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class AimlParserImpl extends aimlParser {
-	Logger							logger			= LoggerFactory
-															.getLogger(AimlParserImpl.class);
+	Logger logger = LoggerFactory.getLogger(AimlParserImpl.class);
 
-	protected AimlLexerImpl			lexer			= null;
+	protected AimlLexerImpl lexer = null;
 
 	/**
 	 * AIML model
 	 */
-	private IAimlXml				root			= null;
-	private IAimlRepository			repository		= null;
+	private IAimlXml root = null;
+	private IAimlRepository repository = null;
 
-	private final StackAimlElement	stackElements	= new StackAimlElement();
+	private final StackAimlElement stackElements = new StackAimlElement();
 
-	private static boolean			debugParsing	= false;
+	private static boolean debugParsing = false;
 
 	public IAimlRepository getRepository() {
 		return repository;
 	}
 
 	private class StackAimlStructure {
-		protected Stack<IAimlElement>	stack	= new Stack<IAimlElement>();
+		protected Stack<IAimlElement> stack = new Stack<IAimlElement>();
 
 		protected IAimlXml push(AimlXmlImpl e) {
 			stack.push(e);
@@ -139,7 +152,7 @@ public class AimlParserImpl extends aimlParser {
 			return e;
 		}
 
-		protected IAimlPattern push(AimlPattern e) {
+		protected IAimlPattern push(AimlPatternImpl e) {
 			/**
 			 * pattern is always a category child
 			 */
@@ -182,7 +195,7 @@ public class AimlParserImpl extends aimlParser {
 	}
 
 	private class StackAimlElement extends StackAimlStructure {
-		private final StackAimlStructure	filter	= new StackAimlStructure();
+		private final StackAimlStructure filter = new StackAimlStructure();
 
 		@Override
 		public IAimlElement pop(String tagName) {
@@ -235,9 +248,9 @@ public class AimlParserImpl extends aimlParser {
 		}
 
 		@Override
-		public IAimlPattern push(AimlPattern e) {
+		public IAimlPattern push(AimlPatternImpl e) {
 			super.push(e);
-			filter.push(new AimlPattern());
+			filter.push(new AimlPatternImpl());
 			return e;
 		}
 
@@ -264,8 +277,7 @@ public class AimlParserImpl extends aimlParser {
 			return e;
 		}
 
-		public IAimlSrai pushSrai() {
-			AimlSraiImpl e = new AimlSraiImpl();
+		public IAimlSrai push(AimlSraiImpl e) {
 			stack.lastElement().add(e);
 			stack.push(e);
 			return e;
@@ -279,6 +291,18 @@ public class AimlParserImpl extends aimlParser {
 		}
 
 		public IAimlSet push(AimlSetImpl e) {
+			stack.lastElement().add(e);
+			stack.push(e);
+			return e;
+		}
+
+		public IAimlDate push(AimlDateImpl e) {
+			stack.lastElement().add(e);
+			stack.push(e);
+			return e;
+		}
+
+		public IAimlId push(AimlIdImpl e) {
 			stack.lastElement().add(e);
 			stack.push(e);
 			return e;
@@ -308,19 +332,31 @@ public class AimlParserImpl extends aimlParser {
 			return e;
 		}
 
-		public IAimlId push(AimlIdImpl e) {
-			stack.lastElement().add(e);
-			stack.push(e);
-			return e;
-		}
-
 		public IAimlPerson2 push(AimlPerson2Impl e) {
 			stack.lastElement().add(e);
 			stack.push(e);
 			return e;
 		}
 
+		public IAimlSize push(AimlSizeImpl e) {
+			stack.lastElement().add(e);
+			stack.push(e);
+			return e;
+		}
+
 		public IAimlStar push(AimlStarImpl e) {
+			stack.lastElement().add(e);
+			stack.push(e);
+			return e;
+		}
+
+		public IAimlThatStar push(AimlThatStarImpl e) {
+			stack.lastElement().add(e);
+			stack.push(e);
+			return e;
+		}
+
+		public IAimlTopicStar push(AimlTopicStarImpl e) {
 			stack.lastElement().add(e);
 			stack.push(e);
 			return e;
@@ -368,15 +404,51 @@ public class AimlParserImpl extends aimlParser {
 			return e;
 		}
 
-		public IAimlSr push(AimlSrImpl e) {
+		public StackAimlStructure getFilter() {
+			return filter;
+		}
+
+		public IAimlUppercase push(AimlUppercaseImpl e) {
 			stack.lastElement().add(e);
 			stack.push(e);
 			return e;
 		}
 
-		public StackAimlStructure getFilter() {
-			return filter;
+		public IAimlLowercase push(AimlLowercaseImpl e) {
+			stack.lastElement().add(e);
+			stack.push(e);
+			return e;
 		}
+	}
+
+	private int iParserError = 0;
+	private int iLexerError = 0;
+
+	private class DiagnosticErrorListenerImpl extends DiagnosticErrorListener {
+
+		@Override
+		public void syntaxError(Recognizer<?, ?> recognizer,
+				Object offendingSymbol, int line, int charPositionInLine,
+				String msg, RecognitionException e) {
+			super.syntaxError(recognizer, offendingSymbol, line,
+					charPositionInLine, msg, e);
+			logger.error("line " + line + " char position "
+					+ charPositionInLine + " : " + msg);
+			iLexerError++;
+		}
+
+	}
+
+	private class DefaultErrorStrategyImpl extends DefaultErrorStrategy {
+
+		@Override
+		public void reportError(Parser recognizer, RecognitionException e)
+				throws RecognitionException {
+			super.reportError(recognizer, e);
+			logger.error(e.getMessage());
+			iParserError++;
+		}
+
 	}
 
 	/**
@@ -391,6 +463,9 @@ public class AimlParserImpl extends aimlParser {
 		super(AimlLexerImpl.getTokens(filename.getAbsolutePath(), encoding));
 		lexer = (AimlLexerImpl) _input.getTokenSource();
 		root = stackElements.push(new AimlXmlImpl());
+
+		lexer.addErrorListener(new DiagnosticErrorListenerImpl());
+		setErrorHandler(new DefaultErrorStrategyImpl());
 	}
 
 	/**
@@ -438,10 +513,21 @@ public class AimlParserImpl extends aimlParser {
 			 */
 			AimlParserImpl parser = new AimlParserImpl(filename, encoding);
 			parser.document();
+
+			if (parser.getParserErrors() > 0 || parser.getLexerErrors() > 0) { throw new AimlParsingError(
+					"Errors, while parsing"); }
 			return parser.getRepository();
 		} catch (RecognitionException e) {
 			throw new AimlParsingError(e);
 		}
+	}
+
+	private int getParserErrors() {
+		return iParserError;
+	}
+
+	private int getLexerErrors() {
+		return iLexerError;
 	}
 
 	private IAimlXml getRoot() {
@@ -471,190 +557,238 @@ public class AimlParserImpl extends aimlParser {
 		stackElements.add(value);
 	}
 
+	IAimlCategory category = null;
+
 	@Override
 	public void onOpenTag(String value) {
 		if (logger.isDebugEnabled() && debugParsing) {
 			logger.debug("onOpenTag - " + value);
 		}
 		switch (decode(value)) {
-			case AIML:
-				/**
-				 * An AIML object is represented by an aiml:aiml element in an
-				 * XML document. The aiml:aiml element may contain the following
-				 * types of elements: - aiml:topic - aiml:category
-				 * 
-				 * create default repository on aiml tag detection attributes
-				 * must be handle next
-				 */
-				repository = stackElements.push(new AimlRepository());
-				repository.setRoot(root);
-				break;
-			case TOPIC:
-				/**
-				 * A topic is an optional top-level element that contains
-				 * category elements. A topic element has a required name
-				 * attribute that must contain a simple pattern expression. A
-				 * topic element may contain one or more category elements.
-				 */
-				IAimlTopic topic = stackElements.push(new AimlTopic());
-				repository.addTopic(topic);
-				break;
-			case CATEGORY:
-				/**
-				 * A category is a top-level (or second-level, if contained
-				 * within a topic) element that contains exactly one pattern and
-				 * exactly one template. A category does not have any
-				 * attributes.
-				 */
-				IAimlCategory category = stackElements.push(new AimlCategory());
-				repository.addCategory(category);
-				break;
-			case TEMPLATE:
-				/**
-				 * A template is an element that appears within category
-				 * elements. The template must follow the pattern-side that
-				 * element, if it exists; otherwise, it follows the pattern
-				 * element. A template does not have any attributes.
-				 */
-				stackElements.push(new AimlTemplateImpl());
-				break;
-			case PATTERN:
-				/**
-				 * A pattern is an element whose content is a mixed pattern
-				 * expression. Exactly one pattern must appear in each category.
-				 * The pattern must always be the first child element of the
-				 * category. A pattern does not have any attributes.
-				 */
-				stackElements.push(new AimlPattern());
-				break;
-			case THAT:
-				/**
-				 * The pattern-side that element is a special type of pattern
-				 * element used for context matching. The pattern-side that is
-				 * optional in a category, but if it occurs it must occur no
-				 * more than once, and must immediately follow the pattern and
-				 * immediately precede the template. A pattern-side that element
-				 * contains a simple pattern expression.
-				 * 
-				 * allocate that on category side, or template side according to
-				 * the parsing context
-				 */
-				if (stackElements.getFilter().lastElement().getClass() == AimlTemplateImpl.class) {
-					stackElements.push(new AimlThatTemplateImpl());
-					return;
-				}
-				if (stackElements.getFilter().lastElement().getClass() == AimlPattern.class) {
-					stackElements.push(new AimlThatPatternImpl());
-					return;
-				}
-				if (stackElements.getFilter().lastElement().getClass() == AimlCategory.class) {
-					stackElements.push(new AimlThatCategoryImpl());
-					return;
-				}
+		case AIML:
+			/**
+			 * An AIML object is represented by an aiml:aiml element in an XML
+			 * document. The aiml:aiml element may contain the following types
+			 * of elements: - aiml:topic - aiml:category
+			 * 
+			 * create default repository on aiml tag detection attributes must
+			 * be handle next
+			 */
+			repository = stackElements.push(new AimlRepository());
+			repository.setRoot(root);
+			break;
+		case TOPIC:
+			/**
+			 * A topic is an optional top-level element that contains category
+			 * elements. A topic element has a required name attribute that must
+			 * contain a simple pattern expression. A topic element may contain
+			 * one or more category elements.
+			 */
+			IAimlTopic topic = stackElements.push(new AimlTopic());
+			repository.addTopic(topic);
+			break;
+		case CATEGORY:
+			/**
+			 * A category is a top-level (or second-level, if contained within a
+			 * topic) element that contains exactly one pattern and exactly one
+			 * template. A category does not have any attributes.
+			 */
+			category = stackElements.push(new AimlCategory());
+			repository.addCategory(category);
+			break;
+		case TEMPLATE:
+			/**
+			 * A template is an element that appears within category elements.
+			 * The template must follow the pattern-side that element, if it
+			 * exists; otherwise, it follows the pattern element. A template
+			 * does not have any attributes.
+			 */
+			stackElements.push(new AimlTemplateImpl());
+			break;
+		case PATTERN:
+			/**
+			 * A pattern is an element whose content is a mixed pattern
+			 * expression. Exactly one pattern must appear in each category. The
+			 * pattern must always be the first child element of the category. A
+			 * pattern does not have any attributes.
+			 */
+			stackElements.push(new AimlPatternImpl());
+			break;
+		case THAT:
+			/**
+			 * The pattern-side that element is a special type of pattern
+			 * element used for context matching. The pattern-side that is
+			 * optional in a category, but if it occurs it must occur no more
+			 * than once, and must immediately follow the pattern and
+			 * immediately precede the template. A pattern-side that element
+			 * contains a simple pattern expression.
+			 * 
+			 * allocate that on category side, or template side according to the
+			 * parsing context
+			 */
+			if (stackElements.getFilter().lastElement().getClass() == AimlTemplateImpl.class) {
+				stackElements.push(new AimlThatTemplateImpl());
+				return;
+			}
+			if (stackElements.getFilter().lastElement().getClass() == AimlPatternImpl.class) {
+				stackElements.push(new AimlThatPatternImpl());
+				return;
+			}
+			if (stackElements.getFilter().lastElement().getClass() == AimlCategory.class) {
+				stackElements.push(new AimlThatCategoryImpl());
+				return;
+			}
 
-				logger.error("Element cannot be null");
-				/**
-				 * TODO error management
-				 */
-				break;
-			case SRAI:
-				/**
-				 * The srai element instructs the AIML interpreter to pass the
-				 * result of processing the contents of the srai element to the
-				 * AIML matching loop, as if the input had been produced by the
-				 * user (this includes stepping through the entire input
-				 * normalization process). The srai element does not have any
-				 * attributes. It may contain any AIML template elements.
-				 */
-				stackElements.pushSrai();
-				break;
-			case GET:
-				/**
-				 * The get element tells the AIML interpreter that it should
-				 * substitute the contents of a predicate, if that predicate has
-				 * a value defined. If the predicate has no value defined, the
-				 * AIML interpreter should substitute the empty string "".
-				 */
-				stackElements.pushGet();
-				break;
-			case SET:
-				/**
-				 * The set element instructs the AIML interpreter to set the
-				 * value of a predicate to the result of processing the contents
-				 * of the set element. The set element has a required attribute
-				 * name, which must be a valid AIML predicate name. If the
-				 * predicate has not yet been defined, the AIML interpreter
-				 * should define it in memory.
-				 */
-				stackElements.push(new AimlSetImpl());
-				break;
-			case RANDOM:
-				/**
-				 * The random element instructs the AIML interpreter to return
-				 * exactly one of its contained li elements randomly. The random
-				 * element must contain one or more li elements of type
-				 * defaultListItem, and cannot contain any other elements.
-				 */
-				stackElements.push(new AimlRandomImpl());
-				break;
-			case LI:
-				/**
-				 * The random element instructs the AIML interpreter to return
-				 * exactly one of its contained li elements randomly. The random
-				 * element must contain one or more li elements of type
-				 * defaultListItem, and cannot contain any other elements.
-				 */
-				stackElements.push(new AimlLiImpl());
-				break;
-			case FORMAL:
-				/**
-				 * The formal element tells the AIML interpreter to render the
-				 * contents of the element such that the first letter of each
-				 * word is in uppercase, as defined (if defined) by the locale
-				 * indicated by the specified language (if specified). This is
-				 * similar to methods that are sometimes called "Title Case".
-				 */
-				stackElements.push(new AimlFormalImpl());
-				break;
-			case INPUT:
-				stackElements.push(new AimlInputImpl());
-				break;
-			case PERSON:
-				stackElements.push(new AimlPersonImpl());
-				break;
-			case THINK:
-				stackElements.push(new AimlThinkImpl());
-				break;
-			case BR:
-				stackElements.push(new AimlBrImpl());
-				break;
-			case STAR:
-				stackElements.push(new AimlStarImpl());
-				break;
-			case A:
-				stackElements.push(new AimlAImpl());
-				break;
-			case SR:
-				stackElements.push(new AimlSrImpl());
-				break;
-			case BOT:
-				stackElements.push(new AimlBotImpl());
-				break;
-			case CONDITION:
-				stackElements.push(new AimlBlockConditionImpl());
-				break;
-			case PERSON2:
-				stackElements.push(new AimlPerson2Impl());
-				break;
-			case ID:
-				stackElements.push(new AimlIdImpl());
-				break;
-			case VERSION:
-				stackElements.push(new AimlVersionImpl());
-				break;
-			default:
-				logger.warn("Unknown tag element : " + value);
-				break;
+			logger.error("Element cannot be null");
+			/**
+			 * TODO error management
+			 */
+			break;
+		case THATSTAR:
+			/**
+			 * The thatstar element tells the AIML interpreter that it should
+			 * substitute the contents of a wildcard from a pattern-side that
+			 * element.
+			 * 
+			 * The thatstar element has an optional integer index attribute that
+			 * indicates which wildcard to use; the minimum acceptable value for
+			 * the index is "1" (the first wildcard).
+			 */
+			if (category != null && category.getThat() != null) stackElements
+					.push(new AimlThatStarImpl(category.getThat()));
+			break;
+		case SRAI:
+			/**
+			 * The srai element instructs the AIML interpreter to pass the
+			 * result of processing the contents of the srai element to the AIML
+			 * matching loop, as if the input had been produced by the user
+			 * (this includes stepping through the entire input normalization
+			 * process). The srai element does not have any attributes. It may
+			 * contain any AIML template elements.
+			 */
+			stackElements.push(new AimlSraiImpl());
+			break;
+		case SR:
+			/**
+			 * The sr element is a shortcut for:
+			 * 
+			 * <srai><star/></srai>
+			 */
+			stackElements.push(new AimlSraiImpl());
+			stackElements.push(new AimlStarImpl());
+			stackElements.pop(value);
+			break;
+		case GET:
+			/**
+			 * The get element tells the AIML interpreter that it should
+			 * substitute the contents of a predicate, if that predicate has a
+			 * value defined. If the predicate has no value defined, the AIML
+			 * interpreter should substitute the empty string "".
+			 */
+			stackElements.pushGet();
+			break;
+		case SET:
+			/**
+			 * The set element instructs the AIML interpreter to set the value
+			 * of a predicate to the result of processing the contents of the
+			 * set element. The set element has a required attribute name, which
+			 * must be a valid AIML predicate name. If the predicate has not yet
+			 * been defined, the AIML interpreter should define it in memory.
+			 */
+			stackElements.push(new AimlSetImpl());
+			break;
+		case DATE:
+			/**
+			 * The date element tells the AIML interpreter that it should
+			 * substitute the system local date and time. No formatting
+			 * constraints on the output are specified.
+			 * 
+			 * The date element does not have any content.
+			 */
+			stackElements.push(new AimlDateImpl());
+			break;
+		case ID:
+			/**
+			 * The id element tells the AIML interpreter that it should
+			 * substitute the user ID. The determination of the user ID is not
+			 * specified, since it will vary by application. A suggested default
+			 * return value is "localhost".
+			 */
+			stackElements.push(new AimlIdImpl());
+			break;
+		case RANDOM:
+			/**
+			 * The random element instructs the AIML interpreter to return
+			 * exactly one of its contained li elements randomly. The random
+			 * element must contain one or more li elements of type
+			 * defaultListItem, and cannot contain any other elements.
+			 */
+			stackElements.push(new AimlRandomImpl());
+			break;
+		case LI:
+			/**
+			 * The random element instructs the AIML interpreter to return
+			 * exactly one of its contained li elements randomly. The random
+			 * element must contain one or more li elements of type
+			 * defaultListItem, and cannot contain any other elements.
+			 */
+			stackElements.push(new AimlLiImpl());
+			break;
+		case FORMAL:
+			/**
+			 * The formal element tells the AIML interpreter to render the
+			 * contents of the element such that the first letter of each word
+			 * is in uppercase, as defined (if defined) by the locale indicated
+			 * by the specified language (if specified). This is similar to
+			 * methods that are sometimes called "Title Case".
+			 */
+			stackElements.push(new AimlFormalImpl());
+			break;
+		case INPUT:
+			stackElements.push(new AimlInputImpl());
+			break;
+		case PERSON:
+			stackElements.push(new AimlPersonImpl());
+			break;
+		case THINK:
+			stackElements.push(new AimlThinkImpl());
+			break;
+		case BR:
+			stackElements.push(new AimlBrImpl());
+			break;
+		case STAR:
+			stackElements.push(new AimlStarImpl());
+			break;
+		case TOPICSTAR:
+			stackElements.push(new AimlTopicStarImpl());
+			break;
+		case A:
+			stackElements.push(new AimlAImpl());
+			break;
+		case BOT:
+			stackElements.push(new AimlBotImpl());
+			break;
+		case CONDITION:
+			stackElements.push(new AimlBlockConditionImpl());
+			break;
+		case PERSON2:
+			stackElements.push(new AimlPerson2Impl());
+			break;
+		case SIZE:
+			stackElements.push(new AimlSizeImpl());
+			break;
+		case VERSION:
+			stackElements.push(new AimlVersionImpl());
+			break;
+		case UPPER:
+			stackElements.push(new AimlUppercaseImpl());
+			break;
+		case LOWER:
+			stackElements.push(new AimlLowercaseImpl());
+			break;
+		default:
+			logger.warn("Unknown tag element : " + value);
+			break;
 		}
 	}
 
