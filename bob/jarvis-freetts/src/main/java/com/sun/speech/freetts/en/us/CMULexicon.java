@@ -98,7 +98,7 @@ public class CMULexicon extends LexiconImpl {
          * if the above didn't work.
          */
         if (letterToSoundURL == null) {
-            Class cls = CMULexicon.class;
+            Class<CMULexicon> cls = CMULexicon.class;
             letterToSoundURL = cls.getResource(basename + "_lts." + type);
             compiledURL = cls.getResource(basename + "_compiled." + type);
             addendaURL = cls.getResource(basename + "_addenda." + type);
@@ -150,7 +150,7 @@ public class CMULexicon extends LexiconImpl {
      * @return <code>true</code> if the word phone in question is on a
      *     syllable boundary; otherwise <code>false</code>.
      */
-    public boolean isSyllableBoundary(List syllablePhones,
+    public boolean isSyllableBoundary(List<?> syllablePhones,
                                       String[] wordPhones,
                                       int currentWordPhone) {
         if (currentWordPhone >= wordPhones.length) {
@@ -218,7 +218,7 @@ public class CMULexicon extends LexiconImpl {
      * @return <code>true</code> if a vowel is found; 
      *		otherwise <code>false</code>. 
      */
-    static protected boolean hasVowel(List phones) {
+    static protected boolean hasVowel(List<?> phones) {
         for (int i = 0; i < phones.size(); i++) {
             if (isVowel((String) phones.get(i))) {
                 return true;

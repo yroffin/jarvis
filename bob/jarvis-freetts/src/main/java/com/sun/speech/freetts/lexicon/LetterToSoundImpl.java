@@ -196,12 +196,12 @@ public class LetterToSoundImpl implements LetterToSound {
     /**
      * The indexes of the starting points for letters in the state machine.
      */
-    protected HashMap letterIndex;
+    protected HashMap<String, Integer> letterIndex;
 
     /**
      * The list of phones that can be returned by the LTS rules.
      */
-    static private List phonemeTable;
+    static private List<String> phonemeTable;
 
     /**
      * Class constructor.
@@ -246,7 +246,7 @@ public class LetterToSoundImpl implements LetterToSound {
 	tokenizeOnLoad = tokenize.equals("load");
 	tokenizeOnLookup = tokenize.equals("lookup");
 
-        letterIndex = new HashMap();
+        letterIndex = new HashMap<String, Integer>();
 
         reader = new BufferedReader(new InputStreamReader(is));
         line = reader.readLine();
@@ -280,7 +280,7 @@ public class LetterToSoundImpl implements LetterToSound {
 	// read the phoneme table
         //
 	int phonemeTableSize = dis.readInt();
-	phonemeTable = new ArrayList(phonemeTableSize);
+	phonemeTable = new ArrayList<String>(phonemeTableSize);
 
 	for (int i = 0; i < phonemeTableSize; i++) {
 	    String phoneme = dis.readUTF();
@@ -290,7 +290,7 @@ public class LetterToSoundImpl implements LetterToSound {
 	// letter index
         //
 	int letterIndexSize = dis.readInt();
-	letterIndex = new HashMap();
+	letterIndex = new HashMap<String, Integer>();
 	for (int i = 0; i < letterIndexSize; i++) {
 	    char c = dis.readChar();
 	    int index = dis.readInt();
@@ -374,7 +374,7 @@ public class LetterToSoundImpl implements LetterToSound {
         //
 	phonemeTable = findPhonemes();
 	dos.writeInt(phonemeTable.size());
-	for (Iterator i = phonemeTable.iterator(); i.hasNext(); ) {
+	for (Iterator<String> i = phonemeTable.iterator(); i.hasNext(); ) {
 	    String phoneme = (String) i.next();
 	    dos.writeUTF(phoneme);
 	}
@@ -382,7 +382,7 @@ public class LetterToSoundImpl implements LetterToSound {
 	// letter index
         //
 	dos.writeInt(letterIndex.size());
-	for (Iterator i = letterIndex.keySet().iterator(); i.hasNext(); ) {
+	for (Iterator<String> i = letterIndex.keySet().iterator(); i.hasNext(); ) {
 	    String letter = (String) i.next();
 	    int index = ((Integer) letterIndex.get(letter)).intValue();
 	    dos.writeChar(letter.charAt(0));
@@ -404,8 +404,8 @@ public class LetterToSoundImpl implements LetterToSound {
      *
      * @return a list of all the phonemes
      */
-    private List findPhonemes() {
-	Set set = new HashSet();
+    private List<String> findPhonemes() {
+	Set<String> set = new HashSet<String>();
         for (int i = 0; i < stateMachine.length; i++) {
 	    if (stateMachine[i] instanceof FinalState) {
 		FinalState fstate = (FinalState) stateMachine[i];
@@ -416,7 +416,7 @@ public class LetterToSoundImpl implements LetterToSound {
 		}
 	    }
 	}
-	return new ArrayList(set);
+	return new ArrayList<String>(set);
     }
 
 
@@ -514,7 +514,7 @@ public class LetterToSoundImpl implements LetterToSound {
      * @return the list of phones for word or <code>null</code>
      */
     public String[] getPhones(String word, String partOfSpeech) {
-        ArrayList phoneList = new ArrayList();
+        ArrayList<String> phoneList = new ArrayList<String>();
         State currentState;
         Integer startIndex;
         int stateIndex;
@@ -566,7 +566,7 @@ public class LetterToSoundImpl implements LetterToSound {
 
 	// compare letter index table
         //
-	for (Iterator i = letterIndex.keySet().iterator(); i.hasNext(); ) {
+	for (Iterator<String> i = letterIndex.keySet().iterator(); i.hasNext(); ) {
 	    String key = (String) i.next();
 	    Integer thisIndex = (Integer) letterIndex.get(key);
 	    Integer otherIndex = (Integer) other.letterIndex.get(key);
@@ -755,7 +755,7 @@ public class LetterToSoundImpl implements LetterToSound {
          *
          * @param array the array to append to
          */
-        public void append(ArrayList array) {
+        public void append(ArrayList<String> array) {
             if (phoneList == null) {
                 return;
             } else {
@@ -859,7 +859,6 @@ public class LetterToSoundImpl implements LetterToSound {
      * Translates between text and binary forms of the CMU6 LTS rules.
      */
     public static void main(String[] args) {
-	LexiconImpl lex, lex2;
 	boolean showTimes = false;
         String srcPath = ".";
         String destPath = ".";

@@ -64,8 +64,6 @@ public class PathExtractorImpl implements PathExtractor {
     private String path;
     private String feature;
     private Object[] compiledPath;
-    private boolean wantFeature = false;
-
     /**
      * Creates a path for the given feature.
      */
@@ -87,7 +85,6 @@ public class PathExtractorImpl implements PathExtractor {
 		feature = pathAndFeature.substring(lastDot + 1);
 		path = pathAndFeature.substring(0, lastDot);
 	    }
-	    this.wantFeature = wantFeature;
 	} else {
 	    this.path = pathAndFeature;
 	}
@@ -204,7 +201,7 @@ public class PathExtractorImpl implements PathExtractor {
      * of an array path traversal enums and associated strings
      */
     private Object[] compile(String path) {
-	List list = new ArrayList();
+	List<Object> list = new ArrayList<Object>();
 
 	if (path == null) {
 	    return list.toArray();
@@ -248,7 +245,7 @@ public class PathExtractorImpl implements PathExtractor {
  * An enumerated type associated with path operations.
  */
 class OpEnum {
-    static private Map map = new HashMap();
+    static private Map<String, OpEnum> map = new HashMap<String, OpEnum>();
 
     public final static OpEnum NEXT = new OpEnum("n");
     public final static OpEnum PREV = new OpEnum("p");

@@ -12,20 +12,12 @@ package com.sun.speech.freetts.en;
 
 import com.sun.speech.freetts.UtteranceProcessor;
 import com.sun.speech.freetts.Utterance;
-import com.sun.speech.freetts.FeatureSet;
 import com.sun.speech.freetts.Item;
 import com.sun.speech.freetts.Relation;
 import com.sun.speech.freetts.PathExtractorImpl;
 import com.sun.speech.freetts.PathExtractor;
 import com.sun.speech.freetts.ProcessException;
 import com.sun.speech.freetts.Voice;
-import java.io.BufferedInputStream;
-import java.io.InputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.List;
-import java.util.LinkedList;
-import java.util.Iterator;
 
 
 /**

@@ -20,7 +20,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
-import org.jarvis.main.model.transform.impl.TransformedItemImpl;
+import org.jarvis.main.model.impl.transform.TransformedItemImpl;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

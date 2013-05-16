@@ -80,7 +80,7 @@ public class GermanLexicon extends LexiconImpl {
          * if the above didn't work.
          */
         if (letterToSoundURL == null) {
-            Class cls = GermanLexicon.class;
+            Class<GermanLexicon> cls = GermanLexicon.class;
             letterToSoundURL = cls.getResource(basename + "_lts." + type);
             compiledURL = cls.getResource(basename + "_compiled." + type);
             addendaURL = cls.getResource(basename + "_addenda." + type);
@@ -131,7 +131,7 @@ public class GermanLexicon extends LexiconImpl {
      * @return <code>true</code> if the word phone in question is on a
      *     syllable boundary; otherwise <code>false</code>.
      */
-    public boolean isSyllableBoundary(List syllablePhones,
+    public boolean isSyllableBoundary(List<?> syllablePhones,
                                       String[] wordPhones,
                                       int currentWordPhone) {
         return false;

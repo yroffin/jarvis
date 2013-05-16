@@ -44,7 +44,6 @@ public class ClusterUnitVoice extends Voice implements ConcatenativeVoice {
 	protected URL phonesetURL;
 	protected URL partOfSpeechURL;
     protected ClusterUnitSelector unitSelector;
-	private ClusterUnitNamer unitNamer;
 	public ClusterUnitVoice(String name, Gender gender, Age age,
 			String description, Locale locale, String domain,
 			String organization, Lexicon lexicon, URL database) {
@@ -81,7 +80,6 @@ public class ClusterUnitVoice extends Voice implements ConcatenativeVoice {
             setLexicon(new CMULexicon("cmutimelex"));
         }
 		this.database = database;
-		this.unitNamer = unitNamer;
 		this.phonesetURL = phonesetURL;
 		this.partOfSpeechURL = partOfSpeechURL;
         try {

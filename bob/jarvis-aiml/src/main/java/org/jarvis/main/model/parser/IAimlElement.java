@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.jarvis.main.engine.IAimlCoreEngine;
 import org.jarvis.main.exception.AimlParsingError;
+import org.jarvis.main.model.parser.history.IAimlHistory;
 
 public interface IAimlElement extends IAimlRender {
 	public void add(String value);
@@ -26,7 +27,7 @@ public interface IAimlElement extends IAimlRender {
 	 * @throws AimlParsingError
 	 */
 	public StringBuilder answer(IAimlCoreEngine engine, List<String> star,
-			String that, StringBuilder render) throws AimlParsingError;
+			IAimlHistory that, StringBuilder render) throws AimlParsingError;
 
 	@Override
 	public StringBuilder toAiml(StringBuilder render);

@@ -24,6 +24,7 @@ import java.util.List;
 import org.jarvis.main.engine.IAimlCoreEngine;
 import org.jarvis.main.engine.impl.AimlCoreEngineImpl;
 import org.jarvis.main.exception.AimlParsingError;
+import org.jarvis.main.model.parser.history.IAimlHistory;
 import org.junit.Test;
 
 public class AimlKnockTest {
@@ -50,23 +51,23 @@ public class AimlKnockTest {
 	@Test
 	public void testSimpleKnock() throws AimlParsingError {
 		IAimlCoreEngine engine = instance("src/test/resources/core/knock/knock.aiml");
-		List<String> answer = null;
+		List<IAimlHistory> answer = null;
 
 		engine.set("name", "Nancy");
 		answer = engine.ask("Knock knock.");
-		assertEquals("Who is there?", answer.get(0));
+		assertEquals("Who is there?", answer.get(0).getAnswer());
 		answer = engine.ask("Banana.");
-		assertEquals("Banana who?", answer.get(0));
+		assertEquals("Banana who?", answer.get(0).getAnswer());
 		answer = engine.ask("Knock knock.");
-		assertEquals("Who is there?", answer.get(0));
+		assertEquals("Who is there?", answer.get(0).getAnswer());
 		answer = engine.ask("Banana.");
-		assertEquals("Banana who?", answer.get(0));
+		assertEquals("Banana who?", answer.get(0).getAnswer());
 		answer = engine.ask("Knock knock.");
-		assertEquals("Who is there?", answer.get(0));
+		assertEquals("Who is there?", answer.get(0).getAnswer());
 		answer = engine.ask("Orange.");
-		assertEquals("Orange who?", answer.get(0));
+		assertEquals("Orange who?", answer.get(0).getAnswer());
 		answer = engine.ask("Orange you glad I didn’t say banana.");
-		assertEquals("Ha ha very funny, Nancy.", answer.get(0));
+		assertEquals("Ha ha very funny, Nancy.", answer.get(0).getAnswer());
 	}
 
 	/**
@@ -75,29 +76,65 @@ public class AimlKnockTest {
 	 * @throws AimlParsingError
 	 */
 	@Test
-	public void testSimpleKnock1() throws AimlParsingError {
+	public void testSimpleInput() throws AimlParsingError {
 		IAimlCoreEngine engine = instance("src/test/resources/core/knock/input.aiml");
-		List<String> answer = null;
+		List<IAimlHistory> answer = null;
 
 		engine.set("name", "Nancy");
 		answer = engine.ask("Knock knock.");
-		assertEquals("Who is there?", answer.get(0));
+		assertEquals("Who is there?", answer.get(0).getAnswer());
 		answer = engine.ask("Banana. Knock knock.");
-		assertEquals("Banana who?", answer.get(0));
-		assertEquals("Who is there?", answer.get(1));
+		assertEquals("Banana who?", answer.get(0).getAnswer());
+		assertEquals("Who is there?", answer.get(1).getAnswer());
 		answer = engine.ask("Banana.");
-		assertEquals("Banana who?", answer.get(0));
+		assertEquals("Banana who?", answer.get(0).getAnswer());
 		answer = engine.ask("Knock knock.");
-		assertEquals("Who is there?", answer.get(0));
+		assertEquals("Who is there?", answer.get(0).getAnswer());
 		answer = engine.ask("Orange.");
-		assertEquals("Orange who?", answer.get(0));
+		assertEquals("Orange who?", answer.get(0).getAnswer());
 		answer = engine.ask("Orange you glad I didn’t say banana.");
 
 		answer = engine.ask("What i said at first ?");
-		assertEquals("Your previous input was Knock knock.", answer.get(0));
+		assertEquals("Your previous input was Knock knock.", answer.get(0)
+				.getAnswer());
 		answer = engine.ask("What i said at second ?");
-		assertEquals("Your previous input was Banana.", answer.get(0));
+		assertEquals("Your previous input was Banana.", answer.get(0)
+				.getAnswer());
 		answer = engine.ask("What i said at second, second sentence ?");
-		assertEquals("Your previous input was Knock knock.", answer.get(0));
+		assertEquals("Your previous input was Knock knock.", answer.get(0)
+				.getAnswer());
+	}
+
+	/**
+	 * Alice BOT
+	 * 
+	 * @throws AimlParsingError
+	 */
+	@Test
+	public void testSimpleThat() throws AimlParsingError {
+		IAimlCoreEngine engine = instance("src/test/resources/core/knock/input.aiml");
+		List<IAimlHistory> answer = null;
+
+		engine.set("name", "Nancy");
+		answer = engine.ask("Knock knock.");
+		assertEquals("Who is there?", answer.get(0).getAnswer());
+		answer = engine.ask("Banana. Knock knock.");
+		assertEquals("Banana who?", answer.get(0).getAnswer());
+		assertEquals("Who is there?", answer.get(1).getAnswer());
+		answer = engine.ask("Banana.");
+		assertEquals("Banana who?", answer.get(0).getAnswer());
+		answer = engine.ask("Knock knock.");
+		assertEquals("Who is there?", answer.get(0).getAnswer());
+		answer = engine.ask("Orange.");
+		assertEquals("Orange who?", answer.get(0).getAnswer());
+		answer = engine.ask("Orange you glad I didn’t say banana.");
+
+		answer = engine.ask("What you said first ?");
+		assertEquals("That was Who is there?.", answer.get(0).getAnswer());
+		answer = engine.ask("What you said second ?");
+		assertEquals("That was Ha ha very funny, Nancy..", answer.get(0)
+				.getAnswer());
+		answer = engine.ask("What you said three ?");
+		assertEquals("That was Who is there?.", answer.get(0).getAnswer());
 	}
 }

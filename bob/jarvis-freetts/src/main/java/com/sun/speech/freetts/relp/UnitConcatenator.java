@@ -50,8 +50,7 @@ public class UnitConcatenator implements UtteranceProcessor {
      */
     public void processUtterance(Utterance utterance) throws ProcessException {
 	float uIndex = 0, m;
-	int pmI = 0, targetResidualPosition = 0, nearestPM, 
-	    unitPart, targetStart = 0, targetEnd, residualSize, numberFrames;
+	int pmI = 0, targetResidualPosition = 0, targetStart = 0, targetEnd, residualSize, numberFrames;
 	Relation unitRelation = utterance.getRelation(Relation.UNIT);
 
 	SampleInfo sampleInfo;
@@ -95,7 +94,7 @@ public class UnitConcatenator implements UtteranceProcessor {
 	     unitItem = unitItem.getNext()) {
 	    FeatureSet featureSet = unitItem.getFeatures();
 
-	    String unitName = featureSet.getString("name");
+	    featureSet.getString("name");
 	    targetEnd = featureSet.getInt("target_end");
 	    Unit unit = (Unit) featureSet.getObject("unit");
 	    int unitSize = unit.getSize();

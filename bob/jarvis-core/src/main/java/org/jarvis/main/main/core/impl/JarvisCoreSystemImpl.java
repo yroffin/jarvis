@@ -7,6 +7,7 @@ import org.jarvis.main.core.IJarvisCoreSystem;
 import org.jarvis.main.engine.IAimlCoreEngine;
 import org.jarvis.main.engine.impl.AimlCoreEngineImpl;
 import org.jarvis.main.exception.AimlParsingError;
+import org.jarvis.main.model.parser.history.IAimlHistory;
 
 import com.sun.speech.freetts.Voice;
 import com.sun.speech.freetts.VoiceManager;
@@ -41,7 +42,7 @@ public class JarvisCoreSystemImpl implements IJarvisCoreSystem {
 		 * The VoiceManager manages all the voices for FreeTTS.
 		 */
 		voiceManager = VoiceManager.getInstance();
-		voice = voiceManager.getVoice(voiceName );
+		voice = voiceManager.getVoice(voiceName);
 
 		if (voice == null) {
 			System.err.println("Cannot find a voice named " + voiceName
@@ -53,7 +54,7 @@ public class JarvisCoreSystemImpl implements IJarvisCoreSystem {
 		 * Allocates the resources for the voice.
 		 */
 		voice.allocate();
-		
+
 		/**
 		 * configure aiml
 		 */
@@ -75,9 +76,9 @@ public class JarvisCoreSystemImpl implements IJarvisCoreSystem {
 
 	@Override
 	public void ask(String sentence) throws AimlParsingError {
-		List<String> answers = engine.ask(sentence);
-		for(String answer : answers) {
-			speak(answer);
+		List<IAimlHistory> answers = engine.ask(sentence);
+		for (IAimlHistory answer : answers) {
+			speak(answer.getAnswer());
 		}
 	}
 }

@@ -25,8 +25,6 @@ public class NullAudioPlayer implements AudioPlayer {
     private final static boolean TRACE 
 	= Utilities.getBoolean("com.sun.speech.freetts.audio.trace");
     private boolean firstSound = true;
-    private int totalBytes = 0;
-    private int totalWrites = 0;
     private BulkTimer timer = new BulkTimer();
 
 
@@ -157,8 +155,6 @@ public class NullAudioPlayer implements AudioPlayer {
      *       	<code> false </code>if the write was cancelled.
      */
     public boolean write(byte[] bytes, int offset, int size) {
-	totalBytes += size;
-	totalWrites ++;
 	if (firstSound) {
 	    timer.stop("AudioFirstSound");
 	    firstSound = false;

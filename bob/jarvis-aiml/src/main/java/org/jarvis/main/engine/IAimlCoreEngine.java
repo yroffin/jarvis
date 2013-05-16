@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Stack;
 
 import org.jarvis.main.exception.AimlParsingError;
+import org.jarvis.main.model.parser.history.IAimlHistory;
 
 /**
  * AIML engine
@@ -80,12 +81,26 @@ public interface IAimlCoreEngine {
 	 * @return
 	 * @throws AimlParsingError
 	 */
-	public List<String> ask(String sentence) throws AimlParsingError;
+	public List<IAimlHistory> ask(String sentence) throws AimlParsingError;
 
 	/**
-	 * all user inputs
+	 * exchange history
 	 * 
 	 * @return
 	 */
-	public Stack<List<String>> getUserInputs();
+	public Stack<List<IAimlHistory>> getHistory();
+
+	/**
+	 * return that history (not last, but last last)
+	 * 
+	 * @return
+	 */
+	public IAimlHistory getThatHistory();
+
+	/**
+	 * return that history
+	 * 
+	 * @return
+	 */
+	public List<IAimlHistory> getThatsHistory();
 }

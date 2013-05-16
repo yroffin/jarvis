@@ -76,7 +76,7 @@ public class ContourGenerator implements UtteranceProcessor {
 	this.modelMean = modelMean;
 	this.modelStddev = modelStddev;
 
-	List termsList = new ArrayList();
+	List<F0ModelTerm> termsList = new ArrayList<F0ModelTerm>();
 
 	String line;
 	BufferedReader reader = new BufferedReader(
@@ -317,7 +317,7 @@ public class ContourGenerator implements UtteranceProcessor {
      * @param list resulting F0ModelTerm is added to this list
      * @param line the string to parse
      */
-    protected void parseAndAdd(List list, String line) {
+    protected void parseAndAdd(List<F0ModelTerm> list, String line) {
         try {
 	    StringTokenizer tokenizer = new StringTokenizer(line," ");
 	    String feature = tokenizer.nextToken();        

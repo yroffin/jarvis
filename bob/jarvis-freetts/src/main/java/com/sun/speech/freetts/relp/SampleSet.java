@@ -17,12 +17,7 @@ import java.io.DataInputStream;
 import java.util.StringTokenizer;
 import java.util.NoSuchElementException;
 
-import java.nio.channels.WritableByteChannel;
-import java.nio.channels.ReadableByteChannel;
 import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
-import java.nio.ShortBuffer;
-import java.io.IOException;
 
 /**
  * Represents the frame and residual data

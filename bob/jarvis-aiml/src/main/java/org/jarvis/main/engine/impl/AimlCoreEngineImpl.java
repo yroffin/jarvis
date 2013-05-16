@@ -24,39 +24,56 @@ import java.util.Map;
 import java.util.Stack;
 
 import org.jarvis.main.engine.IAimlCoreEngine;
+import org.jarvis.main.engine.impl.transform.AimlScoreImpl;
+import org.jarvis.main.engine.impl.transform.AimlTranformImpl;
 import org.jarvis.main.engine.transform.IAimlScore;
 import org.jarvis.main.engine.transform.IAimlTransform;
-import org.jarvis.main.engine.transform.impl.AimlScoreImpl;
-import org.jarvis.main.engine.transform.impl.AimlTranformImpl;
 import org.jarvis.main.exception.AimlParsingError;
+import org.jarvis.main.model.impl.parser.AimlRepository;
+import org.jarvis.main.model.impl.parser.history.AimlHistoryImpl;
 import org.jarvis.main.model.parser.IAimlCategory;
 import org.jarvis.main.model.parser.IAimlRepository;
 import org.jarvis.main.model.parser.IAimlTopic;
-import org.jarvis.main.model.parser.impl.AimlRepository;
+import org.jarvis.main.model.parser.history.IAimlHistory;
 import org.jarvis.main.model.transform.ITransformedItem;
-import org.jarvis.main.model.transform.impl.TransformedItemImpl;
 import org.jarvis.main.parser.AimlParserImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class AimlCoreEngineImpl implements IAimlCoreEngine {
 
-	protected Logger					logger		= LoggerFactory
-															.getLogger(AimlCoreEngineImpl.class);
+	protected Logger logger = LoggerFactory.getLogger(AimlCoreEngineImpl.class);
 
-	private final IAimlRepository		aiml		= new AimlRepository();
-	private final IAimlTransform		transformer	= new AimlTranformImpl();
-	private final List<File>			resources	= new ArrayList<File>();
-	private final Stack<IAimlCategory>	stack		= new Stack<IAimlCategory>();
-	private final Stack<List<String>>	userInputs	= new Stack<List<String>>();
+	private final IAimlRepository aiml = new AimlRepository();
+	private final IAimlTransform transformer = new AimlTranformImpl();
+	private final List<File> resources = new ArrayList<File>();
+	private final Stack<IAimlCategory> stack = new Stack<IAimlCategory>();
+	/**
+	 * user inputs logs
+	 */
+	private final Stack<List<IAimlHistory>> history = new Stack<List<IAimlHistory>>();
 
 	@Override
-	public Stack<List<String>> getUserInputs() {
-		return userInputs;
+	public Stack<List<IAimlHistory>> getHistory() {
+		return history;
 	}
 
-	private final Map<String, Object>	bot			= new HashMap<String, Object>();
-	private final Map<String, Object>	properties	= new HashMap<String, Object>();
+	@Override
+	public IAimlHistory getThatHistory() {
+		List<IAimlHistory> result = getThatsHistory();
+		if (result == null) return null;
+		if (result.size() == 0) return null;
+		return result.get(result.size() - 1);
+	}
+
+	@Override
+	public List<IAimlHistory> getThatsHistory() {
+		if (history.size() == 0) return null;
+		return history.get(history.size() - 1);
+	}
+
+	private final Map<String, Object> bot = new HashMap<String, Object>();
+	private final Map<String, Object> properties = new HashMap<String, Object>();
 
 	@Override
 	public Object getBot(String key) {
@@ -79,12 +96,6 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 		logger.info("set " + key + " to " + value);
 		return properties.put(key, value);
 	}
-
-	/**
-	 * last answer
-	 */
-	private String				that			= null;
-	private ITransformedItem	thatTransformed	= new TransformedItemImpl("");
 
 	@Override
 	public void register(File resource) {
@@ -115,48 +126,55 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 		 * transformation on all category for optimisation during runtime
 		 */
 		for (IAimlCategory cat : aiml.getCategories()) {
+			IAimlHistory history = new AimlHistoryImpl();
+			cat.setHistory(history);
+
 			/**
 			 * optimisation : transformation on categories only deal with the
 			 * first sentence
 			 */
-			cat.setTransformedPattern(transformer.transform(
+			history.setTransformedPattern(transformer.transform(
 					cat.getPattern().getElements()).get(0));
 			if (cat.hasThat()) {
-				cat.setTransformedThat(transformer.transform(
+				history.setTransformedAnswer(transformer.transform(
 						cat.getThat().getElements()).get(0));
 			}
 		}
 	}
 
 	@Override
-	public List<String> ask(String sentence) throws AimlParsingError {
-		List<String> inputs = new ArrayList<String>();
-		List<String> answers = new ArrayList<String>();
+	public List<IAimlHistory> ask(String sentence) throws AimlParsingError {
+		List<IAimlHistory> localHistory = new ArrayList<IAimlHistory>();
+
 		/**
 		 * transform user sentence into common tranform state
 		 */
 		List<ITransformedItem> tx = transformer.transform(sentence);
 		for (ITransformedItem s : tx) {
-			answers.add(ask(s));
-			inputs.add(s.getRaw());
+			IAimlHistory log = new AimlHistoryImpl();
+
+			log.setInput(s.getRaw());
+			log.setAnswer(ask(s));
+
+			/**
+			 * fix transformation
+			 */
+			List<ITransformedItem> answers = transformer.transform(log
+					.getAnswer());
+			log.setTransformedAnswer(answers.get(answers.size() - 1));
+
+			localHistory.add(log);
 		}
-		/**
-		 * log conversation
-		 */
-		getUserInputs().push(inputs);
+
 		/**
 		 * that become the last computed item
 		 */
+		getHistory().push(localHistory);
 		if (logger.isDebugEnabled()) {
-			logger.debug("That: " + that);
-			logger.debug("That (tx): " + thatTransformed);
-			logger.debug("Answer: " + answers);
-			logger.debug("Inputs: " + getUserInputs());
+			logger.debug("getHistory: " + getHistory());
 		}
-		that = answers.get(answers.size() - 1);
-		List<ITransformedItem> txs = transformer.transform(that);
-		thatTransformed = txs.get(txs.size() - 1);
-		return answers;
+
+		return localHistory;
 	}
 
 	private String ask(ITransformedItem sentence) throws AimlParsingError {
@@ -166,21 +184,27 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 		 */
 		for (int iCat = 0; iCat < aiml.getCategories().size() && found == null; iCat++) {
 			IAimlCategory cat = aiml.getCategories().get(iCat);
+			logger.info("Verify : " + cat + " " + iCat + "/"
+					+ aiml.getCategories().size());
+
 			/**
-			 * ignore stacked category
+			 * ignore stacked category to avoid recursion
 			 */
 			if (stack.contains(cat)) continue;
 
-			ITransformedItem toScore = cat.getTransformedPattern();
+			ITransformedItem toScore = cat.getHistory().getTransformedPattern();
 			int score = sentence.score(toScore);
+
 			/**
 			 * handle that element - if score is ok - category have that element
 			 * - current that is not null
 			 */
 			if (score >= 0) {
-				if (cat.hasThat() && that != null) {
-					int thatScore = thatTransformed.score(cat
-							.getTransformedThat());
+				if (cat.hasThat() && getHistory().size() > 0) {
+					ITransformedItem transformed = getThatHistory()
+							.getTransformedAnswer();
+					int thatScore = transformed.score(cat.getHistory()
+							.getTransformedAnswer());
 					if (thatScore > 0) {
 						found = new AimlScoreImpl(score + thatScore, cat);
 					}
@@ -190,19 +214,21 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 			}
 		}
 
-		logger.info("Ask for : " + sentence);
 		if (found != null) {
 			IAimlCategory category = found.getValue();
 			/**
 			 * identify star value
 			 */
 			stack.push(category);
-			String result = category
-					.answer(this,
-							sentence.star(category.getTransformedPattern(),
-									new ArrayList<String>()), that,
-							new StringBuilder()).toString();
+			String result = category.answer(
+					this,
+					sentence.star(
+							category.getHistory().getTransformedPattern(),
+							new ArrayList<String>()), getThatHistory(),
+					new StringBuilder()).toString();
 			stack.pop();
+
+			logger.info("Ask for : " + sentence + " => " + result);
 			return result;
 		} else {
 			return "no anwser";

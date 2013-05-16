@@ -28,13 +28,13 @@ public abstract class BaseEngineProperties
      * List of <code>PropertyChangeListeners</code> registered for
      * <code>PropertyChangeEvents</code> on this object.
      */
-    protected Collection propertyChangeListeners;
+    protected Collection<PropertyChangeListener> propertyChangeListeners;
 
     /**
      * Class constructor.
      */
     protected BaseEngineProperties() {
-        propertyChangeListeners = new java.util.ArrayList();
+        propertyChangeListeners = new java.util.ArrayList<PropertyChangeListener>();
     }
 
     /**
@@ -192,10 +192,10 @@ public abstract class BaseEngineProperties
         if (propertyChangeListeners == null) {
             return;
         }
-        Iterator iterator = propertyChangeListeners.iterator();
+        Iterator<PropertyChangeListener> iterator = propertyChangeListeners.iterator();
         while (iterator.hasNext()) {
             PropertyChangeListener pl =
-                (PropertyChangeListener) iterator.next();
+                iterator.next();
             pl.propertyChange(event);
         }
     }

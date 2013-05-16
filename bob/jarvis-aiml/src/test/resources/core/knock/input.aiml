@@ -20,7 +20,7 @@
 <category>
 <pattern>WHAT I SAID AT FIRST</pattern>
 <template>Your previous input was <input/>.</template>
-</category><
+</category>
 
 <category>
 <pattern>WHAT I SAID AT SECOND</pattern>
@@ -30,6 +30,21 @@
 <category>
 <pattern>WHAT I SAID AT SECOND, SECOND SENTENCE</pattern>
 <template>Your previous input was <input index = "2,2" />.</template>
+</category>
+
+<category>
+<pattern>WHAT YOU SAID FIRST</pattern>
+<template>That was <that/>.</template>
+</category>
+
+<category>
+<pattern>WHAT YOU SAID SECOND</pattern>
+<template>That was <that index = "6,1" />.</template>
+</category>
+
+<category>
+<pattern>WHAT YOU SAID THREE</pattern>
+<template>That was <that index = "2,2" />.</template>
 </category>
 
 </aiml>

@@ -23,6 +23,7 @@ import java.util.List;
 
 import org.jarvis.main.engine.impl.AimlCoreEngineImpl;
 import org.jarvis.main.exception.AimlParsingError;
+import org.jarvis.main.model.parser.history.IAimlHistory;
 import org.junit.Test;
 
 public class AimlCoreEngineSraiTest {
@@ -64,12 +65,14 @@ public class AimlCoreEngineSraiTest {
 	@Test
 	public void testSimpleSraiReduction() throws AimlParsingError {
 		IAimlCoreEngine engine = instance("src/test/resources/core/srai-reduction.xml");
-		List<String> answer = null;
+		List<IAimlHistory> answer = null;
 
 		answer = engine.ask("who is bruno ?");
-		assertEquals("bruno is someone, but i don't know him.", answer.get(0));
+		assertEquals("bruno is someone, but i don't know him.", answer.get(0)
+				.getAnswer());
 		answer = engine.ask("do you know who bruno is ?");
-		assertEquals("bruno is someone, but i don't know him.", answer.get(0));
+		assertEquals("bruno is someone, but i don't know him.", answer.get(0)
+				.getAnswer());
 	}
 
 	/**
@@ -88,12 +91,12 @@ public class AimlCoreEngineSraiTest {
 	@Test
 	public void testSimpleSraiDivideAndConquer() throws AimlParsingError {
 		IAimlCoreEngine engine = instance("src/test/resources/core/srai-divide-conquer.xml");
-		List<String> answer = null;
+		List<IAimlHistory> answer = null;
 
 		answer = engine.ask("yes mister");
 		assertEquals(
 				"Divide and Conquer: Catch All : yes and Catch All : mister",
-				answer.get(0));
+				answer.get(0).getAnswer());
 	}
 
 	/**
@@ -107,10 +110,10 @@ public class AimlCoreEngineSraiTest {
 	@Test
 	public void testSimpleSraiSynonym() throws AimlParsingError {
 		IAimlCoreEngine engine = instance("src/test/resources/core/srai-synonym.xml");
-		List<String> answer = null;
+		List<IAimlHistory> answer = null;
 
 		answer = engine.ask("hola");
-		assertEquals("Hi there!", answer.get(0));
+		assertEquals("Hi there!", answer.get(0).getAnswer());
 	}
 
 	/**
@@ -124,12 +127,12 @@ public class AimlCoreEngineSraiTest {
 	@Test
 	public void testSimpleSraiGrammar() throws AimlParsingError {
 		IAimlCoreEngine engine = instance("src/test/resources/core/srai-grammar.xml");
-		List<String> answer = null;
+		List<IAimlHistory> answer = null;
 
 		answer = engine.ask("your a sheep");
 		assertEquals(
 				"I think you mean \"you’re\" or \"you are\" not \"your.\" I think your are a sheep",
-				answer.get(0));
+				answer.get(0).getAnswer());
 	}
 
 	/**
@@ -145,10 +148,11 @@ public class AimlCoreEngineSraiTest {
 	@Test
 	public void testSimpleSraiKeyword() throws AimlParsingError {
 		IAimlCoreEngine engine = instance("src/test/resources/core/srai-keyword.xml");
-		List<String> answer = null;
+		List<IAimlHistory> answer = null;
 
 		answer = engine.ask("something about my mother");
-		assertEquals(" Tell me more about your family. ", answer.get(0));
+		assertEquals(" Tell me more about your family. ", answer.get(0)
+				.getAnswer());
 	}
 
 	/**
@@ -169,13 +173,13 @@ public class AimlCoreEngineSraiTest {
 	@Test
 	public void testSimpleSraiCond() throws AimlParsingError {
 		IAimlCoreEngine engine = instance("src/test/resources/core/srai-conditional.xml");
-		List<String> answer = null;
+		List<IAimlHistory> answer = null;
 
 		answer = engine.ask("who is he");
-		assertEquals("He is null.", answer.get(0));
+		assertEquals("He is null.", answer.get(0).getAnswer());
 
 		engine.set("he", "jarvis");
 		answer = engine.ask("who is he");
-		assertEquals("He is jarvis.", answer.get(0));
+		assertEquals("He is jarvis.", answer.get(0).getAnswer());
 	}
 }

@@ -49,7 +49,7 @@ public class MbrolaVoiceDirectory extends VoiceDirectory {
 
             Voice[] voices = {mbrola1, mbrola2, mbrola3};
             
-            List validVoices = new java.util.ArrayList();
+            List<Voice> validVoices = new java.util.ArrayList<Voice>();
             int count = 0;
 
             for (int i = 0; i < voices.length; i++) {

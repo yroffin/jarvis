@@ -109,7 +109,7 @@ public class SynthesizerMonitor extends EngineMonitor {
      *
      * @return the number of elements in the enumeration
      */
-    private int countElements(Enumeration e) {
+    private int countElements(Enumeration<?> e) {
 	int count = 0;
 	while (e.hasMoreElements()) {
 	    e.nextElement();

@@ -181,7 +181,7 @@ public class FreeTTSSynthesizer extends BaseSynthesizer {
      * @throws EngineStateError if the engine was not in the proper
      * 				state
      */
-    public Enumeration enumerateQueue() throws EngineStateError {
+    public Enumeration<FreeTTSSynthesizerQueueItem> enumerateQueue() throws EngineStateError {
         checkEngineState(DEALLOCATED | DEALLOCATING_RESOURCES);
         return outputHandler.enumerateQueue();
     }
@@ -488,13 +488,13 @@ public class FreeTTSSynthesizer extends BaseSynthesizer {
          *
          * @see BaseSynthesizerQueueItem
          */
-        protected Vector queue;
+        protected Vector<FreeTTSSynthesizerQueueItem> queue;
 
         /**
          * Create a new OutputHandler for the given Synthesizer.
          */
         public OutputHandler() {
-            queue = new Vector();
+            queue = new Vector<FreeTTSSynthesizerQueueItem>();
         }
 
         /**
@@ -512,7 +512,7 @@ public class FreeTTSSynthesizer extends BaseSynthesizer {
 	 *
 	 * @return the enumeration queue
          */
-        public Enumeration enumerateQueue() {
+        public Enumeration<FreeTTSSynthesizerQueueItem> enumerateQueue() {
             synchronized(queue) {
                 return queue.elements();
             }
@@ -573,15 +573,15 @@ public class FreeTTSSynthesizer extends BaseSynthesizer {
          */
         protected void cancelAllItems() {
 	    FreeTTSSynthesizerQueueItem item = null;
-	    Vector copy;
+	    Vector<FreeTTSSynthesizerQueueItem> copy;
 
 	    synchronized(queue) {
 	        audio.cancel();
-	    	copy = (Vector) queue.clone();
+	    	copy = (Vector<FreeTTSSynthesizerQueueItem>) queue.clone();
 		queue.clear();
 		queueDrained();
 	    }
-	    for (Iterator i = copy.iterator(); i.hasNext(); ) {
+	    for (Iterator<FreeTTSSynthesizerQueueItem> i = copy.iterator(); i.hasNext(); ) {
 		item = (FreeTTSSynthesizerQueueItem) i.next();
 		// item.postSpeakableCancelled();
                 item.cancelled();
@@ -660,8 +660,7 @@ public class FreeTTSSynthesizer extends BaseSynthesizer {
 	 * @param item the item to remove 
          */
         protected void removeQueueItem(FreeTTSSynthesizerQueueItem item) {
-	    boolean queueEmptied = false;
-            synchronized(queue) {
+	    synchronized(queue) {
 		boolean found = queue.remove(item);
 		if (found) {
 		    queueDrained();

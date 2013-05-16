@@ -15,6 +15,7 @@ import javax.speech.EngineList;
 import javax.speech.EngineModeDesc;
 
 import com.sun.speech.freetts.ValidationException;
+import com.sun.speech.freetts.Voice;
 
 
 /**
@@ -29,8 +30,6 @@ import com.sun.speech.freetts.ValidationException;
  */
 
 public class FreeTTSEngineCentral implements EngineCentral {
-    private String engineName = "FreeTTS Synthesizer";
-
     /**
      * Creates a FreeTTSEngineCentral
      */
@@ -85,7 +84,7 @@ public class FreeTTSEngineCentral implements EngineCentral {
         com.sun.speech.freetts.Voice[] voices = voiceManager.getVoices();
 
         // We want to get all combinations of domains and locales
-        Vector domainLocaleVector = new Vector();
+        Vector<DomainLocale> domainLocaleVector = new Vector<DomainLocale>();
         for (int i = 0; i < voices.length; i++) {
             DomainLocale dl =
                 new DomainLocale(voices[i].getDomain(), voices[i].getLocale());
@@ -140,7 +139,7 @@ public class FreeTTSEngineCentral implements EngineCentral {
      *
      * @return the item if it exists in the vector, else null
      */
-    private Object getItem(Vector vector, Object o) {
+    private Object getItem(Vector<DomainLocale> vector, Object o) {
         for (int i = 0; i < vector.size(); i++) {
             if (vector.get(i).equals(o)) {
                 return vector.get(i);
@@ -158,7 +157,7 @@ public class FreeTTSEngineCentral implements EngineCentral {
 class DomainLocale {
     private String domain;
     private Locale locale;
-    private Vector voices;
+    private Vector<Voice> voices;
 
     /**
      * Constructor
@@ -169,7 +168,7 @@ class DomainLocale {
     public DomainLocale(String domain, Locale locale) {
         this.domain = domain;
         this.locale = locale;
-        this.voices = new Vector();
+        this.voices = new Vector<Voice>();
     }
 
     /**

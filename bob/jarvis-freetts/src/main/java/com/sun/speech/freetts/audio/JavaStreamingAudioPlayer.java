@@ -78,10 +78,10 @@ public class JavaStreamingAudioPlayer implements AudioPlayer {
     private SourceDataLine line;
     private float volume = 1.0f;  // the current volume
     private long timeOffset = 0L;
-    private BulkTimer timer = new BulkTimer();
+    private final BulkTimer timer = new BulkTimer();
 
     // default format is 8khz
-    private AudioFormat defaultFormat = 
+    private final AudioFormat defaultFormat = 
 		new AudioFormat(8000f, 16, 1, true, true);
     private AudioFormat currentFormat = defaultFormat;
 
@@ -89,13 +89,13 @@ public class JavaStreamingAudioPlayer implements AudioPlayer {
     private boolean audioMetrics = false;
     private boolean firstSample = true;
 
-    private long cancelDelay;
-    private long drainDelay;
-    private long openFailDelayMs;
-    private long totalOpenFailDelayMs;
+    private final long cancelDelay;
+    private final long drainDelay;
+    private final long openFailDelayMs;
+    private final long totalOpenFailDelayMs;
 
-    private Object openLock = new Object();
-    private Object lineLock = new Object();
+    private final Object openLock = new Object();
+    private final Object lineLock = new Object();
 
 
     /**
@@ -145,7 +145,8 @@ public class JavaStreamingAudioPlayer implements AudioPlayer {
      * @throws UnsupportedOperationException if the line cannot be opened with
      *     the given format
      */
-    public synchronized void setAudioFormat(AudioFormat format) {
+    @Override
+	public synchronized void setAudioFormat(AudioFormat format) {
 	currentFormat = format;
         debugPrint("AF changed to " + format);
     }
@@ -156,14 +157,16 @@ public class JavaStreamingAudioPlayer implements AudioPlayer {
      *
      * @return format the audio format
      */
-    public AudioFormat getAudioFormat() {
+    @Override
+	public AudioFormat getAudioFormat() {
 	return currentFormat;
     }
 
     /**
      * Starts the first sample timer
      */
-    public void startFirstSampleTimer() {
+    @Override
+	public void startFirstSampleTimer() {
 	timer.start("firstAudio");
 	firstSample = true;
     }
@@ -235,7 +238,8 @@ public class JavaStreamingAudioPlayer implements AudioPlayer {
     /**
      * Pauses audio output
      */
-    public synchronized void pause() {
+    @Override
+	public synchronized void pause() {
         if (!isPaused()) {
 	    setPaused(true);
             if (line != null) {
@@ -247,7 +251,8 @@ public class JavaStreamingAudioPlayer implements AudioPlayer {
     /**
      * Resumes audio output
      */
-    public synchronized void resume() {
+    @Override
+	public synchronized void resume() {
 	if (isPaused()) {
 	    setPaused(false);
 	    if (!isCancelled() && line != null) {
@@ -268,7 +273,8 @@ public class JavaStreamingAudioPlayer implements AudioPlayer {
      // stutter after using it for a while. Adding this sleep() fixed the
      // problem. If we later find out that this problem no longer exists,
      // we should remove the thread.sleep(). ]]]
-    public void cancel() {
+    @Override
+	public void cancel() {
         debugPrint("cancelling...");
 
 	if (audioMetrics) {
@@ -310,7 +316,8 @@ public class JavaStreamingAudioPlayer implements AudioPlayer {
      * (such as all output associated with a single FreeTTSSpeakable)
      * should be grouped between a reset/drain pair.
      */
-    public synchronized void reset() {
+    @Override
+	public synchronized void reset() {
 	timer.start("audioOut");
         if (line != null) {
             waitResume();
@@ -324,7 +331,8 @@ public class JavaStreamingAudioPlayer implements AudioPlayer {
     /**
      * Closes this audio player
      */
-    public synchronized void close() {
+    @Override
+	public synchronized void close() {
 	done = true;
         if (line != null && line.isOpen()) {
             line.close();
@@ -339,7 +347,8 @@ public class JavaStreamingAudioPlayer implements AudioPlayer {
      *
      * @return the current volume (between 0 and 1)
      */
-    public float getVolume() {
+    @Override
+	public float getVolume() {
 	return volume;
     }	      
 
@@ -348,7 +357,8 @@ public class JavaStreamingAudioPlayer implements AudioPlayer {
      *
      * @param volume  the current volume (between 0 and 1)
      */
-    public void setVolume(float volume) {
+    @Override
+	public void setVolume(float volume) {
 	if (volume > 1.0f) {
 	    volume = 1.0f;
 	}
@@ -405,7 +415,8 @@ public class JavaStreamingAudioPlayer implements AudioPlayer {
      *    but since this is a streaming audio player, this parameter
      *    has no meaning and effect at all
      */
-    public void begin(int size) {
+    @Override
+	public void begin(int size) {
         debugPrint("opening Stream...");
         openLine(currentFormat);
         reset();
@@ -420,7 +431,8 @@ public class JavaStreamingAudioPlayer implements AudioPlayer {
      *      output was cancelled or interrupted.
      *
      */
-    public synchronized boolean end()  {
+    @Override
+	public synchronized boolean end()  {
         if (line != null) {
             drain();
             synchronized (lineLock) {
@@ -447,7 +459,8 @@ public class JavaStreamingAudioPlayer implements AudioPlayer {
      *   drained out of the system
      * ]]]
      */
-    public boolean drain()  {
+    @Override
+	public boolean drain()  {
         if (line != null) {
             debugPrint("started draining...");
 	    if (line.isOpen()) {
@@ -471,7 +484,8 @@ public class JavaStreamingAudioPlayer implements AudioPlayer {
      *
      * @return the amount of audio in milliseconds
      */
-    public synchronized long getTime()  {
+    @Override
+	public synchronized long getTime()  {
 	return (line.getMicrosecondPosition() - timeOffset) / 1000L;
     }
 
@@ -479,7 +493,8 @@ public class JavaStreamingAudioPlayer implements AudioPlayer {
     /**
      * Resets the audio clock
      */
-    public synchronized void resetTime() {
+    @Override
+	public synchronized void resetTime() {
 	timeOffset = line.getMicrosecondPosition();
     }
     
@@ -493,7 +508,8 @@ public class JavaStreamingAudioPlayer implements AudioPlayer {
      * @return <code>true</code> of the write completed successfully, 
      *       	<code> false </code>if the write was cancelled.
      */
-    public boolean write(byte[] audioData) {
+    @Override
+	public boolean write(byte[] audioData) {
 	return write(audioData, 0, audioData.length);
     }
     
@@ -507,7 +523,8 @@ public class JavaStreamingAudioPlayer implements AudioPlayer {
      * @return <code>true</code> of the write completed successfully, 
      *       	<code> false </code>if the write was cancelled.
      */
-    public boolean write(byte[] bytes, int offset, int size) {
+    @Override
+	public boolean write(byte[] bytes, int offset, int size) {
         if (line == null) {
             return false;
         }
@@ -542,10 +559,6 @@ public class JavaStreamingAudioPlayer implements AudioPlayer {
                     (bytes, curIndex, 
                      Math.min(BYTES_PER_WRITE, bytesRemaining));
 		
-		if (bytesWritten != bytesWritten) {
-		    debugPrint
-			("RETRY! bw" +bytesWritten + " br " + bytesRemaining);
-		}
                 // System.out.println("BytesWritten: " + bytesWritten);
 		curIndex += bytesWritten;
 		bytesRemaining -= bytesWritten;
@@ -586,7 +599,8 @@ public class JavaStreamingAudioPlayer implements AudioPlayer {
      *
      * @return the name of the audio player
      */
-    public String toString() {
+    @Override
+	public String toString() {
 	return "JavaStreamingAudioPlayer";
     }
 
@@ -605,7 +619,8 @@ public class JavaStreamingAudioPlayer implements AudioPlayer {
     /**
      * Shows metrics for this audio player
      */
-    public void showMetrics() {
+    @Override
+	public void showMetrics() {
 	timer.show("JavaStreamingAudioPlayer");
     }
 
@@ -642,7 +657,8 @@ public class JavaStreamingAudioPlayer implements AudioPlayer {
          *
          * @param event the LineEvent to handle
          */
-        public void update(LineEvent event) {
+        @Override
+		public void update(LineEvent event) {
             if (event.getType().equals(LineEvent.Type.OPEN)) {
                 synchronized (openLock) {
                     openLock.notifyAll();

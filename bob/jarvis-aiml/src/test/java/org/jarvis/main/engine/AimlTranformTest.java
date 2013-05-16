@@ -23,8 +23,8 @@ import java.io.IOException;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
+import org.jarvis.main.engine.impl.transform.AimlTranformImpl;
 import org.jarvis.main.engine.transform.IAimlTransform;
-import org.jarvis.main.engine.transform.impl.AimlTranformImpl;
 import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.model.transform.ITransformedItem;
 import org.junit.Test;

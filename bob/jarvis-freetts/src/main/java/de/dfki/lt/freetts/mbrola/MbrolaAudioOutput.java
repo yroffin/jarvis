@@ -73,7 +73,7 @@ public class MbrolaAudioOutput implements UtteranceProcessor {
         // before we can start writing them. Therefore, we need to load all
         // audio data for this utterance into RAM.
         
-        List audioData = (List) utterance.getObject("mbrolaAudio");
+        List<?> audioData = (List<?>) utterance.getObject("mbrolaAudio");
         if (audioData == null) {
             throw new ProcessException
                 ("No \"mbrolaAudio\" object is associated with utterance");
@@ -90,7 +90,7 @@ public class MbrolaAudioOutput implements UtteranceProcessor {
 
         audioPlayer.begin(totalSize);
 
-        for (Iterator it = audioData.iterator(); it.hasNext();) {
+        for (Iterator<?> it = audioData.iterator(); it.hasNext();) {
             byte[] bytes = (byte[]) it.next();
             if (!audioPlayer.write(bytes)) {
                 throw new ProcessException

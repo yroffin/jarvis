@@ -19,7 +19,7 @@ import java.util.LinkedList;
  * pend method.
  */
 public class OutputQueue {
-    private LinkedList list = new LinkedList();
+    private LinkedList<Utterance> list = new LinkedList<Utterance>();
     private int size;
     private final static int DEFAULT_SIZE = 5;
     private volatile boolean closed = false;

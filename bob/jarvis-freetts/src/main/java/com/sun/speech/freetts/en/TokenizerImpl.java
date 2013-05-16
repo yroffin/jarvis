@@ -72,10 +72,6 @@ public class TokenizerImpl implements Tokenizer {
     private Token token;
     private Token lastToken = null;
 
-    // for timing
-    private long duration = 0;
-        
-
     /**
      * Constructs a Tokenizer.
      */

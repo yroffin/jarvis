@@ -37,9 +37,6 @@ import com.sun.speech.freetts.util.Utilities;
  */
 public class TokenToWords implements UtteranceProcessor {
 
-    /** Regular expression for something that has a vowel */
-    private static final String RX_HAS_VOWEL = ".*[aeiouAEIOU].*";    
-                            
     // Patterns for regular expression matching
     private static final Pattern alphabetPattern;
     private static final Pattern commaIntPattern;
@@ -106,7 +103,7 @@ public class TokenToWords implements UtteranceProcessor {
      * Here we use a hashtable for constant time matching, instead of using
      * if (A.equals(B) || A.equals(C) || ...) to match Strings
      */
-    private static Hashtable kingSectionLikeHash = new Hashtable();
+    private static Hashtable<String, String> kingSectionLikeHash = new Hashtable<String, String>();
 
     private static final String KING_NAMES = "kingNames";
     private static final String KING_TITLES = "kingTitles";
@@ -238,7 +235,7 @@ public class TokenToWords implements UtteranceProcessor {
     };
 
     // Again hashtable for constant time searching
-    private static Hashtable usStatesHash = new Hashtable();
+    private static Hashtable<String, String[]> usStatesHash = new Hashtable<String, String[]>();
     
     // initialize the Hashtable for usStates
     static {
@@ -867,7 +864,7 @@ public class TokenToWords implements UtteranceProcessor {
 	int index = tokenVal.indexOf('/');
 	String aaa = tokenVal.substring(0, index);
 	String bbb = tokenVal.substring(index+1);
-	int a, b;
+	int a;
 	
 	// if the previous token is a number, add an "and"
 	if (matches(digitsPattern, (String) tokenItem.findFeature("p.name"))
@@ -878,7 +875,7 @@ public class TokenToWords implements UtteranceProcessor {
 	if (aaa.equals("1") && bbb.equals("2")) {
 	    wordRelation.addWord("a");
 	    wordRelation.addWord("half");
-	} else if ((a = Integer.parseInt(aaa)) < (b = Integer.parseInt(bbb))) {
+	} else if ((a = Integer.parseInt(aaa)) < (Integer.parseInt(bbb))) {
 	    NumberExpander.expandNumber(aaa, wordRelation);
 	    NumberExpander.expandOrdinal(bbb, wordRelation);
 	    if (a > 1) {

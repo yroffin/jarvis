@@ -17,6 +17,11 @@ package com.sun.speech.freetts;
 public class ValidationException extends Exception {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5247894530279032573L;
+
+	/**
      * Class constructor.
      *
      * @param s the reason why the exception was thrown

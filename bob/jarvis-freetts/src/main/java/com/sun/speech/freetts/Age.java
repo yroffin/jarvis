@@ -15,7 +15,7 @@ package com.sun.speech.freetts;
  *
  * @see Voice
  */
-public class Age implements Comparable {
+public class Age implements Comparable<Object> {
     private final String name;
 
     // Ordinal of next created

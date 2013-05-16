@@ -16,7 +16,6 @@ import javax.speech.EngineCreate;
 import javax.speech.EngineException;
 import javax.speech.synthesis.SynthesizerModeDesc;
 
-import com.sun.speech.engine.synthesis.BaseVoice;
 import com.sun.speech.freetts.ValidationException;
 
 /**
@@ -47,7 +46,7 @@ implements EngineCreate {
      *    return an array of size 0
      */
     public javax.speech.synthesis.Voice[] getVoices() {
-        List voiceList = new LinkedList();
+        List<FreeTTSVoice> voiceList = new LinkedList<FreeTTSVoice>();
         javax.speech.synthesis.Voice[] voices = super.getVoices();
         int count = 0;
         for (int i = 0; i < voices.length; i++) {

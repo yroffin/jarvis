@@ -17,6 +17,11 @@ package com.sun.speech.freetts;
 public class ProcessException extends Exception {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3960047077024445990L;
+
+	/**
      * Class constructor.
      *
      * @param s the reason why the exception was thrown

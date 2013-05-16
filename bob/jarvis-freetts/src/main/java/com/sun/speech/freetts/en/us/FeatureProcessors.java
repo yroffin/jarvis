@@ -55,12 +55,12 @@ public class FeatureProcessors {
     private final static Pattern DIGITS_PATTERN  
 	= Pattern.compile(USEnglish.RX_DIGITS);
 
-    private static Set months;
-    private static Set days;
+    private static Set<String> months;
+    private static Set<String> days;
 
     // the set of month names
     static {
-	months = new HashSet();
+	months = new HashSet<String>();
 	months.add("jan");
 	months.add("january");
 	months.add("feb");
@@ -88,7 +88,7 @@ public class FeatureProcessors {
 
     // the set of week neames
     static {
-	days = new HashSet();
+	days = new HashSet<String>();
 	days.add("sun");
 	days.add("sunday");
 	days.add("mon");

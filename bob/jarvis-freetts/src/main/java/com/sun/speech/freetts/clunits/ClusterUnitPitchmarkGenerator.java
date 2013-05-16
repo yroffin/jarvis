@@ -46,7 +46,6 @@ public class ClusterUnitPitchmarkGenerator implements UtteranceProcessor {
 	LPCResult lpcResult;
 	int pitchmarks = 0;
 	int uttSize = 0;
-	int unitEntry;
 	int unitStart;
 	int unitEnd;
 
@@ -55,7 +54,7 @@ public class ClusterUnitPitchmarkGenerator implements UtteranceProcessor {
 
 	for (Item unit = utterance.getRelation(Relation.UNIT).getHead();
 		unit != null; unit = unit.getNext()) {
-	    unitEntry = unit.getFeatures().getInt("unit_entry");
+	    unit.getFeatures().getInt("unit_entry");
 	    unitStart = unit.getFeatures().getInt("unit_start");
 	    unitEnd = unit.getFeatures().getInt("unit_end");
 	    uttSize += sts.getUnitSize(unitStart, unitEnd);
@@ -72,7 +71,7 @@ public class ClusterUnitPitchmarkGenerator implements UtteranceProcessor {
 
 	for (Item unit = utterance.getRelation(Relation.UNIT).getHead();
 		unit != null; unit = unit.getNext()) {
-	    unitEntry = unit.getFeatures().getInt("unit_entry");
+	    unit.getFeatures().getInt("unit_entry");
 	    unitStart = unit.getFeatures().getInt("unit_start");
 	    unitEnd = unit.getFeatures().getInt("unit_end");
 	    for (int i = unitStart; i < unitEnd; i++,pitchmarks++) {

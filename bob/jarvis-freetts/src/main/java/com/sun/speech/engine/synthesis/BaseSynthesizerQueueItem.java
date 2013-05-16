@@ -256,7 +256,7 @@ public class BaseSynthesizerQueueItem extends SynthesizerQueueItem
         
 
         if (synth.speakableListeners != null) {
-            Iterator iterator = synth.speakableListeners.iterator();
+            Iterator<?> iterator = synth.speakableListeners.iterator();
             while (iterator.hasNext()) {
                 SpeakableListener sl = (SpeakableListener) iterator.next();
                 sl.markerReached(event);
@@ -310,7 +310,7 @@ public class BaseSynthesizerQueueItem extends SynthesizerQueueItem
         
 
         if (synth.speakableListeners != null) {
-            Iterator iterator = synth.speakableListeners.iterator();
+            Iterator<?> iterator = synth.speakableListeners.iterator();
             while (iterator.hasNext()) {
                 SpeakableListener sl = (SpeakableListener) iterator.next();
                 sl.speakableCancelled(event);
@@ -363,7 +363,7 @@ public class BaseSynthesizerQueueItem extends SynthesizerQueueItem
         
 
         if (synth.speakableListeners != null) {
-            Iterator iterator = synth.speakableListeners.iterator();
+            Iterator<?> iterator = synth.speakableListeners.iterator();
             while (iterator.hasNext()) {
                 SpeakableListener sl = (SpeakableListener) iterator.next();
                 sl.speakableEnded(event);
@@ -403,7 +403,7 @@ public class BaseSynthesizerQueueItem extends SynthesizerQueueItem
         
 
         if (synth.speakableListeners != null) {
-            Iterator iterator = synth.speakableListeners.iterator();
+            Iterator<?> iterator = synth.speakableListeners.iterator();
             while (iterator.hasNext()) {
                 SpeakableListener sl = (SpeakableListener) iterator.next();
                 sl.speakablePaused(event);
@@ -443,7 +443,7 @@ public class BaseSynthesizerQueueItem extends SynthesizerQueueItem
         
 
         if (synth.speakableListeners != null) {
-            Iterator iterator = synth.speakableListeners.iterator();
+            Iterator<?> iterator = synth.speakableListeners.iterator();
             while (iterator.hasNext()) {
                 SpeakableListener sl =
                     (SpeakableListener) iterator.next();
@@ -484,7 +484,7 @@ public class BaseSynthesizerQueueItem extends SynthesizerQueueItem
         
 
         if (synth.speakableListeners != null) {
-            Iterator iterator = synth.speakableListeners.iterator();
+            Iterator<?> iterator = synth.speakableListeners.iterator();
             while (iterator.hasNext()) {
                 SpeakableListener sl = (SpeakableListener) iterator.next();
                 sl.speakableStarted(event);
@@ -524,7 +524,7 @@ public class BaseSynthesizerQueueItem extends SynthesizerQueueItem
         
 
         if (synth.speakableListeners != null) {
-            Iterator iterator = synth.speakableListeners.iterator();
+            Iterator<?> iterator = synth.speakableListeners.iterator();
             while (iterator.hasNext()) {
                 SpeakableListener sl = (SpeakableListener) iterator.next();
                 sl.topOfQueue(event);
@@ -565,7 +565,7 @@ public class BaseSynthesizerQueueItem extends SynthesizerQueueItem
         
 
         if (synth.speakableListeners != null) {
-            Iterator iterator = synth.speakableListeners.iterator();
+            Iterator<?> iterator = synth.speakableListeners.iterator();
             while (iterator.hasNext()) {
                 SpeakableListener sl = (SpeakableListener) iterator.next();
                 sl.wordStarted(event);

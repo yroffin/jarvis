@@ -37,10 +37,10 @@ public class SynthesizerSelector {
     static public SynthesizerModeDesc getSynthesizerModeDesc(
         Component component,
 	String appName) {
-	List synths = new java.util.ArrayList();
-	List synthNames = new java.util.ArrayList();
+	List<SynthesizerModeDesc> synths = new java.util.ArrayList<SynthesizerModeDesc>();
+	List<String> synthNames = new java.util.ArrayList<String>();
 	EngineList list = Central.availableSynthesizers(null); 
-	Enumeration e = list.elements();
+	Enumeration<?> e = list.elements();
 	while (e.hasMoreElements()) {
             synths.add(((SynthesizerModeDesc) e.nextElement()));
             synthNames.add(

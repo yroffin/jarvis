@@ -38,7 +38,6 @@ import java.util.LinkedHashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.StringTokenizer;
 
 /**
@@ -127,12 +126,12 @@ abstract public class LexiconImpl implements Lexicon {
     /**
      * The addenda.
      */
-    private Map addenda;
+    private Map<Object, Object> addenda;
 
     /**
      * The compiled lexicon.
      */
-    private Map compiled;
+    private Map<Object, Object> compiled;
 
     /**
      * The LetterToSound rules.
@@ -142,7 +141,7 @@ abstract public class LexiconImpl implements Lexicon {
     /**
      * Parts of Speech.
      */
-    private ArrayList partsOfSpeech = new ArrayList();
+    private ArrayList<String> partsOfSpeech = new ArrayList<String>();
 
     /**
      * A static directory of compiledURL URL objects and associated
@@ -152,7 +151,7 @@ abstract public class LexiconImpl implements Lexicon {
      * and <code>removeAddendum</code>, each lexicon instance has its
      * own addenda.
      */
-    private static Map loadedCompiledLexicons;
+    private static Map<URL, Map<Object, Object>> loadedCompiledLexicons;
     
 
     
@@ -257,18 +256,18 @@ abstract public class LexiconImpl implements Lexicon {
 	}
 
 	if (loadedCompiledLexicons == null) {
-	    loadedCompiledLexicons = new HashMap();
+	    loadedCompiledLexicons = new HashMap<URL, Map<Object, Object>>();
 	}
 	if (!loadedCompiledLexicons.containsKey(compiledURL)) {
 		InputStream compiledIS = Utilities.getInputStream(compiledURL);
 		if (compiledIS == null) {
 		    throw new IOException("Can't load lexicon from " + compiledURL);
 		}
-		Map newCompiled = createLexicon(compiledIS, binary, 65000);
+		Map<Object, Object> newCompiled = createLexicon(compiledIS, binary, 65000);
         loadedCompiledLexicons.put(compiledURL, newCompiled);
     	compiledIS.close();
 	}
-	compiled = Collections.unmodifiableMap((Map)loadedCompiledLexicons.get(compiledURL));
+	compiled = Collections.unmodifiableMap((Map<?, ?>)loadedCompiledLexicons.get(compiledURL));
 
 	InputStream addendaIS = Utilities.getInputStream(addendaURL);
 	if (addendaIS == null) {
@@ -295,9 +294,9 @@ abstract public class LexiconImpl implements Lexicon {
                     throw new IOException("Can't load user addenda from "
                                           + userAddenda);
                 }
-                Map tmpAddenda = createLexicon(userAddendaIS, false, 50);
+                Map<Object, Object> tmpAddenda = createLexicon(userAddendaIS, false, 50);
                 userAddendaIS.close();
-                for (Iterator keys = tmpAddenda.keySet().iterator();
+                for (Iterator<Object> keys = tmpAddenda.keySet().iterator();
                      keys.hasNext();) {
                     Object key = keys.next();
                     addenda.put(key, tmpAddenda.get(key));
@@ -323,7 +322,7 @@ abstract public class LexiconImpl implements Lexicon {
      *
      * @throws IOException if errors are encountered while reading the data
      */
-    protected Map createLexicon(InputStream is,
+    protected Map<Object, Object> createLexicon(InputStream is,
                                 boolean binary, 
                                 int estimatedSize) 
         throws IOException {
@@ -350,9 +349,9 @@ abstract public class LexiconImpl implements Lexicon {
      *
      * @throws IOException if errors are encountered while reading the data
      */
-    protected Map loadTextLexicon(InputStream is, int estimatedSize) 
+    protected Map<Object, Object> loadTextLexicon(InputStream is, int estimatedSize) 
 	throws IOException {
-        Map lexicon = new LinkedHashMap(estimatedSize * 4 / 3);
+        Map<Object, Object> lexicon = new LinkedHashMap<Object, Object>(estimatedSize * 4 / 3);
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         String line;
         
@@ -372,7 +371,7 @@ abstract public class LexiconImpl implements Lexicon {
      * @param lexicon the lexicon
      * @param line the input text
      */
-    protected void parseAndAdd(Map lexicon, String line) {
+    protected void parseAndAdd(Map<Object, Object> lexicon, String line) {
         StringTokenizer tokenizer = new StringTokenizer(line,"\t");
         String phones = null;
         
@@ -453,7 +452,7 @@ abstract public class LexiconImpl implements Lexicon {
      *
      * @return the list of phones for word or <code>null</code>
      */
-    protected String[] getPhones(Map lexicon,
+    protected String[] getPhones(Map<Object, Object> lexicon,
                                  String word,
                                  String partOfSpeech) {
         String[] phones;
@@ -480,7 +479,7 @@ abstract public class LexiconImpl implements Lexicon {
      *
      * @return the list of phones for word or <code>null</code>
      */
-    protected String[] getPhones(Map lexicon,
+    protected String[] getPhones(Map<Object, Object> lexicon,
                                  String wordAndPartOfSpeech) {
         Object value = lexicon.get(wordAndPartOfSpeech);
         if (value instanceof String[]) {
@@ -506,7 +505,7 @@ abstract public class LexiconImpl implements Lexicon {
      * @return the phones split into an array
      */
     protected String[] getPhones(String phones) {
-        ArrayList phoneList = new ArrayList();
+        ArrayList<String> phoneList = new ArrayList<String>();
         StringTokenizer tokenizer = new StringTokenizer(phones, " ");
         while (tokenizer.hasMoreTokens()) {
             phoneList.add(tokenizer.nextToken());
@@ -620,12 +619,12 @@ abstract public class LexiconImpl implements Lexicon {
      * @param lexicon the lexicon to dump 
      * @param path the path to dump the file to
      */
-    private void dumpBinaryLexicon(Map lexicon, String path) {
+    private void dumpBinaryLexicon(Map<Object, Object> lexicon, String path) {
 	try {
 	    FileOutputStream fos = new FileOutputStream(path);
 	    DataOutputStream dos = new DataOutputStream(new
 		    BufferedOutputStream(fos));
-	    List phonemeList = findPhonemes(lexicon);
+	    List<String> phonemeList = findPhonemes(lexicon);
 
 	    dos.writeInt(MAGIC);
 	    dos.writeInt(VERSION);
@@ -636,7 +635,7 @@ abstract public class LexiconImpl implements Lexicon {
 	    }
 
 	    dos.writeInt(lexicon.keySet().size());
-	    for (Iterator i = lexicon.keySet().iterator(); i.hasNext(); ) {
+	    for (Iterator<Object> i = lexicon.keySet().iterator(); i.hasNext(); ) {
 		String key = (String) i.next();
 		outString(dos, key);
 		String[] phonemes = getPhones(lexicon, key);
@@ -670,7 +669,7 @@ abstract public class LexiconImpl implements Lexicon {
      *
      * @throws IOException if an IO error occurs
      */
-    private Map loadMappedBinaryLexicon(FileInputStream is, int estimatedSize) 
+    private Map<Object, Object> loadMappedBinaryLexicon(FileInputStream is, int estimatedSize) 
 	throws IOException {
 	FileChannel fc = is.getChannel();
 
@@ -679,13 +678,13 @@ abstract public class LexiconImpl implements Lexicon {
 	bb.load();
 	int size = 0;
 	int numEntries = 0;
-	List phonemeList = new ArrayList();
+	List<String> phonemeList = new ArrayList<String>();
 
 	// we get better performance for some reason if we
 	// just ignore estimated size
         //
 	// Map lexicon = new HashMap();
-        Map lexicon = new LinkedHashMap(estimatedSize * 4 / 3);
+        Map<Object, Object> lexicon = new LinkedHashMap<Object, Object>(estimatedSize * 4 / 3);
 
 	if (bb.getInt() != MAGIC) {
 	    throw new Error("bad magic number in lexicon");
@@ -733,18 +732,18 @@ abstract public class LexiconImpl implements Lexicon {
      *
      * @throws IOException if an IO error occurs
      */
-    private Map loadBinaryLexicon(InputStream is, int estimatedSize) 
+    private Map<Object, Object> loadBinaryLexicon(InputStream is, int estimatedSize) 
 	throws IOException {
 	DataInputStream dis = new DataInputStream(new
 		BufferedInputStream(is));
 	int size = 0;
 	int numEntries = 0;
-	List phonemeList = new ArrayList();
+	List<String> phonemeList = new ArrayList<String>();
 
 	// we get better performance for some reason if we
 	// just ignore estimated size
         //
-        Map lexicon = new LinkedHashMap();
+        Map<Object, Object> lexicon = new LinkedHashMap<Object, Object>();
 
 	if (dis.readInt() != MAGIC) {
 	    throw new Error("bad magic number in lexicon");
@@ -803,9 +802,9 @@ abstract public class LexiconImpl implements Lexicon {
      *
      * @return list the unique set of phonemes
      */
-    private List findPhonemes(Map lexicon) {
-	List phonemeList = new ArrayList();
-	for (Iterator i = lexicon.keySet().iterator(); i.hasNext(); ) {
+    private List<String> findPhonemes(Map<Object, Object> lexicon) {
+	List<String> phonemeList = new ArrayList<String>();
+	for (Iterator<Object> i = lexicon.keySet().iterator(); i.hasNext(); ) {
 	    String key = (String) i.next();
 	    String[] phonemes = getPhones(lexicon, key);
 	    for (int index = 0; index < phonemes.length; index++) {
@@ -839,8 +838,8 @@ abstract public class LexiconImpl implements Lexicon {
      *
      * @return true if they are identical
      */
-    private boolean compare(Map lex, Map other) {
-	for (Iterator i = lex.keySet().iterator(); i.hasNext(); ) {
+    private boolean compare(Map<Object, Object> lex, Map<Object, Object> other) {
+	for (Iterator<Object> i = lex.keySet().iterator(); i.hasNext(); ) {
 	    String key = (String) i.next();
 	    String[] thisPhonemes = getPhones(lex, key);
 	    String[] otherPhonemes = getPhones(other, key);

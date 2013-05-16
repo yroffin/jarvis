@@ -23,6 +23,7 @@ import java.util.List;
 
 import org.jarvis.main.engine.impl.AimlCoreEngineImpl;
 import org.jarvis.main.exception.AimlParsingError;
+import org.jarvis.main.model.parser.history.IAimlHistory;
 import org.junit.Test;
 
 public class AimlCoreEngineTest {
@@ -43,20 +44,23 @@ public class AimlCoreEngineTest {
 
 	@Test
 	public void testSimpleCoreSystem() throws AimlParsingError {
-		List<String> answer = instance(
+		List<IAimlHistory> answer = instance(
 				"src/test/resources/core/default/default.xml").ask("hello");
-		assertEquals("Hi there!", answer.get(0));
+		assertEquals("Hi there!", answer.get(0).getAnswer());
 	}
 
 	@Test
 	public void testSimpleCoreSystemAlt() throws AimlParsingError {
 		IAimlCoreEngine engine = instance("src/test/resources/core/default/default.xml");
-		List<String> answer = null;
+		List<IAimlHistory> answer = null;
 		for (int i = 0; i < 100; i++) {
 			answer = engine.ask("any");
-			boolean a = "What is your favorite movie?".compareTo(answer.get(0)) == 0;
-			boolean b = "What is your name?".compareTo(answer.get(0)) == 0;
-			boolean c = "Will you buy me a drink?".compareTo(answer.get(0)) == 0;
+			boolean a = "What is your favorite movie?".compareTo(answer.get(0)
+					.getAnswer()) == 0;
+			boolean b = "What is your name?".compareTo(answer.get(0)
+					.getAnswer()) == 0;
+			boolean c = "Will you buy me a drink?".compareTo(answer.get(0)
+					.getAnswer()) == 0;
 			assertEquals(a || b || c, true);
 		}
 	}
@@ -64,13 +68,13 @@ public class AimlCoreEngineTest {
 	@Test
 	public void testSimpleCoreSystemSay() throws AimlParsingError {
 		IAimlCoreEngine engine = instance("src/test/resources/core/default/default.xml");
-		List<String> answer = null;
+		List<IAimlHistory> answer = null;
 		for (int i = 0; i < 10; i++) {
 			answer = engine.ask("say a b or c");
-			boolean a = "a".compareTo(answer.get(0)) == 0;
-			boolean b = "b".compareTo(answer.get(0)) == 0;
-			boolean c = "c".compareTo(answer.get(0)) == 0;
-			assertEquals(answer.get(0), a || b || c, true);
+			boolean a = "a".compareTo(answer.get(0).getAnswer()) == 0;
+			boolean b = "b".compareTo(answer.get(0).getAnswer()) == 0;
+			boolean c = "c".compareTo(answer.get(0).getAnswer()) == 0;
+			assertEquals(answer.get(0).getAnswer(), a || b || c, true);
 		}
 	}
 }

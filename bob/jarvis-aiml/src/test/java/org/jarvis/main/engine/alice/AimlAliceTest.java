@@ -24,6 +24,7 @@ import java.util.List;
 import org.jarvis.main.engine.IAimlCoreEngine;
 import org.jarvis.main.engine.impl.AimlCoreEngineImpl;
 import org.jarvis.main.exception.AimlParsingError;
+import org.jarvis.main.model.parser.history.IAimlHistory;
 import org.junit.Test;
 
 public class AimlAliceTest {
@@ -50,10 +51,10 @@ public class AimlAliceTest {
 	@Test
 	public void testSimpleAlice() throws AimlParsingError {
 		IAimlCoreEngine engine = instance("src/test/resources/core/alice/alice.aiml");
-		List<String> answer = null;
+		List<IAimlHistory> answer = null;
 
 		engine.setBot("name", "ALICE");
 		answer = engine.ask("CALL ME BOTNAME");
-		assertEquals("My name is ALICE too!\n\n", answer.get(0));
+		assertEquals("My name is ALICE too!\n\n", answer.get(0).getAnswer());
 	}
 }

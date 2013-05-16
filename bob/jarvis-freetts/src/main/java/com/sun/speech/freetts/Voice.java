@@ -89,8 +89,8 @@ public abstract class Voice implements UtteranceProcessor, Dumpable {
      */
     public final static String DATABASE_NAME = "databaseName";
     
-    private List utteranceProcessors;
-    private Map featureProcessors;
+    private List<?> utteranceProcessors;
+    private Map<String, FeatureProcessor> featureProcessors;
     private FeatureSetImpl features;
     private boolean metrics = false;
     private boolean detailedMetrics = false;
@@ -172,9 +172,9 @@ public abstract class Voice implements UtteranceProcessor, Dumpable {
         /* Make the utteranceProcessors a synchronized list to avoid
          * some threading issues.
          */
-        utteranceProcessors = Collections.synchronizedList(new ArrayList());
+        utteranceProcessors = Collections.synchronizedList(new ArrayList<Object>());
 	features = new FeatureSetImpl();
-	featureProcessors = new HashMap();
+	featureProcessors = new HashMap<String, FeatureProcessor>();
 
 	try {
 	    nominalRate = Float.parseFloat(
@@ -281,7 +281,7 @@ public abstract class Voice implements UtteranceProcessor, Dumpable {
 
 	getAudioPlayer().startFirstSampleTimer();
 
-	for (Iterator i = tokenize(speakable); 
+	for (Iterator<?> i = tokenize(speakable); 
              !speakable.isCompleted() && i.hasNext() ; ) {
 	    try {
 		Utterance utterance = (Utterance) i.next();
@@ -613,7 +613,7 @@ public abstract class Voice implements UtteranceProcessor, Dumpable {
      *
      * @return a List containing UtteranceProcessor instances
      */
-    public List getUtteranceProcessors() {
+    public List<?> getUtteranceProcessors() {
         return utteranceProcessors;
     }
 
@@ -705,7 +705,7 @@ public abstract class Voice implements UtteranceProcessor, Dumpable {
      *
      * @return an iterator that will yield a series of utterances
      */
-    private Iterator tokenize(FreeTTSSpeakable speakable) {
+    private Iterator<?> tokenize(FreeTTSSpeakable speakable) {
 	return new FreeTTSSpeakableTokenizer(speakable).iterator();
     }
     
@@ -1197,7 +1197,7 @@ public abstract class Voice implements UtteranceProcessor, Dumpable {
             DEFAULT_AUDIO_PLAYER, DEFAULT_AUDIO_PLAYER_DEFAULT);
 
         try {
-            Class cls = Class.forName(className);
+            Class<?> cls = Class.forName(className);
             defaultAudioPlayer = (AudioPlayer) cls.newInstance();
             return defaultAudioPlayer;
         } catch (ClassNotFoundException e) {
@@ -1441,8 +1441,8 @@ public abstract class Voice implements UtteranceProcessor, Dumpable {
 	/**
 	 * Returns an iterator for this text item.
 	 */
-	public Iterator iterator() {
-	    return new Iterator() {
+	public Iterator<?> iterator() {
+	    return new Iterator<Object>() {
 		boolean first = true;
 		Token savedToken = null;
 
@@ -1462,7 +1462,7 @@ public abstract class Voice implements UtteranceProcessor, Dumpable {
 		 *    null if there is are no utterances left
 		 */
 		public Object next() {
-		    ArrayList tokenList = new ArrayList();
+		    ArrayList<Token> tokenList = new ArrayList<Token>();
 		    Utterance utterance = null;
 
 		    if (savedToken != null) {

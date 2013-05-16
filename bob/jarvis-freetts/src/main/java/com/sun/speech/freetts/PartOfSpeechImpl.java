@@ -44,7 +44,7 @@ public class PartOfSpeechImpl implements PartOfSpeech {
     /**
      * A map from words to their part of speech.
      */
-    private Map partOfSpeechMap;
+    private Map<String, String> partOfSpeechMap;
 
     /**
      * Default part of speech.
@@ -65,7 +65,7 @@ public class PartOfSpeechImpl implements PartOfSpeech {
         BufferedReader reader;
         String line;
 
-	partOfSpeechMap = new HashMap();
+	partOfSpeechMap = new HashMap<String, String>();
 	this.defaultPartOfSpeech = defaultPartOfSpeech;
 	reader = new BufferedReader(new
 		InputStreamReader(url.openStream()));

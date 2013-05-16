@@ -19,7 +19,7 @@ package org.jarvis.main.model.parser;
 import org.jarvis.main.model.parser.category.IAimlPattern;
 import org.jarvis.main.model.parser.category.IAimlTemplate;
 import org.jarvis.main.model.parser.category.IAimlThat;
-import org.jarvis.main.model.transform.ITransformedItem;
+import org.jarvis.main.model.parser.history.IAimlHistory;
 
 public interface IAimlCategory extends IAimlElement {
 	public void setPattern(IAimlPattern e);
@@ -28,17 +28,13 @@ public interface IAimlCategory extends IAimlElement {
 
 	public void setTemplate(IAimlTemplate e);
 
-	public void setTransformedPattern(ITransformedItem transform);
-
 	public void setThat(IAimlThat e);
 
 	public IAimlThat getThat();
 
-	public ITransformedItem getTransformedPattern();
+	public void setHistory(IAimlHistory e);
+
+	public IAimlHistory getHistory();
 
 	public boolean hasThat();
-
-	public void setTransformedThat(ITransformedItem transform);
-
-	public ITransformedItem getTransformedThat();
 }

@@ -25,14 +25,14 @@ import com.sun.speech.freetts.util.Utilities;
  * Implementation of the FeatureSet interface.
  */
 public class FeatureSetImpl implements FeatureSet {
-    private final Map featureMap;
+    private final Map<String, Object> featureMap;
     static DecimalFormat formatter;
 
     /**
      * Creates a new empty feature set
      */
     public FeatureSetImpl() {
-        featureMap = new LinkedHashMap();
+        featureMap = new LinkedHashMap<String, Object>();
     }
 
     /**
@@ -174,7 +174,7 @@ public class FeatureSetImpl implements FeatureSet {
      */
     public void dump(PrintWriter output, int pad, String title,
 	    boolean showName) {
-	List keys = new ArrayList(featureMap.keySet());
+	List<String> keys = new ArrayList<String>(featureMap.keySet());
 
 	if (formatter == null) {
 	    formatter = new DecimalFormat("########0.000000");
@@ -183,7 +183,7 @@ public class FeatureSetImpl implements FeatureSet {
 	 Collections.reverse(keys);  // to match flite
 
 	Utilities.dump(output, pad, title);
-	for (Iterator i = keys.iterator(); i.hasNext(); ) {
+	for (Iterator<String> i = keys.iterator(); i.hasNext(); ) {
 	    String key = (String) i.next();
 
 	    if (!showName && key.equals("name")) {

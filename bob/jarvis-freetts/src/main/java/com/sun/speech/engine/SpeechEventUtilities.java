@@ -209,7 +209,11 @@ public class SpeechEventUtilities {
      * @see #postSpeechEvent
      */
     protected static class SpeechAWTEventTarget extends Component {
-        SpeechAWTEventTarget() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 5008437043570816037L;
+		SpeechAWTEventTarget() {
             super();
             enableEvents(SpeechAWTEvent.EVENT_ID);
         }
@@ -233,7 +237,11 @@ public class SpeechEventUtilities {
      * @see #postSpeechEvent
      */
     protected static class SpeechAWTEvent extends AWTEvent {
-        static final int EVENT_ID = AWTEvent.RESERVED_ID_MAX + 14830;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 3597111326732419502L;
+		static final int EVENT_ID = AWTEvent.RESERVED_ID_MAX + 14830;
         SpeechEventDispatcher dispatcher = null;
         SpeechEvent event = null;
         Object lock = null;

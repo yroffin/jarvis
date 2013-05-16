@@ -38,7 +38,7 @@ grammar normalizer;
 tokens {
 }
 
-document : (sentence (DOT|QUESTIONMARK|EXCLAIM)?)+ EOF;
+document : (sentence|DOT|QUESTIONMARK|EXCLAIM)* EOF;
 
 sentence : {onNewSentence();} word+;
 
