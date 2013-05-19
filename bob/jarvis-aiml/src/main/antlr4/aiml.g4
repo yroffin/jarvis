@@ -7,9 +7,11 @@ grammar aiml;
 
 @parser::members {
     boolean opened = false;
-    public enum router {UPPER,LOWER,SIZE,DATE,AIML,BR,STAR,A,BOT,CONDITION,PERSON2,ID,VERSION,TEMPLATE,TOPIC,CATEGORY,PATTERN,PERSON,GET,INPUT,SET,SR,SRAI,THAT,RANDOM,LI,FORMAL,THINK,THATSTAR,TOPICSTAR,UNKNOWN};
+    public enum router {SYSTEM,JAVASCRIPT,UPPER,LOWER,SIZE,DATE,AIML,BR,STAR,A,BOT,CONDITION,PERSON2,ID,VERSION,TEMPLATE,TOPIC,CATEGORY,PATTERN,PERSON,GET,INPUT,SET,SR,SRAI,THAT,RANDOM,LI,FORMAL,THINK,THATSTAR,TOPICSTAR,UNKNOWN};
     public router decode(String value) {
         if("aiml".compareTo(value)==0) return router.AIML;
+        if("system".compareTo(value)==0) return router.SYSTEM;
+        if("javascript".compareTo(value)==0) return router.JAVASCRIPT;
         if("template".compareTo(value)==0) return router.TEMPLATE;
         if("topic".compareTo(value)==0) return router.TOPIC;
         if("category".compareTo(value)==0) return router.CATEGORY;

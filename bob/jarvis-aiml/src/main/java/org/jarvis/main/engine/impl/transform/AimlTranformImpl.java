@@ -28,8 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class AimlTranformImpl implements IAimlTransform {
-	protected Logger	logger	= LoggerFactory
-										.getLogger(AimlTranformImpl.class);
+	protected Logger logger = LoggerFactory.getLogger(AimlTranformImpl.class);
 
 	@Override
 	public List<ITransformedItem> transform(List<IAimlElement> elements)
@@ -54,5 +53,19 @@ public class AimlTranformImpl implements IAimlTransform {
 			throws AimlParsingError {
 		IAimlTransformParser parser = new AimlTransformParserImpl(data);
 		return parser.parse();
+	}
+
+	@Override
+	public boolean compare(String left, String right) throws AimlParsingError {
+		List<ITransformedItem> transformedLeft = transform(left);
+		List<ITransformedItem> transformedRight = transform(right);
+		if (transformedLeft.size() != transformedRight.size()) return false;
+
+		int i = 0;
+		boolean scored = true;
+		for (ITransformedItem tx : transformedLeft) {
+			scored = scored && (tx.score(transformedRight.get(i++)) > 0);
+		}
+		return scored;
 	}
 }

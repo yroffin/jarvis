@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="1.0.1">
+<!-- another case -->
+<category> 
+<pattern>Test condition 1</pattern> 
+<template>This category has two condition statements.
+The first is activated when you are on the host machine: 
+<condition name="ip" value="localhost"> 
+You are the true botmaster.
+</condition> 
+The second condition is activated when you claim to be the botmaster. 
+<condition name="name" value="* WALLACE"> 
+Impostor! You are not my real botmaster. 
+</condition>
+</template>
+</category> 
+<!-- another case -->
+<category> 
+<pattern>I AM BLOND 1</pattern> 
+<template>You sound very <condition name="gender" value="female">attractive.</condition><condition name="gender" value="male">handsome.</condition></template> 
+</category>
+<!-- another case -->
+<category> 
+<pattern>I AM BLOND 2</pattern> 
+<template>You sound very <condition><li name="gender" value="female">attractive.</li><li name="gender" value="male">handsome.</li></condition></template> 
+</category>
+<!-- another case -->
+<category> 
+<pattern>I AM BLOND 3</pattern> 
+<template>You sound very <condition name="gender"><li value="female">attractive.</li><li value="male">handsome.</li></condition></template> 
+</category>
+<!-- another case -->
+<category> 
+<pattern>I AM BLOND 4</pattern> 
+<template>You sound very ...
+<condition name="gender" value="female">
+	<li>attractive.</li>
+	</condition><condition name="gender" value="male">
+	<li>handsome.</li>
+	</condition></template> 
+</category>
+</aiml>

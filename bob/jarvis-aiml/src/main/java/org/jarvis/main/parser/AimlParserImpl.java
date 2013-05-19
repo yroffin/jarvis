@@ -53,13 +53,15 @@ import org.jarvis.main.model.impl.parser.template.AimlStarImpl;
 import org.jarvis.main.model.impl.parser.template.AimlThatStarImpl;
 import org.jarvis.main.model.impl.parser.template.AimlThatTemplateImpl;
 import org.jarvis.main.model.impl.parser.template.AimlTopicStarImpl;
-import org.jarvis.main.model.impl.parser.template.condition.AimlBlockConditionImpl;
+import org.jarvis.main.model.impl.parser.template.condition.AimlConditionImpl;
 import org.jarvis.main.model.impl.parser.template.format.AimlFormalImpl;
 import org.jarvis.main.model.impl.parser.template.format.AimlLowercaseImpl;
 import org.jarvis.main.model.impl.parser.template.format.AimlUppercaseImpl;
 import org.jarvis.main.model.impl.parser.template.system.AimlDateImpl;
 import org.jarvis.main.model.impl.parser.template.system.AimlIdImpl;
+import org.jarvis.main.model.impl.parser.template.system.AimlJavascriptImpl;
 import org.jarvis.main.model.impl.parser.template.system.AimlSizeImpl;
+import org.jarvis.main.model.impl.parser.template.system.AimlSystemImpl;
 import org.jarvis.main.model.impl.parser.template.system.AimlVersionImpl;
 import org.jarvis.main.model.impl.parser.template.trans.AimlPerson2Impl;
 import org.jarvis.main.model.impl.parser.template.trans.AimlPersonImpl;
@@ -90,7 +92,9 @@ import org.jarvis.main.model.parser.template.format.IAimlLowercase;
 import org.jarvis.main.model.parser.template.format.IAimlUppercase;
 import org.jarvis.main.model.parser.template.system.IAimlDate;
 import org.jarvis.main.model.parser.template.system.IAimlId;
+import org.jarvis.main.model.parser.template.system.IAimlJavascript;
 import org.jarvis.main.model.parser.template.system.IAimlSize;
+import org.jarvis.main.model.parser.template.system.IAimlSystem;
 import org.jarvis.main.model.parser.template.system.IAimlVersion;
 import org.jarvis.main.model.parser.template.trans.IAimlPerson;
 import org.jarvis.main.model.parser.template.trans.IAimlPerson2;
@@ -326,7 +330,7 @@ public class AimlParserImpl extends aimlParser {
 			return e;
 		}
 
-		public IAimlCondition push(AimlBlockConditionImpl e) {
+		public IAimlCondition push(AimlConditionImpl e) {
 			stack.lastElement().add(e);
 			stack.push(e);
 			return e;
@@ -415,6 +419,18 @@ public class AimlParserImpl extends aimlParser {
 		}
 
 		public IAimlLowercase push(AimlLowercaseImpl e) {
+			stack.lastElement().add(e);
+			stack.push(e);
+			return e;
+		}
+
+		public IAimlSystem push(AimlSystemImpl e) {
+			stack.lastElement().add(e);
+			stack.push(e);
+			return e;
+		}
+
+		public IAimlJavascript push(AimlJavascriptImpl e) {
 			stack.lastElement().add(e);
 			stack.push(e);
 			return e;
@@ -769,7 +785,7 @@ public class AimlParserImpl extends aimlParser {
 			stackElements.push(new AimlBotImpl());
 			break;
 		case CONDITION:
-			stackElements.push(new AimlBlockConditionImpl());
+			stackElements.push(new AimlConditionImpl());
 			break;
 		case PERSON2:
 			stackElements.push(new AimlPerson2Impl());
@@ -785,6 +801,12 @@ public class AimlParserImpl extends aimlParser {
 			break;
 		case LOWER:
 			stackElements.push(new AimlLowercaseImpl());
+			break;
+		case SYSTEM:
+			stackElements.push(new AimlSystemImpl());
+			break;
+		case JAVASCRIPT:
+			stackElements.push(new AimlJavascriptImpl());
 			break;
 		default:
 			logger.warn("Unknown tag element : " + value);

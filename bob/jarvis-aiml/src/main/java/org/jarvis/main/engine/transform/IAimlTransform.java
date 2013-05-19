@@ -28,4 +28,6 @@ public interface IAimlTransform {
 
 	public List<ITransformedItem> transform(List<IAimlElement> elements)
 			throws AimlParsingError;
+
+	public boolean compare(String left, String right) throws AimlParsingError;
 }
