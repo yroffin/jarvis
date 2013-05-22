@@ -16,10 +16,13 @@
 
 package org.jarvis.main.parser;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.NoSuchElementException;
-import java.util.Scanner;
 import java.util.Stack;
 
 import org.antlr.v4.runtime.BailErrorStrategy;
@@ -523,10 +526,12 @@ public class AimlParserImpl extends aimlParser {
 			 */
 			String encoding = "UTF8";
 			try {
-				Scanner scan = new Scanner(filename);
-				CommonTokenStream local = AimlLexerImpl
-						.getTokensFromString(scan.nextLine());
-				scan.close();
+				BufferedReader br = new BufferedReader(new InputStreamReader(
+						new FileInputStream(filename)));
+				System.out.print(".");
+				CommonTokenStream local = AimlLexerImpl.getTokensFromString(br
+						.readLine());
+				br.close();
 				AimlParserImpl parser = new AimlParserImpl(local);
 				parser.setRepository(new AimlRepository());
 				parser.getRepository().setRoot(parser.getRoot());
@@ -537,6 +542,9 @@ public class AimlParserImpl extends aimlParser {
 				String enc = parser.getRepository().getRoot().get("encoding");
 				if (enc != null) encoding = enc;
 			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+				throw new AimlParsingError(e);
+			} catch (IOException e) {
 				e.printStackTrace();
 				throw new AimlParsingError(e);
 			}

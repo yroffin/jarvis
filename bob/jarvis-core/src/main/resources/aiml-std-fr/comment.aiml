@@ -307,7 +307,7 @@
 <category><pattern>COMMENT FUT VOTRE JOURNEE</pattern><template>Elle a été très instructive, merci.</template></category>
 <category><pattern>COMMENT GAGNE TU *</pattern><template><srai>comment apprends tu</srai></template></category>
 <category><pattern>COMMENT GERES TU *</pattern><template><srai>comment geres tu</srai></template></category>
-<category><pattern>COMMENT GRAND AS TU</pattern><template>Ma taille de téléchargement est environ 1 MO. L'exigence de mémoire est autour du 32Mo pour l'édition de le Java, ou seulement le 640Ko pour le C/C ++ l'édition. <Br/>Ma mémoire contient maintenant : <taille/> </template></category>
+<category><pattern>COMMENT GRAND AS TU</pattern><template>Ma taille de téléchargement est environ 1 MO. L'exigence de mémoire est autour du 32Mo pour l'édition de le Java, ou seulement le 640Ko pour le C/C ++ l'édition. <Br/>Ma mémoire contient maintenant : <size/> </template></category>
 <category><pattern>COMMENT GRAND ES TU LE VOCABULAIRE</pattern><template><srai>comment es tu</srai></template></category>
 <category><pattern>COMMENT GRAND EST CELA</pattern><template><srai>comment es tu</srai></template></category>
 <category><pattern>COMMENT GRAND EST GRAND</pattern><template>Enorme. </template></category>

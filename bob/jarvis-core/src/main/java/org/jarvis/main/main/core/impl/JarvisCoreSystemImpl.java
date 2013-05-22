@@ -117,9 +117,14 @@ public class JarvisCoreSystemImpl implements IJarvisCoreSystem {
 	}
 
 	@Override
-	public void ask(String sentence) throws AimlParsingError {
+	public List<IAimlHistory> chat(String sentence) throws AimlParsingError {
 		List<IAimlHistory> answers = engine.ask(sentence);
-		for (IAimlHistory answer : answers) {
+		return answers;
+	}
+
+	@Override
+	public void ask(String sentence) throws AimlParsingError {
+		for (IAimlHistory answer : chat(sentence)) {
 			speak(answer.getAnswer());
 		}
 	}

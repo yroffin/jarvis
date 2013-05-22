@@ -24,7 +24,5 @@ public class JarvisCoreSystemImplTest extends TestCase {
 
 	public void testSimple() throws AimlParsingError, IOException {
 		IJarvisCoreSystem jarvis = new JarvisCoreSystemImpl();
-		jarvis.initialize("src/test/resources/alice/alice.aiml");
-		jarvis.ask("Hello.");
 	}
 }

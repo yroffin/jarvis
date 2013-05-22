@@ -1,17 +1,20 @@
 package org.jarvis.main.core;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.jarvis.main.exception.AimlParsingError;
+import org.jarvis.main.model.parser.history.IAimlHistory;
 
 public interface IJarvisCoreSystem {
 
-	void release();
+	public void release();
 
-	void speak(String value);
+	public void initialize(String aiml) throws AimlParsingError, IOException;
 
-	void initialize(String aiml) throws AimlParsingError, IOException;
+	public void ask(String string) throws AimlParsingError;
 
-	void ask(String string) throws AimlParsingError;
+	public List<IAimlHistory> chat(String sentence) throws AimlParsingError;
 
+	public void speak(String value);
 }

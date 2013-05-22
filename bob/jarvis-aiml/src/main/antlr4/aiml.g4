@@ -160,7 +160,7 @@ fragment PLUS: '+';
 fragment MINUS: '-';
 fragment LPARENT: '(';
 fragment RPARENT: ')';
-fragment OTHERS : 'É' | 'È' | 'Ê' | 'À' | 'Ô' | 'Û' | 'Ç' | 'Ë' | 'Â' | 'Î' | 'Ï' | 'Ù' | 'Ö';
+fragment OTHERS : 'É' | 'È' | 'Ê' | 'À' | 'Ô' | 'Û' | 'Ç' | 'Ë' | 'Â' | 'Î' | 'Ï' | 'Ù' | 'Ö' |  'é' | 'è' | 'ê' | 'à' | 'ô' | 'û' | 'ç' | 'ë' | 'â' | 'î' | 'ï' | 'ù' | 'ö';
 
 fragment DIGIT
     :    '0'..'9'
