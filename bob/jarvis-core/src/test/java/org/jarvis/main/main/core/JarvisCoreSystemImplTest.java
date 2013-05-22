@@ -7,6 +7,8 @@ package org.jarvis.main.main.core;
  * redistribution of this file, and for a DISCLAIMER OF ALL 
  * WARRANTIES.
  */
+import java.io.IOException;
+
 import junit.framework.TestCase;
 
 import org.jarvis.main.core.IJarvisCoreSystem;
@@ -20,7 +22,7 @@ import org.jarvis.main.main.core.impl.JarvisCoreSystemImpl;
  */
 public class JarvisCoreSystemImplTest extends TestCase {
 
-	public void testSimple() throws AimlParsingError {
+	public void testSimple() throws AimlParsingError, IOException {
 		IJarvisCoreSystem jarvis = new JarvisCoreSystemImpl();
 		jarvis.initialize("src/test/resources/alice/alice.aiml");
 		jarvis.ask("Hello.");

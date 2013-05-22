@@ -17,6 +17,7 @@
 package org.jarvis.main.engine;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Stack;
 
@@ -111,4 +112,12 @@ public interface IAimlCoreEngine {
 	 * @return
 	 */
 	public List<IAimlHistory> getThatsHistory();
+
+	/**
+	 * register a new resource
+	 * 
+	 * @param resource
+	 * @throws IOException
+	 */
+	void register(String resource) throws IOException;
 }

@@ -57,22 +57,31 @@ url : URL {onNewUrl($URL.text);};
 star : STAR {onNewStar($STAR.text);};
 underscore : UNDERSCORE {onNewUnderscore($UNDERSCORE.text);};
 abrev : ABREV {onNewAbrev($ABREV.text);};
-misc : COMMA | MINUS | LPARENT | RPARENT | COTE | BCOTE | DCOTE | EQUAL;
+misc : MISC;
 
 DOT: '.';
 QUESTIONMARK: '?';
 EXCLAIM: '!';
-COMMA: ',';
 SEMICOLON: ':';
-MINUS: '-';
-LPARENT: '(';
-RPARENT: ')';
-DCOTE: '"';
-COTE: '\'';
-BCOTE: '’';
-EQUAL: '=';
 STAR: '*';
 UNDERSCORE: '_';
+
+/**
+ * Authorized tokens in value
+ */
+MISC : COMMA | MINUS | LPARENT | RPARENT | LBRACE | RBRACE | COTE | BCOTE | DCOTE | EQUAL | PLUS | OTHERS;
+fragment COMMA: ',';
+fragment MINUS: '-';
+fragment LPARENT: '(';
+fragment RPARENT: ')';
+fragment LBRACE: '[';
+fragment RBRACE: ']';
+fragment COTE: '\'';
+fragment BCOTE: '’';
+fragment DCOTE: '"';
+fragment EQUAL: '=';
+fragment PLUS: '+';
+fragment OTHERS : 'É' | 'È' | 'Ê' | 'À' | 'Ô' | 'Û' | 'Ç' | 'Ë' | 'Â' | 'Î' | 'Ï' | 'Ù' | 'Ö';
 
 COMMENT : '<!--' .*? '-->' -> skip ;
 

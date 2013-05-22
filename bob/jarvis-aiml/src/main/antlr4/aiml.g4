@@ -7,40 +7,42 @@ grammar aiml;
 
 @parser::members {
     boolean opened = false;
-    public enum router {SYSTEM,JAVASCRIPT,UPPER,LOWER,SIZE,DATE,AIML,BR,STAR,A,BOT,CONDITION,PERSON2,ID,VERSION,TEMPLATE,TOPIC,CATEGORY,PATTERN,PERSON,GET,INPUT,SET,SR,SRAI,THAT,RANDOM,LI,FORMAL,THINK,THATSTAR,TOPICSTAR,UNKNOWN};
+    public enum router {GOSSIP,GENDER,SYSTEM,JAVASCRIPT,UPPER,LOWER,SIZE,DATE,AIML,BR,STAR,A,BOT,CONDITION,PERSON2,ID,VERSION,TEMPLATE,TOPIC,CATEGORY,PATTERN,PERSON,GET,INPUT,SET,SR,SRAI,THAT,RANDOM,LI,FORMAL,THINK,THATSTAR,TOPICSTAR,UNKNOWN};
     public router decode(String value) {
-        if("aiml".compareTo(value)==0) return router.AIML;
-        if("system".compareTo(value)==0) return router.SYSTEM;
-        if("javascript".compareTo(value)==0) return router.JAVASCRIPT;
-        if("template".compareTo(value)==0) return router.TEMPLATE;
-        if("topic".compareTo(value)==0) return router.TOPIC;
-        if("category".compareTo(value)==0) return router.CATEGORY;
-        if("pattern".compareTo(value)==0) return router.PATTERN;
-        if("get".compareTo(value)==0) return router.GET;
-        if("srai".compareTo(value)==0) return router.SRAI;
-        if("sr".compareTo(value)==0) return router.SR;
-        if("that".compareTo(value)==0) return router.THAT;
-        if("random".compareTo(value)==0) return router.RANDOM;
-        if("li".compareTo(value)==0) return router.LI;
-        if("formal".compareTo(value)==0) return router.FORMAL;
-        if("think".compareTo(value)==0) return router.THINK;
-        if("set".compareTo(value)==0) return router.SET;
-        if("input".compareTo(value)==0) return router.INPUT;
-        if("person".compareTo(value)==0) return router.PERSON;
-        if("Br".compareTo(value)==0) return router.BR;
-        if("star".compareTo(value)==0) return router.STAR;
-        if("a".compareTo(value)==0) return router.A;
-        if("bot".compareTo(value)==0) return router.BOT;
-        if("condition".compareTo(value)==0) return router.CONDITION;
-        if("person2".compareTo(value)==0) return router.PERSON2;
-        if("id".compareTo(value)==0) return router.ID;
-        if("version".compareTo(value)==0) return router.VERSION;
-        if("thatstar".compareTo(value)==0) return router.THATSTAR;
-        if("topicstar".compareTo(value)==0) return router.TOPICSTAR;
-        if("date".compareTo(value)==0) return router.DATE;
-        if("size".compareTo(value)==0) return router.SIZE;
-        if("uppercase".compareTo(value)==0) return router.UPPER;
-        if("lowercase".compareTo(value)==0) return router.LOWER;
+        if("aiml".compareTo(value.toLowerCase())==0) return router.AIML;
+        if("system".compareTo(value.toLowerCase())==0) return router.SYSTEM;
+        if("javascript".compareTo(value.toLowerCase())==0) return router.JAVASCRIPT;
+        if("template".compareTo(value.toLowerCase())==0) return router.TEMPLATE;
+        if("topic".compareTo(value.toLowerCase())==0) return router.TOPIC;
+        if("category".compareTo(value.toLowerCase())==0) return router.CATEGORY;
+        if("pattern".compareTo(value.toLowerCase())==0) return router.PATTERN;
+        if("get".compareTo(value.toLowerCase())==0) return router.GET;
+        if("srai".compareTo(value.toLowerCase())==0) return router.SRAI;
+        if("sr".compareTo(value.toLowerCase())==0) return router.SR;
+        if("that".compareTo(value.toLowerCase())==0) return router.THAT;
+        if("random".compareTo(value.toLowerCase())==0) return router.RANDOM;
+        if("li".compareTo(value.toLowerCase())==0) return router.LI;
+        if("formal".compareTo(value.toLowerCase())==0) return router.FORMAL;
+        if("think".compareTo(value.toLowerCase())==0) return router.THINK;
+        if("set".compareTo(value.toLowerCase())==0) return router.SET;
+        if("input".compareTo(value.toLowerCase())==0) return router.INPUT;
+        if("person".compareTo(value.toLowerCase())==0) return router.PERSON;
+        if("br".compareTo(value.toLowerCase())==0) return router.BR;
+        if("star".compareTo(value.toLowerCase())==0) return router.STAR;
+        if("a".compareTo(value.toLowerCase())==0) return router.A;
+        if("bot".compareTo(value.toLowerCase())==0) return router.BOT;
+        if("condition".compareTo(value.toLowerCase())==0) return router.CONDITION;
+        if("person2".compareTo(value.toLowerCase())==0) return router.PERSON2;
+        if("id".compareTo(value.toLowerCase())==0) return router.ID;
+        if("version".compareTo(value.toLowerCase())==0) return router.VERSION;
+        if("thatstar".compareTo(value.toLowerCase())==0) return router.THATSTAR;
+        if("topicstar".compareTo(value.toLowerCase())==0) return router.TOPICSTAR;
+        if("date".compareTo(value.toLowerCase())==0) return router.DATE;
+        if("size".compareTo(value.toLowerCase())==0) return router.SIZE;
+        if("uppercase".compareTo(value.toLowerCase())==0) return router.UPPER;
+        if("lowercase".compareTo(value.toLowerCase())==0) return router.LOWER;
+        if("gender".compareTo(value.toLowerCase())==0) return router.GENDER;
+        if("gossip".compareTo(value.toLowerCase())==0) return router.GOSSIP;
         return router.UNKNOWN;
     }
     public void onOpenTag(String value) {
@@ -126,7 +128,7 @@ LETTERS
     ;
 
 NAMECHAR
-    : { tagMode }? (LETTER | DIGIT | '.' | '-')+
+    : { tagMode }? (LETTER | DIGIT | MISC)+
     ;
 
 TAG_START_HEADER : '<?xml' { tagMode = true; };
@@ -147,9 +149,18 @@ ATTR_VALUE : { tagMode }?
  
 PCDATA : { !tagMode }? (~'<')+ ;
 
-fragment SEMICOLON
-    : ':'
-    ;
+/**
+ * Authorized tokens in value
+ */
+fragment
+MISC : DOT | PLUS | MINUS | LPARENT | RPARENT | OTHERS;
+fragment DOT: '.';
+fragment SEMICOLON: ':';
+fragment PLUS: '+';
+fragment MINUS: '-';
+fragment LPARENT: '(';
+fragment RPARENT: ')';
+fragment OTHERS : 'É' | 'È' | 'Ê' | 'À' | 'Ô' | 'Û' | 'Ç' | 'Ë' | 'Â' | 'Î' | 'Ï' | 'Ù' | 'Ö';
 
 fragment DIGIT
     :    '0'..'9'

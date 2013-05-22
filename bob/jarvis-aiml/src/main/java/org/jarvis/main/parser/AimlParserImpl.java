@@ -22,8 +22,8 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Stack;
 
+import org.antlr.v4.runtime.BailErrorStrategy;
 import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.DefaultErrorStrategy;
 import org.antlr.v4.runtime.DiagnosticErrorListener;
 import org.antlr.v4.runtime.Parser;
 import org.antlr.v4.runtime.RecognitionException;
@@ -47,6 +47,7 @@ import org.jarvis.main.model.impl.parser.category.AimlTemplateImpl;
 import org.jarvis.main.model.impl.parser.category.AimlThatCategoryImpl;
 import org.jarvis.main.model.impl.parser.category.AimlThinkImpl;
 import org.jarvis.main.model.impl.parser.pattern.AimlThatPatternImpl;
+import org.jarvis.main.model.impl.parser.template.AimlGossipImpl;
 import org.jarvis.main.model.impl.parser.template.AimlInputImpl;
 import org.jarvis.main.model.impl.parser.template.AimlRandomImpl;
 import org.jarvis.main.model.impl.parser.template.AimlStarImpl;
@@ -63,6 +64,7 @@ import org.jarvis.main.model.impl.parser.template.system.AimlJavascriptImpl;
 import org.jarvis.main.model.impl.parser.template.system.AimlSizeImpl;
 import org.jarvis.main.model.impl.parser.template.system.AimlSystemImpl;
 import org.jarvis.main.model.impl.parser.template.system.AimlVersionImpl;
+import org.jarvis.main.model.impl.parser.template.trans.AimlGenderImpl;
 import org.jarvis.main.model.impl.parser.template.trans.AimlPerson2Impl;
 import org.jarvis.main.model.impl.parser.template.trans.AimlPersonImpl;
 import org.jarvis.main.model.parser.IAimlCategory;
@@ -81,6 +83,7 @@ import org.jarvis.main.model.parser.category.IAimlSrai;
 import org.jarvis.main.model.parser.category.IAimlTemplate;
 import org.jarvis.main.model.parser.category.IAimlThat;
 import org.jarvis.main.model.parser.category.IAimlThink;
+import org.jarvis.main.model.parser.template.IAimlGossip;
 import org.jarvis.main.model.parser.template.IAimlInput;
 import org.jarvis.main.model.parser.template.IAimlRandom;
 import org.jarvis.main.model.parser.template.IAimlStar;
@@ -96,6 +99,7 @@ import org.jarvis.main.model.parser.template.system.IAimlJavascript;
 import org.jarvis.main.model.parser.template.system.IAimlSize;
 import org.jarvis.main.model.parser.template.system.IAimlSystem;
 import org.jarvis.main.model.parser.template.system.IAimlVersion;
+import org.jarvis.main.model.parser.template.trans.IAimlGender;
 import org.jarvis.main.model.parser.template.trans.IAimlPerson;
 import org.jarvis.main.model.parser.template.trans.IAimlPerson2;
 import org.slf4j.Logger;
@@ -287,8 +291,13 @@ public class AimlParserImpl extends aimlParser {
 			return e;
 		}
 
-		public IAimlGet pushGet() {
-			AimlGetImpl e = new AimlGetImpl();
+		public IAimlGossip push(AimlGossipImpl e) {
+			stack.lastElement().add(e);
+			stack.push(e);
+			return e;
+		}
+
+		public IAimlGet push(AimlGetImpl e) {
 			stack.lastElement().add(e);
 			stack.push(e);
 			return e;
@@ -430,6 +439,12 @@ public class AimlParserImpl extends aimlParser {
 			return e;
 		}
 
+		public IAimlGender push(AimlGenderImpl e) {
+			stack.lastElement().add(e);
+			stack.push(e);
+			return e;
+		}
+
 		public IAimlJavascript push(AimlJavascriptImpl e) {
 			stack.lastElement().add(e);
 			stack.push(e);
@@ -449,13 +464,14 @@ public class AimlParserImpl extends aimlParser {
 			super.syntaxError(recognizer, offendingSymbol, line,
 					charPositionInLine, msg, e);
 			logger.error("line " + line + " char position "
-					+ charPositionInLine + " : " + msg);
+					+ charPositionInLine + " : " + msg + " : "
+					+ (e.getInputStream() + "").split("\n")[line - 1]);
 			iLexerError++;
 		}
 
 	}
 
-	private class DefaultErrorStrategyImpl extends DefaultErrorStrategy {
+	private class DefaultErrorStrategyImpl extends BailErrorStrategy {
 
 		@Override
 		public void reportError(Parser recognizer, RecognitionException e)
@@ -701,7 +717,7 @@ public class AimlParserImpl extends aimlParser {
 			 * value defined. If the predicate has no value defined, the AIML
 			 * interpreter should substitute the empty string "".
 			 */
-			stackElements.pushGet();
+			stackElements.push(new AimlGetImpl());
 			break;
 		case SET:
 			/**
@@ -807,6 +823,29 @@ public class AimlParserImpl extends aimlParser {
 			break;
 		case JAVASCRIPT:
 			stackElements.push(new AimlJavascriptImpl());
+			break;
+		case GENDER:
+			/**
+			 * The gender element instructs the AIML interpreter to:
+			 * 
+			 * replace male-gendered words in the result of processing the
+			 * contents of the gender element with the
+			 * grammatically-corresponding female-gendered words; and replace
+			 * female-gendered words in the result of processing the contents of
+			 * the gender element with the grammatically-corresponding
+			 * male-gendered words.
+			 */
+			stackElements.push(new AimlGenderImpl());
+			break;
+		case GOSSIP:
+			/**
+			 * The gossip element instructs the AIML interpreter to capture the
+			 * result of processing the contents of the gossip elements and to
+			 * store these contents in a manner left up to the implementation.
+			 * Most common uses of gossip have been to store captured contents
+			 * in a separate file.
+			 */
+			stackElements.push(new AimlGossipImpl());
 			break;
 		default:
 			logger.warn("Unknown tag element : " + value);

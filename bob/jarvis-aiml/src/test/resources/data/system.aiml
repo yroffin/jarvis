@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<aiml version="1.0">
+	<topic name = "a simple topic">
+		<category>
+			<pattern>Get date *</pattern>
+			<template><star /> <date></date> <id></id></template>
+		</category>
+		<category>
+			<pattern>Get size and version</pattern>
+			<template>size: <size /> version: <version/></template>
+		</category>
+		<category>
+			<pattern>Get upper and lower</pattern>
+			<template>upper: <uppercase>x</uppercase> lower: <lowercase>X</lowercase></template>
+		</category>
+		<category>
+			<pattern>Get upper and lower *</pattern>
+			<template>upper: <uppercase/> lower: <lowercase/></template>
+		</category>
+	</topic>
+</aiml>

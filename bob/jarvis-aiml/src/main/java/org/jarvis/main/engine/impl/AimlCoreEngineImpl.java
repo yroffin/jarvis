@@ -17,6 +17,10 @@
 package org.jarvis.main.engine.impl;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -48,10 +52,38 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 	private final IAimlTransform transformer = new AimlTranformImpl();
 	private final List<File> resources = new ArrayList<File>();
 	private final Stack<IAimlCategory> stack = new Stack<IAimlCategory>();
+
+	/**
+	 * local properties
+	 */
+	private final Map<String, Object> bot = new HashMap<String, Object>();
+	private final Map<String, Object> properties = new HashMap<String, Object>();
+
 	/**
 	 * user inputs logs
 	 */
 	private final Stack<List<IAimlHistory>> history = new Stack<List<IAimlHistory>>();
+
+	/**
+	 * default constructor
+	 */
+	public AimlCoreEngineImpl() {
+	}
+
+	/**
+	 * standard constructor to build from resource list a new engine
+	 * 
+	 * @param resources
+	 * @throws IOException
+	 * @throws AimlParsingError
+	 */
+	public AimlCoreEngineImpl(List<String> resources) throws IOException,
+			AimlParsingError {
+		for (String resource : resources) {
+			register(resource);
+		}
+		parse();
+	}
 
 	@Override
 	public Stack<List<IAimlHistory>> getHistory() {
@@ -71,9 +103,6 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 		if (history.size() == 0) return null;
 		return history.get(history.size() - 1);
 	}
-
-	private final Map<String, Object> bot = new HashMap<String, Object>();
-	private final Map<String, Object> properties = new HashMap<String, Object>();
 
 	@Override
 	public Object getBot(String key) {
@@ -100,6 +129,28 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 	@Override
 	public void register(File resource) {
 		resources.add(resource);
+	}
+
+	@Override
+	public void register(String resource) throws IOException {
+		InputStream local = this.getClass().getClassLoader()
+				.getResourceAsStream(resource);
+		if (local == null) {
+			logger.warn("Unable to find resource " + resource);
+			return;
+		}
+		File data = File
+				.createTempFile((new File(resource)).getName(), "-aiml");
+		data.deleteOnExit();
+		logger.info("Register " + data.getAbsolutePath());
+		OutputStream out = new FileOutputStream(data);
+		byte[] b = new byte[1024];
+		for (; local.read(b) > 0;) {
+			out.write(b);
+		}
+		out.close();
+		local.close();
+		register(data);
 	}
 
 	@Override
@@ -177,6 +228,18 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 		return localHistory;
 	}
 
+	@Override
+	public List<IAimlCategory> getCategories() {
+		return aiml.getCategories();
+	}
+
+	/**
+	 * as to this bot something
+	 * 
+	 * @param sentence
+	 * @return
+	 * @throws AimlParsingError
+	 */
 	private String ask(ITransformedItem sentence) throws AimlParsingError {
 		IAimlScore found = null;
 		/**
@@ -233,10 +296,5 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 		} else {
 			return "no anwser";
 		}
-	}
-
-	@Override
-	public List<IAimlCategory> getCategories() {
-		return aiml.getCategories();
 	}
 }

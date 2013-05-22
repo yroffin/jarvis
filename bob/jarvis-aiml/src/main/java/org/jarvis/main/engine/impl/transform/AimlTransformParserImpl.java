@@ -156,7 +156,8 @@ public class AimlTransformParserImpl extends normalizerParser implements
 			super.syntaxError(recognizer, offendingSymbol, line,
 					charPositionInLine, msg, e);
 			logger.error("line " + line + " char position "
-					+ charPositionInLine + " : " + msg);
+					+ charPositionInLine + " : " + msg + " : "
+					+ (e.getInputStream() + "").split("\n")[line - 1]);
 			iLexerError++;
 		}
 

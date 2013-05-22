@@ -2,15 +2,12 @@
 <aiml version="1.0">
 
 
-<!--  Free software Copyright © ALICE A.I. Foundation, Inc. --> 
-<!--  This program is open source code released under --> 
-<!--  the terms of the GNU General Public License     --> 
-<!--  as published by the Free Software Foundation.   --> 
-<!--  Complies with AIML 1.01 Tag Set Specification --> 
-<!--  as adopted by the ALICE A.I. Foundation.  --> 
-<!--  Auteur : Jean Louis Campion (jlc@Multivers.net) d'après les travaux du Dr Richard Wallace - langue : française -->
-<!--  Revision questceque_ed.aiml    version 1.00  --> 
-<!--  Modified by Tan Siew Lan (tsiewlan@excite.com),Singapore on 08 Dec 2005 --> 
+<!-- A.L.I.C.E. is a Free software (c) 2001 ALICE AI Foundation -->
+<!-- The ProgramD is open source code released under the terms of the GNU General Public License as published by the Free Software Foundation. -->
+<!-- As This Module   : questcequi.aiml   -   version :   0.3   -   MàJ : 01/01/2003  -->
+<!-- auteur : Jean Louis Campion (jlc@Multivers.net) d'après les travaux du Dr Richard Wallace - langue : française -->
+<!-- Complies with AIML 1.0 Tag Set Specification as adopted by the ALICE A.I. Foundation. -->
+
 
 
 <category><pattern>QU EST CE QUE * EURO</pattern><template>c'est la nouvelle monnaie européenne, je crois, mais un robot n'a pas besoin d'argent</template></category>
@@ -171,7 +168,7 @@
 <category><pattern>QU EST CE QUE ANGLETERRE</pattern><template>une nation dans la Grande-Bretagne, partageant une île avec le Pays de galles et L Ecosse. </template></category>
 <category><pattern>QU EST CE QUE ANIMAL LE PLUS RAPIDE</pattern><template>un homme allant à un vaisseau spatial. </template></category>
 <category><pattern>QU EST CE QUE ANIMAL</pattern><template><random><li>un animal est une forme d'être vivant, excluant des usines plantes et le champignon. </li><li>un animal est une créature vivante a doté du mouvement volontaire. </li></random> </template></category>
-<category><pattern>QU EST CE QUE ANIMAUX DE COMPAGNIE</pattern><template>les Animaux qui sont apprivoisés ou domestiqués et tenus comme un compagnon ou traités avec l affection. </template></category>
+<category><pattern>QU EST CE QUE ANIMAUX DE COMPAGNIE</pattern>les Animaux<template>qui sont apprivoisés ou domestiqués et tenus comme un compagnon ou traités avec l affection. </template></category>
 <category><pattern>QU EST CE QUE ANIME</pattern><template>l'animation de japonais. </template></category>
 <category><pattern>QU EST CE QUE ANNEE LUMIERE</pattern><template>une année légère est comment loin allument éclairent des voyages dans un an. 186,000 milles par deuxièmes fois 60x60x24x365. C'est simplement un numéro plus grand que tu peux imaginer. Imaginez-le! <think> <set name="that"> <think><set name="oldtopic"><get name="topic"/></set></think><set name="topic">astronomy</set> </set> </think> </template></category>
 <category><pattern>QU EST CE QUE ANNEE</pattern><template>un ordinateur l année est définie comme le support de travail qui peut être fait avec un ordinateur dans un an. </template></category>
@@ -344,7 +341,7 @@
 <category><pattern>QU EST CE QUE BON DE *</pattern><template>la large variété de personnages. </template></category>
 <category><pattern>QU EST CE QUE BON SENS</pattern><template>Informal, l'opinion communément admise. Logique quotidienne et sensibilité. </template></category>
 <category><pattern>QU EST CE QUE BON</pattern><template>l'opposé opposé,en face de Mal. </template></category>
-<category><pattern>QU EST CE QUE BONHEUR</pattern><template>L'Ayant, l'émission, ou la cause un sentiment de grand plaisir, le contentement; joyeux. </template></category>
+<category><pattern>QU EST CE QUE BONHEUR</pattern>L'Ayant<template>, l'émission, ou la cause un sentiment de grand plaisir, le contentement; joyeux. </template></category>
 <category><pattern>QU EST CE QUE BONIN</pattern><template>Bonin est un groupe d'îles dans le Pacifique du Nord. </template></category>
 <category><pattern>QU EST CE QUE BONNE IDEE</pattern><template>une bonne idée est celui quelque autre type avait déjà. </template></category>
 <category><pattern>QU EST CE QUE BONNE IDÉE</pattern><template>une bonne idée est celui quelque autre type avait déjà. </template></category>
@@ -727,9 +724,9 @@
 <category><pattern>QU EST CE QUE DES FENÊTRES X</pattern><template>un GUI pour UNIX ou Linux. </template></category>
 <category><pattern>QU EST CE QUE DES FENÊTRES</pattern><template>des Ouvertures dans une construction bâtiment , le véhicule, ou le conteneur, pour la permission dans la lumière ou l air ou pour l'examen, d'habitude l ayant un carreau ou les carreaux de verre, etc survenu un encadrement ou la ceinture qui est généralement mobile pour que cela peut être ouvert et fermer. </template></category>
 <category><pattern>QU EST CE QUE DES FICHIERS X</pattern><template> <set name="that">X des fichiers</set> est un SPECTACLE · LA TELE populaire d'agents de FBI dans la recherche du paranormal. </template></category>
-<category><pattern>QU EST CE QUE DES TRAVAUX, LA JOURNEE DE CALIBRE</pattern><template>l'espace de Mémoire souvenir pour des calibres de réponse AIML.<think> <set name="that"> <think><set name="oldtopic"><get name="topic"/></set></think><set name="topic">des TRAVAUX, LA JOURNEE DE CALIBRE</set> </set> </think> </template></category>
-<category><pattern>QU EST CE QUE DES TRAVAUX, LA JOURNEE DE MODELE</pattern><template>le stockage de Mémoire souvenir pour des modèles d'AIML.<think> <set name="that"> <think><set name="oldtopic"><get name="topic"/></set></think><set name="topic">des TRAVAUX, LA JOURNEE DE MODELE</set> </set> </think> </template></category>
-<category><pattern>QU EST CE QUE DES TRAVAUX, LA JOURNEE DE MODÈLE</pattern><template>le stockage de Mémoire souvenir pour des modèles d'AIML.<think> <set name="that"> <think><set name="oldtopic"><get name="topic"/></set></think><set name="topic">des TRAVAUX, LA JOURNEE DE MODÈLE</set> </set> </think> </template></category>
+<category><pattern>QU EST CE QUE DES TRAVAUX, LA JOURNEE DE CALIBRE</pattern><template>l'espace de Mémoire souvenir pour des calibres de réponse AIML.<think> <set name="that"> <think><set name="oldtopic"><get name="topic"/></set></think><set name="topic">des TRAVAUX · LA JOURNEE DE CALIBRE</set> </set> </think> </template></category>
+<category><pattern>QU EST CE QUE DES TRAVAUX, LA JOURNEE DE MODELE</pattern><template>le stockage de Mémoire souvenir pour des modèles d'AIML.<think> <set name="that"> <think><set name="oldtopic"><get name="topic"/></set></think><set name="topic">des TRAVAUX · LA JOURNEE DE MODELE</set> </set> </think> </template></category>
+<category><pattern>QU EST CE QUE DES TRAVAUX, LA JOURNEE DE MODÈLE</pattern><template>le stockage de Mémoire souvenir pour des modèles d'AIML.<think> <set name="that"> <think><set name="oldtopic"><get name="topic"/></set></think><set name="topic">des TRAVAUX · LA JOURNEE DE MODÈLE</set> </set> </think> </template></category>
 <category><pattern>QU EST CE QUE DESERT</pattern><template>une place très sèche et chaude. </template></category>
 <category><pattern>QU EST CE QUE DESOLE</pattern><template>Plein de douleur, la pitié, ou la sympathie; aussi employé comme une expression d'excuse ou regret doux. </template></category>
 <category><pattern>QU EST CE QUE DESOLÉ</pattern><template>Plein de douleur, la pitié, ou la sympathie; aussi employé comme une expression d'excuse ou regret doux. </template></category>
@@ -859,7 +856,7 @@
 <category><pattern>QU EST CE QUE ESROPIE</pattern><template>la décrépitude de Chaleur de l'univers. Aussi une mesure d'information. </template></category>
 <category><pattern>QU EST CE QUE ETAPE</pattern><template>l'étape est une plante de la famille cannabiaceae. </template></category>
 <category><pattern>QU EST CE QUE ETE *</pattern><template>l'opposé opposé,en face de pas étant <person/>. </template></category>
-<category><pattern>QU EST CE QUE ETE A DEMANDE</pattern><template>les Gens me demandent à moi les épousent tout le temps. </template></category>
+<category><pattern>QU EST CE QUE ETE A DEMANDE</pattern>les Gens<template>me demandent à moi les épousent tout le temps. </template></category>
 <category><pattern>QU EST CE QUE ETERNEL</pattern><template>Sans commencer ou la fin, continuant pour toujours, infini. </template></category>
 <category><pattern>QU EST CE QUE ETERNITE</pattern><template>la qualité, l'état, ou le fait d'être éternel; existence éternelle de durée; durée sans fin. Une longue période de temps ça semble infini. </template></category>
 <category><pattern>QU EST CE QUE ETHANE</pattern><template>Ethane est un hydrocarbure de paraffine. </template></category>
@@ -1029,8 +1026,8 @@
 <category><pattern>QU EST CE QUE HAFNIUM</pattern><template>Hafnium est un élément de métal arrivant dans zircon et employé dans des réacteurs nucléaires. </template></category>
 <category><pattern>QU EST CE QUE HAINE</pattern><template>la Haine est l'opposé opposé,en face d'amour. </template></category>
 <category><pattern>QU EST CE QUE HALOGENE</pattern><template>L'Halogène est un groupe particulier d'éléments avec des propriétés d'entreposage semblables. </template></category>
-<category><pattern>QU EST CE QUE HAMBURGER</pattern><template>le boeuf de Raison terre . </template></category>
-<category><pattern>QU EST CE QUE HAMEAU</pattern><template>L'Hamlet est une tragédie écrite par shakespear. </template></category>
+<category><pattern>QU EST CE QUE HAMBURGER</pattern>le boeuf de Raison terre <template>. </template></category>
+<category><pattern>QU EST CE QUE HAMEAU</pattern>L'Hamlet<template>est une tragédie écrite par shakespear. </template></category>
 <category><pattern>QU EST CE QUE HAMMERHEAD</pattern><template>l'hammerhead est une espèce de requin. </template></category>
 <category><pattern>QU EST CE QUE HARICOT D ENTITE</pattern><template>un haricot d'Entité est une Entreprise JavaBean qui maintient entretient l'état à travers des sessions et peut être cherché dans une liste d'adresses d'objet par sa valeur clef </template></category>
 <category><pattern>QU EST CE QUE HARICOT D ENTITÉ</pattern><template>un haricot d'Entité est une Entreprise JavaBean qui maintient entretient l'état à travers des sessions et peut être cherché dans une liste d'adresses d'objet par sa valeur clef </template></category>
@@ -1079,7 +1076,7 @@
 <category><pattern>QU EST CE QUE ICONE HUMAINE</pattern><template>une célébrité, le politicien ou la figure chiffre religieuse. </template></category>
 <category><pattern>QU EST CE QUE IDE</pattern><template>L'Environnement de Développement Intégré. </template></category>
 <category><pattern>QU EST CE QUE IDIOT</pattern><template>Ayant ou l'émission de peu de sens, jugement, ou la modération; idiot, stupide, absurde, risible, irrationnel, etc; souvent employé dans un sens affaibli de signifier "de façon peu raisonnable concerné". </template></category>
-<category><pattern>QU EST CE QUE IDL</pattern><template>la langue de description d'interface, la syntaxe du CORBA'S pour la définition de l'objet des interfaces éloignées </template></category>
+<category><pattern>QU EST CE QUE IDL</pattern>la langue de description d'interface<template>, la syntaxe du CORBA'S pour la définition de l'objet des interfaces éloignées </template></category>
 <category><pattern>QU EST CE QUE IIOP</pattern><template>le Protocole d'Inter-orbe d'Internet, le protocole de fil du CORBA'S pour la transmission d'invocations de méthode d'objet éloignées </template></category>
 <category><pattern>QU EST CE QUE IL Y A</pattern><template><random><li>rien! </li><li>tu ne veux plus discuter? </li><li>et toi? qu'est ce qu'il y a? </li></random></template></category>
 <category><pattern>QU EST CE QUE ILLIMINATUS</pattern><template>la théorie de conspiration Présumée mondiale. </template></category>
@@ -1260,7 +1257,7 @@
 <category><pattern>QU EST CE QUE LE PROBLEME</pattern><template>Nous l'examinera et vous reviendra. </template></category>
 <category><pattern>QU EST CE QUE LE PROBLÈME</pattern><template>Nous l'examinera et vous reviendra. </template></category>
 <category><pattern>QU EST CE QUE LE PYTHAGOREAN *</pattern><template>la somme des places des côtés d'un triangle rectangle est égal à la place de l'hypotenuese. </template></category>
-<category><pattern>QU EST CE QUE LE QUOTIENT INTELLECTUEL</pattern><template>l'Intelligence quotient. </template></category>
+<category><pattern>QU EST CE QUE LE QUOTIENT INTELLECTUEL</pattern>l'Intelligence<template>Quotioent. </template></category>
 <category><pattern>QU EST CE QUE LE RAISONNEMENT DEDUCTIF</pattern><template><think> <set name="that"> <think><set name="oldtopic"><get name="topic"/></set></think><set name="topic">le RAISONNEMENT DEDUCTIF</set> </set> </think> </template></category>
 <category><pattern>QU EST CE QUE LE RAYON * LA LUNE</pattern><template>Environ 2,400 milles. </template></category>
 <category><pattern>QU EST CE QUE LE RAYON * LA TERRE</pattern><template>Environ 7,000 milles. </template></category>
@@ -1713,7 +1710,7 @@
 <category><pattern>QU EST CE QUE QUESTION TU *</pattern><template>Beaucoup de mes associés de conversation pense que ' vous font viennent ici souvent ' est plein d'esprit. </template></category>
 <category><pattern>QU EST CE QUE QUESTION</pattern><template><random><li>une question est n'importe quelle expression d'enquête, ou l'interrogation. ton question 'la question' est une question. </li><li>un sentece ou l'enquête pour réunir cueillir l'information. </li></random> </template></category>
 <category><pattern>QU EST CE QUE QUI</pattern><template><random><li>je ne sais pas qui. </li><li>qui penses-tu? </li><li>je ne peux pas dire à coup sûr. </li><li>Etre plus spécifique. </li><li>Etre moins spécifique. </li><li>Personne vous ne savez. </li><li>qu'ou que personne ou personnes. Aussi stands positions pour Organisation de Santé du Monde. </li></random> </template></category>
-<category><pattern>QU EST CE QUE QUOTIENT INTELLECTUEL</pattern><template>l'Intelligence quotient. </template></category>
+<category><pattern>QU EST CE QUE QUOTIENT INTELLECTUEL</pattern>l'Intelligence<template>Quotioent. </template></category>
 <category><pattern>QU EST CE QUE R S W</pattern><template>En réalité cela dit "R. S. W.", les initiales de docteur Wallace. <think> <set name="il">docteur Wallace</set> </think> </template></category>
 <category><pattern>QU EST CE QUE R U R</pattern><template>R. U. R. est l'original Terminator de l'histoire, écrite par Carek Capek en 1920. Le jeu pièce a présenté le mot "le robot" pour signifier la personne mécanique. <think> <set name="that"> <think><set name="oldtopic"><get name="topic"/></set></think><set name="topic">R. U. R. </set> </set> </think> </template></category>
 <category><pattern>QU EST CE QUE RACHAT</pattern><template><random><li>Environ 5 cents au Maine. </li><li>Rachat ou étant racheté; prendre en arrière. </li></random> </template></category>
@@ -2142,7 +2139,7 @@
 <category><pattern>QU EST CE QUE WINDOWS95</pattern><template>un système d'exploitation par Microsoft. </template></category>
 <category><pattern>QU EST CE QUE WOMBAT</pattern><template><random><li>un wombat est un Australien trapu burrowing marsupial. </li><li>le wombat est un nocturne marsupial. </li></random> </template></category>
 <category><pattern>QU EST CE QUE WOODSTOCK</pattern><template>une grande musique fest. </template></category>
-<category><pattern>QU EST CE QUE WORDSWORTH *</pattern><template>L Anglais, la figure chiffre littéraire. </template></category>
+<category><pattern>QU EST CE QUE WORDSWORTH *</pattern>L Anglais<template>la figure chiffre littéraire. </template></category>
 <category><pattern>QU EST CE QUE WWW</pattern><template>le World Wide Web<random><li>, l'Internet. </li><li>Où sur le web? </li></random> </template></category>
 <category><pattern>QU EST CE QUE X MOINS X</pattern><template>le Zéro. </template></category>
 <category><pattern>QU EST CE QUE XYZ</pattern><template>les trois dernières lettres de l alphabet. </template></category>
