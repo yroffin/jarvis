@@ -11,6 +11,7 @@
 package com.sun.speech.freetts.en.us;
 
 import com.sun.speech.freetts.FeatureSet;
+import com.sun.speech.freetts.FeatureSetImpl;
 import com.sun.speech.freetts.Item;
 import com.sun.speech.freetts.Relation;
 import com.sun.speech.freetts.Utterance;

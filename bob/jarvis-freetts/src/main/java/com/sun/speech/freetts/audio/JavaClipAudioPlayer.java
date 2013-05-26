@@ -55,6 +55,7 @@ public class JavaClipAudioPlayer implements AudioPlayer {
     private AudioFormat currentFormat = defaultFormat;
     private boolean firstSample = true;
     private boolean firstPlay = true;
+    private int curIndex = 0;
     /** Data buffer to write the pure audio data to. */
     private final PipedOutputStream outputData;
     /** Audio input stream that is used to play back the audio. */
@@ -297,6 +298,7 @@ public class JavaClipAudioPlayer implements AudioPlayer {
     public synchronized void begin(int size) {
         timer.start("utteranceOutput");
         cancelled = false;
+        curIndex = 0;
         PipedInputStream in;
         try {
             in = new PipedInputStream(outputData);
@@ -458,6 +460,7 @@ public class JavaClipAudioPlayer implements AudioPlayer {
             LOGGER.warning(e.getLocalizedMessage());
             return false;
         }
+        curIndex += size;
         return true;
     }
 

@@ -16,7 +16,7 @@ package com.sun.speech.freetts;
  *
  * @see Voice
  */
-public class Gender implements Comparable<Object> {
+public class Gender implements Comparable {
     private final String name;
 
     // Ordinal of next created

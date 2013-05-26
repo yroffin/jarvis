@@ -109,7 +109,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class AimlParserImpl extends aimlParser {
-	Logger logger = LoggerFactory.getLogger(AimlParserImpl.class);
+	static public Logger logger = LoggerFactory.getLogger(AimlParserImpl.class);
 
 	protected AimlLexerImpl lexer = null;
 
@@ -524,11 +524,10 @@ public class AimlParserImpl extends aimlParser {
 			/**
 			 * find encoding
 			 */
-			String encoding = "UTF8";
+			String encoding = "UTF-8";
 			try {
 				BufferedReader br = new BufferedReader(new InputStreamReader(
 						new FileInputStream(filename)));
-				System.out.print(".");
 				CommonTokenStream local = AimlLexerImpl.getTokensFromString(br
 						.readLine());
 				br.close();
@@ -551,6 +550,7 @@ public class AimlParserImpl extends aimlParser {
 			/**
 			 * parse all file
 			 */
+			logger.info("Parsing " + filename + " - " + encoding);
 			AimlParserImpl parser = new AimlParserImpl(filename, encoding);
 			parser.document();
 
@@ -558,6 +558,7 @@ public class AimlParserImpl extends aimlParser {
 					"Errors, while parsing"); }
 			return parser.getRepository();
 		} catch (RecognitionException e) {
+			e.printStackTrace();
 			throw new AimlParsingError(e);
 		}
 	}

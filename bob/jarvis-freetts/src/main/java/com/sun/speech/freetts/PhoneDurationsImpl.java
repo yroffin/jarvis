@@ -38,7 +38,7 @@ public class PhoneDurationsImpl implements PhoneDurations {
     /**
      * The set of PhoneDuration instances indexed by phone.
      */
-    private HashMap<String, PhoneDuration> phoneDurations;
+    private HashMap phoneDurations;
     
     /**
      * Creates a new PhoneDurationsImpl by reading from the given URL.
@@ -51,7 +51,7 @@ public class PhoneDurationsImpl implements PhoneDurations {
         BufferedReader reader;
         String line;
 
-	phoneDurations = new HashMap<String, PhoneDuration>();
+	phoneDurations = new HashMap();
 	reader = new BufferedReader(new
 		InputStreamReader(url.openStream()));
 	line = reader.readLine();

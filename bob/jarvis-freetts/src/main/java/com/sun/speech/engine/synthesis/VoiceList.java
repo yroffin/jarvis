@@ -20,13 +20,13 @@ public class VoiceList {
     /**
      * The list of <code>Voices</code>.
      */
-    protected final List<BaseVoice> voiceList;
+    protected final List voiceList;
     
     /**
      * Class constructor.
      */
     public VoiceList() {
-        voiceList = new java.util.ArrayList<BaseVoice>();
+        voiceList = new java.util.ArrayList();
     }
     
     /**
@@ -37,7 +37,7 @@ public class VoiceList {
      * @param desc the <code>SynthesizerModeDesc</code> to get voices from
      */
     public VoiceList(SynthesizerModeDesc desc) {
-        voiceList = new java.util.ArrayList<BaseVoice>();
+        voiceList = new java.util.ArrayList();
         
         Voice[] v = desc.getVoices();
         
@@ -83,7 +83,7 @@ public class VoiceList {
      */
     public BaseVoice getVoiceById(String id) {
         for (int i = 0; i < voiceList.size(); i++) {
-            BaseVoice bv = (voiceList.get(i));
+            BaseVoice bv = (BaseVoice)(voiceList.get(i));
             if (bv.getId().equals(id)) {
                 return bv;
             }
@@ -117,7 +117,7 @@ public class VoiceList {
         int count = 0;
         
         for (int i=0; i<voiceList.size(); i++) {
-            BaseVoice bv = (voiceList.get(i));
+            BaseVoice bv = (BaseVoice)(voiceList.get(i));
             if (bv.match(voice)) {
                 if (variant <= 0) {
                     return bv.getId();
@@ -135,7 +135,7 @@ public class VoiceList {
         variant = (variant - 1) % count;
         
         // Return the selected voice id.
-        BaseVoice bv = (voiceList.get(indexes[variant]));
+        BaseVoice bv = (BaseVoice)(voiceList.get(indexes[variant]));
         return bv.getId();
     }    
 

@@ -115,7 +115,7 @@ public class MbrolaCaller implements UtteranceProcessor {
         // In order to avoid resizing a large array, we save the audio data
         // in the chunks in which we read it.
 
-        List<byte[]> audioData = new java.util.ArrayList<byte[]>();
+        List audioData = new java.util.ArrayList();
         int totalSize = 0;
         int nrRead = -1; // -1 means end of file
 

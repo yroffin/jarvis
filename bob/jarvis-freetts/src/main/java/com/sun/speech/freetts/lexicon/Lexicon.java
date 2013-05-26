@@ -87,7 +87,7 @@ public interface Lexicon {
      *
      * @return <code>true</code> if the phone is a new boundary
      */
-    public boolean isSyllableBoundary(List<?> syllablePhones,
+    public boolean isSyllableBoundary(List syllablePhones,
                                       String[] wordPhones,
                                       int currentWordPhone);    
 

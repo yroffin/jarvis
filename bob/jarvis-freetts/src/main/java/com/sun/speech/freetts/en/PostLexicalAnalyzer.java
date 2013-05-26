@@ -105,7 +105,7 @@ public class PostLexicalAnalyzer implements UtteranceProcessor {
      * @param  utterance  the utterance to process
      */
     private void fixTheIy(Utterance utterance) {
-	utterance.getVoice();
+	Voice voice = utterance.getVoice();
 	for (Item item = utterance.getRelation(Relation.SEGMENT).getHead();
 		item != null; item = item.getNext()) {
 

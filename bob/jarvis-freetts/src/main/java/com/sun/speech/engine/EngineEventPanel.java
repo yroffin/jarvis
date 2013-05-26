@@ -25,11 +25,6 @@ import javax.swing.JButton;
  */
 public class EngineEventPanel extends JPanel {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -1222186146528558848L;
-
-	/**
      * The area where engine events are posted.
      */
     protected JTextArea textArea;

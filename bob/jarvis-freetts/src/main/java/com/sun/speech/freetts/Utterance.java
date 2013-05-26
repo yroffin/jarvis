@@ -30,11 +30,7 @@ import com.sun.speech.freetts.util.SegmentRelationUtils;
  */
 public class Utterance implements FeatureSet, Serializable {
 
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 5644905255905673959L;
-	private Voice voice;
+    private Voice voice;
     private FeatureSetImpl features;
     private FeatureSetImpl relations;
     private boolean first;	// first in a connected series
@@ -58,7 +54,7 @@ public class Utterance implements FeatureSet, Serializable {
      * @param voice the voice associated with the utterance
      * @param tokenList the list of tokens for this utterance
      */
-    public Utterance(Voice voice, List<?> tokenList) {
+    public Utterance(Voice voice, List tokenList) {
 	this(voice);
 	setTokenList(tokenList);
     }
@@ -427,9 +423,9 @@ public class Utterance implements FeatureSet, Serializable {
      * @param tokenList the set of tokens for this utterance
      *
      */
-    private void setInputText(List<?> tokenList) {
+    private void setInputText(List tokenList) {
 	StringBuffer sb = new StringBuffer();
-	for (Iterator<?> i = tokenList.iterator(); i.hasNext(); ) {
+	for (Iterator i = tokenList.iterator(); i.hasNext(); ) {
 	    sb.append(i.next().toString());
 	}
 	setString("input_text", sb.toString());
@@ -444,11 +440,11 @@ public class Utterance implements FeatureSet, Serializable {
      * @param tokenList the tokenList
      *
      */
-    private void setTokenList(List<?> tokenList) {
+    private void setTokenList(List tokenList) {
 	setInputText(tokenList);
 
 	Relation relation = createRelation(Relation.TOKEN);
-	for (Iterator<?> i = tokenList.iterator(); i.hasNext(); ) {
+	for (Iterator i = tokenList.iterator(); i.hasNext(); ) {
 	    Token token = (Token) i.next();
 	    String tokenWord = token.getWord();
 	    

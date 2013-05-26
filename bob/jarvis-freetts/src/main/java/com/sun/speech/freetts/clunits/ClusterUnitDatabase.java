@@ -69,12 +69,12 @@ public class ClusterUnitDatabase {
     private int[] joinWeights;
     private int joinWeightShift;
 
-    private Map<String, CART> cartMap = new HashMap<String, CART>();
+    private Map cartMap = new HashMap();
     private CART defaultCart = null;
 
-    private transient List<DatabaseClusterUnit> unitList;
+    private transient List unitList;
     private transient int lineCount;
-    private transient List<UnitType> unitTypesList;
+    private transient List unitTypesList;
 
     private final static int MAGIC = 0xf0cacc1a;
     private final static int VERSION = 0x1000;
@@ -429,8 +429,8 @@ public class ClusterUnitDatabase {
         String line;
 
 
-	unitList = new ArrayList<DatabaseClusterUnit>();
-	unitTypesList = new ArrayList<UnitType>();
+	unitList = new ArrayList();
+	unitTypesList = new ArrayList();
 
 	if (is == null) {
 	    throw new Error("Can't load cluster db file.");
@@ -604,7 +604,7 @@ public class ClusterUnitDatabase {
 	mcep = new SampleSet(bb);
 
 	int numCarts = bb.getInt();
-	cartMap = new HashMap<String, CART>();
+	cartMap = new HashMap();
 	for (int i = 0; i < numCarts; i++) {
 	    String name = Utilities.getString(bb);
 	    CART cart = CARTImpl.loadBinary(bb);
@@ -659,7 +659,7 @@ public class ClusterUnitDatabase {
 	mcep = new SampleSet(is);
 
 	int numCarts = is.readInt();
-	cartMap = new HashMap<String, CART>();
+	cartMap = new HashMap();
 	for (int i = 0; i < numCarts; i++) {
 	    String name = Utilities.getString(is);
 	    CART cart = CARTImpl.loadBinary(is);
@@ -741,7 +741,7 @@ public class ClusterUnitDatabase {
 	    mcep.dumpBinary(os);
 
 	    os.writeInt(cartMap.size());
-	    for (Iterator<String> i = cartMap.keySet().iterator(); i.hasNext();) {
+	    for (Iterator i = cartMap.keySet().iterator(); i.hasNext();) {
 		String name = (String) i.next();
 		CART cart =  (CART) cartMap.get(name);
 

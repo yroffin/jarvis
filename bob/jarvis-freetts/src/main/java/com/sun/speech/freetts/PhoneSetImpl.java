@@ -45,7 +45,7 @@ public class PhoneSetImpl implements PhoneSet {
     /**
      * The set of phone features indexed by phone.
      */    
-    private Map<String, String> phonesetMap;
+    private Map phonesetMap;
 
     /**
      * Create a new <code>PhoneSetImpl</code> by reading from the
@@ -59,7 +59,7 @@ public class PhoneSetImpl implements PhoneSet {
         BufferedReader reader;
         String line;
 
-	phonesetMap = new HashMap<String, String>();
+	phonesetMap = new HashMap();
 	reader = new BufferedReader(new
 		InputStreamReader(url.openStream()));
 	line = reader.readLine();

@@ -690,6 +690,13 @@ public class LPCResult {
 	 */
 	public static final boolean DEFAULT_SIGNED = true;
 
+	/**
+	 * A boolean indicating that the Wave samples are represented as
+	 * little endian, i.e., this value is false.
+	 */
+	public static final boolean DEFAULT_BIG_ENDIAN = false;
+
+
 	private byte[] samples = null;
 	private AudioFormat audioFormat = null;
 	    

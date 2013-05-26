@@ -25,7 +25,7 @@ public class BulkTimer {
 
     private final static String SELF = "OverallTime";
     private boolean verbose;
-    private Map<String, Timer> timers;
+    private Map timers;
     
 
     /**
@@ -33,7 +33,7 @@ public class BulkTimer {
      */
     public BulkTimer() {
 	this.verbose = false;
-	timers = new LinkedHashMap<String, Timer>();
+	timers = new LinkedHashMap();
     }
 
     /**
@@ -116,9 +116,9 @@ public class BulkTimer {
      */
     public void show(String title) {
 	long overall = getTimer(SELF).getCurrentTime();
-	Collection<Timer>  values = timers.values();
+	Collection  values = timers.values();
 	Timer.showTimesShortTitle(title);
-	for (Iterator<Timer> i = values.iterator(); i.hasNext(); ) {
+	for (Iterator i = values.iterator(); i.hasNext(); ) {
 	    Timer t = (Timer) i.next();
 	    t.showTimes(overall);
 	}

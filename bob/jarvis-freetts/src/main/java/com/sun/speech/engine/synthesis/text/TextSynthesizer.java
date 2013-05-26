@@ -7,11 +7,14 @@
  */
 package com.sun.speech.engine.synthesis.text;
 
+import java.net.URL;
 import java.util.Vector;
 import java.util.Enumeration;
 
 import javax.speech.Engine;
 import javax.speech.EngineStateError;
+import javax.speech.synthesis.Speakable;
+import javax.speech.synthesis.SpeakableEvent;
 import javax.speech.synthesis.SynthesizerModeDesc;
 
 import com.sun.speech.engine.synthesis.BaseSynthesizer;
@@ -85,7 +88,7 @@ public class TextSynthesizer extends BaseSynthesizer {
      *   if this <code>Synthesizer</code> in the <code>DEALLOCATED</code> or 
      *   <code>DEALLOCATING_RESOURCES</code> states
      */
-    public Enumeration<TextSynthesizerQueueItem> enumerateQueue() throws EngineStateError {
+    public Enumeration enumerateQueue() throws EngineStateError {
         checkEngineState(DEALLOCATED | DEALLOCATING_RESOURCES);
         return outputHandler.enumerateQueue();
     }
@@ -170,7 +173,7 @@ public class TextSynthesizer extends BaseSynthesizer {
          *
          * @see BaseSynthesizerQueueItem
          */
-        protected Vector<TextSynthesizerQueueItem> queue;
+        protected Vector queue;
 
         /**
          * The current item to speak.
@@ -209,7 +212,7 @@ public class TextSynthesizer extends BaseSynthesizer {
          * Class constructor.
          */
         public OutputHandler() {
-            queue = new Vector<TextSynthesizerQueueItem>();
+            queue = new Vector();
             currentItem = null;
         }
 
@@ -225,7 +228,7 @@ public class TextSynthesizer extends BaseSynthesizer {
          *
          * @return the current queue
          */
-        public Enumeration<TextSynthesizerQueueItem> enumerateQueue() {
+        public Enumeration enumerateQueue() {
             synchronized(queue) {
                 return queue.elements();
             }
@@ -386,7 +389,7 @@ public class TextSynthesizer extends BaseSynthesizer {
                 item.postTopOfQueue();
                 currentCommand = outputItem(item);
                 if (currentCommand == CANCEL_ALL) {
-                    Vector<TextSynthesizerQueueItem> itemList = new Vector<TextSynthesizerQueueItem>();
+                    Vector itemList = new Vector();
                     itemList.add(item);
                     synchronized(queue) {
                         queue.remove(0);

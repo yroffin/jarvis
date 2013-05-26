@@ -36,7 +36,7 @@ public class FreeTTSVoice extends BaseVoice {
         
         if (validatorName != null) {
             try {
-                Class<?> clazz = Class.forName(validatorName);
+                Class clazz = Class.forName(validatorName);
                 validator = (Validator) clazz.newInstance();
             } catch (ClassNotFoundException cnfe) {
                 cnfe.printStackTrace();

@@ -70,7 +70,7 @@ public class Segmenter implements UtteranceProcessor {
             utterance.createRelation(Relation.SYLLABLE_STRUCTURE);
 	Relation seg = utterance.createRelation(Relation.SEGMENT);
 	Lexicon lex = utterance.getVoice().getLexicon();
-	List<String> syllableList = null;
+	List syllableList = null;
 
 	for (Item word = utterance.getRelation(Relation.WORD).getHead();
 			word != null; word = word.getNext()) {
@@ -100,7 +100,7 @@ public class Segmenter implements UtteranceProcessor {
 		    sylItem = syl.appendItem();
 		    sssyl = ssword.addDaughter(sylItem);
 		    stress = NO_STRESS;
-		    syllableList = new ArrayList<String>();
+		    syllableList = new ArrayList();
 		}
 		segItem = seg.appendItem();
 		if (isStressed(phones[j])) {

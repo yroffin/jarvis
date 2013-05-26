@@ -7,10 +7,16 @@
  */
 package com.sun.speech.engine.synthesis.text;
 
+import javax.speech.Engine;
 import javax.speech.synthesis.Speakable;
+import javax.speech.synthesis.SpeakableEvent;
+
+import com.sun.speech.engine.synthesis.BaseSynthesizer;
 import com.sun.speech.engine.synthesis.BaseSynthesizerQueueItem;
 
 import java.net.URL;
+import java.io.IOException;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;

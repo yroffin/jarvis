@@ -22,13 +22,13 @@ public class BaseAudioManager implements AudioManager {
      * List of <code>AudioListeners</code> registered for
      * <code>AudioEvents</code> on this object.
      */
-    protected Collection<AudioListener> listeners;
+    protected Collection listeners;
     
     /** 
      * Class constructor.
      */
     public BaseAudioManager() {
-        listeners = new java.util.ArrayList<AudioListener>();
+        listeners = new java.util.ArrayList();
     }
 
     /**

@@ -22,11 +22,6 @@ import java.util.EventObject;
  */
 public class SpeechEventWrapper extends SpeechEvent {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1315198586291592674L;
-
-	/**
      * Use an id that won't be confused with JSAPI event ids.
      */
     protected static int WRAPPER_ID = -25468;
