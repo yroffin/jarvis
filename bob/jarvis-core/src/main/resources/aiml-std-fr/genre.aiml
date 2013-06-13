@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <aiml version="1.0">
 
 
 <!-- A.L.I.C.E. is a Free software (c) 2001 ALICE AI Foundation -->
 <!-- The ProgramD is open source code released under the terms of the GNU General Public License as published by the Free Software Foundation. -->
-<!-- As This Module   : genre.aiml   -   version :   0.3   -   MàJ : 01/01/2003  -->
-<!-- auteur : Jean Louis Campion (jlc@Multivers.net) d'après les travaux du Dr Richard Wallace - langue : française -->
+<!-- As This Module   : genre.aiml   -   version :   0.3   -   MÃ J : 01/01/2003  -->
+<!-- auteur : Jean Louis Campion (jlc@Multivers.net) d'aprÃ¨s les travaux du Dr Richard Wallace - langue : franÃ§aise -->
 <!-- Complies with AIML 1.0 Tag Set Specification as adopted by the ALICE A.I. Foundation. -->
 
 
@@ -268,7 +268,7 @@
 <template><condition name="gender">
 <li value="male"><think> <set name="heshe">il</set> </think></li>
 <li value="female"><think> <set name="heshe">elle</set> </think></li>
-<li><think> <set name="heshe">ça</set> </think>Es tu un homme ou une femme? </li></condition></template>
+<li><think> <set name="heshe">Ã§a</set> </think>Es tu un homme ou une femme? </li></condition></template>
 </category>
 
 

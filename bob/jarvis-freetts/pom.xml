@@ -11,7 +11,7 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>${groupId}</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>jsapi</artifactId>
 			<version>1.0</version>
 			<scope>system</scope>

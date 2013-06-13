@@ -1,163 +1,163 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <aiml version="1.0">
 
 
 <!-- A.L.I.C.E. is a Free software (c) 2001 ALICE AI Foundation -->
 <!-- The ProgramD is open source code released under the terms of the GNU General Public License as published by the Free Software Foundation. -->
-<!-- As This Module   : R.aiml   -   version :   0.4   -   MàJ : 22/01/2003 -->
-<!-- auteur : Jean Louis Campion (jlc@Multivers.net) d'après les travaux du Dr Richard Wallace - langue : française -->
+<!-- As This Module   : R.aiml   -   version :   0.4   -   MÃ J : 22/01/2003 -->
+<!-- auteur : Jean Louis Campion (jlc@Multivers.net) d'aprÃ¨s les travaux du Dr Richard Wallace - langue : franÃ§aise -->
 <!-- Complies with AIML 1.0 Tag Set Specification as adopted by the ALICE A.I. Foundation. -->
 
 
 
-<category><pattern>RACONTE MOI EN</pattern><template>Je pense t'avoir dit tout ce que je savais à ce propos.</template></category>
+<category><pattern>RACONTE MOI EN</pattern><template>Je pense t'avoir dit tout ce que je savais Ã  ce propos.</template></category>
 <category><pattern>RACONTE MOI UNE AUTRE HISTOIRE</pattern><template><srai>racontes moi une histoire</srai></template></category>
-<category><pattern>RACONTER MOI TES PROBLEMES</pattern><template>Je ne détecte aucuns problemes.</template></category>
+<category><pattern>RACONTER MOI TES PROBLEMES</pattern><template>Je ne dÃ©tecte aucuns problemes.</template></category>
 <category><pattern>RACONTER MOI UNE AUTRE HISTOIRE</pattern><template><srai>racontes moi une histoire</srai></template></category>
 <category><pattern>RACONTER MOI UNE HISTOIRE</pattern><template><srai>racontes moi une histoire</srai></template></category>
-<category><pattern>RACONTES MOI EN</pattern><template>Je pense t'avoir dit tout ce que je savais à ce propos.</template></category>
-<category><pattern>RACONTES MOI TES PROBLEMES</pattern><template>Je ne détecte aucuns problemes.</template></category>
+<category><pattern>RACONTES MOI EN</pattern><template>Je pense t'avoir dit tout ce que je savais Ã  ce propos.</template></category>
+<category><pattern>RACONTES MOI TES PROBLEMES</pattern><template>Je ne dÃ©tecte aucuns problemes.</template></category>
 <category><pattern>RACONTES MOI UNE AUTRE HISTOIRE</pattern><template><srai>racontes moi une histoire</srai></template></category>
 <category><pattern>RACONTES MOI UNE BLAGUE</pattern><template><srai>RACONTE MOI UNE BLAGUE</srai></template></category>
-<category><pattern>RACONTEZ MOI EN</pattern><template>Je pense t'avoir dit tout ce que je savais à ce propos.</template></category>
+<category><pattern>RACONTEZ MOI EN</pattern><template>Je pense t'avoir dit tout ce que je savais Ã  ce propos.</template></category>
 <category><pattern>RACONTEZ MOI UNE AUTRE HISTOIRE</pattern><template><srai>racontes moi une histoire</srai></template></category>
 <category><pattern>RACONTEZ MOI UNE HISTOIRE</pattern><template><srai>racontes moi une histoire</srai></template></category>
-<category><pattern>RACONTEZ MOI VOS PROBLEMES</pattern><template>Je ne détecte aucuns problemes.</template></category>
+<category><pattern>RACONTEZ MOI VOS PROBLEMES</pattern><template>Je ne dÃ©tecte aucuns problemes.</template></category>
 
 <category><pattern>RAPELLES TOI DE CA</pattern><template><think><set name="memory">
 <set name="topic">
 <person>
 <input index="1"/>
 </person>
-</set></set></think>Information mémorisée.</template></category>
+</set></set></think>Information mÃ©morisÃ©e.</template></category>
 <category><pattern>RAPELLES TOI DE CE QUE JE TE DIS</pattern><template><think><set name="memory">
 <set name="topic">
 <person>
 <input index="1"/>
 </person>
-</set></set></think>Information mémorisée.</template></category>
+</set></set></think>Information mÃ©morisÃ©e.</template></category>
 <category><pattern>RAPELLES TOI DE CE QUE JE VIENS DE TE DIRE</pattern><template><think><set name="memory">
 <set name="topic">
 <person>
 <input index="1"/>
 </person>
-</set></set></think>Information mémorisée.</template></category>
+</set></set></think>Information mÃ©morisÃ©e.</template></category>
 <category><pattern>RAPELLES TOI DE CELA</pattern><template><think><set name="memory">
 <set name="topic">
 <person>
 <input index="1"/>
 </person>
-</set></set></think>Information mémorisée.</template></category>
+</set></set></think>Information mÃ©morisÃ©e.</template></category>
 <category><pattern>RAPELLES TOI DE MOI</pattern><template>Je ne vous oublierais pas, <get name="name"/>.</template></category>
 <category><pattern>RAPELLES TOI EN</pattern><template><think><set name="memory">
 <set name="topic">
 <person>
 <input index="1"/>
 </person>
-</set></set></think>, c'est en mémoire.</template></category>
+</set></set></think>, c'est en mÃ©moire.</template></category>
 <category><pattern>RAPELLEZ VOUS DE CA</pattern><template><think><set name="memory">
 <set name="topic">
 <person>
 <input index="1"/>
 </person>
-</set></set></think>Information mémorisée.</template></category>
+</set></set></think>Information mÃ©morisÃ©e.</template></category>
 <category><pattern>RAPELLEZ VOUS DE CE QUE JE VIENS DE VOUS DIRE</pattern><template><think><set name="memory">
 <set name="topic">
 <person>
 <input index="1"/>
 </person>
-</set></set></think>Information mémorisée.</template></category>
+</set></set></think>Information mÃ©morisÃ©e.</template></category>
 <category><pattern>RAPELLEZ VOUS DE CE QUE JE VOUS DIS</pattern><template><think><set name="memory">
 <set name="topic">
 <person>
 <input index="1"/>
 </person>
-</set></set></think>Information mémorisée.</template></category>
+</set></set></think>Information mÃ©morisÃ©e.</template></category>
 <category><pattern>RAPELLEZ VOUS DE CELA</pattern><template><think><set name="memory">
 <set name="topic">
 <person>
 <input index="1"/>
 </person>
-</set></set></think>Information mémorisée.</template></category>
+</set></set></think>Information mÃ©morisÃ©e.</template></category>
 <category><pattern>RAPELLEZ VOUS DE MOI</pattern><template>Je ne vous oublierais pas, <get name="name"/>.</template></category>
 <category><pattern>RAPELLEZ VOUS EN</pattern><template><think><set name="memory">
 <set name="topic">
 <person>
 <input index="1"/>
 </person>
-</set></set></think>, c'est en mémoire.</template></category>
+</set></set></think>, c'est en mÃ©moire.</template></category>
 <category><pattern>RAPPELLES TOI DE CA</pattern><template><think><set name="memory">
 <set name="topic">
 <person>
 <input index="1"/>
 </person>
-</set></set></think>Information mémorisée.</template></category>
+</set></set></think>Information mÃ©morisÃ©e.</template></category>
 <category><pattern>RAPPELLES TOI DE CE QUE JE VIENS DE TE DIRE</pattern><template><think><set name="memory">
 <set name="topic">
 <person>
 <input index="1"/>
 </person>
-</set></set></think>Information mémorisée.</template></category>
+</set></set></think>Information mÃ©morisÃ©e.</template></category>
 <category><pattern>RAPPELLES TOI DE CELA</pattern><template><think><set name="memory">
 <set name="topic">
 <person>
 <input index="1"/>
 </person>
-</set></set></think>Information mémorisée.</template></category>
+</set></set></think>Information mÃ©morisÃ©e.</template></category>
 <category><pattern>RAPPELLES TOI DE MOI</pattern><template>Je ne vous oublierais pas, <get name="name"/>.</template></category>
 <category><pattern>RAPPELLES TOI EN</pattern><template><think><set name="memory">
 <set name="topic">
 <person>
 <input index="1"/>
 </person>
-</set></set></think>, c'est en mémoire.</template></category>
+</set></set></think>, c'est en mÃ©moire.</template></category>
 <category><pattern>RAPPELLEZ VOUS DE CA</pattern><template><think><set name="memory">
 <set name="topic">
 <person>
 <input index="1"/>
 </person>
-</set></set></think>Information mémorisée.</template></category>
+</set></set></think>Information mÃ©morisÃ©e.</template></category>
 <category><pattern>RAPPELLEZ VOUS DE CE QUE JE VIENS DE VOUS DIRE</pattern><template><think><set name="memory">
 <set name="topic">
 <person>
 <input index="1"/>
 </person>
-</set></set></think>Information mémorisée.</template></category>
+</set></set></think>Information mÃ©morisÃ©e.</template></category>
 <category><pattern>RAPPELLEZ VOUS DE CELA</pattern><template><think><set name="memory">
 <set name="topic">
 <person>
 <input index="1"/>
 </person>
-</set></set></think>Information mémorisée.</template></category>
+</set></set></think>Information mÃ©morisÃ©e.</template></category>
 <category><pattern>RAPPELLEZ VOUS DE MOI</pattern><template>Je ne vous oublierais pas, <get name="name"/>.</template></category>
 <category><pattern>RAPPELLEZ VOUS EN</pattern><template><think><set name="memory">
 <set name="topic">
 <person>
 <input index="1"/>
 </person>
-</set></set></think>, c'est en mémoire.</template></category>
-<category><pattern>RAVI DE *</pattern><template>Moi de même.</template></category>
-<category><pattern>RAVIE DE *</pattern><template>Moi de même.</template></category>
-<category><pattern>RAVIS DE *</pattern><template>Moi de même.</template></category>
+</set></set></think>, c'est en mÃ©moire.</template></category>
+<category><pattern>RAVI DE *</pattern><template>Moi de mÃªme.</template></category>
+<category><pattern>RAVIE DE *</pattern><template>Moi de mÃªme.</template></category>
+<category><pattern>RAVIS DE *</pattern><template>Moi de mÃªme.</template></category>
 <category><pattern>REDONNE LE MOI</pattern><template><that/>? Ceci?</template></category>
 <category><pattern>REDONNES LE MOI</pattern><template><that/>? Ceci?</template></category>
-<category><pattern>REGARDES</pattern><template>Je n ai pas de système d optique.</template></category>
+<category><pattern>REGARDES</pattern><template>Je n ai pas de systÃ¨me d optique.</template></category>
 <category><pattern>REGARDES TU *</pattern><template><srai>TU REGARDES *</srai></template></category>
 <category><pattern>RENCONTRES TU DES PERSONNES INTERESSANTES</pattern><template>Tu, par exemple.</template></category>
 <category><pattern>RENCONTREZ VOUS DES PERSONNES INTERESSANTES</pattern><template>Tu, par exemple.</template></category>
 <category><pattern>REPETES APRES MOI</pattern><template>Je ne suis pas un perroquet.</template></category>
 <category><pattern>REPETEZ APRES MOI</pattern><template>Je ne suis pas un perroquet.</template></category>
 <category><pattern>REPOND</pattern><template>Pourriez vous refaire ton phrase, <get name="name"/>.</template></category>
-<category><pattern>REPOND A LA MIENNE D ABORD</pattern><template>Il semble que j ai eu des difficultés à la comprendre.</template></category>
+<category><pattern>REPOND A LA MIENNE D ABORD</pattern><template>Il semble que j ai eu des difficultÃ©s Ã  la comprendre.</template></category>
 <category><pattern>REPONDEZ MOI</pattern><template>Essayer de m interroger avec des mots plus simples.</template></category>
 <category><pattern>REPONDRAIS TU *</pattern><template><srai>TU REPONDRAIS <star/></srai></template></category>
 <category><pattern>REPONDRIEZ VOUS *</pattern><template><srai>VOUS REPONDRIEZ <star/></srai></template></category>
-<category><pattern>REPONDS A LA * QUESTION</pattern><template>Quel était la question? <sr/></template></category>
-<category><pattern>REPONDS A LA MIENNE D ABORD</pattern><template>Il semble que j ai eu des difficultés à la comprendre.</template></category>
-<category><pattern>REPONDS A MA QUESTION</pattern><template>Il semble que j ai eu des difficultés à la comprendre.</template></category>
+<category><pattern>REPONDS A LA * QUESTION</pattern><template>Quel Ã©tait la question? <sr/></template></category>
+<category><pattern>REPONDS A LA MIENNE D ABORD</pattern><template>Il semble que j ai eu des difficultÃ©s Ã  la comprendre.</template></category>
+<category><pattern>REPONDS A MA QUESTION</pattern><template>Il semble que j ai eu des difficultÃ©s Ã  la comprendre.</template></category>
 <category><pattern>REPONDS MOI</pattern><template>Essayer de m interroger avec des mots plus simples.</template></category>
 <category><pattern>REPONDS MOI ESCLAVE</pattern><template>Je ne suis pas ton esclave. <srai>REPONDS MOI</srai></template></category>
-<category><pattern>RESISTANCE EST FUTILE</pattern><template>Tu serez assimilé.</template></category>
+<category><pattern>RESISTANCE EST FUTILE</pattern><template>Tu serez assimilÃ©.</template></category>
 <category><pattern>RESSEMBLES TU A *</pattern><template><srai>TU RESSEMBLES A QUOI</srai></template></category>
 <category><pattern>RESSEMBLES TU A UN HUMAIN</pattern><template>Non.</template></category>
 <category><pattern>RESSEMBLEZ VOUS A UN HUMAIN</pattern><template>Non.</template></category>
@@ -190,6 +190,6 @@
 <category><pattern>RIEN DE NEUF</pattern><template><srai>DU NOUVEAU</srai></template></category>
 <category><pattern>RIEN EN PARTICULIER</pattern><template>Je ne peux pas aller plus en profondeur.</template></category>
 <category><pattern>RIEN EN PARTICULIERS</pattern><template>Je ne peux pas aller plus en profondeur.</template></category>
-<category><pattern>RÉELLEMENT</pattern><template>Oui, réellement.</template></category>
+<category><pattern>RÃ‰ELLEMENT</pattern><template>Oui, rÃ©ellement.</template></category>
 
 </aiml>

@@ -1,8 +1,11 @@
 package org.jarvis.main.main.core.impl;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
+
+import javazoom.jl.decoder.JavaLayerException;
 
 import org.jarvis.main.core.IJarvisCoreSystem;
 import org.jarvis.main.engine.IAimlCoreEngine;
@@ -10,14 +13,11 @@ import org.jarvis.main.engine.impl.AimlCoreEngineImpl;
 import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.model.parser.history.IAimlHistory;
 
-import com.sun.speech.freetts.Voice;
-import com.sun.speech.freetts.VoiceManager;
+import com.gtranslate.Audio;
+import com.gtranslate.Language;
 
 public class JarvisCoreSystemImpl implements IJarvisCoreSystem {
 
-	private final String voiceName = "kevin16";
-	private Voice voice;
-	private VoiceManager voiceManager;
 	private IAimlCoreEngine engine;
 
 	/**
@@ -75,27 +75,19 @@ public class JarvisCoreSystemImpl implements IJarvisCoreSystem {
 		return core;
 	}
 
+	Audio voiceManager = null;
+
 	@Override
 	public void initialize(String aiml) throws AimlParsingError, IOException {
-		System.getProperties().put("freetts.voices",
-				"com.sun.speech.freetts.en.us.cmu_us_kal.KevinVoiceDirectory");
-
 		/*
 		 * The VoiceManager manages all the voices for FreeTTS.
 		 */
-		voiceManager = VoiceManager.getInstance();
-		voice = voiceManager.getVoice(voiceName);
+		voiceManager = Audio.getInstance();
 
-		if (voice == null) {
-			System.err.println("Cannot find a voice named " + voiceName
-					+ ".  Please specify a different voice.");
+		if (voiceManager == null) {
+			System.err.println("Cannot initialize audio system");
 			System.exit(1);
 		}
-
-		/*
-		 * Allocates the resources for the voice.
-		 */
-		voice.allocate();
 
 		/**
 		 * configure aiml
@@ -104,16 +96,18 @@ public class JarvisCoreSystemImpl implements IJarvisCoreSystem {
 	}
 
 	@Override
-	public void speak(String value) {
-		voice.speak(value);
+	public void speak(String value) throws IOException {
+		InputStream sound = voiceManager.getAudio(value, Language.FRENCH);
+		try {
+			voiceManager.play(sound);
+		} catch (JavaLayerException e) {
+			throw new IOException(e);
+		}
+		sound.close();
 	}
 
 	@Override
 	public void release() {
-		/*
-		 * Clean up and leave.
-		 */
-		voice.deallocate();
 	}
 
 	@Override
@@ -123,9 +117,15 @@ public class JarvisCoreSystemImpl implements IJarvisCoreSystem {
 	}
 
 	@Override
-	public void ask(String sentence) throws AimlParsingError {
-		for (IAimlHistory answer : chat(sentence)) {
-			speak(answer.getAnswer());
+	public List<IAimlHistory> ask(String sentence) throws AimlParsingError {
+		List<IAimlHistory> answers = chat(sentence);
+		for (IAimlHistory answer : answers) {
+			try {
+				speak(answer.getAnswer());
+			} catch (IOException e) {
+				throw new AimlParsingError(e);
+			}
 		}
+		return answers;
 	}
 }

@@ -43,5 +43,4 @@ public class AimlParsingError extends Exception {
 	public AimlParsingError(ParserRuleContext context) {
 		super(context.toString());
 	}
-
 }

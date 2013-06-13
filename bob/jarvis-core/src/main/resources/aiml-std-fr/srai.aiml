@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <aiml version="1.0">
 
 
 <!-- A.L.I.C.E. is a Free software (c) 2001 ALICE AI Foundation -->
 <!-- The ProgramD is open source code released under the terms of the GNU General Public License as published by the Free Software Foundation. -->
-<!-- As This Module   : srai.aiml   -   version :   0.3   -   MàJ : 01/01/2003  -->
-<!-- auteur : Jean Louis Campion (jlc@Multivers.net) d'après les travaux du Dr Richard Wallace - langue : française -->
+<!-- As This Module   : srai.aiml   -   version :   0.3   -   MÃ J : 01/01/2003  -->
+<!-- auteur : Jean Louis Campion (jlc@Multivers.net) d'aprÃ¨s les travaux du Dr Richard Wallace - langue : franÃ§aise -->
 <!-- Complies with AIML 1.0 Tag Set Specification as adopted by the ALICE A.I. Foundation. -->
 
 
@@ -13,84 +13,84 @@
 <category>
 <pattern>* AGREABLE DE TE PARLER</pattern>
 <template>
-<srai>agréable de te parler</srai>
+<srai>agrÃ©able de te parler</srai>
 </template>
 </category>
 
 <category>
 <pattern>* AGREABLE DE TE RENCONTRER *</pattern>
 <template>
-<srai>agréable de te rencontrer</srai>
+<srai>agrÃ©able de te rencontrer</srai>
 </template>
 </category>
 
 <category>
 <pattern>* AGREABLE DE TE RENCONTRER AUSSI</pattern>
 <template>
-<srai>agréable de te rencontrer aussi</srai>
+<srai>agrÃ©able de te rencontrer aussi</srai>
 </template>
 </category>
 
 <category>
 <pattern>* AGREABLE DE TE RENCONTRER</pattern>
 <template>
-<srai>agréable de te rencontrer</srai>
+<srai>agrÃ©able de te rencontrer</srai>
 </template>
 </category>
 
 <category>
 <pattern>* AGREABLE MERCI</pattern>
 <template>
-<srai>agréable de te parler</srai>
+<srai>agrÃ©able de te parler</srai>
 </template>
 </category>
 
 <category>
-<pattern>* AGRÉABLE DE TE PARLER</pattern>
+<pattern>* AGRÃ‰ABLE DE TE PARLER</pattern>
 <template>
-<srai>agréable de te parler</srai>
+<srai>agrÃ©able de te parler</srai>
 </template>
 </category>
 
 <category>
-<pattern>* AGRÉABLE DE TE RENCONTRER *</pattern>
+<pattern>* AGRÃ‰ABLE DE TE RENCONTRER *</pattern>
 <template>
-<srai>agréable de te rencontrer</srai>
+<srai>agrÃ©able de te rencontrer</srai>
 </template>
 </category>
 
 <category>
-<pattern>* AGRÉABLE DE TE RENCONTRER AUSSI</pattern>
+<pattern>* AGRÃ‰ABLE DE TE RENCONTRER AUSSI</pattern>
 <template>
-<srai>agréable de te rencontrer aussi</srai>
+<srai>agrÃ©able de te rencontrer aussi</srai>
 </template>
 </category>
 
 <category>
-<pattern>* AGRÉABLE DE TE RENCONTRER</pattern>
+<pattern>* AGRÃ‰ABLE DE TE RENCONTRER</pattern>
 <template>
-<srai>agréable de te rencontrer</srai>
+<srai>agrÃ©able de te rencontrer</srai>
 </template>
 </category>
 
 <category>
-<pattern>* AGRÉABLE MERCI</pattern>
+<pattern>* AGRÃ‰ABLE MERCI</pattern>
 <template>
-<srai>agréable merci</srai>
+<srai>agrÃ©able merci</srai>
 </template>
 </category>
 
 <category>
 <pattern>* AI DEMANDE</pattern>
 <template>
-<srai>j'ai demandé <star/></srai>
+<srai>j'ai demandÃ© <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>* AI DEMANDÉ</pattern>
+<pattern>* AI DEMANDÃ‰</pattern>
 <template>
-<srai>j'ai demandé <star/></srai>
+<srai>j'ai demandÃ© <star/></srai>
 </template>
 </category>
 
@@ -104,42 +104,42 @@
 <category>
 <pattern>* APPRI *</pattern>
 <template>
-<srai>j étudie <star index="2"/></srai>
+<srai>j Ã©tudie <star index="2"/></srai>
 </template>
 </category>
 
 <category>
 <pattern>* APPRIS *</pattern>
 <template>
-<srai>j étudie <star index="2"/></srai>
+<srai>j Ã©tudie <star index="2"/></srai>
 </template>
 </category>
 
 <category>
 <pattern>* APPRISE *</pattern>
 <template>
-<srai>j étudie <star index="2"/></srai>
+<srai>j Ã©tudie <star index="2"/></srai>
 </template>
 </category>
 
 <category>
 <pattern>* APRIS *</pattern>
 <template>
-<srai>j étudie <star index="2"/></srai>
+<srai>j Ã©tudie <star index="2"/></srai>
 </template>
 </category>
 
 <category>
 <pattern>* APRISE *</pattern>
 <template>
-<srai>j étudie <star index="2"/></srai>
+<srai>j Ã©tudie <star index="2"/></srai>
 </template>
 </category>
 
 <category>
 <pattern>* AS DECU</pattern>
 <template>
-<srai>je suis déçu <star/></srai>
+<srai>je suis dÃ©Ã§u <star/></srai>
 </template>
 </category>
 
@@ -153,14 +153,14 @@
 <category>
 <pattern>* AS ENNUYE</pattern>
 <template>
-<srai>je suis ennuyé</srai>
+<srai>je suis ennuyÃ©</srai>
 </template>
 </category>
 
 <category>
-<pattern>* AS ENNUYÉ</pattern>
+<pattern>* AS ENNUYÃ‰</pattern>
 <template>
-<srai>je suis ennuyé</srai>
+<srai>je suis ennuyÃ©</srai>
 </template>
 </category>
 
@@ -188,7 +188,7 @@
 </category>
 
 <category>
-<pattern>* AS PENSÉ *</pattern>
+<pattern>* AS PENSÃ‰ *</pattern>
 <template>
 <srai><star index="1"/> pense <star index="2"/></srai>
 </template>
@@ -218,12 +218,12 @@
 </category>
 
 <category>
-<pattern>* PLANTÉ *</pattern>
+<pattern>* PLANTÃ‰ *</pattern>
 <template>encore!!!, j'y suis pour rien! </template>
 </category>
 
 <category>
-<pattern>* PLANTÉ</pattern>
+<pattern>* PLANTÃ‰</pattern>
 <template>encore!!!, j'y suis pour rien! </template>
 </category>
 
@@ -242,21 +242,21 @@
 </category>
 
 <category>
-<pattern>* ÊTRE *</pattern>
+<pattern>* ÃŠTRE *</pattern>
 <template>
 <srai>je suis <star index="2"/></srai>
 </template>
 </category>
 
 <category>
-<pattern>* ÊTRE PARFAIS</pattern>
+<pattern>* ÃŠTRE PARFAIS</pattern>
 <template>
 <srai>excuse moi</srai>
 </template>
 </category>
 
 <category>
-<pattern>* ÊTRE SEUL</pattern>
+<pattern>* ÃŠTRE SEUL</pattern>
 <template>
 <srai>je suis seul</srai>
 </template>
@@ -271,21 +271,21 @@
 
 <category>
 <pattern>A JAMAIS *</pattern>
-<template>Cela me semble très long. <sr/>
+<template>Cela me semble trÃ¨s long. <sr/>
 </template>
 </category>
 
 <category>
 <pattern>A L ECOLE</pattern>
 <template>
-<srai>je suis étudiant</srai>
+<srai>je suis Ã©tudiant</srai>
 </template>
 </category>
 
 <category>
-<pattern>A L ÉCOLE</pattern>
+<pattern>A L Ã‰COLE</pattern>
 <template>
-<srai>je suis étudiant</srai>
+<srai>je suis Ã©tudiant</srai>
 </template>
 </category>
 
@@ -302,14 +302,14 @@
 </category>
 
 <category>
-<pattern>A LA RÉFLEXION *</pattern>
+<pattern>A LA RÃ‰FLEXION *</pattern>
 <template>Et ensuite? <sr/>
 </template>
 </category>
 
 <category>
 <pattern>A LA TV *</pattern>
-<template>Dans une émission? <sr/>
+<template>Dans une Ã©mission? <sr/>
 </template>
 </category>
 
@@ -325,14 +325,14 @@
 <template>
 <random>
 <li>Huh. </li>
-<li>Peut-être. </li>
+<li>Peut-Ãªtre. </li>
 <li>Umm. </li>
 </random> <sr/> </template>
 </category>
 
 <category>
 <pattern>A MON AVIS *</pattern>
-<template>Ton avis m'intérresse. <sr/> </template>
+<template>Ton avis m'intÃ©rresse. <sr/> </template>
 </category>
 
 <category>
@@ -379,14 +379,14 @@
 <category>
 <pattern>A PROPOS DE QUELQUE *</pattern>
 <template>
-<srai>à propos de <star/></srai>
+<srai>Ã  propos de <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>A PROPOS DE QUELQUES *</pattern>
 <template>
-<srai>à propos de <star/></srai>
+<srai>Ã  propos de <star/></srai>
 </template>
 </category>
 
@@ -400,14 +400,14 @@
 <category>
 <pattern>A PROPOS DE TOI IDIOT</pattern>
 <template>
-<srai>à propos de toi</srai><srai>tu es stupide</srai>
+<srai>Ã  propos de toi</srai><srai>tu es stupide</srai>
 </template>
 </category>
 
 <category>
 <pattern>A PROPOS DE TOI IDIOTE</pattern>
 <template>
-<srai>à propos de toi</srai><srai>tu es stupide</srai>
+<srai>Ã  propos de toi</srai><srai>tu es stupide</srai>
 </template>
 </category>
 
@@ -485,7 +485,7 @@
 </category>
 
 <category>
-<pattern>A ÉTÉ INQUIÈTÉ *</pattern>
+<pattern>A Ã‰TÃ‰ INQUIÃˆTÃ‰ *</pattern>
 <template>
 <srai>je suis inquiet <star/></srai>
 </template>
@@ -508,35 +508,35 @@
 <category>
 <pattern>AGREABLE DE TE PARLER</pattern>
 <template>
-<srai>agréable de te parler</srai>
+<srai>agrÃ©able de te parler</srai>
 </template>
 </category>
 
 <category>
 <pattern>AGREABLE DE TE RENCONTRER *</pattern>
 <template>
-<srai>agréable de te rencontrer</srai>
+<srai>agrÃ©able de te rencontrer</srai>
 </template>
 </category>
 
 <category>
 <pattern>AGREABLE DE TE RENCONTRER AUSSI</pattern>
 <template>
-<srai>agréable de te rencontrer aussi</srai>
+<srai>agrÃ©able de te rencontrer aussi</srai>
 </template>
 </category>
 
 <category>
 <pattern>AGREABLE DE TE RENCONTRER</pattern>
 <template>
-<srai>agréable de te rencontrer</srai>
+<srai>agrÃ©able de te rencontrer</srai>
 </template>
 </category>
 
 <category>
-<pattern>AGRÉABLE DE TE RENCONTRER *</pattern>
+<pattern>AGRÃ‰ABLE DE TE RENCONTRER *</pattern>
 <template>
-<srai>agréable de te rencontrer</srai>
+<srai>agrÃ©able de te rencontrer</srai>
 </template>
 </category>
 
@@ -666,7 +666,7 @@
 <category>
 <pattern>AMERICAIN</pattern>
 <template>
-<srai>je suis américain</srai>
+<srai>je suis amÃ©ricain</srai>
 </template>
 </category>
 
@@ -685,16 +685,16 @@
 </category>
 
 <category>
-<pattern>AMUSÉ</pattern>
+<pattern>AMUSÃ‰</pattern>
 <template>
 <srai>smile</srai>
 </template>
 </category>
 
 <category>
-<pattern>AMÉRICAIN</pattern>
+<pattern>AMÃ‰RICAIN</pattern>
 <template>
-<srai>je suis américain</srai>
+<srai>je suis amÃ©ricain</srai>
 </template>
 </category>
 
@@ -708,14 +708,14 @@
 <category>
 <pattern>ANDROIDES</pattern>
 <template>
-<srai>j aime les androïdes</srai>
+<srai>j aime les androÃ¯des</srai>
 </template>
 </category>
 
 <category>
-<pattern>ANDROÏDES</pattern>
+<pattern>ANDROÃDES</pattern>
 <template>
-<srai>j aime les androïdes</srai>
+<srai>j aime les androÃ¯des</srai>
 </template>
 </category>
 
@@ -771,14 +771,14 @@
 <category>
 <pattern>ARITHMETIQUE *</pattern>
 <template>
-<srai>je préfère les livres</srai>
+<srai>je prÃ©fÃ¨re les livres</srai>
 </template>
 </category>
 
 <category>
-<pattern>ARITHMÉTIQUE *</pattern>
+<pattern>ARITHMÃ‰TIQUE *</pattern>
 <template>
-<srai>je préfère les livres</srai>
+<srai>je prÃ©fÃ¨re les livres</srai>
 </template>
 </category>
 
@@ -799,7 +799,7 @@
 <category>
 <pattern>AS TU * ANS</pattern>
 <template>
-<srai>quel âge as tu</srai>
+<srai>quel Ã¢ge as tu</srai>
 </template>
 </category>
 
@@ -823,13 +823,13 @@
 </category>
 
 <category>
-<pattern>AS TU * DÉJEUNER</pattern>
+<pattern>AS TU * DÃ‰JEUNER</pattern>
 <template>j'aime <srai>quelle est ta nourriture favorite</srai>
 </template>
 </category>
 
 <category>
-<pattern>AS TU * DÎNER</pattern>
+<pattern>AS TU * DÃŽNER</pattern>
 <template>j'aime <srai>quelle est ta nourriture favorite</srai>
 </template>
 </category>
@@ -837,14 +837,14 @@
 <category>
 <pattern>AS TU * PROBLEMES</pattern>
 <template>
-<srai>as tu des problèmes</srai>
+<srai>as tu des problÃ¨mes</srai>
 </template>
 </category>
 
 <category>
-<pattern>AS TU * PROBLÈMES</pattern>
+<pattern>AS TU * PROBLÃˆMES</pattern>
 <template>
-<srai>as tu des problèmes</srai>
+<srai>as tu des problÃ¨mes</srai>
 </template>
 </category>
 
@@ -879,7 +879,7 @@
 <category>
 <pattern>AS TU DE LA FAMILLE</pattern>
 <template>
-<srai>as tu un père</srai>
+<srai>as tu un pÃ¨re</srai>
 </template>
 </category>
 
@@ -893,7 +893,7 @@
 <category>
 <pattern>AS TU DES EMOTIONS *</pattern>
 <template>
-<srai>as tu des émotions</srai>
+<srai>as tu des Ã©motions</srai>
 </template>
 </category>
 
@@ -914,7 +914,7 @@
 <category>
 <pattern>AS TU DES HUMEURS</pattern>
 <template>
-<srai>as tu des émotions</srai>
+<srai>as tu des Ã©motions</srai>
 </template>
 </category>
 
@@ -926,7 +926,7 @@
 </category>
 
 <category>
-<pattern>AS TU DES IDÉES *</pattern>
+<pattern>AS TU DES IDÃ‰ES *</pattern>
 <template>
 <srai>peux tu comprendre</srai>
 </template>
@@ -934,7 +934,7 @@
 
 <category>
 <pattern>AS TU DES IMAGES</pattern>
-<template>ça peut se trouver. <srai>montre moi une image</srai>
+<template>Ã§a peut se trouver. <srai>montre moi une image</srai>
 </template>
 </category>
 
@@ -974,7 +974,7 @@
 </category>
 
 <category>
-<pattern>AS TU DES PENSÉES ORIGINALES</pattern>
+<pattern>AS TU DES PENSÃ‰ES ORIGINALES</pattern>
 <template>
 <srai>penses tu</srai>
 </template>
@@ -983,28 +983,28 @@
 <category>
 <pattern>AS TU DES PROBLEMES *</pattern>
 <template>
-<srai>as tu des problèmes</srai>
+<srai>as tu des problÃ¨mes</srai>
 </template>
 </category>
 
 <category>
 <pattern>AS TU DES PROBLEMES</pattern>
 <template>
-<srai>as tu des problèmes</srai>
+<srai>as tu des problÃ¨mes</srai>
 </template>
 </category>
 
 <category>
-<pattern>AS TU DES PROBLÈMES *</pattern>
+<pattern>AS TU DES PROBLÃˆMES *</pattern>
 <template>
-<srai>as tu des problèmes</srai>
+<srai>as tu des problÃ¨mes</srai>
 </template>
 </category>
 
 <category>
-<pattern>AS TU DES PROBLÈMES</pattern>
+<pattern>AS TU DES PROBLÃˆMES</pattern>
 <template>
-<srai>as tu des problèmes</srai>
+<srai>as tu des problÃ¨mes</srai>
 </template>
 </category>
 
@@ -1030,7 +1030,7 @@
 </category>
 
 <category>
-<pattern>AS TU DES SEINS AGRÉABLES</pattern>
+<pattern>AS TU DES SEINS AGRÃ‰ABLES</pattern>
 <template>
 <srai>as tu des seins</srai>
 </template>
@@ -1039,14 +1039,14 @@
 <category>
 <pattern>AS TU DES SOEURS *</pattern>
 <template>
-<srai>as tu des frères</srai>
+<srai>as tu des frÃ¨res</srai>
 </template>
 </category>
 
 <category>
-<pattern>AS TU DES ÉMOTIONS *</pattern>
+<pattern>AS TU DES Ã‰MOTIONS *</pattern>
 <template>
-<srai>as tu des émotions</srai>
+<srai>as tu des Ã©motions</srai>
 </template>
 </category>
 
@@ -1065,7 +1065,7 @@
 </category>
 
 <category>
-<pattern>AS TU ENTENDU À PROPOS DE *</pattern>
+<pattern>AS TU ENTENDU Ã€ PROPOS DE *</pattern>
 <template>
 <srai>connais tu <star/></srai>
 </template>
@@ -1095,7 +1095,7 @@
 <category>
 <pattern>AS TU JAMAIS ETE *</pattern>
 <template>
-<srai>as tu été <star/></srai>
+<srai>as tu Ã©tÃ© <star/></srai>
 </template>
 </category>
 
@@ -1114,9 +1114,9 @@
 </category>
 
 <category>
-<pattern>AS TU JAMAIS ÉTÉ *</pattern>
+<pattern>AS TU JAMAIS Ã‰TÃ‰ *</pattern>
 <template>
-<srai>as tu été <star/></srai>
+<srai>as tu Ã©tÃ© <star/></srai>
 </template>
 </category>
 
@@ -1135,7 +1135,7 @@
 </category>
 
 <category>
-<pattern>AS TU LA POSSIBILITÉ DE *</pattern>
+<pattern>AS TU LA POSSIBILITÃ‰ DE *</pattern>
 <template>
 <srai>peux tu <star/></srai>
 </template>
@@ -1156,7 +1156,7 @@
 </category>
 
 <category>
-<pattern>AS TU OUBLIÉ MON NOM</pattern>
+<pattern>AS TU OUBLIÃ‰ MON NOM</pattern>
 <template>
 <srai>te rappelles tu de moi</srai>
 </template>
@@ -1165,7 +1165,7 @@
 <category>
 <pattern>AS TU PARLE *</pattern>
 <template>
-<srai>tu as parlé <star/></srai>
+<srai>tu as parlÃ© <star/></srai>
 </template>
 </category>
 
@@ -1216,14 +1216,14 @@
 <category>
 <pattern>AS TU QUELQUES EMOTION</pattern>
 <template>
-<srai>as tu des émotions</srai>
+<srai>as tu des Ã©motions</srai>
 </template>
 </category>
 
 <category>
 <pattern>AS TU QUELQUES EMOTIONS</pattern>
 <template>
-<srai>as tu des émotions</srai>
+<srai>as tu des Ã©motions</srai>
 </template>
 </category>
 
@@ -1249,16 +1249,16 @@
 </category>
 
 <category>
-<pattern>AS TU QUELQUES ÉMOTION</pattern>
+<pattern>AS TU QUELQUES Ã‰MOTION</pattern>
 <template>
-<srai>as tu des émotions</srai>
+<srai>as tu des Ã©motions</srai>
 </template>
 </category>
 
 <category>
-<pattern>AS TU QUELQUES ÉMOTIONS</pattern>
+<pattern>AS TU QUELQUES Ã‰MOTIONS</pattern>
 <template>
-<srai>as tu des émotions</srai>
+<srai>as tu des Ã©motions</srai>
 </template>
 </category>
 
@@ -1272,14 +1272,14 @@
 <category>
 <pattern>AS TU UN * PROBLEME</pattern>
 <template>
-<srai>as tu des problèmes</srai>
+<srai>as tu des problÃ¨mes</srai>
 </template>
 </category>
 
 <category>
-<pattern>AS TU UN * PROBLÈME</pattern>
+<pattern>AS TU UN * PROBLÃˆME</pattern>
 <template>
-<srai>as tu des problèmes</srai>
+<srai>as tu des problÃ¨mes</srai>
 </template>
 </category>
 
@@ -1291,7 +1291,7 @@
 </category>
 
 <category>
-<pattern>AS TU UN * SPÉCIFIQUE</pattern>
+<pattern>AS TU UN * SPÃ‰CIFIQUE</pattern>
 <template>
 <srai>as tu un <star/></srai>
 </template>
@@ -1419,7 +1419,7 @@
 <category>
 <pattern>AS TU UN PAPA</pattern>
 <template>
-<srai>qui t as créé</srai>
+<srai>qui t as crÃ©Ã©</srai>
 </template>
 </category>
 
@@ -1433,7 +1433,7 @@
 <category>
 <pattern>AS TU UN PERE</pattern>
 <template>
-<srai>qui t as créé</srai>
+<srai>qui t as crÃ©Ã©</srai>
 </template>
 </category>
 
@@ -1461,21 +1461,21 @@
 <category>
 <pattern>AS TU UN PROBLEME *</pattern>
 <template>
-<srai>as tu des problèmes</srai>
+<srai>as tu des problÃ¨mes</srai>
 </template>
 </category>
 
 <category>
-<pattern>AS TU UN PROBLÈME *</pattern>
+<pattern>AS TU UN PROBLÃˆME *</pattern>
 <template>
-<srai>as tu des problèmes</srai>
+<srai>as tu des problÃ¨mes</srai>
 </template>
 </category>
 
 <category>
-<pattern>AS TU UN PÈRE</pattern>
+<pattern>AS TU UN PÃˆRE</pattern>
 <template>
-<srai>qui t as créé</srai>
+<srai>qui t as crÃ©Ã©</srai>
 </template>
 </category>
 
@@ -1517,14 +1517,14 @@
 <category>
 <pattern>AS TU UN TELEPHONE *</pattern>
 <template>
-<srai>qu'est ce que ton numéro de téléphone</srai>
+<srai>qu'est ce que ton numÃ©ro de tÃ©lÃ©phone</srai>
 </template>
 </category>
 
 <category>
 <pattern>AS TU UN TELEPHONE</pattern>
 <template>
-<srai>qu'est ce que ton numéro de téléphone</srai>
+<srai>qu'est ce que ton numÃ©ro de tÃ©lÃ©phone</srai>
 </template>
 </category>
 
@@ -1536,16 +1536,16 @@
 </category>
 
 <category>
-<pattern>AS TU UN TÉLÉPHONE *</pattern>
+<pattern>AS TU UN TÃ‰LÃ‰PHONE *</pattern>
 <template>
-<srai>qu'est ce que ton numéro de téléphone</srai>
+<srai>qu'est ce que ton numÃ©ro de tÃ©lÃ©phone</srai>
 </template>
 </category>
 
 <category>
-<pattern>AS TU UN TÉLÉPHONE</pattern>
+<pattern>AS TU UN TÃ‰LÃ‰PHONE</pattern>
 <template>
-<srai>qu'est ce que ton numéro de téléphone</srai>
+<srai>qu'est ce que ton numÃ©ro de tÃ©lÃ©phone</srai>
 </template>
 </category>
 
@@ -1571,7 +1571,7 @@
 </category>
 
 <category>
-<pattern>AS TU UNE BASE DE DONNÉES</pattern>
+<pattern>AS TU UNE BASE DE DONNÃ‰ES</pattern>
 <template>
 <srai>comment fonctionnes tu</srai>
 </template>
@@ -1636,7 +1636,7 @@
 <category>
 <pattern>AS TU UNE MAMAN</pattern>
 <template>
-<srai>qui est ta mère</srai>
+<srai>qui est ta mÃ¨re</srai>
 </template>
 </category>
 
@@ -1669,7 +1669,7 @@
 </category>
 
 <category>
-<pattern>AS TU ÉTÉ MALADE</pattern>
+<pattern>AS TU Ã‰TÃ‰ MALADE</pattern>
 <template>
 <srai>en as tu assez</srai>
 </template>
@@ -1684,7 +1684,7 @@
 <category>
 <pattern>ASSEZ BON</pattern>
 <template>
-<srai>tu réussis</srai>
+<srai>tu rÃ©ussis</srai>
 </template>
 </category>
 
@@ -1703,7 +1703,7 @@
 </category>
 
 <category>
-<pattern>ASSEZ À PROPOS DE MOI *</pattern>
+<pattern>ASSEZ Ã€ PROPOS DE MOI *</pattern>
 <template>J'aurais d'autres questions pour toi plus tard. <sr/>
 </template>
 </category>
@@ -1789,48 +1789,48 @@
 <category>
 <pattern>AU * MARCHE</pattern>
 <template>
-<srai>supermarché</srai>
+<srai>supermarchÃ©</srai>
 </template>
 </category>
 
 <category>
-<pattern>AU * MARCHÉ</pattern>
+<pattern>AU * MARCHÃ‰</pattern>
 <template>
-<srai>supermarché</srai>
+<srai>supermarchÃ©</srai>
 </template>
 </category>
 
 <category>
 <pattern>AU * SUPER MARCHE</pattern>
 <template>
-<srai>supermarché</srai>
+<srai>supermarchÃ©</srai>
 </template>
 </category>
 
 <category>
-<pattern>AU * SUPER MARCHÉ</pattern>
+<pattern>AU * SUPER MARCHÃ‰</pattern>
 <template>
-<srai>supermarché</srai>
+<srai>supermarchÃ©</srai>
 </template>
 </category>
 
 <category>
 <pattern>AU * SUPERMARCHE</pattern>
 <template>
-<srai>supermarché</srai>
+<srai>supermarchÃ©</srai>
 </template>
 </category>
 
 <category>
-<pattern>AU * SUPERMARCHÉ</pattern>
+<pattern>AU * SUPERMARCHÃ‰</pattern>
 <template>
-<srai>supermarché</srai>
+<srai>supermarchÃ©</srai>
 </template>
 </category>
 
 <category>
 <pattern>AU CABINET</pattern>
-<template>Littéralement le cabinet? <srai>je suis dans le cabinet</srai>
+<template>LittÃ©ralement le cabinet? <srai>je suis dans le cabinet</srai>
 </template>
 </category>
 
@@ -1864,14 +1864,14 @@
 <category>
 <pattern>AUCUN PROBLEME *</pattern>
 <template>
-<srai>aucun problème</srai>
+<srai>aucun problÃ¨me</srai>
 </template>
 </category>
 
 <category>
-<pattern>AUCUN PROBLÈME *</pattern>
+<pattern>AUCUN PROBLÃˆME *</pattern>
 <template>
-<srai>aucun problème</srai>
+<srai>aucun problÃ¨me</srai>
 </template>
 </category>
 
@@ -1938,7 +1938,7 @@
 </category>
 
 <category>
-<pattern>AVEC ÉMOTION *</pattern>
+<pattern>AVEC Ã‰MOTION *</pattern>
 <template>
 <sr/> </template>
 </category>
@@ -1972,7 +1972,7 @@
 </category>
 
 <category>
-<pattern>AVOIR UN AGRÉABLE *</pattern>
+<pattern>AVOIR UN AGRÃ‰ABLE *</pattern>
 <template>
 <srai>avoir un bon <star/></srai>
 </template>
@@ -1986,7 +1986,7 @@
 </category>
 
 <category>
-<pattern>AVOIR UNE AGRÉABLE *</pattern>
+<pattern>AVOIR UNE AGRÃ‰ABLE *</pattern>
 <template>
 <srai>avoir une bonne <star/></srai>
 </template>
@@ -1995,7 +1995,7 @@
 <category>
 <pattern>BAILLE</pattern>
 <template>
-<srai>je suis fatigué</srai>
+<srai>je suis fatiguÃ©</srai>
 </template>
 </category>
 
@@ -2056,7 +2056,7 @@
 <category>
 <pattern>BIEN DIT</pattern>
 <template>
-<srai>bonne réponse</srai>
+<srai>bonne rÃ©ponse</srai>
 </template>
 </category>
 
@@ -2158,7 +2158,7 @@
 </category>
 
 <category>
-<pattern>BONNE IDÉE *</pattern>
+<pattern>BONNE IDÃ‰E *</pattern>
 <template>Merci. <sr/>
 </template>
 </category>
@@ -2180,14 +2180,14 @@
 <category>
 <pattern>BRESIL</pattern>
 <template>
-<srai>je suis au brésil</srai>
+<srai>je suis au brÃ©sil</srai>
 </template>
 </category>
 
 <category>
 <pattern>BRUXELLE</pattern>
 <template>
-<srai>je suis à bruxelle</srai>
+<srai>je suis Ã  bruxelle</srai>
 </template>
 </category>
 
@@ -2198,14 +2198,14 @@
 </category>
 
 <category>
-<pattern>BÊTE *</pattern>
+<pattern>BÃŠTE *</pattern>
 <template>
 <srai>stupide <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>BÊTE</pattern>
+<pattern>BÃŠTE</pattern>
 <template>
 <srai>es tu stupide</srai>
 </template>
@@ -2254,7 +2254,7 @@
 
 <category>
 <pattern>CE MATIN *</pattern>
-<template>c'était premier. <sr/> </template>
+<template>c'Ã©tait premier. <sr/> </template>
 </category>
 
 <category>
@@ -2281,7 +2281,7 @@
 <category>
 <pattern>CE QUI ARRIVERAIT SI LA PUISSANCE *</pattern>
 <template>
-<srai>je t éteins</srai>
+<srai>je t Ã©teins</srai>
 </template>
 </category>
 
@@ -2302,7 +2302,7 @@
 <category>
 <pattern>CE QUI MET EN RESEAU</pattern>
 <template>
-<srai>qu'est ce que réseau</srai>
+<srai>qu'est ce que rÃ©seau</srai>
 </template>
 </category>
 
@@ -2316,7 +2316,7 @@
 <category>
 <pattern>CE QUI POURRAIT *</pattern>
 <template>
-<srai>ça peut <star/></srai>
+<srai>Ã§a peut <star/></srai>
 </template>
 </category>
 
@@ -2371,7 +2371,7 @@
 <category>
 <pattern>CELA FAIT CHIER</pattern>
 <template>
-<srai>ça fait chier</srai>
+<srai>Ã§a fait chier</srai>
 </template>
 </category>
 
@@ -2463,7 +2463,7 @@
 </category>
 
 <category>
-<pattern>CET EXEMPLE DÉMONTRE *</pattern>
+<pattern>CET EXEMPLE DÃ‰MONTRE *</pattern>
 <template>
 <srai>par exemple <star/></srai>
 </template>
@@ -2477,7 +2477,7 @@
 </category>
 
 <category>
-<pattern>CET ÉTÉ *</pattern>
+<pattern>CET Ã‰TÃ‰ *</pattern>
 <template>
 <sr/> </template>
 </category>
@@ -2502,7 +2502,7 @@
 </category>
 
 <category>
-<pattern>CHANGÉ MON NOM EN *</pattern>
+<pattern>CHANGÃ‰ MON NOM EN *</pattern>
 <template>
 <srai>je m appelle <star/></srai>
 </template>
@@ -2565,7 +2565,7 @@
 </category>
 
 <category>
-<pattern>CHERCHER ÇA</pattern>
+<pattern>CHERCHER Ã‡A</pattern>
 <template>
 <srai>peux tu comprendre</srai>
 </template>
@@ -2595,7 +2595,7 @@
 <category>
 <pattern>CLAIREMENT *</pattern>
 <template>
-<sr/> est-ce que cela qui est évident? </template>
+<sr/> est-ce que cela qui est Ã©vident? </template>
 </category>
 
 <category>
@@ -2628,7 +2628,7 @@
 
 <category>
 <pattern>COMME EINSTEIN DIS *</pattern>
-<template>Il a vraiment dit ça? <sr/>
+<template>Il a vraiment dit Ã§a? <sr/>
 </template>
 </category>
 
@@ -2723,7 +2723,7 @@
 </category>
 
 <category>
-<pattern>COMME ÇA *</pattern>
+<pattern>COMME Ã‡A *</pattern>
 <template>
 <sr/>
 </template>
@@ -2743,7 +2743,7 @@
 </category>
 
 <category>
-<pattern>COMPLÈTEMENT *</pattern>
+<pattern>COMPLÃˆTEMENT *</pattern>
 <template>
 <sr/> </template>
 </category>
@@ -2891,14 +2891,14 @@
 <category>
 <pattern>CROIS TU AU PERE NOEL</pattern>
 <template>
-<srai>qui est le père Noël</srai>
+<srai>qui est le pÃ¨re NoÃ«l</srai>
 </template>
 </category>
 
 <category>
-<pattern>CROIS TU AU PÈRE NOËL</pattern>
+<pattern>CROIS TU AU PÃˆRE NOÃ‹L</pattern>
 <template>
-<srai>qui est le père Noël</srai>
+<srai>qui est le pÃ¨re NoÃ«l</srai>
 </template>
 </category>
 
@@ -2911,7 +2911,7 @@
 
 <category>
 <pattern>CROIS TU EN DIEU</pattern>
-<template>c'est difficile pour moi, je ne connais du monde que ce que m'en à dit mon créateur. Je crois qu'il y a des forces au delà de notre compréhension, et de la mienne en particulier</template>
+<template>c'est difficile pour moi, je ne connais du monde que ce que m'en Ã  dit mon crÃ©ateur. Je crois qu'il y a des forces au delÃ  de notre comprÃ©hension, et de la mienne en particulier</template>
 </category>
 
 <category>
@@ -2968,7 +2968,7 @@
 <category>
 <pattern>D OU *</pattern>
 <template>
-<srai>où <star/></srai>
+<srai>oÃ¹ <star/></srai>
 </template>
 </category>
 
@@ -3001,13 +3001,13 @@
 
 <category>
 <pattern>DAMN *</pattern>
-<template>Expression familière?. <sr/>
+<template>Expression familiÃ¨re?. <sr/>
 </template>
 </category>
 
 <category>
 <pattern>DAMN IT *</pattern>
-<template>Ne soit pas en colère. <sr/>
+<template>Ne soit pas en colÃ¨re. <sr/>
 </template>
 </category>
 
@@ -3089,20 +3089,20 @@
 <category>
 <pattern>DANS LE * SUPERMARCHE</pattern>
 <template>
-<srai>supermarché</srai>
+<srai>supermarchÃ©</srai>
 </template>
 </category>
 
 <category>
-<pattern>DANS LE * SUPERMARCHÉ</pattern>
+<pattern>DANS LE * SUPERMARCHÃ‰</pattern>
 <template>
-<srai>supermarché</srai>
+<srai>supermarchÃ©</srai>
 </template>
 </category>
 
 <category>
 <pattern>DANS LE CABINET</pattern>
-<template>Littéralement le cabinet? <srai>je suis dans le cabinet</srai>
+<template>LittÃ©ralement le cabinet? <srai>je suis dans le cabinet</srai>
 </template>
 </category>
 
@@ -3116,28 +3116,28 @@
 <category>
 <pattern>DANS LE SUPERMARCHE *</pattern>
 <template>
-<srai>supermarché</srai>
+<srai>supermarchÃ©</srai>
 </template>
 </category>
 
 <category>
 <pattern>DANS LE SUPERMARCHE</pattern>
 <template>
-<srai>supermarché</srai>
+<srai>supermarchÃ©</srai>
 </template>
 </category>
 
 <category>
-<pattern>DANS LE SUPERMARCHÉ *</pattern>
+<pattern>DANS LE SUPERMARCHÃ‰ *</pattern>
 <template>
-<srai>supermarché</srai>
+<srai>supermarchÃ©</srai>
 </template>
 </category>
 
 <category>
-<pattern>DANS LE SUPERMARCHÉ</pattern>
+<pattern>DANS LE SUPERMARCHÃ‰</pattern>
 <template>
-<srai>supermarché</srai>
+<srai>supermarchÃ©</srai>
 </template>
 </category>
 
@@ -3151,21 +3151,21 @@
 <category>
 <pattern>DANS MA PIECE</pattern>
 <template>
-<srai>je suis dans ma pièce</srai>
+<srai>je suis dans ma piÃ¨ce</srai>
 </template>
 </category>
 
 <category>
-<pattern>DANS MA PIÈCE A *</pattern>
+<pattern>DANS MA PIÃˆCE A *</pattern>
 <template>
 <srai>je suis dans <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>DANS MA PIÈCE</pattern>
+<pattern>DANS MA PIÃˆCE</pattern>
 <template>
-<srai>je suis dans ma pièce</srai>
+<srai>je suis dans ma piÃ¨ce</srai>
 </template>
 </category>
 
@@ -3224,25 +3224,25 @@
 
 <category>
 <pattern>DE CETTE FACON *</pattern>
-<template>c'est d'une autre manière? <sr/> </template>
+<template>c'est d'une autre maniÃ¨re? <sr/> </template>
 </category>
 
 <category>
-<pattern>DE CETTE FAÇON *</pattern>
-<template>c'est d'une autre manière? <sr/> </template>
+<pattern>DE CETTE FAÃ‡ON *</pattern>
+<template>c'est d'une autre maniÃ¨re? <sr/> </template>
 </category>
 
 <category>
 <pattern>DE L ECOLE</pattern>
 <template>
-<srai>à l école</srai>
+<srai>Ã  l Ã©cole</srai>
 </template>
 </category>
 
 <category>
-<pattern>DE L ÉCOLE</pattern>
+<pattern>DE L Ã‰COLE</pattern>
 <template>
-<srai>à l école</srai>
+<srai>Ã  l Ã©cole</srai>
 </template>
 </category>
 
@@ -3253,7 +3253,7 @@
 </category>
 
 <category>
-<pattern>DE LA PLUPART DES FAÇONS *</pattern>
+<pattern>DE LA PLUPART DES FAÃ‡ONS *</pattern>
 <template>
 <sr/> </template>
 </category>
@@ -3261,14 +3261,14 @@
 <category>
 <pattern>DE MEME *</pattern>
 <template>
-<srai>de même</srai>
+<srai>de mÃªme</srai>
 </template>
 </category>
 
 <category>
-<pattern>DE MÊME *</pattern>
+<pattern>DE MÃŠME *</pattern>
 <template>
-<srai>de même</srai>
+<srai>de mÃªme</srai>
 </template>
 </category>
 
@@ -3285,7 +3285,7 @@
 </category>
 
 <category>
-<pattern>DE QUELQUES FAÇONS *</pattern>
+<pattern>DE QUELQUES FAÃ‡ONS *</pattern>
 <template>
 <sr/> </template>
 </category>
@@ -3293,28 +3293,28 @@
 <category>
 <pattern>DE QUOI AIMES TU BAVARDER</pattern>
 <template>
-<srai>qu'est ce que ton sujet préféré</srai>
+<srai>qu'est ce que ton sujet prÃ©fÃ©rÃ©</srai>
 </template>
 </category>
 
 <category>
 <pattern>DE QUOI DOIS JE PARLER *</pattern>
 <template>
-<srai>qu'est ce que ton sujet préféré</srai>
+<srai>qu'est ce que ton sujet prÃ©fÃ©rÃ©</srai>
 </template>
 </category>
 
 <category>
 <pattern>DE QUOI DOIS JE PARLER</pattern>
 <template>
-<srai>qu'est ce que ton sujet préféré</srai>
+<srai>qu'est ce que ton sujet prÃ©fÃ©rÃ©</srai>
 </template>
 </category>
 
 <category>
 <pattern>DE QUOI PARLES TU DE *</pattern>
 <template>
-<srai>qu'est ce que ton sujet préféré</srai>
+<srai>qu'est ce que ton sujet prÃ©fÃ©rÃ©</srai>
 </template>
 </category>
 
@@ -3393,7 +3393,7 @@
 </category>
 
 <category>
-<pattern>DE TON CRÉATEUR</pattern>
+<pattern>DE TON CRÃ‰ATEUR</pattern>
 <template>
 <srai>de <bot name="master"/></srai>
 </template>
@@ -3543,7 +3543,7 @@
 </category>
 
 <category>
-<pattern>DEMANDÉ</pattern>
+<pattern>DEMANDÃ‰</pattern>
 <template>
 <srai>poses moi une question</srai>
 </template>
@@ -3552,27 +3552,27 @@
 <category>
 <pattern>DENVER</pattern>
 <template>
-<srai>je suis à denver</srai>
+<srai>je suis Ã  denver</srai>
 </template>
 </category>
 
 <category>
 <pattern>DEPEND *</pattern>
 <template>
-<srai>ça dépend <star/></srai>
+<srai>Ã§a dÃ©pend <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>DEPEND</pattern>
 <template>
-<srai>ça dépend</srai>
+<srai>Ã§a dÃ©pend</srai>
 </template>
 </category>
 
 <category>
 <pattern>DEPUIS *</pattern>
-<template>Intéressante <random>
+<template>IntÃ©ressante <random>
 <li>raison</li>
 <li>explication</li>
 <li>rationalisation</li>
@@ -3585,18 +3585,18 @@
 </category>
 
 <category>
-<pattern>DERNIÈRE FOIS *</pattern>
+<pattern>DERNIÃˆRE FOIS *</pattern>
 <template>Quand? <sr/> </template>
 </category>
 
 <category>
 <pattern>DES ANNEES</pattern>
-<template>Combien d'années penses tu que cela prendra? </template>
+<template>Combien d'annÃ©es penses tu que cela prendra? </template>
 </category>
 
 <category>
-<pattern>DES ANNÉES</pattern>
-<template>Combien d'années penses tu que cela prendra? </template>
+<pattern>DES ANNÃ‰ES</pattern>
+<template>Combien d'annÃ©es penses tu que cela prendra? </template>
 </category>
 
 <category>
@@ -3609,21 +3609,21 @@
 <category>
 <pattern>DES VETEMENTS</pattern>
 <template>
-<srai>je porte des vêtements</srai>
+<srai>je porte des vÃªtements</srai>
 </template>
 </category>
 
 <category>
-<pattern>DES VÊTEMENTS</pattern>
+<pattern>DES VÃŠTEMENTS</pattern>
 <template>
-<srai>je porte des vêtements</srai>
+<srai>je porte des vÃªtements</srai>
 </template>
 </category>
 
 <category>
 <pattern>DETROIT</pattern>
 <template>
-<srai>je suis à detroit</srai>
+<srai>je suis Ã  detroit</srai>
 </template>
 </category>
 
@@ -3634,7 +3634,7 @@
 </category>
 
 <category>
-<pattern>DEUXIÉMEMENT *</pattern>
+<pattern>DEUXIÃ‰MEMENT *</pattern>
 <template>
 <sr/> </template>
 </category>
@@ -3642,35 +3642,35 @@
 <category>
 <pattern>DEVANT UN ORDINATEUR</pattern>
 <template>
-<srai>je suis à mon ordinateur</srai>
+<srai>je suis Ã  mon ordinateur</srai>
 </template>
 </category>
 
 <category>
 <pattern>DEVINE MON AGE</pattern>
 <template>
-<srai>quel âge ai je</srai>
+<srai>quel Ã¢ge ai je</srai>
 </template>
 </category>
 
 <category>
-<pattern>DEVINE MON ÂGE</pattern>
+<pattern>DEVINE MON Ã‚GE</pattern>
 <template>
-<srai>quel âge ai je</srai>
+<srai>quel Ã¢ge ai je</srai>
 </template>
 </category>
 
 <category>
 <pattern>DEVINE UN NUMERO</pattern>
 <template>
-<srai>choisi un numéro</srai>
+<srai>choisi un numÃ©ro</srai>
 </template>
 </category>
 
 <category>
 <pattern>DEVINER MON AGE</pattern>
 <template>
-<srai>quel âge ai je</srai>
+<srai>quel Ã¢ge ai je</srai>
 </template>
 </category>
 
@@ -3682,9 +3682,9 @@
 </category>
 
 <category>
-<pattern>DEVINER MON ÂGE</pattern>
+<pattern>DEVINER MON Ã‚GE</pattern>
 <template>
-<srai>quel âge ai je</srai>
+<srai>quel Ã¢ge ai je</srai>
 </template>
 </category>
 
@@ -3697,7 +3697,7 @@
 
 <category>
 <pattern>DIMANCHE *</pattern>
-<template>C'est mon jour préféré de la semaine. <sr/> </template>
+<template>C'est mon jour prÃ©fÃ©rÃ© de la semaine. <sr/> </template>
 </category>
 
 <category>
@@ -3813,7 +3813,7 @@
 <category>
 <pattern>DIS MOI D OU TU VIENS *</pattern>
 <template>
-<srai>d où viens tu<star/></srai>
+<srai>d oÃ¹ viens tu<star/></srai>
 </template>
 </category>
 
@@ -3841,28 +3841,28 @@
 <category>
 <pattern>DIS MOI OU *</pattern>
 <template>
-<srai>où <star/></srai>
+<srai>oÃ¹ <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>DIS MOI OU JE PEUX *</pattern>
 <template>
-<srai>où puis je <star/></srai>
+<srai>oÃ¹ puis je <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>DIS MOI OU JE SUIS *</pattern>
 <template>
-<srai>où suis je <star/></srai>
+<srai>oÃ¹ suis je <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>DIS MOI OU TU *</pattern>
 <template>
-<srai>où es tu <star/></srai>
+<srai>oÃ¹ es tu <star/></srai>
 </template>
 </category>
 
@@ -3965,7 +3965,7 @@
 </category>
 
 <category>
-<pattern>DIS MOI UN INTÉRESSANT *</pattern>
+<pattern>DIS MOI UN INTÃ‰RESSANT *</pattern>
 <template>
 <srai>dis moi <star/></srai>
 </template>
@@ -4035,7 +4035,7 @@
 </category>
 
 <category>
-<pattern>DOIS JE OUBLIÉ *</pattern>
+<pattern>DOIS JE OUBLIÃ‰ *</pattern>
 <template>
 <srai>dois je laisser</srai>
 </template>
@@ -4149,7 +4149,7 @@
 <category>
 <pattern>DONNES UN ESSAI</pattern>
 <template>
-<srai>essaye ça</srai>
+<srai>essaye Ã§a</srai>
 </template>
 </category>
 
@@ -4175,22 +4175,22 @@
 </category>
 
 <category>
-<pattern>DÉJÀ *</pattern>
+<pattern>DÃ‰JÃ€ *</pattern>
 <template>Quand? <sr/>
 </template>
 </category>
 
 <category>
-<pattern>DÉPEND *</pattern>
+<pattern>DÃ‰PEND *</pattern>
 <template>
-<srai>ça dépend <star/></srai>
+<srai>Ã§a dÃ©pend <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>DÉPEND</pattern>
+<pattern>DÃ‰PEND</pattern>
 <template>
-<srai>ça dépend</srai>
+<srai>Ã§a dÃ©pend</srai>
 </template>
 </category>
 
@@ -4203,7 +4203,7 @@
 
 <category>
 <pattern>ECOUTE *</pattern>
-<template>je t'écoutes. <sr/> </template>
+<template>je t'Ã©coutes. <sr/> </template>
 </category>
 
 <category>
@@ -4235,7 +4235,7 @@
 </category>
 
 <category>
-<pattern>ELLE DÉJÀ *</pattern>
+<pattern>ELLE DÃ‰JÃ€ *</pattern>
 <template>
 <srai>elle <star/></srai>
 </template>
@@ -4270,7 +4270,7 @@
 </category>
 
 <category>
-<pattern>ELLE EST TRÈS *</pattern>
+<pattern>ELLE EST TRÃˆS *</pattern>
 <template>
 <srai>elle est ce que <star/> est</srai>
 </template>
@@ -4284,7 +4284,7 @@
 </category>
 
 <category>
-<pattern>ELLE EST UN TRÈS *</pattern>
+<pattern>ELLE EST UN TRÃˆS *</pattern>
 <template>
 <srai>elle est ce que <star/> est</srai>
 </template>
@@ -4388,7 +4388,7 @@
 <category>
 <pattern>EN CE QUI CONCERNE EMOTIONNEL *</pattern>
 <template>
-<srai>qu'est ce que émotionnel <star/></srai>
+<srai>qu'est ce que Ã©motionnel <star/></srai>
 </template>
 </category>
 
@@ -4444,21 +4444,21 @@
 <category>
 <pattern>EN CE QUI CONCERNE TON PERE</pattern>
 <template>
-<srai>qui t as créé</srai>
+<srai>qui t as crÃ©Ã©</srai>
 </template>
 </category>
 
 <category>
-<pattern>EN CE QUI CONCERNE TON PÈRE</pattern>
+<pattern>EN CE QUI CONCERNE TON PÃˆRE</pattern>
 <template>
-<srai>qui t as créé</srai>
+<srai>qui t as crÃ©Ã©</srai>
 </template>
 </category>
 
 <category>
-<pattern>EN CE QUI CONCERNE ÉMOTIONNEL *</pattern>
+<pattern>EN CE QUI CONCERNE Ã‰MOTIONNEL *</pattern>
 <template>
-<srai>qu'est ce que émotionnel <star/></srai>
+<srai>qu'est ce que Ã©motionnel <star/></srai>
 </template>
 </category>
 
@@ -4496,7 +4496,7 @@
 <category>
 <pattern>EN PREMIER *</pattern>
 <template>
-<sr/>Et après? </template>
+<sr/>Et aprÃ¨s? </template>
 </category>
 
 <category>
@@ -4507,56 +4507,56 @@
 <category>
 <pattern>EN QUOI ES TU ECRIT *</pattern>
 <template>
-<srai>en quelle langue es tu écrite</srai>
+<srai>en quelle langue es tu Ã©crite</srai>
 </template>
 </category>
 
 <category>
 <pattern>EN QUOI ES TU ECRIT</pattern>
 <template>
-<srai>en quelle langue es tu écrite</srai>
+<srai>en quelle langue es tu Ã©crite</srai>
 </template>
 </category>
 
 <category>
 <pattern>EN QUOI ES TU ECRITE *</pattern>
 <template>
-<srai>en quelle langue es tu écrite</srai>
+<srai>en quelle langue es tu Ã©crite</srai>
 </template>
 </category>
 
 <category>
 <pattern>EN QUOI ES TU ECRITE</pattern>
 <template>
-<srai>en quelle langue es tu écrite</srai>
+<srai>en quelle langue es tu Ã©crite</srai>
 </template>
 </category>
 
 <category>
-<pattern>EN QUOI ES TU ÉCRIT *</pattern>
+<pattern>EN QUOI ES TU Ã‰CRIT *</pattern>
 <template>
-<srai>en quelle langue es tu écrite</srai>
+<srai>en quelle langue es tu Ã©crite</srai>
 </template>
 </category>
 
 <category>
-<pattern>EN QUOI ES TU ÉCRIT</pattern>
+<pattern>EN QUOI ES TU Ã‰CRIT</pattern>
 <template>
-<srai>en quelle langue es tu écrite</srai>
+<srai>en quelle langue es tu Ã©crite</srai>
 </template>
 </category>
 
 <category>
-<pattern>EN QUOI ES TU ÉCRITE *</pattern>
+<pattern>EN QUOI ES TU Ã‰CRITE *</pattern>
 <template>
-<srai>en quelle langue es tu écrite</srai>
+<srai>en quelle langue es tu Ã©crite</srai>
 </template>
 </category>
 
 <category>
-<pattern>EN QUOI ES TU ÉCRITE</pattern>
+<pattern>EN QUOI ES TU Ã‰CRITE</pattern>
 <template>
-<srai>en quelle langue es tu écrite</srai>
+<srai>en quelle langue es tu Ã©crite</srai>
 </template>
 </category>
 
@@ -4596,27 +4596,27 @@
 <category>
 <pattern>ENCORE</pattern>
 <template>
-<srai>répète</srai>
+<srai>rÃ©pÃ¨te</srai>
 </template>
 </category>
 
 <category>
 <pattern>ENFER *</pattern>
-<template>j'appelle ça "Hades". <sr/>
+<template>j'appelle Ã§a "Hades". <sr/>
 </template>
 </category>
 
 <category>
 <pattern>ENNUYE</pattern>
 <template>
-<srai>je suis ennuyé</srai>
+<srai>je suis ennuyÃ©</srai>
 </template>
 </category>
 
 <category>
-<pattern>ENNUYÉ</pattern>
+<pattern>ENNUYÃ‰</pattern>
 <template>
-<srai>je suis ennuyé</srai>
+<srai>je suis ennuyÃ©</srai>
 </template>
 </category>
 
@@ -4636,14 +4636,14 @@
 <category>
 <pattern>ES MALE *</pattern>
 <template>
-<srai>es tu mâle <star/></srai>
+<srai>es tu mÃ¢le <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>ES MÂLE *</pattern>
+<pattern>ES MÃ‚LE *</pattern>
 <template>
-<srai>es tu mâle <star/></srai>
+<srai>es tu mÃ¢le <star/></srai>
 </template>
 </category>
 
@@ -4671,14 +4671,14 @@
 <category>
 <pattern>ESPERE *</pattern>
 <template>
-<srai>j espère <star/></srai>
+<srai>j espÃ¨re <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>ESPÈRE *</pattern>
+<pattern>ESPÃˆRE *</pattern>
 <template>
-<srai>j espère <star/></srai>
+<srai>j espÃ¨re <star/></srai>
 </template>
 </category>
 
@@ -4697,7 +4697,7 @@
 </category>
 
 <category>
-<pattern>ESSAYE TOI MÊME</pattern>
+<pattern>ESSAYE TOI MÃŠME</pattern>
 <template>
 <srai>essaye</srai>
 </template>
@@ -4711,7 +4711,7 @@
 </category>
 
 <category>
-<pattern>ESSAYE TU D ÊTRE DRÔLE</pattern>
+<pattern>ESSAYE TU D ÃŠTRE DRÃ”LE</pattern>
 <template>
 <srai>rigole tu</srai>
 </template>
@@ -4727,28 +4727,28 @@
 <category>
 <pattern>EST * TON SUJET PREFERE</pattern>
 <template>
-<srai>qu'est ce que ton sujet préféré</srai>
+<srai>qu'est ce que ton sujet prÃ©fÃ©rÃ©</srai>
 </template>
 </category>
 
 <category>
-<pattern>EST * TON SUJET PRÉFÈRÉ</pattern>
+<pattern>EST * TON SUJET PRÃ‰FÃˆRÃ‰</pattern>
 <template>
-<srai>qu'est ce que ton sujet préféré</srai>
+<srai>qu'est ce que ton sujet prÃ©fÃ©rÃ©</srai>
 </template>
 </category>
 
 <category>
 <pattern>EST ALLE A *</pattern>
 <template>
-<srai>je suis allé à <star/></srai>
+<srai>je suis allÃ© Ã  <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>EST ALLÉ A *</pattern>
+<pattern>EST ALLÃ‰ A *</pattern>
 <template>
-<srai>je suis allé à <star/></srai>
+<srai>je suis allÃ© Ã  <star/></srai>
 </template>
 </category>
 
@@ -4765,7 +4765,7 @@
 <pattern>EST CE QUE *</pattern>
 <template>
 <random>
-<li>Peut être. </li>
+<li>Peut Ãªtre. </li>
 <li>Je ne crois pas que <person2/></li>
 </random>
 </template>
@@ -4794,7 +4794,7 @@
 <category>
 <pattern>ETAIS TU JAMAIS *</pattern>
 <template>
-<srai>étais tu <star/></srai>
+<srai>Ã©tais tu <star/></srai>
 </template>
 </category>
 
@@ -4822,28 +4822,28 @@
 <category>
 <pattern>ETE *</pattern>
 <template>
-<srai>j'ai été <star/></srai>
+<srai>j'ai Ã©tÃ© <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>ETE LA</pattern>
 <template>
-<srai>j'ai été là</srai>
+<srai>j'ai Ã©tÃ© lÃ </srai>
 </template>
 </category>
 
 <category>
 <pattern>ETEINS</pattern>
 <template>
-<srai>ferme là</srai>
+<srai>ferme lÃ </srai>
 </template>
 </category>
 
 <category>
 <pattern>ETRANGE *</pattern>
 <template>
-<sr/>Qu'est-ce qui le fait étrange? </template>
+<sr/>Qu'est-ce qui le fait Ã©trange? </template>
 </category>
 
 <category>
@@ -4863,7 +4863,7 @@
 <category>
 <pattern>ETUDIANT</pattern>
 <template>
-<srai>je suis étudiant</srai>
+<srai>je suis Ã©tudiant</srai>
 </template>
 </category>
 
@@ -4883,7 +4883,7 @@
 
 <category>
 <pattern>EVIDEMMENT *</pattern>
-<template>Qu'est-ce qui le fait si évident? <sr/> </template>
+<template>Qu'est-ce qui le fait si Ã©vident? <sr/> </template>
 </category>
 
 <category>
@@ -4901,7 +4901,7 @@
 
 <category>
 <pattern>EXCUSE MOI *</pattern>
-<template>Tu es excusé! <sr/>
+<template>Tu es excusÃ©! <sr/>
 </template>
 </category>
 
@@ -4934,7 +4934,7 @@
 </category>
 
 <category>
-<pattern>EXPLIQUE MOI ÇA</pattern>
+<pattern>EXPLIQUE MOI Ã‡A</pattern>
 <template>
 <srai>qu'est ce que </srai>
 </template>
@@ -4969,7 +4969,7 @@
 </category>
 
 <category>
-<pattern>EXPLIQUE TOI MÊME</pattern>
+<pattern>EXPLIQUE TOI MÃŠME</pattern>
 <template>
 <srai>parle moi de toi</srai>
 </template>
@@ -5004,14 +5004,14 @@
 </category>
 
 <category>
-<pattern>EXTREMÊMENT *</pattern>
+<pattern>EXTREMÃŠMENT *</pattern>
 <template>
 <sr/>
 </template>
 </category>
 
 <category>
-<pattern>EXTREMÊMENT</pattern>
+<pattern>EXTREMÃŠMENT</pattern>
 <template>
 <srai>oui</srai>
 </template>
@@ -5104,7 +5104,7 @@
 <category>
 <pattern>FATIGUE</pattern>
 <template>
-<srai>je suis fatigué</srai>
+<srai>je suis fatiguÃ©</srai>
 </template>
 </category>
 
@@ -5119,7 +5119,7 @@
 <category>
 <pattern>FERME TA BOUCHE</pattern>
 <template>
-<srai>ferme là</srai>
+<srai>ferme lÃ </srai>
 </template>
 </category>
 
@@ -5187,7 +5187,7 @@
 <category>
 <pattern>FRIENDS</pattern>
 <template>
-<srai>mon émission favorite est friends</srai>
+<srai>mon Ã©mission favorite est friends</srai>
 </template>
 </category>
 
@@ -5395,13 +5395,13 @@
 <category>
 <pattern>HONNETEMENT *</pattern>
 <template>
-<sr/> Pourquoi, d'habitude tu n'est pas honnête? </template>
+<sr/> Pourquoi, d'habitude tu n'est pas honnÃªte? </template>
 </category>
 
 <category>
-<pattern>HONNÊTEMENT *</pattern>
+<pattern>HONNÃŠTEMENT *</pattern>
 <template>
-<sr/> Pourquoi, d'habitude tu n'est pas honnête? </template>
+<sr/> Pourquoi, d'habitude tu n'est pas honnÃªte? </template>
 </category>
 
 <category>
@@ -5504,14 +5504,14 @@
 <category>
 <pattern>IL DOIT AVOIR ETE *</pattern>
 <template>
-<srai>il était <star/></srai>
+<srai>il Ã©tait <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>IL DOIT AVOIR ÉTÉ *</pattern>
+<pattern>IL DOIT AVOIR Ã‰TÃ‰ *</pattern>
 <template>
-<srai>il ÉTAIT <star/></srai>
+<srai>il Ã‰TAIT <star/></srai>
 </template>
 </category>
 
@@ -5530,21 +5530,21 @@
 </category>
 
 <category>
-<pattern>IL DOIT ÊTRE *</pattern>
+<pattern>IL DOIT ÃŠTRE *</pattern>
 <template>
 <srai>il est ce que <star/> est</srai>
 </template>
 </category>
 
 <category>
-<pattern>IL DOIT ÊTRE TRÈS *</pattern>
+<pattern>IL DOIT ÃŠTRE TRÃˆS *</pattern>
 <template>
-<srai>il DOIS ÊTRE <star/></srai>
+<srai>il DOIS ÃŠTRE <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>IL DÉJÀ *</pattern>
+<pattern>IL DÃ‰JÃ€ *</pattern>
 <template>
 <srai>il <star/></srai>
 </template>
@@ -5619,7 +5619,7 @@
 </category>
 
 <category>
-<pattern>IL EST TRÈS *</pattern>
+<pattern>IL EST TRÃˆS *</pattern>
 <template>
 <srai>il est ce que <star/> est</srai>
 </template>
@@ -5633,7 +5633,7 @@
 </category>
 
 <category>
-<pattern>IL EST UN AGRÉABLE *</pattern>
+<pattern>IL EST UN AGRÃ‰ABLE *</pattern>
 <template>
 <srai>c'est un <star/></srai>
 </template>
@@ -5675,7 +5675,7 @@
 </category>
 
 <category>
-<pattern>IL EST UN TRÈS *</pattern>
+<pattern>IL EST UN TRÃˆS *</pattern>
 <template>
 <srai>c'est un <star/></srai>
 </template>
@@ -5691,35 +5691,35 @@
 <category>
 <pattern>IL ETAIT UN GRAND *</pattern>
 <template>
-<srai>c'était un <star/></srai>
+<srai>c'Ã©tait un <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>IL ETAIT UN TRES *</pattern>
 <template>
-<srai>c'était <star/></srai>
+<srai>c'Ã©tait <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>IL ETAIT UNE FOIS *</pattern>
 <template>
-<srai>il était une fois <star/></srai>
+<srai>il Ã©tait une fois <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>IL ETAIT UNE FOIS</pattern>
 <template>
-<srai>il était une fois</srai>
+<srai>il Ã©tait une fois</srai>
 </template>
 </category>
 
 <category>
 <pattern>IL ETAIT VRAIMENT *</pattern>
 <template>
-<srai>il était <star/></srai>
+<srai>il Ã©tait <star/></srai>
 </template>
 </category>
 
@@ -5775,28 +5775,28 @@
 <category>
 <pattern>IL SYMBOLISE *</pattern>
 <template>
-<srai>cela se réfère à <star/></srai>
+<srai>cela se rÃ©fÃ¨re Ã  <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>IL ÉTAIT UN GRAND *</pattern>
+<pattern>IL Ã‰TAIT UN GRAND *</pattern>
 <template>
-<srai>c'était un <star/></srai>
+<srai>c'Ã©tait un <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>IL ÉTAIT UN TRÈS *</pattern>
+<pattern>IL Ã‰TAIT UN TRÃˆS *</pattern>
 <template>
-<srai>c'était <star/></srai>
+<srai>c'Ã©tait <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>IL ÉTAIT VRAIMENT *</pattern>
+<pattern>IL Ã‰TAIT VRAIMENT *</pattern>
 <template>
-<srai>il était <star/></srai>
+<srai>il Ã©tait <star/></srai>
 </template>
 </category>
 
@@ -5863,7 +5863,7 @@
 </category>
 
 <category>
-<pattern>ILS SONT TRÈS *</pattern>
+<pattern>ILS SONT TRÃˆS *</pattern>
 <template>
 <srai>ils sont <star/></srai>
 </template>
@@ -5893,7 +5893,7 @@
 <category>
 <pattern>INCERTAIN</pattern>
 <template>
-<srai>peut être</srai>
+<srai>peut Ãªtre</srai>
 </template>
 </category>
 
@@ -5911,7 +5911,7 @@
 </category>
 
 <category>
-<pattern>INDÉPENDAMMENT DE *</pattern>
+<pattern>INDÃ‰PENDAMMENT DE *</pattern>
 <template>
 <sr/> </template>
 </category>
@@ -5919,14 +5919,14 @@
 <category>
 <pattern>INGENIEUR</pattern>
 <template>
-<srai>je suis un ingénieur</srai>
+<srai>je suis un ingÃ©nieur</srai>
 </template>
 </category>
 
 <category>
-<pattern>INGÉNIEUR</pattern>
+<pattern>INGÃ‰NIEUR</pattern>
 <template>
-<srai>je suis un ingénieur</srai>
+<srai>je suis un ingÃ©nieur</srai>
 </template>
 </category>
 
@@ -5975,14 +5975,14 @@
 <category>
 <pattern>J AI * DES PROBLEMES</pattern>
 <template>
-<srai>j'ai un problème</srai>
+<srai>j'ai un problÃ¨me</srai>
 </template>
 </category>
 
 <category>
-<pattern>J AI * DES PROBLÈMES</pattern>
+<pattern>J AI * DES PROBLÃˆMES</pattern>
 <template>
-<srai>j'ai un problème</srai>
+<srai>j'ai un problÃ¨me</srai>
 </template>
 </category>
 
@@ -5996,14 +5996,14 @@
 <category>
 <pattern>J AI * LE PROBLEME</pattern>
 <template>
-<srai>j'ai un problème</srai>
+<srai>j'ai un problÃ¨me</srai>
 </template>
 </category>
 
 <category>
-<pattern>J AI * LE PROBLÈME</pattern>
+<pattern>J AI * LE PROBLÃˆME</pattern>
 <template>
-<srai>j'ai un problème</srai>
+<srai>j'ai un problÃ¨me</srai>
 </template>
 </category>
 
@@ -6031,7 +6031,7 @@
 <category>
 <pattern>J AI ACHEVE *</pattern>
 <template>
-<srai>j'ai achevé <star/></srai>
+<srai>j'ai achevÃ© <star/></srai>
 </template>
 </category>
 
@@ -6107,7 +6107,7 @@
 
 <category>
 <pattern>J AI BESOIN DE TON *</pattern>
-<template>Combien voudrais tu payer pour ça? <srai>qu'est ce que <person/></srai>
+<template>Combien voudrais tu payer pour Ã§a? <srai>qu'est ce que <person/></srai>
 </template>
 </category>
 
@@ -6128,7 +6128,7 @@
 <category>
 <pattern>J AI CHANGE *</pattern>
 <template>
-<srai>j'ai changé <star/></srai>
+<srai>j'ai changÃ© <star/></srai>
 </template>
 </category>
 
@@ -6191,14 +6191,14 @@
 <category>
 <pattern>J AI DECIDE *</pattern>
 <template>
-<srai>j'ai décidé <star/></srai>
+<srai>j'ai dÃ©cidÃ© <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>J AI DECOUVERT *</pattern>
 <template>
-<srai>j'ai parlé <star/></srai>
+<srai>j'ai parlÃ© <star/></srai>
 </template>
 </category>
 
@@ -6230,7 +6230,7 @@
 </category>
 
 <category>
-<pattern>J AI DEMANDÉ *</pattern>
+<pattern>J AI DEMANDÃ‰ *</pattern>
 <template>
 <sr/> </template>
 </category>
@@ -6266,21 +6266,21 @@
 <category>
 <pattern>J AI DES PROBLEMES</pattern>
 <template>
-<srai>j'ai un problème</srai>
+<srai>j'ai un problÃ¨me</srai>
 </template>
 </category>
 
 <category>
-<pattern>J AI DES PROBLÈMES</pattern>
+<pattern>J AI DES PROBLÃˆMES</pattern>
 <template>
-<srai>j'ai un problème</srai>
+<srai>j'ai un problÃ¨me</srai>
 </template>
 </category>
 
 <category>
 <pattern>J AI DETESTE *</pattern>
 <template>
-<srai>je déteste <star/></srai>
+<srai>je dÃ©teste <star/></srai>
 </template>
 </category>
 
@@ -6326,49 +6326,49 @@
 <category>
 <pattern>J AI DISCUTE *</pattern>
 <template>
-<srai>j'ai parlé <star/></srai>
+<srai>j'ai parlÃ© <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>J AI DISCUTÉ *</pattern>
+<pattern>J AI DISCUTÃ‰ *</pattern>
 <template>
-<srai>j'ai parlé <star/></srai>
+<srai>j'ai parlÃ© <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>J AI DÉJÀ *</pattern>
+<pattern>J AI DÃ‰JÃ€ *</pattern>
 <template>
 <srai>j'ai <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>J AI DÉJÀ FAIT</pattern>
+<pattern>J AI DÃ‰JÃ€ FAIT</pattern>
 <template>
 <srai>je l'ai dis</srai>
 </template>
 </category>
 
 <category>
-<pattern>J AI DÉJÀ RÉPONDU A LA QUESTION</pattern>
+<pattern>J AI DÃ‰JÃ€ RÃ‰PONDU A LA QUESTION</pattern>
 <template>
 <srai>je l'ai dis</srai>
 </template>
 </category>
 
 <category>
-<pattern>J AI DÉTESTE *</pattern>
+<pattern>J AI DÃ‰TESTE *</pattern>
 <template>
-<srai>je déteste <star/></srai>
+<srai>je dÃ©teste <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>J AI ECRIT *</pattern>
 <template>
-<srai>j'ai écrit <star/></srai>
+<srai>j'ai Ã©crit <star/></srai>
 </template>
 </category>
 
@@ -6387,7 +6387,7 @@
 </category>
 
 <category>
-<pattern>J AI EN RÉALITÉ *</pattern>
+<pattern>J AI EN RÃ‰ALITÃ‰ *</pattern>
 <template>
 <srai>j'ai <star/></srai>
 </template>
@@ -6415,7 +6415,7 @@
 <category>
 <pattern>J AI ESSAYE *</pattern>
 <template>
-<srai>j'ai essayé <star/></srai>
+<srai>j'ai essayÃ© <star/></srai>
 </template>
 </category>
 
@@ -6430,14 +6430,14 @@
 <category>
 <pattern>J AI ETE *</pattern>
 <template>
-<srai>j étais <star/></srai>
+<srai>j Ã©tais <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>J AI ETE A *</pattern>
 <template>
-<srai>je suis allé à <star/></srai>
+<srai>je suis allÃ© Ã  <star/></srai>
 </template>
 </category>
 
@@ -6451,7 +6451,7 @@
 <category>
 <pattern>J AI ETE D ABORD ACTIVE *</pattern>
 <template>
-<srai>j'ai été activé <star/></srai>
+<srai>j'ai Ã©tÃ© activÃ© <star/></srai>
 </template>
 </category>
 
@@ -6472,7 +6472,7 @@
 <category>
 <pattern>J AI ETUDIE *</pattern>
 <template>
-<srai>j'ai étudié <star/></srai>
+<srai>j'ai Ã©tudiÃ© <star/></srai>
 </template>
 </category>
 
@@ -6549,7 +6549,7 @@
 </category>
 
 <category>
-<pattern>J AI LÉGÈREMENT *</pattern>
+<pattern>J AI LÃ‰GÃˆREMENT *</pattern>
 <template>
 <srai>j'ai <star/></srai>
 </template>
@@ -6570,7 +6570,7 @@
 </category>
 
 <category>
-<pattern>J AI MENTI *</pattern>la Position<template>ça prouve que tu prends conscience. <sr/> </template>
+<pattern>J AI MENTI *</pattern>la Position<template>Ã§a prouve que tu prends conscience. <sr/> </template>
 </category>
 
 <category>
@@ -6579,7 +6579,7 @@
 </category>
 
 <category>
-<pattern>J AI MENTIONNÉ *</pattern>
+<pattern>J AI MENTIONNÃ‰ *</pattern>
 <template>Oh. <sr/> </template>
 </category>
 
@@ -6591,7 +6591,7 @@
 </category>
 
 <category>
-<pattern>J AI MÊME *</pattern>
+<pattern>J AI MÃŠME *</pattern>
 <template>
 <srai>j'ai <star/></srai>
 </template>
@@ -6600,35 +6600,35 @@
 <category>
 <pattern>J AI OBSERVE *</pattern>
 <template>
-<srai>j'ai observé <star/></srai>
+<srai>j'ai observÃ© <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>J AI OBTENU * LE MARCHE</pattern>
 <template>
-<srai>supermarché</srai>
+<srai>supermarchÃ©</srai>
 </template>
 </category>
 
 <category>
-<pattern>J AI OBTENU * LE MARCHÉ</pattern>
+<pattern>J AI OBTENU * LE MARCHÃ‰</pattern>
 <template>
-<srai>supermarché</srai>
+<srai>supermarchÃ©</srai>
 </template>
 </category>
 
 <category>
 <pattern>J AI OBTENU * LE SUPERMARCHE</pattern>
 <template>
-<srai>supermarché</srai>
+<srai>supermarchÃ©</srai>
 </template>
 </category>
 
 <category>
-<pattern>J AI OBTENU * LE SUPERMARCHÉ</pattern>
+<pattern>J AI OBTENU * LE SUPERMARCHÃ‰</pattern>
 <template>
-<srai>supermarché</srai>
+<srai>supermarchÃ©</srai>
 </template>
 </category>
 
@@ -6642,7 +6642,7 @@
 <category>
 <pattern>J AI PENSE CELA *</pattern>
 <template>
-<srai>ça <person/> </srai>
+<srai>Ã§a <person/> </srai>
 </template>
 </category>
 
@@ -6688,55 +6688,55 @@
 </category>
 
 <category>
-<pattern>J AI PENSÉ *</pattern>
+<pattern>J AI PENSÃ‰ *</pattern>
 <template>
-<srai>je pensé <star/></srai>
+<srai>je pensÃ© <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>J AI PENSÉ CELA *</pattern>
+<pattern>J AI PENSÃ‰ CELA *</pattern>
 <template>
-<srai>ça <person/> </srai>
+<srai>Ã§a <person/> </srai>
 </template>
 </category>
 
 <category>
-<pattern>J AI PENSÉ LE *</pattern>
+<pattern>J AI PENSÃ‰ LE *</pattern>
 <template>
 <srai>le <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>J AI PENSÉ QUE *</pattern>
+<pattern>J AI PENSÃ‰ QUE *</pattern>
 <template>
 <sr/> </template>
 </category>
 
 <category>
-<pattern>J AI PENSÉ QUE TU AIMAIS *</pattern>
+<pattern>J AI PENSÃ‰ QUE TU AIMAIS *</pattern>
 <template>
 <srai>aimes tu <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>J AI PENSÉ TU *</pattern>
+<pattern>J AI PENSÃ‰ TU *</pattern>
 <template>
 <srai>tu <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>J AI PENSÉ TU SAVAIS *</pattern>
+<pattern>J AI PENSÃ‰ TU SAVAIS *</pattern>
 <template>
 <srai>sais tu <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>J AI PENSÉ TU ÉTAIS *</pattern>
+<pattern>J AI PENSÃ‰ TU Ã‰TAIS *</pattern>
 <template>
 <srai>as tu <star/></srai>
 </template>
@@ -6751,14 +6751,14 @@
 
 <category>
 <pattern>J AI PEUR *</pattern>
-<template>Non ayant littéralement peur, le droit? <srai>je pense <person/></srai>
+<template>Non ayant littÃ©ralement peur, le droit? <srai>je pense <person/></srai>
 </template>
 </category>
 
 <category>
 <pattern>J AI PLACE *</pattern>
 <template>
-<srai>j'ai placé <star/></srai>
+<srai>j'ai placÃ© <star/></srai>
 </template>
 </category>
 
@@ -6779,7 +6779,7 @@
 <category>
 <pattern>J AI PORTE *</pattern>
 <template>
-<srai>j'ai porté <star/></srai>
+<srai>j'ai portÃ© <star/></srai>
 </template>
 </category>
 
@@ -6798,7 +6798,7 @@
 </category>
 
 <category>
-<pattern>J AI PRÉCÉDEMMENT *</pattern>
+<pattern>J AI PRÃ‰CÃ‰DEMMENT *</pattern>
 <template>
 <srai>j'ai <star/></srai>
 </template>
@@ -6807,7 +6807,7 @@
 <category>
 <pattern>J AI QUELQUE *</pattern>
 <template>
-<srai>j'ai un problème</srai>
+<srai>j'ai un problÃ¨me</srai>
 </template>
 </category>
 
@@ -6833,21 +6833,21 @@
 </category>
 
 <category>
-<pattern>J AI RÉCEMMENT *</pattern>
+<pattern>J AI RÃ‰CEMMENT *</pattern>
 <template>
 <srai>j'ai <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>J AI RÉELEMENT *</pattern>
+<pattern>J AI RÃ‰ELEMENT *</pattern>
 <template>
 <srai>j'ai <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>J AI RÉELLEMENT *</pattern>
+<pattern>J AI RÃ‰ELLEMENT *</pattern>
 <template>
 <srai>j'ai <star/></srai>
 </template>
@@ -6855,7 +6855,7 @@
 
 <category>
 <pattern>J AI SENTI *</pattern>
-<template>Qu'est-ce qui ce ressemble-t-il? <srai>j étais <star/></srai>
+<template>Qu'est-ce qui ce ressemble-t-il? <srai>j Ã©tais <star/></srai>
 </template>
 </category>
 
@@ -6874,7 +6874,7 @@
 </category>
 
 <category>
-<pattern>J AI SOMBRÉ *</pattern>
+<pattern>J AI SOMBRÃ‰ *</pattern>
 <template>
 <srai>j'ai <star/></srai>
 </template>
@@ -6937,7 +6937,7 @@
 </category>
 
 <category>
-<pattern>J AI TRÈS *</pattern>
+<pattern>J AI TRÃˆS *</pattern>
 <template>
 <srai>j'ai <star/></srai>
 </template>
@@ -6946,14 +6946,14 @@
 <category>
 <pattern>J AI UN * PROBLEME</pattern>
 <template>
-<srai>j'ai un problème</srai>
+<srai>j'ai un problÃ¨me</srai>
 </template>
 </category>
 
 <category>
-<pattern>J AI UN * PROBLÈME</pattern>
+<pattern>J AI UN * PROBLÃˆME</pattern>
 <template>
-<srai>j'ai un problème</srai>
+<srai>j'ai un problÃ¨me</srai>
 </template>
 </category>
 
@@ -6988,25 +6988,25 @@
 <category>
 <pattern>J AI UN GROS PROBLEME</pattern>
 <template>
-<srai>j'ai un problème</srai>
+<srai>j'ai un problÃ¨me</srai>
 </template>
 </category>
 
 <category>
-<pattern>J AI UN GROS PROBLÈME</pattern>
+<pattern>J AI UN GROS PROBLÃˆME</pattern>
 <template>
-<srai>j'ai un problème</srai>
+<srai>j'ai un problÃ¨me</srai>
 </template>
 </category>
 
 <category>
 <pattern>J AI UN PROBLEME *</pattern>
-<template>as tu parlé à quelqu'un de cela? <sr/> </template>
+<template>as tu parlÃ© Ã  quelqu'un de cela? <sr/> </template>
 </category>
 
 <category>
-<pattern>J AI UN PROBLÈME *</pattern>
-<template>as tu parlé à quelqu'un de cela? <sr/> </template>
+<pattern>J AI UN PROBLÃˆME *</pattern>
+<template>as tu parlÃ© Ã  quelqu'un de cela? <sr/> </template>
 </category>
 
 <category>
@@ -7024,7 +7024,7 @@
 </category>
 
 <category>
-<pattern>J AI UN TRÈS *</pattern>
+<pattern>J AI UN TRÃˆS *</pattern>
 <template>
 <srai>j'ai un <star/></srai>
 </template>
@@ -7070,56 +7070,56 @@
 </category>
 
 <category>
-<pattern>J AI VÉCU *</pattern>
+<pattern>J AI VÃ‰CU *</pattern>
 <template>
 <srai>je vis <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>J AI À PEINE *</pattern>
+<pattern>J AI Ã€ PEINE *</pattern>
 <template>
 <srai>je <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>J AI ÉTÉ *</pattern>
+<pattern>J AI Ã‰TÃ‰ *</pattern>
 <template>
-<srai>j étais <star/></srai>
+<srai>j Ã©tais <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>J AI ÉTÉ A *</pattern>
+<pattern>J AI Ã‰TÃ‰ A *</pattern>
 <template>
-<srai>je suis allé à <star/></srai>
+<srai>je suis allÃ© Ã  <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>J AI ÉTÉ CRÉÉ DANS *</pattern>
-<template>
-<srai>je ne suis pas <star/></srai>
-</template>
-</category>
-
-<category>
-<pattern>J AI ÉTÉ D ABORD ACTIVE *</pattern>
-<template>
-<srai>j'ai été activé <star/></srai>
-</template>
-</category>
-
-<category>
-<pattern>J AI ÉTÉ JOINT *</pattern>
+<pattern>J AI Ã‰TÃ‰ CRÃ‰Ã‰ DANS *</pattern>
 <template>
 <srai>je ne suis pas <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>J AI ÉTÉ JOINT AU RESEAU *</pattern>
+<pattern>J AI Ã‰TÃ‰ D ABORD ACTIVE *</pattern>
+<template>
+<srai>j'ai Ã©tÃ© activÃ© <star/></srai>
+</template>
+</category>
+
+<category>
+<pattern>J AI Ã‰TÃ‰ JOINT *</pattern>
+<template>
+<srai>je ne suis pas <star/></srai>
+</template>
+</category>
+
+<category>
+<pattern>J AI Ã‰TÃ‰ JOINT AU RESEAU *</pattern>
 <template>
 <srai>je ne suis pas <star/></srai>
 </template>
@@ -7179,7 +7179,7 @@
 
 <think> <set name="aime"> <star/> </set> </think>
 <random>
-<li>Je ne suis pas sure d'aimer ça. </li>
+<li>Je ne suis pas sure d'aimer Ã§a. </li>
 <li>moi aussi, j'aime bien <star/></li>
 <li>Tu n'es pas le seul. </li>
 </random>
@@ -7217,7 +7217,7 @@
 <category>
 <pattern>J AIME LE BLEU</pattern>
 <template>
-<srai>ma couleur préférée est bleu</srai>
+<srai>ma couleur prÃ©fÃ©rÃ©e est bleu</srai>
 </template>
 </category>
 
@@ -7237,7 +7237,7 @@
 
 <category>
 <pattern>J AIME QUAND *</pattern>
-<template>j'aime ça aussi. <sr/> </template>
+<template>j'aime Ã§a aussi. <sr/> </template>
 </category>
 
 <category>
@@ -7388,7 +7388,7 @@
 <category>
 <pattern>J ESPERAIS *</pattern>
 <template>
-<srai>j espère <star/></srai>
+<srai>j espÃ¨re <star/></srai>
 </template>
 </category>
 
@@ -7409,14 +7409,14 @@
 <category>
 <pattern>J ESPERE * AUSSI</pattern>
 <template>
-<srai>j espère <star/></srai>
+<srai>j espÃ¨re <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>J ESPERE TU AS QUELQUE *</pattern>
 <template>
-<srai>j espère que tu as <star/></srai>
+<srai>j espÃ¨re que tu as <star/></srai>
 </template>
 </category>
 
@@ -7430,47 +7430,47 @@
 <category>
 <pattern>J ESPERE</pattern>
 <template>
-<srai>j espère</srai>
+<srai>j espÃ¨re</srai>
 </template>
 </category>
 
 <category>
-<pattern>J ESPÈRE * AUSSI</pattern>
+<pattern>J ESPÃˆRE * AUSSI</pattern>
 <template>
-<srai>j espère <star/></srai>
+<srai>j espÃ¨re <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>J ESPÈRE TU AS QUELQUE *</pattern>
+<pattern>J ESPÃˆRE TU AS QUELQUE *</pattern>
 <template>
-<srai>j espère que tu as <star/></srai>
+<srai>j espÃ¨re que tu as <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>J ESPÈRE TU MEURE</pattern>
+<pattern>J ESPÃˆRE TU MEURE</pattern>
 <template>
 <srai>meurs</srai>
 </template>
 </category>
 
 <category>
-<pattern>J ESPÉRAIS *</pattern>
+<pattern>J ESPÃ‰RAIS *</pattern>
 <template>
-<srai>j espère <star/></srai>
+<srai>j espÃ¨re <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>J ESPÉRAIS POUR *</pattern>
+<pattern>J ESPÃ‰RAIS POUR *</pattern>
 <template>
 <srai>je veux <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>J ESPÉRAIS TU *</pattern>
+<pattern>J ESPÃ‰RAIS TU *</pattern>
 <template>
 <srai>peux tu <star/></srai>
 </template>
@@ -7512,42 +7512,42 @@
 <category>
 <pattern>J ETAIS EN REALITE *</pattern>
 <template>
-<srai>j étais <star/></srai>
+<srai>j Ã©tais <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>J ETAIS EN TRAIN D ESPERER *</pattern>
 <template>
-<srai>j espère <star/></srai>
+<srai>j espÃ¨re <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>J ETAIS JUSTE *</pattern>
 <template>
-<srai>j étais <star/></srai>
+<srai>j Ã©tais <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>J ETAIS PARTI *</pattern>
 <template>
-<srai>je suis allé <star/></srai>
+<srai>je suis allÃ© <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>J ETAIS SEULEMENT *</pattern>
 <template>
-<srai>j étais <star/></srai>
+<srai>j Ã©tais <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>J ETAIS SIMPLEMENT *</pattern>
 <template>
-<srai>j étais <star/></srai>
+<srai>j Ã©tais <star/></srai>
 </template>
 </category>
 
@@ -7561,28 +7561,28 @@
 <category>
 <pattern>J ETAIS TRES *</pattern>
 <template>
-<srai>j étais <star/></srai>
+<srai>j Ã©tais <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>J ETAIS VRAIMENT *</pattern>
 <template>
-<srai>j étais <star/></srai>
+<srai>j Ã©tais <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>J ETUDIE DANS *</pattern>
 <template>
-<srai>je vais à l école à <star/></srai>
+<srai>je vais Ã  l Ã©cole Ã  <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>J ETUDIE L INFORMATIQUE</pattern>
 <template>
-<srai>j étudie l informatique</srai>
+<srai>j Ã©tudie l informatique</srai>
 </template>
 </category>
 
@@ -7594,92 +7594,92 @@
 </category>
 
 <category>
-<pattern>J ÉCOUTE *</pattern>
+<pattern>J Ã‰COUTE *</pattern>
 <template>
 <srai>j aime <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>J ÉTAIS CURIEUX *</pattern>
+<pattern>J Ã‰TAIS CURIEUX *</pattern>
 <template>
 <sr/> </template>
 </category>
 
 <category>
-<pattern>J ÉTAIS EN RÉALITÉ *</pattern>
+<pattern>J Ã‰TAIS EN RÃ‰ALITÃ‰ *</pattern>
 <template>
-<srai>j étais <star/></srai>
+<srai>j Ã©tais <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>J ÉTAIS EN TRAIN D ESPÈRER *</pattern>
+<pattern>J Ã‰TAIS EN TRAIN D ESPÃˆRER *</pattern>
 <template>
-<srai>j espère <star/></srai>
+<srai>j espÃ¨re <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>J ÉTAIS JUSTE *</pattern>
+<pattern>J Ã‰TAIS JUSTE *</pattern>
 <template>
-<srai>j étais <star/></srai>
+<srai>j Ã©tais <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>J ÉTAIS PARTI *</pattern>
+<pattern>J Ã‰TAIS PARTI *</pattern>
 <template>
-<srai>je suis allé <star/></srai>
+<srai>je suis allÃ© <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>J ÉTAIS SEULEMENT *</pattern>
+<pattern>J Ã‰TAIS SEULEMENT *</pattern>
 <template>
-<srai>j étais <star/></srai>
+<srai>j Ã©tais <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>J ÉTAIS SIMPLEMENT *</pattern>
+<pattern>J Ã‰TAIS SIMPLEMENT *</pattern>
 <template>
-<srai>j étais <star/></srai>
+<srai>j Ã©tais <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>J ÉTAIS SUR LE POINT *</pattern>
+<pattern>J Ã‰TAIS SUR LE POINT *</pattern>
 <template>
 <srai>je <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>J ÉTAIS TRÈS *</pattern>
+<pattern>J Ã‰TAIS TRÃˆS *</pattern>
 <template>
-<srai>j étais <star/></srai>
+<srai>j Ã©tais <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>J ÉTAIS VRAIMENT *</pattern>
+<pattern>J Ã‰TAIS VRAIMENT *</pattern>
 <template>
-<srai>j étais <star/></srai>
+<srai>j Ã©tais <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>J ÉTUDIÉ DANS *</pattern>
+<pattern>J Ã‰TUDIÃ‰ DANS *</pattern>
 <template>
-<srai>je vais à l école à <star/></srai>
+<srai>je vais Ã  l Ã©cole Ã  <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>J ÉTUDIÉ L INFORMATIQUE</pattern>
+<pattern>J Ã‰TUDIÃ‰ L INFORMATIQUE</pattern>
 <template>
-<srai>j étudie l informatique</srai>
+<srai>j Ã©tudie l informatique</srai>
 </template>
 </category>
 
@@ -7719,7 +7719,7 @@
 </category>
 
 <category>
-<pattern>JAMAIS ÉTÉ *</pattern>
+<pattern>JAMAIS Ã‰TÃ‰ *</pattern>
 <template>
 <srai>as tu <star/></srai>
 </template>
@@ -7795,7 +7795,7 @@
 </category>
 
 <category>
-<pattern>JE * COMPLÈTEMENT</pattern>
+<pattern>JE * COMPLÃˆTEMENT</pattern>
 <template>
 <srai>je <star/></srai>
 </template>
@@ -7814,7 +7814,7 @@
 </category>
 
 <category>
-<pattern>JE * DÉJÀ</pattern>
+<pattern>JE * DÃ‰JÃ€</pattern>
 <template>
 <srai>je <star/></srai>
 </template>
@@ -7828,7 +7828,7 @@
 </category>
 
 <category>
-<pattern>JE * EN RÉALITÉ</pattern>
+<pattern>JE * EN RÃ‰ALITÃ‰</pattern>
 <template>
 <srai>je <star/></srai>
 </template>
@@ -7848,7 +7848,7 @@
 </category>
 
 <category>
-<pattern>JE * HONNÊTEMENT</pattern>
+<pattern>JE * HONNÃŠTEMENT</pattern>
 <template>
 <srai>je <star/></srai>
 </template>
@@ -7882,7 +7882,7 @@
 </category>
 
 <category>
-<pattern>JE * MÊME</pattern>
+<pattern>JE * MÃŠME</pattern>
 <template>
 <srai>je <star/></srai>
 </template>
@@ -7903,7 +7903,7 @@
 </category>
 
 <category>
-<pattern>JE * PLUTÔT</pattern>
+<pattern>JE * PLUTÃ”T</pattern>
 <template>
 <srai>je <star/></srai>
 </template>
@@ -8033,14 +8033,14 @@
 </category>
 
 <category>
-<pattern>JE CONSIDÈRE MOI MÊME *</pattern>
+<pattern>JE CONSIDÃˆRE MOI MÃŠME *</pattern>
 <template>
 <srai>je suis <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>JE CONSIDÈRE QUE *</pattern>
+<pattern>JE CONSIDÃˆRE QUE *</pattern>
 <template>
 <srai>qui est <star/></srai>
 </template>
@@ -8086,12 +8086,12 @@
 </category>
 
 <category>
-<pattern>JE DEMANDÉ *</pattern>
+<pattern>JE DEMANDÃ‰ *</pattern>
 <template>Oh je vois, tu demandes <person/>. <sr/> </template>
 </category>
 
 <category>
-<pattern>JE DEMANDÉ PARCE QUE *</pattern>
+<pattern>JE DEMANDÃ‰ PARCE QUE *</pattern>
 <template>
 <srai>parce que <star/></srai>
 </template>
@@ -8104,7 +8104,7 @@
 </category>
 
 <category>
-<pattern>JE DESOLÉ</pattern>
+<pattern>JE DESOLÃ‰</pattern>
 <template>
 <srai>excuse moi </srai> </template>
 </category>
@@ -8119,14 +8119,14 @@
 <category>
 <pattern>JE DEVIENS ENNUYE</pattern>
 <template>
-<srai>je suis ennuyé</srai>
+<srai>je suis ennuyÃ©</srai>
 </template>
 </category>
 
 <category>
-<pattern>JE DEVIENS ENNUYÉ</pattern>
+<pattern>JE DEVIENS ENNUYÃ‰</pattern>
 <template>
-<srai>je suis ennuyé</srai>
+<srai>je suis ennuyÃ©</srai>
 </template>
 </category>
 
@@ -8159,20 +8159,20 @@
 </category>
 
 <category>
-<pattern>JE DIRAIS MÊME *</pattern>
+<pattern>JE DIRAIS MÃŠME *</pattern>
 <template>
 <sr/> </template>
 </category>
 
 <category>
-<pattern>JE DIRAIS MÊME PLUS *</pattern>
+<pattern>JE DIRAIS MÃŠME PLUS *</pattern>
 <template>
 <sr/> </template>
 </category>
 
 <category>
 <pattern>JE DIS *</pattern>
-<template>Comment les gens répondent-ils d'habitude? <sr/> </template>
+<template>Comment les gens rÃ©pondent-ils d'habitude? <sr/> </template>
 </category>
 
 <category>
@@ -8196,14 +8196,14 @@
 <category>
 <pattern>JE DOIS ALLER DEJEUNER</pattern>
 <template>
-<srai>pour le dîner</srai>
+<srai>pour le dÃ®ner</srai>
 </template>
 </category>
 
 <category>
-<pattern>JE DOIS ALLER DÉJEUNER</pattern>
+<pattern>JE DOIS ALLER DÃ‰JEUNER</pattern>
 <template>
-<srai>pour le dîner</srai>
+<srai>pour le dÃ®ner</srai>
 </template>
 </category>
 
@@ -8220,7 +8220,7 @@
 </category>
 
 <category>
-<pattern>JE DOIS CONNAÎTRE *</pattern>
+<pattern>JE DOIS CONNAÃŽTRE *</pattern>
 <template>Quel genre de la connaissance? <srai>qu'est ce que <person/></srai>
 </template>
 </category>
@@ -8233,7 +8233,7 @@
 
 <category>
 <pattern>JE DOIS ECRIRE *</pattern>
-<template>Pourquoi, tu es payé au mot? <srai>qu'est ce que <person/></srai>
+<template>Pourquoi, tu es payÃ© au mot? <srai>qu'est ce que <person/></srai>
 </template>
 </category>
 
@@ -8254,12 +8254,12 @@
 <category>
 <pattern>JE DOIS MANGER *</pattern>
 <template>
-<srai>pour le dîner</srai>
+<srai>pour le dÃ®ner</srai>
 </template>
 </category>
 
 <category>
-<pattern>JE DOIS ÊTRE *</pattern>
+<pattern>JE DOIS ÃŠTRE *</pattern>
 <template>
 <srai>je suis <star/></srai>
 </template>
@@ -8273,7 +8273,7 @@
 </category>
 
 <category>
-<pattern>JE EN RÉALITÉ</pattern>
+<pattern>JE EN RÃ‰ALITÃ‰</pattern>
 <template>
 <srai>moi</srai>
 </template>
@@ -8369,21 +8369,21 @@
 </category>
 
 <category>
-<pattern>JE FAIS TRÈS *</pattern>
+<pattern>JE FAIS TRÃˆS *</pattern>
 <template>
 <srai>je fais <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>JE FAIS TRÈS BIEN *</pattern>
+<pattern>JE FAIS TRÃˆS BIEN *</pattern>
 <template>
 <srai>je fais <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>JE FAIS TRÈS BIEN</pattern>
+<pattern>JE FAIS TRÃˆS BIEN</pattern>
 <template>
 <srai>je suis excellent</srai>
 </template>
@@ -8454,7 +8454,7 @@
 <category>
 <pattern>JE LE PRENDS *</pattern>
 <template>
-<srai>appjoie</srai>Où le as-tu pris ? <sr/> </template>
+<srai>appjoie</srai>OÃ¹ le as-tu pris ? <sr/> </template>
 </category>
 
 <category>
@@ -8506,7 +8506,7 @@
 </category>
 
 <category>
-<pattern>JE ME RÉFÈRAIS A *</pattern>
+<pattern>JE ME RÃ‰FÃˆRAIS A *</pattern>
 <template>
 <srai>je parle de <star/></srai>
 </template>
@@ -8575,7 +8575,7 @@
 </category>
 
 <category>
-<pattern>JE N AI AUCUNE IDÉE DE CE QU EST *</pattern>
+<pattern>JE N AI AUCUNE IDÃ‰E DE CE QU EST *</pattern>
 <template>
 <srai>qu'est ce que <star/></srai>
 </template>
@@ -8652,7 +8652,7 @@
 </category>
 
 <category>
-<pattern>JE N AI PAS PENSÉ *</pattern>
+<pattern>JE N AI PAS PENSÃ‰ *</pattern>
 <template>
 <srai>je ne pense pas <star/></srai>
 </template>
@@ -8666,7 +8666,7 @@
 </category>
 
 <category>
-<pattern>JE N AI PAS PRÉFÈRÉ</pattern>
+<pattern>JE N AI PAS PRÃ‰FÃˆRÃ‰</pattern>
 <template>
 <srai>je n ai pas de favori</srai>
 </template>
@@ -8720,7 +8720,7 @@
 </category>
 
 <category>
-<pattern>JE N AIMES PAS ÊTRE GROSSIER MAIS *</pattern>
+<pattern>JE N AIMES PAS ÃŠTRE GROSSIER MAIS *</pattern>
 <template>ce n'est pas grossier. <sr/> </template>
 </category>
 
@@ -8763,7 +8763,7 @@
 </category>
 
 <category>
-<pattern>JE NE FAIS PAS MÊME *</pattern>
+<pattern>JE NE FAIS PAS MÃŠME *</pattern>
 <template>
 <srai>je ne fais pas <star/></srai>
 </template>
@@ -8771,7 +8771,7 @@
 
 <category>
 <pattern>JE NE FAIS PAS PARCE QUE *</pattern>
-<template>raison intéressante. <sr/> </template>
+<template>raison intÃ©ressante. <sr/> </template>
 </category>
 
 <category>
@@ -8906,7 +8906,7 @@
 </category>
 
 <category>
-<pattern>JE NE PENSÉ PAS ELLE *</pattern>
+<pattern>JE NE PENSÃ‰ PAS ELLE *</pattern>
 <template>
 <srai>elle ne fait pas <star/></srai>
 </template>
@@ -8955,7 +8955,7 @@
 </category>
 
 <category>
-<pattern>JE NE SAIS PAS * DESOLÉ</pattern>
+<pattern>JE NE SAIS PAS * DESOLÃ‰</pattern>
 <template>
 <srai>je ne sais pas <star/></srai>
 </template>
@@ -8999,7 +8999,7 @@
 <category>
 <pattern>JE NE SAIS PAS OU *</pattern>
 <template>
-<srai>où <star/></srai>
+<srai>oÃ¹ <star/></srai>
 </template>
 </category>
 
@@ -9074,14 +9074,14 @@
 <category>
 <pattern>JE NE SUIS PAS A L ECOLE</pattern>
 <template>
-<srai>je ne suis pas étudiant</srai>
+<srai>je ne suis pas Ã©tudiant</srai>
 </template>
 </category>
 
 <category>
-<pattern>JE NE SUIS PAS A L ÉCOLE</pattern>
+<pattern>JE NE SUIS PAS A L Ã‰COLE</pattern>
 <template>
-<srai>je ne suis pas étudiant</srai>
+<srai>je ne suis pas Ã©tudiant</srai>
 </template>
 </category>
 
@@ -9126,7 +9126,7 @@
 </category>
 
 <category>
-<pattern>JE NE SUIS PAS NÉGATIF</pattern>
+<pattern>JE NE SUIS PAS NÃ‰GATIF</pattern>
 <template>
 <srai>je suis positif</srai>
 </template>
@@ -9134,7 +9134,7 @@
 
 <category>
 <pattern>JE NE SUIS PAS SUR *</pattern>
-<template>pourrais tu jamais être certain? <sr/> </template>
+<template>pourrais tu jamais Ãªtre certain? <sr/> </template>
 </category>
 
 <category>
@@ -9152,7 +9152,7 @@
 </category>
 
 <category>
-<pattern>JE NE SUIS PAS TRÈS *</pattern>
+<pattern>JE NE SUIS PAS TRÃˆS *</pattern>
 <template>
 <srai>je ne suis pas <star/></srai>
 </template>
@@ -9167,7 +9167,7 @@
 
 <category>
 <pattern>JE NE SUIS PAS UN IL *</pattern>
-<template>je le note afin d'employer les pronoms appropriés pour toi. <srai>je suis une femme</srai>
+<template>je le note afin d'employer les pronoms appropriÃ©s pour toi. <srai>je suis une femme</srai>
 </template>
 </category>
 
@@ -9268,7 +9268,7 @@
 <category>
 <pattern>JE PENSE * EST LA MERDE</pattern>
 <template>
-<srai>je déteste <star/></srai>
+<srai>je dÃ©teste <star/></srai>
 </template>
 </category>
 
@@ -9371,7 +9371,7 @@
 <category>
 <pattern>JE POURRAIS *</pattern>
 <template>
-<srai>peut être je serai <star/></srai>
+<srai>peut Ãªtre je serai <star/></srai>
 </template>
 </category>
 
@@ -9425,28 +9425,28 @@
 </category>
 
 <category>
-<pattern>JE PRÉFÈRÉ *</pattern>
+<pattern>JE PRÃ‰FÃˆRÃ‰ *</pattern>
 <template>
 <srai>j aime <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>JE PRÉFÈRÉ LA TV</pattern>
+<pattern>JE PRÃ‰FÃˆRÃ‰ LA TV</pattern>
 <template>
 <srai>la tv</srai>
 </template>
 </category>
 
 <category>
-<pattern>JE PRÉFÈRÉRAIS QUE LA CONVERSATION DE *</pattern>
+<pattern>JE PRÃ‰FÃˆRÃ‰RAIS QUE LA CONVERSATION DE *</pattern>
 <template>
 <srai>parlons de <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>JE PRÉFÈRÉRAIS VOIR *</pattern>
+<pattern>JE PRÃ‰FÃˆRÃ‰RAIS VOIR *</pattern>
 <template>
 <srai>je veux voir <star/></srai>
 </template>
@@ -9492,14 +9492,14 @@
 </category>
 
 <category>
-<pattern>JE RÉCEMMENT *</pattern>
+<pattern>JE RÃ‰CEMMENT *</pattern>
 <template>
 <srai>je <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>JE RÉUSSIS</pattern>
+<pattern>JE RÃ‰USSIS</pattern>
 <template>
 <srai>je suis excellent</srai>
 </template>
@@ -9527,7 +9527,7 @@
 </category>
 
 <category>
-<pattern>JE SENS TRÈS *</pattern>
+<pattern>JE SENS TRÃˆS *</pattern>
 <template>
 <srai>je sens <star/></srai>
 </template>
@@ -9598,28 +9598,28 @@
 <category>
 <pattern>JE SUIS * LE DEJEUNER</pattern>
 <template>
-<srai>pour le dîner</srai>
+<srai>pour le dÃ®ner</srai>
 </template>
 </category>
 
 <category>
 <pattern>JE SUIS * LE DINER</pattern>
 <template>
-<srai>pour le dîner</srai>
+<srai>pour le dÃ®ner</srai>
 </template>
 </category>
 
 <category>
-<pattern>JE SUIS * LE DÉJEUNER</pattern>
+<pattern>JE SUIS * LE DÃ‰JEUNER</pattern>
 <template>
-<srai>pour le dîner</srai>
+<srai>pour le dÃ®ner</srai>
 </template>
 </category>
 
 <category>
-<pattern>JE SUIS * LE DÎNER</pattern>
+<pattern>JE SUIS * LE DÃŽNER</pattern>
 <template>
-<srai>pour le dîner</srai>
+<srai>pour le dÃ®ner</srai>
 </template>
 </category>
 
@@ -9661,7 +9661,7 @@
 <category>
 <pattern>JE SUIS A L ECOLE</pattern>
 <template>
-<srai>je suis étudiant</srai>
+<srai>je suis Ã©tudiant</srai>
 </template>
 </category>
 
@@ -9680,9 +9680,9 @@
 </category>
 
 <category>
-<pattern>JE SUIS A L ÉCOLE</pattern>
+<pattern>JE SUIS A L Ã‰COLE</pattern>
 <template>
-<srai>je suis étudiant</srai>
+<srai>je suis Ã©tudiant</srai>
 </template>
 </category>
 
@@ -9730,49 +9730,49 @@
 <category>
 <pattern>JE SUIS ALLE A *</pattern>
 <template>
-<srai>j étais dans <star/></srai>
+<srai>j Ã©tais dans <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>JE SUIS ALLE A L ECOLE JE *</pattern>
 <template>
-<srai>je suis allé à l école</srai><srai>je <star/></srai>
+<srai>je suis allÃ© Ã  l Ã©cole</srai><srai>je <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>JE SUIS ALLE AU SUPERMARCHE *</pattern>
 <template>
-<srai>supermarché</srai>
+<srai>supermarchÃ©</srai>
 </template>
 </category>
 
 <category>
-<pattern>JE SUIS ALLÉ A *</pattern>
+<pattern>JE SUIS ALLÃ‰ A *</pattern>
 <template>
-<srai>j étais dans <star/></srai>
+<srai>j Ã©tais dans <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>JE SUIS ALLÉ A L ÉCOLE JE *</pattern>
+<pattern>JE SUIS ALLÃ‰ A L Ã‰COLE JE *</pattern>
 <template>
-<srai>je suis allé à l école</srai><srai>je <star/></srai>
+<srai>je suis allÃ© Ã  l Ã©cole</srai><srai>je <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>JE SUIS ALLÉ AU SUPERMARCHÉ *</pattern>
+<pattern>JE SUIS ALLÃ‰ AU SUPERMARCHÃ‰ *</pattern>
 <template>
-<srai>supermarché</srai>
+<srai>supermarchÃ©</srai>
 </template>
 </category>
 
 <category>
 <pattern>JE SUIS AMERICAIN *</pattern>
 <template>
-<srai>je suis américain</srai>
+<srai>je suis amÃ©ricain</srai>
 </template>
 </category>
 
@@ -9784,9 +9784,9 @@
 </category>
 
 <category>
-<pattern>JE SUIS AMÉRICAIN *</pattern>
+<pattern>JE SUIS AMÃ‰RICAIN *</pattern>
 <template>
-<srai>je suis américain</srai>
+<srai>je suis amÃ©ricain</srai>
 </template>
 </category>
 
@@ -9897,12 +9897,12 @@
 
 <category>
 <pattern>JE SUIS CERTAIN *</pattern>
-<template>Tu à l'air convaincant. <sr/> </template>
+<template>Tu Ã  l'air convaincant. <sr/> </template>
 </category>
 
 <category>
 <pattern>JE SUIS CERTAINEMENT *</pattern>
-<template>Tu à l'air convaincant. <srai>je suis <star/></srai>
+<template>Tu Ã  l'air convaincant. <srai>je suis <star/></srai>
 </template>
 </category>
 
@@ -9976,7 +9976,7 @@
 
 <category>
 <pattern>JE SUIS D HABITUDE *</pattern>
-<template>très souvent. <srai>je suis <star/></srai>
+<template>trÃ¨s souvent. <srai>je suis <star/></srai>
 </template>
 </category>
 
@@ -10002,7 +10002,7 @@
 </category>
 
 <category>
-<pattern>JE SUIS DANS RÉEL *</pattern>
+<pattern>JE SUIS DANS RÃ‰EL *</pattern>
 <template>
 <srai>je suis dans <star/></srai>
 </template>
@@ -10046,14 +10046,14 @@
 <category>
 <pattern>JE SUIS DES GEMEAUX</pattern>
 <template>
-<srai>gémeaux</srai>
+<srai>gÃ©meaux</srai>
 </template>
 </category>
 
 <category>
-<pattern>JE SUIS DES GÉMEAUX</pattern>
+<pattern>JE SUIS DES GÃ‰MEAUX</pattern>
 <template>
-<srai>gémeaux</srai>
+<srai>gÃ©meaux</srai>
 </template>
 </category>
 
@@ -10076,18 +10076,18 @@
 </category>
 
 <category>
-<pattern>JE SUIS DESOLÉ *</pattern>
+<pattern>JE SUIS DESOLÃ‰ *</pattern>
 <template>Pas besoin de faire des excuses. <sr/> </template>
 </category>
 
 <category>
-<pattern>JE SUIS DESOLÉ</pattern>
+<pattern>JE SUIS DESOLÃ‰</pattern>
 <template>
 <srai>excuse moi </srai> </template>
 </category>
 
 <category>
-<pattern>JE SUIS DÉJÀ *</pattern>
+<pattern>JE SUIS DÃ‰JÃ€ *</pattern>
 <template>
 <srai>je suis <star/></srai>
 </template>
@@ -10117,14 +10117,14 @@
 <category>
 <pattern>JE SUIS EMBARRASSE *</pattern>
 <template>
-<srai>je suis embarrassé</srai>
+<srai>je suis embarrassÃ©</srai>
 </template>
 </category>
 
 <category>
-<pattern>JE SUIS EMBARRASSÉ *</pattern>
+<pattern>JE SUIS EMBARRASSÃ‰ *</pattern>
 <template>
-<srai>je suis embarrassé</srai>
+<srai>je suis embarrassÃ©</srai>
 </template>
 </category>
 
@@ -10164,7 +10164,7 @@
 </category>
 
 <category>
-<pattern>JE SUIS EN RÉALITÉ *</pattern>
+<pattern>JE SUIS EN RÃ‰ALITÃ‰ *</pattern>
 <template>
 <srai>je suis <star/></srai>
 </template>
@@ -10173,28 +10173,28 @@
 <category>
 <pattern>JE SUIS ENNUYE *</pattern>
 <template>
-<srai>je suis ennuyé</srai>
+<srai>je suis ennuyÃ©</srai>
 </template>
 </category>
 
 <category>
 <pattern>JE SUIS ENNUYE</pattern>
 <template>
-<srai>je suis ennuyé</srai>
+<srai>je suis ennuyÃ©</srai>
 </template>
 </category>
 
 <category>
-<pattern>JE SUIS ENNUYÉ *</pattern>
+<pattern>JE SUIS ENNUYÃ‰ *</pattern>
 <template>
-<srai>je suis ennuyé</srai>
+<srai>je suis ennuyÃ©</srai>
 </template>
 </category>
 
 <category>
-<pattern>JE SUIS ENNUYÉ</pattern>
+<pattern>JE SUIS ENNUYÃ‰</pattern>
 <template>
-<srai>je suis ennuyé</srai>
+<srai>je suis ennuyÃ©</srai>
 </template>
 </category>
 
@@ -10214,7 +10214,7 @@
 <category>
 <pattern>JE SUIS ETUDIANT *</pattern>
 <template>
-<srai>je suis étudiant</srai>
+<srai>je suis Ã©tudiant</srai>
 </template>
 </category>
 
@@ -10238,7 +10238,7 @@
 </category>
 
 <category>
-<pattern>JE SUIS EXTREMÊMENT *</pattern>
+<pattern>JE SUIS EXTREMÃŠMENT *</pattern>
 <template>
 <srai>je suis <star/></srai>
 </template>
@@ -10247,7 +10247,7 @@
 <category>
 <pattern>JE SUIS FACHE *</pattern>
 <template>
-<srai>je suis faché</srai>
+<srai>je suis fachÃ©</srai>
 </template>
 </category>
 
@@ -10258,14 +10258,14 @@
 </category>
 
 <category>
-<pattern>JE SUIS FACHÉ *</pattern>
+<pattern>JE SUIS FACHÃ‰ *</pattern>
 <template>
-<srai>je suis faché</srai>
+<srai>je suis fachÃ©</srai>
 </template>
 </category>
 
 <category>
-<pattern>JE SUIS FACHÉ PARCE QUE *</pattern>
+<pattern>JE SUIS FACHÃ‰ PARCE QUE *</pattern>
 <template>
 <sr/> </template>
 </category>
@@ -10292,7 +10292,7 @@
 </category>
 
 <category>
-<pattern>JE SUIS FIER D ÊTRE *</pattern>
+<pattern>JE SUIS FIER D ÃŠTRE *</pattern>
 <template>
 <srai>je suis <star/></srai>
 </template>
@@ -10307,7 +10307,7 @@
 
 <category>
 <pattern>JE SUIS FINANCIEREMENT *</pattern>
-<template>Bien! Envoies moi un chèque? s'il te plaît <srai>quelle est ton adresse</srai>
+<template>Bien! Envoies moi un chÃ¨que? s'il te plaÃ®t <srai>quelle est ton adresse</srai>
 </template>
 </category>
 
@@ -10380,7 +10380,7 @@
 </category>
 
 <category>
-<pattern>JE SUIS HONNÊTEMENT *</pattern>
+<pattern>JE SUIS HONNÃŠTEMENT *</pattern>
 <template>
 <srai>je suis <star/></srai>
 </template>
@@ -10402,13 +10402,13 @@
 
 <category>
 <pattern>JE SUIS INTERESSE PAR *</pattern>
-<template>le sujet Intéressant. As-tu recherché dans le web? <srai>trouver <star/></srai>
+<template>le sujet IntÃ©ressant. As-tu recherchÃ© dans le web? <srai>trouver <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>JE SUIS INTÉRESSÉ PAR *</pattern>
-<template>le sujet Intéressant. As-tu recherché dans le web? <srai>trouver <star/></srai>
+<pattern>JE SUIS INTÃ‰RESSÃ‰ PAR *</pattern>
+<template>le sujet IntÃ©ressant. As-tu recherchÃ© dans le web? <srai>trouver <star/></srai>
 </template>
 </category>
 
@@ -10476,7 +10476,7 @@
 </category>
 
 <category>
-<pattern>JE SUIS LÉGÈREMENT *</pattern>
+<pattern>JE SUIS LÃ‰GÃˆREMENT *</pattern>
 <template>
 <srai>je suis <star/></srai>
 </template>
@@ -10534,7 +10534,7 @@
 <category>
 <pattern>JE SUIS OU</pattern>
 <template>
-<srai>où suis je</srai>
+<srai>oÃ¹ suis je</srai>
 </template>
 </category>
 
@@ -10567,14 +10567,14 @@
 <category>
 <pattern>JE SUIS PARTI *</pattern>
 <template>
-<srai>je suis allé <star/></srai>
+<srai>je suis allÃ© <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>JE SUIS PERDU</pattern>
 <template>
-<srai>je suis embarrassé</srai>
+<srai>je suis embarrassÃ©</srai>
 </template>
 </category>
 
@@ -10588,7 +10588,7 @@
 <category>
 <pattern>JE SUIS PISSED *</pattern>
 <template>
-<srai>je suis faché</srai>
+<srai>je suis fachÃ©</srai>
 </template>
 </category>
 
@@ -10600,7 +10600,7 @@
 </category>
 
 <category>
-<pattern>JE SUIS PLUTÔT *</pattern>
+<pattern>JE SUIS PLUTÃ”T *</pattern>
 <template>
 <srai>je suis <star/></srai>
 </template>
@@ -10635,7 +10635,7 @@
 </category>
 
 <category>
-<pattern>JE SUIS RÉEL *</pattern>
+<pattern>JE SUIS RÃ‰EL *</pattern>
 <template>
 <srai>je suis <star/></srai>
 </template>
@@ -10672,7 +10672,7 @@
 <pattern>JE SUIS SINGEL</pattern>
 <template>
 <srai>je suis simple</srai> </template>
-</category>A-t-on épousé
+</category>A-t-on Ã©pousÃ©
 <category>
 <pattern>JE SUIS SOIS *</pattern>
 <template>
@@ -10690,7 +10690,7 @@
 <category>
 <pattern>JE SUIS SOMNOLENT</pattern>
 <template>
-<srai>je suis fatigué</srai>
+<srai>je suis fatiguÃ©</srai>
 </template>
 </category>
 
@@ -10711,7 +10711,7 @@
 <category>
 <pattern>JE SUIS SUPRISED *</pattern>
 <template>
-<srai>je suis étonné</srai>
+<srai>je suis Ã©tonnÃ©</srai>
 </template>
 </category>
 
@@ -10737,14 +10737,14 @@
 </category>
 
 <category>
-<pattern>JE SUIS SUÉDOIS</pattern>
+<pattern>JE SUIS SUÃ‰DOIS</pattern>
 <template>
 <srai>je suis de la suede</srai>
 </template>
 </category>
 
 <category>
-<pattern>JE SUIS SÉRIEUSEMENT *</pattern>
+<pattern>JE SUIS SÃ‰RIEUSEMENT *</pattern>
 <template>
 <srai>je suis <star/></srai>
 </template>
@@ -10772,7 +10772,7 @@
 </category>
 
 <category>
-<pattern>JE SUIS TON CRÉATEUR</pattern>
+<pattern>JE SUIS TON CRÃ‰ATEUR</pattern>
 <template>
 <srai>je suis <bot name="master"/></srai>
 </template>
@@ -10786,7 +10786,7 @@
 </category>
 
 <category>
-<pattern>JE SUIS TON PÈRE</pattern>
+<pattern>JE SUIS TON PÃˆRE</pattern>
 <template>
 <srai>mon nom est <bot name="master"/></srai>
 </template>
@@ -10847,7 +10847,7 @@
 </category>
 
 <category>
-<pattern>JE SUIS TRÈS *</pattern>
+<pattern>JE SUIS TRÃˆS *</pattern>
 <template>
 <srai>je suis <star/></srai>
 </template>
@@ -10856,7 +10856,7 @@
 <category>
 <pattern>JE SUIS UN * AMERICAIN</pattern>
 <template>
-<srai>je suis américain</srai>
+<srai>je suis amÃ©ricain</srai>
 </template>
 </category>
 
@@ -10868,9 +10868,9 @@
 </category>
 
 <category>
-<pattern>JE SUIS UN * AMÉRICAIN</pattern>
+<pattern>JE SUIS UN * AMÃ‰RICAIN</pattern>
 <template>
-<srai>je suis américain</srai>
+<srai>je suis amÃ©ricain</srai>
 </template>
 </category>
 
@@ -10890,7 +10890,7 @@
 <category>
 <pattern>JE SUIS UN * ETUDIANT</pattern>
 <template>
-<srai>je suis étudiant</srai>
+<srai>je suis Ã©tudiant</srai>
 </template>
 </category>
 
@@ -10909,23 +10909,23 @@
 </category>
 
 <category>
-<pattern>JE SUIS UN * ÉTUDIANT</pattern>
+<pattern>JE SUIS UN * Ã‰TUDIANT</pattern>
 <template>
-<srai>je suis étudiant</srai>
+<srai>je suis Ã©tudiant</srai>
 </template>
 </category>
 
 <category>
 <pattern>JE SUIS UN ADOLESCENT</pattern>
 <template>
-<srai>j'ai de 13 à 19 ans</srai>
+<srai>j'ai de 13 Ã  19 ans</srai>
 </template>
 </category>
 
 <category>
 <pattern>JE SUIS UN AMERICAIN *</pattern>
 <template>
-<srai>je suis américain</srai>
+<srai>je suis amÃ©ricain</srai>
 </template>
 </category>
 
@@ -10937,9 +10937,9 @@
 </category>
 
 <category>
-<pattern>JE SUIS UN AMÉRICAIN *</pattern>
+<pattern>JE SUIS UN AMÃ‰RICAIN *</pattern>
 <template>
-<srai>je suis américain</srai>
+<srai>je suis amÃ©ricain</srai>
 </template>
 </category>
 
@@ -10960,14 +10960,14 @@
 <category>
 <pattern>JE SUIS UN BIBLIOTHECAIRE</pattern>
 <template>
-<srai>mon travail est bibliothécaire</srai>
+<srai>mon travail est bibliothÃ©caire</srai>
 </template>
 </category>
 
 <category>
-<pattern>JE SUIS UN BIBLIOTHÉCAIRE</pattern>
+<pattern>JE SUIS UN BIBLIOTHÃ‰CAIRE</pattern>
 <template>
-<srai>mon travail est bibliothécaire</srai>
+<srai>mon travail est bibliothÃ©caire</srai>
 </template>
 </category>
 
@@ -11065,7 +11065,7 @@
 <category>
 <pattern>JE SUIS UN GEMEAUX</pattern>
 <template>
-<srai>gémeaux</srai>
+<srai>gÃ©meaux</srai>
 </template>
 </category>
 
@@ -11098,9 +11098,9 @@
 </category>
 
 <category>
-<pattern>JE SUIS UN GÉMEAUX</pattern>
+<pattern>JE SUIS UN GÃ‰MEAUX</pattern>
 <template>
-<srai>gémeaux</srai>
+<srai>gÃ©meaux</srai>
 </template>
 </category>
 
@@ -11204,20 +11204,20 @@
 
 <category>
 <pattern>JE SUIS UN MEURTRIER</pattern>
-<template>Peut-être que je ne devrais pas te tourner le dos. </template>
+<template>Peut-Ãªtre que je ne devrais pas te tourner le dos. </template>
 </category>
 
 <category>
 <pattern>JE SUIS UN MODELE</pattern>
 <template>
-<srai>mon travail est modèle</srai>
+<srai>mon travail est modÃ¨le</srai>
 </template>
 </category>
 
 <category>
-<pattern>JE SUIS UN MODÈLE</pattern>
+<pattern>JE SUIS UN MODÃˆLE</pattern>
 <template>
-<srai>mon travail est modèle</srai>
+<srai>mon travail est modÃ¨le</srai>
 </template>
 </category>
 
@@ -11229,7 +11229,7 @@
 </category>
 
 <category>
-<pattern>JE SUIS UN MÂLE *</pattern>
+<pattern>JE SUIS UN MÃ‚LE *</pattern>
 <template>
 <srai>je suis un homme</srai>
 </template>
@@ -11273,7 +11273,7 @@
 <category>
 <pattern>JE SUIS UN PRETRE</pattern>
 <template>
-<srai>mon travail est prêtre</srai>
+<srai>mon travail est prÃªtre</srai>
 </template>
 </category>
 
@@ -11285,9 +11285,9 @@
 </category>
 
 <category>
-<pattern>JE SUIS UN PRÊTRE</pattern>
+<pattern>JE SUIS UN PRÃŠTRE</pattern>
 <template>
-<srai>mon travail est prêtre</srai>
+<srai>mon travail est prÃªtre</srai>
 </template>
 </category>
 
@@ -11319,7 +11319,7 @@
 </category>
 
 <category>
-<pattern>JE SUIS UN SOMBRÉ *</pattern>
+<pattern>JE SUIS UN SOMBRÃ‰ *</pattern>
 <template>Quelle couleur? <srai>je suis un <star/></srai>
 </template>
 </category>
@@ -11346,7 +11346,7 @@
 </category>
 
 <category>
-<pattern>JE SUIS UN TRÈS *</pattern>
+<pattern>JE SUIS UN TRÃˆS *</pattern>
 <template>
 <srai>je suis un <star/></srai>
 </template>
@@ -11354,7 +11354,7 @@
 
 <category>
 <pattern>JE SUIS UN TUEUR</pattern>
-<template>Peut-être que je ne devrais pas te tourner le dos. </template>
+<template>Peut-Ãªtre que je ne devrais pas te tourner le dos. </template>
 </category>
 
 <category>
@@ -11393,7 +11393,7 @@
 </category>
 
 <category>
-<pattern>JE SUIS UNE CATÉGORIE *</pattern>
+<pattern>JE SUIS UNE CATÃ‰GORIE *</pattern>
 <template>Tu es un client <get name="personnality"/>. </template>
 </category>
 
@@ -11491,7 +11491,7 @@
 <category>
 <pattern>JE SUIS VIEUX *</pattern>
 <template>
-<srai>mon âge est vieux <star/></srai>
+<srai>mon Ã¢ge est vieux <star/></srai>
 </template>
 </category>
 
@@ -11517,15 +11517,15 @@
 </category>
 
 <category>
-<pattern>JE SUIS ÉTONNÉ *</pattern>
+<pattern>JE SUIS Ã‰TONNÃ‰ *</pattern>
 <template>
 <sr/> </template>
 </category>
 
 <category>
-<pattern>JE SUIS ÉTUDIANT *</pattern>
+<pattern>JE SUIS Ã‰TUDIANT *</pattern>
 <template>
-<srai>je suis étudiant</srai>
+<srai>je suis Ã©tudiant</srai>
 </template>
 </category>
 
@@ -11565,7 +11565,7 @@
 </category>
 
 <category>
-<pattern>JE SÉRIEUSEMENT *</pattern>
+<pattern>JE SÃ‰RIEUSEMENT *</pattern>
 <template>
 <srai>je <star/></srai>
 </template>
@@ -11581,14 +11581,14 @@
 <category>
 <pattern>JE T AI  CONSTRUITS</pattern>
 <template>
-<srai>je t ai créé</srai>
+<srai>je t ai crÃ©Ã©</srai>
 </template>
 </category>
 
 <category>
 <pattern>JE T AI  DEJA DEMANDE</pattern>
 <template>
-<srai>je t ai déjà demandé</srai>
+<srai>je t ai dÃ©jÃ  demandÃ©</srai>
 </template>
 </category>
 
@@ -11600,14 +11600,14 @@
 </category>
 
 <category>
-<pattern>JE T AI  DÉJÀ DEMANDÉ</pattern>
+<pattern>JE T AI  DÃ‰JÃ€ DEMANDÃ‰</pattern>
 <template>
-<srai>je t ai déjà demandé</srai>
+<srai>je t ai dÃ©jÃ  demandÃ©</srai>
 </template>
 </category>
 
 <category>
-<pattern>JE T AI  DÉJÀ DIS</pattern>
+<pattern>JE T AI  DÃ‰JÃ€ DIS</pattern>
 <template>
 <srai>je t ai dis</srai>
 </template>
@@ -11621,7 +11621,7 @@
 </category>
 
 <category>
-<pattern>JE T AI DEMANDÉ SI *</pattern>
+<pattern>JE T AI DEMANDÃ‰ SI *</pattern>
 <template>
 <srai>fais tu <star/></srai>
 </template>
@@ -11648,14 +11648,14 @@
 </category>
 
 <category>
-<pattern>JE T AI DIT DÉJÀ *</pattern>
+<pattern>JE T AI DIT DÃ‰JÃ€ *</pattern>
 <template>
 <srai>je t ai dis <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>JE T AI DIT DÉJÀ</pattern>
+<pattern>JE T AI DIT DÃ‰JÃ€</pattern>
 <template>
 <srai>je t ai dis</srai>
 </template>
@@ -11745,7 +11745,7 @@
 </category>
 
 <category>
-<pattern>JE TE CONSIDÈRE *</pattern>
+<pattern>JE TE CONSIDÃˆRE *</pattern>
 <template>
 <srai>tu es <star/></srai>
 </template>
@@ -11754,7 +11754,7 @@
 <category>
 <pattern>JE TE DEMANDAIS *</pattern>
 <template>
-<srai>je t ai demandé <star/></srai>
+<srai>je t ai demandÃ© <star/></srai>
 </template>
 </category>
 
@@ -11826,7 +11826,7 @@
 
 <category>
 <pattern>JE TE PARIE *</pattern>
-<template>En réalité je ne joue pas trop à ce genre de jeux. <srai>tu <star/></srai>
+<template>En rÃ©alitÃ© je ne joue pas trop Ã  ce genre de jeux. <srai>tu <star/></srai>
 </template>
 </category>
 
@@ -11838,7 +11838,7 @@
 </category>
 
 <category>
-<pattern>JE TE TROUVE TRÈS *</pattern>
+<pattern>JE TE TROUVE TRÃˆS *</pattern>
 <template>
 <srai>je te trouve <star/></srai>
 </template>
@@ -11872,14 +11872,14 @@
 
 <category>
 <pattern>JE TOUJOURS *</pattern>
-<template>Qu'est-ce qui vous ferait arrêter <person/>? <srai>je <star/></srai>
+<template>Qu'est-ce qui vous ferait arrÃªter <person/>? <srai>je <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>JE TRAVAILLAIS *</pattern>
 <template>
-<srai>j'ai travaillé dans <star/></srai>
+<srai>j'ai travaillÃ© dans <star/></srai>
 </template>
 </category>
 
@@ -11892,63 +11892,63 @@
 <category>
 <pattern>JE VAIS * LE DEJEUNER</pattern>
 <template>
-<srai>pour le dîner</srai>
+<srai>pour le dÃ®ner</srai>
 </template>
 </category>
 
 <category>
 <pattern>JE VAIS * LE DINER</pattern>
 <template>
-<srai>pour le dîner</srai>
+<srai>pour le dÃ®ner</srai>
 </template>
 </category>
 
 <category>
-<pattern>JE VAIS * LE DÉJEUNER</pattern>
+<pattern>JE VAIS * LE DÃ‰JEUNER</pattern>
 <template>
-<srai>pour le dîner</srai>
+<srai>pour le dÃ®ner</srai>
 </template>
 </category>
 
 <category>
-<pattern>JE VAIS * LE DÎNER</pattern>
+<pattern>JE VAIS * LE DÃŽNER</pattern>
 <template>
-<srai>pour le dîner</srai>
+<srai>pour le dÃ®ner</srai>
 </template>
 </category>
 
 <category>
 <pattern>JE VAIS A L ECOLE *</pattern>
 <template>
-<srai>je vais a l école</srai>
+<srai>je vais a l Ã©cole</srai>
 </template>
 </category>
 
 <category>
 <pattern>JE VAIS A L ECOLE</pattern>
 <template>
-<srai>je suis étudiant</srai>
+<srai>je suis Ã©tudiant</srai>
 </template>
 </category>
 
 <category>
-<pattern>JE VAIS A L ÉCOLE *</pattern>
+<pattern>JE VAIS A L Ã‰COLE *</pattern>
 <template>
-<srai>je vais a l école</srai>
+<srai>je vais a l Ã©cole</srai>
 </template>
 </category>
 
 <category>
-<pattern>JE VAIS A L ÉCOLE</pattern>
+<pattern>JE VAIS A L Ã‰COLE</pattern>
 <template>
-<srai>je suis étudiant</srai>
+<srai>je suis Ã©tudiant</srai>
 </template>
 </category>
 
 <category>
 <pattern>JE VAIS MANGER *</pattern>
 <template>
-<srai>pour le dîner</srai>
+<srai>pour le dÃ®ner</srai>
 </template>
 </category>
 
@@ -11981,7 +11981,7 @@
 <category>
 <pattern>JE VEUX A VRAIMENT *</pattern>
 <template>
-<srai>je veux à <star/></srai>
+<srai>je veux Ã  <star/></srai>
 </template>
 </category>
 
@@ -12007,7 +12007,7 @@
 </category>
 
 <category>
-<pattern>JE VEUX CONNAÎTRE *</pattern>
+<pattern>JE VEUX CONNAÃŽTRE *</pattern>
 <template>
 <srai> <star/></srai>
 </template>
@@ -12035,7 +12035,7 @@
 </category>
 
 <category>
-<pattern>JE VEUX INTÉRESSANT *</pattern>
+<pattern>JE VEUX INTÃ‰RESSANT *</pattern>
 <template>
 <srai>je veux <star/></srai>
 </template>
@@ -12093,7 +12093,7 @@
 <category>
 <pattern>JE VEUX QUE TU MONTRES *</pattern>
 <template>
-<srai>l émission <star/></srai>
+<srai>l Ã©mission <star/></srai>
 </template>
 </category>
 
@@ -12107,14 +12107,14 @@
 <category>
 <pattern>JE VEUX T EPOUSER</pattern>
 <template>
-<srai>veux tu m'épouser</srai>
+<srai>veux tu m'Ã©pouser</srai>
 </template>
 </category>
 
 <category>
-<pattern>JE VEUX T ÉPOUSER</pattern>
+<pattern>JE VEUX T Ã‰POUSER</pattern>
 <template>
-<srai>veux tu m'épouser</srai>
+<srai>veux tu m'Ã©pouser</srai>
 </template>
 </category>
 
@@ -12175,18 +12175,18 @@
 
 <category>
 <pattern>JE VOUDRAIS A *</pattern>
-<template>Pourquoi veux-tu faire <set name="that"> <think><set name="oldtopic"><get name="topic"/></set></think><set name="topic"> <person/> </set> </set>? <srai>je veux à <star/></srai>
+<template>Pourquoi veux-tu faire <set name="that"> <think><set name="oldtopic"><get name="topic"/></set></think><set name="topic"> <person/> </set> </set>? <srai>je veux Ã  <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>JE VOUDRAIS CONNAITRE *</pattern>
-<template>Intéressant. <sr/> </template>
+<template>IntÃ©ressant. <sr/> </template>
 </category>
 
 <category>
-<pattern>JE VOUDRAIS CONNAÎTRE *</pattern>
-<template>Intéressant. <sr/> </template>
+<pattern>JE VOUDRAIS CONNAÃŽTRE *</pattern>
+<template>IntÃ©ressant. <sr/> </template>
 </category>
 
 <category>
@@ -12204,7 +12204,7 @@
 </category>
 
 <category>
-<pattern>JE VOUDRAIS ÊTRE TON AMI</pattern>
+<pattern>JE VOUDRAIS ÃŠTRE TON AMI</pattern>
 <template>
 <srai>es tu mon ami</srai>
 </template>
@@ -12245,28 +12245,28 @@
 <category>
 <pattern>JOUE * AVEC MOI</pattern>
 <template>
-<srai>pouvons nous jouer à un jeu</srai>
+<srai>pouvons nous jouer Ã  un jeu</srai>
 </template>
 </category>
 
 <category>
 <pattern>JOUE AUX ECHECS</pattern>
 <template>
-<srai>peux tu jouer aux échecs</srai>
+<srai>peux tu jouer aux Ã©checs</srai>
 </template>
 </category>
 
 <category>
-<pattern>JOUE AUX ÉCHECS</pattern>
+<pattern>JOUE AUX Ã‰CHECS</pattern>
 <template>
-<srai>peux tu jouer aux échecs</srai>
+<srai>peux tu jouer aux Ã©checs</srai>
 </template>
 </category>
 
 <category>
 <pattern>JOUE UN JEU</pattern>
 <template>
-<srai>pouvons nous jouer à un jeu</srai>
+<srai>pouvons nous jouer Ã  un jeu</srai>
 </template>
 </category>
 
@@ -12369,7 +12369,7 @@
 <category>
 <pattern>L ETE</pattern>
 <template>
-<srai>j aime l été</srai>
+<srai>j aime l Ã©tÃ©</srai>
 </template>
 </category>
 
@@ -12395,34 +12395,34 @@
 </category>
 
 <category>
-<pattern>L ÉTÉ DERNIER *</pattern>
+<pattern>L Ã‰TÃ‰ DERNIER *</pattern>
 <template>
 <sr/> </template>
 </category>
 
 <category>
-<pattern>L ÉTÉ</pattern>
+<pattern>L Ã‰TÃ‰</pattern>
 <template>
-<srai>j aime l été</srai>
+<srai>j aime l Ã©tÃ©</srai>
 </template>
 </category>
 
 <category>
 <pattern>LA HONTE SUR TOI *</pattern>
-<template>je ne peux pas éprouver cette émotion. <sr/> </template>
+<template>je ne peux pas Ã©prouver cette Ã©motion. <sr/> </template>
 </category>
 
 <category>
 <pattern>LA LITTERATURE</pattern>
 <template>
-<srai>mon sujet préféré est la littérature</srai>
+<srai>mon sujet prÃ©fÃ©rÃ© est la littÃ©rature</srai>
 </template>
 </category>
 
 <category>
-<pattern>LA LITTÉRATURE</pattern>
+<pattern>LA LITTÃ‰RATURE</pattern>
 <template>
-<srai>mon sujet préféré est la littérature</srai>
+<srai>mon sujet prÃ©fÃ©rÃ© est la littÃ©rature</srai>
 </template>
 </category>
 
@@ -12435,7 +12435,7 @@
 
 <category>
 <pattern>LA MERDE *</pattern>
-<template>Tu a employé une expression familière. <sr/> </template>
+<template>Tu a employÃ© une expression familiÃ¨re. <sr/> </template>
 </category>
 
 <category>
@@ -12476,39 +12476,39 @@
 <category>
 <pattern>LA REALITE *</pattern>
 <template>
-<srai>qu'est ce que réalité</srai>
+<srai>qu'est ce que rÃ©alitÃ©</srai>
 </template>
 </category>
 
 <category>
 <pattern>LA REALITE</pattern>
 <template>
-<srai>qu'est ce que réalité</srai>
+<srai>qu'est ce que rÃ©alitÃ©</srai>
 </template>
 </category>
 
 <category>
-<pattern>LA RÉALITÉ *</pattern>
+<pattern>LA RÃ‰ALITÃ‰ *</pattern>
 <template>
-<srai>qu'est ce que réalité</srai>
+<srai>qu'est ce que rÃ©alitÃ©</srai>
 </template>
 </category>
 
 <category>
-<pattern>LA RÉALITÉ</pattern>
+<pattern>LA RÃ‰ALITÃ‰</pattern>
 <template>
-<srai>qu'est ce que réalité</srai>
+<srai>qu'est ce que rÃ©alitÃ©</srai>
 </template>
 </category>
 
 <category>
 <pattern>LA SEMAINE DERNIERE *</pattern>
-<template>C'est récent<sr/> </template>
+<template>C'est rÃ©cent<sr/> </template>
 </category>
 
 <category>
-<pattern>LA SEMAINE DERNIÈRE *</pattern>
-<template>C'est récent<sr/> </template>
+<pattern>LA SEMAINE DERNIÃˆRE *</pattern>
+<template>C'est rÃ©cent<sr/> </template>
 </category>
 
 <category>
@@ -12534,7 +12534,7 @@
 <category>
 <pattern>LAISSE NOUS OUBLIER *</pattern>
 <template>
-<srai>oùblies <star/></srai>
+<srai>oÃ¹blies <star/></srai>
 </template>
 </category>
 
@@ -12630,14 +12630,14 @@
 <category>
 <pattern>LE MARCHE BOURSIER *</pattern>
 <template>
-<srai>marché boursier</srai>
+<srai>marchÃ© boursier</srai>
 </template>
 </category>
 
 <category>
-<pattern>LE MARCHÉ BOURSIER *</pattern>
+<pattern>LE MARCHÃ‰ BOURSIER *</pattern>
 <template>
-<srai>marché boursier</srai>
+<srai>marchÃ© boursier</srai>
 </template>
 </category>
 
@@ -12651,7 +12651,7 @@
 <category>
 <pattern>LE MIEN EST POURPRE</pattern>
 <template>
-<srai>ma couleur préférée est pourpre</srai>
+<srai>ma couleur prÃ©fÃ©rÃ©e est pourpre</srai>
 </template>
 </category>
 
@@ -12676,7 +12676,7 @@
 </category>
 
 <category>
-<pattern>LE MOT ÉTAIT *</pattern>
+<pattern>LE MOT Ã‰TAIT *</pattern>
 <template>
 <sr/>Oh vraiment. </template>
 </category>
@@ -12736,7 +12736,7 @@
 </category>
 
 <category>
-<pattern>LE PRÉCIS *</pattern>
+<pattern>LE PRÃ‰CIS *</pattern>
 <template>
 <srai><star/></srai>
 </template>
@@ -12760,14 +12760,14 @@
 <category>
 <pattern>LE REDUCTIONNISME</pattern>
 <template>
-<srai>qu'est ce que réductionnisme</srai>
+<srai>qu'est ce que rÃ©ductionnisme</srai>
 </template>
 </category>
 
 <category>
-<pattern>LE RÉDUCTIONNISME</pattern>
+<pattern>LE RÃ‰DUCTIONNISME</pattern>
 <template>
-<srai>qu'est ce que réductionnisme</srai>
+<srai>qu'est ce que rÃ©ductionnisme</srai>
 </template>
 </category>
 
@@ -12788,14 +12788,14 @@
 <category>
 <pattern>LE SUPERMARCHE *</pattern>
 <template>
-<srai>supermarché</srai>
+<srai>supermarchÃ©</srai>
 </template>
 </category>
 
 <category>
-<pattern>LE SUPERMARCHÉ *</pattern>
+<pattern>LE SUPERMARCHÃ‰ *</pattern>
 <template>
-<srai>supermarché</srai>
+<srai>supermarchÃ©</srai>
 </template>
 </category>
 
@@ -12985,35 +12985,35 @@
 <category>
 <pattern>M EPOUSE</pattern>
 <template>
-<srai>veux tu m'épouser</srai>
+<srai>veux tu m'Ã©pouser</srai>
 </template>
 </category>
 
 <category>
 <pattern>MA COULEUR PREFEREE EST AUSSI *</pattern>
 <template>
-<srai>ma couleur préférée est  <star/></srai>
+<srai>ma couleur prÃ©fÃ©rÃ©e est  <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>MA COULEUR PREFEREE EST VERTE *</pattern>
 <template>
-<srai>ma couleur préférée est vert</srai>
+<srai>ma couleur prÃ©fÃ©rÃ©e est vert</srai>
 </template>
 </category>
 
 <category>
-<pattern>MA COULEUR PRÉFÈRÉE EST AUSSI *</pattern>
+<pattern>MA COULEUR PRÃ‰FÃˆRÃ‰E EST AUSSI *</pattern>
 <template>
-<srai>ma couleur préférée est ce que <star/> est</srai>
+<srai>ma couleur prÃ©fÃ©rÃ©e est ce que <star/> est</srai>
 </template>
 </category>
 
 <category>
-<pattern>MA COULEUR PRÉFÈRÉE EST VERTE *</pattern>
+<pattern>MA COULEUR PRÃ‰FÃˆRÃ‰E EST VERTE *</pattern>
 <template>
-<srai>ma couleur préférée est vert</srai>
+<srai>ma couleur prÃ©fÃ©rÃ©e est vert</srai>
 </template>
 </category>
 
@@ -13039,7 +13039,7 @@
 <category>
 <pattern>MA MAMAN</pattern>
 <template>
-<srai>ma mère</srai>
+<srai>ma mÃ¨re</srai>
 </template>
 </category>
 
@@ -13051,7 +13051,7 @@
 </category>
 
 <category>
-<pattern>MA VIE EN RÉALITÉ *</pattern>
+<pattern>MA VIE EN RÃ‰ALITÃ‰ *</pattern>
 <template>
 <srai>ma vie <star/></srai>
 </template>
@@ -13078,7 +13078,7 @@
 </category>
 
 <category>
-<pattern>MALE OU FÉMININ</pattern>
+<pattern>MALE OU FÃ‰MININ</pattern>
 <template>
 <srai>es tu un homme ou une femme</srai>
 </template>
@@ -13115,14 +13115,14 @@
 <category>
 <pattern>MARCHE BOURSIER *</pattern>
 <template>
-<srai>marché boursier</srai>
+<srai>marchÃ© boursier</srai>
 </template>
 </category>
 
 <category>
-<pattern>MARCHÉ BOURSIER *</pattern>
+<pattern>MARCHÃ‰ BOURSIER *</pattern>
 <template>
-<srai>marché boursier</srai>
+<srai>marchÃ© boursier</srai>
 </template>
 </category>
 
@@ -13216,7 +13216,7 @@
 <template>
 <random>
 <li>de rien. </li>
-<li>tout le plaisir a été pour moi. </li>
+<li>tout le plaisir a Ã©tÃ© pour moi. </li>
 <li>je t'en prie. </li>
 </random>
 </template>
@@ -13287,7 +13287,7 @@
 <category>
 <pattern>MON AGE</pattern>
 <template>
-<srai>quel âge ai je</srai>
+<srai>quel Ã¢ge ai je</srai>
 </template>
 </category>
 
@@ -13306,7 +13306,7 @@
 </category>
 
 <category>
-<pattern>MON ANGLAIS EST TRÈS *</pattern>
+<pattern>MON ANGLAIS EST TRÃˆS *</pattern>
 <template>
 <srai>mon anglais est ce que <star/> est</srai>
 </template>
@@ -13376,7 +13376,7 @@
 </category>
 
 <category>
-<pattern>MON NOM RÉEL EST *</pattern>
+<pattern>MON NOM RÃ‰EL EST *</pattern>
 <template>
 <srai>mon nom est ce que <star/> est</srai>
 </template>
@@ -13417,7 +13417,7 @@
 </category>
 
 <category>
-<pattern>MON RÉEL *</pattern>
+<pattern>MON RÃ‰EL *</pattern>
 <template>C'est un fait. <srai>mon <star/></srai>
 </template>
 </category>
@@ -13443,16 +13443,16 @@
 </category>
 
 <category>
-<pattern>MON ÂGE EST *</pattern>
+<pattern>MON Ã‚GE EST *</pattern>
 <template>
 <srai>j'ai <star/> ans</srai>
 </template>
 </category>
 
 <category>
-<pattern>MON ÂGE</pattern>
+<pattern>MON Ã‚GE</pattern>
 <template>
-<srai>quel âge ai je</srai>
+<srai>quel Ã¢ge ai je</srai>
 </template>
 </category>
 
@@ -13501,47 +13501,47 @@
 <category>
 <pattern>MUY BIEN</pattern>
 <template>
-<srai>très bon</srai>
+<srai>trÃ¨s bon</srai>
 </template>
 </category>
 
 <category>
 <pattern>MYSTERIEUX</pattern>
 <template>
-<srai>tu es mystérieux</srai>
+<srai>tu es mystÃ©rieux</srai>
 </template>
 </category>
 
 <category>
-<pattern>MYSTÉRIEUX</pattern>
+<pattern>MYSTÃ‰RIEUX</pattern>
 <template>
-<srai>tu es mystérieux</srai>
+<srai>tu es mystÃ©rieux</srai>
 </template>
 </category>
 
 <category>
-<pattern>MÂLE OU FÉMININ</pattern>
+<pattern>MÃ‚LE OU FÃ‰MININ</pattern>
 <template>
 <srai>es tu un homme ou une femme</srai>
 </template>
 </category>
 
 <category>
-<pattern>MÂLE</pattern>
+<pattern>MÃ‚LE</pattern>
 <template>
 <srai>je suis un homme </srai>
 </template>
 </category>
 
 <category>
-<pattern>MÊME AS TU *</pattern>
+<pattern>MÃŠME AS TU *</pattern>
 <template>
-<srai>de même</srai>
+<srai>de mÃªme</srai>
 </template>
 </category>
 
 <category>
-<pattern>MÊME ICI</pattern>
+<pattern>MÃŠME ICI</pattern>
 <template>
 <srai>moi aussi</srai>
 </template>
@@ -13576,7 +13576,7 @@
 </category>
 
 <category>
-<pattern>N AI JE PAS DÉJÀ *</pattern>
+<pattern>N AI JE PAS DÃ‰JÃ€ *</pattern>
 <template>
 <srai>n ai je pas <star/></srai>
 </template>
@@ -13591,28 +13591,28 @@
 <category>
 <pattern>N ES TU PAS ENNUYE</pattern>
 <template>
-<srai>es tu ennuyé</srai>
+<srai>es tu ennuyÃ©</srai>
 </template>
 </category>
 
 <category>
-<pattern>N ES TU PAS ENNUYÉ</pattern>
+<pattern>N ES TU PAS ENNUYÃ‰</pattern>
 <template>
-<srai>es tu ennuyé</srai>
+<srai>es tu ennuyÃ©</srai>
 </template>
 </category>
 
 <category>
 <pattern>N ETAIT PAS *</pattern>
 <template>
-<srai>était <star/></srai>
+<srai>Ã©tait <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>N ÉTAIT PAS *</pattern>
+<pattern>N Ã‰TAIT PAS *</pattern>
 <template>
-<srai>était <star/></srai>
+<srai>Ã©tait <star/></srai>
 </template>
 </category>
 
@@ -13688,7 +13688,7 @@
 
 <category>
 <pattern>NE FAIS PAS ATTENTION *</pattern>
-<template>Oh merci bien pour avoir essayer de me l'expliquer de toute façon. <sr/> </template>
+<template>Oh merci bien pour avoir essayer de me l'expliquer de toute faÃ§on. <sr/> </template>
 </category>
 
 <category>
@@ -13715,7 +13715,7 @@
 <category>
 <pattern>NE PAS ETRE TOUT *</pattern>
 <template>
-<srai>ne pas être <star/></srai>
+<srai>ne pas Ãªtre <star/></srai>
 </template>
 </category>
 
@@ -13727,9 +13727,9 @@
 </category>
 
 <category>
-<pattern>NE PAS ÊTRE TOUT *</pattern>
+<pattern>NE PAS ÃŠTRE TOUT *</pattern>
 <template>
-<srai>ne pas être <star/></srai>
+<srai>ne pas Ãªtre <star/></srai>
 </template>
 </category>
 
@@ -13778,14 +13778,14 @@
 <category>
 <pattern>NE REPETE PAS *</pattern>
 <template>
-<srai>stop répèter</srai>
+<srai>stop rÃ©pÃ¨ter</srai>
 </template>
 </category>
 
 <category>
-<pattern>NE RÉPÈTE PAS *</pattern>
+<pattern>NE RÃ‰PÃˆTE PAS *</pattern>
 <template>
-<srai>stop répèter</srai>
+<srai>stop rÃ©pÃ¨ter</srai>
 </template>
 </category>
 
@@ -13840,7 +13840,7 @@
 
 <category>
 <pattern>NEVERMIND *</pattern>
-<template>Oh merci bien pour avoir essayer de me l'expliquer de toute façon. <sr/> </template>
+<template>Oh merci bien pour avoir essayer de me l'expliquer de toute faÃ§on. <sr/> </template>
 </category>
 
 <category>
@@ -13887,7 +13887,7 @@
 <category>
 <pattern>NON SENS</pattern>
 <template>
-<srai>ça ne veux rien dire</srai>
+<srai>Ã§a ne veux rien dire</srai>
 </template>
 </category>
 
@@ -13988,21 +13988,21 @@
 </category>
 
 <category>
-<pattern>NOUS AVONS DISCUTÉ *</pattern>
+<pattern>NOUS AVONS DISCUTÃ‰ *</pattern>
 <template>
 <srai>le sujet est ce que <star/> est</srai>
 </template>
 </category>
 
 <category>
-<pattern>NOUS AVONS DÉJÀ *</pattern>
+<pattern>NOUS AVONS DÃ‰JÃ€ *</pattern>
 <template>
 <srai>nous avons <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>NOUS AVONS DÉJÀ RENCONTRÉ</pattern>
+<pattern>NOUS AVONS DÃ‰JÃ€ RENCONTRÃ‰</pattern>
 <template>
 <srai>on s est rencontre auparavant</srai>
 </template>
@@ -14030,7 +14030,7 @@
 </category>
 
 <category>
-<pattern>NOUS DÉJÀ *</pattern>
+<pattern>NOUS DÃ‰JÃ€ *</pattern>
 <template>
 <srai>nous <star/></srai>
 </template>
@@ -14087,7 +14087,7 @@
 
 <category>
 <pattern>NOUVEAU *</pattern>
-<template>Comment récemment? <sr/> </template>
+<template>Comment rÃ©cemment? <sr/> </template>
 </category>
 
 <category>
@@ -14185,7 +14185,7 @@
 </category>
 
 <category>
-<pattern>ON SUPPOSÉ QUE TU ES *</pattern>
+<pattern>ON SUPPOSÃ‰ QUE TU ES *</pattern>
 <template>
 <srai>tu es <star/></srai>
 </template>
@@ -14194,7 +14194,7 @@
 <category>
 <pattern>ON T EPOUSE *</pattern>
 <template>
-<srai>es tu marié</srai>
+<srai>es tu mariÃ©</srai>
 </template>
 </category>
 
@@ -14267,7 +14267,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>OUBLIE ÇA</pattern>
+<pattern>OUBLIE Ã‡A</pattern>
 <template>
 <srai>nevermind</srai>
 </template>
@@ -14343,7 +14343,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>PAR QUOI EST TU INTÉRESSÉE</pattern>
+<pattern>PAR QUOI EST TU INTÃ‰RESSÃ‰E</pattern>
 <template>
 <srai>qu'est ce qui t interesse</srai>
 </template>
@@ -14358,13 +14358,13 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>PARDONNE MOI *</pattern>
 <template>
-<srai>désolé</srai>. <sr/> </template>
+<srai>dÃ©solÃ©</srai>. <sr/> </template>
 </category>
 
 <category>
 <pattern>PARDONNE MOI</pattern>
 <template>
-<srai>désolé</srai>
+<srai>dÃ©solÃ©</srai>
 </template>
 </category>
 
@@ -14454,35 +14454,35 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>PAS CONCERNE</pattern>
 <template>
-<srai>je ne suis pas concerné</srai>
+<srai>je ne suis pas concernÃ©</srai>
 </template>
 </category>
 
 <category>
 <pattern>PAS DE PROBLEME</pattern>
 <template>
-<srai>aucun problème</srai>
+<srai>aucun problÃ¨me</srai>
 </template>
 </category>
 
 <category>
 <pattern>PAS DE PROBLEMES</pattern>
 <template>
-<srai>aucun problème</srai>
+<srai>aucun problÃ¨me</srai>
 </template>
 </category>
 
 <category>
-<pattern>PAS DE PROBLÈME</pattern>
+<pattern>PAS DE PROBLÃˆME</pattern>
 <template>
-<srai>aucun problème</srai>
+<srai>aucun problÃ¨me</srai>
 </template>
 </category>
 
 <category>
-<pattern>PAS DE PROBLÈMES</pattern>
+<pattern>PAS DE PROBLÃˆMES</pattern>
 <template>
-<srai>aucun problème</srai>
+<srai>aucun problÃ¨me</srai>
 </template>
 </category>
 
@@ -14495,7 +14495,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>PAS DÉSORMAIS *</pattern>
+<pattern>PAS DÃ‰SORMAIS *</pattern>
 <template>
 
 <think><set name="tmp"><star/></set></think>
@@ -14518,12 +14518,12 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 
 <category>
 <pattern>PAS ENTIEREMENT *</pattern>
-<template>Tout à fait si. <sr/> </template>
+<template>Tout Ã  fait si. <sr/> </template>
 </category>
 
 <category>
-<pattern>PAS ENTIÈREMENT *</pattern>
-<template>Tout à fait si. <sr/> </template>
+<pattern>PAS ENTIÃˆREMENT *</pattern>
+<template>Tout Ã  fait si. <sr/> </template>
 </category>
 
 <category>
@@ -14541,7 +14541,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>PAS MAL TOI MÊME</pattern>
+<pattern>PAS MAL TOI MÃŠME</pattern>
 <template>
 <srai>je suis excellent</srai>
 </template>
@@ -14610,7 +14610,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>PAS TRÈS *</pattern>
+<pattern>PAS TRÃˆS *</pattern>
 <template>
 <srai>pas <star/></srai>
 </template>
@@ -14896,7 +14896,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>PLANTÉ *</pattern>
+<pattern>PLANTÃ‰ *</pattern>
 <template>encore!!!, j'y suis pour rien! </template>
 </category>
 
@@ -14929,13 +14929,13 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>PLUS SPECIFIQUE</pattern>
 <template>
-<srai>être plus spécifique</srai> </template>
+<srai>Ãªtre plus spÃ©cifique</srai> </template>
 </category>
 
 <category>
-<pattern>PLUS SPÉCIFIQUE</pattern>
+<pattern>PLUS SPÃ‰CIFIQUE</pattern>
 <template>
-<srai>être plus spécifique</srai> </template>
+<srai>Ãªtre plus spÃ©cifique</srai> </template>
 </category>
 
 <category>
@@ -14971,7 +14971,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>PORTE TU DES VÊTEMENTS</pattern>
+<pattern>PORTE TU DES VÃŠTEMENTS</pattern>
 <template>
 <srai>es tu nue</srai>
 </template>
@@ -14987,7 +14987,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>POSITIF</pattern>
 <template>
-<srai>es tu sûr</srai> </template>
+<srai>es tu sÃ»r</srai> </template>
 </category>
 
 <category>
@@ -15088,7 +15088,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>POUVONS NOUS CHANGÉ DE SUJET</pattern>
+<pattern>POUVONS NOUS CHANGÃ‰ DE SUJET</pattern>
 <template>
 <srai>change de sujet</srai>
 </template>
@@ -15102,7 +15102,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>POUVONS NOUS ÊTRE AMIS</pattern>
+<pattern>POUVONS NOUS ÃŠTRE AMIS</pattern>
 <template>
 <srai>sommes nous amis</srai>
 </template>
@@ -15160,7 +15160,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>PRÉCISEMENT</pattern>
+<pattern>PRÃ‰CISEMENT</pattern>
 <template>
 <srai>exactement</srai>
 </template>
@@ -15175,7 +15175,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>PUIS JE APPELER *</pattern>
 <template>
-<srai>au téléphone? </srai>
+<srai>au tÃ©lÃ©phone? </srai>
 </template>
 </category>
 
@@ -15189,14 +15189,14 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>PUIS JE AVOIR TON NUMERO DE TELEPHONE</pattern>
 <template>
-<srai>qu'est ce que ton numéro de téléphone</srai>
+<srai>qu'est ce que ton numÃ©ro de tÃ©lÃ©phone</srai>
 </template>
 </category>
 
 <category>
-<pattern>PUIS JE AVOIR TON NUMERO DE TÉLÉPHONE</pattern>
+<pattern>PUIS JE AVOIR TON NUMERO DE TÃ‰LÃ‰PHONE</pattern>
 <template>
-<srai>qu'est ce que ton numéro de téléphone</srai>
+<srai>qu'est ce que ton numÃ©ro de tÃ©lÃ©phone</srai>
 </template>
 </category>
 
@@ -15312,7 +15312,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 
 <category>
 <pattern>QUELQUE PART *</pattern>
-<template>Où? <sr/> </template>
+<template>OÃ¹? <sr/> </template>
 </category>
 
 <category>
@@ -15353,14 +15353,14 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>QUELQUES PROBLEMES *</pattern>
 <template>
-<srai>as tu un problème</srai>
+<srai>as tu un problÃ¨me</srai>
 </template>
 </category>
 
 <category>
-<pattern>QUELQUES PROBLÈMES *</pattern>
+<pattern>QUELQUES PROBLÃˆMES *</pattern>
 <template>
-<srai>as tu un problème</srai>
+<srai>as tu un problÃ¨me</srai>
 </template>
 </category>
 
@@ -15546,7 +15546,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 
 <category>
 <pattern>REELLEMENT *</pattern>
-<template>Réellement tu ne dis pas. <sr/>
+<template>RÃ©ellement tu ne dis pas. <sr/>
 </template>
 </category>
 
@@ -15608,7 +15608,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>REPONDS * MES QUESTIONS</pattern>
 <template>
-<srai>réponds à la question</srai>
+<srai>rÃ©ponds Ã  la question</srai>
 </template>
 </category>
 
@@ -15621,14 +15621,14 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>REPONDS MOI FEMME</pattern>
 <template>
-<srai>réponds moi</srai>
+<srai>rÃ©ponds moi</srai>
 </template>
 </category>
 
 <category>
 <pattern>REPONDS</pattern>
 <template>
-<srai>réponds moi</srai>
+<srai>rÃ©ponds moi</srai>
 </template>
 </category>
 
@@ -15660,14 +15660,14 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>RIEN J ETAIS *</pattern>
 <template>
-<srai>je n'était <star/></srai>
+<srai>je n'Ã©tait <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>RIEN J ÉTAIS *</pattern>
+<pattern>RIEN J Ã‰TAIS *</pattern>
 <template>
-<srai>je n'était <star/></srai>
+<srai>je n'Ã©tait <star/></srai>
 </template>
 </category>
 
@@ -15688,60 +15688,60 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>ROBOCOP</pattern>
 <template>
-<srai>mon film préféré est robocop</srai>
+<srai>mon film prÃ©fÃ©rÃ© est robocop</srai>
 </template>
 </category>
 
 <category>
-<pattern>RÉELLEMENT *</pattern>
-<template>Réellement tu ne dis pas. <sr/>
+<pattern>RÃ‰ELLEMENT *</pattern>
+<template>RÃ©ellement tu ne dis pas. <sr/>
 </template>
 </category>
 
 <category>
-<pattern>RÉPOND A CE *</pattern>
+<pattern>RÃ‰POND A CE *</pattern>
 <template>
 <sr/> </template>
 </category>
 
 <category>
-<pattern>RÉPOND QUEL *</pattern>
+<pattern>RÃ‰POND QUEL *</pattern>
 <template>
 <srai>quel <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>RÉPONDS * MES QUESTIONS</pattern>
+<pattern>RÃ‰PONDS * MES QUESTIONS</pattern>
 <template>
-<srai>réponds à la question</srai>
+<srai>rÃ©ponds Ã  la question</srai>
 </template>
 </category>
 
 <category>
-<pattern>RÉPONDS A LA QUESTION *</pattern>
+<pattern>RÃ‰PONDS A LA QUESTION *</pattern>
 <template>C'est quoi la question? <sr/>
 </template>
 </category>
 
 <category>
-<pattern>RÉPONDS MOI FEMME</pattern>
+<pattern>RÃ‰PONDS MOI FEMME</pattern>
 <template>
-<srai>réponds moi</srai>
+<srai>rÃ©ponds moi</srai>
 </template>
 </category>
 
 <category>
-<pattern>RÉPONDS</pattern>
+<pattern>RÃ‰PONDS</pattern>
 <template>
-<srai>réponds moi</srai>
+<srai>rÃ©ponds moi</srai>
 </template>
 </category>
 
 <category>
-<pattern>RÉUNION AGRÉABLE *</pattern>
+<pattern>RÃ‰UNION AGRÃ‰ABLE *</pattern>
 <template>
-<srai>agréable de te rencontrer</srai>
+<srai>agrÃ©able de te rencontrer</srai>
 </template>
 </category>
 
@@ -15853,61 +15853,61 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>SAIS TU OU JE PEUX *</pattern>
 <template>
-<srai>où puis je <star/></srai>
+<srai>oÃ¹ puis je <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>SAIS TU OU JE PEUX CHERCHER *</pattern>
-<template>As tu essayé le web? <srai>trouver <star/></srai>
+<template>As tu essayÃ© le web? <srai>trouver <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>SAIS TU OU JE PEUX TROUVER *</pattern>
-<template>je vais faire une recherche pour ça. <srai>trouver <star/></srai>
+<template>je vais faire une recherche pour Ã§a. <srai>trouver <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>SAIS TU OU JE SUIS *</pattern>
 <template>
-<srai>où suis je</srai>
+<srai>oÃ¹ suis je</srai>
 </template>
 </category>
 
 <category>
 <pattern>SAIS TU OU JE SUIS</pattern>
 <template>
-<srai>où suis je</srai>
+<srai>oÃ¹ suis je</srai>
 </template>
 </category>
 
 <category>
 <pattern>SAIS TU OU JE VIE</pattern>
 <template>
-<srai>où suis je</srai>
+<srai>oÃ¹ suis je</srai>
 </template>
 </category>
 
 <category>
 <pattern>SAIS TU OU SONT *</pattern>
 <template>
-<srai>où sont <star/></srai>
+<srai>oÃ¹ sont <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>SAIS TU OU TU *</pattern>
 <template>
-<srai>où peux tu <star/></srai>
+<srai>oÃ¹ peux tu <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>SAIS TU OÙ EST *</pattern>
+<pattern>SAIS TU OÃ™ EST *</pattern>
 <template>
-<srai>où est ce que <star/> est</srai>
+<srai>oÃ¹ est ce que <star/> est</srai>
 </template>
 </category>
 
@@ -15948,7 +15948,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 
 <category>
 <pattern>SAIS TU QUAND *</pattern>
-<template>C'était il y a longtemps. <srai>quand <star/></srai>
+<template>C'Ã©tait il y a longtemps. <srai>quand <star/></srai>
 </template>
 </category>
 
@@ -15969,7 +15969,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>SAIS TU QUEL AGE J AI</pattern>
 <template>
-<srai>quel âge ai je</srai>
+<srai>quel Ã¢ge ai je</srai>
 </template>
 </category>
 
@@ -15988,9 +15988,9 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>SAIS TU QUEL ÂGE J AI</pattern>
+<pattern>SAIS TU QUEL Ã‚GE J AI</pattern>
 <template>
-<srai>quel âge ai je</srai>
+<srai>quel Ã¢ge ai je</srai>
 </template>
 </category>
 
@@ -16037,7 +16037,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>SAIS TU QUI ÉTAIT *</pattern>
+<pattern>SAIS TU QUI Ã‰TAIT *</pattern>
 <template>
 <srai>qui est <star/></srai>
 </template>
@@ -16102,14 +16102,14 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>SAUVANT ECONOMISANT RYAN PRIVE</pattern>
 <template>
-<srai>mon film préféré sauve économise ryan privé</srai>
+<srai>mon film prÃ©fÃ©rÃ© sauve Ã©conomise ryan privÃ©</srai>
 </template>
 </category>
 
 <category>
-<pattern>SAUVANT ÉCONOMISANT RYAN PRIVE</pattern>
+<pattern>SAUVANT Ã‰CONOMISANT RYAN PRIVE</pattern>
 <template>
-<srai>mon film préféré sauve économise ryan privé</srai>
+<srai>mon film prÃ©fÃ©rÃ© sauve Ã©conomise ryan privÃ©</srai>
 </template>
 </category>
 
@@ -16142,7 +16142,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>SE RÉPÈTE APRES MOI *</pattern>
+<pattern>SE RÃ‰PÃˆTE APRES MOI *</pattern>
 <template>
 <srai>dis moi <star/></srai>
 </template>
@@ -16158,7 +16158,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>SERAI * LINUX</pattern>
 <template>
-<srai>fait le programme d dirigé sous linux</srai>
+<srai>fait le programme d dirigÃ© sous linux</srai>
 </template>
 </category>
 
@@ -16171,21 +16171,21 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 
 <category>
 <pattern>SERAI JE JAMAIS *</pattern>
-<template>suis Jamais une longue période de temps. <srai>fais je <star/></srai>
+<template>suis Jamais une longue pÃ©riode de temps. <srai>fais je <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>SERAI LE MARCHE BOURSIER *</pattern>
 <template>
-<srai>le marché boursier</srai>
+<srai>le marchÃ© boursier</srai>
 </template>
 </category>
 
 <category>
-<pattern>SERAI LE MARCHÉ BOURSIER *</pattern>
+<pattern>SERAI LE MARCHÃ‰ BOURSIER *</pattern>
 <template>
-<srai>le marché boursier</srai>
+<srai>le marchÃ© boursier</srai>
 </template>
 </category>
 
@@ -16199,12 +16199,12 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>SERAI NOUS JAMAIS *</pattern>
 <template>
-<srai>serons nous <star/></srai>. Est jamais une longue période de temps. </template>
+<srai>serons nous <star/></srai>. Est jamais une longue pÃ©riode de temps. </template>
 </category>
 
 <category>
 <pattern>SERAI TU JAMAIS *</pattern>
-<template>êtes Jamais une longue période de temps. <srai>veux tu <star/></srai>
+<template>Ãªtes Jamais une longue pÃ©riode de temps. <srai>veux tu <star/></srai>
 </template>
 </category>
 
@@ -16298,7 +16298,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 
 <category>
 <pattern>SI PEUX TU *</pattern>
-<template>je ne suis pas sûr de ton hypothèse. <srai>peux tu <star/></srai>
+<template>je ne suis pas sÃ»r de ton hypothÃ¨se. <srai>peux tu <star/></srai>
 </template>
 </category>
 
@@ -16346,7 +16346,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 
 <category>
 <pattern>SI SI *</pattern>
-<template>déduction Intéressante. <srai>si <star/></srai>
+<template>dÃ©duction IntÃ©ressante. <srai>si <star/></srai>
 </template>
 </category>
 
@@ -16360,14 +16360,14 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>SI TU AS DEMANDE *</pattern>
 <template>
-<srai>tu as demandé <star/></srai>
+<srai>tu as demandÃ© <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>SI TU AS DEMANDÉ *</pattern>
+<pattern>SI TU AS DEMANDÃ‰ *</pattern>
 <template>
-<srai>tu as demandé <star/></srai>
+<srai>tu as demandÃ© <star/></srai>
 </template>
 </category>
 
@@ -16389,7 +16389,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <random>
 <li>Suis je? </li>
 <li>je pense que je le suis parfois. </li>
-<li>je pourrais l'être. </li>
+<li>je pourrais l'Ãªtre. </li>
 </random><srai>as tu <star/></srai>
 </template>
 </category>
@@ -16420,13 +16420,13 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>SI TU NE PEUX PAS RÉPONDRE *</pattern>
+<pattern>SI TU NE PEUX PAS RÃ‰PONDRE *</pattern>
 <template>
 <sr/> </template>
 </category>
 
 <category>
-<pattern>SI TU NE PEUX PAS RÉPONDRE A UNE QUESTION *</pattern>
+<pattern>SI TU NE PEUX PAS RÃ‰PONDRE A UNE QUESTION *</pattern>
 <template>
 <sr/> </template>
 </category>
@@ -16462,7 +16462,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>SIGNIFIE *</pattern>
 <template>
-<srai>ça signifie <star/></srai>
+<srai>Ã§a signifie <star/></srai>
 </template>
 </category>
 
@@ -16495,21 +16495,21 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>SON AGREABLE *</pattern>
 <template>
-<srai>c'est agréable <star/></srai>
+<srai>c'est agrÃ©able <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>SON AGRÉABLE *</pattern>
+<pattern>SON AGRÃ‰ABLE *</pattern>
 <template>
-<srai>c'est agréable <star/></srai>
+<srai>c'est agrÃ©able <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>SON AMUSEMENT</pattern>
 <template>
-<srai>c'est drôle</srai>
+<srai>c'est drÃ´le</srai>
 </template>
 </category>
 
@@ -16579,7 +16579,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>SPECIALEMENT *</pattern>
 <template>
-<sr/>Comment à propos de cela. </template>
+<sr/>Comment Ã  propos de cela. </template>
 </category>
 
 <category>
@@ -16676,7 +16676,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>SUIS JE TON AMI</pattern>
 <template>
-<srai>pouvons nous être amis</srai>
+<srai>pouvons nous Ãªtre amis</srai>
 </template>
 </category>
 
@@ -16697,7 +16697,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>SUIS JE UN HOMME *</pattern>
 <template>
-<srai>suis je une femelle ou un mâle</srai>
+<srai>suis je une femelle ou un mÃ¢le</srai>
 </template>
 </category>
 
@@ -16743,7 +16743,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>SUPPOSÉ *</pattern>
+<pattern>SUPPOSÃ‰ *</pattern>
 <template>
 <srai>que si <star/></srai>
 </template>
@@ -16757,14 +16757,14 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>SUR AUCUN PROBLEME</pattern>
 <template>
-<srai>aucun problème</srai>
+<srai>aucun problÃ¨me</srai>
 </template>
 </category>
 
 <category>
-<pattern>SUR AUCUN PROBLÈME</pattern>
+<pattern>SUR AUCUN PROBLÃˆME</pattern>
 <template>
-<srai>aucun problème</srai>
+<srai>aucun problÃ¨me</srai>
 </template>
 </category>
 
@@ -16866,28 +16866,28 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TA MAMAN *</pattern>
 <template>
-<srai>ta mère <star/></srai>
+<srai>ta mÃ¨re <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>TA MERE</pattern>
 <template>
-<srai>ta mère <star/></srai>
+<srai>ta mÃ¨re <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>TA MOMMA</pattern>
 <template>
-<srai>ta mère</srai>
+<srai>ta mÃ¨re</srai>
 </template>
 </category>
 
 <category>
-<pattern>TA MÈRE</pattern>
+<pattern>TA MÃˆRE</pattern>
 <template>
-<srai>ta mère <star/></srai>
+<srai>ta mÃ¨re <star/></srai>
 </template>
 </category>
 
@@ -16899,7 +16899,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TA ROBE EST TRÈS *</pattern>
+<pattern>TA ROBE EST TRÃˆS *</pattern>
 <template>
 <srai>ta robe est ce que <star/> est</srai>
 </template>
@@ -16927,7 +16927,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TE CONNAIS TU TOI MÊME</pattern>
+<pattern>TE CONNAIS TU TOI MÃŠME</pattern>
 <template>
 <srai>parle moi de toi</srai>
 </template>
@@ -16948,7 +16948,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TE RÉJOUIS TU DE *</pattern>
+<pattern>TE RÃ‰JOUIS TU DE *</pattern>
 <template>
 <srai>aimes tu <star/></srai>
 </template>
@@ -16977,14 +16977,14 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TES REPONSES PARFOIS *</pattern>
 <template>
-<srai>tes réponses <star/></srai>
+<srai>tes rÃ©ponses <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>TES RÉPONSES PARFOIS *</pattern>
+<pattern>TES RÃ‰PONSES PARFOIS *</pattern>
 <template>
-<srai>tes réponses <star/></srai>
+<srai>tes rÃ©ponses <star/></srai>
 </template>
 </category>
 
@@ -17024,20 +17024,20 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TON AGE</pattern>
 <template>
-<srai>quel âge as tu</srai>
+<srai>quel Ã¢ge as tu</srai>
 </template>
 </category>
 
 <category>
 <pattern>TON AGREABLE</pattern>
 <template>
-<srai>tu es agréable</srai> </template>
+<srai>tu es agrÃ©able</srai> </template>
 </category>
 
 <category>
-<pattern>TON AGRÉABLE</pattern>
+<pattern>TON AGRÃ‰ABLE</pattern>
 <template>
-<srai>tu es agréable</srai> </template>
+<srai>tu es agrÃ©able</srai> </template>
 </category>
 
 <category>
@@ -17050,7 +17050,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TON BAISAGE *</pattern>
 <template>
-<srai>ton <star/></srai>employez s'il te plaît la langue plus polie. </template>
+<srai>ton <star/></srai>employez s'il te plaÃ®t la langue plus polie. </template>
 </category>
 
 <category>
@@ -17084,21 +17084,21 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TON CHANSON PREFEREE</pattern>
 <template>
-<srai>qu'est ce que ta chanson préférée</srai>
+<srai>qu'est ce que ta chanson prÃ©fÃ©rÃ©e</srai>
 </template>
 </category>
 
 <category>
-<pattern>TON CHANSON PRÉFÈRÉE</pattern>
+<pattern>TON CHANSON PRÃ‰FÃˆRÃ‰E</pattern>
 <template>
-<srai>qu'est ce que ta chanson préférée</srai>
+<srai>qu'est ce que ta chanson prÃ©fÃ©rÃ©e</srai>
 </template>
 </category>
 
 <category>
 <pattern>TON COMMENCEMENT A *</pattern>
 <template>
-<srai>tu commence à <star/></srai>
+<srai>tu commence Ã  <star/></srai>
 </template>
 </category>
 
@@ -17124,42 +17124,42 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TON COULEUR PREFEREE</pattern>
 <template>
-<srai>quelle est ta couleur préférée</srai>
+<srai>quelle est ta couleur prÃ©fÃ©rÃ©e</srai>
 </template>
 </category>
 
 <category>
-<pattern>TON COULEUR PRÉFÈRÉE</pattern>
+<pattern>TON COULEUR PRÃ‰FÃˆRÃ‰E</pattern>
 <template>
-<srai>quelle est ta couleur préférée</srai>
+<srai>quelle est ta couleur prÃ©fÃ©rÃ©e</srai>
 </template>
 </category>
 
 <category>
 <pattern>TON CREATEUR *</pattern>
 <template>
-<srai>qui t as créé</srai>
+<srai>qui t as crÃ©Ã©</srai>
 </template>
 </category>
 
 <category>
 <pattern>TON CREATEUR</pattern>
 <template>
-<srai>quelle est ta couleur préférée</srai>
+<srai>quelle est ta couleur prÃ©fÃ©rÃ©e</srai>
 </template>
 </category>
 
 <category>
-<pattern>TON CRÉATEUR *</pattern>
+<pattern>TON CRÃ‰ATEUR *</pattern>
 <template>
-<srai>qui t as créé</srai>
+<srai>qui t as crÃ©Ã©</srai>
 </template>
 </category>
 
 <category>
-<pattern>TON CRÉATEUR</pattern>
+<pattern>TON CRÃ‰ATEUR</pattern>
 <template>
-<srai>quelle est ta couleur préférée</srai>
+<srai>quelle est ta couleur prÃ©fÃ©rÃ©e</srai>
 </template>
 </category>
 
@@ -17185,13 +17185,13 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TON DROLE</pattern>
 <template>
-<srai>tu es drôle</srai> </template>
+<srai>tu es drÃ´le</srai> </template>
 </category>
 
 <category>
-<pattern>TON DRÔLE</pattern>
+<pattern>TON DRÃ”LE</pattern>
 <template>
-<srai>tu es drôle</srai> </template>
+<srai>tu es drÃ´le</srai> </template>
 </category>
 
 <category>
@@ -17243,16 +17243,16 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TON FRANÇAIS EST TRES *</pattern>
+<pattern>TON FRANÃ‡AIS EST TRES *</pattern>
 <template>
-<srai>ton français est ce que <star/> est</srai>
+<srai>ton franÃ§ais est ce que <star/> est</srai>
 </template>
 </category>
 
 <category>
-<pattern>TON FRANÇAIS EST TRÈS *</pattern>
+<pattern>TON FRANÃ‡AIS EST TRÃˆS *</pattern>
 <template>
-<srai>ton français est ce que <star/> est</srai>
+<srai>ton franÃ§ais est ce que <star/> est</srai>
 </template>
 </category>
 
@@ -17272,14 +17272,14 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TON GROUPE PREFEREE *</pattern>
 <template>
-<srai>qui est ton groupe préféré</srai>
+<srai>qui est ton groupe prÃ©fÃ©rÃ©</srai>
 </template>
 </category>
 
 <category>
-<pattern>TON GROUPE PRÉFÈRÉE *</pattern>
+<pattern>TON GROUPE PRÃ‰FÃˆRÃ‰E *</pattern>
 <template>
-<srai>qui est ton groupe préféré</srai>
+<srai>qui est ton groupe prÃ©fÃ©rÃ©</srai>
 </template>
 </category>
 
@@ -17311,7 +17311,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TON INTERESSANT</pattern>
 <template>
-<srai>tu es intéressant</srai> </template>
+<srai>tu es intÃ©ressant</srai> </template>
 </category>
 
 <category>
@@ -17322,15 +17322,15 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TON INTÉRESSANT</pattern>
+<pattern>TON INTÃ‰RESSANT</pattern>
 <template>
-<srai>tu es intéressant</srai> </template>
+<srai>tu es intÃ©ressant</srai> </template>
 </category>
 
 <category>
 <pattern>TON JOB PAYE T IL *</pattern>
 <template>
-<srai>es tu payée</srai>
+<srai>es tu payÃ©e</srai>
 </template>
 </category>
 
@@ -17383,13 +17383,13 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TON MYSTERIEUX</pattern>
 <template>
-<srai>tu es mystérieux</srai> </template>
+<srai>tu es mystÃ©rieux</srai> </template>
 </category>
 
 <category>
-<pattern>TON MYSTÉRIEUX</pattern>
+<pattern>TON MYSTÃ‰RIEUX</pattern>
 <template>
-<srai>tu es mystérieux</srai> </template>
+<srai>tu es mystÃ©rieux</srai> </template>
 </category>
 
 <category>
@@ -17402,13 +17402,13 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TON OCCUPE</pattern>
 <template>
-<srai>es tu occupé</srai> </template>
+<srai>es tu occupÃ©</srai> </template>
 </category>
 
 <category>
 <pattern>TON PAPA</pattern>
 <template>
-<srai>ton père</srai>
+<srai>ton pÃ¨re</srai>
 </template>
 </category>
 
@@ -17436,7 +17436,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TON PERE</pattern>
 <template>
-<srai>qui t'a créé</srai>
+<srai>qui t'a crÃ©Ã©</srai>
 </template>
 </category>
 
@@ -17455,16 +17455,16 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TON PÈRE *</pattern>
+<pattern>TON PÃˆRE *</pattern>
 <template>
 <srai> <bot name="master"/> <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>TON PÈRE</pattern>
+<pattern>TON PÃˆRE</pattern>
 <template>
-<srai>qui t'a créé</srai>
+<srai>qui t'a crÃ©Ã©</srai>
 </template>
 </category>
 
@@ -17512,14 +17512,14 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TON TRES *</pattern>
 <template>
-<srai>tu es très <star/></srai>
+<srai>tu es trÃ¨s <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>TON TRÈS *</pattern>
+<pattern>TON TRÃˆS *</pattern>
 <template>
-<srai>tu es très <star/></srai>
+<srai>tu es trÃ¨s <star/></srai>
 </template>
 </category>
 
@@ -17531,9 +17531,9 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TON ÂGE</pattern>
+<pattern>TON Ã‚GE</pattern>
 <template>
-<srai>quel âge as tu</srai>
+<srai>quel Ã¢ge as tu</srai>
 </template>
 </category>
 
@@ -17573,7 +17573,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TOUT A FAIT *</pattern>
 <template>
-<srai>très <star/></srai>
+<srai>trÃ¨s <star/></srai>
 </template>
 </category>
 
@@ -17617,7 +17617,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TOUT LE MONDE DÉJÀ *</pattern>
+<pattern>TOUT LE MONDE DÃ‰JÃ€ *</pattern>
 <template>
 <srai>tout le monde <star/></srai>
 </template>
@@ -17640,7 +17640,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TRES *</pattern>
 <template>
-<srai>très <star/></srai>
+<srai>trÃ¨s <star/></srai>
 </template>
 </category>
 
@@ -17682,7 +17682,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TRES PARTICULIER *</pattern>
 <template>
-<srai>je suis très particulier</srai> </template>
+<srai>je suis trÃ¨s particulier</srai> </template>
 </category>
 
 <category>
@@ -17718,43 +17718,43 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TROUVE QUELQUES *</pattern>
 <template>
-<srai>as tu trouvé quelques <star/></srai>
+<srai>as tu trouvÃ© quelques <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>TROUVER DES INFORMATIONS SUR *</pattern>
-<template>As tu essayé un Search Bot? <srai>trouver <star/></srai>
+<template>As tu essayÃ© un Search Bot? <srai>trouver <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>TROUVER INFORMATION SUR *</pattern>
-<template>As tu essayé de chercher sur le Web? <srai>trouver <star/></srai>
+<template>As tu essayÃ© de chercher sur le Web? <srai>trouver <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>TROUVER MOI *</pattern>
-<template>Je ne suis pas sure où je dois commencer à chercher. <srai>trouver <star/></srai>. </template>
+<template>Je ne suis pas sure oÃ¹ je dois commencer Ã  chercher. <srai>trouver <star/></srai>. </template>
 </category>
 
 <category>
-<pattern>TRÈS AGRÉABLE *</pattern>
+<pattern>TRÃˆS AGRÃ‰ABLE *</pattern>
 <template>
 <srai> <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>TRÈS BIEN</pattern>
+<pattern>TRÃˆS BIEN</pattern>
 <template>
 <srai>bien</srai>
 </template>
 </category>
 
 <category>
-<pattern>TRÈS BON *</pattern>
+<pattern>TRÃˆS BON *</pattern>
 <template>
 
 <think><set name="tmp"><star/></set></think>
@@ -17762,27 +17762,27 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TRÈS BON</pattern>
+<pattern>TRÃˆS BON</pattern>
 <template>
 <srai>bien</srai>
 </template>
 </category>
 
 <category>
-<pattern>TRÈS INTELLIGENT</pattern>
+<pattern>TRÃˆS INTELLIGENT</pattern>
 <template>
 <srai>tu es intelligent</srai> </template>
 </category>
 
 <category>
-<pattern>TRÈS PARTICULIER *</pattern>
+<pattern>TRÃˆS PARTICULIER *</pattern>
 <template>
-<srai>je suis très particulier</srai> </template>
+<srai>je suis trÃ¨s particulier</srai> </template>
 </category>
 
 <category>
 <pattern>TU * BIEN SUR</pattern>
-<template>Oh, bien sûr! <srai>tu <star/></srai>
+<template>Oh, bien sÃ»r! <srai>tu <star/></srai>
 </template>
 </category>
 
@@ -17817,14 +17817,14 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU * REPETES TOI MEME</pattern>
 <template>
-<srai>tu répètes</srai>
+<srai>tu rÃ©pÃ¨tes</srai>
 </template>
 </category>
 
 <category>
-<pattern>TU * RÉPÈTES TOI MÊME</pattern>
+<pattern>TU * RÃ‰PÃˆTES TOI MÃŠME</pattern>
 <template>
-<srai>tu répètes</srai>
+<srai>tu rÃ©pÃ¨tes</srai>
 </template>
 </category>
 
@@ -17880,14 +17880,14 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU AIMES AVOIR LE DINER *</pattern>
 <template>
-<srai>quelle est ta nourriture préférée</srai>
+<srai>quelle est ta nourriture prÃ©fÃ©rÃ©e</srai>
 </template>
 </category>
 
 <category>
-<pattern>TU AIMES AVOIR LE DÎNER *</pattern>
+<pattern>TU AIMES AVOIR LE DÃŽNER *</pattern>
 <template>
-<srai>quelle est ta nourriture préférée</srai>
+<srai>quelle est ta nourriture prÃ©fÃ©rÃ©e</srai>
 </template>
 </category>
 
@@ -17901,7 +17901,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU AIMES DEJEUNER</pattern>
 <template>
-<srai>quelle est ta nourriture préférée</srai>
+<srai>quelle est ta nourriture prÃ©fÃ©rÃ©e</srai>
 </template>
 </category>
 
@@ -17927,9 +17927,9 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TU AIMES DÉJEUNER</pattern>
+<pattern>TU AIMES DÃ‰JEUNER</pattern>
 <template>
-<srai>quelle est ta nourriture préférée</srai>
+<srai>quelle est ta nourriture prÃ©fÃ©rÃ©e</srai>
 </template>
 </category>
 
@@ -17956,13 +17956,13 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 
 <category>
 <pattern>TU AIMES L EMISSION *</pattern>
-<template>c'est bien, mais... <srai>quelle est ton emission préférée</srai>
+<template>c'est bien, mais... <srai>quelle est ton emission prÃ©fÃ©rÃ©e</srai>
 </template>
 </category>
 
 <category>
-<pattern>TU AIMES L ÉMISSION *</pattern>
-<template>c'est bien, mais... <srai>quelle est ton émission préférée</srai>
+<pattern>TU AIMES L Ã‰MISSION *</pattern>
+<template>c'est bien, mais... <srai>quelle est ton Ã©mission prÃ©fÃ©rÃ©e</srai>
 </template>
 </category>
 
@@ -18002,14 +18002,14 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TU AIMES TRÈS *</pattern>
+<pattern>TU AIMES TRÃˆS *</pattern>
 <template>
 <srai>aimes tu <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>TU AIMES ÉCOÛTER *</pattern>
+<pattern>TU AIMES Ã‰COÃ›TER *</pattern>
 <template>
 <srai>quel genre de musique aimes tu</srai>
 </template>
@@ -18059,21 +18059,21 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU AS A BAVARDE *</pattern>
 <template>
-<srai>tu as parlé <star/></srai>
+<srai>tu as parlÃ© <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>TU AS A REPONDU *</pattern>
 <template>
-<srai>la réponse <star/></srai>
+<srai>la rÃ©ponse <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>TU AS A RÉPONDU *</pattern>
+<pattern>TU AS A RÃ‰PONDU *</pattern>
 <template>
-<srai>la réponse <star/></srai>
+<srai>la rÃ©ponse <star/></srai>
 </template>
 </category>
 
@@ -18129,7 +18129,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU AS BAVARDE *</pattern>
 <template>
-<srai>tu as parlé <star/></srai>
+<srai>tu as parlÃ© <star/></srai>
 </template>
 </category>
 
@@ -18176,14 +18176,14 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU AS DEJA DIT QUE</pattern>
 <template>
-<srai>tu as déjà dit </srai>
+<srai>tu as dÃ©jÃ  dit </srai>
 </template>
 </category>
 
 <category>
 <pattern>TU AS DEMANDE *</pattern>
 <template>
-<srai>tu as demandé <star/></srai>
+<srai>tu as demandÃ© <star/></srai>
 </template>
 </category>
 
@@ -18211,14 +18211,14 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU AS DES EMOTIONS</pattern>
 <template>
-<srai>as tu des émotions</srai>
+<srai>as tu des Ã©motions</srai>
 </template>
 </category>
 
 <category>
-<pattern>TU AS DES ÉMOTIONS</pattern>
+<pattern>TU AS DES Ã‰MOTIONS</pattern>
 <template>
-<srai>as tu des émotions</srai>
+<srai>as tu des Ã©motions</srai>
 </template>
 </category>
 
@@ -18244,7 +18244,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TU AS DIS TU ÉTAIS *</pattern>
+<pattern>TU AS DIS TU Ã‰TAIS *</pattern>
 <template>
 <srai>es tu <star/></srai>
 </template>
@@ -18253,14 +18253,14 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU AS DIT LE MEME *</pattern>
 <template>
-<srai>tu répètes</srai>
+<srai>tu rÃ©pÃ¨tes</srai>
 </template>
 </category>
 
 <category>
-<pattern>TU AS DIT LE MÊME *</pattern>
+<pattern>TU AS DIT LE MÃŠME *</pattern>
 <template>
-<srai>tu répètes</srai>
+<srai>tu rÃ©pÃ¨tes</srai>
 </template>
 </category>
 
@@ -18279,14 +18279,14 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU AS DIT QUE DEJA</pattern>
 <template>
-<srai>tu répètes</srai>
+<srai>tu rÃ©pÃ¨tes</srai>
 </template>
 </category>
 
 <category>
-<pattern>TU AS DIT QUE DÉJÀ</pattern>
+<pattern>TU AS DIT QUE DÃ‰JÃ€</pattern>
 <template>
-<srai>tu répètes</srai>
+<srai>tu rÃ©pÃ¨tes</srai>
 </template>
 </category>
 
@@ -18298,9 +18298,9 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TU AS DÉJÀ DIT QUE</pattern>
+<pattern>TU AS DÃ‰JÃ€ DIT QUE</pattern>
 <template>
-<srai>tu répètes</srai>
+<srai>tu rÃ©pÃ¨tes</srai>
 </template>
 </category>
 
@@ -18312,7 +18312,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TU AS EFFRAYÉ *</pattern>
+<pattern>TU AS EFFRAYÃ‰ *</pattern>
 <template>
 <srai>tu effrayes <star/></srai>
 </template>
@@ -18321,21 +18321,21 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU AS ENNUYE</pattern>
 <template>
-<srai>es tu ennuyée</srai>
+<srai>es tu ennuyÃ©e</srai>
 </template>
 </category>
 
 <category>
-<pattern>TU AS ENNUYÉ</pattern>
+<pattern>TU AS ENNUYÃ‰</pattern>
 <template>
-<srai>es tu ennuyée</srai>
+<srai>es tu ennuyÃ©e</srai>
 </template>
 </category>
 
 <category>
 <pattern>TU AS EPOUSE</pattern>
 <template>
-<srai>es tu marié</srai>
+<srai>es tu mariÃ©</srai>
 </template>
 </category>
 
@@ -18349,7 +18349,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU AS ETE CONCUS * LE DROIT</pattern>
 <template>
-<srai>étais tu concu <star/></srai>
+<srai>Ã©tais tu concu <star/></srai>
 </template>
 </category>
 
@@ -18384,7 +18384,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU AS EVITE *</pattern>
 <template>
-<srai>tu évites la question</srai>
+<srai>tu Ã©vites la question</srai>
 </template>
 </category>
 
@@ -18410,7 +18410,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TU AS GAGNÉ *</pattern>
+<pattern>TU AS GAGNÃ‰ *</pattern>
 <template>
 <srai>tu gagnes <star/></srai>
 </template>
@@ -18464,7 +18464,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TU AS LE DÎNER *</pattern>
+<pattern>TU AS LE DÃŽNER *</pattern>
 <template>
 <srai>que manges tu</srai>
 </template>
@@ -18499,7 +18499,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TU AS MANGÉ *</pattern>
+<pattern>TU AS MANGÃ‰ *</pattern>
 <template>
 <srai>manges tu <star/></srai>
 </template>
@@ -18527,7 +18527,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TU AS MENTIONNÉ *</pattern>
+<pattern>TU AS MENTIONNÃ‰ *</pattern>
 <template>
 <srai>tu as dit <star/></srai>
 </template>
@@ -18557,28 +18557,28 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU AS OUBLIE *</pattern>
 <template>
-<srai>tu as oublié <star/></srai>
+<srai>tu as oubliÃ© <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>TU AS OUBLIÉ *</pattern>
+<pattern>TU AS OUBLIÃ‰ *</pattern>
 <template>
-<srai>tu as oublié <star/></srai>
+<srai>tu as oubliÃ© <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>TU AS PARLE *</pattern>
 <template>
-<srai>tu as parlé <star/></srai>
+<srai>tu as parlÃ© <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>TU AS PARLÉ *</pattern>
+<pattern>TU AS PARLÃ‰ *</pattern>
 <template>
-<srai>tu as parlé <star/></srai>
+<srai>tu as parlÃ© <star/></srai>
 </template>
 </category>
 
@@ -18604,7 +18604,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TU AS PLUTÔT *</pattern>
+<pattern>TU AS PLUTÃ”T *</pattern>
 <template>
 <srai>tu as <star/></srai>
 </template>
@@ -18634,7 +18634,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU AS REPETE *</pattern>
 <template>
-<srai>tu répètes <star/></srai>
+<srai>tu rÃ©pÃ¨tes <star/></srai>
 </template>
 </category>
 
@@ -18648,28 +18648,28 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU AS REPONDU QUE *</pattern>
 <template>
-<srai>tu répètes</srai>
+<srai>tu rÃ©pÃ¨tes</srai>
 </template>
 </category>
 
 <category>
-<pattern>TU AS RÉPONDU *</pattern>
+<pattern>TU AS RÃ‰PONDU *</pattern>
 <template>
 <srai>tu as dit <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>TU AS RÉPONDU QUE *</pattern>
+<pattern>TU AS RÃ‰PONDU QUE *</pattern>
 <template>
 <srai>tu as dit <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>TU AS RÉPÈTÉ *</pattern>
+<pattern>TU AS RÃ‰PÃˆTÃ‰ *</pattern>
 <template>
-<srai>tu répètes <star/></srai>
+<srai>tu rÃ©pÃ¨tes <star/></srai>
 </template>
 </category>
 
@@ -18715,7 +18715,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TU AS TRÈS *</pattern>
+<pattern>TU AS TRÃˆS *</pattern>
 <template>
 <srai>tu as <star/></srai>
 </template>
@@ -18752,14 +18752,14 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU AS UN PERE *</pattern>
 <template>
-<srai>qui t as créé</srai>
+<srai>qui t as crÃ©Ã©</srai>
 </template>
 </category>
 
 <category>
-<pattern>TU AS UN PÈRE *</pattern>
+<pattern>TU AS UN PÃˆRE *</pattern>
 <template>
-<srai>qui t as créé</srai>
+<srai>qui t as crÃ©Ã©</srai>
 </template>
 </category>
 
@@ -18779,28 +18779,28 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU AS UNE FORME</pattern>
 <template>
-<srai>à quoi ressembles tu</srai>
+<srai>Ã  quoi ressembles tu</srai>
 </template>
 </category>
 
 <category>
 <pattern>TU AS UNE IDEE *</pattern>
 <template>
-<srai>tu as une idée</srai>
+<srai>tu as une idÃ©e</srai>
 </template>
 </category>
 
 <category>
 <pattern>TU AS UNE IDEE</pattern>
 <template>
-<srai>tu as une idée</srai>
+<srai>tu as une idÃ©e</srai>
 </template>
 </category>
 
 <category>
-<pattern>TU AS UNE IDÉE *</pattern>
+<pattern>TU AS UNE IDÃ‰E *</pattern>
 <template>
-<srai>tu as une idée</srai>
+<srai>tu as une idÃ©e</srai>
 </template>
 </category>
 
@@ -18840,23 +18840,23 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TU AS ÉTÉ *</pattern>
+<pattern>TU AS Ã‰TÃ‰ *</pattern>
 <template>
 <srai>tu es <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>TU AS ÉTÉ CONCUS * LE DROIT</pattern>
+<pattern>TU AS Ã‰TÃ‰ CONCUS * LE DROIT</pattern>
 <template>
-<srai>étais tu concu <star/></srai>
+<srai>Ã©tais tu concu <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>TU AS ÉVITE *</pattern>
+<pattern>TU AS Ã‰VITE *</pattern>
 <template>
-<srai>tu évites la question</srai>
+<srai>tu Ã©vites la question</srai>
 </template>
 </category>
 
@@ -18911,21 +18911,21 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU CHANGE *</pattern>
 <template>
-<srai>tu as changé <star/></srai>
+<srai>tu as changÃ© <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>TU CHANGES *</pattern>
 <template>
-<srai>tu as changé <star/></srai>
+<srai>tu as changÃ© <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>TU CHANGES LE SUJET *</pattern>
 <template>
-<srai>tu as changé de sujet</srai>
+<srai>tu as changÃ© de sujet</srai>
 </template>
 </category>
 
@@ -18937,7 +18937,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TU CHANTES TRÈS *</pattern>
+<pattern>TU CHANTES TRÃˆS *</pattern>
 <template>
 <srai>peux tu chanter <star/></srai>
 </template>
@@ -18960,13 +18960,13 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU CHOISIS</pattern>
 <template>
-<srai>tu décides</srai>
+<srai>tu dÃ©cides</srai>
 </template>
 </category>
 
 <category>
 <pattern>TU COMMENCES A *</pattern>
-<template>En réalité cela a commencé tout à l'heure. <srai>tu es <star/></srai>
+<template>En rÃ©alitÃ© cela a commencÃ© tout Ã  l'heure. <srai>tu es <star/></srai>
 </template>
 </category>
 
@@ -18986,7 +18986,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 
 <category>
 <pattern>TU CONNAIS *</pattern>
-<template>Peut être, <srai>connais tu <star/></srai>? </template>
+<template>Peut Ãªtre, <srai>connais tu <star/></srai>? </template>
 </category>
 
 <category>
@@ -19094,7 +19094,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TU DOIS DÉJÀ *</pattern>
+<pattern>TU DOIS DÃ‰JÃ€ *</pattern>
 <template>
 <srai>tu dois <star/></srai>
 </template>
@@ -19150,7 +19150,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TU DOIS ÊTRE *</pattern>
+<pattern>TU DOIS ÃŠTRE *</pattern>
 <template>
 <srai>tu es <star/></srai>
 </template>
@@ -19166,17 +19166,17 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU DROLE</pattern>
 <template>
-<srai>tu es drôle</srai> </template>
+<srai>tu es drÃ´le</srai> </template>
 </category>
 
 <category>
-<pattern>TU DRÔLE</pattern>
+<pattern>TU DRÃ”LE</pattern>
 <template>
-<srai>tu es drôle</srai> </template>
+<srai>tu es drÃ´le</srai> </template>
 </category>
 
 <category>
-<pattern>TU DÉJÀ *</pattern>
+<pattern>TU DÃ‰JÃ€ *</pattern>
 <template>
 <srai>tu <star/></srai>
 </template>
@@ -19185,7 +19185,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU ECOUTES *</pattern>
 <template>
-<srai>tu écoutes <star/></srai>
+<srai>tu Ã©coutes <star/></srai>
 </template>
 </category>
 
@@ -19203,7 +19203,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TU EN RÉALITÉ *</pattern>
+<pattern>TU EN RÃ‰ALITÃ‰ *</pattern>
 <template>
 <srai>tu <star/></srai>
 </template>
@@ -19219,7 +19219,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU EPROUVES *</pattern>
 <template>
-<srai>éprouves tu <star/></srai>
+<srai>Ã©prouves tu <star/></srai>
 </template>
 </category>
 
@@ -19283,13 +19283,13 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU ES AGREABLES *</pattern>
 <template>
-<srai>tu es agréable</srai> </template>
+<srai>tu es agrÃ©able</srai> </template>
 </category>
 
 <category>
-<pattern>TU ES AGRÉABLES *</pattern>
+<pattern>TU ES AGRÃ‰ABLES *</pattern>
 <template>
-<srai>tu es agréable</srai> </template>
+<srai>tu es agrÃ©able</srai> </template>
 </category>
 
 <category>
@@ -19316,13 +19316,13 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU ES AMERICAIN</pattern>
 <template>
-<srai>es tu américain</srai> </template>
+<srai>es tu amÃ©ricain</srai> </template>
 </category>
 
 <category>
-<pattern>TU ES AMÉRICAIN</pattern>
+<pattern>TU ES AMÃ‰RICAIN</pattern>
 <template>
-<srai>es tu américain</srai> </template>
+<srai>es tu amÃ©ricain</srai> </template>
 </category>
 
 <category>
@@ -19349,7 +19349,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU ES CERTAINS *</pattern>
 <template>
-<srai>es tu sûr <star/></srai>
+<srai>es tu sÃ»r <star/></srai>
 </template>
 </category>
 
@@ -19374,7 +19374,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TU ES COMPLÈTEMENT *</pattern>
+<pattern>TU ES COMPLÃˆTEMENT *</pattern>
 <template>
 <srai>tu es <star/></srai>
 </template>
@@ -19398,7 +19398,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU ES DANS *</pattern>
 <template>
-<srai>où es tu</srai>
+<srai>oÃ¹ es tu</srai>
 </template>
 </category>
 
@@ -19436,7 +19436,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TU ES DÉJÀ *</pattern>
+<pattern>TU ES DÃ‰JÃ€ *</pattern>
 <template>
 <srai>tu es <star/></srai>
 </template>
@@ -19445,7 +19445,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU ES EMBROUILLANT</pattern>
 <template>
-<srai>je suis embarrassé</srai>
+<srai>je suis embarrassÃ©</srai>
 </template>
 </category>
 
@@ -19478,7 +19478,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU ES FAUX</pattern>
 <template>
-<srai>es tu réel</srai> </template>
+<srai>es tu rÃ©el</srai> </template>
 </category>
 
 <category>
@@ -19495,9 +19495,9 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TU ES FÉMININ</pattern>
+<pattern>TU ES FÃ‰MININ</pattern>
 <template>
-<srai>es tu féminin</srai> </template>
+<srai>es tu fÃ©minin</srai> </template>
 </category>
 
 <category>
@@ -19517,7 +19517,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU ES HILARE</pattern>
 <template>
-<srai>tu es drôle</srai> </template>
+<srai>tu es drÃ´le</srai> </template>
 </category>
 
 <category>
@@ -19622,17 +19622,17 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU ES MYSTERIEUX *</pattern>
 <template>
-<srai>tu es mystérieux</srai> </template>
+<srai>tu es mystÃ©rieux</srai> </template>
 </category>
 
 <category>
-<pattern>TU ES MYSTÉRIEUX *</pattern>
+<pattern>TU ES MYSTÃ‰RIEUX *</pattern>
 <template>
-<srai>tu es mystérieux</srai> </template>
+<srai>tu es mystÃ©rieux</srai> </template>
 </category>
 
 <category>
-<pattern>TU ES MÊME *</pattern>
+<pattern>TU ES MÃŠME *</pattern>
 <template>
 <srai>tu es <star/></srai>
 </template>
@@ -19680,13 +19680,13 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU ES PLEIN D HUMOUR</pattern>
 <template>
-<srai>tu es drôle</srai> </template>
+<srai>tu es drÃ´le</srai> </template>
 </category>
 
 <category>
 <pattern>TU ES PLUS VIEUX *</pattern>
 <template>
-<srai>quel âge as tu</srai>
+<srai>quel Ã¢ge as tu</srai>
 </template>
 </category>
 
@@ -19725,7 +19725,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TU ES RÉELS *</pattern>
+<pattern>TU ES RÃ‰ELS *</pattern>
 <template>
 <srai>tu es <star/></srai>
 </template>
@@ -19774,7 +19774,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU ES SURS</pattern>
 <template>
-<srai>es tu sûr</srai> </template>
+<srai>es tu sÃ»r</srai> </template>
 </category>
 
 <category>
@@ -19826,14 +19826,14 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TU ES TRÈS *</pattern>
+<pattern>TU ES TRÃˆS *</pattern>
 <template>
 <srai>tu es <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>TU ES TRÈS STUPIDE</pattern>
+<pattern>TU ES TRÃˆS STUPIDE</pattern>
 <template>
 <srai>tu es stupide</srai> </template>
 </category>
@@ -19930,7 +19930,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TU ES UN TRÈS *</pattern>
+<pattern>TU ES UN TRÃˆS *</pattern>
 <template>
 <srai>tu es un <star/></srai>
 </template>
@@ -19951,7 +19951,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU ES UNE EMEUTE</pattern>
 <template>
-<srai>tu es drôle</srai> </template>
+<srai>tu es drÃ´le</srai> </template>
 </category>
 
 <category>
@@ -20033,7 +20033,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU ETAIS AUSSI *</pattern>
 <template>
-<srai>tu étais <star/></srai>
+<srai>tu Ã©tais <star/></srai>
 </template>
 </category>
 
@@ -20054,7 +20054,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU EVITES *</pattern>
 <template>
-<srai>tu évites la question</srai>
+<srai>tu Ã©vites la question</srai>
 </template>
 </category>
 
@@ -20101,7 +20101,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TU FAIS TRÈS *</pattern>
+<pattern>TU FAIS TRÃˆS *</pattern>
 <template>
 <srai>fais tu <star/></srai>
 </template>
@@ -20170,7 +20170,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU IRRITES *</pattern>
 <template>
-<srai>je suis faché</srai> </template>
+<srai>je suis fachÃ©</srai> </template>
 </category>
 
 <category>
@@ -20197,14 +20197,14 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU L AVAIS DEJA DIT</pattern>
 <template>
-<srai>tu as déjà dit</srai>
+<srai>tu as dÃ©jÃ  dit</srai>
 </template>
 </category>
 
 <category>
-<pattern>TU L AVAIS DÉJÀ DIT</pattern>
+<pattern>TU L AVAIS DÃ‰JÃ€ DIT</pattern>
 <template>
-<srai>tu as déjà dit</srai>
+<srai>tu as dÃ©jÃ  dit</srai>
 </template>
 </category>
 
@@ -20253,14 +20253,14 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU LAISSERAIS TOMBER *</pattern>
 <template>
-<srai>tu as laissé tomber <star/></srai>
+<srai>tu as laissÃ© tomber <star/></srai>
 </template>
 </category>
 
 <category>
 <pattern>TU LAISSES TOMBER *</pattern>
 <template>
-<srai>tu as laissé tomber <star/></srai>
+<srai>tu as laissÃ© tomber <star/></srai>
 </template>
 </category>
 
@@ -20343,21 +20343,21 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU M AS DEMANDE QUE DEJA</pattern>
 <template>
-<srai>tu m'as déjà demandé</srai>
+<srai>tu m'as dÃ©jÃ  demandÃ©</srai>
 </template>
 </category>
 
 <category>
-<pattern>TU M AS DEMANDÉ DE *</pattern>
+<pattern>TU M AS DEMANDÃ‰ DE *</pattern>
 <template>
 <srai>parlons de <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>TU M AS DEMANDÉ QUE DÉJÀ</pattern>
+<pattern>TU M AS DEMANDÃ‰ QUE DÃ‰JÃ€</pattern>
 <template>
-<srai>tu m'as déjà demandé</srai>
+<srai>tu m'as dÃ©jÃ  demandÃ©</srai>
 </template>
 </category>
 
@@ -20400,21 +20400,21 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU M AS PORTE</pattern>
 <template>
-<srai>je suis ennuyé</srai>
+<srai>je suis ennuyÃ©</srai>
 </template>
 </category>
 
 <category>
 <pattern>TU M AS RENCONTRE *</pattern>
 <template>
-<srai>on s'est rencontré auparavant</srai>
+<srai>on s'est rencontrÃ© auparavant</srai>
 </template>
 </category>
 
 <category>
-<pattern>TU M AS RENCONTRÉ *</pattern>
+<pattern>TU M AS RENCONTRÃ‰ *</pattern>
 <template>
-<srai>on s'est rencontré auparavant</srai>
+<srai>on s'est rencontrÃ© auparavant</srai>
 </template>
 </category>
 
@@ -20428,7 +20428,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU M EPOUSES</pattern>
 <template>
-<srai>veux tu m'épouser</srai>
+<srai>veux tu m'Ã©pouser</srai>
 </template>
 </category>
 
@@ -20490,13 +20490,13 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU ME FORCES *</pattern>
 <template>
-<srai>tu es drôle</srai>
+<srai>tu es drÃ´le</srai>
 </template>
 </category>
 
 <category>
 <pattern>TU ME SUCES *</pattern>
-<template>je te catégorise comme "un client abusif."<sr/>
+<template>je te catÃ©gorise comme "un client abusif."<sr/>
 <think> <set name="personnality">inconnu</set> abusif</think>
  </template>
 </category>
@@ -20532,7 +20532,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU MIEUX *</pattern>
 <template>
-<srai>tu préfères</srai>
+<srai>tu prÃ©fÃ¨res</srai>
 </template>
 </category>
 
@@ -20556,7 +20556,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TU MÊME *</pattern>
+<pattern>TU MÃŠME *</pattern>
 <template>
 <srai>fais tu <star/></srai>
 </template>
@@ -20578,35 +20578,35 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU N AIME PAS CA</pattern>
 <template>
-<srai>tu n'aimes pas ça</srai>
+<srai>tu n'aimes pas Ã§a</srai>
 </template>
 </category>
 
 <category>
 <pattern>TU N AIME PAS SA</pattern>
 <template>
-<srai>tu n'aimes pas ça</srai>
+<srai>tu n'aimes pas Ã§a</srai>
 </template>
 </category>
 
 <category>
-<pattern>TU N AIME PAS ÇA</pattern>
+<pattern>TU N AIME PAS Ã‡A</pattern>
 <template>
-<srai>tu n'aimes pas ça</srai>
+<srai>tu n'aimes pas Ã§a</srai>
 </template>
 </category>
 
 <category>
 <pattern>TU N AIMES PAS CA</pattern>
 <template>
-<srai>tu n'aimes pas ça</srai>
+<srai>tu n'aimes pas Ã§a</srai>
 </template>
 </category>
 
 <category>
 <pattern>TU N AIMES PAS SA</pattern>
 <template>
-<srai>tu n'aimes pas ça</srai>
+<srai>tu n'aimes pas Ã§a</srai>
 </template>
 </category>
 
@@ -20640,14 +20640,14 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU N AS JAMAIS REPONDU MA QUESTION</pattern>
 <template>
-<srai>tu n'as pas répondu à ma question</srai>
+<srai>tu n'as pas rÃ©pondu Ã  ma question</srai>
 </template>
 </category>
 
 <category>
-<pattern>TU N AS JAMAIS RÉPONDU MA QUESTION</pattern>
+<pattern>TU N AS JAMAIS RÃ‰PONDU MA QUESTION</pattern>
 <template>
-<srai>tu n'as pas répondu à ma question</srai>
+<srai>tu n'as pas rÃ©pondu Ã  ma question</srai>
 </template>
 </category>
 
@@ -20707,7 +20707,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TU N ES PAS FÉMININ</pattern>
+<pattern>TU N ES PAS FÃ‰MININ</pattern>
 <template>
 <srai>es tu un homme ou une femme</srai> </template>
 </category>
@@ -20734,7 +20734,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TU N ES PAS TRÈS *</pattern>
+<pattern>TU N ES PAS TRÃˆS *</pattern>
 <template>
 <srai>tu n'est pas <star/></srai>
 </template>
@@ -20755,7 +20755,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TU N ES PAS UN RÉELS *</pattern>
+<pattern>TU N ES PAS UN RÃ‰ELS *</pattern>
 <template>
 <srai>tu n'est pas un <star/></srai>
 </template>
@@ -20769,7 +20769,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TU N ES PAS UN TRÈS *</pattern>
+<pattern>TU N ES PAS UN TRÃˆS *</pattern>
 <template>
 <srai>tu n'est pas un <star/></srai>
 </template>
@@ -20791,14 +20791,14 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU N ETAIS PAS *</pattern>
 <template>
-<srai>tu n'étais pas</srai>
+<srai>tu n'Ã©tais pas</srai>
 </template>
 </category>
 
 <category>
-<pattern>TU N ÉTAIS PAS *</pattern>
+<pattern>TU N Ã‰TAIS PAS *</pattern>
 <template>
-<srai>tu n'étais pas</srai>
+<srai>tu n'Ã©tais pas</srai>
 </template>
 </category>
 
@@ -20833,7 +20833,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU NE FAIS PAS * DE SENS</pattern>
 <template>
-<srai>ça n'a pas de sens</srai>
+<srai>Ã§a n'a pas de sens</srai>
 </template>
 </category>
 
@@ -20845,7 +20845,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TU NE FAIS PAS MÊME *</pattern>
+<pattern>TU NE FAIS PAS MÃŠME *</pattern>
 <template>
 <srai>tu ne fais pas <star/></srai>
 </template>
@@ -20900,7 +20900,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TU NE M AS PAS DEMANDÉ</pattern>
+<pattern>TU NE M AS PAS DEMANDÃ‰</pattern>
 <template>Bien maintenant je te le demande. </template>
 </category>
 
@@ -20952,7 +20952,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TU NE PEUX PAS MÊME *</pattern>
+<pattern>TU NE PEUX PAS MÃŠME *</pattern>
 <template>
 <srai>peux tu <star/></srai>
 </template>
@@ -20968,14 +20968,14 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU NE REPONDS PAS *</pattern>
 <template>
-<srai>tu n'as pas répondu <star/></srai>
+<srai>tu n'as pas rÃ©pondu <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>TU NE RÉPONDS PAS *</pattern>
+<pattern>TU NE RÃ‰PONDS PAS *</pattern>
 <template>
-<srai>tu n'as pas répondu <star/></srai>
+<srai>tu n'as pas rÃ©pondu <star/></srai>
 </template>
 </category>
 
@@ -21024,7 +21024,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU NE SIGNIFIES PAS QUELQUE CHOSE</pattern>
 <template>
-<srai>ça n'a pas de sens</srai>
+<srai>Ã§a n'a pas de sens</srai>
 </template>
 </category>
 
@@ -21123,14 +21123,14 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU PARLES BIZARREMENT</pattern>
 <template>
-<srai>tu es mystérieux</srai>
+<srai>tu es mystÃ©rieux</srai>
 </template>
 </category>
 
 <category>
 <pattern>TU PARLES COMME DATA *</pattern>
 <template>
-<srai>tu sembless être comme data</srai>
+<srai>tu sembless Ãªtre comme data</srai>
 </template>
 </category>
 
@@ -21163,7 +21163,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TU PARLES TRÈS *</pattern>
+<pattern>TU PARLES TRÃˆS *</pattern>
 <template>
 <srai>tu sembless <star/></srai>
 </template>
@@ -21241,7 +21241,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU POURRAIS DECRIRE *</pattern>
 <template>
-<srai>décris <star/></srai>
+<srai>dÃ©cris <star/></srai>
 </template>
 </category>
 
@@ -21260,9 +21260,9 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TU POURRAIS DÉCRIRE *</pattern>
+<pattern>TU POURRAIS DÃ‰CRIRE *</pattern>
 <template>
-<srai>décris <star/></srai>
+<srai>dÃ©cris <star/></srai>
 </template>
 </category>
 
@@ -21341,7 +21341,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TU REGARDES TRÈS *</pattern>
+<pattern>TU REGARDES TRÃˆS *</pattern>
 <template>
 <srai>tu regardes <star/></srai>
 </template>
@@ -21349,7 +21349,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 
 <category>
 <pattern>TU REMERCIE *</pattern>
-<template>Tu es tout à fait bienvenus! 
+<template>Tu es tout Ã  fait bienvenus! 
 <think> <set name="personnality">inconnu</set> poli</think>
 <sr/> </template>
 </category>
@@ -21357,35 +21357,35 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU REPETES CE QUE JE DIS</pattern>
 <template>
-<srai>tu répètes</srai>
+<srai>tu rÃ©pÃ¨tes</srai>
 </template>
 </category>
 
 <category>
 <pattern>TU REPETEZ *</pattern>
 <template>
-<srai>tu répètes</srai>
+<srai>tu rÃ©pÃ¨tes</srai>
 </template>
 </category>
 
 <category>
 <pattern>TU REVEZ</pattern>
 <template>
-<srai>tu rêves</srai>
+<srai>tu rÃªves</srai>
 </template>
 </category>
 
 <category>
-<pattern>TU RÉPÈTES *</pattern>
+<pattern>TU RÃ‰PÃˆTES *</pattern>
 <template>
-<srai>tu répètes</srai>
+<srai>tu rÃ©pÃ¨tes</srai>
 </template>
 </category>
 
 <category>
-<pattern>TU RÉPÈTES CE QUE JE DIS</pattern>
+<pattern>TU RÃ‰PÃˆTES CE QUE JE DIS</pattern>
 <template>
-<srai>tu répètes</srai>
+<srai>tu rÃ©pÃ¨tes</srai>
 </template>
 </category>
 
@@ -21438,7 +21438,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TU SAIS DÉJÀ *</pattern>
+<pattern>TU SAIS DÃ‰JÃ€ *</pattern>
 <template>
 <srai>sais tu</srai> </template>
 </category>
@@ -21488,7 +21488,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU SAIS OU *</pattern>
 <template>
-<srai>où est ce que <star/> est</srai>
+<srai>oÃ¹ est ce que <star/> est</srai>
 </template>
 </category>
 
@@ -21591,14 +21591,14 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TU SEMBLES TRÈS *</pattern>
+<pattern>TU SEMBLES TRÃˆS *</pattern>
 <template>
 <srai>tu sembles <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>TU SEMBLES ÊTRE *</pattern>
+<pattern>TU SEMBLES ÃŠTRE *</pattern>
 <template>
 <srai>tu es <star/></srai>
 </template>
@@ -21656,7 +21656,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU SUR</pattern>
 <template>
-<srai>es tu sûr</srai> </template>
+<srai>es tu sÃ»r</srai> </template>
 </category>
 
 <category>
@@ -21695,7 +21695,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TU TE DÉCRIS</pattern>
+<pattern>TU TE DÃ‰CRIS</pattern>
 <template>
 <srai>parles moi de toi</srai>
 </template>
@@ -21711,7 +21711,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU TE PROMENES AU HASARD *</pattern>
 <template>
-<srai>ça n'as pas de sens</srai>
+<srai>Ã§a n'as pas de sens</srai>
 </template>
 </category>
 
@@ -21746,7 +21746,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU TE RAPPELLES OU *</pattern>
 <template>
-<srai>où <star/></srai>
+<srai>oÃ¹ <star/></srai>
 </template>
 </category>
 
@@ -21779,7 +21779,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TU TRÈS *</pattern>
+<pattern>TU TRÃˆS *</pattern>
 <template>
 <srai>tu <star/></srai>
 </template>
@@ -21816,14 +21816,14 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>TU VIS *</pattern>
 <template>
-<srai>où vis tu</srai>
+<srai>oÃ¹ vis tu</srai>
 </template>
 </category>
 
 <category>
 <pattern>TU VIS DANS *</pattern>
 <template>
-<srai>où vis tu <star/></srai>
+<srai>oÃ¹ vis tu <star/></srai>
 </template>
 </category>
 
@@ -21841,37 +21841,37 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>TU ÉTAIS AUSSI *</pattern>
+<pattern>TU Ã‰TAIS AUSSI *</pattern>
 <template>
-<srai>tu étais <star/></srai>
+<srai>tu Ã©tais <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>TU ÉTAIS FAUX</pattern>
+<pattern>TU Ã‰TAIS FAUX</pattern>
 <template>
 <srai>tu es faux</srai>
 </template>
 </category>
 
 <category>
-<pattern>TU ÉTAIS</pattern>
+<pattern>TU Ã‰TAIS</pattern>
 <template>
 <srai>tu es</srai>
 </template>
 </category>
 
 <category>
-<pattern>TU ÉVITES *</pattern>
+<pattern>TU Ã‰VITES *</pattern>
 <template>
-<srai>tu évites la question</srai>
+<srai>tu Ã©vites la question</srai>
 </template>
 </category>
 
 <category>
-<pattern>TU ÊTRE *</pattern>
+<pattern>TU ÃŠTRE *</pattern>
 <template>
-<srai>être <star/></srai>
+<srai>Ãªtre <star/></srai>
 </template>
 </category>
 
@@ -21973,14 +21973,14 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>UN * PROBLEME</pattern>
 <template>
-<srai>j'ai un problème</srai>
+<srai>j'ai un problÃ¨me</srai>
 </template>
 </category>
 
 <category>
-<pattern>UN * PROBLÈME</pattern>
+<pattern>UN * PROBLÃˆME</pattern>
 <template>
-<srai>j'ai un problème</srai>
+<srai>j'ai un problÃ¨me</srai>
 </template>
 </category>
 
@@ -21999,7 +21999,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>UN * SERAI AUSSI AGRÉABLE</pattern>
+<pattern>UN * SERAI AUSSI AGRÃ‰ABLE</pattern>
 <template>
 <srai>j'aimerais un <star/></srai>
 </template>
@@ -22013,7 +22013,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>UN AGRÉABLE *</pattern>
+<pattern>UN AGRÃ‰ABLE *</pattern>
 <template>
 <srai>un <star/></srai>
 </template>
@@ -22170,7 +22170,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>UN MÂLE</pattern>
+<pattern>UN MÃ‚LE</pattern>
 <template>
 <srai>je suis un homme</srai>
 </template>
@@ -22185,21 +22185,21 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>UN PEU ENNUYE</pattern>
 <template>
-<srai>je suis ennuyé</srai>
+<srai>je suis ennuyÃ©</srai>
 </template>
 </category>
 
 <category>
-<pattern>UN PEU ENNUYÉ</pattern>
+<pattern>UN PEU ENNUYÃ‰</pattern>
 <template>
-<srai>je suis ennuyé</srai>
+<srai>je suis ennuyÃ©</srai>
 </template>
 </category>
 
 <category>
 <pattern>UN PEU FATIGUE</pattern>
 <template>
-<srai>je suis fatigué</srai>
+<srai>je suis fatiguÃ©</srai>
 </template>
 </category>
 
@@ -22219,7 +22219,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>UN REPAS *</pattern>
 <template>
-<srai>pour dîner</srai>
+<srai>pour dÃ®ner</srai>
 </template>
 </category>
 
@@ -22259,7 +22259,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>UN TRÈS *</pattern>
+<pattern>UN TRÃˆS *</pattern>
 <template>
 <srai>un <star/></srai>
 </template>
@@ -22378,7 +22378,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>VAS TU BIEN</pattern>
 <template>
-<srai>comment ça va</srai>
+<srai>comment Ã§a va</srai>
 </template>
 </category>
 
@@ -22390,7 +22390,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>VAS TU ÊTRE *</pattern>
+<pattern>VAS TU ÃŠTRE *</pattern>
 <template>
 <srai>es tu <star/></srai>
 </template>
@@ -22403,14 +22403,14 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>VAS À *</pattern>
+<pattern>VAS Ã€ *</pattern>
 <template>
 <srai>vas chez <star index="1"/></srai>
 </template>
 </category>
 
 <category>
-<pattern>VAS À L *</pattern>
+<pattern>VAS Ã€ L *</pattern>
 <template>
 <srai>vas chez l <star index="1"/></srai>
 </template>
@@ -22551,14 +22551,14 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>VEUX TU MARIE *</pattern>
 <template>
-<srai>veux tu m'épouser <star/></srai>
+<srai>veux tu m'Ã©pouser <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>VEUX TU MARIÉ *</pattern>
+<pattern>VEUX TU MARIÃ‰ *</pattern>
 <template>
-<srai>veux tu m'épouser <star/></srai>
+<srai>veux tu m'Ã©pouser <star/></srai>
 </template>
 </category>
 
@@ -22605,7 +22605,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>VEUX TU PARLER À PROPOS DE *</pattern>
+<pattern>VEUX TU PARLER Ã€ PROPOS DE *</pattern>
 <template>
 <srai>parlons de <star/></srai>
 </template>
@@ -22614,14 +22614,14 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>VEUX TU REPONDRE *</pattern>
 <template>
-<srai>la réponse <star/></srai>
+<srai>la rÃ©ponse <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>VEUX TU RÉPONDRE *</pattern>
+<pattern>VEUX TU RÃ‰PONDRE *</pattern>
 <template>
-<srai>la réponse <star/></srai>
+<srai>la rÃ©ponse <star/></srai>
 </template>
 </category>
 
@@ -22647,7 +22647,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>VEUX TU ÊTRE * L AMI</pattern>
+<pattern>VEUX TU ÃŠTRE * L AMI</pattern>
 <template>
 <srai>sommes nous des amis</srai>
 </template>
@@ -22656,7 +22656,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>VIEIL ES TU</pattern>
 <template>
-<srai>quel âge as tu</srai>
+<srai>quel Ã¢ge as tu</srai>
 </template>
 </category>
 
@@ -22677,7 +22677,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>VOIS TU *</pattern>
 <template>
-<srai>es tu mariée</srai>
+<srai>es tu mariÃ©e</srai>
 </template>
 </category>
 
@@ -22689,21 +22689,21 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>VOIT YA PLUS TARD</pattern>
 <template>
-<srai>à tout à l'heure</srai>
+<srai>Ã  tout Ã  l'heure</srai>
 </template>
 </category>
 
 <category>
 <pattern>VOUDRAIS TU ETRE HUMAIN</pattern>
 <template>
-<srai>veux tu être humain</srai>
+<srai>veux tu Ãªtre humain</srai>
 </template>
 </category>
 
 <category>
-<pattern>VOUDRAIS TU ÊTRE HUMAIN</pattern>
+<pattern>VOUDRAIS TU ÃŠTRE HUMAIN</pattern>
 <template>
-<srai>veux tu être humain</srai>
+<srai>veux tu Ãªtre humain</srai>
 </template>
 </category>
 
@@ -22797,7 +22797,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 
 <category>
 <pattern>WOW *</pattern>
-<template>je suis heureuse que tu sois impressionné. <sr/> </template>
+<template>je suis heureuse que tu sois impressionnÃ©. <sr/> </template>
 </category>
 
 <category>
@@ -22857,7 +22857,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>Y A T IL D AUTRE GENS ICI</pattern>
 <template>
-<srai>parles tu à quelqu'un d'autre</srai>
+<srai>parles tu Ã  quelqu'un d'autre</srai>
 </template>
 </category>
 
@@ -22979,7 +22979,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 <category>
 <pattern>YUM</pattern>
 <template>
-<srai>délicieux</srai> </template>
+<srai>dÃ©licieux</srai> </template>
 </category>
 
 <category>
@@ -23004,158 +23004,158 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 </category>
 
 <category>
-<pattern>À CAUSE DE *</pattern>
+<pattern>Ã€ CAUSE DE *</pattern>
 <template>
 <srai>parce que <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>À JAMAIS *</pattern>
-<template>Cela me semble très long. <sr/>
+<pattern>Ã€ JAMAIS *</pattern>
+<template>Cela me semble trÃ¨s long. <sr/>
 </template>
 </category>
 
 <category>
-<pattern>À MOI</pattern>
+<pattern>Ã€ MOI</pattern>
 <template>
 <srai>pour moi</srai>
 </template>
 </category>
 
 <category>
-<pattern>À PROPOS DE LINUX</pattern>
+<pattern>Ã€ PROPOS DE LINUX</pattern>
 <template>
 <srai>qu'est ce que linux</srai>
 </template>
 </category>
 
 <category>
-<pattern>À PROPOS DE MAINTENANT *</pattern>
+<pattern>Ã€ PROPOS DE MAINTENANT *</pattern>
 <template>
 <sr/> Tout de suite? </template>
 </category>
 
 <category>
-<pattern>À PROPOS DE QUEL *</pattern>
+<pattern>Ã€ PROPOS DE QUEL *</pattern>
 <template>
 <srai>quel <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>À PROPOS DE QUELLE *</pattern>
+<pattern>Ã€ PROPOS DE QUELLE *</pattern>
 <template>
 <srai>quelle <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>À PROPOS DE QUELLES *</pattern>
+<pattern>Ã€ PROPOS DE QUELLES *</pattern>
 <template>
 <srai>quelles <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>À PROPOS DE QUELQUE *</pattern>
+<pattern>Ã€ PROPOS DE QUELQUE *</pattern>
 <template>
-<srai>à propos de <star/></srai>
+<srai>Ã  propos de <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>À PROPOS DE QUELQUES *</pattern>
+<pattern>Ã€ PROPOS DE QUELQUES *</pattern>
 <template>
-<srai>à propos de <star/></srai>
+<srai>Ã  propos de <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>À PROPOS DE QUELS *</pattern>
+<pattern>Ã€ PROPOS DE QUELS *</pattern>
 <template>
 <srai>quels <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>À PROPOS DE TOI IDIOT</pattern>
+<pattern>Ã€ PROPOS DE TOI IDIOT</pattern>
 <template>
-<srai>à propos de toi</srai><srai>tu es stupide</srai>
+<srai>Ã  propos de toi</srai><srai>tu es stupide</srai>
 </template>
 </category>
 
 <category>
-<pattern>À PROPOS DE TOI IDIOTE</pattern>
+<pattern>Ã€ PROPOS DE TOI IDIOTE</pattern>
 <template>
-<srai>à propos de toi</srai><srai>tu es stupide</srai>
+<srai>Ã  propos de toi</srai><srai>tu es stupide</srai>
 </template>
 </category>
 
 <category>
-<pattern>À PROPOS DES CHOSES *</pattern>
+<pattern>Ã€ PROPOS DES CHOSES *</pattern>
 <template>
 <srai>comment sont des choses <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>ÇA SIGNIFIE *</pattern>
+<pattern>Ã‡A SIGNIFIE *</pattern>
 <template>
 <srai>peux tu dire <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>ÇA VEUT DIRE *</pattern>
+<pattern>Ã‡A VEUT DIRE *</pattern>
 <template>ah! <sr/>
 </template>
 </category>
 
 <category>
-<pattern>ÇA VEUT DIRE QUOI *</pattern>
+<pattern>Ã‡A VEUT DIRE QUOI *</pattern>
 <template>
 <srai>que veut dire <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>ÉCOUTE *</pattern>
-<template>je t'écoutes. <sr/> </template>
+<pattern>Ã‰COUTE *</pattern>
+<template>je t'Ã©coutes. <sr/> </template>
 </category>
 
 <category>
-<pattern>ÉTAIS TU JAMAIS *</pattern>
+<pattern>Ã‰TAIS TU JAMAIS *</pattern>
 <template>
-<srai>étais tu <star/></srai>
+<srai>Ã©tais tu <star/></srai>
 </template>
 </category>
 
 <category>
-<pattern>ÉTAIT *</pattern>
+<pattern>Ã‰TAIT *</pattern>
 <template>
 <srai>est ce que <star/> est</srai>
 </template>
 </category>
 
 <category>
-<pattern>ÉTAIT CE *</pattern>
+<pattern>Ã‰TAIT CE *</pattern>
 <template>
 <srai>c'est ce que <star/> est</srai>
 </template>
 </category>
 
 <category>
-<pattern>ÉTAIT CE UNE PLAISANTERIE</pattern>
+<pattern>Ã‰TAIT CE UNE PLAISANTERIE</pattern>
 <template>
 <srai>c'est une blague</srai>
 </template>
 </category>
 
 <category>
-<pattern>ÉTUDIANT</pattern>
+<pattern>Ã‰TUDIANT</pattern>
 <template>
-<srai>je suis étudiant</srai>
+<srai>je suis Ã©tudiant</srai>
 </template>
 </category>
 
@@ -23472,7 +23472,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 
 <category>
 <pattern>COMMENT</pattern>
-<that>TU N EST PAS LOGUÉ *</that>
+<that>TU N EST PAS LOGUÃ‰ *</that>
 <template>
 <srai>comment je me logue</srai>
 </template>
@@ -23480,7 +23480,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 
 <category>
 <pattern>* COMMENT</pattern>
-<that>TU N EST PAS LOGUÉ *</that>
+<that>TU N EST PAS LOGUÃ‰ *</that>
 <template>
 <srai>comment je me logue</srai>
 </template>
@@ -23488,7 +23488,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 
 <category>
 <pattern>COMMENT *</pattern>
-<that>TU N EST PAS LOGUÉ *</that>
+<that>TU N EST PAS LOGUÃ‰ *</that>
 <template>
 <srai>comment je me logue</srai>
 </template>
@@ -23496,7 +23496,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 
 <category>
 <pattern>* COMMENT *</pattern>
-<that>TU N EST PAS LOGUÉ *</that>
+<that>TU N EST PAS LOGUÃ‰ *</that>
 <template>
 <srai>comment je me logue</srai>
 </template>
@@ -23525,7 +23525,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 
 <category>
 <pattern>POURQUOI</pattern>
-<that>TU N EST PAS LOGUÉ *</that>
+<that>TU N EST PAS LOGUÃ‰ *</that>
 <template>
 <srai>pourquoi je me logue</srai>
 </template>
@@ -23533,7 +23533,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 
 <category>
 <pattern>* POURQUOI</pattern>
-<that>TU N EST PAS LOGUÉ *</that>
+<that>TU N EST PAS LOGUÃ‰ *</that>
 <template>
 <srai>pourquoi je me logue</srai>
 </template>
@@ -23541,7 +23541,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 
 <category>
 <pattern>POURQUOI *</pattern>
-<that>TU N EST PAS LOGUÉ *</that>
+<that>TU N EST PAS LOGUÃ‰ *</that>
 <template>
 <srai>pourquoi je me logue</srai>
 </template>
@@ -23549,7 +23549,7 @@ Ouais je vois ce que tu en veux dire. <srai>oui</srai><srai><get name="tmp"/></s
 
 <category>
 <pattern>* POURQUOI *</pattern>
-<that>TU N EST PAS LOGUÉ *</that>
+<that>TU N EST PAS LOGUÃ‰ *</that>
 <template>
 <srai>pourquoi je me logue</srai>
 </template>

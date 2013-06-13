@@ -12,9 +12,9 @@ public interface IJarvisCoreSystem {
 
 	public void initialize(String aiml) throws AimlParsingError, IOException;
 
-	public void ask(String string) throws AimlParsingError;
+	public List<IAimlHistory> ask(String string) throws AimlParsingError;
 
 	public List<IAimlHistory> chat(String sentence) throws AimlParsingError;
 
-	public void speak(String value);
+	public void speak(String value) throws IOException;
 }

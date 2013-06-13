@@ -66,7 +66,7 @@ public class AimlKnockTest {
 		assertEquals("Who is there?", answer.get(0).getAnswer());
 		answer = engine.ask("Orange.");
 		assertEquals("Orange who?", answer.get(0).getAnswer());
-		answer = engine.ask("Orange you glad I didn’t say banana.");
+		answer = engine.ask("Orange you glad I didn't say banana.");
 		assertEquals("Ha ha very funny, Nancy.", answer.get(0).getAnswer());
 	}
 
@@ -92,7 +92,7 @@ public class AimlKnockTest {
 		assertEquals("Who is there?", answer.get(0).getAnswer());
 		answer = engine.ask("Orange.");
 		assertEquals("Orange who?", answer.get(0).getAnswer());
-		answer = engine.ask("Orange you glad I didn’t say banana.");
+		answer = engine.ask("Orange you glad I didn't say banana.");
 
 		answer = engine.ask("What i said at first ?");
 		assertEquals("Your previous input was Knock knock.", answer.get(0)
@@ -127,7 +127,7 @@ public class AimlKnockTest {
 		assertEquals("Who is there?", answer.get(0).getAnswer());
 		answer = engine.ask("Orange.");
 		assertEquals("Orange who?", answer.get(0).getAnswer());
-		answer = engine.ask("Orange you glad I didn’t say banana.");
+		answer = engine.ask("Orange you glad I didn't say banana.");
 
 		answer = engine.ask("What you said first ?");
 		assertEquals("That was Who is there?.", answer.get(0).getAnswer());

@@ -24,29 +24,19 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>org.mobicents.external.freetts</groupId>
-			<artifactId>cmulex</artifactId>
-			<version>1.0</version>
+			<groupId>org.yroffin.com.bob</groupId>
+			<artifactId>jarvis-gtranslate</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>org.mobicents.external.freetts</groupId>
-			<artifactId>cmu_us_kal</artifactId>
-			<version>1.0</version>
+			<groupId>org.yroffin.com.bob</groupId>
+			<artifactId>jarvis-libs-gtranslate</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>org.mobicents.external.freetts</groupId>
-			<artifactId>cmu_time_awb</artifactId>
-			<version>1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.mobicents.external.freetts</groupId>
-			<artifactId>cmudict04</artifactId>
-			<version>1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.mobicents.external.freetts</groupId>
-			<artifactId>cmutimelex</artifactId>
-			<version>1.0</version>
+			<groupId>org.yroffin.com.bob</groupId>
+			<artifactId>jarvis-libs-jl</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 

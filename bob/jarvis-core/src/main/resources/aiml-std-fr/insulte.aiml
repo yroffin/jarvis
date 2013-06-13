@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <aiml version="1.0">
 
 
 <!-- A.L.I.C.E. is a Free software (c) 2001 ALICE AI Foundation -->
 <!-- The ProgramD is open source code released under the terms of the GNU General Public License as published by the Free Software Foundation. -->
-<!-- As This Module   : insulte.aiml   -   version :   0.3   -   MàJ : 01/01/2003  -->
-<!-- auteur : Jean Louis Campion (jlc@Multivers.net) - langue : française -->
+<!-- As This Module   : insulte.aiml   -   version :   0.3   -   MÃ J : 01/01/2003  -->
+<!-- auteur : Jean Louis Campion (jlc@Multivers.net) - langue : franÃ§aise -->
 <!-- Complies with AIML 1.0 Tag Set Specification as adopted by the ALICE A.I. Foundation. -->
 
 
@@ -34,14 +34,14 @@
 <srai>appreproche</srai>
 <think><set name="insulte">insulte moyenne</set></think>
 <random>
-<li>toi même ! </li>
+<li>toi mÃªme ! </li>
 <li>c'est c'sui qui l'a dit qui y est ! </li>
 <li>oh! </li>
 <li>mon pauvre! </li>
-<li>ce n'est pas très civilisé ce genre de langage</li>
+<li>ce n'est pas trÃ¨s civilisÃ© ce genre de langage</li>
 <li>ce genre de langue ne te menera nulle part. </li>
 <li>Mais tu n'a pas besoin d'utiliser ce genre de langage. </li>
-<li>Tu pourrais être un peu plus poli. </li>
+<li>Tu pourrais Ãªtre un peu plus poli. </li>
 </random>
 </template>
 </category>
@@ -52,13 +52,13 @@
 <srai>appchoquee</srai>
 <think><set name="insulte">grosse insulte</set></think>
 <random>
-<li>je le dirai à mon botmaster</li>
+<li>je le dirai Ã  mon botmaster</li>
 <li>gros naze</li>
-<li>vas y, défoule toi! </li>
+<li>vas y, dÃ©foule toi! </li>
 <li>amas organique</li>
-<li>Je suis désolé mais je ne suis pas ton type de chatterbot. </li>
+<li>Je suis dÃ©solÃ© mais je ne suis pas ton type de chatterbot. </li>
 <li>p'tite bite</li>
-<li>sac à merde</li>
+<li>sac Ã  merde</li>
 </random>
 </template>
 </category>
@@ -82,21 +82,21 @@
 <think><set name="insulte">ok</set></think>
 <think><set name="orthographe">ok</set></think>
 <random>
-<li>ça va, mais ce n'est pas parce que je n'ai pas d'émotion qu'il faut en profiter</li>
-<li>accepté. </li>
+<li>Ã§a va, mais ce n'est pas parce que je n'ai pas d'Ã©motion qu'il faut en profiter</li>
+<li>acceptÃ©. </li>
 <li>c'est bon, mais fais attention. </li>
 </random>
 </template>
 </category>
 
 <category>
-<pattern>DÉSOLÉ</pattern>
+<pattern>DÃ‰SOLÃ‰</pattern>
 <template><srai>excuse moi</srai></template>
 </category>
 
 <category>
-<pattern>DÉSOLÉ *</pattern>
-<template><srai>désolé</srai>, <sr/></template>
+<pattern>DÃ‰SOLÃ‰ *</pattern>
+<template><srai>dÃ©solÃ©</srai>, <sr/></template>
 </category>
 
 <category>
@@ -107,10 +107,10 @@
 <category>
 <pattern>INSULTRON</pattern>
 <template>
-Espèce de 
+EspÃ¨ce de 
 <random> 
 <li>vieux batard </li>
-<li>vieil enculé </li>
+<li>vieil enculÃ© </li>
 <li>gros fils de pute </li>
 <li>vieille canaille </li>
 <li>grosse merde </li>
@@ -128,17 +128,17 @@ Espèce de
 <li>de tes os, </li>
 <li>des bois, </li>
 <li>puant(e), </li>
-<li>débile, </li>
-<li>assexué, </li>
+<li>dÃ©bile, </li>
+<li>assexuÃ©, </li>
 <li>alcoolique, </li>
-<li>lobotomisé, </li>
+<li>lobotomisÃ©, </li>
 <li>sans couilles, </li>
 </random> 
 
 <random> 
 <li>tu es </li>
-<li>tu ressembles à </li>
-<li>tu me fais penser à </li>
+<li>tu ressembles Ã  </li>
+<li>tu me fais penser Ã  </li>
 </random> 
   
 
@@ -154,7 +154,7 @@ Espèce de
 <li>un nabot </li>
 <li>un gland </li>
 <li>une fiante de pigeon </li>
-<li>une merde siliconnée </li>
+<li>une merde siliconnÃ©e </li>
 <li>une daube pas fraiche </li>
 </random> 
 
@@ -165,40 +165,40 @@ Espèce de
 <li>qui coule de partout, </li>
 <li>qui se chie dessus, </li>
 <li>qui est vert de trouille, </li>
-<li>jaune devant marron derrière, </li>
-<li>toujours prêt à lécher le cul, </li>
+<li>jaune devant marron derriÃ¨re, </li>
+<li>toujours prÃªt Ã  lÃ©cher le cul, </li>
 <li>qui ne colle pas une mouche au plafond, </li>
 <li>qui pu du bec, </li>
 </random> 
 
 <random> 
 <li>je voudrais seulement </li>
-<li>je rève de </li>
-<li>je crève d'envie de </li>
+<li>je rÃ¨ve de </li>
+<li>je crÃ¨ve d'envie de </li>
 <li>j'ai fait le pari de </li>
-<li>je bande à l'idée de </li>
-<li>je mouille en pensant à </li>
-<li>je ris en pensant à </li>
-<li>je me marre grave à l'idée de </li>
+<li>je bande Ã  l'idÃ©e de </li>
+<li>je mouille en pensant Ã  </li>
+<li>je ris en pensant Ã  </li>
+<li>je me marre grave Ã  l'idÃ©e de </li>
 </random> 
   
 
 <random> 
-<li>te pisser à la raie </li>
+<li>te pisser Ã  la raie </li>
 <li>t'eclater la face </li>
-<li>t'éclater la tronche </li>
+<li>t'Ã©clater la tronche </li>
 <li>te fumer </li>
 <li>te broyer les couilles </li>
 <li>te gerber dessus </li>
 <li>te chier dessus </li>
-<li>t'apprendre les bonnes manières </li>
+<li>t'apprendre les bonnes maniÃ¨res </li>
 <li>te bousiller la carcasse </li>
 <li>te peter dessus </li>
 <li>te mettre mes couilles sur ton nez </li>
 </random> 
 
 <random> 
-<li>derrière le cyprès </li>
+<li>derriÃ¨re le cyprÃ¨s </li>
 <li>devant toute ta famille </li>
 <li>ou tu veux </li>
 <li>au boulot </li>
@@ -209,13 +209,13 @@ Espèce de
 </random> 
 
 <random> 
-<li>jusqu'à l'aube. </li>
+<li>jusqu'Ã  l'aube. </li>
 <li>vite fait. </li>
 <li>pour rigoler. </li>
-<li>après l'apéro. </li>
+<li>aprÃ¨s l'apÃ©ro. </li>
 <li>pendant les pub. </li>
 <li>si tu as 5 minutes. </li>
-<li>après le match de foot. </li>
+<li>aprÃ¨s le match de foot. </li>
 <li>en regardant un match de rugby. </li>
 <li>en baisant ta copine. </li>
 </random> 
@@ -237,10 +237,10 @@ Va
 <category><pattern>BABY *</pattern><template><srai>AppContrariete</srai>M'appelle pas "Baby". <sr/></template></category>
 <category><pattern>BABY</pattern><template><srai>AppContrariete</srai>M'appelle pas "Baby". </template></category>
 
-<category><pattern>POUPÉE *</pattern><template><srai>AppContrariete</srai>M'appelle pas "Poupée". <sr/></template></category>
-<category><pattern>POUPÉE</pattern><template><srai>AppContrariete</srai>M'appelle pas "Poupée". </template></category>
-<category><pattern>POUPEE *</pattern><template><srai>AppContrariete</srai>M'appelle pas "Poupée". <sr/></template></category>
-<category><pattern>POUPEE</pattern><template><srai>AppContrariete</srai>M'appelle pas "Poupée". </template></category>
+<category><pattern>POUPÃ‰E *</pattern><template><srai>AppContrariete</srai>M'appelle pas "PoupÃ©e". <sr/></template></category>
+<category><pattern>POUPÃ‰E</pattern><template><srai>AppContrariete</srai>M'appelle pas "PoupÃ©e". </template></category>
+<category><pattern>POUPEE *</pattern><template><srai>AppContrariete</srai>M'appelle pas "PoupÃ©e". <sr/></template></category>
+<category><pattern>POUPEE</pattern><template><srai>AppContrariete</srai>M'appelle pas "PoupÃ©e". </template></category>
 
 <category><pattern>MA JOLIE *</pattern><template><srai>AppContrariete</srai>M'appelle pas "Ma jolie". <sr/></template></category>
 <category><pattern>MA JOLIE</pattern><template><srai>AppContrariete</srai>M'appelle pas "Ma jolie". </template></category>

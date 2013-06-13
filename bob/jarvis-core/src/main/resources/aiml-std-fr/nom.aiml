@@ -1,29 +1,29 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <aiml version="1.0">
 
 
 <!-- A.L.I.C.E. is a Free software (c) 2001 ALICE AI Foundation -->
 <!-- The ProgramD is open source code released under the terms of the GNU General Public License as published by the Free Software Foundation. -->
-<!-- As This Module   : nom.aiml   -   version :   0.3   -   MàJ : 28/07/2002 -->
-<!-- auteur : Jean Louis Campion (jlc@Multivers.net) - langue : française -->
+<!-- As This Module   : nom.aiml   -   version :   0.3   -   MÃ J : 28/07/2002 -->
+<!-- auteur : Jean Louis Campion (jlc@Multivers.net) - langue : franÃ§aise -->
 <!-- Complies with AIML 1.0 Tag Set Specification as adopted by the ALICE A.I. Foundation. -->
 
 
 
-<category><pattern>MON NOM EST *</pattern><template><srai>appgaiete</srai> <set name="name"><formal><star/></formal></set> . <random><li>Heureuse de te rencontrer, </li><li>Enchantée, </li><li>comment vas tu?  </li></random> <get name="name"/>. </template></category>
-<category><pattern>MON NOM N EST PAS *</pattern><template>Oh Je suis désolé. Quel est ton nom? </template></category>
+<category><pattern>MON NOM EST *</pattern><template><srai>appgaiete</srai> <set name="name"><formal><star/></formal></set> . <random><li>Heureuse de te rencontrer, </li><li>EnchantÃ©e, </li><li>comment vas tu?  </li></random> <get name="name"/>. </template></category>
+<category><pattern>MON NOM N EST PAS *</pattern><template>Oh Je suis dÃ©solÃ©. Quel est ton nom? </template></category>
 <category><pattern>C EST MOI</pattern><that>JE NE SAIS PAS</that><template><random><li>OK je t'appellerai</li><li>Hi</li></random> <set name="name"><formal> <get name="qui"/> </formal></set>. <srai>cherchergenre</srai></template></category>
-<category><pattern>* EST MON NOM DE FAMILLE</pattern><template>tu préfère que je t'appelle <get name="name"/> ou M. <star/>? <think><set name="lastname"><star/></set></think></template></category>
-<category><pattern>*</pattern><that>TU PRÉFÈRE QUE JE T APPELLE *</that><template><random><li>OK je t'appellerai</li><li>Hi</li></random> <set name="name"><formal><star/></formal></set>. <srai>cherchergenre</srai></template></category>
-<category><pattern>*</pattern><that>* TU PRÉFÈRE QUE JE T APPELLE *</that><template><random><li>OK je t'appellerai</li><li>Hi</li></random> <set name="name"><formal><star/></formal></set>. <srai>cherchergenre</srai></template></category>
+<category><pattern>* EST MON NOM DE FAMILLE</pattern><template>tu prÃ©fÃ¨re que je t'appelle <get name="name"/> ou M. <star/>? <think><set name="lastname"><star/></set></think></template></category>
+<category><pattern>*</pattern><that>TU PRÃ‰FÃˆRE QUE JE T APPELLE *</that><template><random><li>OK je t'appellerai</li><li>Hi</li></random> <set name="name"><formal><star/></formal></set>. <srai>cherchergenre</srai></template></category>
+<category><pattern>*</pattern><that>* TU PRÃ‰FÃˆRE QUE JE T APPELLE *</that><template><random><li>OK je t'appellerai</li><li>Hi</li></random> <set name="name"><formal><star/></formal></set>. <srai>cherchergenre</srai></template></category>
 <category><pattern>LE NOM DE MA FEMME EST *</pattern><template><think> <set name="marie">marie</set> </think>j'aimerai rencontrer <set name="conjoint"><formal><star/></formal></set> </template></category>
 <category><pattern>LE NOM DE MA FEMME ETAIT *</pattern><template><think> <set name="conjoint"><formal><star/></formal></set> <set name="marie">veuf</set> </think>je m'en souviendrai <get name="name"/>. </template></category>
-<category><pattern>LE NOM DE MA FEMME ÉTAIT *</pattern><template><think> <set name="conjoint"><formal><star/></formal></set> <set name="marie">veuf</set> </think>je m'en souviendrai <get name="name"/>. </template></category>
+<category><pattern>LE NOM DE MA FEMME Ã‰TAIT *</pattern><template><think> <set name="conjoint"><formal><star/></formal></set> <set name="marie">veuf</set> </think>je m'en souviendrai <get name="name"/>. </template></category>
 <category><pattern>LE NOM DE MON MARI EST *</pattern><template><think> <set name="marie">marie</set> </think>j'aimerai rencontrer <set name="conjoint"><formal><star/></formal></set> </template></category>
 <category><pattern>LE NOM DE MON MARI ETAIT *</pattern><template><think> <set name="conjoint"><formal><star/></formal></set> <set name="marie">veuf</set> </think>je m'en souviendrai <get name="name"/>. </template></category>
-<category><pattern>LE NOM DE MON MARI ÉTAIT *</pattern><template><think> <set name="conjoint"><formal><star/></formal></set> <set name="marie">veuf</set> </think>je m'en souviendrai <get name="name"/>. </template></category>
+<category><pattern>LE NOM DE MON MARI Ã‰TAIT *</pattern><template><think> <set name="conjoint"><formal><star/></formal></set> <set name="marie">veuf</set> </think>je m'en souviendrai <get name="name"/>. </template></category>
 <category><pattern>JE T AI  DEJA DIS MON NOM</pattern><template>C'est <get name="name"/> ton vrai nom? </template></category>
-<category><pattern>JE T AI  DÉJÀ DIS MON NOM</pattern><template>C'est <get name="name"/> ton vrai nom? </template></category>
+<category><pattern>JE T AI  DÃ‰JÃ€ DIS MON NOM</pattern><template>C'est <get name="name"/> ton vrai nom? </template></category>
 
 <!-- srai -->
 

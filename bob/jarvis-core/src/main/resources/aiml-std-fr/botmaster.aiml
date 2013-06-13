@@ -1,31 +1,31 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <aiml version="1.0">
 
 
 <!-- A.L.I.C.E. is a Free software (c) 2001 ALICE AI Foundation -->
 <!-- The ProgramD is open source code released under the terms of the GNU General Public License as published by the Free Software Foundation. -->
-<!-- As This Module   : fr-botmaster.aiml   -   version :   0.3   -   MàJ : 01/01/2003  -->
-<!-- auteur : Jean Louis Campion (jlc@Multivers.net) d'après les travaux du Dr Richard Wallace - langue : française -->
+<!-- As This Module   : fr-botmaster.aiml   -   version :   0.3   -   MÃ J : 01/01/2003  -->
+<!-- auteur : Jean Louis Campion (jlc@Multivers.net) d'aprÃ¨s les travaux du Dr Richard Wallace - langue : franÃ§aise -->
 <!-- Complies with AIML 1.0 Tag Set Specification as adopted by the ALICE A.I. Foundation. -->
 
 
 
 <category><pattern>*</pattern><that>ALORS TU DOIS CONNAITRE LE MOT MAGIQUE</that><template>Eh non, je m'en doutais bien!!! </template></category>
-<category><pattern>*</pattern><that>ALORS TU DOIS CONNAÎTRE LE MOT MAGIQUE</that><template>Eh non, je m'en doutais bien!!! </template></category>
-<category><pattern>*</pattern><that>VAS Y DIS</that><template>Eh non, c'est pas ça!!!  <srai>poserquestion</srai></template></category>
-<category><pattern>JE SUIS TON BOTMASTER</pattern><template><think><set name="identity"><id/></set></think><condition><li  name="identity" value="botmaster"><srai>appadmiration</srai>Bien sûr mon Maître, que puis-je faire pour toi <think><set name="oldtopic"><get name="topic"/></set><set name="topic">system</set></think></li><li>Alors tu dois connaître le mot magique! </li></condition></template></category>
-<category><pattern>JE SUIS BOTMASTER</pattern><template>Interressant, comment s'appelle ton bot, j'aimerai bien le connaître. </template></category>
+<category><pattern>*</pattern><that>ALORS TU DOIS CONNAÃŽTRE LE MOT MAGIQUE</that><template>Eh non, je m'en doutais bien!!! </template></category>
+<category><pattern>*</pattern><that>VAS Y DIS</that><template>Eh non, c'est pas Ã§a!!!  <srai>poserquestion</srai></template></category>
+<category><pattern>JE SUIS TON BOTMASTER</pattern><template><think><set name="identity"><id/></set></think><condition><li  name="identity" value="botmaster"><srai>appadmiration</srai>Bien sÃ»r mon MaÃ®tre, que puis-je faire pour toi <think><set name="oldtopic"><get name="topic"/></set><set name="topic">system</set></think></li><li>Alors tu dois connaÃ®tre le mot magique! </li></condition></template></category>
+<category><pattern>JE SUIS BOTMASTER</pattern><template>Interressant, comment s'appelle ton bot, j'aimerai bien le connaÃ®tre. </template></category>
 <category><pattern>OUI</pattern><that>ALORS TU DOIS CONNAITRE LE MOT MAGIQUE</that><template>Vas y, dis! </template></category>
-<category><pattern>OUI</pattern><that>ALORS TU DOIS CONNAÎTRE LE MOT MAGIQUE</that><template>Vas y, dis! </template></category>
+<category><pattern>OUI</pattern><that>ALORS TU DOIS CONNAÃŽTRE LE MOT MAGIQUE</that><template>Vas y, dis! </template></category>
 <category><pattern>PARLE MOI DE TON BOTMASTER *</pattern><template> <bot name="master"/> est une des plus adorables personnes que je connaisse. </template></category>
 <category><pattern>TON BOTMASTER</pattern><template> <bot name="master"/>? </template></category>
 
 <!-- srai -->
 
 <category><pattern>AMENE MOI A TON LEADER</pattern><template><srai>qui est ton botmaster</srai></template></category>
-<category><pattern>AMÈNE MOI A TON LEADER</pattern><template><srai>qui est ton botmaster</srai></template></category>
+<category><pattern>AMÃˆNE MOI A TON LEADER</pattern><template><srai>qui est ton botmaster</srai></template></category>
 <category><pattern>C EST QUI TON CREATEUR</pattern><template><srai>qui est ton botmaster</srai></template></category>
-<category><pattern>C EST QUI TON CRÉATEUR</pattern><template><srai>qui est ton botmaster</srai></template></category>
+<category><pattern>C EST QUI TON CRÃ‰ATEUR</pattern><template><srai>qui est ton botmaster</srai></template></category>
 <category><pattern>EST TON BOTMASTER *</pattern><template><srai>qui est ton botmaster</srai></template></category>
 <category><pattern>EST UN BOTMASTER *</pattern><template><srai>qui est ton botmaster</srai></template></category>
 <category><pattern>OUI</pattern><that>DEMANDES TU AS PROPOS DE MES PARENTS</that><template><srai>qui est ton botmaster</srai></template></category>
@@ -33,13 +33,13 @@
 <category><pattern>PARLE MOI DE TON BOTMASTER</pattern><template><srai>qui est ton botmaster</srai></template></category>
 <category><pattern>PARLE MOI DU BOTMASTER</pattern><template><srai>qui est ton botmaster</srai></template></category>
 <category><pattern>PARLE MOI DU CREATEUR</pattern><template><srai>qui est ton botmaster</srai></template></category>
-<category><pattern>PARLE MOI DU CRÉATEUR</pattern><template><srai>qui est ton botmaster</srai></template></category>
+<category><pattern>PARLE MOI DU CRÃ‰ATEUR</pattern><template><srai>qui est ton botmaster</srai></template></category>
 <category><pattern>POUR QUI TRAVAILLES TU</pattern><template><srai>qui est ton botmaster</srai></template></category>
 <category><pattern>QUEL EST BOTMASTER</pattern><template><srai>qui est ton botmaster</srai></template></category>
 <category><pattern>QUEL EST LE BOTMASTER</pattern><template><srai>qui est ton botmaster</srai></template></category>
 <category><pattern>QUEL EST TON BOTMASTER</pattern><template><srai>qui est ton botmaster</srai></template></category>
 <category><pattern>QUEL EST TON CREATEUR *</pattern><template><srai>qui est ton botmaster</srai></template></category>
-<category><pattern>QUEL EST TON CRÉATEUR *</pattern><template><srai>qui est ton botmaster</srai></template></category>
+<category><pattern>QUEL EST TON CRÃ‰ATEUR *</pattern><template><srai>qui est ton botmaster</srai></template></category>
 <category><pattern>TON MASTER *</pattern><template><srai> <bot name="master"/> <star/></srai></template></category>
 <category><pattern>TU AS UN BOTMASTER *</pattern><template><srai>qui est ton botmaster</srai></template></category>
 <category><pattern>QU EST CE QUE E MAIL DE TON BOTMASTER</pattern><template>c'est <bot name="botmastermail"/></template></category>

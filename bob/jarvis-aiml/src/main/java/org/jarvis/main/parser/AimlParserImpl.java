@@ -25,12 +25,9 @@ import java.io.InputStreamReader;
 import java.util.NoSuchElementException;
 import java.util.Stack;
 
-import org.antlr.v4.runtime.BailErrorStrategy;
 import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.DiagnosticErrorListener;
-import org.antlr.v4.runtime.Parser;
+import org.antlr.v4.runtime.InputMismatchException;
 import org.antlr.v4.runtime.RecognitionException;
-import org.antlr.v4.runtime.Recognizer;
 import org.jarvis.main.antlr4.aimlParser;
 import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.model.impl.parser.AimlCategory;
@@ -105,10 +102,13 @@ import org.jarvis.main.model.parser.template.system.IAimlVersion;
 import org.jarvis.main.model.parser.template.trans.IAimlGender;
 import org.jarvis.main.model.parser.template.trans.IAimlPerson;
 import org.jarvis.main.model.parser.template.trans.IAimlPerson2;
+import org.jarvis.main.utils.DefaultErrorStrategyImpl;
+import org.jarvis.main.utils.DiagnosticErrorListenerImpl;
+import org.jarvis.main.utils.IAimlParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class AimlParserImpl extends aimlParser {
+public class AimlParserImpl extends aimlParser implements IAimlParser {
 	static public Logger logger = LoggerFactory.getLogger(AimlParserImpl.class);
 
 	protected AimlLexerImpl lexer = null;
@@ -458,34 +458,6 @@ public class AimlParserImpl extends aimlParser {
 	private int iParserError = 0;
 	private int iLexerError = 0;
 
-	private class DiagnosticErrorListenerImpl extends DiagnosticErrorListener {
-
-		@Override
-		public void syntaxError(Recognizer<?, ?> recognizer,
-				Object offendingSymbol, int line, int charPositionInLine,
-				String msg, RecognitionException e) {
-			super.syntaxError(recognizer, offendingSymbol, line,
-					charPositionInLine, msg, e);
-			logger.error("line " + line + " char position "
-					+ charPositionInLine + " : " + msg + " : "
-					+ (e.getInputStream() + "").split("\n")[line - 1]);
-			iLexerError++;
-		}
-
-	}
-
-	private class DefaultErrorStrategyImpl extends BailErrorStrategy {
-
-		@Override
-		public void reportError(Parser recognizer, RecognitionException e)
-				throws RecognitionException {
-			super.reportError(recognizer, e);
-			logger.error(e.getMessage());
-			iParserError++;
-		}
-
-	}
-
 	/**
 	 * default construtor
 	 * 
@@ -499,8 +471,9 @@ public class AimlParserImpl extends aimlParser {
 		lexer = (AimlLexerImpl) _input.getTokenSource();
 		root = stackElements.push(new AimlXmlImpl());
 
-		lexer.addErrorListener(new DiagnosticErrorListenerImpl());
-		setErrorHandler(new DefaultErrorStrategyImpl());
+		lexer.addErrorListener(new DiagnosticErrorListenerImpl(this, filename));
+		setErrorHandler(new DefaultErrorStrategyImpl(this, filename));
+		addErrorListener(new DiagnosticErrorListenerImpl(this, filename));
 	}
 
 	/**
@@ -520,11 +493,11 @@ public class AimlParserImpl extends aimlParser {
 	 * @throws AimlParsingError
 	 */
 	public static IAimlRepository parse(File filename) throws AimlParsingError {
+		String encoding = "UTF-8";
 		try {
 			/**
 			 * find encoding
 			 */
-			String encoding = "UTF-8";
 			try {
 				BufferedReader br = new BufferedReader(new InputStreamReader(
 						new FileInputStream(filename)));
@@ -558,8 +531,13 @@ public class AimlParserImpl extends aimlParser {
 					"Errors, while parsing"); }
 			return parser.getRepository();
 		} catch (RecognitionException e) {
+			logger.warn("Parsing " + filename + " - " + encoding);
 			e.printStackTrace();
 			throw new AimlParsingError(e);
+		} catch (AimlParsingError e) {
+			logger.warn("Parsing " + filename + " - " + encoding);
+			e.printStackTrace();
+			throw e;
 		}
 	}
 
@@ -602,6 +580,16 @@ public class AimlParserImpl extends aimlParser {
 
 	@Override
 	public void onOpenTag(String value) {
+		try {
+			onPrivateOpenTag(value);
+		} catch (Exception e) {
+			e.printStackTrace();
+			this.getErrorHandler().reportError(this,
+					new InputMismatchException(this));
+		}
+	}
+
+	public void onPrivateOpenTag(String value) {
 		if (logger.isDebugEnabled() && debugParsing) {
 			logger.debug("onOpenTag - " + value);
 		}
@@ -864,9 +852,39 @@ public class AimlParserImpl extends aimlParser {
 
 	@Override
 	public void onCloseTag(String value) {
+		try {
+			onPrivateCloseTag(value);
+		} catch (Exception e) {
+			e.printStackTrace();
+			this.getErrorHandler().reportError(this,
+					new InputMismatchException(this));
+		}
+	}
+
+	public void onPrivateCloseTag(String value) {
 		if (logger.isDebugEnabled() && debugParsing) {
 			logger.debug("onCloseTag - " + value);
 		}
 		stackElements.pop(value);
+	}
+
+	@Override
+	public void addLexerError(int i) {
+		iLexerError += i;
+	}
+
+	@Override
+	public String getStatistics() {
+		return getRepository().getStatistics();
+	}
+
+	@Override
+	public void addParserError(int i) {
+		iParserError += i;
+	}
+
+	@Override
+	public boolean reportAttemptingFullContext() {
+		return false;
 	}
 }

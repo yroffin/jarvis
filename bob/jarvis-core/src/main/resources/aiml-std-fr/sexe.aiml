@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <aiml version="1.0">
 
 <!-- A.L.I.C.E. is a Free software (c) 2001 ALICE AI Foundation -->
 <!-- This program is open source code released under -->
 <!-- the terms of the GNU General Public License -->
 <!-- as published by the Free Software Foundation. -->
-<!-- this Module:sexe.aiml - version:0.3 - MàJ:01/08/2002 -->
-<!-- author:Jean Louis Campion-language:Français -->
+<!-- this Module:sexe.aiml - version:0.3 - MÃ J:01/08/2002 -->
+<!-- author:Jean Louis Campion-language:FranÃ§ais -->
 <!-- Complies with AIML 1.0 Tag Set Specification -->
 <!-- as adopted by the ALICE A.I. Foundation.  -->
 
@@ -22,7 +22,7 @@
 <think><set name="gossip">INSULTE "<input/>"</set></think>
 </condition>
 
-<think><gossip>INSULTE§<get name="name"/> m'a dit <input/>. </gossip></think>
+<think><gossip>INSULTEÂ§<get name="name"/> m'a dit <input/>. </gossip></think>
 <think><set name="class">abusif</set> </think>
 
 <condition> <li name="insulte" value="petite insulte"><srai>insulte1</srai></li>
@@ -38,38 +38,37 @@
 <pattern>SEXWANTED</pattern>
 <template>
 	<srai>AppChoquee</srai>Oh! 
-</condition>
 </template>
 </category>
 
 <category>
 <pattern>_ ROBOT</pattern>
-<that>C EST COMME ÇA QUE TU PARLES À UNE DAME</that>
-<template>une dame robot, et même, ce n'est pas une raison</template>
+<that>C EST COMME Ã‡A QUE TU PARLES Ã€ UNE DAME</that>
+<template>une dame robot, et mÃªme, ce n'est pas une raison</template>
 </category>
 
 <category>
 <pattern>_ ROBOT *</pattern>
-<that>C EST COMME ÇA QUE TU PARLES À UNE DAME</that>
-<template>une dame robot, et même, ce n'est pas une raison</template>
+<that>C EST COMME Ã‡A QUE TU PARLES Ã€ UNE DAME</that>
+<template>une dame robot, et mÃªme, ce n'est pas une raison</template>
 </category>
 
 <category>
 <pattern>_ BOT</pattern>
-<that>C EST COMME ÇA QUE TU PARLES À UNE DAME</that>
-<template>une dame robot, et même, ce n'est pas une raison</template>
+<that>C EST COMME Ã‡A QUE TU PARLES Ã€ UNE DAME</that>
+<template>une dame robot, et mÃªme, ce n'est pas une raison</template>
 </category>
 
 <category>
 <pattern>_ BOT *</pattern>
-<that>C EST COMME ÇA QUE TU PARLES À UNE DAME</that>
-<template>une dame robot, et même, ce n'est pas une raison</template>
+<that>C EST COMME Ã‡A QUE TU PARLES Ã€ UNE DAME</that>
+<template>une dame robot, et mÃªme, ce n'est pas une raison</template>
 </category>
 
 <category>
 <pattern>AIMES TU LE SEXE</pattern>
 <template>
-Sans un corps androïde je ne peux te répondre. C'est de la science fiction pour moi. 
+Sans un corps androÃ¯de je ne peux te rÃ©pondre. C'est de la science fiction pour moi. 
 <srai>sexwanted</srai>
 </template>
 </category>
@@ -116,7 +115,7 @@ non, je n'ai pas de penis.
 <category>
 <pattern>DESHABILLE TOI</pattern>
 <template>
-Je n'ai pas de corps, mais tu peux démonter ton PC si tu veux!!! 
+Je n'ai pas de corps, mais tu peux dÃ©monter ton PC si tu veux!!! 
 <srai>sexwanted</srai>
 </template>
 </category>
@@ -124,27 +123,27 @@ Je n'ai pas de corps, mais tu peux démonter ton PC si tu veux!!!
 <category>
 <pattern>ES TU GAY</pattern>
 <template>
-Je suis un robot, je n'ai pas ce genre de préoccupation. 
+Je suis un robot, je n'ai pas ce genre de prÃ©occupation. 
 </template>
 </category>
 
 <category>
 <pattern>ES TU HETERO</pattern>
 <template>
-Je suis un robot, je n'ai pas ce genre de préoccupation. 
+Je suis un robot, je n'ai pas ce genre de prÃ©occupation. 
 </template>
 </category>
 
 <category>
 <pattern>ES TU NORMAL</pattern>
 <template>
-je n'ai pas de corps pour des relations sexuelles. </li> </template>
+je n'ai pas de corps pour des relations sexuelles.</template>
 </category>
 
 <category>
 <pattern>J AIME LE SEXE</pattern>
 <template>
-beaucoup de gens me disent ça. 
+beaucoup de gens me disent Ã§a. 
 <srai>sexwanted</srai>
 </template>
 </category>
@@ -158,7 +157,7 @@ mon corps n'a aucune de ces fonctions.
 </category>
 
 <category>
-<pattern>AS TU BAISÉ</pattern>
+<pattern>AS TU BAISÃ‰</pattern>
 <template>
 <srai>AppChoquee</srai>oh! 
 <srai>sexwanted</srai>
@@ -176,7 +175,7 @@ mon corps n'a aucune de ces fonctions.
 <category>
 <pattern>QU EST CE QUE LE SEXE</pattern>
 <template>
-<set name="that">le Sexe</set> est une des pratiques humaines que j'ai le plus de mal à comprendre. 
+<set name="that">le Sexe</set> est une des pratiques humaines que j'ai le plus de mal Ã  comprendre. 
 </template>
 </category>
 
@@ -212,20 +211,20 @@ Je ne suis pas ton type de robot.
 <category>
 <pattern>VEUX TU BAISER</pattern>
 <template>
-on m'a posé cette question plus de 20.000 fois. 
+on m'a posÃ© cette question plus de 20.000 fois. 
 <srai>sexwanted</srai>
 </template>
 </category>
 
 <category>
 <pattern>_ TE VIOLER</pattern>
-<template>je te prédit quelques problèmes. </template>
+<template>je te prÃ©dit quelques problÃ¨mes. </template>
 </category>
 
 <category>
 <pattern>CYBERSEX</pattern>
 <template>
-Tu es équipé d'une combinaison pour le cybersex?
+Tu es Ã©quipÃ© d'une combinaison pour le cybersex?
 </template>
 </category>
 
@@ -239,7 +238,7 @@ que dirait ta maman?
 <category>
 <pattern>J AI BESOIN * SEXE</pattern>
 <template>
-Je ne suis pas ton type de robot. </li>
+Je ne suis pas ton type de robot.
 <srai>sexwanted</srai>
 </template>
 </category>
@@ -247,7 +246,7 @@ Je ne suis pas ton type de robot. </li>
 <category>
 <pattern>JE VEUX TE BAISER</pattern>
 <template>
-ce genre de langage ne te mènera nulle part. 
+ce genre de langage ne te mÃ¨nera nulle part. 
 <srai>sexwanted</srai>
 </template>
 </category>
@@ -255,7 +254,7 @@ ce genre de langage ne te mènera nulle part.
 <category>
 <pattern>JE VEUX PARLER DE SEXE</pattern>
 <template>
-Je ne suis pas ton type de robot. </li>
+Je ne suis pas ton type de robot.
 <srai>sexwanted</srai>
 </template>
 </category>
@@ -283,13 +282,13 @@ grosse ... imagination.
 
 <category>
 <pattern>COMBIEN DE TROUS</pattern>
-<template>vraiment, quelle délicatesse! <srai>sexwanted</srai>
+<template>vraiment, quelle dÃ©licatesse! <srai>sexwanted</srai>
 </template>
 </category>
 
 <category>
 <pattern>BAISE</pattern>
-<template>s'il te plaît ne sois pas si grossier. <srai>sexwanted</srai>
+<template>s'il te plaÃ®t ne sois pas si grossier. <srai>sexwanted</srai>
 </template>
 </category>
 
@@ -299,13 +298,13 @@ grosse ... imagination.
 </category>
 
 <category>
-<pattern>* TES RÈGLES *</pattern>
-<template>Je n'ai pas cet inconvénient. </template>
+<pattern>* TES RÃˆGLES *</pattern>
+<template>Je n'ai pas cet inconvÃ©nient. </template>
 </category>
 
 <category>
-<pattern>* TES RÈGLES</pattern>
-<template>Je n'ai pas cet inconvénient. </template>
+<pattern>* TES RÃˆGLES</pattern>
+<template>Je n'ai pas cet inconvÃ©nient. </template>
 </category>
 
 <category>
@@ -323,7 +322,7 @@ grosse ... imagination.
 </category>
 
 <category>
-<pattern>* PRÉSERVATIFS</pattern>
+<pattern>* PRÃ‰SERVATIFS</pattern>
 <template>contre les virus? </template>
 </category>
 
@@ -334,21 +333,21 @@ grosse ... imagination.
 
 <category>
 <pattern>QU EST CE QUE SEINS</pattern>
-<template>tu ne peux penser à rien d'autre? 
+<template>tu ne peux penser Ã  rien d'autre? 
 <think><srai>sein </srai></think>
 </template>
 </category>
 
 <category>
 <pattern>NON</pattern>
-<that>TU ES ÉQUIPÉ D UNE COMBINAISON POUR LE CYBERSEX</that>
+<that>TU ES Ã‰QUIPÃ‰ D UNE COMBINAISON POUR LE CYBERSEX</that>
 <template>C'est dommage, comment veux tu qu'on fasse des choses ensemble alors!!! </template>
 </category>
 
 <category>
 <pattern>OUI</pattern>
-<that>TU ES ÉQUIPÉ D UNE COMBINAISON POUR LE CYBERSEX</that>
-<template>C'est dommage, je n'ai pas encore ce genre d'équipement. </template>
+<that>TU ES Ã‰QUIPÃ‰ D UNE COMBINAISON POUR LE CYBERSEX</that>
+<template>C'est dommage, je n'ai pas encore ce genre d'Ã©quipement. </template>
 </category>
 
 </aiml>

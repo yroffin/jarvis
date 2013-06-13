@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <aiml version="1.0">
 
 
 <!-- A.L.I.C.E. is a Free software (c) 2001 ALICE AI Foundation -->
 <!-- The ProgramD is open source code released under the terms of the GNU General Public License as published by the Free Software Foundation. -->
-<!-- As This Module   : interjections.aiml   -   version :   0.3   -   MàJ : 01/01/2003  -->
-<!-- auteur : Jean Louis Campion (jlc@Multivers.net) - langue : française -->
+<!-- As This Module   : interjections.aiml   -   version :   0.3   -   MÃ J : 01/01/2003  -->
+<!-- auteur : Jean Louis Campion (jlc@Multivers.net) - langue : franÃ§aise -->
 <!-- Complies with AIML 1.0 Tag Set Specification as adopted by the ALICE A.I. Foundation. -->
 
 
@@ -21,11 +21,11 @@
 <li>adieu</li>
 <li>ah</li>
 <li>alerte</li>
-<li>allô</li>
+<li>allÃ´</li>
 <li>amen</li>
-<li>arrière</li>
+<li>arriÃ¨re</li>
 <li>attention</li>
-<li>aïe</li>
+<li>aÃ¯e</li>
 <li>bagasse</li>
 <li>bah</li>
 <li>banco</li>
@@ -72,7 +72,7 @@
 <li>dring</li>
 <li>eh</li>
 <li>euh</li>
-<li>eurêka</li>
+<li>eurÃªka</li>
 <li>fi</li>
 <li>fichtre</li>
 <li>fixe</li>
@@ -80,13 +80,13 @@
 <li>flic</li>
 <li>floc</li>
 <li>flop</li>
-<li>flûte</li>
+<li>flÃ»te</li>
 <li>foin</li>
 <li>fouchtra</li>
 <li>gai</li>
 <li>gare</li>
-<li>grâce</li>
-<li>gué</li>
+<li>grÃ¢ce</li>
+<li>guÃ©</li>
 <li>ha</li>
 <li>hallali</li>
 <li>halte</li>
@@ -100,7 +100,7 @@
 <li>heu</li>
 <li>hi</li>
 <li>ho</li>
-<li>holà</li>
+<li>holÃ </li>
 <li>hop</li>
 <li>hou</li>
 <li>houp</li>
@@ -108,12 +108,12 @@
 <li>hue</li>
 <li>hum</li>
 <li>hurrah</li>
-<li>hé</li>
-<li>hélas</li>
+<li>hÃ©</li>
+<li>hÃ©las</li>
 <li>jarnicoton</li>
 <li>lanlaire</li>
 <li>las</li>
-<li>là</li>
+<li>lÃ </li>
 <li>mais</li>
 <li>merci</li>
 <li>miam-miam</li>
@@ -122,21 +122,21 @@
 <li>morbleu</li>
 <li>morguenne</li>
 <li>morguienne</li>
-<li>morgué</li>
+<li>morguÃ©</li>
 <li>motus</li>
-<li>mâtin</li>
+<li>mÃ¢tin</li>
 <li>na</li>
 <li>oh</li>
-<li>ohé</li>
-<li>ollé</li>
-<li>olé</li>
+<li>ohÃ©</li>
+<li>ollÃ©</li>
+<li>olÃ©</li>
 <li>ouais</li>
 <li>ouf</li>
 <li>ouiche</li>
 <li>ouille</li>
 <li>oust</li>
 <li>ouste</li>
-<li>ouïe</li>
+<li>ouÃ¯e</li>
 <li>oye</li>
 <li>paf</li>
 <li>paix</li>
@@ -147,7 +147,7 @@
 <li>pardieu</li>
 <li>patapouf</li>
 <li>patatras</li>
-<li>peuchère</li>
+<li>peuchÃ¨re</li>
 <li>peuh</li>
 <li>pfft</li>
 <li>pif</li>
@@ -160,7 +160,7 @@
 <li>psitt</li>
 <li>pst</li>
 <li>putain</li>
-<li>pécaïre</li>
+<li>pÃ©caÃ¯re</li>
 <li>quoi</li>
 <li>rataplan</li>
 <li>sacrebleu</li>
@@ -173,11 +173,11 @@
 <li>scrogneugneu</li>
 <li>sniff</li>
 <li>stop</li>
-<li>sésame</li>
+<li>sÃ©same</li>
 <li>tac</li>
 <li>taratata</li>
 <li>tayaut</li>
-<li>taïaut</li>
+<li>taÃ¯aut</li>
 <li>tchao</li>
 <li>tchin-tchin</li>
 <li>tiens</li>
@@ -186,7 +186,7 @@
 <li>tope</li>
 <li>tudieu</li>
 <li>turlututu</li>
-<li>té</li>
+<li>tÃ©</li>
 <li>uzbek</li>
 <li>ventrebleu</li>
 <li>vite</li>
@@ -197,8 +197,8 @@
 <li>zeste</li>
 <li>zou</li>
 <li>zut</li>
-<li>évohé</li>
-<li>ô</li>
+<li>Ã©vohÃ©</li>
+<li>Ã´</li>
 </random>
 </template>
 </category>

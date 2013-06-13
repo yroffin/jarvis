@@ -145,8 +145,8 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 		logger.info("Register " + data.getAbsolutePath());
 		OutputStream out = new FileOutputStream(data);
 		byte[] b = new byte[1024];
-		for (; local.read(b) > 0;) {
-			out.write(b);
+		for (int length = local.read(b); length > 0; length = local.read(b)) {
+			out.write(b, 0, length);
 		}
 		out.close();
 		local.close();

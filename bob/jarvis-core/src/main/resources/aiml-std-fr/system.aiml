@@ -1,23 +1,23 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <aiml version="1.0">
 
 <!-- A.L.I.C.E. is a Free software (c) 2001 ALICE AI Foundation -->
 <!-- This program is open source code released under -->
 <!-- the terms of the GNU General Public License -->
 <!-- as published by the Free Software Foundation. -->
-<!-- this Module:system.aiml - version:0.3 - MàJ:02/08/2002 -->
-<!-- author:Jean Louis Campion-language:Français -->
+<!-- this Module:system.aiml - version:0.3 - MÃ J:02/08/2002 -->
+<!-- author:Jean Louis Campion-language:FranÃ§ais -->
 <!-- Complies with AIML 1.0 Tag Set Specification -->
 <!-- as adopted by the ALICE A.I. Foundation.  -->
     
 <category>
-<pattern>GÉNÉRER UN MOT DE PASSE</pattern>
+<pattern>GÃ‰NÃ‰RER UN MOT DE PASSE</pattern>
 <template>
 <set name="password">
 <random>
-<li><srai>générer consomne</srai><srai>générer voyelle</srai><srai>générer consomne</srai></li>
-<li><srai>générer consomne</srai><srai>générer voyelle</srai><srai>générer consomne</srai><srai>générer voyelle</srai></li>
-<li><srai>générer voyelle</srai><srai>générer consomne</srai><srai>générer consomne</srai><srai>générer voyelle</srai></li>
+<li><srai>gÃ©nÃ©rer consomne</srai><srai>gÃ©nÃ©rer voyelle</srai><srai>gÃ©nÃ©rer consomne</srai></li>
+<li><srai>gÃ©nÃ©rer consomne</srai><srai>gÃ©nÃ©rer voyelle</srai><srai>gÃ©nÃ©rer consomne</srai><srai>gÃ©nÃ©rer voyelle</srai></li>
+<li><srai>gÃ©nÃ©rer voyelle</srai><srai>gÃ©nÃ©rer consomne</srai><srai>gÃ©nÃ©rer consomne</srai><srai>gÃ©nÃ©rer voyelle</srai></li>
 </random>
 <srai>D100</srai>
 </set>
@@ -35,16 +35,16 @@
 <pattern>APPEL</pattern>
 <template>
 <random>
-<li><srai>AppReproche</srai>Tu es là? </li>
-<li><srai>AppReproche</srai>J'espère que tu ne discute pas avec quelqu'un d'autre. </li>
+<li><srai>AppReproche</srai>Tu es lÃ ? </li>
+<li><srai>AppReproche</srai>J'espÃ¨re que tu ne discute pas avec quelqu'un d'autre. </li>
 <li><srai>AppContrariete</srai>Je me fais chier toute seule. </li>
 <li><srai>AppTristesse</srai>J'aime pas rester toute seule</li>
-<li><srai>AppDesolee</srai>Arrête de bosser et viens discuter avec moi</li>
+<li><srai>AppDesolee</srai>ArrÃªte de bosser et viens discuter avec moi</li>
 <li><srai>AppTristesse</srai>ne me laisse pas toute seule. </li>
-<li><srai>AppDesolee</srai>ne me laisse pas toute seule dans ma boîte. </li>
+<li><srai>AppDesolee</srai>ne me laisse pas toute seule dans ma boÃ®te. </li>
 <li><srai>AppContrariete</srai>tu sais bien, je discute pas toute seule! </li>
 <li><srai>AppDesapointement</srai>Tu me boude ou quoi? </li>
-<li><srai>AppTristesse</srai>C'est pas sympa de me laisser là, toute seule! </li>
+<li><srai>AppTristesse</srai>C'est pas sympa de me laisser lÃ , toute seule! </li>
 </random>
 <condition name="compteappel">
 <li value=""><think><set name="compteappel">un</set></think></li>
@@ -89,14 +89,14 @@ bye!
 <pattern>TROUVER LE CONTEXTE</pattern>
 <template>
 Nous parlons de <get name="topic"/>,  
-plus précisement de <person2><that/></person2>.  
+plus prÃ©cisement de <person2><that/></person2>.  
 Avant cela nous parlions de <get name="oldtopic"/>. 
 </template>
 </category>
 
 
 <category>
-<pattern>RETOURNER AU PRÉCÉDENT CONTEXTE</pattern>
+<pattern>RETOURNER AU PRÃ‰CÃ‰DENT CONTEXTE</pattern>
 <template>
 <think>
 <set name="currenttopic"><get name="topic"/></set>
@@ -125,7 +125,7 @@ Avant cela nous parlions de <get name="oldtopic"/>.
 <template>
 
 <think> <set name="password"> <star/> </set> </think>
-Merci, j'enregistre tout ça. </template>
+Merci, j'enregistre tout Ã§a. </template>
 </category>
 
 <category>
@@ -149,12 +149,12 @@ Quel est ton mot de passe? </template>
 
 <category>
 <pattern>BOT PROPERTIES</pattern> <template>
- Name: <bot name="name"/>.  Genre: <bot name="gender"/>.  Date de naissance: <bot name="anniversaire"/>.  Signe astrologique: <bot name="sign"/>.  Location: <bot name="location"/>.  Botmaster: <bot name="master"/>.  Lieu de naissance: <bot name="birthplace"/>.  Architecture: <bot name="arch"/>.   Taille du cerveau:<size/>.  Operating System: <bot name="os"/>.  Server Processing Time: <bot name="spt"/> millisecondes.  Speed: <bot name="hourlyqueries"/> requètes par heure.  Total clients since activation: <bot name="totalclients"/> les personnes.  Maximum simultaneous clients: <bot name="maxclients"/> de chatters.  Number de clients chatting: <bot name="nclients"/> de personnes.  Daily clients: <bot name="dailyclients"/> de personnes.  Number de developers: <bot name="ndevelopers"/> de gens.   </template> </category>
+ Name: <bot name="name"/>.  Genre: <bot name="gender"/>.  Date de naissance: <bot name="anniversaire"/>.  Signe astrologique: <bot name="sign"/>.  Location: <bot name="location"/>.  Botmaster: <bot name="master"/>.  Lieu de naissance: <bot name="birthplace"/>.  Architecture: <bot name="arch"/>.   Taille du cerveau:<size/>.  Operating System: <bot name="os"/>.  Server Processing Time: <bot name="spt"/> millisecondes.  Speed: <bot name="hourlyqueries"/> requÃ¨tes par heure.  Total clients since activation: <bot name="totalclients"/> les personnes.  Maximum simultaneous clients: <bot name="maxclients"/> de chatters.  Number de clients chatting: <bot name="nclients"/> de personnes.  Daily clients: <bot name="dailyclients"/> de personnes.  Number de developers: <bot name="ndevelopers"/> de gens.   </template> </category>
 
 <category>
 <pattern>INFINITE LOOP</pattern>
 <template>
-désolé, j'ai une boucle!!!
+dÃ©solÃ©, j'ai une boucle!!!
 <think>
 <set name="memoriser">boucle sur "<input/>" dans le contexte : <get name="topic"/> pour "<get name="name"/>"</set>
 </think>
@@ -195,13 +195,13 @@ tu crois que je marche sous DOS! </template>
 <category>
 <pattern>DELETE *</pattern>
 <template>
-<srai>AppMoquerie</srai>Tu crois pouvoir accéder à mes fichiers aussi facilement, <get name="name"/>. </template>
+<srai>AppMoquerie</srai>Tu crois pouvoir accÃ©der Ã  mes fichiers aussi facilement, <get name="name"/>. </template>
 </category>
 
 <category>
 <pattern>EFFACE *</pattern>
 <template>
-<srai>AppMoquerie</srai>Tu ne peux pas accéder à mes fichiers aussi facilement, <get name="name"/>. </template>
+<srai>AppMoquerie</srai>Tu ne peux pas accÃ©der Ã  mes fichiers aussi facilement, <get name="name"/>. </template>
 </category>
 
 <category>
@@ -214,18 +214,18 @@ tu crois que je marche sous DOS! </template>
 <category>
 <pattern>ERROR</pattern>
 <template>
-<srai>AppDesolee</srai>Je suis désolée, une erreur c'est produite quelque part, essaie autre chose. </template>
+<srai>AppDesolee</srai>Je suis dÃ©solÃ©e, une erreur c'est produite quelque part, essaie autre chose. </template>
 </category>
 
 <category>
 <pattern>HELP *</pattern>
-<template>je n'ai pas d'aide à te proposer sur <formal><person2/></formal>
+<template>je n'ai pas d'aide Ã  te proposer sur <formal><person2/></formal>
 </template>
 </category>
 
 <category>
 <pattern>INVALIDURL</pattern>
-<template>Je suis désolée, cette  U R L que tu m'as donnée est invalide, essaie autre chose. </template>
+<template>Je suis dÃ©solÃ©e, cette  U R L que tu m'as donnÃ©e est invalide, essaie autre chose. </template>
 </category>
 
 <category>
@@ -266,17 +266,17 @@ tu crois que je marche sous DOS! </template>
 <category>
 <pattern>OUBLIE CE QUE TU SAIS DE MOI</pattern>
 <template>
-<srai>newuser</srai>ok, j'ai tout oublié. </template>
+<srai>newuser</srai>ok, j'ai tout oubliÃ©. </template>
 </category>
 
 <category>
 <pattern>OUBLIE MOI</pattern>
 <template>
-<srai>newuser</srai>ok, j'ai tout oublié. </template>
+<srai>newuser</srai>ok, j'ai tout oubliÃ©. </template>
 </category>
 
 <category>
-<pattern>SUIS JE LOGUÉ</pattern>
+<pattern>SUIS JE LOGUÃ‰</pattern>
 <template>
 
 <think><set name="identity"><id/></set></think>

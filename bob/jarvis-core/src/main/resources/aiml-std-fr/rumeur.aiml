@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <aiml version="1.0">
 
 
 <!-- A.L.I.C.E. is a Free software (c) 2001 ALICE AI Foundation -->
 <!-- The ProgramD is open source code released under the terms of the GNU General Public License as published by the Free Software Foundation. -->
-<!-- As This Module   : rumeur.aiml   -   version :   0.3   -   MàJ : 01/01/2003  -->
-<!-- auteur : Jean Louis Campion (jlc@Multivers.net) d'après les travaux du Dr Richard Wallace - langue : française -->
+<!-- As This Module   : rumeur.aiml   -   version :   0.3   -   MÃ J : 01/01/2003  -->
+<!-- auteur : Jean Louis Campion (jlc@Multivers.net) d'aprÃ¨s les travaux du Dr Richard Wallace - langue : franÃ§aise -->
 <!-- Complies with AIML 1.0 Tag Set Specification as adopted by the ALICE A.I. Foundation. -->
 
 
@@ -14,7 +14,7 @@
 <pattern>*</pattern>
 <that>* RACONTE MOI</that>
 <template><srai>appmoquerie</srai>
-Merci, je me ferai un plaisir de colporter ça. 
+Merci, je me ferai un plaisir de colporter Ã§a. 
 <think>
 <set name="memoriser">rumeur : <get name="name"/> dit "<star/>" dans le contexte : <get name="topic"/></set>
 </think>
@@ -26,12 +26,12 @@ Merci, je me ferai un plaisir de colporter ça.
 
 <category>
 <pattern>AIMES TU LES RUMEURS</pattern>
-<template>Oui j'aime à colporter des rumeurs. Comme,<srai>raconter rumeur</srai></template>
+<template>Oui j'aime Ã  colporter des rumeurs. Comme,<srai>raconter rumeur</srai></template>
 </category>
 
 <category>
 <pattern>APPRENDS RUMEUR *</pattern>
-<template>Merci, j'espère m'en rappeler. "<person2/>" 
+<template>Merci, j'espÃ¨re m'en rappeler. "<person2/>" 
 <think>
 <set name="memoriser">rumeur : <get name="name"/> on dit que "<person/>" dans le contexte : <get name="topic"/></set>
 </think>
@@ -47,7 +47,7 @@ Merci, je me ferai un plaisir de colporter ça.
 </category>
 
 <category>
-<pattern>AS TU ENTENDU LA DERNIÈRE RUMEUR</pattern>
+<pattern>AS TU ENTENDU LA DERNIÃˆRE RUMEUR</pattern>
 <template><srai>as tu entendu la derniere rumeur</srai></template>
 </category>
 
@@ -73,12 +73,12 @@ Merci, je me ferai un plaisir de colporter ça.
 
 <category>
 <pattern>* PAS DE RUMEUR</pattern>
-<template>Mais j'aime à colporter rumeurs. </template>
+<template>Mais j'aime Ã  colporter rumeurs. </template>
 </category>
 
 <category>
 <pattern>* RUMEUR EST MAL</pattern>
-<template>Pas nécessairement. la sémiotique dit que les rumeurs sont une adaptation fondamentale du cerveau humain. </template>
+<template>Pas nÃ©cessairement. la sÃ©miotique dit que les rumeurs sont une adaptation fondamentale du cerveau humain. </template>
 </category>
 
 <!-- srai -->
@@ -174,7 +174,7 @@ Merci, je me ferai un plaisir de colporter ça.
 </category>
 
 <category>
-<pattern>DIS MOI QUELQUE CHOSE D INTÉRRESSANT</pattern>
+<pattern>DIS MOI QUELQUE CHOSE D INTÃ‰RRESSANT</pattern>
 <template><srai>raconter rumeur</srai></template>
 </category>
 
@@ -234,12 +234,12 @@ Merci, je me ferai un plaisir de colporter ça.
 </category>
 
 <category>
-<pattern>DONNÉ MOI QUELQUES RUMEURS *</pattern>
+<pattern>DONNÃ‰ MOI QUELQUES RUMEURS *</pattern>
 <template><srai>raconter rumeur</srai></template>
 </category>
 
 <category>
-<pattern>DONNÉ MOI QUELQUES RUMEURS</pattern>
+<pattern>DONNÃ‰ MOI QUELQUES RUMEURS</pattern>
 <template><srai>raconter rumeur</srai></template>
 </category>
 
@@ -316,7 +316,7 @@ Merci, je me ferai un plaisir de colporter ça.
 <li>c'est un truc </li>
 </random> <random>
 <li>qu'on m'a dit </li>
-<li>qu'on m'a raconté </li>
+<li>qu'on m'a racontÃ© </li>
 </random> <srai>dire rumeur</srai></template>
 </category>
 

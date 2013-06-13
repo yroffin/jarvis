@@ -37,9 +37,9 @@ public class AimlRepository extends AimlElementContainer implements
 		root = new AimlXmlImpl();
 	}
 
-	private final List<IAimlTopic>		topics		= new ArrayList<IAimlTopic>();
-	private final List<IAimlCategory>	categories	= new ArrayList<IAimlCategory>();
-	private IAimlXml					root;
+	private final List<IAimlTopic> topics = new ArrayList<IAimlTopic>();
+	private final List<IAimlCategory> categories = new ArrayList<IAimlCategory>();
+	private IAimlXml root;
 
 	@Override
 	public List<IAimlTopic> getTopics() {
@@ -89,5 +89,19 @@ public class AimlRepository extends AimlElementContainer implements
 	@Override
 	public IAimlXml getRoot() {
 		return root;
+	}
+
+	@Override
+	public String getStatistics() {
+		StringBuilder render = new StringBuilder();
+		for (IAimlTopic topic : topics) {
+			topic.toAiml(render);
+			render.append("\n");
+		}
+		for (IAimlCategory category : categories) {
+			category.toAiml(render);
+			render.append("\n");
+		}
+		return render.toString();
 	}
 }

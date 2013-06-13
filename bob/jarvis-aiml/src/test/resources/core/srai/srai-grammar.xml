@@ -2,7 +2,7 @@
 <aiml version="1.0">
 	<category>
 	<pattern>YOUR A *</pattern>
-	<template>I think you mean "you’re" or "you are" not "your." <srai>YOU ARE A <star/></srai></template>
+	<template>I think you mean "you're" or "you are" not "your." <srai>YOU ARE A <star/></srai></template>
 	</category>
 	<category>
 	<pattern>YOU ARE A *</pattern>

@@ -7,6 +7,11 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>jarvis-aiml</artifactId>
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.antlr</groupId>
@@ -38,6 +43,7 @@
 				<artifactId>antlr4-maven-plugin</artifactId>
 				<version>4.0</version>
 				<configuration>
+					<encoding>UTF-8</encoding>
 					<sourceDirectory>src</sourceDirectory>
 					<verbose>true</verbose>
 					<arguments>

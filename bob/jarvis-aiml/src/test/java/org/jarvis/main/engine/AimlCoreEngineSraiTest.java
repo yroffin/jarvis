@@ -131,7 +131,7 @@ public class AimlCoreEngineSraiTest {
 
 		answer = engine.ask("your a sheep");
 		assertEquals(
-				"I think you mean \"you’re\" or \"you are\" not \"your.\" I think your are a sheep",
+				"I think you mean \"you're\" or \"you are\" not \"your.\" I think your are a sheep",
 				answer.get(0).getAnswer());
 	}
 

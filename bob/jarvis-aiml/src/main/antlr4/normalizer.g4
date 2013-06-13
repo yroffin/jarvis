@@ -60,7 +60,7 @@ abrev : ABREV {onNewAbrev($ABREV.text);};
 misc : MISC;
 
 DOT: '.';
-QUESTIONMARK: '?';
+QUESTIONMARK: '\u003F';
 EXCLAIM: '!';
 SEMICOLON: ':';
 STAR: '*';
@@ -77,11 +77,11 @@ fragment RPARENT: ')';
 fragment LBRACE: '[';
 fragment RBRACE: ']';
 fragment COTE: '\'';
-fragment BCOTE: '’';
+fragment BCOTE: '\u00B4';
 fragment DCOTE: '"';
 fragment EQUAL: '=';
 fragment PLUS: '+';
-fragment OTHERS : 'É' | 'È' | 'Ê' | 'À' | 'Ô' | 'Û' | 'Ç' | 'Ë' | 'Â' | 'Î' | 'Ï' | 'Ù' | 'Ö' |  'é' | 'è' | 'ê' | 'à' | 'ô' | 'û' | 'ç' | 'ë' | 'â' | 'î' | 'ï' | 'ù' | 'ö';
+fragment OTHERS : '\u00A1' .. '\u00B3' | '\u00B5' .. '\u00FF';
 
 COMMENT : '<!--' .*? '-->' -> skip ;
 

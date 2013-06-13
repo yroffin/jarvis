@@ -35,4 +35,6 @@ public interface IAimlRepository extends IAimlElement {
 	void setRoot(IAimlXml root);
 
 	IAimlXml getRoot();
+
+	String getStatistics();
 }
