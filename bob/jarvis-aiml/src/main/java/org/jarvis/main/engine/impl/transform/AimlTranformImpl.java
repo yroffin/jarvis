@@ -51,7 +51,15 @@ public class AimlTranformImpl implements IAimlTransform {
 	@Override
 	public List<ITransformedItem> transform(String data)
 			throws AimlParsingError {
-		IAimlTransformParser parser = new AimlTransformParserImpl(data);
+		IAimlTransformParser parser;
+		if (data != null) {
+			parser = new AimlTransformParserImpl(data);
+		} else {
+			/**
+			 * null value handler
+			 */
+			parser = new AimlTransformParserImpl("");
+		}
 		return parser.parse();
 	}
 
