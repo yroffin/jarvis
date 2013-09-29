@@ -55,7 +55,6 @@
 
 	<modules>
 		<module>jarvis-aiml</module>
-		<module>jarvis-freetts</module>
 		<module>jarvis-core</module>
 		<module>jarvis-gtranslate</module>
 	</modules>

@@ -10,16 +10,6 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.yroffin.com.bob</groupId>
-			<artifactId>jsapi</artifactId>
-			<version>1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.yroffin.com.bob</groupId>
-			<artifactId>jarvis-freetts</artifactId>
-			<version>1.2.2</version>
-		</dependency>
-		<dependency>
-			<groupId>org.yroffin.com.bob</groupId>
 			<artifactId>jarvis-aiml</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
