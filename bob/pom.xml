@@ -39,6 +39,13 @@
 		</dependency>
 	</dependencies>
 
+	<distributionManagement>
+		<repository>
+			<id>snapshots</id>
+			<url>http://192.168.0.130:9081/nexus/content/repositories/snapshots</url>
+		</repository>
+	</distributionManagement>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -57,5 +64,6 @@
 		<module>jarvis-aiml</module>
 		<module>jarvis-core</module>
 		<module>jarvis-gtranslate</module>
+		<module>jarvis-gtranslate-libs</module>
 	</modules>
 </project>

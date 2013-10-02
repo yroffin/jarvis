@@ -34,7 +34,7 @@ public class JarvisConsole {
 				+ Charset.defaultCharset().displayName());
 		IJarvisCoreSystem jarvis = new JarvisCoreSystemImpl();
 		System.out.println("Initializing ...");
-		jarvis.initialize("");
+		jarvis.initialize(args[0]);
 		System.out.println("Ready ...");
 		String line = null;
 		System.out.print("You: ");

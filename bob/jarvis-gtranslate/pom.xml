@@ -17,8 +17,10 @@
 				<executions>
 					<execution>
 						<id>install-file-gtranslate</id>
-						<phase>install</phase>
-						<goals><goal>install-file</goal></goals>
+						<phase>compile</phase>
+						<goals>
+							<goal>install-file</goal>
+						</goals>
 						<configuration>
 							<file>${project.basedir}/lib/gtranslateapi-1.0.jar</file>
 							<groupId>${project.groupId}</groupId>
@@ -29,8 +31,10 @@
 					</execution>
 					<execution>
 						<id>install-file-jl</id>
-						<phase>install</phase>
-						<goals><goal>install-file</goal></goals>
+						<phase>compile</phase>
+						<goals>
+							<goal>install-file</goal>
+						</goals>
 						<configuration>
 							<file>${project.basedir}/lib/jl1.0.jar</file>
 							<groupId>${project.groupId}</groupId>

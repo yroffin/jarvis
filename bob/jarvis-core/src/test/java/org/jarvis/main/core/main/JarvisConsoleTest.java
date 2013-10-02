@@ -11,7 +11,9 @@ public class JarvisConsoleTest {
 	public void test() throws NoSuchFieldException, SecurityException,
 			IllegalArgumentException, IllegalAccessException, AimlParsingError,
 			IOException {
-		JarvisConsole.main(new String[0]);
+		String[] args = new String[1];
+		args[0] = "categories.txt";
+		JarvisConsole.main(args);
 	}
 
 }

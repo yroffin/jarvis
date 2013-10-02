@@ -15,17 +15,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.yroffin.com.bob</groupId>
-			<artifactId>jarvis-gtranslate</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>org.yroffin.com.bob</groupId>
-			<artifactId>jarvis-libs-gtranslate</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>org.yroffin.com.bob</groupId>
-			<artifactId>jarvis-libs-jl</artifactId>
+			<artifactId>jarvis-gtranslate-libs</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
@@ -49,7 +39,6 @@
 							<mainClass>org.jarvis.main.core.main.JarvisConsole</mainClass>
 						</manifest>
 					</archive>
-					<appendAssemblyId>false</appendAssemblyId>
 					<descriptorRefs>
 						<descriptorRef>jar-with-dependencies</descriptorRef>
 					</descriptorRefs>
