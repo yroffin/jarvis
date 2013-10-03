@@ -1,0 +1,23 @@
+<project name="play launcher" default="init" basedir=".">
+	<description>
+        lauch play command
+    </description>
+
+	<target name="dependencies">
+		<!-- Launch with play -->
+		<exec executable="cmd">
+			<arg value="/c" />
+			<arg value="play" />
+			<arg value="dependencies" />
+		</exec>
+	</target>
+
+	<target name="init" depends="dependencies">
+		<!-- Launch with play -->
+		<exec executable="cmd">
+			<arg value="/c" />
+			<arg value="play" />
+			<arg value="~run" />
+		</exec>
+	</target>
+</project>

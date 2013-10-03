@@ -28,6 +28,7 @@ import java.util.Map;
 import java.util.Stack;
 
 import org.jarvis.main.engine.IAimlCoreEngine;
+import org.jarvis.main.engine.IAimlCoreTransactionMonitor;
 import org.jarvis.main.engine.impl.transform.AimlScoreImpl;
 import org.jarvis.main.engine.impl.transform.AimlTranformImpl;
 import org.jarvis.main.engine.transform.IAimlScore;
@@ -234,7 +235,7 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 	}
 
 	/**
-	 * as to this bot something
+	 * ask to this bot something
 	 * 
 	 * @param sentence
 	 * @return
@@ -283,18 +284,27 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 			 * identify star value
 			 */
 			stack.push(category);
+			transactionMonitor.getTransaction().push(category);
 			String result = category.answer(
 					this,
 					sentence.star(
 							category.getHistory().getTransformedPattern(),
 							new ArrayList<String>()), getThatHistory(),
 					new StringBuilder()).toString();
+			transactionMonitor.getTransaction().pop(result);
 			stack.pop();
 
-			logger.info("Ask for : " + sentence + " => " + result);
+			transactionMonitor.info("Ask for : " + sentence + " => " + result);
 			return result;
 		} else {
 			return "no anwser";
 		}
+	}
+
+	IAimlCoreTransactionMonitor transactionMonitor = new AimlCoreTransactionMonitorImpl();
+
+	@Override
+	public IAimlCoreTransactionMonitor getTransactionMonitor() {
+		return transactionMonitor;
 	}
 }

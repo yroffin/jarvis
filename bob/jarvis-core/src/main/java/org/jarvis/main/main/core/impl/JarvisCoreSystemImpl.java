@@ -100,4 +100,9 @@ public class JarvisCoreSystemImpl implements IJarvisCoreSystem {
 		}
 		return answers;
 	}
+
+	@Override
+	public IAimlCoreEngine getEngine() {
+		return engine;
+	}
 }

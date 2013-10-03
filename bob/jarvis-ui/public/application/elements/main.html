@@ -1,0 +1,22 @@
+Speak: <input ng-model="query"><button ng-click="send(query)">send</button>
+
+Answer :
+<ul>
+  <li ng-repeat="answer in answers">
+    <p>{{answer}}</p>
+  </li>
+</ul>
+
+Profiling :
+<ul>
+  <li ng-repeat="transaction in transactions">
+    <p>{{transaction}}</p>
+	<ul>
+	  <li ng-repeat="category in transaction.categories">
+	    <p>{{category.level}}</p>
+	    <p>{{category.category}}</p>
+	    <p>{{category.result}}</p>
+	  </li>
+	</ul>
+  </li>
+</ul>

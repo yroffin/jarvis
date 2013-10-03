@@ -73,6 +73,12 @@ public class AimlCoreEngineSraiTest {
 		answer = engine.ask("do you know who bruno is ?");
 		assertEquals("bruno is someone, but i don't know him.", answer.get(0)
 				.getAnswer());
+		
+		for(IAimlCoreTransaction tx : engine.getTransactionMonitor().getTransactions()) {
+			for(ICategoryStack category : tx.getCategories()) {
+				System.err.println(category);
+			}
+		}
 	}
 
 	/**
@@ -118,8 +124,8 @@ public class AimlCoreEngineSraiTest {
 
 	/**
 	 * The single most common client spelling mistake is the use of "your" when
-	 * "you’re" or "you are" is intended. Not every occurrence of "your" however
-	 * should be turned into "you’re." A small amount of grammatical context is
+	 * "youï¿½re" or "you are" is intended. Not every occurrence of "your" however
+	 * should be turned into "youï¿½re." A small amount of grammatical context is
 	 * usually necessary to catch this error.
 	 * 
 	 * @throws AimlParsingError
@@ -165,7 +171,7 @@ public class AimlCoreEngineSraiTest {
 	 * <category> <pattern>WHOISHE *</pattern> <template>He is <get
 	 * name="he"/>.</template> </category>
 	 * 
-	 * <category> <pattern>WHOISHE UNKNOWN</pattern> <template>I don’t know who
+	 * <category> <pattern>WHOISHE UNKNOWN</pattern> <template>I donï¿½t know who
 	 * he is.</template> </category>
 	 * 
 	 * @throws AimlParsingError

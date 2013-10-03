@@ -30,6 +30,12 @@ import org.jarvis.main.model.parser.history.IAimlHistory;
  */
 public interface IAimlCoreEngine {
 	/**
+	 * retrieve transaction monitor
+	 * @return
+	 */
+	IAimlCoreTransactionMonitor getTransactionMonitor();
+
+	/**
 	 * the categories currently loaded
 	 * 
 	 * @return
