@@ -25,9 +25,9 @@ public class AimlThinkImpl extends AimlElementContainer implements IAimlThink {
 		 * processing of its contents, but to not return any value, regardless
 		 * of whether the contents produce output.
 		 */
-		String local = super.answer(engine, star, that, new StringBuilder())
+		String thought = super.answer(engine, star, that, new StringBuilder())
 				.toString();
-		logger.info("Think: " + local);
+		logger.info("Think: " + thought);
 		return render;
 	}
 

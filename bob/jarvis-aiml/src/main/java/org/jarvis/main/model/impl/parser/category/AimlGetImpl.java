@@ -24,7 +24,9 @@ public class AimlGetImpl extends AimlElementContainer implements IAimlGet {
 
 	@Override
 	public void add(IAimlProperty value) {
-		if (value.getKey().compareTo("name") == 0) name = accept(value);
+		if (value.getKey().compareTo("name") == 0) {
+			name = accept(value);
+		}
 	}
 
 	@Override
@@ -33,7 +35,7 @@ public class AimlGetImpl extends AimlElementContainer implements IAimlGet {
 		if (name == null) {
 			render.append("unknown");
 		} else {
-			render.append(engine.get(name));
+			if(engine.get(name) != null) render.append(engine.get(name));
 		}
 		return render;
 	}

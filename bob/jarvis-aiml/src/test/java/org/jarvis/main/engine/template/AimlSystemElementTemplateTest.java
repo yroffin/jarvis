@@ -25,6 +25,7 @@ import java.util.List;
 import org.jarvis.main.engine.IAimlCoreEngine;
 import org.jarvis.main.engine.impl.AimlCoreEngineImpl;
 import org.jarvis.main.exception.AimlParsingError;
+import org.jarvis.main.model.impl.parser.AimlProperty;
 import org.jarvis.main.model.parser.history.IAimlHistory;
 import org.junit.Test;
 
@@ -54,6 +55,7 @@ public class AimlSystemElementTemplateTest {
 		IAimlCoreEngine engine = instance("src/test/resources/core/system-defined/system.aiml");
 		List<IAimlHistory> answer = null;
 
+		engine.getAiml().accept(new AimlProperty("topic", " a simple topic "));
 		answer = engine.ask("Get date system.");
 		assertEquals(
 				("system " + (new Date()) + " localhost").substring(0, 22),
@@ -72,6 +74,7 @@ public class AimlSystemElementTemplateTest {
 		IAimlCoreEngine engine = instance("src/test/resources/core/system-defined/system.aiml");
 		List<IAimlHistory> answer = null;
 
+		engine.getAiml().accept(new AimlProperty("topic", " a simple topic "));
 		answer = engine.ask("Get size and version");
 		assertEquals("size: 4 version: 1.0.1", answer.get(0).getAnswer());
 		answer = engine.ask("Get upper and lower");

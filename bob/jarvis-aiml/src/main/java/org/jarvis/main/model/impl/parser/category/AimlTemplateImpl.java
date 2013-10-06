@@ -17,10 +17,13 @@
 package org.jarvis.main.model.impl.parser.category;
 
 import org.jarvis.main.model.impl.parser.AimlElementContainer;
+import org.jarvis.main.model.parser.IAimlTopic;
 import org.jarvis.main.model.parser.category.IAimlTemplate;
 
 public class AimlTemplateImpl extends AimlElementContainer implements IAimlTemplate {
 	
+	IAimlTopic topic;
+
 	/**
 	 * The pattern-side that element is a special type of pattern element used
 	 * for context matching. The pattern-side that is optional in a category,
@@ -28,8 +31,14 @@ public class AimlTemplateImpl extends AimlElementContainer implements IAimlTempl
 	 * follow the pattern and immediately precede the template. A pattern-side
 	 * that element contains a simple pattern expression.
 	 */
-	public AimlTemplateImpl() {
+	public AimlTemplateImpl(IAimlTopic topic) {
 		super("template");
+		this.topic = topic;
+	}
+
+	@Override
+	public IAimlTopic getTopic() {
+		return topic;
 	}
 
 	@Override

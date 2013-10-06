@@ -2,12 +2,22 @@ package org.jarvis.main.model.impl.parser.pattern;
 
 import org.jarvis.main.model.impl.parser.AimlElementContainer;
 import org.jarvis.main.model.parser.IAimlProperty;
+import org.jarvis.main.model.parser.IAimlTopic;
+import org.jarvis.main.model.parser.category.IAimlPattern;
 import org.jarvis.main.model.parser.category.IAimlThat;
 
 public class AimlThatPatternImpl extends AimlElementContainer implements IAimlThat {
 
-	public AimlThatPatternImpl() {
+	private IAimlPattern pattern;
+
+	public AimlThatPatternImpl(IAimlPattern e) {
 		super("that");
+		pattern = e;
+	}
+
+	@Override
+	public IAimlTopic getTopic() {
+		return pattern.getTopic();
 	}
 
 	private String index;

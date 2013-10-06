@@ -182,7 +182,7 @@ public class AimlCoreEngineSraiTest {
 		List<IAimlHistory> answer = null;
 
 		answer = engine.ask("who is he");
-		assertEquals("He is null.", answer.get(0).getAnswer());
+		assertEquals("?", answer.get(0).getAnswer());
 
 		engine.set("he", "jarvis");
 		answer = engine.ask("who is he");

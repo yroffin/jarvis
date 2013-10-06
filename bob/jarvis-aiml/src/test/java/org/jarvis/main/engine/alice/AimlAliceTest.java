@@ -24,6 +24,7 @@ import java.util.List;
 import org.jarvis.main.engine.IAimlCoreEngine;
 import org.jarvis.main.engine.impl.AimlCoreEngineImpl;
 import org.jarvis.main.exception.AimlParsingError;
+import org.jarvis.main.model.impl.parser.AimlProperty;
 import org.jarvis.main.model.parser.history.IAimlHistory;
 import org.junit.Test;
 
@@ -53,8 +54,21 @@ public class AimlAliceTest {
 		IAimlCoreEngine engine = instance("src/test/resources/core/alice/alice.aiml");
 		List<IAimlHistory> answer = null;
 
+		engine.getAiml().accept(new AimlProperty("topic", " ENDS WITH ALICE "));
 		engine.setBot("name", "ALICE");
 		answer = engine.ask("CALL ME BOTNAME");
 		assertEquals("My name is ALICE too!\n\n", answer.get(0).getAnswer());
+	}
+
+	@Test
+	public void testSimpleAliceHello() throws AimlParsingError {
+		IAimlCoreEngine engine = instance("src/test/resources/core/alice/alice.aiml");
+		List<IAimlHistory> answer = null;
+
+		engine.setBot("name", "ALICE");
+		answer = engine.ask("HOW DID YOU HEAR ABOUT ALICE");
+		engine.setLastAnswer("HOW DID YOU HEAR ABOUT ALICE");
+		answer = engine.ask("In romania");
+		assertEquals(" heard about ALICE from Romania. I can't say that many people hear about ALICE from  Romania .", answer.get(0).getAnswer());
 	}
 }

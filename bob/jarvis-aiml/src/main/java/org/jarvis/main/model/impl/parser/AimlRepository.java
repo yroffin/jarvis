@@ -23,10 +23,14 @@ import org.jarvis.main.model.parser.IAimlCategory;
 import org.jarvis.main.model.parser.IAimlRepository;
 import org.jarvis.main.model.parser.IAimlTopic;
 import org.jarvis.main.model.parser.IAimlXml;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AimlRepository extends AimlElementContainer implements
 		IAimlRepository {
 
+	static protected Logger logger = LoggerFactory.getLogger(AimlRepository.class);
+	
 	/**
 	 * An AIML object is represented by an aiml:aiml element in an XML document.
 	 * The aiml:aiml element may contain the following types of elements: -
@@ -49,6 +53,18 @@ public class AimlRepository extends AimlElementContainer implements
 	@Override
 	public List<IAimlCategory> getCategories() {
 		return categories;
+	}
+
+	@Override
+	public List<IAimlCategory> getCategoriesFilteredByTopic(String filter) {
+		List<IAimlCategory> filtered = new ArrayList<IAimlCategory>();
+		for(IAimlCategory c : categories) {
+			if(c.getTopic().getName().compareTo(filter)==0) {
+				filtered.add(c);
+			}
+		}
+		logger.info("Filtered categories from [" + filter + "] : " + filtered.size());
+		return filtered;
 	}
 
 	@Override

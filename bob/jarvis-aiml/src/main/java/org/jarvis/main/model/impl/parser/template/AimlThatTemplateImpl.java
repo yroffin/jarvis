@@ -22,14 +22,24 @@ import org.jarvis.main.engine.IAimlCoreEngine;
 import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.model.impl.parser.AimlElementContainer;
 import org.jarvis.main.model.parser.IAimlProperty;
+import org.jarvis.main.model.parser.IAimlTopic;
+import org.jarvis.main.model.parser.category.IAimlTemplate;
 import org.jarvis.main.model.parser.category.IAimlThat;
 import org.jarvis.main.model.parser.history.IAimlHistory;
 
 public class AimlThatTemplateImpl extends AimlElementContainer implements
 		IAimlThat {
 
-	public AimlThatTemplateImpl() {
+	private IAimlTemplate template;
+
+	public AimlThatTemplateImpl(IAimlTemplate e) {
 		super("that");
+		template = e;
+	}
+
+	@Override
+	public IAimlTopic getTopic() {
+		return template.getTopic();
 	}
 
 	private String index;

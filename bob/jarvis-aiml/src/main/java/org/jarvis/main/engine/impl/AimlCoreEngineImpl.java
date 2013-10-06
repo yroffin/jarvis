@@ -50,6 +50,7 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 	protected Logger logger = LoggerFactory.getLogger(AimlCoreEngineImpl.class);
 
 	private final IAimlRepository aiml = new AimlRepository();
+
 	private final IAimlTransform transformer = new AimlTranformImpl();
 	private final List<File> resources = new ArrayList<File>();
 	private final Stack<IAimlCategory> stack = new Stack<IAimlCategory>();
@@ -112,7 +113,7 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 
 	@Override
 	public Object setBot(String key, Object value) {
-		logger.info("set (bot)" + key + " to " + value);
+		logger.info("set (bot) " + key + " to " + value);
 		return bot.put(key, value);
 	}
 
@@ -123,8 +124,9 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 
 	@Override
 	public Object set(String key, Object value) {
-		logger.info("set " + key + " to " + value);
-		return properties.put(key, value);
+		logger.info("set (object) " + key + " to " + value);
+		if(value != null) return properties.put(key, value);
+		else return properties.put(key, "");
 	}
 
 	@Override
@@ -185,10 +187,10 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 			 * optimisation : transformation on categories only deal with the
 			 * first sentence
 			 */
-			history.setTransformedPattern(transformer.transform(
+			history.setTransformedPattern(transformer.transform(cat.getTopic(),
 					cat.getPattern().getElements()).get(0));
 			if (cat.hasThat()) {
-				history.setTransformedAnswer(transformer.transform(
+				history.setTransformedAnswer(transformer.transform(cat.getTopic(),
 						cat.getThat().getElements()).get(0));
 			}
 		}
@@ -203,18 +205,7 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 		 */
 		List<ITransformedItem> tx = transformer.transform(sentence);
 		for (ITransformedItem s : tx) {
-			IAimlHistory log = new AimlHistoryImpl();
-
-			log.setInput(s.getRaw());
-			log.setAnswer(ask(s));
-
-			/**
-			 * fix transformation
-			 */
-			List<ITransformedItem> answers = transformer.transform(log
-					.getAnswer());
-			log.setTransformedAnswer(answers.get(answers.size() - 1));
-
+			IAimlHistory log = new AimlHistoryImpl(s.getRaw(),ask(s),transformer);
 			localHistory.add(log);
 		}
 
@@ -246,15 +237,18 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 		/**
 		 * find the category with pattern match algorithm based on scoring
 		 */
-		for (int iCat = 0; iCat < aiml.getCategories().size() && found == null; iCat++) {
-			IAimlCategory cat = aiml.getCategories().get(iCat);
-			logger.info("Verify : " + cat + " " + iCat + "/"
-					+ aiml.getCategories().size());
+		List<IAimlCategory> availableCategories = aiml.getCategoriesFilteredByTopic(aiml.get("topic"));
+		for (int iCat = 0; iCat < availableCategories.size() && found == null; iCat++) {
+			IAimlCategory cat = availableCategories.get(iCat);
+			String catXmlValue = cat.toAiml(new StringBuilder()).toString().replace("\n", "").replace("\r", "");
 
 			/**
 			 * ignore stacked category to avoid recursion
 			 */
-			if (stack.contains(cat)) continue;
+			if (stack.contains(cat)) {
+				logger.info("Ignore : " + iCat + "/" + aiml.getCategories().size() + " : "+ catXmlValue);
+				continue;
+			}
 
 			ITransformedItem toScore = cat.getHistory().getTransformedPattern();
 			int score = sentence.score(toScore);
@@ -264,13 +258,27 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 			 * - current that is not null
 			 */
 			if (score >= 0) {
-				if (cat.hasThat() && getHistory().size() > 0) {
-					ITransformedItem transformed = getThatHistory()
-							.getTransformedAnswer();
-					int thatScore = transformed.score(cat.getHistory()
-							.getTransformedAnswer());
-					if (thatScore > 0) {
-						found = new AimlScoreImpl(score + thatScore, cat);
+				
+				logger.info("Score : " + score + " : "+ catXmlValue);
+				logger.info("Scored : " + cat.hasThat() + "/" + getHistory().size() + " : "+ catXmlValue);
+
+				if (cat.hasThat()) {
+					if(getHistory().size() > 0) {
+						ITransformedItem transformed = getThatHistory()
+								.getTransformedAnswer();
+						int thatScore = transformed.score(cat.getHistory()
+								.getTransformedAnswer());
+						
+						logger.info("That Score : " + thatScore + " : "+ catXmlValue);
+	
+						if (thatScore > 0) {
+							found = new AimlScoreImpl(score + thatScore, cat);
+						}
+					} else {
+						/**
+						 * that must be matched but, no history
+						 */
+						logger.info("That needed but no history : " + catXmlValue);
 					}
 				} else {
 					found = new AimlScoreImpl(score, cat);
@@ -297,8 +305,19 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 			transactionMonitor.info("Ask for : " + sentence + " => " + result);
 			return result;
 		} else {
-			return "no anwser";
+			return "?";
 		}
+	}
+
+	@Override
+	public void setLastAnswer(String reply) throws AimlParsingError {
+		IAimlHistory e = new AimlHistoryImpl("", reply, transformer);
+		getThatsHistory().add(e);
+	}
+
+	@Override
+	public IAimlRepository getAiml() {
+		return aiml;
 	}
 
 	IAimlCoreTransactionMonitor transactionMonitor = new AimlCoreTransactionMonitorImpl();

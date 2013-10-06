@@ -240,28 +240,28 @@ public class AimlParserImpl extends aimlParser implements IAimlParser {
 		@Override
 		public IAimlTopic push(AimlTopic e) {
 			super.push(e);
-			filter.push(new AimlTopic());
+			filter.push(new AimlTopic(e.getName()));
 			return e;
 		}
 
 		@Override
 		public IAimlCategory push(AimlCategory e) {
 			super.push(e);
-			filter.push(new AimlCategory());
+			filter.push(new AimlCategory(e.getTopic()));
 			return e;
 		}
 
 		@Override
 		public IAimlTemplate push(AimlTemplateImpl e) {
 			super.push(e);
-			filter.push(new AimlTemplateImpl());
+			filter.push(new AimlTemplateImpl(e.getTopic()));
 			return e;
 		}
 
 		@Override
 		public IAimlPattern push(AimlPatternImpl e) {
 			super.push(e);
-			filter.push(new AimlPatternImpl());
+			filter.push(new AimlPatternImpl(e.getTopic()));
 			return e;
 		}
 
@@ -577,6 +577,10 @@ public class AimlParserImpl extends aimlParser implements IAimlParser {
 	}
 
 	IAimlCategory category = null;
+	IAimlTemplate template = null;
+	IAimlPattern pattern = null;
+	IAimlTopic defaultTopic = new AimlTopic("");
+	IAimlTopic topic = defaultTopic;
 
 	@Override
 	public void onOpenTag(String value) {
@@ -613,7 +617,7 @@ public class AimlParserImpl extends aimlParser implements IAimlParser {
 			 * contain a simple pattern expression. A topic element may contain
 			 * one or more category elements.
 			 */
-			IAimlTopic topic = stackElements.push(new AimlTopic());
+			topic = stackElements.push(new AimlTopic());
 			repository.addTopic(topic);
 			break;
 		case CATEGORY:
@@ -622,7 +626,7 @@ public class AimlParserImpl extends aimlParser implements IAimlParser {
 			 * topic) element that contains exactly one pattern and exactly one
 			 * template. A category does not have any attributes.
 			 */
-			category = stackElements.push(new AimlCategory());
+			category = stackElements.push(new AimlCategory(topic));
 			repository.addCategory(category);
 			break;
 		case TEMPLATE:
@@ -632,7 +636,7 @@ public class AimlParserImpl extends aimlParser implements IAimlParser {
 			 * exists; otherwise, it follows the pattern element. A template
 			 * does not have any attributes.
 			 */
-			stackElements.push(new AimlTemplateImpl());
+			template= stackElements.push(new AimlTemplateImpl(topic));
 			break;
 		case PATTERN:
 			/**
@@ -641,7 +645,7 @@ public class AimlParserImpl extends aimlParser implements IAimlParser {
 			 * pattern must always be the first child element of the category. A
 			 * pattern does not have any attributes.
 			 */
-			stackElements.push(new AimlPatternImpl());
+			pattern = stackElements.push(new AimlPatternImpl(topic));
 			break;
 		case THAT:
 			/**
@@ -656,15 +660,15 @@ public class AimlParserImpl extends aimlParser implements IAimlParser {
 			 * parsing context
 			 */
 			if (stackElements.getFilter().lastElement().getClass() == AimlTemplateImpl.class) {
-				stackElements.push(new AimlThatTemplateImpl());
+				stackElements.push(new AimlThatTemplateImpl(template));
 				return;
 			}
 			if (stackElements.getFilter().lastElement().getClass() == AimlPatternImpl.class) {
-				stackElements.push(new AimlThatPatternImpl());
+				stackElements.push(new AimlThatPatternImpl(pattern));
 				return;
 			}
 			if (stackElements.getFilter().lastElement().getClass() == AimlCategory.class) {
-				stackElements.push(new AimlThatCategoryImpl());
+				stackElements.push(new AimlThatCategoryImpl(category));
 				return;
 			}
 
@@ -864,6 +868,21 @@ public class AimlParserImpl extends aimlParser implements IAimlParser {
 	public void onPrivateCloseTag(String value) {
 		if (logger.isDebugEnabled() && debugParsing) {
 			logger.debug("onCloseTag - " + value);
+		}
+		/**
+		 * close current topic, category etc ...
+		 */
+		if(value.startsWith("topic")) {
+			topic = defaultTopic;
+		}
+		if(value.startsWith("category")) {
+			category = null;
+		}
+		if(value.startsWith("pattern")) {
+			pattern = null;
+		}
+		if(value.startsWith("template")) {
+			template = null;
 		}
 		stackElements.pop(value);
 	}

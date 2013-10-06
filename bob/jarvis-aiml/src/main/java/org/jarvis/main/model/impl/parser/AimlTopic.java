@@ -20,9 +20,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jarvis.main.model.parser.IAimlCategory;
+import org.jarvis.main.model.parser.IAimlProperty;
 import org.jarvis.main.model.parser.IAimlTopic;
 
 public class AimlTopic extends AimlElementContainer implements IAimlTopic {
+
+	private String name;
 
 	/**
 	 * A topic is an optional top-level element that contains category elements.
@@ -34,6 +37,11 @@ public class AimlTopic extends AimlElementContainer implements IAimlTopic {
 		super("topic");
 	}
 
+	public AimlTopic(String name) {
+		super("topic");
+		this.name = name;
+	}
+
 	private List<IAimlCategory> categories = new ArrayList<IAimlCategory>();
 
 	@Override
@@ -42,7 +50,16 @@ public class AimlTopic extends AimlElementContainer implements IAimlTopic {
 	}
 
 	@Override
+	public void add(IAimlProperty value) {
+		if (value.getKey().compareTo("name") == 0) name = accept(value);
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	@Override
 	public String toString() {
-		return "\n\t\tAimlTopic [categories=" + categories + "]";
+		return "AimlTopic [name=" + name + "]";
 	}
 }

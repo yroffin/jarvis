@@ -29,4 +29,9 @@ public class AimlProperty implements Entry<String,String>, IAimlProperty {
         this.value = value;
         return old;
 	}
+
+	@Override
+	public String toString() {
+		return "AimlProperty [key=" + key + ", value=" + value + "]";
+	}
 }

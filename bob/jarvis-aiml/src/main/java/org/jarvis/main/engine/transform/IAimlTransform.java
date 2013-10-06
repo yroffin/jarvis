@@ -20,13 +20,14 @@ import java.util.List;
 
 import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.model.parser.IAimlElement;
+import org.jarvis.main.model.parser.IAimlTopic;
 import org.jarvis.main.model.transform.ITransformedItem;
 
 public interface IAimlTransform {
 	public List<ITransformedItem> transform(String data)
 			throws AimlParsingError;
 
-	public List<ITransformedItem> transform(List<IAimlElement> elements)
+	public List<ITransformedItem> transform(IAimlTopic topic, List<IAimlElement> elements)
 			throws AimlParsingError;
 
 	public boolean compare(String left, String right) throws AimlParsingError;

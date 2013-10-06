@@ -19,7 +19,11 @@ package org.jarvis.main.model.parser.category;
 import java.util.List;
 
 import org.jarvis.main.model.parser.IAimlElement;
+import org.jarvis.main.model.parser.IAimlTopic;
 
 public interface IAimlPattern extends IAimlElement {
 	List<IAimlElement> getElements();
+
+	IAimlTopic getTopic();
+	void setTopic(IAimlTopic topic);
 }

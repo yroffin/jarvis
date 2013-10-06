@@ -24,6 +24,7 @@ import java.util.List;
 import org.jarvis.main.engine.IAimlCoreEngine;
 import org.jarvis.main.engine.impl.AimlCoreEngineImpl;
 import org.jarvis.main.exception.AimlParsingError;
+import org.jarvis.main.model.impl.parser.AimlProperty;
 import org.jarvis.main.model.parser.history.IAimlHistory;
 import org.junit.Test;
 
@@ -53,6 +54,7 @@ public class AimlAtomicElementShortcutsTest {
 		IAimlCoreEngine engine = instance("src/test/resources/core/shortcut-elements/shortcuts.aiml");
 		List<IAimlHistory> answer = null;
 
+		engine.getAiml().accept(new AimlProperty("topic", " a simple topic "));
 		answer = engine.ask("Hello.");
 		assertEquals("Hi there!", answer.get(0).getAnswer());
 		answer = engine.ask("Hola Hello.");

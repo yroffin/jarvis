@@ -22,6 +22,7 @@ import org.jarvis.main.engine.IAimlCoreEngine;
 import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.model.parser.IAimlCategory;
 import org.jarvis.main.model.parser.IAimlElement;
+import org.jarvis.main.model.parser.IAimlTopic;
 import org.jarvis.main.model.parser.category.IAimlPattern;
 import org.jarvis.main.model.parser.category.IAimlTemplate;
 import org.jarvis.main.model.parser.category.IAimlThat;
@@ -34,14 +35,16 @@ public class AimlCategory extends AimlElementContainer implements IAimlCategory 
 	 * element that contains exactly one pattern and exactly one template. A
 	 * category does not have any attributes.
 	 */
-	public AimlCategory() {
+	public AimlCategory(IAimlTopic topic) {
 		super("category");
+		this.topic = topic;
 	}
 
 	private IAimlTemplate template;
 	private IAimlPattern pattern;
 	private IAimlThat that;
 	private IAimlHistory history;
+	private IAimlTopic topic;
 
 	@Override
 	public IAimlPattern getPattern() {
@@ -116,5 +119,10 @@ public class AimlCategory extends AimlElementContainer implements IAimlCategory 
 			render.append("</" + tag + ">\n");
 		}
 		return render;
+	}
+
+	@Override
+	public IAimlTopic getTopic() {
+		return topic;
 	}
 }

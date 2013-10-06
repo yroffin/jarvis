@@ -27,6 +27,7 @@ public interface IAimlRepository extends IAimlElement {
 	List<IAimlTopic> getTopics();
 
 	List<IAimlCategory> getCategories();
+	List<IAimlCategory> getCategoriesFilteredByTopic(String filter);
 
 	void addCategory(IAimlCategory currentCategory);
 

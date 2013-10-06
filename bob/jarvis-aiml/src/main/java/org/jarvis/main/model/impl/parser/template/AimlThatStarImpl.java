@@ -63,7 +63,7 @@ public class AimlThatStarImpl extends AimlElementContainer implements
 			IAimlHistory that, StringBuilder render) {
 		List<ITransformedItem> list = null;
 		try {
-			list = thatElement.getTransforms();
+			list = thatElement.getTransforms(thatElement.getTopic());
 		} catch (AimlParsingError e) {
 			e.printStackTrace();
 			logger.warn(e.getMessage());

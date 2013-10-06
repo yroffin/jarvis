@@ -23,6 +23,7 @@ import org.jarvis.main.engine.transform.IAimlTransformParser;
 import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.model.impl.parser.AimlDataImpl;
 import org.jarvis.main.model.parser.IAimlElement;
+import org.jarvis.main.model.parser.IAimlTopic;
 import org.jarvis.main.model.transform.ITransformedItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +32,7 @@ public class AimlTranformImpl implements IAimlTransform {
 	protected Logger logger = LoggerFactory.getLogger(AimlTranformImpl.class);
 
 	@Override
-	public List<ITransformedItem> transform(List<IAimlElement> elements)
+	public List<ITransformedItem> transform(IAimlTopic topic, List<IAimlElement> elements)
 			throws AimlParsingError {
 		StringBuilder render = new StringBuilder();
 		StringBuilder transform = new StringBuilder();
@@ -43,7 +44,7 @@ public class AimlTranformImpl implements IAimlTransform {
 			}
 		}
 		if (logger.isDebugEnabled()) {
-			logger.debug("[TRANSFORM] => " + transform(render.toString()));
+			logger.debug("[TRANSFORM] " + topic + " => " + transform(render.toString()));
 		}
 		return transform(render.toString());
 	}

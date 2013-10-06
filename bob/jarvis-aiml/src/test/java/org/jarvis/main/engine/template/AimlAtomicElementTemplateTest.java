@@ -24,6 +24,7 @@ import java.util.List;
 import org.jarvis.main.engine.IAimlCoreEngine;
 import org.jarvis.main.engine.impl.AimlCoreEngineImpl;
 import org.jarvis.main.exception.AimlParsingError;
+import org.jarvis.main.model.impl.parser.AimlProperty;
 import org.jarvis.main.model.parser.history.IAimlHistory;
 import org.junit.Test;
 
@@ -71,6 +72,7 @@ public class AimlAtomicElementTemplateTest {
 		IAimlCoreEngine engine = instance("src/test/resources/core/atomic-template-elements/input.aiml");
 		List<IAimlHistory> answer = null;
 
+		engine.getAiml().accept(new AimlProperty("topic", " a simple topic "));
 		answer = engine.ask("Repeat my sentence.");
 		assertEquals("Ok x a b c", answer.get(0).getAnswer());
 		answer = engine.ask("What i've said ?");

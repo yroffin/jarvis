@@ -19,5 +19,6 @@ package org.jarvis.main.model.parser;
 public interface IAimlTopic extends IAimlElement {
 
 	void addCategory(IAimlCategory currentCategory);
+	String getName();
 
 }

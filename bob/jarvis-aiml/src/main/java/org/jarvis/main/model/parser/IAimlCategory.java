@@ -37,4 +37,6 @@ public interface IAimlCategory extends IAimlElement {
 	public IAimlHistory getHistory();
 
 	public boolean hasThat();
+
+	public IAimlTopic getTopic();
 }

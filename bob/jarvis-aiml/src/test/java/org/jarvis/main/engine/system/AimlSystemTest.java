@@ -24,6 +24,7 @@ import java.util.List;
 import org.jarvis.main.engine.IAimlCoreEngine;
 import org.jarvis.main.engine.impl.AimlCoreEngineImpl;
 import org.jarvis.main.exception.AimlParsingError;
+import org.jarvis.main.model.impl.parser.AimlProperty;
 import org.jarvis.main.model.parser.history.IAimlHistory;
 import org.junit.Test;
 
@@ -54,6 +55,7 @@ public class AimlSystemTest {
 		List<IAimlHistory> answer = null;
 
 		engine.set("name", "Nancy");
+		engine.getAiml().accept(new AimlProperty("topic", " a simple topic "));
 		answer = engine.ask("Execute system.");
 		assertEquals("Runnning script ...", answer.get(0).getAnswer());
 		answer = engine.ask("Execute javascript.");

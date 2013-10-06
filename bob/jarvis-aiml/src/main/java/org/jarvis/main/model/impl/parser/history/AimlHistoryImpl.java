@@ -15,6 +15,10 @@
  */
 package org.jarvis.main.model.impl.parser.history;
 
+import java.util.List;
+
+import org.jarvis.main.engine.transform.IAimlTransform;
+import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.model.parser.history.IAimlHistory;
 import org.jarvis.main.model.transform.ITransformedItem;
 
@@ -24,6 +28,22 @@ public class AimlHistoryImpl implements IAimlHistory {
 	private String answer;
 	private ITransformedItem transformedAnswer;
 	private ITransformedItem transformedPattern;
+
+	public AimlHistoryImpl() {		
+	}
+
+	public AimlHistoryImpl(String input, String reply, IAimlTransform transformer) throws AimlParsingError {
+		setInput(input);
+		setAnswer(reply);
+		/**
+		 * fix transformation
+		 */
+		List<ITransformedItem> answers = transformer.transform(reply);
+
+		if(answers.size()>0) {
+			setTransformedAnswer(answers.get(answers.size() - 1));
+		}
+	}
 
 	@Override
 	public void setInput(String input) {
