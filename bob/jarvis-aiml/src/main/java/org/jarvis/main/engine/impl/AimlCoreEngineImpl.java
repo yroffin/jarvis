@@ -225,6 +225,8 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 		return aiml.getCategories();
 	}
 
+	static int sessionId = 0;
+
 	/**
 	 * ask to this bot something
 	 * 
@@ -238,15 +240,21 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 		 * find the category with pattern match algorithm based on scoring
 		 */
 		List<IAimlCategory> availableCategories = aiml.getCategoriesFilteredByTopic(aiml.get("topic"));
-		for (int iCat = 0; iCat < availableCategories.size() && found == null; iCat++) {
+
+		Thread.currentThread().getId();
+
+		for (int iCat = 0; iCat < availableCategories.size(); iCat++) {
 			IAimlCategory cat = availableCategories.get(iCat);
-			String catXmlValue = cat.toAiml(new StringBuilder()).toString().replace("\n", "").replace("\r", "");
+			String sessiondIdText = "[" + sessionId + "/" + iCat + "]";
+			String catXmlValue = sessiondIdText + cat.toAiml(new StringBuilder()).toString().replace("\n", "").replace("\r", "");
+
+			logger.info(catXmlValue);
 
 			/**
 			 * ignore stacked category to avoid recursion
 			 */
 			if (stack.contains(cat)) {
-				logger.info("Ignore : " + iCat + "/" + aiml.getCategories().size() + " : "+ catXmlValue);
+				logger.info(sessiondIdText + " => Ignore");
 				continue;
 			}
 
@@ -259,9 +267,9 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 			 */
 			if (score >= 0) {
 				
-				logger.info("Score : " + score + " : "+ catXmlValue);
-				logger.info("Scored : " + cat.hasThat() + "/" + getHistory().size() + " : "+ catXmlValue);
-
+				/**
+				 * that statement cound improve the current score
+				 */
 				if (cat.hasThat()) {
 					if(getHistory().size() > 0) {
 						ITransformedItem transformed = getThatHistory()
@@ -269,18 +277,30 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 						int thatScore = transformed.score(cat.getHistory()
 								.getTransformedAnswer());
 						
-						logger.info("That Score : " + thatScore + " : "+ catXmlValue);
+						logger.info(sessiondIdText + " => That improve score : " + thatScore);
 	
 						if (thatScore > 0) {
-							found = new AimlScoreImpl(score + thatScore, cat);
+							score += score;
 						}
 					} else {
 						/**
 						 * that must be matched but, no history
 						 */
-						logger.info("That needed but no history : " + catXmlValue);
+						logger.info(sessiondIdText + " => That needed but no history");
 					}
-				} else {
+				}
+			}
+			
+			logger.info(sessiondIdText + " => Score  : " + score);
+			logger.info(sessiondIdText + " => Scored : " + cat.hasThat() + "/" + getHistory().size());
+
+			/**
+			 * scored item, but more scored ?
+			 */
+			if(score >= 0) {
+				if(found == null) {
+					found = new AimlScoreImpl(score, cat);
+				} else if(found.getKey() < score) {
 					found = new AimlScoreImpl(score, cat);
 				}
 			}

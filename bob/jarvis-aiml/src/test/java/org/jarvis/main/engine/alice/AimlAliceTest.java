@@ -61,11 +61,22 @@ public class AimlAliceTest {
 	}
 
 	@Test
+	public void testSimpleAliceIsMyName() throws AimlParsingError {
+		IAimlCoreEngine engine = instance("src/test/resources/core/alice/alice.aiml");
+		List<IAimlHistory> answer = null;
+
+		engine.setBot("name", "ALICE");
+		answer = engine.ask("My name is really YANNICK");
+		assertEquals("No, nothing to do with your stupid question really yannick", answer.get(0).getAnswer());
+	}
+	
+	@Test
 	public void testSimpleAliceHello() throws AimlParsingError {
 		IAimlCoreEngine engine = instance("src/test/resources/core/alice/alice.aiml");
 		List<IAimlHistory> answer = null;
 
 		engine.setBot("name", "ALICE");
+		answer = engine.ask("My name is YANNICK");
 		answer = engine.ask("HOW DID YOU HEAR ABOUT ALICE");
 		engine.setLastAnswer("HOW DID YOU HEAR ABOUT ALICE");
 		answer = engine.ask("In romania");
