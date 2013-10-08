@@ -69,13 +69,21 @@ public class JarvisCoreSystemImpl implements IJarvisCoreSystem {
 
 	@Override
 	public void speak(String value) throws IOException {
-		InputStream sound = voiceManager.getAudio(value, Language.FRENCH);
+		InputStream sound = null;
 		try {
-			voiceManager.play(sound);
-		} catch (JavaLayerException e) {
-			throw new IOException(e);
+			try {
+				if(value != null && value.length()>0) {
+					sound = voiceManager.getAudio(value, Language.FRENCH);
+					voiceManager.play(sound);
+				}
+			} catch (JavaLayerException e) {
+				throw new IOException(e);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} finally {
+			if(sound != null) sound.close();
 		}
-		sound.close();
 	}
 
 	@Override
@@ -93,7 +101,7 @@ public class JarvisCoreSystemImpl implements IJarvisCoreSystem {
 		List<IAimlHistory> answers = chat(sentence);
 		for (IAimlHistory answer : answers) {
 			try {
-				speak(answer.getAnswer());
+				speak(answer.getAnswer().replace("\n", "").replace("\r", "").trim());
 			} catch (IOException e) {
 				throw new AimlParsingError(e);
 			}

@@ -43,13 +43,13 @@ public class JarvisConsole {
 			line = br.readLine();
 			for (; line != null;) {
 				if (line.length() > 0) {
-					List<IAimlHistory> result = jarvis.chat(line);
+					List<IAimlHistory> result = jarvis.ask(line);
 					for (IAimlHistory value : result) {
 						System.out.println(value.getAnswer());
 					}
 				}
 				line = br.readLine();
-				System.out.print("You: ");
+				System.out.print("Me: ");
 			}
 		} catch (IOException e) {
 		}

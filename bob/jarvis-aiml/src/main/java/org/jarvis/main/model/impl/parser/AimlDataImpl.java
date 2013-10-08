@@ -54,7 +54,7 @@ public class AimlDataImpl extends AimlElementContainer {
 			 */
 			render.append(value.replace(STAR, star.get(0)));
 		} else {
-			render.append(value);
+			render.append(value.replace("\n", "").replace("\r", ""));
 		}
 		return render;
 	}

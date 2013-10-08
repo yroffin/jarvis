@@ -248,12 +248,11 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 			String sessiondIdText = "[" + sessionId + "/" + iCat + "]";
 			String catXmlValue = sessiondIdText + cat.toAiml(new StringBuilder()).toString().replace("\n", "").replace("\r", "");
 
-			logger.info(catXmlValue);
-
 			/**
 			 * ignore stacked category to avoid recursion
 			 */
 			if (stack.contains(cat)) {
+				logger.info(catXmlValue);
 				logger.info(sessiondIdText + " => Ignore");
 				continue;
 			}
@@ -271,7 +270,7 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 				 * that statement cound improve the current score
 				 */
 				if (cat.hasThat()) {
-					if(getHistory().size() > 0) {
+					if(getHistory().size() > 0 && getThatHistory() != null) {
 						ITransformedItem transformed = getThatHistory()
 								.getTransformedAnswer();
 						int thatScore = transformed.score(cat.getHistory()
@@ -287,20 +286,23 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 						 * that must be matched but, no history
 						 */
 						logger.info(sessiondIdText + " => That needed but no history");
+						score = -1;
 					}
 				}
 			}
 			
-			logger.info(sessiondIdText + " => Score  : " + score);
-			logger.info(sessiondIdText + " => Scored : " + cat.hasThat() + "/" + getHistory().size());
-
 			/**
 			 * scored item, but more scored ?
 			 */
 			if(score >= 0) {
+				logger.info(catXmlValue);
+				logger.info(sessiondIdText + " => Score  : " + score);
+				logger.info(sessiondIdText + " => Scored : " + cat.hasThat() + "/" + getHistory().size());
+
 				if(found == null) {
 					found = new AimlScoreImpl(score, cat);
 				} else if(found.getKey() < score) {
+					logger.info(sessiondIdText + " => Replace  : " + found.getKey() + " by " + score);
 					found = new AimlScoreImpl(score, cat);
 				}
 			}

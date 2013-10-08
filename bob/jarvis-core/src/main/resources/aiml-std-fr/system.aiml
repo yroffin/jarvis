@@ -176,7 +176,6 @@ désolé, j'ai une boucle!!!
 <think><gossip>
 <get name="memoriser"/>
 </gossip></think>
-
 <condition>
 	<li name="apprendre" value="oui">que veut dire <get name="quoi"/>?
 		<think><set name="oldtopic"><topic/></set><think><set name="oldtopic"><get name="topic"/></set></think><set name="topic">comprendre</set></think>
