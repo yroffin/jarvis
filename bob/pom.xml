@@ -65,5 +65,16 @@
 		<module>jarvis-core</module>
 		<module>jarvis-gtranslate</module>
 		<module>jarvis-gtranslate-libs</module>
+		<module>sphinx-core</module>
 	</modules>
+
+    <repositories>
+        <repository>
+            <id>snapshots-repo</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <releases><enabled>false</enabled></releases>
+        <snapshots><enabled>true</enabled></snapshots>
+        </repository>
+    </repositories>
+
 </project>

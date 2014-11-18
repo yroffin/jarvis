@@ -57,7 +57,7 @@ public class AimlAliceTest {
 		engine.getAiml().accept(new AimlProperty("topic", " ENDS WITH ALICE "));
 		engine.setBot("name", "ALICE");
 		answer = engine.ask("CALL ME BOTNAME");
-		assertEquals("My name is ALICE too!\n\n", answer.get(0).getAnswer());
+		assertEquals("My name is ALICE too!", answer.get(0).getAnswer());
 	}
 
 	@Test

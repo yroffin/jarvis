@@ -712,9 +712,9 @@
 <template><set name="it">      <set name="topic"> ALICE HEADQUARTERS </set>     </set> is <bot name="location"/>.</template>
 </category>
 <category><pattern>My *</pattern>
-<template>Nothing to do with your question <star></start></template>
+<template>Nothing to do with your question <star></star></template>
 </category>
 <category><pattern>My name is *</pattern>
-<template>No, nothing to do with your stupid question <star></start></template>
+<template>No, nothing to do with your stupid question <star></star></template>
 </category>
 </aiml>

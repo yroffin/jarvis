@@ -155,11 +155,11 @@ public class AimlAliceTest {
 
 		engine.set("gender", "female");
 		answer = engine.ask("i am blond 4");
-		assertEquals("You sound very ...\r\nattractive.", answer.get(0)
+		assertEquals("You sound very ...attractive.", answer.get(0)
 				.getAnswer());
 		engine.set("gender", "male");
 		answer = engine.ask("i am blond 4");
-		assertEquals("You sound very ...\r\nhandsome.", answer.get(0)
+		assertEquals("You sound very ...handsome.", answer.get(0)
 				.getAnswer());
 	}
 }
