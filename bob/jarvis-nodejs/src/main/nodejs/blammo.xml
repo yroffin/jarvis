@@ -1,0 +1,42 @@
+<configuration>
+	<appender name="console" type="console_appender">
+		<encoder type="dummy_encoder"/>
+		<layout type="pattern_layout">%timestamp|%pid|%logger|%level|%message</layout>
+
+		<config>
+			<colorize>0</colorize>
+		</config>
+	</appender>
+
+	<appender name="file_pattern" type="file_appender">
+		<encoder type="dummy_encoder"/>
+		<layout type="pattern_layout">%timestamp|%pid|%logger|%level|%message</layout>
+
+		<filters>
+			<filter type="threshold_filter">WARN</filter>
+		</filters>
+
+		<config>
+			<filename>logs/blammo.log</filename>
+		</config>
+	</appender>
+
+	<appender name="file_json" type="file_appender">
+		<encoder type="dummy_encoder"/>
+		<layout type="json_layout" />
+
+		<config>
+			<filename>logs/blammo.json</filename>
+		</config>
+	</appender>
+
+	<logger name="logger1">
+		<appender-ref ref="console" />
+	</logger>
+
+	<root level="trace">
+		<appender-ref ref="file_pattern" />
+		<appender-ref ref="file_json" />
+		<appender-ref ref="console" />
+	</root>
+</configuration>

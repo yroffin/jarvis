@@ -67,7 +67,8 @@
 		<module>jarvis-gtranslate-libs</module>
 		<module>sphinx-core</module>
     <module>jarvis-server</module>
-  </modules>
+    <module>jarvis-nodejs</module>
+	</modules>
 
     <repositories>
         <repository>

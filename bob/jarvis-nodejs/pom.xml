@@ -1,0 +1,162 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.yroffin.com.bob</groupId>
+		<artifactId>bob</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>jarvis-nodejs</artifactId>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.github.eirslett</groupId>
+				<artifactId>frontend-maven-plugin</artifactId>
+				<version>0.0.16</version>
+				<executions>
+					<execution>
+						<id>install node and npm</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>install-node-and-npm</goal>
+						</goals>
+						<configuration>
+							<nodeVersion>v0.10.33</nodeVersion>
+							<npmVersion>1.3.8</npmVersion>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>keytool-maven-plugin</artifactId>
+				<version>1.5</version>
+				<executions>
+					<!-- Step 1: Creating the “public-private” key-pair. -->
+					<!-- keytool -genkey -alias client -validity 365 -keystore keystore.jks -->
+					<execution>
+						<id>01-export-public-private-key-pair</id>
+						<goals>
+							<goal>generateKeyPair</goal>
+							<goal>list</goal>
+							<goal>generateCertificateRequest</goal>
+							<goal>generateCertificate</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<dname>cn=www.example.com, ou=None, L=Seattle, ST=Washington, o=ExampleOrg, c=US</dname>
+							<alias>jarvis-nodejs</alias>
+							<keypass>keypass</keypass>
+							<sigalg>SHA1withDSA</sigalg>
+							<validity>100</validity>
+							<startdate>2012/01/01</startdate>
+							<file>target/csr-for-server.pem</file>
+							<infile>target/csr-for-server.pem</infile>
+							<outfile>src/main/nodejs/cert/signed-cert.pem</outfile>
+						</configuration>
+					</execution>
+					<!-- Step 2: Validate the “public-private” key pair. -->
+					<!-- keytool -list -v -keystore keystore.jks -->
+					<execution>
+						<id>02-validate-public-private-key-pair</id>
+						<goals>
+							<goal>printCertificate</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<file>src/main/nodejs/cert/signed-cert.pem</file>
+							<alias>jarvis-nodejs</alias>
+							<keypass>keypass</keypass>
+						</configuration>
+					</execution>
+					<!-- Step 3: Extract the “public key” from the “public-private” -->
+					<!-- keytool -export -alias client -keystore keystore.jks -rfc -file 
+						public.cert -->
+					<execution>
+						<id>03-export-public-key-pair</id>
+						<goals>
+							<goal>exportCertificate</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<file>src/main/nodejs/cert/public.cert</file>
+							<rfc>true</rfc>
+							<alias>jarvis-nodejs</alias>
+						</configuration>
+					</execution>
+					<!-- Step 4: Check the extracted public key (public.cert) -->
+					<!-- Step 5: Time to create the truststore using the public key, which 
+						was extracted. -->
+					<!-- keytool -import -alias client -file public.cert -keystore server.truststore -->
+					<execution>
+						<id>04-export-truststore</id>
+						<goals>
+							<goal>importCertificate</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<file>src/main/nodejs/cert/public.cert</file>
+							<alias>jarvis-nodejs</alias>
+							<keystore>target/server-truststore.jks</keystore>
+							<storepass>storepass</storepass>
+							<noprompt>true</noprompt>
+						</configuration>
+					</execution>
+					<!-- Steps Private Keys Export : It is required to save the private 
+						key in the PKCS#12 format -->
+					<!-- Step 1: keytool -v -importkeystore -srckeystore keystore.jks -srcalias 
+						client -destkeystore myp12file.p12 -deststoretype PKCS12 -->
+					<!-- Step 2: openssl pkcs12 -in myp12file.p12 -out private.pem -->
+					<execution>
+						<id>05-export-pkcs12-key</id>
+						<goals>
+							<goal>importKeystore</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<srckeystore>target/keystore.jks</srckeystore>
+							<srcstorepass>storepass</srcstorepass>
+							<destkeystore>target/keystore.p12</destkeystore>
+							<deststoretype>PKCS12</deststoretype>
+							<deststorepass>pkcs12storepass</deststorepass>
+							<srcalias>jarvis-nodejs</srcalias>
+							<srckeypass>keypass</srckeypass>
+							<destkeypass>pkcs12storepass</destkeypass>
+						</configuration>
+					</execution>
+				</executions>
+				<configuration>
+					<verbose>true</verbose>
+					<keystore>target/keystore.jks</keystore>
+					<storepass>storepass</storepass>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.3.2</version>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<executable>src/main/bin/openssl.exe</executable>
+					<arguments>
+	                    <argument>pkcs12</argument>
+	                    <argument>-in</argument>
+	                    <argument>target/keystore.p12</argument>
+	                    <argument>-out</argument>
+	                    <argument>target/key.pem</argument>
+	                    <argument>-password</argument>
+	                    <argument>pkcs12storepass</argument>
+                	</arguments>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
