@@ -8,7 +8,7 @@ function main() {
 	var root = blammo.LoggerFactory.getLogger(blammo.Logger.ROOT_LOGGER_NAME);
 	var logger = blammo.LoggerFactory.getLogger('logger1');
 
-	// This line is from the Node.js HTTPS documentation.
+	// Default options for this htts server
 	var options = {
 		key : fs.readFileSync('keys/agent2-key.pem'),
 		cert : fs.readFileSync('keys/agent2-cert.pem')
@@ -19,7 +19,8 @@ function main() {
 
 	// Create an HTTP service.
 	logger.info('Create an HTTP service');
-	http.createServer(app).listen(80);
+	var httpServer = http.createServer(app);
+	httpServer.listen(80);
 	logger.info('Create an HTTP service done');
 	// Create an HTTPS service identical to the HTTP service.
 	logger.info("Create an HTTPS service identical to the HTTP service");
