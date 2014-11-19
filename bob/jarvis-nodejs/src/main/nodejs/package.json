@@ -1,0 +1,22 @@
+{
+  "name": "jarvis-node",
+  "version": "0.1.0",
+  "description": "jarvis-nodejs",
+  "main": "src/main/nodejs/hello-world-server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified! Configure in package.json\" && exit 1"
+  },
+  "dependencies": {
+	    "express": "3.3.5",
+	    "blammo": "0.4.5"
+	  },
+  "repository": "",
+  "keywords": [
+    "node.js",
+    "eclipse",
+    "nodeclipse"
+  ],
+  "author": "",
+  "license": "Apache 2.0",
+  "readmeFilename": "README.md"
+}
