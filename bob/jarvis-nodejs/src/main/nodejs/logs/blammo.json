@@ -1,5 +1,0 @@
-{"timestamp":"2014-11-19 23:54:34.086","logger":"logger1","level":"INFO","message":"Create an HTTP service."}
-{"timestamp":"2014-11-19 23:55:14.656","logger":"logger1","level":"INFO","message":"Create an HTTP service"}
-{"timestamp":"2014-11-19 23:55:14.688","logger":"logger1","level":"INFO","message":"Create an HTTP service done"}
-{"timestamp":"2014-11-19 23:55:14.689","logger":"logger1","level":"INFO","message":"Create an HTTPS service identical to the HTTP service"}
-{"timestamp":"2014-11-19 23:55:14.978","logger":"logger1","level":"INFO","message":"Create an HTTPS service identical to the HTTP service done"}
