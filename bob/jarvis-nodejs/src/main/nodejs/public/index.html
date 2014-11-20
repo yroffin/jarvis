@@ -1,0 +1,177 @@
+<!doctype html>
+<!--
+Copyright 2014 Yannick Roffin.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<html lang="en" ng-app="myApp">
+    <head>
+        <title>My AngularJS App</title>
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jquerymobile/1.4.3/jquery.mobile.min.css" />
+        <link rel="stylesheet" href="css/app.css"/>
+        <script src="config.js"></script>
+    </head>
+    <body ng-controller="BootstrapCtrl" ng-init="load()">
+
+        <!-- Main page -->
+        <div data-role="page" id="home" data-theme="{{theme}}">
+
+            <div data-role="header">
+                <h1>Ille & Zick</h1>
+            </div><!-- /header -->
+
+            <div role="main" class="ui-content">
+                <p>Bienvenu sur la page d'accueil (Email google: {{auth.getEmail}}).</p>
+            </div><!-- /content -->
+
+            <div data-role=footer">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="#home" id="home" data-transition="flip" data-icon="home">Accueil</a></li>
+                        <li><a href="#inventory" id="email" data-transition="flip" data-icon="grid" ng-click="loadInventory()">Inventaire</a></li>
+                        <li><a href="#member" id="member" data-transition="flip" data-icon="user">Membres</a></li>
+                        <li><a href="#groups" id="groups" data-transition="flip" data-icon="tag" ng-click="loadGroups()">Groupes</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div><!-- /page -->
+
+        <!-- Inventory page -->
+        <div data-role="page" id="inventory" data-theme="{{theme}}">
+            <div data-role="header">
+                <h1>Inventaire</h1>
+            </div>
+            <div role="main" class="ui-content">
+                <div>
+                    <ul data-role="listview" id="inventoryList">
+                        <li ng-repeat="item in inventory"><a href="#inventory-detail" ng-click="selectItem(item)">{{item.name}}</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div data-role=footer">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="#home" id="home" data-transition="flip" data-icon="home">Accueil</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Member page -->
+        <div data-role="page" id="member" data-theme="{{theme}}">
+            <div data-role="header">
+                <h1>Membres</h1>
+            </div>
+            <div role="main" class="ui-content">
+                <div>
+                </div>
+            </div>
+            <div data-role=footer">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="#home" id="home" data-transition="flip" data-icon="home">Accueil</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Groups page -->
+        <div data-role="page" id="groups" data-theme="{{theme}}">
+            <div data-role="header">
+                <h1>Groupes</h1>
+            </div>
+            <div role="main" class="ui-content">
+                <div>
+                    <ul data-role="listview" id="groupsList">
+                        <li ng-repeat="item in groups"><a href="#groups-detail" ng-click="selectGroup(item)">{{item.email}} ({{item.count}} personne(s))</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div data-role=footer">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="#home" id="home" data-transition="flip" data-icon="home">Accueil</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Inventory detail page -->
+        <div data-role="page" id="inventory-detail" data-theme="{{theme}}">
+            <div data-role="header">
+                <h1>Inventaire</h1>
+            </div>
+            <div role="main" class="ui-content">
+                <div>
+                    <form>
+                        <label for="text-basic">Nom</label>
+                        <input type="text" name="text-basic" id="text-basic" value="{{inventoryItem.name}}" />
+                        <label for="text-basic">Image</label>
+                        <img width="128px" src="{{inventoryItem.href}}" />
+                        <label for="text-basic">Description</label>
+                        <input type="text" name="text-basic" id="text-basic" value="{{inventoryItem.description}}" />
+                    </form>
+                </div>
+            </div>
+            <div data-role=footer">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="#home" id="home" data-transition="flip" data-icon="home">Accueil</a></li>
+                        <li><a href="#inventory" id="email" data-transition="flip" data-icon="grid" ng-click="loadInventory()">Inventaire</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Groups detail page -->
+        <div data-role="page" id="groups-detail" data-theme="{{theme}}">
+            <div data-role="header">
+                <h1>Groupe {{groupItem.email}}</h1>
+            </div>
+            <div role="main" class="ui-content">
+                <div>
+                    <ul data-role="listview" id="groupsDetailList">
+                        <li ng-repeat="user in groupItem.users">{{user.email}}</li>
+                    </ul>
+                </div>
+            </div>
+            <div data-role=footer">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="#home" id="home" data-transition="flip" data-icon="home">Accueil</a></li>
+                        <li><a href="#groups" id="groups" data-transition="flip" data-icon="tag" ng-click="loadGroups()">Groupes</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- JQuery -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquerymobile/1.4.3/jquery.mobile.min.js"></script>
+        <!-- AngularJS -->
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular-resource.min.js"></script>
+
+        <!-- Application -->
+        <script src="js/app.js"></script>
+        <script src="js/services.js"></script>
+        <script src="js/controllers.js"></script>
+        <script src="js/filters.js"></script>
+        <script src="js/directives.js"></script>
+    </body>
+</html>
