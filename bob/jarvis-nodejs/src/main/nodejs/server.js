@@ -40,7 +40,7 @@ function main() {
 	
 	// Activate cookies, sessions and forms
 	app.use(express.logger())
-	.use(express.static('public'))
+	.use(express.static(__dirname + '/public'))
 	.use(express.favicon(__dirname + '/public/favicon.ico'))
 	.use(express.cookieParser())
 	.use(express.session({secret: 'secretkey'}))

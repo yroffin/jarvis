@@ -25,6 +25,6 @@ exports.init = function () {
  * info services
  */
 exports.info = function (req, res) {
-	logger.info('info()' + req.params);
-	res.json({res:'titi'});
+	logger.info('info() key [%s]', req.params.key);
+	res.json({properties:[{key:'test', value:'test'},{key:'test', value:'test'},{key:'test', value:'test'},{key:'test', value:'test'}]});
 };

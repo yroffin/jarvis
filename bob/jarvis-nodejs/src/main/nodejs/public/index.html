@@ -23,7 +23,6 @@ limitations under the License.
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8">
         <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jquerymobile/1.4.3/jquery.mobile.min.css" />
-        <link rel="stylesheet" href="css/app.css"/>
         <script src="config.js"></script>
     </head>
     <body ng-controller="BootstrapCtrl" ng-init="load()">
@@ -32,18 +31,18 @@ limitations under the License.
         <div data-role="page" id="home" data-theme="{{theme}}">
 
             <div data-role="header">
-                <h1>Ille & Zick</h1>
+                <h1>Jarvis</h1>
             </div><!-- /header -->
 
             <div role="main" class="ui-content">
-                <p>Bienvenu sur la page d'accueil (Email google: {{auth.getEmail}}).</p>
+                <p>Bienvenu sur la page d'accueil du système jarvis.</p>
             </div><!-- /content -->
 
             <div data-role=footer">
                 <div data-role="navbar">
                     <ul>
                         <li><a href="#home" id="home" data-transition="flip" data-icon="home">Accueil</a></li>
-                        <li><a href="#inventory" id="email" data-transition="flip" data-icon="grid" ng-click="loadInventory()">Inventaire</a></li>
+                        <li><a href="#configuration" id="configuration" data-transition="flip" data-icon="grid" ng-click="loadConfiguration()">Configuration</a></li>
                         <li><a href="#member" id="member" data-transition="flip" data-icon="user">Membres</a></li>
                         <li><a href="#groups" id="groups" data-transition="flip" data-icon="tag" ng-click="loadGroups()">Groupes</a></li>
                     </ul>
@@ -51,16 +50,28 @@ limitations under the License.
             </div>
         </div><!-- /page -->
 
-        <!-- Inventory page -->
-        <div data-role="page" id="inventory" data-theme="{{theme}}">
+        <!-- Configuration page -->
+        <div data-role="page" id="configuration" data-theme="{{theme}}">
             <div data-role="header">
-                <h1>Inventaire</h1>
+                <h1>Configuration</h1>
             </div>
             <div role="main" class="ui-content">
                 <div>
-                    <ul data-role="listview" id="inventoryList">
-                        <li ng-repeat="item in inventory"><a href="#inventory-detail" ng-click="selectItem(item)">{{item.name}}</a></li>
-                    </ul>
+                	<h1>Properties</h1>
+                    <table data-role="table" id="configuration-properties" data-mode="reflow" class="ui-responsive table-stroke">
+                    	<thead>
+                    		<tr>
+                    			<th data-priority = "1">Key</th>
+                    			<th data-priority = "1">Value</th>
+                    		</tr>
+                    	</thead>
+                    	<tbody>
+                        	<tr ng-repeat="item in jarvis.configuration.properties">
+                        		<td>{{item.key}}</td>
+                        		<td>{{item.value}}</td>
+                        	</tr>
+                    	</tbody>
+                    </table>
                 </div>
             </div>
             <div data-role=footer">
@@ -116,9 +127,9 @@ limitations under the License.
             <div data-role="header">
                 <h1>Inventaire</h1>
             </div>
-            <div role="main" class="ui-content">
+            <div role="main" class="ui-content">	
                 <div>
-                    <form>
+                    <form ng-show="inventoryItem" >
                         <label for="text-basic">Nom</label>
                         <input type="text" name="text-basic" id="text-basic" value="{{inventoryItem.name}}" />
                         <label for="text-basic">Image</label>

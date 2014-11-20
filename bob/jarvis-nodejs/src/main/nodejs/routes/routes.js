@@ -23,6 +23,10 @@ var servicesConfig = require('../services/config');
  */
 exports.init = function (app) {
 	logger.info('Store routes configuration' + servicesConfig.info);
+	/**
+	 * configuration services
+	 */
+	app.get('/services/info', servicesConfig.info);
 	app.get('/services/info/:key', servicesConfig.info);
 	return;
 };
