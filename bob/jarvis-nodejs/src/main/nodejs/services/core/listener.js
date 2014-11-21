@@ -69,13 +69,25 @@ exports.handler = function(socket) {
 	/**
 	 * Identify this client
 	 */
-	socket.name = socket.remoteAddress + ":" + socket.remotePort
+	socket.name = socket.remoteAddress + ":" + socket.remotePort;
+
+	/**
+	 * write on socket
+	 */
+	function write(message, target) {
+		target.write(JSON.stringify(message));
+		target.write("\r\n");
+	}
 
 	/**
 	 * Send a nice welcome message and announce
 	 */
-	socket.write("Welcome " + socket.name + "\n");
-	broadcast(socket.name + " joined the chat\n", socket);
+	write({
+		'code' : 'welcome',
+		'welcome' : {
+			'data' : socket.name + ' joined the chat.'
+		}
+	}, socket);
 
 	/**
 	 * store socket in context put this new client in the list
@@ -86,9 +98,19 @@ exports.handler = function(socket) {
 	 * Handle incoming messages from clients.
 	 */
 	socket.on('data', function(data) {
-		socket.write("\r\n" + socket.name + "@jarvis: ");
+		write({
+			'code' : 'ack',
+			'ack' : {
+				'data' : socket.name + ' @jarvis'
+			}
+		}, socket);
 		handle(data, socket);
-		broadcast(socket.name + "> " + data, socket);
+		broadcast({
+			'code' : 'ack',
+			'ack' : {
+				'data' : socket.name + ' @jarvis'
+			}
+		}, socket);
 	});
 
 	/**
@@ -96,7 +118,12 @@ exports.handler = function(socket) {
 	 */
 	socket.on('end', function() {
 		kernel.getClients().splice(api.getClients().indexOf(socket), 1);
-		broadcast(socket.name + " left the chat.\n");
+		broadcast({
+			'code' : 'bye',
+			'bye' : {
+				'data' : socket.name + ' left the chat.'
+			}
+		});
 	});
 
 	/**
@@ -109,8 +136,11 @@ exports.handler = function(socket) {
 		 */
 		if (message == 'list') {
 			console.info("List client(s)");
-			api.getClients().forEach(function(client) {
-				sender.write("\r\n" + client.name);
+			broadcast({
+				'code' : 'list',
+				'list' : {
+					'client' : api.getClients()
+				}
 			});
 		}
 	}
@@ -121,18 +151,18 @@ exports.handler = function(socket) {
 	 */
 	function broadcast(message, sender) {
 		kernel.getClients().forEach(function(client) {
-			// Don't want to send it to sender
+			/**
+			 * Don't want to send it to sender
+			 */
 			if (client === sender)
 				return;
 			if (client != undefined) {
-				try {
-					client.write(message);
-				} catch (excp) {
-					console.error(excp);
-				}
+				write(message, client);
 			}
 		});
-		// Log it to the server output too
-		process.stdout.write(message)
+		/**
+		 * Log it to the server output too
+		 */
+		process.stdout.write(JSON.stringify(message))
 	}
 }

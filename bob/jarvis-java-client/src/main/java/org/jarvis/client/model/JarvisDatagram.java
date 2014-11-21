@@ -14,14 +14,33 @@
  * limitations under the License.
  */
 
-package org.jarvis.client;
+package org.jarvis.client.model;
 
-import java.io.IOException;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-import org.jarvis.client.model.JarvisDatagram;
+public class JarvisDatagram {
+	@JsonProperty("code")
+	String code;
 
-public interface IJarvisSocketClient {
+	@JsonProperty("welcome")
+	JarvisDatagramStandard welcome;
 
-	void onNewMessage(JarvisDatagram message) throws IOException;
+	@JsonProperty("bye")
+	JarvisDatagramStandard bye;
 
+	@JsonProperty("ack")
+	JarvisDatagramStandard ack;
+
+	@JsonProperty("list")
+	JarvisDatagramList list;
+
+	public String getCode() {
+		return code;
+	}
+
+	@Override
+	public String toString() {
+		return "JarvisDatagram [code=" + code + ", welcome=" + welcome
+				+ ", bye=" + bye + ", ack=" + ack + ", list=" + list + "]";
+	}
 }

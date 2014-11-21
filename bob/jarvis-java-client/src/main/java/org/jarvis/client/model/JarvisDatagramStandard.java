@@ -14,18 +14,16 @@
  * limitations under the License.
  */
 
-var context = {};
+package org.jarvis.client.model;
 
-/**
- * retrieve current kernel context
- */
-exports.getContext = function () {
-  return context;
-};
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-/**
- * retrieve current kernel client
- */
-exports.getClients = function () {
-  return context.clients;
-};
+public class JarvisDatagramStandard {
+	@JsonProperty("data")
+	String data;
+
+	@Override
+	public String toString() {
+		return "JarvisDatagramStandard [data=" + data + "]";
+	}
+}
