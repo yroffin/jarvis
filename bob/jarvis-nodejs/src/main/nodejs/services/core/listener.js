@@ -25,7 +25,7 @@ var api = require(__dirname + '/api');
 /**
  * main services
  */
-exports.start = function () {
+exports.start = function() {
 	/**
 	 * Keep track of the chat clients
 	 */
@@ -34,24 +34,56 @@ exports.start = function () {
 	/**
 	 * Start a TCP Server
 	 */
-	net.createServer(function(socket) {
+	var chatServer = net.createServer(exports.handler);
+	try {
+		/**
+		 * error handler
+		 */
+		chatServer.on('error', function(e) {
+			if (e.code == 'EADDRINUSE') {
+				console.log('Address 5000 in use, retrying...');
+				setTimeout(function() {
+					chatServer.listen(5000);
+				}, 5000);
+			}
+		});
+		chatServer.listen(5000);
+	} catch (excp) {
+		console.error(excp);
+	}
 
+	// Put a friendly message on the terminal of the server.
+	console.log("Chat server running at port 5000\n");
+}
+
+/**
+ * handler services
+ */
+exports.handler = function(socket) {
+	try {
 		/**
 		 * Identify this client
 		 */
 		socket.name = socket.remoteAddress + ":" + socket.remotePort
 
 		/**
-		 * store socket in context
-		 * put this new client in the list
-		 */
-		api.addClient(socket);
-
-		/**
 		 * Send a nice welcome message and announce
 		 */
-		socket.write("Welcome " + socket.name + "\n");
+		try {
+			socket.write("Welcome " + socket.name + "\n");
+		} catch (excp) {
+			/**
+			 * unable to build exchange protocol with this client
+			 */
+			console.error(excp);
+			return;
+		}
 		broadcast(socket.name + " joined the chat\n", socket);
+
+		/**
+		 * store socket in context put this new client in the list
+		 */
+		api.addClient(socket);
 
 		/**
 		 * Handle incoming messages from clients.
@@ -78,7 +110,7 @@ exports.start = function () {
 			/**
 			 * handle list command
 			 */
-			if(message == 'list') {
+			if (message == 'list') {
 				console.info("List client(s)");
 				api.getClients().forEach(function(client) {
 					sender.write("\r\n" + client.name);
@@ -87,19 +119,18 @@ exports.start = function () {
 		}
 
 		/**
-		 * Send a message to all clients
-		 * note : exlucde using api level, we must acquire the pysical socket
-		 * client stored in list
+		 * Send a message to all clients note : exlucde using api level, we must
+		 * acquire the pysical socket client stored in list
 		 */
 		function broadcast(message, sender) {
 			kernel.getClients().forEach(function(client) {
 				// Don't want to send it to sender
 				if (client === sender)
 					return;
-				if(client != undefined) {
+				if (client != undefined) {
 					try {
 						client.write(message);
-					}catch (excp) {
+					} catch (excp) {
 						console.error(excp);
 					}
 				}
@@ -107,10 +138,7 @@ exports.start = function () {
 			// Log it to the server output too
 			process.stdout.write(message)
 		}
-
-	}).listen(5000);
-
-	// Put a friendly message on the terminal of the server.
-	console.log("Chat server running at port 5000\n");
+	} catch (excp) {
+		console.error(excp);
+	}
 }
-

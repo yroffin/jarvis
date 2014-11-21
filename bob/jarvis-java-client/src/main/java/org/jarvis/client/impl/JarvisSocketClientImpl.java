@@ -43,5 +43,6 @@ public class JarvisSocketClientImpl implements IJarvisSocketClient {
 		JarvisSocketClientImpl client = new JarvisSocketClientImpl("localhost", 5000);
 		client.sync();
 		client.getEchoSocket().getOutputStream().write("test".getBytes());;
+		System.in.read();
 	}
 }

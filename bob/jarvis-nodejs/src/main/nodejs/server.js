@@ -1,4 +1,4 @@
-/* 
+/** 
  * Copyright 2014 Yannick Roffin.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -45,20 +45,19 @@ function main() {
 
 	// Create a service (the app object is just a callback).
 	var app = express();
-	
+
 	// Activate cookies, sessions and forms
-	app.use(express.logger())
-	.use(express.static(__dirname + '/public'))
-	.use(express.favicon(__dirname + '/public/favicon.ico'))
-	.use(express.cookieParser())
-	.use(express.session({secret: 'secretkey'}))
-	.use(express.bodyParser());
+	app.use(express.logger()).use(express.static(__dirname + '/public')).use(
+			express.favicon(__dirname + '/public/favicon.ico')).use(
+			express.cookieParser()).use(express.session({
+		secret : 'secretkey'
+	})).use(express.bodyParser());
 
 	/**
 	 * start listener
 	 */
 	listener.start()
-	
+
 	/**
 	 * build all routes
 	 */
@@ -67,11 +66,31 @@ function main() {
 	// Create an HTTP service.
 	logger.info('Create an HTTP service');
 	var httpServer = http.createServer(app);
+
+	httpServer.on('error', function(e) {
+		if (e.code == 'EADDRINUSE') {
+			console.log('Address 80 in use, retrying...');
+			setTimeout(function() {
+				httpServer.listen(80);
+			}, 5000);
+		}
+	});
+
 	httpServer.listen(80);
 	logger.info('Create an HTTP service done');
 	// Create an HTTPS service identical to the HTTP service.
 	logger.info("Create an HTTPS service identical to the HTTP service");
 	var httpsServer = https.createServer(options, app);
+
+	httpsServer.on('error', function(e) {
+		if (e.code == 'EADDRINUSE') {
+			console.log('Address 443 in use, retrying...');
+			setTimeout(function() {
+				httpServer.listen(443);
+			}, 5000);
+		}
+	});
+
 	httpsServer.listen(443);
 	logger.info("Create an HTTPS service identical to the HTTP service done");
 }
