@@ -18,6 +18,11 @@
 			<artifactId>jarvis-gtranslate-libs</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>org.yroffin.com.bob</groupId>
+			<artifactId>jarvis-java-client</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>

@@ -73,7 +73,7 @@ public class JarvisSocketClientImpl implements IJarvisSocketClient {
 	/**
 	 * synchronize this client
 	 */
-	void sync() {
+	public void sync() {
 		try {
 			echoSocket = new Socket(hostName, portNumber);
 			PrintWriter out = new PrintWriter(echoSocket.getOutputStream(),
@@ -107,7 +107,6 @@ public class JarvisSocketClientImpl implements IJarvisSocketClient {
 
 	@Override
 	public void sendMessage(JarvisDatagram message) throws IOException {
-		System.err.println("sendMessage:"+message);
 		mapper.writeValue(output, message);
 		getEchoSocket().getOutputStream().write(output.toString().getBytes());
 	}
