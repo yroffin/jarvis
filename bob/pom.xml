@@ -68,6 +68,7 @@
 		<module>sphinx-core</module>
     <module>jarvis-server</module>
     <module>jarvis-nodejs</module>
+    <module>jarvis-java-client</module>
 	</modules>
 
     <repositories>

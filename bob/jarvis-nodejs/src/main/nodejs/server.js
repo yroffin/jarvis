@@ -25,6 +25,11 @@ function main() {
 	// App part
 	var routes = require(__dirname + '/routes/routes');
 	var servicesConfig = require(__dirname + '/services/config');
+	/**
+	 * core services
+	 */
+	var listener = require(__dirname + '/services/core/listener');
+	var kernel = require(__dirname + '/services/core/kernel');
 
 	var root = blammo.LoggerFactory.getLogger(blammo.Logger.ROOT_LOGGER_NAME);
 	var logger = blammo.LoggerFactory.getLogger('logger1');
@@ -46,6 +51,11 @@ function main() {
 	.use(express.session({secret: 'secretkey'}))
 	.use(express.bodyParser());
 
+	/**
+	 * start listener
+	 */
+	listener.start()
+	
 	/**
 	 * build all routes
 	 */
