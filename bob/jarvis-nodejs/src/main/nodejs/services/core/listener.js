@@ -19,17 +19,17 @@
  */
 net = require('net');
 
+var kernel = require(__dirname + '/kernel');
+var api = require(__dirname + '/api');
+
 /**
  * main services
  */
 exports.start = function () {
-	var kernel = require(__dirname + '/kernel');
-
 	/**
 	 * Keep track of the chat clients
 	 */
-	var context = kernel.getContext();
-	context.clients = [];
+	api.clearClients();
 
 	/**
 	 * Start a TCP Server
@@ -45,7 +45,7 @@ exports.start = function () {
 		 * store socket in context
 		 * put this new client in the list
 		 */
-		context.clients.push(socket);
+		api.addClient(socket);
 
 		/**
 		 * Send a nice welcome message and announce
@@ -53,16 +53,20 @@ exports.start = function () {
 		socket.write("Welcome " + socket.name + "\n");
 		broadcast(socket.name + " joined the chat\n", socket);
 
-		// Handle incoming messages from clients.
+		/**
+		 * Handle incoming messages from clients.
+		 */
 		socket.on('data', function(data) {
 			socket.write("\r\n" + socket.name + "@jarvis: ");
 			handle(data, socket);
 			broadcast(socket.name + "> " + data, socket);
 		});
 
-		// Remove the client from the list when it leaves
+		/**
+		 * Remove the client from the list when it leaves
+		 */
 		socket.on('end', function() {
-			context.clients.splice(context.clients.indexOf(socket), 1);
+			kernel.getClients().splice(api.getClients().indexOf(socket), 1);
 			broadcast(socket.name + " left the chat.\n");
 		});
 
@@ -76,7 +80,7 @@ exports.start = function () {
 			 */
 			if(message == 'list') {
 				console.info("List client(s)");
-				context.clients.forEach(function(client) {
+				api.getClients().forEach(function(client) {
 					sender.write("\r\n" + client.name);
 				});
 			}
@@ -84,13 +88,21 @@ exports.start = function () {
 
 		/**
 		 * Send a message to all clients
+		 * note : exlucde using api level, we must acquire the pysical socket
+		 * client stored in list
 		 */
 		function broadcast(message, sender) {
-			context.clients.forEach(function(client) {
+			kernel.getClients().forEach(function(client) {
 				// Don't want to send it to sender
 				if (client === sender)
 					return;
-				client.write(message);
+				if(client != undefined) {
+					try {
+						client.write(message);
+					}catch (excp) {
+						console.error(excp);
+					}
+				}
 			});
 			// Log it to the server output too
 			process.stdout.write(message)

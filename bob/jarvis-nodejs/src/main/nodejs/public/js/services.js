@@ -24,25 +24,19 @@ var myAppServices = angular.module('myApp.services', ['ngResource']);
 myAppServices.factory('jarvisServices', ['$resource', 
 function ($resource,$windows) {
     return $resource('', {}, {
-                   getConfiguration: {
+                   getProperties: {
                         method: 'GET',
-                        url: jarvisServicesUrl + '/info',
-                        params: {
-                            callback:'JSON_CALLBACK',
-                            key: 'getConfiguration'
-                        },
+                        url: jarvisServicesUrl + '/info/properties',
+                        params: {},
                         isArray: false,
                         cache: false
                     },
-                   findAllGroups: {
-                        method: 'JSONP',
-                        url: jarvisServicesUrl,
-                        params: {
-                            callback:'JSON_CALLBACK',
-                            operation: 'findAllGroups'
-                        },
-                        isArray: true,
-                        cache: false
+                   getClients: {
+                       method: 'GET',
+                       url: jarvisServicesUrl + '/info/clients',
+                       params: {},
+                       isArray: false,
+                       cache: false
                    },
                    getAllInventory: {
                         method: 'JSONP',

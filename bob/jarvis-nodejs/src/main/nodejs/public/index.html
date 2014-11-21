@@ -72,6 +72,21 @@ limitations under the License.
                         	</tr>
                     	</tbody>
                     </table>
+                	<h1>Clients</h1>
+                    <table data-role="table" id="configuration-clients" data-mode="reflow" class="ui-responsive table-stroke">
+                    	<thead>
+                    		<tr>
+                    			<th data-priority = "1">Id</th>
+                    			<th data-priority = "1">Name</th>
+                    		</tr>
+                    	</thead>
+                    	<tbody>
+                        	<tr ng-repeat="item in jarvis.configuration.clients">
+                        		<td>{{item.id}}</td>
+                        		<td>{{item.name}}</td>
+                        	</tr>
+                    	</tbody>
+                    </table>
                 </div>
             </div>
             <div data-role=footer">

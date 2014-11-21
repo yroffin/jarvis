@@ -33,11 +33,32 @@ angular.module('myApp.controllers', [])
     	 * load configuration elements
     	 */
         console.log("Configuration loading ...");
-        jarvisServices.getConfiguration({message: {}},
+        $scope.jarvis.configuration = {};
+        /**
+         * loading properties
+         */
+        jarvisServices.getProperties({},
         function(data) {
             console.log(data);
-            $scope.jarvis.configuration = data;
-            console.log("getConfiguration loaded ...");
+            $scope.jarvis.configuration.properties = data.properties;
+            console.log("properties loaded ...");
+            /**
+             * refresh jquerymobile widget
+             */
+            setTimeout(function(){
+                $("#configuration-properties").table("refresh");
+            },100);
+        },function(failure) {
+            $window.location.href = failure.config.url;
+        });
+        /**
+         * loading clients
+         */
+        jarvisServices.getClients({},
+        function(data) {
+            console.log(data);
+            $scope.jarvis.configuration.clients = data.clients;
+            console.log("clients loaded ...");
             /**
              * refresh jquerymobile widget
              */

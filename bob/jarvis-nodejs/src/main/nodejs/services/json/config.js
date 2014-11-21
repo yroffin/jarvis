@@ -17,6 +17,8 @@
 var blammo = require('blammo');
 var logger = blammo.LoggerFactory.getLogger('logger1');
 
+var api = require(__dirname + '/../core/api');
+
 exports.init = function () {
   return;
 };
@@ -26,5 +28,19 @@ exports.init = function () {
  */
 exports.info = function (req, res) {
 	logger.info('info() key [%s]', req.params.key);
-	res.json({properties:[{key:'test', value:'test'},{key:'test', value:'test'},{key:'test', value:'test'},{key:'test', value:'test'}]});
+	/**
+	 * properties
+	 */
+	if(req.params.key == 'properties') {
+		res.json({properties:[{key:'test', value:'test'},{key:'test', value:'test'},{key:'test', value:'test'},{key:'test', value:'test'}]});
+		return;
+	}
+	/**
+	 * clients
+	 */
+	if(req.params.key == 'clients') {
+		res.json({clients:api.getClients()});
+		return;
+	}
+	res.json({});
 };

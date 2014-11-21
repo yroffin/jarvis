@@ -14,25 +14,28 @@
  * limitations under the License.
  */
 
+/**
+ * logging
+ */
+var blammo = require('blammo');
+var root = blammo.LoggerFactory.getLogger(blammo.Logger.ROOT_LOGGER_NAME);
+var logger = blammo.LoggerFactory.getLogger('logger1');
+
 function main() {
 	// Middleware
 	var express = require('express');
 	var https = require('https');
 	var http = require('http');
 	var fs = require('fs');
-	var blammo = require('blammo');
 
 	// App part
 	var routes = require(__dirname + '/routes/routes');
-	var servicesConfig = require(__dirname + '/services/config');
+	var servicesConfig = require(__dirname + '/services/json/config');
 	/**
 	 * core services
 	 */
 	var listener = require(__dirname + '/services/core/listener');
 	var kernel = require(__dirname + '/services/core/kernel');
-
-	var root = blammo.LoggerFactory.getLogger(blammo.Logger.ROOT_LOGGER_NAME);
-	var logger = blammo.LoggerFactory.getLogger('logger1');
 
 	// Default options for this htts server
 	var options = {

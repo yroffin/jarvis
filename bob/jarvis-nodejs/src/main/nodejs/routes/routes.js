@@ -16,7 +16,7 @@
 
 var blammo = require('blammo');
 var logger = blammo.LoggerFactory.getLogger('logger1');
-var servicesConfig = require('../services/config');
+var servicesConfig = require('../services/json/config');
 
 /**
  * initialise all routes

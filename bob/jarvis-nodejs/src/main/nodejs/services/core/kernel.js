@@ -22,3 +22,10 @@ var context = {};
 exports.getContext = function () {
   return context;
 };
+
+/**
+ * retrieve current kernel client
+ */
+exports.getClients = function () {
+  return context.clients;
+};
