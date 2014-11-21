@@ -98,17 +98,19 @@ exports.handler = function(socket) {
 	 * Handle incoming messages from clients.
 	 */
 	socket.on('data', function(data) {
+		console.info("before ack, message to parse[%s]", data);
 		write({
 			'code' : 'ack',
 			'ack' : {
-				'data' : socket.name + ' @jarvis'
+				'data' : 'jarvis@' + socket.name
 			}
 		}, socket);
-		handle(data, socket);
+		console.info("message to parse[%s]", data);
+		handle(JSON.parse(data), socket);
 		broadcast({
 			'code' : 'ack',
 			'ack' : {
-				'data' : socket.name + ' @jarvis'
+				'data' : 'jarvis@' + socket.name
 			}
 		}, socket);
 	});
@@ -130,11 +132,10 @@ exports.handler = function(socket) {
 	 * Send a message to all clients
 	 */
 	function handle(message, sender) {
-		console.info("message[%s]", message);
 		/**
 		 * handle list command
 		 */
-		if (message == 'list') {
+		if (message.code == 'list') {
 			console.info("List client(s)");
 			broadcast({
 				'code' : 'list',

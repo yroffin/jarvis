@@ -20,6 +20,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -39,6 +40,8 @@ public class JarvisSocketClientImpl implements IJarvisSocketClient {
 	int portNumber = 5000;
 	Socket echoSocket = null;
 	private LinkedBlockingQueue<JarvisDatagram> linked = new LinkedBlockingQueue<JarvisDatagram>();
+	private ObjectMapper mapper;
+	private OutputStream output;
 
 	/**
 	 * constructor
@@ -48,6 +51,23 @@ public class JarvisSocketClientImpl implements IJarvisSocketClient {
 	public JarvisSocketClientImpl(String hostName, int portNumber) {
 		this.hostName = hostName;
 		this.portNumber = portNumber;
+		mapper = new ObjectMapper(); 
+		
+		output = new OutputStream()
+	    {
+	        private StringBuilder string = new StringBuilder();
+
+	        @Override
+	        public void write(int b) throws IOException {
+	            this.string.append((char) b );
+	        }
+
+	        public String toString(){
+	            String result = this.string.toString();
+	            string.setLength(0);
+	            return result;
+	        }
+	    };
 	}
 
 	/**
@@ -77,10 +97,19 @@ public class JarvisSocketClientImpl implements IJarvisSocketClient {
 	 */
 	@Override
 	public void onNewMessage(JarvisDatagram message) throws IOException {
-		System.err.println(message);		
+		System.err.println("onNewMessage:"+message);		
 		if(message.getCode().startsWith("welcome")) {
-			getEchoSocket().getOutputStream().write("list".getBytes());
+			JarvisDatagram nextMessage = new JarvisDatagram();
+			nextMessage.setCode("list");
+			sendMessage(nextMessage);
 		}
+	}
+
+	@Override
+	public void sendMessage(JarvisDatagram message) throws IOException {
+		System.err.println("sendMessage:"+message);
+		mapper.writeValue(output, message);
+		getEchoSocket().getOutputStream().write(output.toString().getBytes());
 	}
 
 	/**
@@ -128,7 +157,9 @@ public class JarvisSocketClientImpl implements IJarvisSocketClient {
 		JarvisSocketClientImpl client = new JarvisSocketClientImpl("localhost",
 				5000);
 		client.sync();
-		client.getEchoSocket().getOutputStream().write("list".getBytes());
+		JarvisDatagram message = new JarvisDatagram();
+		message.setCode("list");
+		client.sendMessage(message);
 		System.in.read();
 	}
 

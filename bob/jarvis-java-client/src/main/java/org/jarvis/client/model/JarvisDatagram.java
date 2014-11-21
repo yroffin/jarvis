@@ -38,6 +38,10 @@ public class JarvisDatagram {
 		return code;
 	}
 
+	public void setCode(String code) {
+		this.code = code;		
+	}
+
 	@Override
 	public String toString() {
 		return "JarvisDatagram [code=" + code + ", welcome=" + welcome
