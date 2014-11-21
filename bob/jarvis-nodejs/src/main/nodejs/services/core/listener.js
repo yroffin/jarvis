@@ -35,22 +35,18 @@ exports.start = function() {
 	 * Start a TCP Server
 	 */
 	var chatServer = net.createServer(exports.handler);
-	try {
-		/**
-		 * error handler
-		 */
-		chatServer.on('error', function(e) {
-			if (e.code == 'EADDRINUSE') {
-				console.log('Address 5000 in use, retrying...');
-				setTimeout(function() {
-					chatServer.listen(5000);
-				}, 5000);
-			}
-		});
-		chatServer.listen(5000);
-	} catch (excp) {
-		console.error(excp);
-	}
+	/**
+	 * error handler
+	 */
+	chatServer.on('error', function(e) {
+		if (e.code == 'EADDRINUSE') {
+			console.log('Address 5000 in use, retrying...');
+			setTimeout(function() {
+				chatServer.listen(5000);
+			}, 5000);
+		}
+	});
+	chatServer.listen(5000);
 
 	// Put a friendly message on the terminal of the server.
 	console.log("Chat server running at port 5000\n");
@@ -60,85 +56,83 @@ exports.start = function() {
  * handler services
  */
 exports.handler = function(socket) {
-	try {
+	/**
+	 * Error handler
+	 */
+	socket.on('error', function(e) {
 		/**
-		 * Identify this client
+		 * unable to build exchange protocol with this client
 		 */
-		socket.name = socket.remoteAddress + ":" + socket.remotePort
+		console.error(e);
+	});
 
-		/**
-		 * Send a nice welcome message and announce
-		 */
-		try {
-			socket.write("Welcome " + socket.name + "\n");
-		} catch (excp) {
-			/**
-			 * unable to build exchange protocol with this client
-			 */
-			console.error(excp);
-			return;
-		}
-		broadcast(socket.name + " joined the chat\n", socket);
+	/**
+	 * Identify this client
+	 */
+	socket.name = socket.remoteAddress + ":" + socket.remotePort
 
-		/**
-		 * store socket in context put this new client in the list
-		 */
-		api.addClient(socket);
+	/**
+	 * Send a nice welcome message and announce
+	 */
+	socket.write("Welcome " + socket.name + "\n");
+	broadcast(socket.name + " joined the chat\n", socket);
 
-		/**
-		 * Handle incoming messages from clients.
-		 */
-		socket.on('data', function(data) {
-			socket.write("\r\n" + socket.name + "@jarvis: ");
-			handle(data, socket);
-			broadcast(socket.name + "> " + data, socket);
-		});
+	/**
+	 * store socket in context put this new client in the list
+	 */
+	api.addClient(socket);
 
-		/**
-		 * Remove the client from the list when it leaves
-		 */
-		socket.on('end', function() {
-			kernel.getClients().splice(api.getClients().indexOf(socket), 1);
-			broadcast(socket.name + " left the chat.\n");
-		});
+	/**
+	 * Handle incoming messages from clients.
+	 */
+	socket.on('data', function(data) {
+		socket.write("\r\n" + socket.name + "@jarvis: ");
+		handle(data, socket);
+		broadcast(socket.name + "> " + data, socket);
+	});
 
-		/**
-		 * Send a message to all clients
-		 */
-		function handle(message, sender) {
-			console.info("message[%s]", message);
-			/**
-			 * handle list command
-			 */
-			if (message == 'list') {
-				console.info("List client(s)");
-				api.getClients().forEach(function(client) {
-					sender.write("\r\n" + client.name);
-				});
-			}
-		}
+	/**
+	 * Remove the client from the list when it leaves
+	 */
+	socket.on('end', function() {
+		kernel.getClients().splice(api.getClients().indexOf(socket), 1);
+		broadcast(socket.name + " left the chat.\n");
+	});
 
+	/**
+	 * Send a message to all clients
+	 */
+	function handle(message, sender) {
+		console.info("message[%s]", message);
 		/**
-		 * Send a message to all clients note : exlucde using api level, we must
-		 * acquire the pysical socket client stored in list
+		 * handle list command
 		 */
-		function broadcast(message, sender) {
-			kernel.getClients().forEach(function(client) {
-				// Don't want to send it to sender
-				if (client === sender)
-					return;
-				if (client != undefined) {
-					try {
-						client.write(message);
-					} catch (excp) {
-						console.error(excp);
-					}
-				}
+		if (message == 'list') {
+			console.info("List client(s)");
+			api.getClients().forEach(function(client) {
+				sender.write("\r\n" + client.name);
 			});
-			// Log it to the server output too
-			process.stdout.write(message)
 		}
-	} catch (excp) {
-		console.error(excp);
+	}
+
+	/**
+	 * Send a message to all clients note : exlucde using api level, we must
+	 * acquire the pysical socket client stored in list
+	 */
+	function broadcast(message, sender) {
+		kernel.getClients().forEach(function(client) {
+			// Don't want to send it to sender
+			if (client === sender)
+				return;
+			if (client != undefined) {
+				try {
+					client.write(message);
+				} catch (excp) {
+					console.error(excp);
+				}
+			}
+		});
+		// Log it to the server output too
+		process.stdout.write(message)
 	}
 }
