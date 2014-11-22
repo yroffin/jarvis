@@ -36,17 +36,17 @@ exports.clearClients = function () {
 };
 
 /**
- * retrieve current clients connected
+ * retrieve current clients connected (without internal information like socket)
  */
 exports.getClients = function () {
-	logger.info("getClients()");
 	/**
 	 * api must not expose internal structure for security
 	 * reason
 	 */
 	var result = [];
-	kernel.getContext().clients.forEach(function(client) {
-		result.push({id:0,name:client.name});
+	kernel.getContext().clients.forEach(function(descriptor) {
+		result.push({'id':descriptor.id,'name':descriptor.name,'isReferer':descriptor.isReferer,'isSensor':descriptor.isSensor});
+		logger.info("getClients(%s)", JSON.stringify({'id':descriptor.id,'name':descriptor.name,'isReferer':descriptor.isReferer,'isSensor':descriptor.isSensor}));
 	});
  	return result;
 };
@@ -54,12 +54,34 @@ exports.getClients = function () {
 /**
  * retrieve current clients connected
  */
-exports.addClient = function (client) {
-	logger.info("addClient(%s)", client.name);
+exports.getClientIndexOf = function (socket) {
+	/**
+	 * api must not expose internal structure for security
+	 * reason
+	 */
+	var index = 0;
+	var length = kernel.getContext().clients.length;
+	var result = {index:-1};
+	for(;index < length;index++) {
+		descriptor = kernel.getContext().clients[index];
+		if(descriptor.socket == socket) {
+			result.index = index;
+			result.descriptor = descriptor;
+		}
+	}
+	logger.debug("getClientIndexOf(%s) => %s", socket.remoteAddress + ":" + socket.remotePort, result.index);
+ 	return result;
+};
+
+/**
+ * retrieve current clients connected
+ */
+exports.addClient = function (descriptor) {
+	logger.info("addClient(%s)", descriptor.id);
 	/**
 	 * add this client to current context
 	 * note : client is a pure socket nodejs object
 	 */
-	kernel.getContext().clients.push(client)
- 	return client;
+	kernel.getContext().clients.push(descriptor)
+ 	return descriptor;
 };

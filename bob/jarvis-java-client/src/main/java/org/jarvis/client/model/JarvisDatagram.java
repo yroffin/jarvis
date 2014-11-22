@@ -23,28 +23,38 @@ public class JarvisDatagram {
 	String code;
 
 	@JsonProperty("welcome")
-	JarvisDatagramStandard welcome;
+	public JarvisDatagramEvent welcome;
 
 	@JsonProperty("bye")
-	JarvisDatagramStandard bye;
+	public JarvisDatagramEvent bye;
 
 	@JsonProperty("ack")
-	JarvisDatagramStandard ack;
+	public JarvisDatagramEvent ack;
 
+	@JsonProperty("event")
+	public JarvisDatagramEvent event;
+
+	/**
+	 * for internal use
+	 */
 	@JsonProperty("list")
 	JarvisDatagramList list;
+
+	@JsonProperty("session")
+	public JarvisDatagramSession session;
 
 	public String getCode() {
 		return code;
 	}
 
 	public void setCode(String code) {
-		this.code = code;		
+		this.code = code;
 	}
 
 	@Override
 	public String toString() {
 		return "JarvisDatagram [code=" + code + ", welcome=" + welcome
-				+ ", bye=" + bye + ", ack=" + ack + ", list=" + list + "]";
+				+ ", bye=" + bye + ", ack=" + ack + ", event=" + event
+				+ ", list=" + list + ", session=" + session + "]";
 	}
 }

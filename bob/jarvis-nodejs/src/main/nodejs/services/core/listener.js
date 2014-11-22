@@ -67,9 +67,13 @@ exports.handler = function(socket) {
 	});
 
 	/**
-	 * Identify this client
+	 * Identify this client (create) during socket
+	 * connect phase
 	 */
-	socket.name = socket.remoteAddress + ":" + socket.remotePort;
+	var descriptor = {
+		'id' : socket.remoteAddress + ":" + socket.remotePort,
+		'socket' : socket
+	};
 
 	/**
 	 * write on socket
@@ -85,32 +89,33 @@ exports.handler = function(socket) {
 	write({
 		'code' : 'welcome',
 		'welcome' : {
-			'data' : socket.name + ' joined the chat.'
+			'data' : descriptor.id + ' connexion'
+		},
+		'session' : {
+			'client' : {
+				'id' : descriptor.id
+			}
 		}
 	}, socket);
 
 	/**
-	 * store socket in context put this new client in the list
+	 * store descriptor/socket in context put this new client in the list
 	 */
-	api.addClient(socket);
+	api.addClient(descriptor);
 
 	/**
 	 * Handle incoming messages from clients.
 	 */
 	socket.on('data', function(data) {
-		console.info("before ack, message to parse[%s]", data);
-		write({
-			'code' : 'ack',
-			'ack' : {
-				'data' : 'jarvis@' + socket.name
-			}
-		}, socket);
+		/**
+		 * handle this new message
+		 */
 		console.info("message to parse[%s]", data);
-		handle(JSON.parse(data), socket);
+		handle(socket, JSON.parse(data));
 		broadcast({
 			'code' : 'ack',
 			'ack' : {
-				'data' : 'jarvis@' + socket.name
+				'data' : 'jarvis@' + descriptor.id
 			}
 		}, socket);
 	});
@@ -119,11 +124,11 @@ exports.handler = function(socket) {
 	 * Remove the client from the list when it leaves
 	 */
 	socket.on('end', function() {
-		kernel.getClients().splice(api.getClients().indexOf(socket), 1);
+		kernel.getClients().splice(api.getClientIndexOf(socket).index, 1);
 		broadcast({
 			'code' : 'bye',
 			'bye' : {
-				'data' : socket.name + ' left the chat.'
+				'data' : descriptor.id + ' exit'
 			}
 		});
 	});
@@ -131,18 +136,29 @@ exports.handler = function(socket) {
 	/**
 	 * Send a message to all clients
 	 */
-	function handle(message, sender) {
+	function handle(sender, message) {
+		/**
+		 * handle welcome reply
+		 */
+		if (message.code == 'welcome') {
+			var descriptor = api.getClientIndexOf(sender).descriptor;
+			descriptor.name = message.session.client.name;
+			descriptor.isReferer = message.session.client.isReferer;
+			descriptor.isSensor = message.session.client.isSensor;
+			return;
+		}
 		/**
 		 * handle list command
 		 */
 		if (message.code == 'list') {
 			console.info("List client(s)");
-			broadcast({
+			write({
 				'code' : 'list',
 				'list' : {
 					'client' : api.getClients()
 				}
-			});
+			}, sender);
+			return;
 		}
 	}
 
@@ -151,14 +167,14 @@ exports.handler = function(socket) {
 	 * acquire the pysical socket client stored in list
 	 */
 	function broadcast(message, sender) {
-		kernel.getClients().forEach(function(client) {
+		kernel.getClients().forEach(function(descriptor) {
 			/**
 			 * Don't want to send it to sender
 			 */
-			if (client === sender)
+			if (descriptor.socket === sender)
 				return;
-			if (client != undefined) {
-				write(message, client);
+			if (descriptor != undefined) {
+				write(message, descriptor.socket);
 			}
 		});
 		/**

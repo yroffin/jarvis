@@ -11,17 +11,26 @@
 		<dependency>
 			<groupId>org.yroffin.com.bob</groupId>
 			<artifactId>jarvis-aiml</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.yroffin.com.bob</groupId>
 			<artifactId>jarvis-gtranslate-libs</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.yroffin.com.bob</groupId>
 			<artifactId>jarvis-java-client</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
 		</dependency>
 	</dependencies>
 
@@ -41,7 +50,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>org.jarvis.main.core.main.JarvisConsole</mainClass>
+							<mainClass>org.jarvis.main.core.main.JarvisClient</mainClass>
 						</manifest>
 					</archive>
 					<descriptorRefs>

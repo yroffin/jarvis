@@ -18,7 +18,7 @@ package org.jarvis.client.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class JarvisDatagramStandard {
+public class JarvisDatagramEvent {
 	@JsonProperty("data")
 	String data;
 
