@@ -58,15 +58,28 @@ angular.module('myApp.controllers', [])
         function(data) {
             console.log(data);
             $scope.jarvis.configuration.clients = data.clients;
-            console.log("clients loaded ...");
             /**
              * refresh jquerymobile widget
              */
             setTimeout(function(){
-                $("#configuration-properties").table("refresh");
+                console.log("clients loaded ...");
+                $("#configuration-clients").table("refresh");
             },100);
         },function(failure) {
             $window.location.href = failure.config.url;
+        });
+    }
+    $scope.send = function(target,element) {
+        /**
+         * loading clients
+         */
+        jarvisServices.send({target:target,message:element},
+        function(data) {
+            console.log(data);
+        },function(failure) {
+        	/**
+        	 * TODO : handle error message
+        	 */
         });
     }
     $scope.loadGroups = function() {

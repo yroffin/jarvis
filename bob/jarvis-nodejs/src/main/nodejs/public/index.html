@@ -90,9 +90,9 @@ limitations under the License.
                         		<td>{{item.isRenderer}}</td>
                         		<td>{{item.isSensor}}</td>
                         		<td>{{item.canAnswer}}</td>
-                        		<td>
-                        			<label for="xxx2">Ask</label>
-                        			<input type="search" name="xxx1" id="xxx2"></input>
+                        		<td ng-show="item.canAnswer">
+                       				<input type="text" ng-enter="notif()" ng-model="renderer.message"></input>
+                       				<button data-inline="true" ng-click="send(item,renderer.message)">Send</button>
                         		</td>
                         	</tr>
                     	</tbody>

@@ -16,19 +16,17 @@
 
 var blammo = require('blammo');
 var logger = blammo.LoggerFactory.getLogger('logger1');
-var servicesConfig = require('../services/json/config');
-var interact = require('../services/json/interact');
+
+var api = require(__dirname + '/../core/api');
+
+exports.init = function () {
+  return;
+};
 
 /**
- * initialise all routes
+ * send services
  */
-exports.init = function (app) {
-	logger.info('Store routes configuration' + servicesConfig.info);
-	/**
-	 * configuration services
-	 */
-	app.get('/services/info', servicesConfig.info);
-	app.get('/services/info/:key', servicesConfig.info);
-	app.get('/services/send', interact.send);
-	return;
+exports.send = function (req, res) {
+	logger.info('send() [%s, %s]', JSON.parse(req.query.target), req.query.message);
+	res.json({});
 };

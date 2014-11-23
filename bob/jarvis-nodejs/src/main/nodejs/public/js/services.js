@@ -38,15 +38,12 @@ function ($resource,$windows) {
                        isArray: false,
                        cache: false
                    },
-                   getAllInventory: {
-                        method: 'JSONP',
-                        url: jarvisServicesUrl,
-                        params: {
-                            callback:'JSON_CALLBACK',
-                            operation: 'getAllInventory'
-                        },
-                        isArray: true,
-                        cache: false
-                    }
+                   send: {
+                       method: 'GET',
+                       url: jarvisServicesUrl + '/send',
+                       params: {},
+                       isArray: false,
+                       cache: false
+                   }
     })}
 ]);
