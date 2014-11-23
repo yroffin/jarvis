@@ -26,4 +26,8 @@ public interface IJarvisSocketClient {
 
 	void sendMessage(JarvisDatagram message) throws IOException;
 
+	void onConnect() throws Exception;
+
+	void onDisconnect() throws Exception;
+
 }

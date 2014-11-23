@@ -64,13 +64,37 @@ exports.getClientIndexOf = function (socket) {
 	var length = kernel.getContext().clients.length;
 	var result = {index:-1};
 	for(;index < length;index++) {
-		descriptor = kernel.getContext().clients[index];
+		var descriptor = kernel.getContext().clients[index];
 		if(descriptor.socket == socket) {
 			result.index = index;
 			result.descriptor = descriptor;
 		}
 	}
 	logger.debug("getClientIndexOf(%s) => %s", socket.remoteAddress + ":" + socket.remotePort, result.index);
+ 	return result;
+};
+
+/**
+ * retrieve current clients connected
+ */
+exports.findDescriptorById = function (id) {
+	/**
+	 * api must not expose internal structure for security
+	 * reason
+	 */
+	 debugger;
+	var index = 0;
+	var length = kernel.getContext().clients.length;
+	var result = {index:-1};
+	for(;index < length;index++) {
+		var descriptor = kernel.getContext().clients[index];
+		if(descriptor.id == id) {
+			result.index = index;
+			result.descriptor = descriptor;
+			break;
+		}
+	}
+	logger.debug("findDescriptorById(%s) => %s", descriptor.id, result.index);
  	return result;
 };
 
@@ -86,3 +110,13 @@ exports.addClient = function (descriptor) {
 	kernel.getContext().clients.push(descriptor)
  	return descriptor;
 };
+
+/**
+ * write on socket
+ * @param Object message to send
+ * @param Object target descriptor to send to
+ */
+exports.sendMessage = function write(message, target) {
+	target.write(JSON.stringify(message));
+	target.write("\r\n");
+}

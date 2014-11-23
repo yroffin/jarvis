@@ -27,6 +27,27 @@ exports.init = function () {
  * send services
  */
 exports.send = function (req, res) {
-	logger.info('send() [%s, %s]', JSON.parse(req.query.target), req.query.message);
+	var target = JSON.parse(req.query.target);
+	logger.info('send() [%s, %s]', target.id, req.query.message);
+	/**
+	 * find target client
+	 */
+	var descriptor = api.findDescriptorById(target.id).descriptor;
+	
+	/**
+	 * Send a nice welcome message and announce
+	 */
+	api.sendMessage({
+		'code' : 'request',
+		'request' : {
+			'data' : req.query.message
+		},
+		'session' : {
+			'client' : {
+				'id' : descriptor.id
+			}
+		}
+	}, descriptor.socket);
+
 	res.json({});
 };

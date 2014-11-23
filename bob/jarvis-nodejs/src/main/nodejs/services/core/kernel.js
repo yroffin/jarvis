@@ -26,6 +26,13 @@ exports.getContext = function () {
 /**
  * retrieve current kernel client
  */
+exports.setSession = function () {
+  return context.session;
+};
+
+/**
+ * retrieve current kernel client
+ */
 exports.getClients = function () {
   return context.clients;
 };

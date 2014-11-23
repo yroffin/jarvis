@@ -34,6 +34,9 @@ public class JarvisCoreSystemImpl implements IJarvisCoreSystem {
 	private IAimlCoreEngine instance(String resources) throws AimlParsingError,
 			IOException {
 		InputStream is = this.getClass().getClassLoader().getResourceAsStream(resources);
+		if(is == null) {
+			throw new IOException("Unable to find [" + resources + "] in resources paths");
+		}
 		byte[] b = new byte[is.available()];
         is.read(b);
         List<String> res = new ArrayList<String>();
@@ -57,8 +60,8 @@ public class JarvisCoreSystemImpl implements IJarvisCoreSystem {
 		voiceManager = Audio.getInstance();
 
 		if (voiceManager == null) {
-			System.err.println("Cannot initialize audio system");
-			System.exit(1);
+			logger.error("Cannot initialize audio system");
+			return;
 		}
 
 		/**

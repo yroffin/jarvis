@@ -20,10 +20,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class JarvisDatagramEvent {
 	@JsonProperty("data")
+	private
 	String data;
+
+	public String getData() {
+		return data;
+	}
+
+	public void setData(String data) {
+		this.data = data;
+	}
 
 	@Override
 	public String toString() {
-		return "JarvisDatagramStandard [data=" + data + "]";
+		return "JarvisDatagramStandard [data=" + getData() + "]";
 	}
 }

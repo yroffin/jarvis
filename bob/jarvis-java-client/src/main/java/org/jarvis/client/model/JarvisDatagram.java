@@ -31,6 +31,9 @@ public class JarvisDatagram {
 	@JsonProperty("ack")
 	public JarvisDatagramEvent ack;
 
+	@JsonProperty("request")
+	public JarvisDatagramEvent request;
+
 	@JsonProperty("event")
 	public JarvisDatagramEvent event;
 

@@ -76,17 +76,9 @@ exports.handler = function(socket) {
 	};
 
 	/**
-	 * write on socket
-	 */
-	function write(message, target) {
-		target.write(JSON.stringify(message));
-		target.write("\r\n");
-	}
-
-	/**
 	 * Send a nice welcome message and announce
 	 */
-	write({
+	api.sendMessage({
 		'code' : 'welcome',
 		'welcome' : {
 			'data' : descriptor.id + ' connexion'
@@ -153,11 +145,18 @@ exports.handler = function(socket) {
 			return;
 		}
 		/**
+		 * handle welcome reply
+		 */
+		if (message.code == 'event') {
+			console.info(message.event.data);
+			return;
+		}
+		/**
 		 * handle list command
 		 */
 		if (message.code == 'list') {
 			console.info("List client(s)");
-			write({
+			api.sendMessage({
 				'code' : 'list',
 				'list' : {
 					'client' : api.getClients()
@@ -179,12 +178,8 @@ exports.handler = function(socket) {
 			if (descriptor.socket === sender)
 				return;
 			if (descriptor != undefined) {
-				write(message, descriptor.socket);
+				api.sendMessage(message, descriptor.socket);
 			}
 		});
-		/**
-		 * Log it to the server output too
-		 */
-		process.stdout.write(JSON.stringify(message))
 	}
 }

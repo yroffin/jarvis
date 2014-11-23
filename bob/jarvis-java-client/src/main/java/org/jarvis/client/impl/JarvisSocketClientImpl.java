@@ -91,14 +91,17 @@ public class JarvisSocketClientImpl implements IJarvisSocketClient {
 
 	/**
 	 * synchronize this client
+	 * @throws Exception 
 	 */
-	public void sync() {
+	public void sync() throws Exception {
 		try {
 			/**
 			 * initialize socket
 			 */
 			socket = new Socket(hostName, portNumber);
 
+			onConnect();
+			
 			/**
 			 * start consume mecanism (thread based)
 			 */
@@ -149,8 +152,10 @@ public class JarvisSocketClientImpl implements IJarvisSocketClient {
 				}
 			}
 		} catch (Exception e) {
-
+			logger.error("Error {} while syncing the system", e);
 		}
+		
+		onDisconnect();
 	}
 
 	/**
@@ -224,9 +229,9 @@ public class JarvisSocketClientImpl implements IJarvisSocketClient {
 	 * standard main procedure
 	 * 
 	 * @param argv
-	 * @throws IOException
+	 * @throws Exception 
 	 */
-	public static void main(String argv[]) throws IOException {
+	public static void main(String argv[]) throws Exception {
 		JarvisSocketClientImpl client = new JarvisSocketClientImpl("localhost",
 				5000);
 		client.sync();
@@ -271,6 +276,14 @@ public class JarvisSocketClientImpl implements IJarvisSocketClient {
 
 	public void setCanAswer(boolean canAnswer) {
 		this.canAnswer = canAnswer;
+	}
+
+	@Override
+	public void onConnect() throws Exception {
+	}
+
+	@Override
+	public void onDisconnect() throws Exception {
 	}
 
 	@Override
