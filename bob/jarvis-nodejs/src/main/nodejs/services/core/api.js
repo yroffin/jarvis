@@ -45,8 +45,9 @@ exports.getClients = function () {
 	 */
 	var result = [];
 	kernel.getContext().clients.forEach(function(descriptor) {
-		result.push({'id':descriptor.id,'name':descriptor.name,'isReferer':descriptor.isReferer,'isSensor':descriptor.isSensor});
-		logger.info("getClients(%s)", JSON.stringify({'id':descriptor.id,'name':descriptor.name,'isReferer':descriptor.isReferer,'isSensor':descriptor.isSensor}));
+		var descriptor = {'id':descriptor.id,'name':descriptor.name,'isRenderer':descriptor.isRenderer,'canAnswer':descriptor.canAnswer,'isSensor':descriptor.isSensor};
+		result.push(descriptor);
+		logger.debug("getClients(%s)", JSON.stringify(descriptor));
 	});
  	return result;
 };

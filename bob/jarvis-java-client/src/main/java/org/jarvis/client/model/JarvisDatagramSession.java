@@ -18,22 +18,13 @@ package org.jarvis.client.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class JarvisDatagramClient {
-	@JsonProperty("id")
-	public String id;
-	@JsonProperty("name")
-	public String name;
-	@JsonProperty("isRenderer")
-	public boolean isRenderer;
-	@JsonProperty("isSensor")
-	public boolean isSensor;
-	@JsonProperty("canAnswer")
-	public boolean canAnswer;
+public class JarvisDatagramSession {
+
+	@JsonProperty("client")
+	public JarvisDatagramClient client;
 
 	@Override
 	public String toString() {
-		return "JarvisDatagramClient [id=" + id + ", name=" + name
-				+ ", isRenderer=" + isRenderer + ", isSensor=" + isSensor
-				+ ", canAnswer=" + canAnswer + "]";
+		return "JarvisDatagramSession [client=" + client + "]";
 	}
 }

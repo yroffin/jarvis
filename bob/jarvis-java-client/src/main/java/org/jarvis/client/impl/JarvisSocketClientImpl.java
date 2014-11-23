@@ -50,6 +50,7 @@ public class JarvisSocketClientImpl implements IJarvisSocketClient {
 	private String name;
 	private boolean isRenderer;
 	private boolean isSensor;
+	private boolean canAnswer;
 
 	/**
 	 * internal member
@@ -131,6 +132,7 @@ public class JarvisSocketClientImpl implements IJarvisSocketClient {
 						session.client.name = name;
 						session.client.isRenderer = isRenderer;
 						session.client.isSensor = isSensor;
+						session.client.canAnswer = canAnswer;
 					} else {
 						logger.error("First message must be a welcome message, session must be filled");
 					}
@@ -265,5 +267,16 @@ public class JarvisSocketClientImpl implements IJarvisSocketClient {
 
 	public void setSensor(boolean isSensor) {
 		this.isSensor = isSensor;
+	}
+
+	public void setCanAswer(boolean canAnswer) {
+		this.canAnswer = canAnswer;
+	}
+
+	@Override
+	public String toString() {
+		return "JarvisSocketClientImpl [name=" + name + ", isRenderer="
+				+ isRenderer + ", isSensor=" + isSensor + ", canAnswer="
+				+ canAnswer + "]";
 	}
 }

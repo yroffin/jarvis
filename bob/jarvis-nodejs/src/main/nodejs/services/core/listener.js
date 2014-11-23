@@ -142,8 +142,13 @@ exports.handler = function(socket) {
 		 */
 		if (message.code == 'welcome') {
 			var descriptor = api.getClientIndexOf(sender).descriptor;
+			/**
+			 * store element from client in session
+			 * onto descriptor element
+			 */
 			descriptor.name = message.session.client.name;
-			descriptor.isReferer = message.session.client.isReferer;
+			descriptor.canAnswer = message.session.client.canAnswer;
+			descriptor.isRenderer = message.session.client.isRenderer;
 			descriptor.isSensor = message.session.client.isSensor;
 			return;
 		}

@@ -78,12 +78,22 @@ limitations under the License.
                     		<tr>
                     			<th data-priority = "1">Id</th>
                     			<th data-priority = "1">Name</th>
+                    			<th data-priority = "1">isRenderer</th>
+                    			<th data-priority = "1">isSensor</th>
+                    			<th data-priority = "1">canAnswer</th>
                     		</tr>
                     	</thead>
                     	<tbody>
                         	<tr ng-repeat="item in jarvis.configuration.clients">
                         		<td>{{item.id}}</td>
                         		<td>{{item.name}}</td>
+                        		<td>{{item.isRenderer}}</td>
+                        		<td>{{item.isSensor}}</td>
+                        		<td>{{item.canAnswer}}</td>
+                        		<td>
+                        			<label for="xxx2">Ask</label>
+                        			<input type="search" name="xxx1" id="xxx2"></input>
+                        		</td>
                         	</tr>
                     	</tbody>
                     </table>
