@@ -47,7 +47,7 @@ exports.send = function (req, res) {
 				'id' : descriptor.id
 			}
 		}
-	}, descriptor.socket);
+	}, descriptor, descriptor.socket);
 
 	res.json({});
 };

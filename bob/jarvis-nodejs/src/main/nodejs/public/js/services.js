@@ -38,6 +38,13 @@ function ($resource,$windows) {
                        isArray: false,
                        cache: false
                    },
+                   getEvents: {
+                       method: 'GET',
+                       url: jarvisServicesUrl + '/info/events',
+                       params: {},
+                       isArray: false,
+                       cache: false
+                   },
                    send: {
                        method: 'GET',
                        url: jarvisServicesUrl + '/send',

@@ -80,6 +80,6 @@ public class AimlAliceTest {
 		answer = engine.ask("HOW DID YOU HEAR ABOUT ALICE");
 		engine.setLastAnswer("HOW DID YOU HEAR ABOUT ALICE");
 		answer = engine.ask("In romania");
-		assertEquals(" heard about ALICE from Romania. I can't say that many people hear about ALICE from  Romania .", answer.get(0).getAnswer());
+		assertEquals("heard about ALICE from Romania. I can't say that many people hear about ALICE from  Romania .", answer.get(0).getAnswer());
 	}
 }

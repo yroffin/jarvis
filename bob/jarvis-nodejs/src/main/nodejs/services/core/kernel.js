@@ -14,7 +14,71 @@
  * limitations under the License.
  */
 
-var context = {};
+var logger = require('blammo').LoggerFactory.getLogger('kernel');
+
+var Dequeue = require('./dequeue')
+
+/**
+ * events queue store all event acquire by this
+ * system before any treatment
+ */
+var context = {'sequence':0,'events':new Dequeue()};
+
+/**
+ * register a new event, only for system internal use
+ */
+exports.notify = function (message) {
+	var copy = {'data':message};
+	/**
+	 * update event context
+	 */
+	copy.sender = {'id':-1, 'name':'internal'};
+	copy.target = {'id':-1, 'name':'internal'};
+	copy.sequence = context.sequence++;
+	copy.timestamp = new Date();
+	/**
+	 * register it
+	 */
+	context.events.push(copy);
+	logger.info("Register new event", copy);
+	return copy;
+}
+
+/**
+ * register a new event
+ */
+exports.register = function (sender, target, event) {
+	var copy = event;
+	/**
+	 * update event context
+	 */
+	copy.sender = {'id':sender.id, 'name':sender.name};
+	copy.target = {'id':target.id, 'name':target.name};
+	copy.sequence = context.sequence++;
+	copy.timestamp = new Date();
+	/**
+	 * register it
+	 */
+	context.events.push(copy);
+	logger.info("Register new event", copy);
+	return event;
+}
+
+/**
+ * process event queue
+ */
+exports.process = function (callback) {
+	while(context.events.length > 0) {
+		callback(context.events.pop());
+	}
+}
+
+/**
+ * retrieve events
+ */
+exports.getEvents = function () {
+  return context.events.all();
+};
 
 /**
  * retrieve current kernel context

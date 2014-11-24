@@ -62,7 +62,7 @@ public class JarvisClient extends JarvisSocketClientImpl implements
 		charset.set(null, null);
 		logger.info("Default encoding: {}", Charset.defaultCharset().displayName());
 		logger.info("Initializing ...");
-		jarvis.initialize("categories.txt");
+		jarvis.initialize("jarvis.txt");
 		logger.info("Ready ...");
 	}
 

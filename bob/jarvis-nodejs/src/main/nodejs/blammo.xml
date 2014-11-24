@@ -34,6 +34,10 @@
 		<appender-ref ref="console" />
 	</logger>
 
+	<logger name="kernel">
+		<appender-ref ref="console" />
+	</logger>
+
 	<root level="trace">
 		<appender-ref ref="file_pattern" />
 		<appender-ref ref="file_json" />

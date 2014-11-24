@@ -157,7 +157,7 @@ public class AimlCoreEngineSraiTest {
 		List<IAimlHistory> answer = null;
 
 		answer = engine.ask("something about my mother");
-		assertEquals(" Tell me more about your family. ", answer.get(0)
+		assertEquals("Tell me more about your family.", answer.get(0)
 				.getAnswer());
 	}
 

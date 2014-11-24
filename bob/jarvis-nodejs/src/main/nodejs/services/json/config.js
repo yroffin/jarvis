@@ -42,5 +42,12 @@ exports.info = function (req, res) {
 		res.json({clients:api.getClients()});
 		return;
 	}
+	/**
+	 * clients
+	 */
+	if(req.params.key == 'events') {
+		res.json({events:api.getEvents()});
+		return;
+	}
 	res.json({});
 };

@@ -23,7 +23,7 @@ var kernel = require(__dirname + '/kernel');
 var api = require(__dirname + '/api');
 
 /**
- * main services
+ * main listener
  */
 exports.start = function() {
 	/**
@@ -34,22 +34,19 @@ exports.start = function() {
 	/**
 	 * Start a TCP Server
 	 */
-	var chatServer = net.createServer(exports.handler);
+	var listener = net.createServer(exports.handler);
 	/**
 	 * error handler
 	 */
-	chatServer.on('error', function(e) {
+	listener.on('error', function(e) {
 		if (e.code == 'EADDRINUSE') {
 			console.log('Address 5000 in use, retrying...');
 			setTimeout(function() {
-				chatServer.listen(5000);
+				listener.listen(5000);
 			}, 5000);
 		}
 	});
-	chatServer.listen(5000);
-
-	// Put a friendly message on the terminal of the server.
-	console.log("Chat server running at port 5000\n");
+	listener.listen(5000);
 }
 
 /**
@@ -67,8 +64,7 @@ exports.handler = function(socket) {
 	});
 
 	/**
-	 * Identify this client (create) during socket
-	 * connect phase
+	 * Identify this client (create) during socket connect phase
 	 */
 	var descriptor = {
 		'id' : socket.remoteAddress + ":" + socket.remotePort,
@@ -88,7 +84,7 @@ exports.handler = function(socket) {
 				'id' : descriptor.id
 			}
 		}
-	}, socket);
+	}, descriptor, socket);
 
 	/**
 	 * store descriptor/socket in context put this new client in the list
@@ -104,12 +100,6 @@ exports.handler = function(socket) {
 		 */
 		console.info("message to parse[%s]", data);
 		handle(socket, JSON.parse(data));
-		broadcast({
-			'code' : 'ack',
-			'ack' : {
-				'data' : 'jarvis@' + descriptor.id
-			}
-		}, socket);
 	});
 
 	/**
@@ -117,12 +107,6 @@ exports.handler = function(socket) {
 	 */
 	socket.on('end', function() {
 		kernel.getClients().splice(api.getClientIndexOf(socket).index, 1);
-		broadcast({
-			'code' : 'bye',
-			'bye' : {
-				'data' : descriptor.id + ' exit'
-			}
-		});
 	});
 
 	/**
@@ -133,53 +117,30 @@ exports.handler = function(socket) {
 		 * handle welcome reply
 		 */
 		if (message.code == 'welcome') {
-			var descriptor = api.getClientIndexOf(sender).descriptor;
+			var descriptor = api.findDescriptorBySocket(sender).descriptor;
 			/**
-			 * store element from client in session
-			 * onto descriptor element
+			 * store element from client in session onto descriptor element
 			 */
 			descriptor.name = message.session.client.name;
 			descriptor.canAnswer = message.session.client.canAnswer;
 			descriptor.isRenderer = message.session.client.isRenderer;
 			descriptor.isSensor = message.session.client.isSensor;
+			kernel.register(descriptor, {
+				'id' : -1,
+				'name' : 'kernel'
+			}, message);
 			return;
 		}
 		/**
-		 * handle welcome reply
+		 * handle event
 		 */
 		if (message.code == 'event') {
-			console.info(message.event.data);
+			var descriptor = api.findDescriptorBySocket(sender).descriptor;
+			kernel.register(descriptor, {
+				'id' : -1,
+				'name' : 'kernel'
+			}, message);
 			return;
 		}
-		/**
-		 * handle list command
-		 */
-		if (message.code == 'list') {
-			console.info("List client(s)");
-			api.sendMessage({
-				'code' : 'list',
-				'list' : {
-					'client' : api.getClients()
-				}
-			}, sender);
-			return;
-		}
-	}
-
-	/**
-	 * Send a message to all clients note : exlucde using api level, we must
-	 * acquire the pysical socket client stored in list
-	 */
-	function broadcast(message, sender) {
-		kernel.getClients().forEach(function(descriptor) {
-			/**
-			 * Don't want to send it to sender
-			 */
-			if (descriptor.socket === sender)
-				return;
-			if (descriptor != undefined) {
-				api.sendMessage(message, descriptor.socket);
-			}
-		});
 	}
 }

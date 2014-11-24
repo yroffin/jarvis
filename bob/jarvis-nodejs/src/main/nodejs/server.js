@@ -92,7 +92,7 @@ function main() {
 	});
 
 	httpsServer.listen(443);
-	logger.info("Create an HTTPS service identical to the HTTP service done");
+	kernel.notify("Create an HTTPS service identical to the HTTP service done");
 }
 
 main()

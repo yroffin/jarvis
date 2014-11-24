@@ -17,9 +17,7 @@
 /**
  * logging
  */
-var blammo = require('blammo');
-var root = blammo.LoggerFactory.getLogger(blammo.Logger.ROOT_LOGGER_NAME);
-var logger = blammo.LoggerFactory.getLogger('logger1');
+var logger = require('blammo').LoggerFactory.getLogger('logger1');
 
 var kernel = require(__dirname + '/kernel');
 var cycle = require(__dirname + '/cycle');
@@ -27,96 +25,130 @@ var cycle = require(__dirname + '/cycle');
 /**
  * clear clients
  */
-exports.clearClients = function () {
+exports.clearClients = function() {
 	/**
 	 * clear current client context
 	 */
- 	kernel.getContext().clients = [];
+	kernel.getContext().clients = [];
 	logger.info("clearClients()");
 };
 
 /**
  * retrieve current clients connected (without internal information like socket)
  */
-exports.getClients = function () {
+exports.getClients = function() {
 	/**
-	 * api must not expose internal structure for security
-	 * reason
+	 * api must not expose internal structure for security reason
 	 */
 	var result = [];
 	kernel.getContext().clients.forEach(function(descriptor) {
-		var descriptor = {'id':descriptor.id,'name':descriptor.name,'isRenderer':descriptor.isRenderer,'canAnswer':descriptor.canAnswer,'isSensor':descriptor.isSensor};
+		var descriptor = {
+			'id' : descriptor.id,
+			'name' : descriptor.name,
+			'isRenderer' : descriptor.isRenderer,
+			'canAnswer' : descriptor.canAnswer,
+			'isSensor' : descriptor.isSensor
+		};
 		result.push(descriptor);
 		logger.debug("getClients(%s)", JSON.stringify(descriptor));
 	});
- 	return result;
+	return result;
+};
+
+/**
+ * retrieve current events to be processed
+ */
+exports.getEvents = function() {
+	return kernel.getEvents();
 };
 
 /**
  * retrieve current clients connected
  */
-exports.getClientIndexOf = function (socket) {
+exports.findDescriptorBySocket = function(socket) {
 	/**
-	 * api must not expose internal structure for security
-	 * reason
+	 * api must not expose internal structure for security reason
 	 */
 	var index = 0;
 	var length = kernel.getContext().clients.length;
-	var result = {index:-1};
-	for(;index < length;index++) {
+	var result = {
+		index : -1
+	};
+	for (; index < length; index++) {
 		var descriptor = kernel.getContext().clients[index];
-		if(descriptor.socket == socket) {
+		if (descriptor.socket == socket) {
 			result.index = index;
 			result.descriptor = descriptor;
+			break;
 		}
 	}
-	logger.debug("getClientIndexOf(%s) => %s", socket.remoteAddress + ":" + socket.remotePort, result.index);
- 	return result;
+	logger.debug("getClientIndexOf(%s) => %s", socket.remoteAddress + ":"
+			+ socket.remotePort, result.index);
+	return result;
 };
 
 /**
  * retrieve current clients connected
  */
-exports.findDescriptorById = function (id) {
+exports.findDescriptorById = function(id) {
 	/**
-	 * api must not expose internal structure for security
-	 * reason
+	 * api must not expose internal structure for security reason
 	 */
-	 debugger;
 	var index = 0;
 	var length = kernel.getContext().clients.length;
-	var result = {index:-1};
-	for(;index < length;index++) {
+	var result = {
+		index : -1
+	};
+	for (; index < length; index++) {
 		var descriptor = kernel.getContext().clients[index];
-		if(descriptor.id == id) {
+		if (descriptor.id == id) {
 			result.index = index;
 			result.descriptor = descriptor;
 			break;
 		}
 	}
 	logger.debug("findDescriptorById(%s) => %s", descriptor.id, result.index);
- 	return result;
+	return result;
 };
 
 /**
- * retrieve current clients connected
+ * add a new descriptor for this client
+ * @param Object
+ *            client descriptor
  */
-exports.addClient = function (descriptor) {
+exports.addClient = function(descriptor) {
 	logger.info("addClient(%s)", descriptor.id);
 	/**
-	 * add this client to current context
-	 * note : client is a pure socket nodejs object
+	 * add this client to current context note : client is a pure socket nodejs
+	 * object
 	 */
 	kernel.getContext().clients.push(descriptor)
- 	return descriptor;
+	return descriptor;
 };
 
 /**
  * write on socket
- * @param Object message to send
- * @param Object target descriptor to send to
+ * 
+ * @param Object
+ *            message to send
+ * @param Object
+ *            target descriptor to send to
  */
-exports.sendMessage = function write(message, target) {
-	target.write(JSON.stringify(message));
-	target.write("\r\n");
+exports.sendMessage = function write(message, target, socket) {
+	/**
+	 * send message on network
+	 */
+	socket.write(JSON.stringify(message));
+	socket.write("\r\n");
+	/**
+	 * each message are event and must be notified / traced to
+	 * the system event queue
+	 */
+	kernel.register({
+		'id' : -1,
+		'name' : 'kernel'
+	}, {
+		'id' : target.id,
+		'name' : target.name
+	}, message);
 }

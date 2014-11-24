@@ -32,7 +32,6 @@ angular.module('myApp.controllers', [])
     	/**
     	 * load configuration elements
     	 */
-        console.log("Configuration loading ...");
         $scope.jarvis.configuration = {};
         /**
          * loading properties
@@ -41,15 +40,17 @@ angular.module('myApp.controllers', [])
         function(data) {
             console.log(data);
             $scope.jarvis.configuration.properties = data.properties;
-            console.log("properties loaded ...");
             /**
              * refresh jquerymobile widget
              */
             setTimeout(function(){
                 $("#configuration-properties").table("refresh");
+                console.log("properties loaded ...");
             },100);
         },function(failure) {
-            $window.location.href = failure.config.url;
+        	/**
+        	 * TODO : handle error message
+        	 */
         });
         /**
          * loading clients
@@ -62,11 +63,32 @@ angular.module('myApp.controllers', [])
              * refresh jquerymobile widget
              */
             setTimeout(function(){
-                console.log("clients loaded ...");
                 $("#configuration-clients").table("refresh");
+                console.log("clients loaded ...");
             },100);
         },function(failure) {
-            $window.location.href = failure.config.url;
+        	/**
+        	 * TODO : handle error message
+        	 */
+        });
+        /**
+         * loading events
+         */
+        jarvisServices.getEvents({},
+        function(data) {
+            console.log(data);
+            $scope.jarvis.configuration.events = data.events;
+            /**
+             * refresh jquerymobile widget
+             */
+            setTimeout(function(){
+                $("#configuration-events").table("refresh");
+                console.log("events loaded ...");
+            },100);
+        },function(failure) {
+        	/**
+        	 * TODO : handle error message
+        	 */
         });
     }
     $scope.send = function(target,element) {

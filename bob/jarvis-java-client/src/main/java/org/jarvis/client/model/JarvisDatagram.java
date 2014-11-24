@@ -57,7 +57,8 @@ public class JarvisDatagram {
 	@Override
 	public String toString() {
 		return "JarvisDatagram [code=" + code + ", welcome=" + welcome
-				+ ", bye=" + bye + ", ack=" + ack + ", event=" + event
-				+ ", list=" + list + ", session=" + session + "]";
+				+ ", bye=" + bye + ", ack=" + ack + ", request=" + request
+				+ ", event=" + event + ", list=" + list + ", session="
+				+ session + "]";
 	}
 }

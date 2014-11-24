@@ -273,13 +273,21 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 					if(getHistory().size() > 0 && getThatHistory() != null) {
 						ITransformedItem transformed = getThatHistory()
 								.getTransformedAnswer();
-						int thatScore = transformed.score(cat.getHistory()
-								.getTransformedAnswer());
-						
-						logger.info(sessiondIdText + " => That improve score : " + thatScore);
-	
-						if (thatScore > 0) {
-							score += score;
+						/**
+						 * transformed could be null if no viable history
+						 */
+						if(transformed != null) {
+							int thatScore = transformed.score(cat.getHistory()
+									.getTransformedAnswer());
+							
+							logger.info(sessiondIdText + " => That improve score : " + thatScore);
+		
+							if (thatScore > 0) {
+								score += score;
+							}
+						} else {
+							logger.info("Null transformed history");
+							score = -1;
 						}
 					} else {
 						/**
@@ -325,7 +333,10 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 			stack.pop();
 
 			transactionMonitor.info("Ask for : " + sentence + " => " + result);
-			return result;
+			/**
+			 * clean this output string from DR/LF and extra space
+			 */
+			return result.replace("\n", "").replace("\r", "").trim();
 		} else {
 			return "?";
 		}

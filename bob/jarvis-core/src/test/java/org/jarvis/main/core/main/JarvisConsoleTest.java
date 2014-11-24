@@ -12,8 +12,17 @@ public class JarvisConsoleTest {
 			IllegalArgumentException, IllegalAccessException, AimlParsingError,
 			IOException {
 		String[] args = new String[1];
-		args[0] = "categories.txt";
+		args[0] = "jarvis.txt";
 		JarvisConsole.main(args);
+	}
+
+	@Test
+	public void testDirect() throws NoSuchFieldException, SecurityException,
+			IllegalArgumentException, IllegalAccessException, AimlParsingError,
+			IOException {
+		String[] args = new String[1];
+		args[0] = "jarvis.txt";
+		JarvisConsole.direct(args, "test jarvis".split(","));
 	}
 
 }
