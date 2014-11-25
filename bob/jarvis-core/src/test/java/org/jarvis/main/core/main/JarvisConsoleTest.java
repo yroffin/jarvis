@@ -22,7 +22,19 @@ public class JarvisConsoleTest {
 			IOException {
 		String[] args = new String[1];
 		args[0] = "jarvis.txt";
-		JarvisConsole.direct(args, "test jarvis".split(","));
+		JarvisConsole.direct(args,
+				"test jarvis, what is your full name, would jarvis eat ?"
+						.split(","));
+	}
+
+	@Test
+	public void testDirectPlus() throws NoSuchFieldException,
+			SecurityException, IllegalArgumentException,
+			IllegalAccessException, AimlParsingError, IOException {
+		String[] args = new String[1];
+		args[0] = "jarvis.txt";
+		JarvisConsole
+				.direct(args, "does jarvis can send an email ?".split(","));
 	}
 
 }

@@ -56,6 +56,7 @@ public class AimlSystemTest {
 
 		engine.set("name", "Nancy");
 		engine.getAiml().accept(new AimlProperty("topic", " a simple topic "));
+		engine.set("topic", "a simple topic");
 		answer = engine.ask("Execute system.");
 		assertEquals("Runnning script ...", answer.get(0).getAnswer());
 		answer = engine.ask("Execute javascript.");

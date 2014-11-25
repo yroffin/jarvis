@@ -36,10 +36,12 @@ import org.jarvis.main.engine.transform.IAimlTransform;
 import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.model.impl.parser.AimlRepository;
 import org.jarvis.main.model.impl.parser.history.AimlHistoryImpl;
+import org.jarvis.main.model.impl.transform.DebugTableImpl;
 import org.jarvis.main.model.parser.IAimlCategory;
 import org.jarvis.main.model.parser.IAimlRepository;
 import org.jarvis.main.model.parser.IAimlTopic;
 import org.jarvis.main.model.parser.history.IAimlHistory;
+import org.jarvis.main.model.transform.IDebugTable;
 import org.jarvis.main.model.transform.ITransformedItem;
 import org.jarvis.main.parser.AimlParserImpl;
 import org.slf4j.Logger;
@@ -95,14 +97,17 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 	@Override
 	public IAimlHistory getThatHistory() {
 		List<IAimlHistory> result = getThatsHistory();
-		if (result == null) return null;
-		if (result.size() == 0) return null;
+		if (result == null)
+			return null;
+		if (result.size() == 0)
+			return null;
 		return result.get(result.size() - 1);
 	}
 
 	@Override
 	public List<IAimlHistory> getThatsHistory() {
-		if (history.size() == 0) return null;
+		if (history.size() == 0)
+			return null;
 		return history.get(history.size() - 1);
 	}
 
@@ -125,8 +130,10 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 	@Override
 	public Object set(String key, Object value) {
 		logger.info("set (object) " + key + " to " + value);
-		if(value != null) return properties.put(key, value);
-		else return properties.put(key, "");
+		if (value != null)
+			return properties.put(key, value);
+		else
+			return properties.put(key, "");
 	}
 
 	@Override
@@ -190,11 +197,13 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 			history.setTransformedPattern(transformer.transform(cat.getTopic(),
 					cat.getPattern().getElements()).get(0));
 			if (cat.hasThat()) {
-				history.setTransformedAnswer(transformer.transform(cat.getTopic(),
-						cat.getThat().getElements()).get(0));
+				history.setTransformedAnswer(transformer.transform(
+						cat.getTopic(), cat.getThat().getElements()).get(0));
 			}
 		}
 	}
+
+	static IDebugTable debug = DebugTableImpl.instance;
 
 	@Override
 	public List<IAimlHistory> ask(String sentence) throws AimlParsingError {
@@ -205,8 +214,19 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 		 */
 		List<ITransformedItem> tx = transformer.transform(sentence);
 		for (ITransformedItem s : tx) {
-			IAimlHistory log = new AimlHistoryImpl(s.getRaw(),ask(s),transformer);
+			IAimlHistory log = new AimlHistoryImpl(s.getRaw(), ask(s),
+					transformer);
 			localHistory.add(log);
+		}
+
+		if (logger.isDebugEnabled()) {
+			File output = null;
+			try {
+				output = debug.store();
+			} catch (IOException e) {
+				logger.error("Error, while debugging {}", e);
+			}
+			logger.info("Html debug stored in " + output.getAbsolutePath());
 		}
 
 		/**
@@ -228,6 +248,47 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 	static int sessionId = 0;
 
 	/**
+	 * internal use
+	 * 
+	 * @param table
+	 * @param availableCategories
+	 * @param sentence
+	 */
+	private void addCategories(IDebugTable table,
+			List<IAimlCategory> availableCategories, ITransformedItem sentence) {
+		/**
+		 * for debugging purpose
+		 */
+		if (table != null) {
+			table.addCategories(availableCategories, sentence,
+					(String) get("topic"));
+		}
+	}
+
+	/**
+	 * internal use
+	 * 
+	 * @param table
+	 * @param sessiondIdText
+	 * @param catXmlValue
+	 * @param score
+	 * @param toScore
+	 * @param found
+	 * @param old
+	 */
+	private void addFound(IDebugTable table, String sessiondIdText,
+			String catXmlValue, int score, ITransformedItem toScore,
+			IAimlScore found, IAimlScore old) {
+		/**
+		 * for debugging purpose
+		 */
+		if (table != null) {
+			table.addFound(sessiondIdText, catXmlValue, score, toScore, found,
+					old);
+		}
+	}
+
+	/**
 	 * ask to this bot something
 	 * 
 	 * @param sentence
@@ -236,17 +297,28 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 	 */
 	private String ask(ITransformedItem sentence) throws AimlParsingError {
 		IAimlScore found = null;
+		String topic = (String) get("topic");
+		if (topic == null)
+			topic = "";
 		/**
 		 * find the category with pattern match algorithm based on scoring
 		 */
-		List<IAimlCategory> availableCategories = aiml.getCategoriesFilteredByTopic(aiml.get("topic"));
+		List<IAimlCategory> availableCategories = aiml
+				.getCategoriesFilteredByTopic(topic);
 
 		Thread.currentThread().getId();
+
+		/**
+		 * for debugging purpose
+		 */
+		addCategories(debug, availableCategories, sentence);
 
 		for (int iCat = 0; iCat < availableCategories.size(); iCat++) {
 			IAimlCategory cat = availableCategories.get(iCat);
 			String sessiondIdText = "[" + sessionId + "/" + iCat + "]";
-			String catXmlValue = sessiondIdText + cat.toAiml(new StringBuilder()).toString().replace("\n", "").replace("\r", "");
+			String catXmlValue = sessiondIdText
+					+ cat.toAiml(new StringBuilder()).toString()
+							.replace("\n", "").replace("\r", "");
 
 			/**
 			 * ignore stacked category to avoid recursion
@@ -254,65 +326,83 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 			if (stack.contains(cat)) {
 				logger.info(catXmlValue);
 				logger.info(sessiondIdText + " => Ignore");
+				addFound(debug, sessiondIdText + "#0", catXmlValue, -2, null,
+						null, null);
 				continue;
 			}
 
 			ITransformedItem toScore = cat.getHistory().getTransformedPattern();
 			int score = sentence.score(toScore);
 
+			addFound(debug, sessiondIdText + "#1", catXmlValue, score, toScore,
+					null, null);
+
 			/**
 			 * handle that element - if score is ok - category have that element
 			 * - current that is not null
 			 */
 			if (score >= 0) {
-				
+
 				/**
 				 * that statement cound improve the current score
 				 */
 				if (cat.hasThat()) {
-					if(getHistory().size() > 0 && getThatHistory() != null) {
+					if (getHistory().size() > 0 && getThatHistory() != null) {
 						ITransformedItem transformed = getThatHistory()
 								.getTransformedAnswer();
 						/**
 						 * transformed could be null if no viable history
 						 */
-						if(transformed != null) {
+						if (transformed != null) {
 							int thatScore = transformed.score(cat.getHistory()
 									.getTransformedAnswer());
-							
-							logger.info(sessiondIdText + " => That improve score : " + thatScore);
-		
+
+							logger.info(sessiondIdText
+									+ " => That improve score : " + thatScore);
+
 							if (thatScore > 0) {
 								score += score;
 							}
 						} else {
 							logger.info("Null transformed history");
-							score = -1;
 						}
 					} else {
 						/**
 						 * that must be matched but, no history
 						 */
-						logger.info(sessiondIdText + " => That needed but no history");
-						score = -1;
+						logger.info(sessiondIdText
+								+ " => That needed but no history");
 					}
 				}
 			}
-			
+
+			addFound(debug, sessiondIdText + "#2", catXmlValue, score, toScore,
+					null, null);
+
 			/**
 			 * scored item, but more scored ?
 			 */
-			if(score >= 0) {
+			if (score >= 0) {
 				logger.info(catXmlValue);
 				logger.info(sessiondIdText + " => Score  : " + score);
-				logger.info(sessiondIdText + " => Scored : " + cat.hasThat() + "/" + getHistory().size());
+				logger.info(sessiondIdText + " => Scored : " + cat.hasThat()
+						+ "/" + getHistory().size());
 
-				if(found == null) {
+				if (found == null) {
 					found = new AimlScoreImpl(score, cat);
-				} else if(found.getKey() < score) {
-					logger.info(sessiondIdText + " => Replace  : " + found.getKey() + " by " + score);
+					addFound(debug, sessiondIdText + "#3", catXmlValue, score,
+							toScore, found, null);
+				} else if (found.getKey() < score) {
+					logger.info(sessiondIdText + " => Replace  : "
+							+ found.getKey() + " by " + score);
+					IAimlScore old = found;
 					found = new AimlScoreImpl(score, cat);
+					addFound(debug, sessiondIdText + "#4", catXmlValue, score,
+							toScore, found, old);
 				}
+			} else {
+				addFound(debug, sessiondIdText + "#5", catXmlValue, score,
+						toScore, null, null);
 			}
 		}
 

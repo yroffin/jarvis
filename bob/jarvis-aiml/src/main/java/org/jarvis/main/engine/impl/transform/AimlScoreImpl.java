@@ -50,4 +50,9 @@ public class AimlScoreImpl implements IAimlScore {
 		return category;
 	}
 
+	@Override
+	public String toString() {
+		return "AimlScoreImpl [key=" + key + ", category=" + category + "]";
+	}
+
 }

@@ -55,6 +55,7 @@ public class AimlAliceTest {
 		List<IAimlHistory> answer = null;
 
 		engine.getAiml().accept(new AimlProperty("topic", " ENDS WITH ALICE "));
+		engine.set("topic", "ENDS WITH ALICE");
 		engine.setBot("name", "ALICE");
 		answer = engine.ask("CALL ME BOTNAME");
 		assertEquals("My name is ALICE too!", answer.get(0).getAnswer());
@@ -67,9 +68,11 @@ public class AimlAliceTest {
 
 		engine.setBot("name", "ALICE");
 		answer = engine.ask("My name is really YANNICK");
-		assertEquals("No, nothing to do with your stupid question really yannick", answer.get(0).getAnswer());
+		assertEquals(
+				"No, nothing to do with your stupid question really yannick",
+				answer.get(0).getAnswer());
 	}
-	
+
 	@Test
 	public void testSimpleAliceHello() throws AimlParsingError {
 		IAimlCoreEngine engine = instance("src/test/resources/core/alice/alice.aiml");
@@ -80,6 +83,8 @@ public class AimlAliceTest {
 		answer = engine.ask("HOW DID YOU HEAR ABOUT ALICE");
 		engine.setLastAnswer("HOW DID YOU HEAR ABOUT ALICE");
 		answer = engine.ask("In romania");
-		assertEquals("heard about ALICE from Romania. I can't say that many people hear about ALICE from  Romania .", answer.get(0).getAnswer());
+		assertEquals(
+				"heard about ALICE from Romania. I can't say that many people hear about ALICE from  Romania .",
+				answer.get(0).getAnswer());
 	}
 }

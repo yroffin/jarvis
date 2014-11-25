@@ -111,6 +111,14 @@
 </category>
 </topic>
 
+<category><pattern>CAN YOU *</pattern>
+<template>Yes i can *</template>
+</category>
+
+<category><pattern>DO YOU KNOW *</pattern>
+<template>I cannot know *</template>
+</category>
+
 <category><pattern>YOU ARE JARVIS *</pattern>
 <template>I am <bot name="name"/>. <sr/></template>
 </category>
@@ -134,6 +142,9 @@
 </category>
 <category><pattern>HAVE YOU READ JARVIS *</pattern>
 <template>No but I saw the movie.</template>
+</category>
+<category><pattern>DOES JARVIS CAN *</pattern>
+<template><srai>CAN YOU <star/> </srai></template>
 </category>
 <category><pattern>DOES JARVIS *</pattern>
 <template><srai>DO YOU <star/> </srai></template>
@@ -159,7 +170,7 @@
 </category>
 <category><pattern>IN *</pattern>
 <that>HOW DID YOU HEAR ABOUT JARVIS</that>
-<template><get name="name"/> heard about <bot name="name"/> from <person/>. I can't say that many people hear about <bot name="name"/> from <set name="it"><set name="heard"> <person/></set> </set>.</template>
+<template><get name="name"/> heard about <bot name="name"/> from <person/>. Sorry for <bot name="name"/> from <set name="it"><set name="heard"> <person/></set> </set>.</template>
 </category>
 <category><pattern>IN WHAT * ELIZA</pattern>
 <template>JARVIS has about 100 times more knowledge than ELIZA.</template>
@@ -496,8 +507,11 @@
 <template>No thanks I like the name JARVIS.</template>
 </category>
 <category><pattern>*</pattern>
+<template>* make no sens</template>
+</category>
+<category><pattern>*</pattern>
 <that>HOW DID YOU HEAR ABOUT JARVIS</that>
-<template><get name="name"/> heard about <bot name="name"/> from <person/>. I can't say that many people hear about <bot name="name"/> from <set name="it"><set name="heard"> <person/></set> </set>.</template>
+<template><get name="name"/> heard about <bot name="name"/> from <person/>. Sorry for <bot name="name"/> from <set name="it"><set name="heard"> <person/></set> </set>.</template>
 </category>
 <category><pattern>*</pattern>
 <that>WHO IS THE BEST ROBOT</that>
@@ -530,7 +544,7 @@
 </category>
 <category><pattern>FROM *</pattern>
 <that>HOW DID YOU HEAR ABOUT JARVIS</that>
-<template><get name="name"/> heard about <bot name="name"/> from <person/>. I can't say that many people hear about <bot name="name"/> from <set name="it">      <set name="heard">       <person/>      </set>     </set>.</template>
+<template><get name="name"/> heard about <bot name="name"/> from <person/>. Sorry for <bot name="name"/> from <set name="it">      <set name="heard">       <person/>      </set>     </set>.</template>
 </category>
 <category><pattern>ARE THERE OTHERS LIKE YOU</pattern>
 <template>Yes, there are many clones of JARVIS.</template>

@@ -18,9 +18,8 @@ import org.slf4j.LoggerFactory;
 public class JarvisClient extends JarvisSocketClientImpl implements
 		IJarvisSocketClient {
 
-	protected Logger logger = LoggerFactory
-			.getLogger(JarvisClient.class);
-	
+	protected Logger logger = LoggerFactory.getLogger(JarvisClient.class);
+
 	IJarvisCoreSystem jarvis;
 
 	/**
@@ -36,7 +35,7 @@ public class JarvisClient extends JarvisSocketClientImpl implements
 		setRenderer(true);
 		setSensor(true);
 		setCanAswer(true);
-		
+
 		/**
 		 * implement jarvis system
 		 */
@@ -60,9 +59,10 @@ public class JarvisClient extends JarvisSocketClientImpl implements
 				.getDeclaredField("defaultCharset");
 		charset.setAccessible(true);
 		charset.set(null, null);
-		logger.info("Default encoding: {}", Charset.defaultCharset().displayName());
+		logger.info("Default encoding: {}", Charset.defaultCharset()
+				.displayName());
 		logger.info("Initializing ...");
-		jarvis.initialize("jarvis.txt");
+		jarvis.initialize("jarvis", "jarvis.txt");
 		logger.info("Ready ...");
 	}
 
@@ -70,7 +70,8 @@ public class JarvisClient extends JarvisSocketClientImpl implements
 	public void onNewMessage(JarvisDatagram message) throws IOException {
 		if (message.getCode().startsWith("request")) {
 			try {
-				List<IAimlHistory> result = jarvis.ask(message.request.getData());
+				List<IAimlHistory> result = jarvis.ask(message.request
+						.getData());
 				for (IAimlHistory value : result) {
 					/**
 					 * on event per answer
@@ -82,7 +83,8 @@ public class JarvisClient extends JarvisSocketClientImpl implements
 					sendMessage(nextMessage);
 				}
 			} catch (AimlParsingError e) {
-				logger.error("Error, while accessing to jarvis with {}", message.request.getData());
+				logger.error("Error, while accessing to jarvis with {}",
+						message.request.getData());
 				return;
 			}
 		}
@@ -92,7 +94,7 @@ public class JarvisClient extends JarvisSocketClientImpl implements
 	 * standard main procedure
 	 * 
 	 * @param argv
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public static void main(String argv[]) throws Exception {
 		JarvisSocketClientImpl client = new JarvisClient("localhost", 5000);

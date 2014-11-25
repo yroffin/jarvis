@@ -12,14 +12,15 @@ import org.jarvis.main.engine.IAimlCoreEngine;
 import org.jarvis.main.engine.impl.AimlCoreEngineImpl;
 import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.model.parser.history.IAimlHistory;
-
-import com.gtranslate.Audio;
-import com.gtranslate.Language;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.gtranslate.Audio;
+import com.gtranslate.Language;
+
 public class JarvisCoreSystemImpl implements IJarvisCoreSystem {
-	protected Logger logger = LoggerFactory.getLogger(JarvisCoreSystemImpl.class);
+	protected Logger logger = LoggerFactory
+			.getLogger(JarvisCoreSystemImpl.class);
 
 	private IAimlCoreEngine engine;
 
@@ -33,19 +34,21 @@ public class JarvisCoreSystemImpl implements IJarvisCoreSystem {
 	 */
 	private IAimlCoreEngine instance(String resources) throws AimlParsingError,
 			IOException {
-		InputStream is = this.getClass().getClassLoader().getResourceAsStream(resources);
-		if(is == null) {
-			throw new IOException("Unable to find [" + resources + "] in resources paths");
+		InputStream is = this.getClass().getClassLoader()
+				.getResourceAsStream(resources);
+		if (is == null) {
+			throw new IOException("Unable to find [" + resources
+					+ "] in resources paths");
 		}
 		byte[] b = new byte[is.available()];
-        is.read(b);
-        List<String> res = new ArrayList<String>();
-        for(String resource : new String(b).split("\n")) {
-        	if(resource.trim().length() > 0) {
-        		logger.warn("Read resource : " + resource);
-        		res.add(resource);
-        	}
-        }
+		is.read(b);
+		List<String> res = new ArrayList<String>();
+		for (String resource : new String(b).split("\n")) {
+			if (resource.trim().length() > 0) {
+				logger.warn("Read resource : " + resource);
+				res.add(resource);
+			}
+		}
 		IAimlCoreEngine core = new AimlCoreEngineImpl(res);
 		return core;
 	}
@@ -53,7 +56,8 @@ public class JarvisCoreSystemImpl implements IJarvisCoreSystem {
 	Audio voiceManager = null;
 
 	@Override
-	public void initialize(String aiml) throws AimlParsingError, IOException {
+	public void initialize(String botname, String aiml)
+			throws AimlParsingError, IOException {
 		/*
 		 * The VoiceManager manages all the voices for FreeTTS.
 		 */
@@ -68,6 +72,7 @@ public class JarvisCoreSystemImpl implements IJarvisCoreSystem {
 		 * configure aiml
 		 */
 		engine = instance(aiml);
+		engine.setBot("name", botname);
 	}
 
 	@Override
@@ -75,8 +80,8 @@ public class JarvisCoreSystemImpl implements IJarvisCoreSystem {
 		InputStream sound = null;
 		try {
 			try {
-				if(value != null && value.length()>0) {
-					sound = voiceManager.getAudio(value, Language.FRENCH);
+				if (value != null && value.length() > 0) {
+					sound = voiceManager.getAudio(value, Language.ENGLISH);
 					voiceManager.play(sound);
 				}
 			} catch (JavaLayerException e) {
@@ -85,7 +90,8 @@ public class JarvisCoreSystemImpl implements IJarvisCoreSystem {
 				e.printStackTrace();
 			}
 		} finally {
-			if(sound != null) sound.close();
+			if (sound != null)
+				sound.close();
 		}
 	}
 
@@ -104,7 +110,8 @@ public class JarvisCoreSystemImpl implements IJarvisCoreSystem {
 		List<IAimlHistory> answers = chat(sentence);
 		for (IAimlHistory answer : answers) {
 			try {
-				speak(answer.getAnswer().replace("\n", "").replace("\r", "").trim());
+				speak(answer.getAnswer().replace("\n", "").replace("\r", "")
+						.trim());
 			} catch (IOException e) {
 				throw new AimlParsingError(e);
 			}

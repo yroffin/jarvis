@@ -73,6 +73,7 @@ public class AimlAtomicElementTemplateTest {
 		List<IAimlHistory> answer = null;
 
 		engine.getAiml().accept(new AimlProperty("topic", " a simple topic "));
+		engine.set("topic", "a simple topic");
 		answer = engine.ask("Repeat my sentence.");
 		assertEquals("Ok x a b c", answer.get(0).getAnswer());
 		answer = engine.ask("What i've said ?");

@@ -55,6 +55,7 @@ public class AimlAtomicElementShortcutsTest {
 		List<IAimlHistory> answer = null;
 
 		engine.getAiml().accept(new AimlProperty("topic", " a simple topic "));
+		engine.set("topic", "a simple topic");
 		answer = engine.ask("Hello.");
 		assertEquals("Hi there!", answer.get(0).getAnswer());
 		answer = engine.ask("Hola Hello.");

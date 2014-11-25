@@ -3,6 +3,7 @@ package org.jarvis.main.model.impl.parser;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.jarvis.main.engine.IAimlCoreEngine;
 import org.jarvis.main.engine.impl.transform.AimlTranformImpl;
 import org.jarvis.main.engine.transform.IAimlTransform;
@@ -86,6 +87,16 @@ public abstract class AimlElementContainer implements IAimlElement {
 			element.answer(engine, star, that, render);
 		}
 		return render;
+	}
+
+	@Override
+	public String unescapedHtml() {
+		return StringEscapeUtils.unescapeHtml4(toString());
+	}
+
+	@Override
+	public String escapedHtml() {
+		return StringEscapeUtils.escapeHtml4(toString());
 	}
 
 	@Override

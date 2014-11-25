@@ -56,6 +56,7 @@ public class AimlSystemElementTemplateTest {
 		List<IAimlHistory> answer = null;
 
 		engine.getAiml().accept(new AimlProperty("topic", " a simple topic "));
+		engine.set("topic", "a simple topic");
 		answer = engine.ask("Get date system.");
 		assertEquals(
 				("system " + (new Date()) + " localhost").substring(0, 22),
@@ -75,6 +76,7 @@ public class AimlSystemElementTemplateTest {
 		List<IAimlHistory> answer = null;
 
 		engine.getAiml().accept(new AimlProperty("topic", " a simple topic "));
+		engine.set("topic", "a simple topic");
 		answer = engine.ask("Get size and version");
 		assertEquals("size: 4 version: 1.0.1", answer.get(0).getAnswer());
 		answer = engine.ask("Get upper and lower");

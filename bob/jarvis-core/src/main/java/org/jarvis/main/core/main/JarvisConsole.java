@@ -34,7 +34,7 @@ public class JarvisConsole {
 				+ Charset.defaultCharset().displayName());
 		IJarvisCoreSystem jarvis = new JarvisCoreSystemImpl();
 		System.out.println("Initializing ...");
-		jarvis.initialize(args[0]);
+		jarvis.initialize("jarvis", args[0]);
 		System.out.println("Ready ...");
 		String line = null;
 		System.out.print("You: ");
@@ -68,11 +68,11 @@ public class JarvisConsole {
 				+ Charset.defaultCharset().displayName());
 		IJarvisCoreSystem jarvis = new JarvisCoreSystemImpl();
 		System.out.println("Initializing ...");
-		jarvis.initialize(args[0]);
+		jarvis.initialize("jarvis", args[0]);
 		System.out.println("Ready ...");
 		System.out.print("You: ");
 
-		for(String line : lines) {
+		for (String line : lines) {
 			if (line.length() > 0) {
 				List<IAimlHistory> result = jarvis.ask(line);
 				for (IAimlHistory value : result) {

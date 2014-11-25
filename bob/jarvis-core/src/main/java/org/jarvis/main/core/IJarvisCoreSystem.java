@@ -11,7 +11,8 @@ public interface IJarvisCoreSystem {
 
 	public void release();
 
-	public void initialize(String aiml) throws AimlParsingError, IOException;
+	public void initialize(String botname, String aiml)
+			throws AimlParsingError, IOException;
 
 	public List<IAimlHistory> ask(String string) throws AimlParsingError;
 
