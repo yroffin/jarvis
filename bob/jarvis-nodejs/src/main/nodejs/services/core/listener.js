@@ -105,8 +105,15 @@ exports.handler = function(socket) {
 	/**
 	 * Remove the client from the list when it leaves
 	 */
+	socket.on('error', function() {
+		kernel.getClients().splice(api.findDescriptorBySocket(socket).index, 1);
+	});
+
+	/**
+	 * Remove the client from the list when it leaves
+	 */
 	socket.on('end', function() {
-		kernel.getClients().splice(api.getClientIndexOf(socket).index, 1);
+		kernel.getClients().splice(api.findDescriptorBySocket(socket).index, 1);
 	});
 
 	/**

@@ -80,6 +80,7 @@ public class JarvisClient extends JarvisSocketClientImpl implements
 					nextMessage.setCode("event");
 					nextMessage.event = new JarvisDatagramEvent();
 					nextMessage.event.setData(value.getAnswer());
+					nextMessage.event.setScript(value.getJavascript());
 					sendMessage(nextMessage);
 				}
 			} catch (AimlParsingError e) {
@@ -99,6 +100,5 @@ public class JarvisClient extends JarvisSocketClientImpl implements
 	public static void main(String argv[]) throws Exception {
 		JarvisSocketClientImpl client = new JarvisClient("localhost", 5000);
 		client.sync();
-		System.in.read();
 	}
 }

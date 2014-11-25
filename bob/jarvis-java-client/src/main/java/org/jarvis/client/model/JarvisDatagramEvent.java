@@ -20,11 +20,21 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class JarvisDatagramEvent {
 	@JsonProperty("data")
-	private
-	String data;
+	private String data;
+
+	@JsonProperty("script")
+	private String script;
 
 	public String getData() {
 		return data;
+	}
+
+	public String getScript() {
+		return script;
+	}
+
+	public void setScript(String script) {
+		this.script = script;
 	}
 
 	public void setData(String data) {
@@ -33,6 +43,6 @@ public class JarvisDatagramEvent {
 
 	@Override
 	public String toString() {
-		return "JarvisDatagramStandard [data=" + getData() + "]";
+		return "JarvisDatagramEvent [data=" + data + ", script=" + script + "]";
 	}
 }

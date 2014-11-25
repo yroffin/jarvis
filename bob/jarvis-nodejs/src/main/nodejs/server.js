@@ -93,6 +93,31 @@ function main() {
 
 	httpsServer.listen(443);
 	kernel.notify("Create an HTTPS service identical to the HTTP service done");
+
+	/**
+	 * infinite loop for processing event
+	 */
+	function process() {
+	    kernel.process(function(e) {
+			if(e.code == 'event') {
+				if(e.event.script != 'undefined') {
+					/**
+					 * run this plugin
+					 */
+					var js = JSON.parse(e.event.script);
+					var plugin = require(__dirname + '/plugins/' + js.plugin);
+					kernel.notify("Running plugin " + js.plugin + " " + JSON.stringify(js.params));
+					plugin.execute(js.params);
+				}
+	    	}
+			/**
+			 * TODO store event in history
+			 */
+	    });
+	    setTimeout(process, 1000);
+	}
+
+	process();
 }
 
 main()

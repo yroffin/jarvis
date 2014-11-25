@@ -28,11 +28,10 @@ import org.jarvis.client.IJarvisSocketClient;
 import org.jarvis.client.model.JarvisDatagram;
 import org.jarvis.client.model.JarvisDatagramClient;
 import org.jarvis.client.model.JarvisDatagramSession;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * default implementation of java protocol between nodejs bus and java client
@@ -91,7 +90,8 @@ public class JarvisSocketClientImpl implements IJarvisSocketClient {
 
 	/**
 	 * synchronize this client
-	 * @throws Exception 
+	 * 
+	 * @throws Exception
 	 */
 	public void sync() throws Exception {
 		try {
@@ -101,7 +101,7 @@ public class JarvisSocketClientImpl implements IJarvisSocketClient {
 			socket = new Socket(hostName, portNumber);
 
 			onConnect();
-			
+
 			/**
 			 * start consume mecanism (thread based)
 			 */
@@ -110,7 +110,10 @@ public class JarvisSocketClientImpl implements IJarvisSocketClient {
 
 			boolean identified = false;
 			JarvisDatagram message = null;
-			while ((message = linked.take()) != null) {
+			if (logger.isDebugEnabled()) {
+				logger.error("Waiting for new message");
+			}
+			while ((message = linked.take()) != null && message.code != null) {
 				if (!identified) {
 					/**
 					 * welcome message is the first element of this protocol
@@ -151,10 +154,11 @@ public class JarvisSocketClientImpl implements IJarvisSocketClient {
 					onNewMessage(message);
 				}
 			}
+			consumer.join();
 		} catch (Exception e) {
 			logger.error("Error {} while syncing the system", e);
 		}
-		
+
 		onDisconnect();
 	}
 
@@ -171,7 +175,6 @@ public class JarvisSocketClientImpl implements IJarvisSocketClient {
 		}
 		if (message.getCode().startsWith("welcome")) {
 			JarvisDatagram nextMessage = new JarvisDatagram();
-			nextMessage.setCode("list");
 			sendMessage(nextMessage);
 		}
 	}
@@ -204,23 +207,38 @@ public class JarvisSocketClientImpl implements IJarvisSocketClient {
 					new InputStreamReader(stream));
 			ObjectMapper mapper = new ObjectMapper();
 			try {
+				boolean cont = true;
 				String line = null;
-				while ((line = in.readLine()) != null) {
+				while (cont && (line = in.readLine()) != null) {
 					if (logger.isDebugEnabled()) {
 						logger.debug("Line {}", line);
 					}
 					if (line.trim().length() == 0)
 						continue;
+					if (logger.isDebugEnabled()) {
+						logger.debug("Line {}", line);
+					}
 					JarvisDatagram datagram = mapper.readValue(line,
 							JarvisDatagram.class);
 					try {
+						if (logger.isDebugEnabled()) {
+							logger.debug("Datagram {}", datagram);
+						}
 						linked.put(datagram);
 					} catch (InterruptedException e) {
-						logger.error("While waiting for a new message {}", e);
+						logger.error(
+								"InterruptedException while waiting for a new message {}",
+								e);
+						cont = false;
 					}
 				}
 			} catch (IOException e) {
 				logger.error("While waiting for a new message {}", e);
+			}
+			try {
+				linked.put(new JarvisDatagram());
+			} catch (InterruptedException e) {
+				logger.error("While stopping {}", e);
 			}
 		}
 	}
@@ -229,7 +247,7 @@ public class JarvisSocketClientImpl implements IJarvisSocketClient {
 	 * standard main procedure
 	 * 
 	 * @param argv
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public static void main(String argv[]) throws Exception {
 		JarvisSocketClientImpl client = new JarvisSocketClientImpl("localhost",

@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class JarvisDatagram {
 	@JsonProperty("code")
-	String code;
+	public String code;
 
 	@JsonProperty("welcome")
 	public JarvisDatagramEvent welcome;

@@ -29,7 +29,7 @@
 </category>
 
 <category><pattern>jarvis ajoute des * dans la liste</pattern>
-<template>les * sont dans la liste, ça va<think><set name="article">*</set></think><think>,test</think><javascript>alert(<get name="article" />)</javascript></template>
+<template>les * sont dans la liste, ça va<think><set name="article">*</set></think><think>,test</think><javascript>{"plugin":"liste", "params":{"article":"<get name="article" />"}}</javascript></template>
 </category>
 
 <topic name="ENDS WITH JARVIS">
