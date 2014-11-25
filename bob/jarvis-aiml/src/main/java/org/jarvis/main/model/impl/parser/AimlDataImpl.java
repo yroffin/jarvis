@@ -3,6 +3,7 @@ package org.jarvis.main.model.impl.parser;
 import java.util.List;
 
 import org.jarvis.main.engine.IAimlCoreEngine;
+import org.jarvis.main.model.parser.IAimlResult;
 import org.jarvis.main.model.parser.history.IAimlHistory;
 
 public class AimlDataImpl extends AimlElementContainer {
@@ -45,8 +46,8 @@ public class AimlDataImpl extends AimlElementContainer {
 	}
 
 	@Override
-	public StringBuilder answer(IAimlCoreEngine engine, List<String> star,
-			IAimlHistory that, StringBuilder render) {
+	public IAimlResult answer(IAimlCoreEngine engine, List<String> star,
+			IAimlHistory that, IAimlResult render) {
 		if (star.size() > 0 && starTransformation) {
 			/**
 			 * * is only replace by first star element use <star /> with index

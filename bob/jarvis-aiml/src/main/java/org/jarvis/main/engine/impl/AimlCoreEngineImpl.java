@@ -35,10 +35,12 @@ import org.jarvis.main.engine.transform.IAimlScore;
 import org.jarvis.main.engine.transform.IAimlTransform;
 import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.model.impl.parser.AimlRepository;
+import org.jarvis.main.model.impl.parser.AimlResult;
 import org.jarvis.main.model.impl.parser.history.AimlHistoryImpl;
 import org.jarvis.main.model.impl.transform.DebugTableImpl;
 import org.jarvis.main.model.parser.IAimlCategory;
 import org.jarvis.main.model.parser.IAimlRepository;
+import org.jarvis.main.model.parser.IAimlResult;
 import org.jarvis.main.model.parser.IAimlTopic;
 import org.jarvis.main.model.parser.history.IAimlHistory;
 import org.jarvis.main.model.transform.IDebugTable;
@@ -295,7 +297,7 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 	 * @return
 	 * @throws AimlParsingError
 	 */
-	private String ask(ITransformedItem sentence) throws AimlParsingError {
+	private IAimlResult ask(ITransformedItem sentence) throws AimlParsingError {
 		IAimlScore found = null;
 		String topic = (String) get("topic");
 		if (topic == null)
@@ -413,27 +415,25 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 			 */
 			stack.push(category);
 			transactionMonitor.getTransaction().push(category);
-			String result = category.answer(
-					this,
-					sentence.star(
-							category.getHistory().getTransformedPattern(),
-							new ArrayList<String>()), getThatHistory(),
-					new StringBuilder()).toString();
-			transactionMonitor.getTransaction().pop(result);
+			IAimlResult speech = new AimlResult();
+			category.answer(this, sentence.star(category.getHistory()
+					.getTransformedPattern(), new ArrayList<String>()),
+					getThatHistory(), speech);
+			transactionMonitor.getTransaction().pop(speech);
 			stack.pop();
 
-			transactionMonitor.info("Ask for : " + sentence + " => " + result);
-			/**
-			 * clean this output string from DR/LF and extra space
-			 */
-			return result.replace("\n", "").replace("\r", "").trim();
+			transactionMonitor.info("Ask for : " + sentence + " => " + speech);
+
+			return speech;
 		} else {
-			return "?";
+			IAimlResult speech = new AimlResult();
+			speech.append("?");
+			return speech;
 		}
 	}
 
 	@Override
-	public void setLastAnswer(String reply) throws AimlParsingError {
+	public void setLastAnswer(IAimlResult reply) throws AimlParsingError {
 		IAimlHistory e = new AimlHistoryImpl("", reply, transformer);
 		getThatsHistory().add(e);
 	}

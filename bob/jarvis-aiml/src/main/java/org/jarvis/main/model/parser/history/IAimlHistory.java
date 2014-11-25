@@ -25,7 +25,19 @@ public interface IAimlHistory {
 
 	public void setAnswer(String answer);
 
+	public void setThink(String think);
+
+	public void setScript(String script);
+
+	public void setJavascript(String javascript);
+
 	public String getAnswer();
+
+	public String getThink();
+
+	public String getScript();
+
+	public String getJavascript();
 
 	public void setTransformedAnswer(ITransformedItem answer);
 

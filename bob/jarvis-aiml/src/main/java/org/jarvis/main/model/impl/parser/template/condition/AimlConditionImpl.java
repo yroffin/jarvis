@@ -10,6 +10,7 @@ import org.jarvis.main.model.impl.parser.AimlElementContainer;
 import org.jarvis.main.model.impl.parser.category.AimlLiImpl;
 import org.jarvis.main.model.parser.IAimlElement;
 import org.jarvis.main.model.parser.IAimlProperty;
+import org.jarvis.main.model.parser.IAimlResult;
 import org.jarvis.main.model.parser.category.IAimlLi;
 import org.jarvis.main.model.parser.history.IAimlHistory;
 import org.jarvis.main.model.parser.template.condition.IAimlCondition;
@@ -47,8 +48,10 @@ public class AimlConditionImpl extends AimlElementContainer implements
 
 	@Override
 	public void add(IAimlProperty p) {
-		if (p.getKey().compareTo("name") == 0) name = accept(p);
-		if (p.getKey().compareTo("value") == 0) value = accept(p);
+		if (p.getKey().compareTo("name") == 0)
+			name = accept(p);
+		if (p.getKey().compareTo("value") == 0)
+			value = accept(p);
 	}
 
 	/**
@@ -62,10 +65,12 @@ public class AimlConditionImpl extends AimlElementContainer implements
 	 * @throws AimlParsingError
 	 */
 	private void answerBlock(IAimlCoreEngine engine, List<String> star,
-			IAimlHistory that, StringBuilder render) throws AimlParsingError {
+			IAimlHistory that, IAimlResult render) throws AimlParsingError {
 		String eval = (String) engine.get(name);
-		if (eval == null && value == null) return;
-		if (eval == null) return;
+		if (eval == null && value == null)
+			return;
+		if (eval == null)
+			return;
 
 		if (transformer.compare(eval, value)) {
 			super.answer(engine, star, that, render);
@@ -84,7 +89,7 @@ public class AimlConditionImpl extends AimlElementContainer implements
 	 * @throws AimlParsingError
 	 */
 	private void answerSingle(IAimlCoreEngine engine, List<String> star,
-			IAimlHistory that, StringBuilder render) throws AimlParsingError {
+			IAimlHistory that, IAimlResult render) throws AimlParsingError {
 		String eval = (String) engine.get(name);
 
 		for (IAimlElement element : elements) {
@@ -113,7 +118,7 @@ public class AimlConditionImpl extends AimlElementContainer implements
 	 * @throws AimlParsingError
 	 */
 	private void answerMulti(IAimlCoreEngine engine, List<String> star,
-			IAimlHistory that, StringBuilder render) throws AimlParsingError {
+			IAimlHistory that, IAimlResult render) throws AimlParsingError {
 		for (IAimlElement element : elements) {
 			/**
 			 * count AimlLiImpl elements
@@ -129,7 +134,7 @@ public class AimlConditionImpl extends AimlElementContainer implements
 	}
 
 	private void answerDefault(IAimlCoreEngine engine, List<String> star,
-			IAimlHistory that, StringBuilder render) throws AimlParsingError {
+			IAimlHistory that, IAimlResult render) throws AimlParsingError {
 		String eval = (String) engine.get(name);
 
 		if (transformer.compare(eval, value)) {
@@ -147,8 +152,8 @@ public class AimlConditionImpl extends AimlElementContainer implements
 	}
 
 	@Override
-	public StringBuilder answer(IAimlCoreEngine engine, List<String> star,
-			IAimlHistory that, StringBuilder render) throws AimlParsingError {
+	public IAimlResult answer(IAimlCoreEngine engine, List<String> star,
+			IAimlHistory that, IAimlResult render) throws AimlParsingError {
 		int countLi = 0;
 		int valueOnlyListItem = 0;
 		int nameValueListItem = 0;
@@ -162,9 +167,12 @@ public class AimlConditionImpl extends AimlElementContainer implements
 			 */
 			if (element.getClass() == AimlLiImpl.class) {
 				IAimlLi li = (IAimlLi) element;
-				if (li.isValueOnlyListItem()) valueOnlyListItem++;
-				if (li.isNameValueListItem()) nameValueListItem++;
-				if (li.isDefaultListItem()) defaultListItem++;
+				if (li.isValueOnlyListItem())
+					valueOnlyListItem++;
+				if (li.isNameValueListItem())
+					nameValueListItem++;
+				if (li.isDefaultListItem())
+					defaultListItem++;
 				countLi++;
 			}
 		}

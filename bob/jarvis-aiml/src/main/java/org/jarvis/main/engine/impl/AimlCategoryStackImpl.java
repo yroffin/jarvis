@@ -2,14 +2,16 @@ package org.jarvis.main.engine.impl;
 
 import org.jarvis.main.engine.ICategoryStack;
 import org.jarvis.main.model.parser.IAimlCategory;
+import org.jarvis.main.model.parser.IAimlResult;
 
 public class AimlCategoryStackImpl implements ICategoryStack {
 
 	int level = 0;
 	IAimlCategory category = null;
-	String result;
+	IAimlResult result;
 
-	public AimlCategoryStackImpl(int level, IAimlCategory category, String result) {
+	public AimlCategoryStackImpl(int level, IAimlCategory category,
+			IAimlResult result) {
 		this.level = level;
 		this.category = category;
 		this.result = result;
@@ -27,13 +29,13 @@ public class AimlCategoryStackImpl implements ICategoryStack {
 	}
 
 	@Override
-	public String getResult() {
+	public IAimlResult getResult() {
 		return result;
 	}
 
 	@Override
 	public String toString() {
-		return "CategoryStackImpl [\nlevel=" + level + ", \ncategory=" + getCategory()
-				+ ", \nresult=" + result + "]";
+		return "CategoryStackImpl [\nlevel=" + level + ", \ncategory="
+				+ getCategory() + ", \nresult=" + result + "]";
 	}
 }

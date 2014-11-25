@@ -10,6 +10,7 @@ import org.jarvis.main.engine.transform.IAimlTransform;
 import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.model.parser.IAimlElement;
 import org.jarvis.main.model.parser.IAimlProperty;
+import org.jarvis.main.model.parser.IAimlResult;
 import org.jarvis.main.model.parser.IAimlTopic;
 import org.jarvis.main.model.parser.history.IAimlHistory;
 import org.jarvis.main.model.transform.ITransformedItem;
@@ -37,8 +38,10 @@ public abstract class AimlElementContainer implements IAimlElement {
 	}
 
 	@Override
-	public List<ITransformedItem> getTransforms(IAimlTopic topic) throws AimlParsingError {
-		if (cache != null) return cache;
+	public List<ITransformedItem> getTransforms(IAimlTopic topic)
+			throws AimlParsingError {
+		if (cache != null)
+			return cache;
 		cache = transformer.transform(topic, elements);
 		return cache;
 	}
@@ -81,8 +84,8 @@ public abstract class AimlElementContainer implements IAimlElement {
 	}
 
 	@Override
-	public StringBuilder answer(IAimlCoreEngine engine, List<String> star,
-			IAimlHistory that, StringBuilder render) throws AimlParsingError {
+	public IAimlResult answer(IAimlCoreEngine engine, List<String> star,
+			IAimlHistory that, IAimlResult render) throws AimlParsingError {
 		for (IAimlElement element : elements) {
 			element.answer(engine, star, that, render);
 		}

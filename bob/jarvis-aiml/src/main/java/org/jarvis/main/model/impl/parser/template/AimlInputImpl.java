@@ -22,6 +22,7 @@ import org.jarvis.main.engine.IAimlCoreEngine;
 import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.model.impl.parser.AimlElementContainer;
 import org.jarvis.main.model.parser.IAimlProperty;
+import org.jarvis.main.model.parser.IAimlResult;
 import org.jarvis.main.model.parser.history.IAimlHistory;
 import org.jarvis.main.model.parser.template.IAimlInput;
 
@@ -40,12 +41,13 @@ public class AimlInputImpl extends AimlElementContainer implements IAimlInput {
 
 	@Override
 	public void add(IAimlProperty value) {
-		if (value.getKey().compareTo("index") == 0) index = accept(value);
+		if (value.getKey().compareTo("index") == 0)
+			index = accept(value);
 	}
 
 	@Override
-	public StringBuilder answer(IAimlCoreEngine engine, List<String> star,
-			IAimlHistory that, StringBuilder render) throws AimlParsingError {
+	public IAimlResult answer(IAimlCoreEngine engine, List<String> star,
+			IAimlHistory that, IAimlResult render) throws AimlParsingError {
 		Stack<List<IAimlHistory>> inputs = engine.getHistory();
 		if (index == null) {
 			if (inputs.size() > 0 && inputs.get(0).size() > 0) {

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.jarvis.main.engine.IAimlCoreEngine;
 import org.jarvis.main.model.impl.parser.AimlElementContainer;
+import org.jarvis.main.model.parser.IAimlResult;
 import org.jarvis.main.model.parser.history.IAimlHistory;
 import org.jarvis.main.model.parser.template.system.IAimlId;
 
@@ -14,8 +15,8 @@ public class AimlIdImpl extends AimlElementContainer implements IAimlId {
 	}
 
 	@Override
-	public StringBuilder answer(IAimlCoreEngine engine, List<String> star,
-			IAimlHistory that, StringBuilder render) {
+	public IAimlResult answer(IAimlCoreEngine engine, List<String> star,
+			IAimlHistory that, IAimlResult render) {
 		render.append("localhost");
 		return render;
 	}

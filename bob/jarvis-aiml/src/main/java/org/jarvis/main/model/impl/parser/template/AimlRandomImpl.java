@@ -6,6 +6,7 @@ import java.util.Random;
 import org.jarvis.main.engine.IAimlCoreEngine;
 import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.model.impl.parser.AimlElementContainer;
+import org.jarvis.main.model.parser.IAimlResult;
 import org.jarvis.main.model.parser.history.IAimlHistory;
 import org.jarvis.main.model.parser.template.IAimlRandom;
 
@@ -28,8 +29,8 @@ public class AimlRandomImpl extends AimlElementContainer implements IAimlRandom 
 	}
 
 	@Override
-	public StringBuilder answer(IAimlCoreEngine engine, List<String> star,
-			IAimlHistory that, StringBuilder render) throws AimlParsingError {
+	public IAimlResult answer(IAimlCoreEngine engine, List<String> star,
+			IAimlHistory that, IAimlResult render) throws AimlParsingError {
 		/**
 		 * randomize li selection and render it
 		 */

@@ -25,6 +25,8 @@ import org.jarvis.main.engine.IAimlCoreEngine;
 import org.jarvis.main.engine.impl.AimlCoreEngineImpl;
 import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.model.impl.parser.AimlProperty;
+import org.jarvis.main.model.impl.parser.AimlResult;
+import org.jarvis.main.model.parser.IAimlResult;
 import org.jarvis.main.model.parser.history.IAimlHistory;
 import org.junit.Test;
 
@@ -81,7 +83,9 @@ public class AimlAliceTest {
 		engine.setBot("name", "ALICE");
 		answer = engine.ask("My name is YANNICK");
 		answer = engine.ask("HOW DID YOU HEAR ABOUT ALICE");
-		engine.setLastAnswer("HOW DID YOU HEAR ABOUT ALICE");
+		IAimlResult result = new AimlResult();
+		result.append("HOW DID YOU HEAR ABOUT ALICE");
+		engine.setLastAnswer(result);
 		answer = engine.ask("In romania");
 		assertEquals(
 				"heard about ALICE from Romania. I can't say that many people hear about ALICE from  Romania .",

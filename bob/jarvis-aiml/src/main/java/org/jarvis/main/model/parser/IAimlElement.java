@@ -24,7 +24,8 @@ public interface IAimlElement extends IAimlRender {
 	 * @return
 	 * @throws AimlParsingError
 	 */
-	public List<ITransformedItem> getTransforms(IAimlTopic topic) throws AimlParsingError;
+	public List<ITransformedItem> getTransforms(IAimlTopic topic)
+			throws AimlParsingError;
 
 	/**
 	 * compute an answer
@@ -35,14 +36,15 @@ public interface IAimlElement extends IAimlRender {
 	 * @param render
 	 * @throws AimlParsingError
 	 */
-	public StringBuilder answer(IAimlCoreEngine engine, List<String> star,
-			IAimlHistory that, StringBuilder render) throws AimlParsingError;
+	public IAimlResult answer(IAimlCoreEngine engine, List<String> star,
+			IAimlHistory that, IAimlResult render) throws AimlParsingError;
 
 	@Override
 	public StringBuilder toAiml(StringBuilder render);
 
 	/**
 	 * accept this property
+	 * 
 	 * @param e
 	 * @return
 	 */

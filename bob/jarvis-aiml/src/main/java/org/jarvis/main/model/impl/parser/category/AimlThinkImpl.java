@@ -5,6 +5,8 @@ import java.util.List;
 import org.jarvis.main.engine.IAimlCoreEngine;
 import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.model.impl.parser.AimlElementContainer;
+import org.jarvis.main.model.impl.parser.AimlResult;
+import org.jarvis.main.model.parser.IAimlResult;
 import org.jarvis.main.model.parser.category.IAimlThink;
 import org.jarvis.main.model.parser.history.IAimlHistory;
 import org.slf4j.Logger;
@@ -18,16 +20,16 @@ public class AimlThinkImpl extends AimlElementContainer implements IAimlThink {
 	}
 
 	@Override
-	public StringBuilder answer(IAimlCoreEngine engine, List<String> star,
-			IAimlHistory that, StringBuilder render) throws AimlParsingError {
+	public IAimlResult answer(IAimlCoreEngine engine, List<String> star,
+			IAimlHistory that, IAimlResult render) throws AimlParsingError {
 		/**
 		 * The think element instructs the AIML interpreter to perform all usual
 		 * processing of its contents, but to not return any value, regardless
 		 * of whether the contents produce output.
 		 */
-		String thought = super.answer(engine, star, that, new StringBuilder())
-				.toString();
-		logger.info("Think: " + thought);
+		IAimlResult thought = super
+				.answer(engine, star, that, new AimlResult());
+		render.addThink(thought.getSpeech());
 		return render;
 	}
 

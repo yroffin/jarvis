@@ -58,8 +58,8 @@ public class AimlSystemTest {
 		engine.getAiml().accept(new AimlProperty("topic", " a simple topic "));
 		engine.set("topic", "a simple topic");
 		answer = engine.ask("Execute system.");
-		assertEquals("Runnning script ...", answer.get(0).getAnswer());
+		assertEquals("ls -lrtsysdate", answer.get(0).getScript());
 		answer = engine.ask("Execute javascript.");
-		assertEquals("Runnning javascript ...", answer.get(0).getAnswer());
+		assertEquals("javascriptls -lrt", answer.get(0).getJavascript());
 	}
 }

@@ -5,6 +5,8 @@ import java.util.List;
 import org.jarvis.main.engine.IAimlCoreEngine;
 import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.model.impl.parser.AimlElementContainer;
+import org.jarvis.main.model.impl.parser.AimlResult;
+import org.jarvis.main.model.parser.IAimlResult;
 import org.jarvis.main.model.parser.history.IAimlHistory;
 import org.jarvis.main.model.parser.template.format.IAimlFormal;
 import org.slf4j.Logger;
@@ -19,12 +21,12 @@ public class AimlFormalImpl extends AimlElementContainer implements IAimlFormal 
 	}
 
 	@Override
-	public StringBuilder answer(IAimlCoreEngine engine, List<String> star,
-			IAimlHistory that, StringBuilder render) {
+	public IAimlResult answer(IAimlCoreEngine engine, List<String> star,
+			IAimlHistory that, IAimlResult render) {
 		if (elements.size() > 0) {
-			StringBuilder sb = null;
+			IAimlResult sb = null;
 			try {
-				sb = super.answer(engine, star, that, new StringBuilder());
+				sb = super.answer(engine, star, that, new AimlResult());
 			} catch (AimlParsingError e) {
 				e.printStackTrace();
 				logger.warn(e.getMessage());

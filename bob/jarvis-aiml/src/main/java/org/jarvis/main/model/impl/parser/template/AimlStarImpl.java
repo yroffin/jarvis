@@ -20,6 +20,7 @@ import java.util.List;
 import org.jarvis.main.engine.IAimlCoreEngine;
 import org.jarvis.main.model.impl.parser.AimlElementContainer;
 import org.jarvis.main.model.parser.IAimlProperty;
+import org.jarvis.main.model.parser.IAimlResult;
 import org.jarvis.main.model.parser.history.IAimlHistory;
 import org.jarvis.main.model.parser.template.IAimlStar;
 
@@ -38,13 +39,13 @@ public class AimlStarImpl extends AimlElementContainer implements IAimlStar {
 
 	@Override
 	public void add(IAimlProperty value) {
-		if (value.getKey().compareTo("index") == 0) index = Integer
-				.parseInt(accept(value));
+		if (value.getKey().compareTo("index") == 0)
+			index = Integer.parseInt(accept(value));
 	}
 
 	@Override
-	public StringBuilder answer(IAimlCoreEngine engine, List<String> star,
-			IAimlHistory that, StringBuilder render) {
+	public IAimlResult answer(IAimlCoreEngine engine, List<String> star,
+			IAimlHistory that, IAimlResult render) {
 		if (star.size() > 0 && index < star.size()) {
 			render.append(star.get(index));
 		}

@@ -6,6 +6,7 @@ import org.jarvis.main.engine.IAimlCoreEngine;
 import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.model.impl.parser.AimlElementContainer;
 import org.jarvis.main.model.parser.IAimlProperty;
+import org.jarvis.main.model.parser.IAimlResult;
 import org.jarvis.main.model.parser.category.IAimlGet;
 import org.jarvis.main.model.parser.history.IAimlHistory;
 
@@ -30,12 +31,13 @@ public class AimlGetImpl extends AimlElementContainer implements IAimlGet {
 	}
 
 	@Override
-	public StringBuilder answer(IAimlCoreEngine engine, List<String> star,
-			IAimlHistory that, StringBuilder render) throws AimlParsingError {
+	public IAimlResult answer(IAimlCoreEngine engine, List<String> star,
+			IAimlHistory that, IAimlResult render) throws AimlParsingError {
 		if (name == null) {
 			render.append("unknown");
 		} else {
-			if(engine.get(name) != null) render.append(engine.get(name));
+			if (engine.get(name) != null)
+				render.append((String) engine.get(name));
 		}
 		return render;
 	}

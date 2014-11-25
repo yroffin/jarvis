@@ -20,6 +20,18 @@
 </template>
 </category>
 
+<category><pattern>bonjour</pattern>
+<template>bonjour yannick, tu va bien ?</template>
+</category>
+
+<category><pattern>tu connais pierre</pattern>
+<template>oui, c'est ton fils</template>
+</category>
+
+<category><pattern>jarvis ajoute des * dans la liste</pattern>
+<template>les * sont dans la liste, ça va<think><set name="article">*</set></think><think>,test</think><javascript>alert(<get name="article" />)</javascript></template>
+</category>
+
 <topic name="ENDS WITH JARVIS">
 <category><pattern>TEST BOTNAME</pattern>
 <template><bot name="name"/> is functioning normally.<think><set name="matched">true</set></think></template>

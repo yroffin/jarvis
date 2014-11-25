@@ -9,14 +9,15 @@ import java.util.Stack;
 import org.jarvis.main.engine.IAimlCoreTransaction;
 import org.jarvis.main.engine.ICategoryStack;
 import org.jarvis.main.model.parser.IAimlCategory;
+import org.jarvis.main.model.parser.IAimlResult;
 
 public class AimlCoreTransactionImpl implements IAimlCoreTransaction {
-	
+
 	List<String> messages = new ArrayList<String>();
 
 	@Override
 	public void message(String message) {
-		messages.add(message);		
+		messages.add(message);
 	}
 
 	@Override
@@ -33,9 +34,10 @@ public class AimlCoreTransactionImpl implements IAimlCoreTransaction {
 	}
 
 	@Override
-	public void pop(String result) {
+	public void pop(IAimlResult result) {
 		IAimlCategory categorie = stack.pop();
-		categories.add(new AimlCategoryStackImpl(stack.size(),categorie,result));
+		categories.add(new AimlCategoryStackImpl(stack.size(), categorie,
+				result));
 	}
 
 	class CategoryStackComparator implements Comparator<ICategoryStack> {
@@ -47,7 +49,7 @@ public class AimlCoreTransactionImpl implements IAimlCoreTransaction {
 
 	@Override
 	public List<ICategoryStack> getCategories() {
-		Collections.sort(categories,new CategoryStackComparator());
+		Collections.sort(categories, new CategoryStackComparator());
 		return categories;
 	}
 }

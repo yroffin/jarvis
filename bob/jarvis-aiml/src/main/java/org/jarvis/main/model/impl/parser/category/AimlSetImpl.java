@@ -5,7 +5,9 @@ import java.util.List;
 import org.jarvis.main.engine.IAimlCoreEngine;
 import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.model.impl.parser.AimlElementContainer;
+import org.jarvis.main.model.impl.parser.AimlResult;
 import org.jarvis.main.model.parser.IAimlProperty;
+import org.jarvis.main.model.parser.IAimlResult;
 import org.jarvis.main.model.parser.category.IAimlSet;
 import org.jarvis.main.model.parser.history.IAimlHistory;
 
@@ -24,16 +26,16 @@ public class AimlSetImpl extends AimlElementContainer implements IAimlSet {
 
 	@Override
 	public void add(IAimlProperty value) {
-		if (value.getKey().compareTo("name") == 0) name = accept(value);
+		if (value.getKey().compareTo("name") == 0)
+			name = accept(value);
 	}
 
 	@Override
-	public StringBuilder answer(IAimlCoreEngine engine, List<String> star,
-			IAimlHistory that, StringBuilder render) throws AimlParsingError {
-		String set = super.answer(engine, star, that, new StringBuilder())
-				.toString();
-		engine.set(name, set);
-		render.append(set);
+	public IAimlResult answer(IAimlCoreEngine engine, List<String> star,
+			IAimlHistory that, IAimlResult render) throws AimlParsingError {
+		IAimlResult set = super.answer(engine, star, that, new AimlResult());
+		engine.set(name, set.getSpeech());
+		render.append(set.getSpeech());
 		return render;
 	}
 

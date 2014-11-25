@@ -81,7 +81,7 @@ public class JarvisCoreSystemImpl implements IJarvisCoreSystem {
 		try {
 			try {
 				if (value != null && value.length() > 0) {
-					sound = voiceManager.getAudio(value, Language.ENGLISH);
+					sound = voiceManager.getAudio(value, Language.FRENCH);
 					voiceManager.play(sound);
 				}
 			} catch (JavaLayerException e) {

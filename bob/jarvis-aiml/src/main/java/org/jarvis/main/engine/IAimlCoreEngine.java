@@ -24,6 +24,7 @@ import java.util.Stack;
 import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.model.parser.IAimlCategory;
 import org.jarvis.main.model.parser.IAimlRepository;
+import org.jarvis.main.model.parser.IAimlResult;
 import org.jarvis.main.model.parser.history.IAimlHistory;
 
 /**
@@ -32,6 +33,7 @@ import org.jarvis.main.model.parser.history.IAimlHistory;
 public interface IAimlCoreEngine {
 	/**
 	 * retrieve transaction monitor
+	 * 
 	 * @return
 	 */
 	IAimlCoreTransactionMonitor getTransactionMonitor();
@@ -130,10 +132,11 @@ public interface IAimlCoreEngine {
 
 	/**
 	 * set last reply (force)
+	 * 
 	 * @param reply
-	 * @throws AimlParsingError 
+	 * @throws AimlParsingError
 	 */
-	void setLastAnswer(String reply) throws AimlParsingError;
+	void setLastAnswer(IAimlResult reply) throws AimlParsingError;
 
 	IAimlRepository getAiml();
 }

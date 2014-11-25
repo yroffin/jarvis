@@ -22,6 +22,7 @@ import org.jarvis.main.engine.IAimlCoreEngine;
 import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.model.parser.IAimlCategory;
 import org.jarvis.main.model.parser.IAimlElement;
+import org.jarvis.main.model.parser.IAimlResult;
 import org.jarvis.main.model.parser.IAimlTopic;
 import org.jarvis.main.model.parser.category.IAimlPattern;
 import org.jarvis.main.model.parser.category.IAimlTemplate;
@@ -87,8 +88,8 @@ public class AimlCategory extends AimlElementContainer implements IAimlCategory 
 	}
 
 	@Override
-	public StringBuilder answer(IAimlCoreEngine engine, List<String> star,
-			IAimlHistory that, StringBuilder render) throws AimlParsingError {
+	public IAimlResult answer(IAimlCoreEngine engine, List<String> star,
+			IAimlHistory that, IAimlResult render) throws AimlParsingError {
 		for (IAimlElement element : template.getElements()) {
 			/**
 			 * TODO here that must be local that

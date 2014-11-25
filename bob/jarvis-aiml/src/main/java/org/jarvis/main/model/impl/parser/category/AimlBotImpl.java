@@ -6,6 +6,7 @@ import org.jarvis.main.engine.IAimlCoreEngine;
 import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.model.impl.parser.AimlElementContainer;
 import org.jarvis.main.model.parser.IAimlProperty;
+import org.jarvis.main.model.parser.IAimlResult;
 import org.jarvis.main.model.parser.category.IAimlBot;
 import org.jarvis.main.model.parser.history.IAimlHistory;
 
@@ -27,16 +28,17 @@ public class AimlBotImpl extends AimlElementContainer implements IAimlBot {
 
 	@Override
 	public void add(IAimlProperty value) {
-		if (value.getKey().compareTo("name") == 0) name = accept(value);
+		if (value.getKey().compareTo("name") == 0)
+			name = accept(value);
 	}
 
 	@Override
-	public StringBuilder answer(IAimlCoreEngine engine, List<String> star,
-			IAimlHistory that, StringBuilder render) throws AimlParsingError {
+	public IAimlResult answer(IAimlCoreEngine engine, List<String> star,
+			IAimlHistory that, IAimlResult render) throws AimlParsingError {
 		if (name == null) {
 			render.append("");
 		} else {
-			render.append(engine.getBot(name));
+			render.append((String) engine.getBot(name));
 		}
 		return render;
 	}
