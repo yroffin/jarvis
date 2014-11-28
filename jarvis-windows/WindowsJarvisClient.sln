@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsJarvisMicrophone", "WindowsFormsApplication1\WindowsJarvisMicrophone.csproj", "{32114658-D058-4EB4-83B7-645784542C18}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsJarvisClient", "ClassLibrary1\WindowsJarvisClient.csproj", "{D73362B5-3D9E-48AA-8F77-850DB4750AAD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{32114658-D058-4EB4-83B7-645784542C18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32114658-D058-4EB4-83B7-645784542C18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32114658-D058-4EB4-83B7-645784542C18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32114658-D058-4EB4-83B7-645784542C18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D73362B5-3D9E-48AA-8F77-850DB4750AAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D73362B5-3D9E-48AA-8F77-850DB4750AAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D73362B5-3D9E-48AA-8F77-850DB4750AAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D73362B5-3D9E-48AA-8F77-850DB4750AAD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

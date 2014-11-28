@@ -1,0 +1,5 @@
+u:\users\yannick\documents\visual studio 2013\Projects\WindowsFormsApplication1\ClassLibrary1\bin\Debug\ClassLibrary1.dll
+u:\users\yannick\documents\visual studio 2013\Projects\WindowsFormsApplication1\ClassLibrary1\bin\Debug\ClassLibrary1.pdb
+u:\users\yannick\documents\visual studio 2013\Projects\WindowsFormsApplication1\ClassLibrary1\bin\Debug\Newtonsoft.Json.dll
+u:\users\yannick\documents\visual studio 2013\Projects\WindowsFormsApplication1\ClassLibrary1\obj\Debug\ClassLibrary1.dll
+u:\users\yannick\documents\visual studio 2013\Projects\WindowsFormsApplication1\ClassLibrary1\obj\Debug\ClassLibrary1.pdb

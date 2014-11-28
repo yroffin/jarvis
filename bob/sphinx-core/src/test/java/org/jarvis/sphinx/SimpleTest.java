@@ -1,67 +1,40 @@
 package org.jarvis.sphinx;
 
-import static org.junit.Assert.*;
-
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
+import javax.sound.sampled.AudioFileFormat;
+import javax.sound.sampled.LineUnavailableException;
+
 import org.junit.Test;
 
-import edu.cmu.sphinx.api.Configuration;
-import edu.cmu.sphinx.api.Context;
-import edu.cmu.sphinx.api.LiveSpeechRecognizer;
-import edu.cmu.sphinx.api.SpeechResult;
-import edu.cmu.sphinx.frontend.util.Microphone;
-import edu.cmu.sphinx.recognizer.Recognizer;
-import edu.cmu.sphinx.result.Result;
+import com.darkprograms.speech.microphone.Microphone;
+import com.darkprograms.speech.recognizer.Recognizer;
 
 public class SimpleTest {
 
 	@Test
-	public void testLiveSpeechRecognizer() throws MalformedURLException, IOException {
-		Configuration configuration = new Configuration();
-
-		// Set language model.
-		configuration.setLanguageModelPath("resource:/edu/cmu/sphinx/models/language/en-us.lm.dmp");
-		// Set path to acoustic model.
-		configuration.setAcousticModelPath("resource:/edu/cmu/sphinx/models/acoustic/wsj");
-		// Set path to dictionary.
-		configuration.setDictionaryPath("resource:/edu/cmu/sphinx/models/acoustic/wsj/dict/cmudict.0.6d");
-
-		LiveSpeechRecognizer recognizer = new LiveSpeechRecognizer(configuration);
-		// Start recognition process pruning previously cached data.
-		recognizer.startRecognition(true);
-		SpeechResult result = recognizer.getResult();
-		// Pause recognition process. It can be resumed then with startRecognition(false).
-		recognizer.stopRecognition();
-	}
-	
-	
-		@Test
-	public void test() throws MalformedURLException, IOException {
-		Configuration configuration = new Configuration();
-		 
-		// Set language model.
-		configuration.setLanguageModelPath("resource:/edu/cmu/sphinx/models/language/en-us.lm.dmp");
-		// Set path to acoustic model.
-		configuration.setAcousticModelPath("resource:/edu/cmu/sphinx/models/acoustic/wsj");
-		// Set path to dictionary.
-		configuration.setDictionaryPath("resource:/edu/cmu/sphinx/models/acoustic/wsj/dict/cmudict.0.6d");
-		
-		Context context = new Context(configuration);
-		// Use microphone input.
-		//context.useMicrophone();
-		 
-		// Get required instances. 
-		Recognizer recognizer = context.getInstance(Recognizer.class);
-		Microphone microphone = context.getInstance(Microphone.class);
-		 
-		// Start recognition.
-		recognizer.allocate();
-		microphone.startRecording();
-		Result result = recognizer.recognize();
-		microphone.stopRecording();
-		recognizer.deallocate();
+	public void go() throws IOException {
+		File waveFile = new File(
+				"C:/Users/yannick/AppData/Local/Temp/test7331341722432731118.wav");
+		System.err.println(waveFile.getAbsolutePath());
+		Recognizer r = new Recognizer();
+		r.getRecognizedDataForWave(waveFile);
 	}
 
+	@Test
+	public void testLiveSpeechRecognizer() throws MalformedURLException,
+			IOException, LineUnavailableException, InterruptedException {
+		Microphone m = new Microphone(AudioFileFormat.Type.WAVE);
+		File waveFile = File.createTempFile("test", ".wav");
+		waveFile.deleteOnExit();
+		m.captureAudioToFile(waveFile);
+		System.err.println("Go !!");
+		System.in.read();
+		m.close();
+		System.err.println(waveFile.getAbsolutePath());
+		Recognizer r = new Recognizer();
+		r.getRecognizedDataForWave(waveFile);
+	}
 }
