@@ -10,3 +10,12 @@ u:\users\yannick\documents\visual studio 2013\Projects\WindowsFormsApplication1\
 u:\users\yannick\documents\visual studio 2013\Projects\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\Newtonsoft.Json.dll
 u:\users\yannick\documents\visual studio 2013\Projects\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\ClassLibrary1.pdb
 u:\users\yannick\documents\visual studio 2013\Projects\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsJarvisClient.pdb
+W:\git-luna\jarvis-windows\WindowsJarvisMicrophone\bin\Debug\WindowsJarvisClient.exe.config
+W:\git-luna\jarvis-windows\WindowsJarvisMicrophone\bin\Debug\WindowsJarvisClient.exe
+W:\git-luna\jarvis-windows\WindowsJarvisMicrophone\bin\Debug\WindowsJarvisClient.pdb
+W:\git-luna\jarvis-windows\WindowsJarvisMicrophone\obj\Debug\WindowsJarvisMicrophone.csprojResolveAssemblyReference.cache
+W:\git-luna\jarvis-windows\WindowsJarvisMicrophone\obj\Debug\WindowsJarvisClient.MainJarvisClientForm.resources
+W:\git-luna\jarvis-windows\WindowsJarvisMicrophone\obj\Debug\WindowsJarvisClient.Properties.Resources.resources
+W:\git-luna\jarvis-windows\WindowsJarvisMicrophone\obj\Debug\WindowsJarvisMicrophone.csproj.GenerateResource.Cache
+W:\git-luna\jarvis-windows\WindowsJarvisMicrophone\obj\Debug\WindowsJarvisClient.exe
+W:\git-luna\jarvis-windows\WindowsJarvisMicrophone\obj\Debug\WindowsJarvisClient.pdb
