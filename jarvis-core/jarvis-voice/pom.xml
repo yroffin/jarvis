@@ -6,7 +6,7 @@
 		<artifactId>bob</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>jarvis-core</artifactId>
+	<artifactId>jarvis-voice</artifactId>
 	<dependencies>
 		<dependency>
 			<groupId>org.yroffin.com.bob</groupId>

@@ -133,11 +133,10 @@
 
 	<modules>
 		<module>jarvis-aiml</module>
-		<module>jarvis-core</module>
+		<module>jarvis-voice</module>
 		<module>jarvis-gtranslate</module>
 		<module>jarvis-gtranslate-libs</module>
 		<module>sphinx-core</module>
-		<module>jarvis-server</module>
 		<module>jarvis-nodejs</module>
 		<module>jarvis-java-client</module>
 	</modules>
