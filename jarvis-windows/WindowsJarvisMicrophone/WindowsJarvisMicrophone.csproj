@@ -113,7 +113,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ClassLibrary1\WindowsJarvisClient.csproj">
+    <ProjectReference Include="..\WindowsJarvisClient\WindowsJarvisClient.csproj">
       <Project>{d73362b5-3d9e-48aa-8f77-850db4750aad}</Project>
       <Name>WindowsJarvisClient</Name>
     </ProjectReference>
