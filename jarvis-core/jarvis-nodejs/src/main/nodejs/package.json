@@ -2,7 +2,7 @@
   "name": "jarvis-node",
   "version": "0.1.0",
   "description": "jarvis-nodejs",
-  "main": "src/main/nodejs/hello-world-server.js",
+  "main": "src/main/nodejs/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified! Configure in package.json\" && exit 1"
   },
