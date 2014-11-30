@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>WindowsJarvisClient</RootNamespace>
     <AssemblyName>WindowsJarvisMicrophone</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile />
@@ -37,6 +37,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -46,8 +47,10 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Messaging" />
@@ -82,6 +85,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="libs\pocketsphinx.lib" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -91,6 +95,27 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="resources\fr\language\french3g62K.lm.dmp" />
+    <None Include="resources\fr\language\frenchWords62K - Copie.dic" />
+    <None Include="resources\fr\language\frenchWords62K.dic" />
+    <None Include="resources\fr\wsj\F0\feat.params" />
+    <None Include="resources\fr\wsj\F0\LICENSE" />
+    <None Include="resources\fr\wsj\F0\mdef" />
+    <None Include="resources\fr\wsj\F0\means" />
+    <None Include="resources\fr\wsj\F0\mixture_weights" />
+    <None Include="resources\fr\wsj\F0\noisedict" />
+    <None Include="resources\fr\wsj\F0\README" />
+    <None Include="resources\fr\wsj\F0\transition_matrices" />
+    <None Include="resources\fr\wsj\F0\variances" />
+    <None Include="resources\fr\wsj\F2\feat.params" />
+    <None Include="resources\fr\wsj\F2\LICENSE" />
+    <None Include="resources\fr\wsj\F2\mdef" />
+    <None Include="resources\fr\wsj\F2\means" />
+    <None Include="resources\fr\wsj\F2\mixture_weights" />
+    <None Include="resources\fr\wsj\F2\noisedict" />
+    <None Include="resources\fr\wsj\F2\README" />
+    <None Include="resources\fr\wsj\F2\transition_matrices" />
+    <None Include="resources\fr\wsj\F2\variances" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -117,6 +142,14 @@
       <Project>{d73362b5-3d9e-48aa-8f77-850db4750aad}</Project>
       <Name>WindowsJarvisClient</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="libs\pocketsphinx.dll" />
+    <Content Include="libs\sphinxbase.dll" />
+    <Content Include="pocketsphinx.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
