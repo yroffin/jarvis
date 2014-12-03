@@ -5,7 +5,7 @@ using System.Text;
 
 namespace WindowsJarvisClient
 {
-    class JarvisDatagramClient
+    public class JarvisDatagramClient
     {
 	    public String id;
 	    public String name;

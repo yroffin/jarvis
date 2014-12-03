@@ -6,11 +6,11 @@ using System.Threading;
 
 namespace WindowsJarvisClient
 {
-    class JarvisProtocol
+    public class JarvisProtocol
     {
     }
 
-    class JarvisDatagram
+    public class JarvisDatagram
     {
 	    public String code;
 

@@ -21,7 +21,7 @@ namespace WindowsJarvisClient
     }
 
     // Asynchronous Client
-    public class AsynchronousClient
+    public class AsynchronousClient : InterfaceRunnable
     {
         // The port number for the remote device.
         private const int port = 5000;
@@ -47,14 +47,30 @@ namespace WindowsJarvisClient
 
         // Main form element
         private Socket client;
-        private InterfaceConsole mainJarvisClientForm;
+        protected InterfaceConsole mainJarvisClientForm;
 
         public AsynchronousClient(InterfaceConsole mainJarvisClientForm)
         {
             this.mainJarvisClientForm = mainJarvisClientForm;
         }
 
-        private void StartClientSocket()
+        public void stop()
+        {
+            thread.Abort();
+        }
+
+        private Thread thread;
+        public void setThread(Thread t)
+        {
+            thread = t;
+        }
+
+        public Thread getThread()
+        {
+            return thread;
+        }
+        
+        public void run()
         {
             // Connect to a remote device.
             try
@@ -246,7 +262,7 @@ namespace WindowsJarvisClient
             }
         }
 
-        private void onNewMessage(JarvisDatagram message)
+        protected void onNewMessage(JarvisDatagram message)
         {
             if (isDebugEnabled())
             {
@@ -259,7 +275,7 @@ namespace WindowsJarvisClient
             }
         }
 
-        private void sendMessage(JarvisDatagram message)
+        public void sendMessage(JarvisDatagram message)
         {
             Send(client, JsonConvert.SerializeObject(message));
             sendDone.WaitOne();
@@ -295,21 +311,6 @@ namespace WindowsJarvisClient
             {
                 writeLine(e.ToString());
             }
-        }
-
-        // Start method (main entry point)
-        public static void startClient(InterfaceConsole mainJarvisClientForm)
-        {
-            // The constructor for the Thread class requires a ThreadStart 
-            // delegate that represents the method to be executed on the 
-            // thread.  C# simplifies the creation of this delegate.
-            Thread t = new Thread(new ThreadStart(new AsynchronousClient(mainJarvisClientForm).StartClientSocket));
-
-            // Start ThreadProc.  Note that on a uniprocessor, the new 
-            // thread does not get any processor time until the main thread 
-            // is preempted or yields.  Uncomment the Thread.Sleep that 
-            // follows t.Start() to see the difference.
-            t.Start();
         }
     }
 }

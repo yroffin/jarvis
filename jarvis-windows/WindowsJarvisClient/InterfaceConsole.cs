@@ -10,4 +10,12 @@ namespace WindowsJarvisClient
     {
         void appendText(string text);
     }
+    public interface InterfaceRunnable
+    {
+        void sendMessage(JarvisDatagram message);
+        void run();
+        void stop();
+        Thread getThread();
+        void setThread(Thread t);
+    }
 }

@@ -1,19 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿/** 
+ * Copyright 2014 Yannick Roffin.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-using WindowsJarvisClient;
+using System;
+using System.Threading;
+using System.Windows.Forms;
 
 namespace WindowsJarvisClient
 {
-    public partial class MainJarvisClientForm : Form, InterfaceConsole 
+    public partial class MainJarvisClientForm : Form, InterfaceConsoleSphinx4 
     {
+        private InterfaceRunnable socketClient = null;
+        private InterfaceRunnable sphinxClient = null;
+
         public MainJarvisClientForm()
         {
             InitializeComponent();
@@ -22,6 +33,10 @@ namespace WindowsJarvisClient
         // This delegate enables asynchronous calls for setting
         // the text property on a TextBox control.
         public delegate void appendTextCallback(string text);
+
+        // This delegate enables asynchronous calls for setting
+        // the text property on a TextBox control.
+        public delegate void fixUtteranceCallback(string uttid, string text);
 
         // This method demonstrates a pattern for making thread-safe
         // calls on a Windows Forms control. 
@@ -50,13 +65,51 @@ namespace WindowsJarvisClient
             }
         }
 
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        public void fixUtterance(string uttid, string hypText)
         {
+            // InvokeRequired required compares the thread ID of the
+            // calling thread to the thread ID of the creating thread.
+            // If these threads are different, it returns true.
+            if (this.textHyp.InvokeRequired)
+            {
+                fixUtteranceCallback d = new fixUtteranceCallback(fixUtterance);
+                this.Invoke(d, new object[] { uttid, hypText });
+            }
+            else
+            {
+                this.textHyp.Text = uttid + ":" + hypText;
+
+                JarvisDatagram nextMessage = new JarvisDatagram();
+                nextMessage.code = "request";
+                nextMessage.request = new JarvisDatagramEvent();
+                nextMessage.request.data = this.textHyp.Text;
+                socketClient.sendMessage(nextMessage);
+            }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void MainJarvisClientForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            AsynchronousClient.startClient(this);
+            if (socketClient != null)
+            {
+                socketClient.stop();
+            }
+            if (sphinxClient != null)
+            {
+                sphinxClient.stop();
+            }
+            e.Cancel = false;
+        }
+
+        private void MainJarvisClientForm_Load(object sender, EventArgs e)
+        {
+            if (socketClient == null)
+            {
+                socketClient = JarvisMicrophoneClient.startClient(this);
+            }
+            if (sphinxClient == null)
+            {
+                sphinxClient = JarvisSphinx4Client.startClient(this);
+            }
         }
     }
 }

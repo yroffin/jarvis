@@ -5,9 +5,9 @@ using System.Text;
 
 namespace WindowsJarvisClient
 {
-    class JarvisDatagramEvent
+    public class JarvisDatagramEvent
     {
-    	private String data;
-	    private String script;
+    	public String data;
+        public String script;
     }
 }
