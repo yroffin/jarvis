@@ -37,25 +37,26 @@
             // console
             // 
             this.console.BackColor = System.Drawing.SystemColors.InfoText;
-            this.console.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.console.Font = new System.Drawing.Font("Yu Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.console.ForeColor = System.Drawing.SystemColors.Info;
-            this.console.Location = new System.Drawing.Point(119, 12);
+            this.console.Location = new System.Drawing.Point(13, 64);
             this.console.Name = "console";
             this.console.ReadOnly = true;
-            this.console.Size = new System.Drawing.Size(1024, 471);
+            this.console.Size = new System.Drawing.Size(871, 326);
             this.console.TabIndex = 1;
             this.console.Text = "";
             // 
             // textHyp
             // 
-            this.textHyp.Location = new System.Drawing.Point(12, 67);
+            this.textHyp.Font = new System.Drawing.Font("Mistral", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textHyp.Location = new System.Drawing.Point(13, 12);
             this.textHyp.Name = "textHyp";
-            this.textHyp.Size = new System.Drawing.Size(237, 20);
+            this.textHyp.Size = new System.Drawing.Size(870, 46);
             this.textHyp.TabIndex = 3;
             // 
             // MainJarvisClientForm
             // 
-            this.ClientSize = new System.Drawing.Size(1148, 487);
+            this.ClientSize = new System.Drawing.Size(897, 404);
             this.Controls.Add(this.textHyp);
             this.Controls.Add(this.console);
             this.Name = "MainJarvisClientForm";

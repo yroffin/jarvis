@@ -1,0 +1,8 @@
+-feat 1s_c_d_dd
+-agc max
+-cmn current
+-varnorm no 
+-lowerf 440
+-upperf 3500
+-nfilt 31
+-nfft 512

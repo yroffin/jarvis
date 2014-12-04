@@ -1,4 +1,20 @@
-﻿using System;
+﻿/** 
+ * Copyright 2014 Yannick Roffin.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -284,12 +300,28 @@ namespace WindowsJarvisClient
         // Send
         private void Send(Socket client, String data)
         {
+            if (!client.IsBound)
+            {
+                writeLine("Le client n'est plus connecté");
+            
+                // Signal that all bytes have been sent.
+                sendDone.Set();
+            }
             // Convert the string data to byte data using ASCII encoding.
             byte[] byteData = Encoding.ASCII.GetBytes(data);
 
-            // Begin sending the data to the remote device.
-            client.BeginSend(byteData, 0, byteData.Length, 0,
-                new AsyncCallback(SendCallback), client);
+            try
+            {
+                // Begin sending the data to the remote device.
+                client.BeginSend(byteData, 0, byteData.Length, 0, new AsyncCallback(SendCallback), client);
+            }
+            catch (Exception e)
+            {
+                writeLine(e.ToString());
+                
+                // Signal that all bytes have been sent.
+                sendDone.Set();
+            }
         }
 
         // Send callback

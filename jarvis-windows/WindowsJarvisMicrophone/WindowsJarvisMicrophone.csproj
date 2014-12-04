@@ -147,6 +147,7 @@
     <ProjectReference Include="..\Win32SphinxInterface\Win32SphinxInterface.vcxproj">
       <Project>{372d272e-00f3-415f-b201-a50c62e71559}</Project>
       <Name>Win32SphinxInterface</Name>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </ProjectReference>
     <ProjectReference Include="..\WindowsJarvisClient\WindowsJarvisClient.csproj">
       <Project>{d73362b5-3d9e-48aa-8f77-850db4750aad}</Project>
