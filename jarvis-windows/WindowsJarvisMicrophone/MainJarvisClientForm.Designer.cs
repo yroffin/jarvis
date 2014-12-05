@@ -31,7 +31,9 @@
         private void InitializeComponent()
         {
             this.console = new System.Windows.Forms.RichTextBox();
-            this.textHyp = new System.Windows.Forms.TextBox();
+            this.textUttid = new System.Windows.Forms.TextBox();
+            this.textHypthesis = new System.Windows.Forms.TextBox();
+            this.send = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // console
@@ -46,18 +48,38 @@
             this.console.TabIndex = 1;
             this.console.Text = "";
             // 
-            // textHyp
+            // textUttid
             // 
-            this.textHyp.Font = new System.Drawing.Font("Mistral", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textHyp.Location = new System.Drawing.Point(13, 12);
-            this.textHyp.Name = "textHyp";
-            this.textHyp.Size = new System.Drawing.Size(870, 46);
-            this.textHyp.TabIndex = 3;
+            this.textUttid.Font = new System.Drawing.Font("Mistral", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textUttid.Location = new System.Drawing.Point(13, 12);
+            this.textUttid.Name = "textUttid";
+            this.textUttid.Size = new System.Drawing.Size(275, 46);
+            this.textUttid.TabIndex = 3;
+            // 
+            // textHypthesis
+            // 
+            this.textHypthesis.Font = new System.Drawing.Font("Mistral", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textHypthesis.Location = new System.Drawing.Point(294, 12);
+            this.textHypthesis.Name = "textHypthesis";
+            this.textHypthesis.Size = new System.Drawing.Size(505, 46);
+            this.textHypthesis.TabIndex = 4;
+            // 
+            // send
+            // 
+            this.send.Location = new System.Drawing.Point(809, 12);
+            this.send.Name = "send";
+            this.send.Size = new System.Drawing.Size(75, 46);
+            this.send.TabIndex = 5;
+            this.send.Text = "Send";
+            this.send.UseVisualStyleBackColor = true;
+            this.send.Click += new System.EventHandler(this.button1_Click);
             // 
             // MainJarvisClientForm
             // 
             this.ClientSize = new System.Drawing.Size(897, 404);
-            this.Controls.Add(this.textHyp);
+            this.Controls.Add(this.send);
+            this.Controls.Add(this.textHypthesis);
+            this.Controls.Add(this.textUttid);
             this.Controls.Add(this.console);
             this.Name = "MainJarvisClientForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainJarvisClientForm_FormClosing);
@@ -70,7 +92,9 @@
         #endregion
 
         private System.Windows.Forms.RichTextBox console;
-        private System.Windows.Forms.TextBox textHyp;
+        private System.Windows.Forms.TextBox textUttid;
+        private System.Windows.Forms.TextBox textHypthesis;
+        private System.Windows.Forms.Button send;
     }
 }
 

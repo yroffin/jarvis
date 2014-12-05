@@ -70,19 +70,29 @@ namespace WindowsJarvisClient
             // InvokeRequired required compares the thread ID of the
             // calling thread to the thread ID of the creating thread.
             // If these threads are different, it returns true.
-            if (this.textHyp.InvokeRequired)
+            if (this.textUttid.InvokeRequired)
             {
                 fixUtteranceCallback d = new fixUtteranceCallback(fixUtterance);
                 this.Invoke(d, new object[] { uttid, hypText });
             }
             else
             {
-                this.textHyp.Text = uttid + ":" + hypText;
+                this.textUttid.Text = uttid;
+                this.textHypthesis.Text = hypText;
+                handleText(hypText);
+            }
+        }
 
+        private void handleText(string hypText)
+        {
+            // Send only when not null
+            if (hypText != "")
+            {
                 JarvisDatagram nextMessage = new JarvisDatagram();
-                nextMessage.code = "request";
-                nextMessage.request = new JarvisDatagramEvent();
-                nextMessage.request.data = this.textHyp.Text;
+                nextMessage.code = "evt";
+                nextMessage.evt = new JarvisDatagramEvent();
+                nextMessage.evt.data = this.textUttid.Text;
+                nextMessage.evt.script = "{\"plugin\":\"aiml\", \"args\":{\"sentence\":\"" + hypText + "\"}}";
                 socketClient.sendMessage(nextMessage);
             }
         }
@@ -110,6 +120,11 @@ namespace WindowsJarvisClient
             {
                 sphinxClient = JarvisSphinx4Client.startClient(this);
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            handleText(this.textHypthesis.Text);
         }
     }
 }

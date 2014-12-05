@@ -22,6 +22,8 @@ namespace WindowsJarvisClient
     {
         public AsynchronousMicrophoneClient(InterfaceConsole mainJarvisClientForm) : base(mainJarvisClientForm)
         {
+            this.name = "Default microphone client";
+            this.isSensor = true;
         }
     }
 

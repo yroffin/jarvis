@@ -17,7 +17,7 @@
 /**
  * Load the TCP Library
  */
-net = require('net');
+var net = require('net');
 
 var kernel = require(__dirname + '/kernel');
 var api = require(__dirname + '/api');
@@ -142,6 +142,14 @@ exports.handler = function(socket) {
 		 * handle event
 		 */
 		if (message.code == 'event') {
+			var descriptor = api.findDescriptorBySocket(sender).descriptor;
+			kernel.register(descriptor, {
+				'id' : -1,
+				'name' : 'kernel'
+			}, message);
+			return;
+		}
+		if (message.code == 'evt') {
 			var descriptor = api.findDescriptorBySocket(sender).descriptor;
 			kernel.register(descriptor, {
 				'id' : -1,

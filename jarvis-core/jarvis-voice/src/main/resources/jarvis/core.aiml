@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <aiml version="1.0">
 <!-- -->
 <!-- Free software (c) 2011 JARVIS A.I. Foundation.   -->
@@ -20,6 +20,10 @@
 </template>
 </category>
 
+<category><pattern>ok</pattern>
+<template>je vous Ã©coute</template>
+</category>
+
 <category><pattern>bonjour</pattern>
 <template>bonjour yannick, tu va bien ?</template>
 </category>
@@ -29,7 +33,7 @@
 </category>
 
 <category><pattern>jarvis ajoute des * dans la liste</pattern>
-<template>les * sont dans la liste, ça va<think><set name="article">*</set></think><think>,test</think><javascript>{"plugin":"liste", "params":{"article":"<get name="article" />"}}</javascript></template>
+<template>les * sont dans la liste, ï¿½a va<think><set name="article">*</set></think><think>,test</think><javascript>{"plugin":"liste", "params":{"article":"<get name="article" />"}}</javascript></template>
 </category>
 
 <topic name="ENDS WITH JARVIS">

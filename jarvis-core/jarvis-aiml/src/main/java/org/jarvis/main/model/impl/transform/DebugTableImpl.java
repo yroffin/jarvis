@@ -21,10 +21,6 @@ public class DebugTableImpl implements IDebugTable {
 	private List<ITransformedItem> listSentence = new ArrayList<ITransformedItem>();
 	private List<String> listTopic = new ArrayList<String>();
 
-	private class tableCat {
-		private IAimlCategory cat;
-	}
-
 	private class tableRow {
 
 		private String sessiondIdText;

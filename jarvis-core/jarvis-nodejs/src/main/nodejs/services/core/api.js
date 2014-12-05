@@ -112,6 +112,30 @@ exports.findDescriptorById = function(id) {
 };
 
 /**
+ * retrieve current clients connected
+ */
+exports.findAnswerDescriptor = function() {
+	/**
+	 * api must not expose internal structure for security reason
+	 */
+	var index = 0;
+	var length = kernel.getContext().clients.length;
+	var result = {
+		index : -1
+	};
+	for (; index < length; index++) {
+		var descriptor = kernel.getContext().clients[index];
+		if (descriptor.canAnswer == true) {
+			result.index = index;
+			result.descriptor = descriptor;
+			break;
+		}
+	}
+	logger.debug("findAnswerDescriptor() %s => %s", descriptor.id, result.index);
+	return result;
+};
+
+/**
  * add a new descriptor for this client
  * @param Object
  *            client descriptor
@@ -152,3 +176,41 @@ exports.sendMessage = function write(message, target, socket) {
 		'name' : target.name
 	}, message);
 }
+
+/**
+ * api aiml
+ * send stream to aiml renderer
+ * @target object {id: target id, message: message to send}
+ */
+exports.aiml = function (target) {
+	/**
+	 * find target client
+	 */
+	var descriptor;
+	if(target.id != undefined) {
+		/**
+		 * find descriptor by id
+		 */
+		descriptor = this.findDescriptorById(target.id).descriptor;
+	} else {
+		/**
+		 * find descriptor by attribute
+		 */
+		descriptor = this.findAnswerDescriptor().descriptor;
+	}
+	/**
+	 * Send a nice welcome message and announce
+	 */
+	this.sendMessage({
+		'code' : 'request',
+		'request' : {
+			'data' : target.message
+		},
+		'session' : {
+			'client' : {
+				'id' : descriptor.id
+			}
+		}
+	}, descriptor, descriptor.socket);
+}
+

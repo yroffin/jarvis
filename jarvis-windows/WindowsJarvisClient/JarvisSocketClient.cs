@@ -50,11 +50,13 @@ namespace WindowsJarvisClient
         private ManualResetEvent receiveDone =
             new ManualResetEvent(false);
 
+        // Protected member
+        protected String name = "Default name";
+        protected Boolean isRenderer = false;
+        protected Boolean isSensor = false;
+        protected Boolean canAnswer = false;
+        
         // Internal member
-        private String name = "Default name";
-        private Boolean isRenderer = false;
-        private Boolean isSensor = false;
-        private Boolean canAnswer = false;
         private Boolean identified = false;
         private JarvisDatagramSession session;
 
@@ -293,6 +295,10 @@ namespace WindowsJarvisClient
 
         public void sendMessage(JarvisDatagram message)
         {
+            /**
+             * fill message session
+             */
+            message.session = session;
             Send(client, JsonConvert.SerializeObject(message));
             sendDone.WaitOne();
         }

@@ -95,24 +95,66 @@ function main() {
 	kernel.notify("Create an HTTPS service identical to the HTTP service done");
 
 	/**
+	 * plugin execute
+	 */
+	function plugin(js) {
+		var plugin = require(__dirname + '/plugins/' + js.plugin);
+		if(js.params != undefined) {
+			kernel.notify("Running plugin " + js.plugin + " " + JSON.stringify(js.params));
+			plugin.execute(js.params);
+			return;
+		} else {
+			if(js.args != undefined) {
+				kernel.notify("Running plugin " + js.plugin + " " + JSON.stringify(js.args));
+				plugin.execute(js.args);
+				return;
+			} else {
+				plugin.execute();
+				return;
+			}
+		}
+	}
+
+	/**
 	 * infinite loop for processing event
 	 */
 	function process() {
 	    kernel.process(function(e) {
-			if(e.code == 'event') {
-				if(e.event.script != 'undefined') {
-					/**
-					 * run this plugin
-					 */
-					var js = JSON.parse(e.event.script);
-					var plugin = require(__dirname + '/plugins/' + js.plugin);
-					kernel.notify("Running plugin " + js.plugin + " " + JSON.stringify(js.params));
-					plugin.execute(js.params);
-				}
+	    	try {
+	    		/**
+	    		 * standard event
+	    		 */
+				if(e.code == 'event') {
+					if(e.event.script != undefined) {
+						/**
+						 * run this plugin
+						 */
+						if(e.event.script != '') {
+							plugin(JSON.parse(e.event.script));
+						}
+					}
+		    	}
+	    		/**
+	    		 * standard event, but call evt
+	    		 * event is a reserved keyword in .Net
+	    		 */
+				if(e.code == 'evt') {
+					if(e.evt.script != undefined) {
+						/**
+						 * run this plugin
+						 */
+						if(e.evt.script != '') {
+							plugin(JSON.parse(e.evt.script));
+						}
+					}
+		    	}
+				/**
+				 * TODO store event in history
+				 */
+	    	} catch(e) {
+				console.log('Exception: ', e);
+				throw e;
 	    	}
-			/**
-			 * TODO store event in history
-			 */
 	    });
 	    setTimeout(process, 1000);
 	}

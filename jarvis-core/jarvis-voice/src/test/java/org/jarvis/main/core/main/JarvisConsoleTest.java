@@ -37,4 +37,12 @@ public class JarvisConsoleTest {
 				"jarvis ajoute des carottes dans la liste".split(","));
 	}
 
+	@Test
+	public void testOk() throws NoSuchFieldException, SecurityException,
+			IllegalArgumentException, IllegalAccessException, AimlParsingError,
+			IOException {
+		String[] args = new String[1];
+		args[0] = "jarvis.txt";
+		JarvisConsole.direct(args, "ok".split(","));
+	}
 }

@@ -28,26 +28,13 @@ exports.init = function () {
  */
 exports.send = function (req, res) {
 	var target = JSON.parse(req.query.target);
+
 	logger.info('send() [%s, %s]', target.id, req.query.message);
+
 	/**
-	 * find target client
+	 * use api to send this message
 	 */
-	var descriptor = api.findDescriptorById(target.id).descriptor;
-	
-	/**
-	 * Send a nice welcome message and announce
-	 */
-	api.sendMessage({
-		'code' : 'request',
-		'request' : {
-			'data' : req.query.message
-		},
-		'session' : {
-			'client' : {
-				'id' : descriptor.id
-			}
-		}
-	}, descriptor, descriptor.socket);
+	api.aiml({id: target.id, message:req.query.message});
 
 	res.json({});
 };
