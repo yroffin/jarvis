@@ -1,0 +1,97 @@
+<!doctype html>
+<!--
+Copyright 2014 Yannick Roffin.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<html lang="en" ng-app="myImpressDocumentation">
+    <head>
+        <title>Jarvis presentation</title>
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic" />
+        <link href="css/impress.css" rel="stylesheet" />
+    </head>
+    <body ng-controller="ImpressCtrl" ng-init="loadPresentation('prez')">
+<div id="prez">
+    <div id="a" class="step slide" data-x="5" data-y="5" data-scale=".2">
+        <div ng-include="'elements/slide00.html'"></div>
+    </div>
+
+    <div id="b" class="step slide" data-x="105" data-y="105" data-scale=".2">
+        <div ng-include="'elements/slide01.html'"></div>
+        <div ng-include="'elements/slide01.svg'"></div>
+    </div>
+
+    <div id="c" class="step slide" data-x="105" data-y="405" data-scale=".2" data-rotate="90">
+        <div ng-include="'elements/slide02.html'"></div>
+    </div>
+    
+    <div id="d" class="step slide" data-x="305" data-y="105" data-scale=".01" ng-click="selectSlide('d');">
+        <div ng-include="'elements/slide02.html'"></div>
+    </div>
+
+    <div id="e" class="step slide" data-x="405" data-y="405" data-scale=".2">
+        <div ng-include="'elements/slide02.html'"></div>
+    </div>
+
+    <div id="f" class="step slide"  data-x="505" data-y="205" data-scale=".2" data-rotate="90">
+        <div ng-include="elements/slide02.html"></div>
+    </div>
+</div>
+
+<div id="info">
+<ul>
+    <li class="animate-repeat" ng-repeat="slide in slides"><button ng-click="selectSlide(slide.id);">{{slide.id}}</button></li>
+</ul>
+
+<table>
+  <thead>
+  <tr>
+     <th>Name</th>
+     <th>Value</th>
+  </tr>
+  </thead>
+  <tfoot>
+  </tfoot>
+  <tbody>
+  	<tr><td>state.translate.x</td><td>{{state.translate.x}}</td><td>target.translate.x</td><td>{{target.translate.x}}</td></tr>
+  	<tr><td>state.translate.y</td><td>{{state.translate.y}}</td><td>target.translate.y</td><td>{{target.translate.y}}</td></tr>
+  	<tr><td>state.translate.y</td><td>{{state.translate.z}}<td>target.translate.y</td><td>{{target.translate.z}}</td></tr>
+  	<tr><td>state.rotate.x</td><td>{{state.rotate.x}}</td><td>target.rotate.x</td><td>{{target.rotate.x}}</td></tr>
+  	<tr><td>state.rotate.y</td><td>{{state.rotate.y}}</td><td>target.rotate.y</td><td>{{target.rotate.y}}</td></tr>
+  	<tr><td>state.rotate.y</td><td>{{state.rotate.z}}</td><td>target.rotate.y</td><td>{{target.rotate.z}}</td></tr>
+  	<tr><td>state.scale</td><td>{{state.scale}}</td><td>target.scale</td><td>{{target.scale}}</td></tr>
+  	<tr><td>state.current</td><td>{{state.current.index}}</td><td>target.current</td><td>{{target.current.index}}</td></tr>
+  </tbody>
+</table>
+</div>
+
+        <!-- JQuery -->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <!-- AngularJS -->
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular-resource.min.js"></script>
+
+        <!-- Application -->
+        <script src="angular/app.js"></script>
+        <script src="angular/services.js"></script>
+        <script src="angular/controllers.js"></script>
+        <script src="angular/filters.js"></script>
+        <script src="angular/directives.js"></script>
+        
+    </body>
+</html>

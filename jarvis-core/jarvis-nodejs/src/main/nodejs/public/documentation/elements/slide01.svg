@@ -1,0 +1,20 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
+ <title>Architecture</title>
+ <g>
+  <title>Layer 1</title>
+  <image stroke="null" xlink:href="http://previewcf.turbosquid.com/Preview/2014/05/24__20_18_23/Robot640_040.jpg141a80a0-4f40-494c-b6cd-ff3b1a4886b1Larger.jpg" id="svg_2" height="600" width="800" y="-1.66667" x="-0.66667"/>
+  <image id="svg_13" xlink:href="https://angularjs.org/img/AngularJS-large.png" height="47" width="106" y="208" x="658.33333"/>
+  <image xlink:href="https://s3.amazonaws.com/media-p.slid.es/uploads/yannickroffin/images/907398/effect.png" id="module_1" height="150" width="82" y="27" x="166"/>
+  <image xlink:href="https://s3.amazonaws.com/media-p.slid.es/uploads/yannickroffin/images/907403/java.png" id="svg_20" height="39" width="34" y="98" x="166"/>
+  <image xlink:href="https://s3.amazonaws.com/media-p.slid.es/uploads/yannickroffin/images/907336/microphone-icone-6248-128.png" id="svg_21" height="82" width="85" y="57" x="79"/>
+  <image xlink:href="https://s3.amazonaws.com/media-p.slid.es/uploads/yannickroffin/images/907340/baffle.png" id="svg_23" height="69" width="69.00001" y="170.99999" x="81.66666"/>
+  <image id="module_2" xlink:href="https://s3.amazonaws.com/media-p.slid.es/uploads/yannickroffin/images/907398/effect.png" height="150" width="82" y="132" x="170"/>
+  <image xlink:href="https://s3.amazonaws.com/media-p.slid.es/uploads/yannickroffin/images/907342/app-x-ms-dos-executable-icon.png" id="svg_24" height="31" width="33" y="209" x="173"/>
+  <image xlink:href="https://s3.amazonaws.com/media-p.slid.es/uploads/yannickroffin/images/907328/processus.png" id="svg_25" height="72" width="78" y="82.66667" x="659.33333"/>
+  <image xlink:href="https://s3.amazonaws.com/media-p.slid.es/uploads/yannickroffin/images/907412/logo_nodejs.png" id="svg_26" height="101" width="125" y="1" x="650.66667"/>
+  <line id="svg_28" y2="305" x2="295" y1="57" x1="295" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" stroke="#000000" fill="none"/>
+  <polygon fill="none" id="svg_29"/>
+  <path fill="#FF0000" stroke="#000000" stroke-width="5" d="m417.88751,38.13763c-0.19107,0.00558 -0.37589,0.02173 -0.56781,0.04181c-3.07233,0.30627 -5.78421,2.25513 -7.16156,5.16089l-0.73047,2.19803c0.15775,-0.76129 0.39972,-1.50009 0.73047,-2.19803c-2.45657,-2.54532 -5.90485,-3.7207 -9.31201,-3.16888c-3.40662,0.55161 -6.36597,2.76166 -7.98254,5.96515c-4.56494,-2.81076 -10.25528,-2.64093 -14.65762,0.44495c-4.40222,3.08499 -6.74857,8.54694 -6.03513,14.05807l0.46643,2.24091c-0.21082,-0.73557 -0.36819,-1.48221 -0.46643,-2.24091l-0.0712,0.20709c-3.82675,0.41653 -6.9649,3.38599 -7.78015,7.35886c-0.81485,3.97339 0.87973,8.05139 4.19949,10.10458l5.18329,1.25983c-1.80994,0.14987 -3.61676,-0.28986 -5.18329,-1.25983c-2.56036,2.86786 -3.14987,7.11511 -1.46069,10.62155c1.68924,3.50659 5.29645,5.52539 9.01776,5.06775l2.26199,-0.59854c-0.72787,0.30463 -1.48367,0.50284 -2.26199,0.59854c2.1124,3.88992 5.61563,6.72604 9.72766,7.85605c4.112,1.12866 8.47955,0.46152 12.12112,-1.84778c2.97086,4.68539 8.2439,7.14615 13.5318,6.31668c5.28751,-0.82901 9.64926,-4.80405 11.19824,-10.19769l0.5376,-3.01416c-0.08063,1.02399 -0.25504,2.02997 -0.5376,3.01416c3.63693,2.38504 8.21146,2.51813 11.9693,0.35138c3.75775,-2.16852 6.10266,-6.30389 6.13693,-10.80737l-1.34717,-6.72977l-5.30713,-4.55185c4.10394,2.57062 6.69077,6.48605 6.6543,11.28162c4.87961,0.05023 9.02402,-4.13022 10.88409,-8.92889c1.85944,-4.79892 1.15601,-10.2688 -1.84656,-14.37863c1.24573,-3.05936 1.17188,-6.53873 -0.20276,-9.53674c-1.37415,-2.99796 -3.90924,-5.22607 -6.95813,-6.10022c-0.6824,-3.97339 -3.49512,-7.16953 -7.21234,-8.2171c-3.71674,-1.04733 -7.67514,0.24539 -10.16382,3.32428l-1.51114,2.54919c0.38623,-0.92145 0.89053,-1.78119 1.51114,-2.54919c-1.75409,-2.42093 -4.50549,-3.78583 -7.37405,-3.69574l0,0l-0.00003,-0.00003z" id="svg_1"/>
+ </g>
+</svg>
