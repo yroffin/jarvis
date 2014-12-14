@@ -11,4 +11,4 @@ Jarvis system aim to introduce a human to machine interface capability with :
 - google TTS
 - and a custom aiml renderer
 
-[Short description is here](http://slides.com/yannickroffin/jarvis/live)
+[Short description is here](https://6a1f1411b70ea966ae7d011616f2d38c2be1f67d-www.googledrive.com/host/0B-1rUiMKBiO4RXQzNUNjS0JGWmM/documentation/cartography.html)
