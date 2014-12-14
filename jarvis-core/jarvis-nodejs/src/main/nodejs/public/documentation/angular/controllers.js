@@ -28,10 +28,139 @@ angular.module('myImpressDocumentation.controllers', []).controller('ImpressCtrl
 	 * <li>index, slide index in local steps array</li>
 	 * </ul>
 	 */
+	$scope.arborInit = function(parameters, nodeModel, canvas, width, height) {
+		/**
+		 * init arbor system
+		 */
+		$scope.arborRenderer = function(canvas) {
+			var canvas = $(canvas).get(0)
+			var ctx = canvas.getContext("2d");
+			var particleSystem
+
+			var that = {
+				init : function(system) {
+					particleSystem = system
+					if (canvas.width < window.innerWidth) {
+						canvas.width = window.innerWidth;
+					}
+
+					if (canvas.height < window.innerHeight) {
+						canvas.height = window.innerHeight;
+					}
+					particleSystem.screenSize(canvas.width, canvas.height)
+					particleSystem.screenPadding(80) // leave an extra 80px
+					that.initMouseHandling()
+				},
+
+				redraw : function() {
+					ctx.fillStyle = "#F0F5F5";
+					ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+					particleSystem.eachEdge(function(edge, pt1, pt2) {
+						ctx.strokeStyle = "rgba(0,0,0, .333)";
+						ctx.lineWidth = 1;
+						ctx.beginPath();
+						ctx.moveTo(pt1.x, pt1.y);
+						ctx.lineTo(pt2.x, pt2.y);
+						ctx.stroke();
+					})
+
+					particleSystem.eachNode(function(node, pt) {
+						var w = 10;
+						ctx.fillStyle = "orange";
+						ctx.fillRect(pt.x - w / 2, pt.y - w / 2, w, w);
+						ctx.fillStyle = "black";
+						ctx.font = 'italic 13px sans-serif';
+						ctx.fillText(node.name, pt.x + 8, pt.y + 8);
+					})
+				},
+
+				initMouseHandling : function() {
+					var dragged = null;
+
+					var handler = {
+						clicked : function(e) {
+							var pos = $(canvas).offset();
+							var _mouseP = arbor.Point(e.pageX - pos.left, e.pageY - pos.top);
+							dragged = particleSystem.nearest(_mouseP);
+
+							var selected = dragged.node.data.name;
+
+							if (dragged && dragged.node !== null) {
+								// while we're dragging, don't let physics move
+								// the node
+								dragged.node.fixed = true
+							}
+
+							$(canvas).bind('mousemove', handler.dragged)
+							$(window).bind('mouseup', handler.dropped)
+
+							if (selected != undefined)
+								$scope.selectSlide(selected);
+							return false
+						},
+						dragged : function(e) {
+							var pos = $(canvas).offset();
+							var s = arbor.Point(e.pageX - pos.left, e.pageY - pos.top)
+
+							if (dragged && dragged.node !== null) {
+								var p = particleSystem.fromScreen(s)
+								dragged.node.p = p
+							}
+
+							return false
+						},
+
+						dropped : function(e) {
+							if (dragged === null || dragged.node === undefined)
+								return;
+
+							if (dragged.node !== null)
+								dragged.node.fixed = false
+							dragged.node.tempMass = 1000
+							dragged = null
+							$(canvas).unbind('mousemove', handler.dragged)
+							$(window).unbind('mouseup', handler.dropped)
+							var _mouseP = null;
+							return false;
+						}
+					}
+
+					// start listening
+					$(canvas).mousedown(handler.clicked);
+				},
+
+			}
+			return that
+		}
+		/**
+		 * init
+		 */
+		var sys = arbor.ParticleSystem(); // create the system
+		sys.parameters(parameters);
+		// with sensible
+		// repulsion/stiffness/friction
+		sys.parameters({
+			gravity : true
+		}) // use center-gravity to make the graph settle nicely (ymmv)
+		sys.renderer = $scope.arborRenderer('#' + canvas) // our newly created
+		sys.graft(nodeModel);
+	}
+
+	/**
+	 * init steps
+	 * <ul>
+	 * <li>index, slide index in local steps array</li>
+	 * </ul>
+	 */
 	$scope.initStep = function(index) {
 		var step = $scope.steps[index];
 		var dataset = step.dataset;
 
+		var depends = "";
+		if (dataset.depends != undefined) {
+			depends = dataset.depends.split(",");
+		}
 		var elt = {
 			id : step.id,
 			el : step,
@@ -46,6 +175,7 @@ angular.module('myImpressDocumentation.controllers', []).controller('ImpressCtrl
 				z : $scope.tools.integer(dataset.rotateZ || dataset.rotate)
 			},
 			scale : $scope.tools.integer(dataset.scale, 1),
+			depends : depends,
 			index : $scope.slides.length
 		};
 
@@ -77,18 +207,33 @@ angular.module('myImpressDocumentation.controllers', []).controller('ImpressCtrl
 		var translateFrom = $scope.indexes[id];
 
 		jQuery.each($scope.slides, function(indexTranslate, totranslate) {
-			if (indexTranslate == id)
-				return;
 
 			var duration = $scope.tools.integer(duration, $scope.config.transitionDuration);
-			var delay = (duration / 2);
+			var delay = Math.floor(duration / 2);
+
+			var translation = JSON.parse(JSON.stringify(translateFrom.translate));
+			var rotation = JSON.parse(JSON.stringify(totranslate.rotate));
+			var scale = JSON.parse(JSON.stringify(totranslate.scale));
+
+			/**
+			 * current selected objet recover its position
+			 */
+			if (totranslate.id != id) {
+				rotation.x = translateFrom.rotate.x;
+				rotation.y = translateFrom.rotate.y;
+				rotation.z = translateFrom.rotate.z;
+				translation.x = 100000 * (Math.random() - 0.5);
+				translation.y = 100000 * (Math.random() - 0.5);
+				translation.z = -10000;
+				scale = 0.1;
+			}
 
 			if ($scope.config.debug) {
 				console.debug("Translate ", totranslate, " reference ", translateFrom);
 			}
 
 			$scope.tools.css(totranslate.el, {
-				transform : $scope.tools.translateFrom(totranslate.translate, translateFrom.translate) + $scope.tools.rotate(totranslate.rotate) + $scope.tools.scale(totranslate.scale),
+				transform : $scope.tools.scale(scale) + $scope.tools.translateFrom(totranslate.translate, translation) + $scope.tools.rotate(rotation),
 				transitionDuration : duration + "ms",
 				transitionDelay : delay + "ms",
 			});
@@ -98,15 +243,15 @@ angular.module('myImpressDocumentation.controllers', []).controller('ImpressCtrl
 		// elmenents handle translation
 
 		var duration = $scope.tools.integer(duration, $scope.config.transitionDuration);
-		var delay = (duration / 3);
+		var delay = Math.floor(duration / 3);
 
 		// bind end of first transformation
 		$scope.root.bind('oanimationend animationend webkitAnimationEnd transitionend', function() {
 			$scope.tools.css($scope.root[0], {
 				// inverse rotation and scale for this transition
 				transform : "" + $scope.tools.rotateInverse(translateFrom.rotate) + $scope.tools.scale(1 / translateFrom.scale),
-				transitionDuration : duration + "ms",
-				transitionDelay : delay + "ms",
+				transitionDuration : Math.floor(duration) + "ms",
+				transitionDelay : Math.floor(delay) + "ms",
 			});
 		});
 
@@ -114,8 +259,8 @@ angular.module('myImpressDocumentation.controllers', []).controller('ImpressCtrl
 		$scope.tools.css($scope.root[0], {
 			// inverse rotation and normal scale for this transition
 			transform : "" + $scope.tools.rotateInverse(translateFrom.rotate) + $scope.tools.scale(1),
-			transitionDuration : (duration / 2) + "ms",
-			transitionDelay : (delay / 2) + "ms",
+			transitionDuration : Math.floor(duration / 2) + "ms",
+			transitionDelay : Math.floor(delay / 2) + "ms",
 		});
 	}
 	/**
@@ -171,20 +316,6 @@ angular.module('myImpressDocumentation.controllers', []).controller('ImpressCtrl
 		// all will be done with these reference
 		$scope.tools.css($scope.root[0], $scope.config.rootStyle);
 
-		$scope.tools.css($('#info')[0], {
-			position : "absolute",
-			transform : $scope.tools.translate({
-				x : 0,
-				y : 0,
-				z : 2000
-			}) + $scope.tools.rotate({
-				x : 0,
-				y : 0,
-				z : 0
-			}) + $scope.tools.scale(1),
-			transformStyle : "preserve-3d"
-		});
-
 		// load and init steps
 		$scope.steps = $('.step');
 		$scope.slides = [];
@@ -192,6 +323,136 @@ angular.module('myImpressDocumentation.controllers', []).controller('ImpressCtrl
 		$scope.steps.each($scope.initStep);
 
 		console.info("Slides loaded", $scope.slides);
+		$scope.selectSlide('index');
+
+		/**
+		 * init arbor system
+		 */
+		var CLR = {
+			branch : "#b2b19d",
+			code : "orange",
+			doc : "#922E00",
+			demo : "#a7af00"
+		}
+
+		var nodeModel = {
+			nodes : {},
+			edges : {}
+		};
+
+		for (var slideIndex = 0; slideIndex < $scope.slides.length; slideIndex++) {
+			nodeModel.nodes[$scope.slides[slideIndex].id] = {
+				name : $scope.slides[slideIndex].id
+			};
+			nodeModel.edges[$scope.slides[slideIndex].id] = {};
+			var edges = nodeModel.edges[$scope.slides[slideIndex].id];
+			for (var slideDepend = 0; slideDepend < $scope.slides[slideIndex].depends.length; slideDepend++) {
+				edges[$scope.slides[slideIndex].depends[slideDepend]] = {
+					length : .8
+				};
+			}
+		}
+		var nodeModel1 = {
+			nodes : {
+				"arbor.js" : {
+					color : "red",
+					shape : "dot",
+					alpha : 1
+				},
+
+				demos : {
+					color : CLR.branch,
+					shape : "dot",
+					alpha : 1
+				},
+				halfviz : {
+					color : CLR.demo,
+					alpha : 0,
+					link : '/halfviz'
+				},
+				atlas : {
+					color : CLR.demo,
+					alpha : 0,
+					link : '/atlas'
+				},
+				echolalia : {
+					color : CLR.demo,
+					alpha : 0,
+					link : '/echolalia'
+				},
+
+				docs : {
+					color : CLR.branch,
+					shape : "dot",
+					alpha : 1
+				},
+				reference : {
+					color : CLR.doc,
+					alpha : 0,
+					link : '#reference'
+				},
+				introduction : {
+					color : CLR.doc,
+					alpha : 0,
+					link : '#introduction'
+				},
+
+				code : {
+					color : CLR.branch,
+					shape : "dot",
+					alpha : 1
+				},
+				github : {
+					color : CLR.code,
+					alpha : 0,
+					link : 'https://github.com/samizdatco/arbor'
+				},
+				".zip" : {
+					color : CLR.code,
+					alpha : 0,
+					link : '/js/dist/arbor-v0.92.zip'
+				},
+				".tar.gz" : {
+					color : CLR.code,
+					alpha : 0,
+					link : '/js/dist/arbor-v0.92.tar.gz'
+				}
+			},
+			edges : {
+				"arbor.js" : {
+					demos : {
+						length : .8
+					},
+					docs : {
+						length : .8
+					},
+					code : {
+						length : .8
+					}
+				},
+				demos : {
+					halfviz : {},
+					atlas : {},
+					echolalia : {}
+				},
+				docs : {
+					reference : {},
+					introduction : {}
+				},
+				code : {
+					".zip" : {},
+					".tar.gz" : {},
+					"github" : {}
+				}
+			}
+		}
+
+		$scope.arborInit({
+			stiffness : 900,
+			repulsion : 200,
+			gravity : true,
+			dt : 0.015
+		}, nodeModel, 'viewport', 1024, 768)
 	}
 
 	$scope.tools = {
@@ -248,8 +509,8 @@ angular.module('myImpressDocumentation.controllers', []).controller('ImpressCtrl
 			memory['transformOrigin'] = [ 'transform-origin', '-webkit-transform-origin', , '-moz-transform-origin', '-o-transform-origin' ];
 
 			memory['transition'] = [ 'transition', '-webkit-transition', , '-moz-transition', '-o-transition' ];
-			memory['transitionDuration'] = [ 'transition-duration' ];
-			memory['transitionDelay'] = [ 'transition-delay' ];
+			memory['transitionDuration'] = [ 'transition-duration', '-webkit-transition-duration', '-moz-transition-duration', '-o-transition-duration' ];
+			memory['transitionDelay'] = [ 'transition-delay', '-webkit-transition-delay', '-moz-transition-delay', '-o-transition-delay' ];
 
 			memory['position'] = [ 'position' ];
 			memory['overflow'] = [ 'overflow' ];
@@ -278,8 +539,9 @@ angular.module('myImpressDocumentation.controllers', []).controller('ImpressCtrl
 				if (props.hasOwnProperty(key)) {
 					var pkeys = $scope.tools.pfx(key);
 					if (pkeys !== undefined) {
-						for (var pkey = 0; pkey < pkeys.length; pkey++)
+						for (var pkey = 0; pkey < pkeys.length; pkey++) {
 							el.style[pkeys[pkey]] = props[key];
+						}
 					}
 				}
 			}

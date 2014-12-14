@@ -180,13 +180,16 @@ a:focus {
 
     They cover everything what you see on first three steps of the demo.
 */
+#info {
+    display: block;
+}
+
 .slide {
     display: block;
 
     margin: 0px 0px;
     padding: 0px 0px;
 
-    background-color: white;
     border: 1px solid rgba(0, 0, 0, .3);
     border-radius: 10px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
