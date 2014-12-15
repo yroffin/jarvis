@@ -1,0 +1,17 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
+ <title>Architecture</title>
+ <g>
+  <title>Listener</title>
+  <rect fill="#9ff72c" stroke="#000000" stroke-linejoin="null" stroke-linecap="null" x="173" y="74" width="444.99999" height="412" id="svg_59"/>
+  <polygon fill="none" id="svg_29"/>
+  <image xlink:href="https://6a1f1411b70ea966ae7d011616f2d38c2be1f67d-www.googledrive.com/host/0B-1rUiMKBiO4RXQzNUNjS0JGWmM/documentation/images/logo_nodejs.png" id="svg_26" height="72" width="101" y="468" x="345.66668"/>
+  <g id="svg_4">
+   <g id="listener">
+    <path stroke="#000000" id="svg_2" d="m211.29199,98.02901l-18.29199,4.91399l0,44.785l164.271,0.114l20.733,-5.028l0,-44.78499l-166.71201,0l0,0l0,0l0,0l0,0zm146.97501,4.83299l0,44.98601m0,-44.98601l20.733,-4.927m-20.733,5.142l-165.06799,-0.215" fill="#9ff72c" stroke-linecap="null" stroke-linejoin="null"/>
+    <text fill="#000000" stroke="#000000" stroke-width="0" stroke-linejoin="null" stroke-linecap="null" x="276" y="129" id="svg_16" font-size="10" font-family="Cursive" text-anchor="middle" xml:space="preserve">listener</text>
+   </g>
+   <image xlink:href="https://6a1f1411b70ea966ae7d011616f2d38c2be1f67d-www.googledrive.com/host/0B-1rUiMKBiO4RXQzNUNjS0JGWmM/documentation/images/processus.png" id="svg_25" height="37" width="43" y="106.66666" x="196.33334"/>
+  </g>
+ </g>
+</svg>

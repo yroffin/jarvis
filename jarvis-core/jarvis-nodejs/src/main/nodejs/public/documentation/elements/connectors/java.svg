@@ -1,0 +1,38 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
+ <defs>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_end_svg_27">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m100,50l-100,40l30,-40l-30,-40l100,40z" id="svg_30"/>
+  </marker>
+ </defs>
+ <title>Java client</title>
+ <g>
+  <title>Listener</title>
+  <rect fill="#9ff72c" stroke="#000000" stroke-linejoin="null" stroke-linecap="null" x="150" y="68" width="444.99999" height="412" id="svg_59"/>
+  <polygon fill="none" id="svg_29"/>
+  <path stroke="#000000" id="svg_2" d="m211.29199,98.02901l-18.29199,4.91399l0,44.785l164.271,0.114l20.733,-5.028l0,-44.78499l-166.71201,0l0,0l0,0l0,0l0,0zm146.97501,4.83299l0,44.98601m0,-44.98601l20.733,-4.927m-20.733,5.14201l-165.06799,-0.215" fill="#9ff72c" stroke-linecap="null" stroke-linejoin="null"/>
+  <image xlink:href="https://6a1f1411b70ea966ae7d011616f2d38c2be1f67d-www.googledrive.com/host/0B-1rUiMKBiO4RXQzNUNjS0JGWmM/documentation/images/processus.png" id="svg_25" height="37" width="43" y="106.66666" x="196.33334"/>
+  <text fill="#000000" stroke="#000000" stroke-width="0" stroke-linejoin="null" stroke-linecap="null" x="297" y="129" id="svg_5" font-size="10" font-family="Cursive" text-anchor="middle" xml:space="preserve">Simple Java client</text>
+  <text fill="#000000" stroke="#000000" stroke-width="0" stroke-linejoin="null" stroke-linecap="null" x="190.5" y="180.5" id="svg_6" font-size="10" font-family="Cursive" text-anchor="middle" xml:space="preserve">json request</text>
+  <text fill="#000000" stroke="#000000" stroke-width="0" stroke-linejoin="null" stroke-linecap="null" x="340.5" y="197" id="svg_7" font-size="10" font-family="Cursive" text-anchor="middle" xml:space="preserve">Aiml engine transform</text>
+  <image x="346" y="444" width="78" height="80" id="svg_8" xlink:href="https://6a1f1411b70ea966ae7d011616f2d38c2be1f67d-www.googledrive.com/host/0B-1rUiMKBiO4RXQzNUNjS0JGWmM/documentation/images/java.png"/>
+  <text id="svg_18" fill="#000000" stroke="#000000" stroke-width="0" stroke-linejoin="null" stroke-linecap="null" x="497" y="236.5" font-size="10" font-family="Cursive" text-anchor="middle" xml:space="preserve">Google TTS client</text>
+  <path id="svg_19" stroke="#000000" d="m373.75262,115.9951l-8.75262,3.14188l0,28.63429l78.60278,0.07289l9.92065,-3.21477l0,-28.63429l-79.77081,0l0,0l0,0l0,0l0,0zm70.32672,3.09009l0,28.76282m0,-28.76282l9.92065,-3.15019m-9.92065,3.28766l-78.98413,-0.13747" fill="#9ff72c" stroke-linecap="null" stroke-linejoin="null"/>
+  <text id="svg_20" fill="#000000" stroke="#000000" stroke-width="0" stroke-linejoin="null" stroke-linecap="null" x="403" y="137" font-size="10" font-family="Cursive" text-anchor="middle" xml:space="preserve">Aiml Engine</text>
+  <path id="svg_21" stroke="#000000" d="m457.75262,115.9951l-8.75262,3.14188l0,28.63429l78.60278,0.07289l9.92065,-3.21477l0,-28.63429l-79.77081,0l0,0l0,0l0,0l0,0zm70.32672,3.09009l0,28.76282m0,-28.76282l9.92065,-3.15019m-9.92065,3.28766l-78.98413,-0.13747" fill="#9ff72c" stroke-linecap="null" stroke-linejoin="null"/>
+  <text id="svg_22" fill="#000000" stroke="#000000" stroke-width="0" stroke-linejoin="null" stroke-linecap="null" x="487" y="137" font-size="10" font-family="Cursive" text-anchor="middle" xml:space="preserve">Google TTS</text>
+  <line id="svg_23" y2="424.5" x2="404.5" y1="149.5" x1="404.5" stroke-linecap="null" stroke-linejoin="null" stroke="#000000" fill="none"/>
+  <line id="svg_24" y2="113" x2="410" y1="113" x1="411" stroke-linecap="null" stroke-linejoin="null" stroke="#000000" fill="none"/>
+  <line id="svg_26" y2="426" x2="489" y1="151" x1="489" stroke-linecap="null" stroke-linejoin="null" stroke="#000000" fill="none"/>
+  <line marker-end="url(#se_marker_end_svg_27)" id="svg_27" y2="185.93002" x2="270.61057" y1="186.93002" x1="114.61057" stroke-linecap="null" stroke-linejoin="null" stroke="#000000" fill="none"/>
+  <line id="svg_31" y2="425" x2="274.5" y1="150" x1="274.5" stroke-linecap="null" stroke-linejoin="null" stroke="#000000" fill="none"/>
+  <line transform="rotate(180 193.8605499267578,166.43002319335938) " id="svg_32" marker-end="url(#se_marker_end_svg_27)" y2="165.93002" x2="272.11054" y1="166.93002" x1="115.61054" stroke-linecap="null" stroke-linejoin="null" stroke="#000000" fill="none"/>
+  <line id="svg_33" marker-end="url(#se_marker_end_svg_27)" y2="202.93002" x2="401.11057" y1="203.93002" x1="276.61057" stroke-linecap="null" stroke-linejoin="null" stroke="#000000" fill="none"/>
+  <line id="svg_34" marker-end="url(#se_marker_end_svg_27)" y2="223.43002" x2="486.11058" y1="224.43002" x1="405.61057" stroke-linecap="null" stroke-linejoin="null" stroke="#000000" fill="none"/>
+  <line transform="rotate(-180 340.1105651855469,263.4300231933594) " id="svg_35" marker-end="url(#se_marker_end_svg_27)" y2="262.93002" x2="401.61059" y1="263.93002" x1="278.61057" stroke-linecap="null" stroke-linejoin="null" stroke="#000000" fill="none"/>
+  <line id="svg_36" transform="rotate(-180 194.11054992675784,293.9300231933594) " marker-end="url(#se_marker_end_svg_27)" y2="293.43002" x2="272.61056" y1="294.43002" x1="115.61054" stroke-linecap="null" stroke-linejoin="null" stroke="#000000" fill="none"/>
+  <text id="svg_37" fill="#000000" stroke="#000000" stroke-width="0" stroke-linejoin="null" stroke-linecap="null" x="189.5" y="286.5" font-size="10" font-family="Cursive" text-anchor="middle" xml:space="preserve">javascript</text>
+  <text xml:space="preserve" text-anchor="middle" font-family="Cursive" font-size="10" id="svg_38" y="220" x="338.84375" stroke-linecap="null" stroke-linejoin="null" stroke-width="0" stroke="#000000" fill="#000000">text request to</text>
+  <text xml:space="preserve" text-anchor="middle" font-family="Cursive" font-size="10" id="svg_39" y="236.5" x="339.125" stroke-linecap="null" stroke-linejoin="null" stroke-width="0" stroke="#000000" fill="#000000">javascript action</text>
+ </g>
+</svg>

@@ -1,0 +1,18 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
+ <title>Java client</title>
+ <g>
+  <title>Listener</title>
+  <path id="svg_13" stroke-linejoin="null" stroke-linecap="null" fill="#9ff72c" d="m54.63568,114.02901l-21.63568,4.91399l0,44.785l194.29901,0.11401l24.52292,-5.028l0,-44.785l-197.18625,0l0,0l0,0l0,0l0,0zm173.8414,4.83298l0,44.98601m0,-44.98601l24.52292,-4.92699m-24.52292,5.14201l-195.2417,-0.215" stroke="#000000"/>
+  <text id="svg_14" xml:space="preserve" text-anchor="middle" font-family="Cursive" font-size="10" y="144" x="181" stroke-linecap="null" stroke-linejoin="null" stroke-width="0" stroke="#000000" fill="#000000">Simple .Net client</text>
+  <polygon id="svg_29" fill="none"/>
+  <g id="svg_11">
+   <path stroke-linejoin="null" stroke-linecap="null" fill="#9ff72c" d="m54.63568,63.02901l-21.63568,4.91399l0,44.785l194.29901,0.114l24.52292,-5.028l0,-44.78499l-197.18625,0l0,0l0,0l0,0l0,0zm173.8414,4.83299l0,44.98601m0,-44.98601l24.52292,-4.927m-24.52292,5.14201l-195.2417,-0.215" id="svg_2" stroke="#000000"/>
+   <text xml:space="preserve" text-anchor="middle" font-family="Cursive" font-size="10" id="svg_5" y="93" x="181" stroke-linecap="null" stroke-linejoin="null" stroke-width="0" stroke="#000000" fill="#000000">Simple Java client</text>
+   <image xlink:href="https://6a1f1411b70ea966ae7d011616f2d38c2be1f67d-www.googledrive.com/host/0B-1rUiMKBiO4RXQzNUNjS0JGWmM/documentation/images/SpeakerIcon.png" id="svg_9" height="36" width="33" y="72" x="78"/>
+   <image xlink:href="https://6a1f1411b70ea966ae7d011616f2d38c2be1f67d-www.googledrive.com/host/0B-1rUiMKBiO4RXQzNUNjS0JGWmM/documentation/images/alice.png" id="svg_10" height="37" width="37" y="71" x="36"/>
+  </g>
+  <image xlink:href="https://6a1f1411b70ea966ae7d011616f2d38c2be1f67d-www.googledrive.com/host/0B-1rUiMKBiO4RXQzNUNjS0JGWmM/documentation/images/microphone.png" id="svg_17" height="37" width="55" y="124" x="67"/>
+  <text transform="rotate(-36.869895935058594 58.000000000000014,143) " xml:space="preserve" text-anchor="middle" font-family="Cursive" font-size="10" id="svg_18" y="147" x="58" stroke-linecap="null" stroke-linejoin="null" stroke-width="0" stroke="#000000" fill="#000000">Sphinx 4</text>
+ </g>
+</svg>

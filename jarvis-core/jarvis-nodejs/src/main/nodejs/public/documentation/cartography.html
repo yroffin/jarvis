@@ -26,34 +26,34 @@ limitations under the License.
 </head>
 <body ng-controller="ImpressCtrl" ng-init="loadPresentation('prez')">
   <div id="prez">
-    <div id="index" class="step slide" data-depends="main" data-x="0" data-y="0" data-scale=".2" >
+    <div id="index" class="step slide" data-x="0" data-y="0" data-scale=".2" >
       <canvas id="viewport" width="1024" height="768"></canvas>
     </div>
-    <div id="main" class="step slide" data-depends="architecture" data-x="0" data-y="0" data-scale=".2" ng-click="selectSlide('index');">
+    <div id="main" class="step slide" data-depends="index" data-x="0" data-y="0" data-scale=".2" ng-click="selectSlide('index');">
       <div align="center" ng-include="'elements/main.html'"></div>
       <div align="center" ng-include="'elements/main.svg'"></div>
     </div>
-    <div id="architecture" class="step slide" data-depends="technical-architecture,connectors,kernel" data-x="150" data-y="150" data-rotate="-45" data-scale=".2" ng-click="selectSlide('index');">
+    <div id="architecture" class="step slide" data-depends="main" data-x="150" data-y="150" data-rotate="-45" data-scale=".2" ng-click="selectSlide('index');">
       <div align="center" ng-include="'elements/architecture.html'"></div>
       <div align="center" ng-include="'elements/architecture.svg'"></div>
     </div>
-    <div id="technical-architecture" class="step slide" data-depends="connectors,kernel" data-x="150" data-y="1500" data-rotate="-145" data-scale=".2" ng-click="selectSlide('index');">
+    <div id="technical-architecture" class="step slide" data-depends="architecture" data-x="150" data-y="1500" data-rotate="-145" data-scale=".2" ng-click="selectSlide('index');">
       <div align="center" ng-include="'elements/technical-architecture.html'"></div>
       <div align="center" ng-include="'elements/technical-architecture.svg'"></div>
     </div>
-    <div id="connectors" class="step slide" data-depends="connector-java,connector-dotnet" data-x="100" data-y="250" data-z="-100" data-rotate="-45" data-scale=".2" ng-click="selectSlide('index');">
+    <div id="connectors" class="step slide" data-depends="listener" data-x="100" data-y="250" data-z="-100" data-rotate="-45" data-scale=".2" ng-click="selectSlide('index');">
       <div align="center" ng-include="'elements/connectors.html'"></div>
       <div align="center" ng-include="'elements/connectors.svg'"></div>
     </div>
-    <div id="connector-java" class="step slide" data-x="100" data-y="250" data-z="-400" data-rotate="-45" data-scale=".2" ng-click="selectSlide('index');">
+    <div id="connector-java" class="step slide" data-depends="connectors" data-x="100" data-y="250" data-z="-400" data-rotate="-45" data-scale=".2" ng-click="selectSlide('index');">
       <div align="center" ng-include="'elements/connectors/java.html'"></div>
       <div align="center" ng-include="'elements/connectors/java.svg'"></div>
     </div>
-    <div id="connector-dotnet" class="step slide" data-x="100" data-y="250" data-z="-400" data-rotate="-45" data-scale=".2" ng-click="selectSlide('index');">
+    <div id="connector-dotnet" class="step slide" data-depends="connectors" data-x="100" data-y="250" data-z="-400" data-rotate="-45" data-scale=".2" ng-click="selectSlide('index');">
       <div align="center" ng-include="'elements/connectors/dotnet.html'"></div>
       <div align="center" ng-include="'elements/connectors/dotnet.svg'"></div>
     </div>
-    <div id="kernel" class="step slide" data-x="250" data-y="150" data-z="-200" data-rotate="-45" data-scale=".2" ng-click="selectSlide('index');">
+    <div id="kernel" class="step slide" data-x="250" data-depends="technical-architecture" data-y="150" data-z="-200" data-rotate="-45" data-scale=".2" ng-click="selectSlide('index');">
       <div align="center" ng-include="'elements/kernel/kernel.html'"></div>
       <div align="center" ng-include="'elements/kernel/kernel.svg'"></div>
     </div>
@@ -61,9 +61,17 @@ limitations under the License.
       <div align="center" ng-include="'elements/kernel/listener.html'"></div>
       <div align="center" ng-include="'elements/kernel/listener.svg'"></div>
     </div>
-    <div id="interface" class="step slide" data-depends="listener" data-x="250" data-y="150" data-z="-200" data-rotate="-30" data-scale=".2" ng-click="selectSlide('index');">
+    <div id="http_server" class="step slide" data-depends="kernel" data-x="250" data-y="150" data-z="-200" data-rotate="-245" data-scale=".2" ng-click="selectSlide('index');">
+      <div align="center" ng-include="'elements/kernel/http_server.html'"></div>
+      <div align="center" ng-include="'elements/kernel/http_server.svg'"></div>
+    </div>
+    <div id="interface" class="step slide" data-depends="http_server" data-x="250" data-y="150" data-z="-200" data-rotate="-30" data-scale=".2" ng-click="selectSlide('index');">
       <div align="center" ng-include="'elements/kernel/interface.html'"></div>
       <div align="center" ng-include="'elements/kernel/interface.svg'"></div>
+    </div>
+    <div id="events" class="step slide" data-depends="http_server,listener" data-x="250" data-y="150" data-z="-200" data-rotate="-30" data-scale=".2" ng-click="selectSlide('index');">
+      <div align="center" ng-include="'elements/kernel/events.html'"></div>
+      <div align="center" ng-include="'elements/kernel/events.svg'"></div>
     </div>
   </div>
   <!-- JQuery -->
