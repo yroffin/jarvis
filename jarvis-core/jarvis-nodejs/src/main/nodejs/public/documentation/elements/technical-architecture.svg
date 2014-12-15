@@ -1,0 +1,35 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
+ <title>Architecture</title>
+ <g>
+  <title>Layer 1</title>
+  <polygon fill="none" id="svg_29"/>
+  <line stroke="#000000" fill="none" stroke-width="5" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x1="306.00004" y1="295" x2="757.99998" y2="295" id="svg_3"/>
+  <image xlink:href="https://6a1f1411b70ea966ae7d011616f2d38c2be1f67d-www.googledrive.com/host/0B-1rUiMKBiO4RXQzNUNjS0JGWmM/documentation/images/app-x-ms-dos-executable.png" id="svg_24" height="30" width="29" y="164" x="302"/>
+  <image x="464" y="172" width="74" height="70" id="svg_8" xlink:href="https://6a1f1411b70ea966ae7d011616f2d38c2be1f67d-www.googledrive.com/host/0B-1rUiMKBiO4RXQzNUNjS0JGWmM/documentation/images/alice.png"/>
+  <line stroke="#000000" fill="none" stroke-width="5" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x1="273.5" y1="242.5" x2="360.5" y2="242.5" id="svg_9" transform="rotate(90 317.00000000000006,242.50000000000003) "/>
+  <image x="334" y="369" width="109" height="166" id="svg_12" xlink:href="https://6a1f1411b70ea966ae7d011616f2d38c2be1f67d-www.googledrive.com/host/0B-1rUiMKBiO4RXQzNUNjS0JGWmM/documentation/images/streamline.png"/>
+  <image x="341" y="443" width="30" height="32" id="svg_14" xlink:href="https://6a1f1411b70ea966ae7d011616f2d38c2be1f67d-www.googledrive.com/host/0B-1rUiMKBiO4RXQzNUNjS0JGWmM/documentation/images/html5.png"/>
+  <image id="svg_13" xlink:href="https://6a1f1411b70ea966ae7d011616f2d38c2be1f67d-www.googledrive.com/host/0B-1rUiMKBiO4RXQzNUNjS0JGWmM/documentation/images/AngularJS-large.png" height="29" width="58" y="443" x="375.33333"/>
+  <image xlink:href="https://6a1f1411b70ea966ae7d011616f2d38c2be1f67d-www.googledrive.com/host/0B-1rUiMKBiO4RXQzNUNjS0JGWmM/documentation/images/logo_nodejs.png" id="svg_26" height="72" width="101" y="321" x="235.66668"/>
+  <text stroke="#000000" transform="matrix(0.3587612509727477,0,0,0.5151515007019043,452.01855481509125,90.00000548362732) " fill="#000000" stroke-width="0" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x="628.5" y="372.5" font-size="24" font-family="Cursive" text-anchor="middle" xml:space="preserve" id="svg_30">raw json protocol (default port 5000)</text>
+  <image xlink:href="https://6a1f1411b70ea966ae7d011616f2d38c2be1f67d-www.googledrive.com/host/0B-1rUiMKBiO4RXQzNUNjS0JGWmM/documentation/images/java.png" height="37" width="30" y="185" x="431.5" id="svg_2"/>
+  <image xlink:href="https://6a1f1411b70ea966ae7d011616f2d38c2be1f67d-www.googledrive.com/host/0B-1rUiMKBiO4RXQzNUNjS0JGWmM/documentation/images/java.png" id="svg_20" height="37" width="30" y="93" x="348"/>
+  <image stroke="null" xlink:href="https://6a1f1411b70ea966ae7d011616f2d38c2be1f67d-www.googledrive.com/host/0B-1rUiMKBiO4RXQzNUNjS0JGWmM/documentation/images/Home-Server-icon.png" id="svg_11" height="113" width="100" y="263" x="82"/>
+  <image stroke="null" xlink:href="https://6a1f1411b70ea966ae7d011616f2d38c2be1f67d-www.googledrive.com/host/0B-1rUiMKBiO4RXQzNUNjS0JGWmM/documentation/images/pc-images-panneau-arriere.png" id="svg_18" height="62" width="262.00001" y="90" x="28"/>
+  <line transform="rotate(40.236358642578125 270.5000000000001,155.49999999999997) " id="svg_22" stroke="#000000" fill="none" stroke-width="5" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x1="237.5" y1="156" x2="303.5" y2="155"/>
+  <line stroke="#000000" fill="none" stroke-width="5" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x1="277" y1="117" x2="343" y2="116" id="svg_5"/>
+  <image stroke="null" xlink:href="https://6a1f1411b70ea966ae7d011616f2d38c2be1f67d-www.googledrive.com/host/0B-1rUiMKBiO4RXQzNUNjS0JGWmM/documentation/images/baffle.png" id="svg_23" height="29" width="30" y="99" x="296.66667"/>
+  <image stroke="null" xlink:href="https://6a1f1411b70ea966ae7d011616f2d38c2be1f67d-www.googledrive.com/host/0B-1rUiMKBiO4RXQzNUNjS0JGWmM/documentation/images/microphone.png" id="svg_21" height="37" width="52" y="142" x="248"/>
+  <line stroke="#000000" id="svg_28" fill="none" stroke-width="5" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x1="286" y1="209.5" x2="443" y2="209.5" transform="rotate(90 364.50000000000006,209.50000000000003) "/>
+  <line stroke="#000000" id="svg_32" fill="none" stroke-width="5" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x1="418" y1="255.5" x2="481" y2="255.5" transform="rotate(90 449.50000000000006,255.50000000000003) "/>
+  <line id="svg_33" stroke="#000000" fill="none" stroke-width="5" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x1="185" y1="334.5" x2="755.99995" y2="334.5"/>
+  <text style="cursor: move;" id="svg_35" stroke="#000000" transform="matrix(0.35876125097274764,0,0,0.5151515007019043,451.01855481509125,52.830022573471076) " fill="#000000" stroke-width="0" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x="636.86211" y="529.7353" font-size="24" font-family="Cursive" text-anchor="middle" xml:space="preserve">http/https (default port 80/443)</text>
+  <image xlink:href="https://6a1f1411b70ea966ae7d011616f2d38c2be1f67d-www.googledrive.com/host/0B-1rUiMKBiO4RXQzNUNjS0JGWmM/documentation/images/processus.png" id="svg_25" height="37" width="43" y="316.66666" x="203.33334"/>
+  <line id="svg_36" stroke="#000000" fill="none" stroke-width="5" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x1="357" y1="375.5" x2="420" y2="375.5" transform="rotate(90 388.5,375.50000000000006) "/>
+  <image stroke="null" xlink:href="https://6a1f1411b70ea966ae7d011616f2d38c2be1f67d-www.googledrive.com/host/0B-1rUiMKBiO4RXQzNUNjS0JGWmM/documentation/images/Xbox_360_Kinect.png" id="svg_37" height="61.00002" width="138.99998" y="29.99998" x="92.00002"/>
+  <text id="svg_38" stroke="#000000" transform="matrix(0.35876125097274764,0,0,0.5151515007019043,174.0185548150913,112.83002257347107) " fill="#000000" stroke-width="0" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x="890.51269" y="7.55881" font-size="24" font-family="Cursive" text-anchor="middle" xml:space="preserve">jarvis-voice-0.0.1-SNAPSHOT-jar-with-dependencies.jar</text>
+  <text id="svg_39" stroke="#000000" transform="matrix(0.35876125097274764,0,0,0.5151515007019043,174.0185548150913,112.83002257347107) " fill="#000000" stroke-width="0" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x="182.51794" y="164.79044" font-size="24" font-family="Cursive" text-anchor="middle" xml:space="preserve">WindowsJarvisMicrophone.exe</text>
+  <text id="svg_40" stroke="#000000" transform="matrix(0.35876125097274764,0,0,0.5151515007019043,174.0185548150913,112.83002257347107) " fill="#000000" stroke-width="0" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x="93.3274" y="498.67003" font-size="24" font-family="Cursive" text-anchor="middle" xml:space="preserve">server.js</text>
+ </g>
+</svg>
