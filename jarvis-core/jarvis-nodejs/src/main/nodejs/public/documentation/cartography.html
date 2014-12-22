@@ -62,14 +62,14 @@ limitations under the License.
       <div id="listener-svg" align="center" ng-include="'elements/kernel/listener.svg'" ng-click="editSlide($event, 'listener-svg');"></div>
     </div>
     <div id="http-server" class="step slide" data-depends="kernel" data-x="250" data-y="150" data-z="-200" data-rotate="-245" data-scale=".2">
-      <div align="center" ng-include="'elements/kernel/http_server.html'" ng-click="selectSlide('index');"></div>
-      <div id="http-server-svg" align="center" ng-include="'elements/kernel/http_server.svg'" ng-click="editSlide($event, 'http-server-svg');"></div>
+      <div align="center" ng-include="'elements/kernel/http-server.html'" ng-click="selectSlide('index');"></div>
+      <div id="http-server-svg" align="center" ng-include="'elements/kernel/http-server.svg'" ng-click="editSlide($event, 'http-server-svg');"></div>
     </div>
-    <div id="interface" class="step slide" data-depends="http_server" data-x="250" data-y="150" data-z="-200" data-rotate="-30" data-scale=".2">
+    <div id="interface" class="step slide" data-depends="http-server" data-x="250" data-y="150" data-z="-200" data-rotate="-30" data-scale=".2">
       <div align="center" ng-include="'elements/kernel/interface.html'" ng-click="selectSlide('index');"></div>
       <div id="interface-svg" align="center" ng-include="'elements/kernel/interface.svg'" ng-click="editSlide($event, 'interface-svg');"></div>
     </div>
-    <div id="events" class="step slide" data-depends="http_server,listener" data-x="250" data-y="150" data-z="-200" data-rotate="-30" data-scale=".2">
+    <div id="events" class="step slide" data-depends="http-server,listener" data-x="250" data-y="150" data-z="-200" data-rotate="-30" data-scale=".2">
       <div align="center" ng-include="'elements/kernel/events.html'" ng-click="selectSlide('index');"></div>
       <div id="events-svg" align="center" ng-include="'elements/kernel/events.svg'" ng-click="editSlide($event, 'events-svg');"></div>
     </div>
