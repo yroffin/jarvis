@@ -523,7 +523,7 @@
 <template>No thanks I like the name JARVIS.</template>
 </category>
 <category><pattern>*</pattern>
-<template>* make no sens</template>
+<template>* est incompréhensible</template>
 </category>
 <category><pattern>*</pattern>
 <that>HOW DID YOU HEAR ABOUT JARVIS</that>

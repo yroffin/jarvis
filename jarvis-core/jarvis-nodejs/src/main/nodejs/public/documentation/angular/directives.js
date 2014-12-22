@@ -18,11 +18,21 @@
 
 /* Directives */
 
+angular.module('myImpressDocumentation.directives', []).directive('appVersion', [ 'version', function(version) {
+	return function(scope, elm, attrs) {
+		elm.text(version);
+	};
+} ]);
 
-angular.module('myImpressDocumentation.directives', []).
-  directive('appVersion', ['version', function(version) {
-    return function(scope, elm, attrs) {
-      elm.text(version);
-    };
-  }]);
- 
+angular.module('myImpressDocumentation.directives', []).directive('rightClick', function() {
+	document.oncontextmenu = function(e) {
+		if (e.target.hasAttribute('right-click')) {
+			return false;
+		}
+	};
+	return function(scope, el, attrs) {
+		el.bind('contextmenu', function(e) {
+			alert(attrs.alert);
+		});
+	}
+});
