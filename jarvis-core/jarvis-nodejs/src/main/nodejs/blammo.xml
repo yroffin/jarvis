@@ -17,7 +17,7 @@
 		</filters>
 
 		<config>
-			<filename>logs/blammo.log</filename>
+			<filename>${JARVIS_LOGS}/logs/blammo.log</filename>
 		</config>
 	</appender>
 
