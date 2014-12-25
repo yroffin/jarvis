@@ -11,11 +11,11 @@ Jarvis system aim to introduce a human to machine interface capability with :
 - google TTS
 - and a custom aiml renderer
 
-[Description can be found here](https://6a1f1411b70ea966ae7d011616f2d38c2be1f67d-www.googledrive.com/host/0B-1rUiMKBiO4RXQzNUNjS0JGWmM/documentation/cartography.html)
+[description can be found here](https://6a1f1411b70ea966ae7d011616f2d38c2be1f67d-www.googledrive.com/host/0B-1rUiMKBiO4RXQzNUNjS0JGWmM/documentation/cartography.html)
 
 Setup
 -----
 
 Windows installation process is build with innoSetup
 
-[setup-jarvis-1.0beta1.exe](https://6a1f1411b70ea966ae7d011616f2d38c2be1f67d-www.googledrive.com/host/0B-1rUiMKBiO4RXQzNUNjS0JGWmM/bundles/setup-jarvis-1.0beta1.exe)
+[bundles can be found here](https://6a1f1411b70ea966ae7d011616f2d38c2be1f67d-www.googledrive.com/host/0B-1rUiMKBiO4RXQzNUNjS0JGWmM/bundles)
