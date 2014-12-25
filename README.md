@@ -19,7 +19,9 @@ Setup
 pre-requisites
 --------------
 
-Java 8 u25 min (and JAVA_HOME set)
+Jarvis use Java and .Net technologies
+- Java [8 u25](https://www.java.com/fr/download) min (and JAVA_HOME set)
+- .Net [4.0](http://www.microsoft.com/fr-fr/download/details.aspx?id=17851) minimum
 
 windows platforms
 -----------------
