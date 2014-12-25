@@ -20,9 +20,8 @@ cleanup()
 # Returns: None
 findNodeExecutable()
 {
-	set -x
 	# first find it locally (in design mode)
-	for executable in `cd "${SCRIPT_WORKSPACE}" && find ./node -type f -name 'node.exe' 2>/dev/null`
+	for executable in `cd "${SCRIPT_WORKSPACE}" && find ../../../jarvis-nodejs/node -type f -name 'node.exe' 2>/dev/null`
 	do
 		echo ${SCRIPT_WORKSPACE}/`dirname $executable`
 		return
@@ -47,7 +46,7 @@ findNodeExecutable()
 findServerJs()
 {
 	# first find it locally (in design mode)
-	for executable in `cd "${SCRIPT_WORKSPACE}" && find ./nodejs -type f -name 'server.js' 2>/dev/null`
+	for executable in `cd "${SCRIPT_WORKSPACE}" && find ../../../jarvis-nodejs/src/main/nodejs -type f -name 'server.js' 2>/dev/null`
 	do
 		echo ${SCRIPT_WORKSPACE}/`dirname $executable`
 		return
@@ -70,7 +69,8 @@ export NODE_PATH="${NODEJS_HOME}"/node_modules/npm/node_modules:"${NODEJS_HOME}"
 set | grep SCRIPT_WORKSPACE
 set | grep NODE
 
-export JARVIS_LOGS="${TEMP}"
+export JARVIS_LOGS="${TEMP}/logs"
+echo LOGS: "${JARVIS_LOGS}"
 mkdir -p "${JARVIS_LOGS}"
 
 cd "${NODEJS_HOME}"

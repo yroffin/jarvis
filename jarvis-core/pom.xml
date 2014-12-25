@@ -139,6 +139,7 @@
 		<module>sphinx-core</module>
 		<module>jarvis-nodejs</module>
 		<module>jarvis-java-client</module>
+		<module>jarvis-scripts</module>
 	</modules>
 
 	<repositories>

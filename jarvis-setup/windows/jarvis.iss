@@ -33,10 +33,14 @@ Source: "../../jarvis-core/jarvis-nodejs/src/main/nodejs/*"; DestDir: "{app}/nod
 Source: "../../jarvis-windows/WindowsJarvisMicrophone/bin/Debug/*.exe"; DestDir: "{app}/windows"
 Source: "../../jarvis-windows/WindowsJarvisMicrophone/bin/Debug/*.dll"; DestDir: "{app}/windows"
 ; Win-bash
-Source: "../../jarvis-core/jarvis-nodejs/src/main/shell.w32-ix86/*"; DestDir: "{app}/scripts/shell.w32-ix86"; Flags: recursesubdirs
+Source: "../../jarvis-core/jarvis-scripts/src/main/shell.w32-ix86/*"; DestDir: "{app}/scripts/shell.w32-ix86"; Flags: recursesubdirs
 ; Scripts
-Source: "../../jarvis-core/jarvis-nodejs/src/main/jarvis.sh"; DestDir: "{app}/scripts";
-Source: "../../jarvis-core/jarvis-nodejs/src/main/jarvis-bootstrap.cmd"; DestDir: "{app}/scripts";
+Source: "../../jarvis-core/jarvis-scripts/src/main/jarvis.sh"; DestDir: "{app}/scripts";
+Source: "../../jarvis-core/jarvis-scripts/src/main/jarvis-bootstrap.cmd"; DestDir: "{app}/scripts";
+Source: "../../jarvis-core/jarvis-scripts/src/main/jarvis-voice.sh"; DestDir: "{app}/scripts";
+Source: "../../jarvis-core/jarvis-scripts/src/main/jarvis-voice-bootstrap.cmd"; DestDir: "{app}/scripts";
+Source: "../../jarvis-core/jarvis-scripts/src/main/jarvis-ear.sh"; DestDir: "{app}/scripts";
+Source: "../../jarvis-core/jarvis-scripts/src/main/jarvis-ear-bootstrap.cmd"; DestDir: "{app}/scripts";
 
 [Icons]
 Name: "{group}\Jarvis"; Filename: "{app}\jarvis.exe"
