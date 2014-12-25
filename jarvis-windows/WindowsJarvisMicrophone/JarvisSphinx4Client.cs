@@ -39,12 +39,15 @@ namespace WindowsJarvisClient
         public AsynchronousSphinxClient(InterfaceConsoleSphinx4 mainJarvisClientForm)
         {
             this.mainJarvisClientForm = mainJarvisClientForm;
+            this.jarvisLangageDir = Environment.GetEnvironmentVariable("JARVIS_LANGAGE_DIR");
+            if (jarvisLangageDir == null) throw new Exception("JARVIS_LANGAGE_DIR undefined");
         }
 
         // Main form element and local private member
         private InterfaceConsoleSphinx4 mainJarvisClientForm;
         private Sphinx4Interface obj;
         private bool runit = true;
+        private String jarvisLangageDir;
 
         public void run()
         {
@@ -52,9 +55,9 @@ namespace WindowsJarvisClient
             GC.WaitForPendingFinalizers();
 
             obj = new Sphinx4Interface();
-            obj.init("U:/Users/Yannick/Documents/Visual Studio 2013/Projects/pocketsphinx/model/lm/fr/wsj/F2",
-                "U:/Users/Yannick/Documents/Visual Studio 2013/Projects/pocketsphinx/model/lm/fr/language/french3g62K.lm.dmp",
-                "U:/Users/Yannick/Documents/Visual Studio 2013/Projects/pocketsphinx/model/lm/fr/language/frenchWords62K.dic");
+            obj.init(jarvisLangageDir + "/model/lm/fr/wsj/F2",
+                jarvisLangageDir + "/model/lm/fr/language/french3g62K.lm.dmp",
+                jarvisLangageDir + "/model/lm/fr/language/frenchWords62K.dic");
 
             obj.openMicrophone();
             for (;runit; )

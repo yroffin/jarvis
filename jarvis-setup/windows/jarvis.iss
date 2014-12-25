@@ -12,7 +12,7 @@ DefaultGroupName=Jarvis
 UninstallDisplayIcon={app}\uninstall-jarvis.exe
 Compression=lzma2
 SolidCompression=yes
-OutputDir=userdocs:Inno Setup Examples Output
+OutputDir=userdocs:jarvis
 ; "ArchitecturesAllowed=x64" specifies that Setup cannot run on
 ; anything but x64.
 ArchitecturesAllowed=x64
@@ -20,6 +20,7 @@ ArchitecturesAllowed=x64
 ; done in "64-bit mode" on x64, meaning it should use the native
 ; 64-bit Program Files directory and the 64-bit view of the registry.
 ArchitecturesInstallIn64BitMode=x64
+OutputBaseFilename=setup-jarvis-1.0beta1
 
 [Files]
 Source: "../../jarvis-core/jarvis-voice/target/jarvis-voice-0.0.1-SNAPSHOT-jar-with-dependencies.jar"; DestDir: "{app}/java"; DestName: "jarvis-voice-0.0.1-SNAPSHOT.jar"
@@ -30,6 +31,7 @@ Source: "../../jarvis-core/jarvis-nodejs/node/*"; DestDir: "{app}/node"; Flags: 
 ; NodeJS
 Source: "../../jarvis-core/jarvis-nodejs/src/main/nodejs/*"; DestDir: "{app}/nodejs"; Flags: recursesubdirs
 ; Windows clients
+Source: "M:/Google Drive/com.github.yroffin/jarvis/model/*"; DestDir: "{app}/model"; Flags: recursesubdirs
 Source: "../../jarvis-windows/WindowsJarvisMicrophone/bin/Debug/*.exe"; DestDir: "{app}/windows"
 Source: "../../jarvis-windows/WindowsJarvisMicrophone/bin/Debug/*.dll"; DestDir: "{app}/windows"
 ; Win-bash
