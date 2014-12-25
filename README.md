@@ -14,8 +14,19 @@ Jarvis system aim to introduce a human to machine interface capability with :
 [description can be found here](https://6a1f1411b70ea966ae7d011616f2d38c2be1f67d-www.googledrive.com/host/0B-1rUiMKBiO4RXQzNUNjS0JGWmM/documentation/cartography.html)
 
 Setup
------
+======
+
+pre-requisites
+--------------
+
+Java 8 u25 min (and JAVA_HOME set)
+
+windows platforms
+-----------------
 
 Windows installation process is build with innoSetup
+
+bundles
+-------
 
 [bundles can be found here](https://6a1f1411b70ea966ae7d011616f2d38c2be1f67d-www.googledrive.com/host/0B-1rUiMKBiO4RXQzNUNjS0JGWmM/bundles)
