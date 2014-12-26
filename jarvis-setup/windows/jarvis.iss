@@ -10,8 +10,8 @@ AppVersion=1.0
 DefaultDirName={pf}\Jarvis
 DefaultGroupName=Jarvis
 UninstallDisplayIcon={app}\uninstall-jarvis.exe
-Compression=lzma2
-SolidCompression=yes
+Compression=lzma2/ultra64
+SolidCompression=no
 OutputDir=userdocs:jarvis
 ; "ArchitecturesAllowed=x64" specifies that Setup cannot run on
 ; anything but x64.
@@ -32,10 +32,15 @@ Source: "../../jarvis-core/jarvis-nodejs/node/*"; DestDir: "{app}/node"; Flags: 
 Source: "../../jarvis-core/jarvis-nodejs/src/main/nodejs/*"; DestDir: "{app}/nodejs"; Flags: recursesubdirs
 ; Windows clients
 Source: "M:/Google Drive/com.github.yroffin/jarvis/model/*"; DestDir: "{app}/model"; Flags: recursesubdirs
-Source: "../../jarvis-windows/WindowsJarvisMicrophone/bin/Debug/*.exe"; DestDir: "{app}/windows"
-Source: "../../jarvis-windows/WindowsJarvisMicrophone/bin/Debug/*.dll"; DestDir: "{app}/windows"
+Source: "../../jarvis-windows/WindowsJarvisMicrophone/bin/Release/*.exe"; DestDir: "{app}/windows"
+Source: "../../jarvis-windows/WindowsJarvisMicrophone/bin/Release/*.dll"; DestDir: "{app}/windows"
+; msvcrt120
+Source: "C:\Windows\System32\msvcr120.dll"; DestDir: "{app}/windows"
+Source: "C:\Windows\System32\msvcr120d.dll"; DestDir: "{app}/windows"
 ; Win-bash
 Source: "../../jarvis-core/jarvis-scripts/src/main/shell.w32-ix86/*"; DestDir: "{app}/scripts/shell.w32-ix86"; Flags: recursesubdirs
+; Depends
+Source: "../../jarvis-core/jarvis-scripts/src/main/depends22/*"; DestDir: "{app}/scripts/depends22"; Flags: recursesubdirs
 ; Scripts
 Source: "../../jarvis-core/jarvis-scripts/src/main/jarvis.sh"; DestDir: "{app}/scripts";
 Source: "../../jarvis-core/jarvis-scripts/src/main/jarvis-bootstrap.cmd"; DestDir: "{app}/scripts";

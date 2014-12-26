@@ -39,10 +39,12 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>full</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
@@ -50,9 +52,34 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>WindowsJarvisClient.Program</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
@@ -101,27 +128,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="resources\fr\language\french3g62K.lm.dmp" />
-    <None Include="resources\fr\language\frenchWords62K - Copie.dic" />
-    <None Include="resources\fr\language\frenchWords62K.dic" />
-    <None Include="resources\fr\wsj\F0\feat.params" />
-    <None Include="resources\fr\wsj\F0\LICENSE" />
-    <None Include="resources\fr\wsj\F0\mdef" />
-    <None Include="resources\fr\wsj\F0\means" />
-    <None Include="resources\fr\wsj\F0\mixture_weights" />
-    <None Include="resources\fr\wsj\F0\noisedict" />
-    <None Include="resources\fr\wsj\F0\README" />
-    <None Include="resources\fr\wsj\F0\transition_matrices" />
-    <None Include="resources\fr\wsj\F0\variances" />
-    <None Include="resources\fr\wsj\F2\feat.params" />
-    <None Include="resources\fr\wsj\F2\LICENSE" />
-    <None Include="resources\fr\wsj\F2\mdef" />
-    <None Include="resources\fr\wsj\F2\means" />
-    <None Include="resources\fr\wsj\F2\mixture_weights" />
-    <None Include="resources\fr\wsj\F2\noisedict" />
-    <None Include="resources\fr\wsj\F2\README" />
-    <None Include="resources\fr\wsj\F2\transition_matrices" />
-    <None Include="resources\fr\wsj\F2\variances" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -164,6 +170,9 @@
     <Content Include="sphinxbase.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

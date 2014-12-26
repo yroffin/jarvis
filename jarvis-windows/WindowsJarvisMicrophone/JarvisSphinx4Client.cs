@@ -39,8 +39,33 @@ namespace WindowsJarvisClient
         public AsynchronousSphinxClient(InterfaceConsoleSphinx4 mainJarvisClientForm)
         {
             this.mainJarvisClientForm = mainJarvisClientForm;
-            this.jarvisLangageDir = Environment.GetEnvironmentVariable("JARVIS_LANGAGE_DIR");
-            if (jarvisLangageDir == null) throw new Exception("JARVIS_LANGAGE_DIR undefined");
+            /**
+             * look in cmd line
+             */
+            String[] argv = Environment.GetCommandLineArgs();
+            for (int argc = 0; argc < argv.Length; argc++)
+            {
+                String value = argv[argc];
+                String[] stringSeparators = new String[] { "=" };
+                if (value.Length > 1 && value.StartsWith("-D"))
+                {
+                    String[] result = value.Replace("-D", "").Split(stringSeparators, StringSplitOptions.None);
+                    if (result.Length > 1 && result[0].StartsWith("JARVIS_LANGAGE_DIR"))
+                    {
+                        this.jarvisLangageDir = result[1];
+                    }
+                }
+            }
+            /**
+             * then in env
+             */
+            if (this.jarvisLangageDir == null)
+            {
+                this.jarvisLangageDir = Environment.GetEnvironmentVariable("JARVIS_LANGAGE_DIR");
+                if (jarvisLangageDir == null) throw new Exception("JARVIS_LANGAGE_DIR undefined");
+            }
+
+            mainJarvisClientForm.appendText("JARVIS_LANGAGE_DIR:" + jarvisLangageDir + "\n");
         }
 
         // Main form element and local private member
@@ -51,17 +76,24 @@ namespace WindowsJarvisClient
 
         public void run()
         {
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-
+            mainJarvisClientForm.appendText("Interface\n");
+            
             obj = new Sphinx4Interface();
+
+            mainJarvisClientForm.appendText("Init ...");
             obj.init(jarvisLangageDir + "/model/lm/fr/wsj/F2",
                 jarvisLangageDir + "/model/lm/fr/language/french3g62K.lm.dmp",
                 jarvisLangageDir + "/model/lm/fr/language/frenchWords62K.dic");
+            mainJarvisClientForm.appendText(" ok\n");
+
+            mainJarvisClientForm.appendText("Models:" + jarvisLangageDir + "/model/lm/fr/wsj/F2\n");
+            mainJarvisClientForm.appendText("Dump:" + jarvisLangageDir + "/model/lm/fr/language/french3g62K.lm.dmp\n");
+            mainJarvisClientForm.appendText("Dictionnary:" + jarvisLangageDir + "/model/lm/fr/language/frenchWords62K.dic\n");
 
             obj.openMicrophone();
             for (;runit; )
             {
+                mainJarvisClientForm.appendText("Ready\n");
                 Sphinx4InterfaceSentence sentence = new Sphinx4InterfaceSentence();
                 obj.readFromMicrophone(sentence);
                 HandlerUtterance(sentence.uttid, sentence.hyp);

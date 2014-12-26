@@ -40,18 +40,32 @@ findWindowsExecutable()
 	done
 }
 
+# Description : find node executable
+# Arguments: None
+# Returns: None
+findModel()
+{
+	# first find it locally (in design mode)
+	[ -d "${SCRIPT_WORKSPACE}/../../../../jarvis-windows/model" ] && echo "${SCRIPT_WORKSPACE}/../../../../jarvis-windows"
+	# find it in subdirs
+	[ -d "${SCRIPT_WORKSPACE}/model" ] && echo "${SCRIPT_WORKSPACE}"
+	[ -d "${SCRIPT_WORKSPACE}/../model" ] && echo "${SCRIPT_WORKSPACE}/.."
+}
+
 echo CWD: `pwd`
 export SCRIPT_WORKSPACE="`pwd`"
 
 export TARGET_HOME="`findWindowsExecutable`"
+export MODELS="`findModel`"
 
 set | grep SCRIPT_WORKSPACE
 set | grep TARGET
+set | grep MODELS
 
 export JARVIS_LOGS="${TEMP}/logs"
 echo LOGS: "${JARVIS_LOGS}"
 mkdir -p "${JARVIS_LOGS}"
 
 cd "${NODEJS_HOME}"
-cd "${TARGET_HOME}" && WindowsJarvisMicrophone.exe
+cd "${TARGET_HOME}" && WindowsJarvisMicrophone.exe -DJARVIS_LANGAGE_DIR="${MODELS}"
 exit $?
