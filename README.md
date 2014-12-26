@@ -22,6 +22,7 @@ pre-requisites
 Jarvis use Java and .Net technologies
 - Java [8 u25](https://www.java.com/fr/download) min (and JAVA_HOME set)
 - .Net [4.0](http://www.microsoft.com/fr-fr/download/details.aspx?id=17851) minimum
+- Redistribuable [Visual C++ pour Visual Studio 2012](http://www.microsoft.com/fr-FR/download/details.aspx?id=30679)
 
 windows platforms
 -----------------
