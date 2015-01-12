@@ -15,28 +15,27 @@
  */
 
 var blammo = require('blammo');
-var logger = blammo.LoggerFactory.getLogger('kernel');
-var config = require('../services/json/config');
-var interact = require('../services/json/interact');
-var mongodb = require('../services/json/mongodb');
+var logger = blammo.LoggerFactory.getLogger('mongodb');
+
+var mongodb = require(__dirname + '/../core/mongodb');
+
+exports.init = function() {
+	return;
+};
 
 /**
- * initialise all routes
+ * info services
  */
-exports.init = function(app) {
-	logger.info('Store routes configuration' + config.info);
+exports.info = function(req, res) {
+	logger.info('info() key [%s]', req.params.key);
 	/**
-	 * configuration services
+	 * properties
 	 */
-	app.get('/services/info', config.info);
-	app.get('/services/info/:key', config.info);
-	/**
-	 * interactions services
-	 */
-	app.get('/services/send', interact.send);
-	/**
-	 * interactions services
-	 */
-	app.get('/services/mongodb/:key', mongodb.info);
-	return;
+	if (req.params.key == 'collections') {
+		res.json({
+			collections : mongodb.getCollections()
+		});
+		return;
+	}
+	res.json({});
 };

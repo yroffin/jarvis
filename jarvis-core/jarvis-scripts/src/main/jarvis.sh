@@ -43,16 +43,66 @@ findNodeExecutable()
 # Description : find node executable
 # Arguments: None
 # Returns: None
-findServerJs()
+findPythonExecutable()
 {
 	# first find it locally (in design mode)
-	for executable in `cd "${SCRIPT_WORKSPACE}" && find ../../../jarvis-nodejs/src/main/nodejs -type f -name 'server.js' 2>/dev/null`
+	for executable in `cd "${SCRIPT_WORKSPACE}" && find ../../../jarvis-nodejs/python -type f -name 'python.exe' 2>/dev/null`
 	do
 		echo ${SCRIPT_WORKSPACE}/`dirname $executable`
 		return
 	done
 	# find it in subdirs
-	for executable in `cd "${SCRIPT_WORKSPACE}" && find ../nodejs -type f -name 'server.js' 2>/dev/null`
+	for executable in `cd "${SCRIPT_WORKSPACE}" && find ../python -type f -name 'python.exe' 2>/dev/null`
+	do
+		echo ${SCRIPT_WORKSPACE}/`dirname $executable`
+		return
+	done
+	# find it in subdirs
+	for executable in `cd "${SCRIPT_WORKSPACE}" && find ../../python -type f -name 'python.exe' 2>/dev/null`
+	do
+		echo ${SCRIPT_WORKSPACE}/`dirname $executable`
+		return
+	done
+}
+
+# Description : find node executable
+# Arguments: None
+# Returns: None
+findNpmExecutable()
+{
+	# first find it locally (in design mode)
+	for executable in `cd "${SCRIPT_WORKSPACE}" && find ../../../jarvis-nodejs/node -type f -name 'npm.cmd' 2>/dev/null`
+	do
+		echo ${SCRIPT_WORKSPACE}/`dirname $executable`
+		return
+	done
+	# find it in subdirs
+	for executable in `cd "${SCRIPT_WORKSPACE}" && find ../node -type f -name 'npm.cmd' 2>/dev/null`
+	do
+		echo ${SCRIPT_WORKSPACE}/`dirname $executable`
+		return
+	done
+	# find it in subdirs
+	for executable in `cd "${SCRIPT_WORKSPACE}" && find ../../node -type f -name 'npm.cmd' 2>/dev/null`
+	do
+		echo ${SCRIPT_WORKSPACE}/`dirname $executable`
+		return
+	done
+}
+
+# Description : find node executable
+# Arguments: None
+# Returns: None
+findServerJs()
+{
+	# first find it locally (in design mode)
+	for executable in `cd "${SCRIPT_WORKSPACE}" && find ../../../jarvis-nodejs/src/main/nodejs -type f -name 'jarvis-bootstrap.js' 2>/dev/null`
+	do
+		echo ${SCRIPT_WORKSPACE}/`dirname $executable`
+		return
+	done
+	# find it in subdirs
+	for executable in `cd "${SCRIPT_WORKSPACE}" && find ../nodejs -type f -name 'jarvis-bootstrap.js' 2>/dev/null`
 	do
 		echo ${SCRIPT_WORKSPACE}/`dirname $executable`
 		return
@@ -63,16 +113,41 @@ echo CWD: `pwd`
 export SCRIPT_WORKSPACE="`pwd`"
 
 export NODE_HOME="`findNodeExecutable`"
+export PYTHON_HOME="`findPythonExecutable`"
+export NPM_HOME="`findNpmExecutable`"
 export NODEJS_HOME="`findServerJs`"
-export NODE_PATH="${NODEJS_HOME}"/node_modules/npm/node_modules:"${NODEJS_HOME}"/node_modules/npm
+export NODE_PATH="${NODE_HOME}/node_modules/npm/node_modules":"${NODE_HOME}/node_modules"
+export PATH="${PYTHON_HOME}:${NODE_HOME}:${NPM_HOME}:${NODE_HOME}/node_modules/npm/bin/node-gyp-bin:${PATH}"
+echo "PATH: ${PATH}"
 
 set | grep SCRIPT_WORKSPACE
 set | grep NODE
+set | grep NPM
 
 export JARVIS_LOGS="${TEMP}/logs"
 echo LOGS: "${JARVIS_LOGS}"
 mkdir -p "${JARVIS_LOGS}"
 
-cd "${NODEJS_HOME}"
-"${NODE_HOME}/node.exe" "${NODEJS_HOME}/server.js"
+rm -rf "${NODEJS_HOME}/node_modules"
+mkdir -p "${NODEJS_HOME}/node_modules"
+mkdir -p "${NODEJS_HOME}/node_modules/bson"
+cd "${NODEJS_HOME}" && ls -lrt
+
+[ ! -d "${NPM_HOME}" ] && {
+	echo Error, directory "${NPM_HOME}" does not exist
+	exit -1
+}
+echo Running "${NPM_HOME}/npm"
+npm install node-gyp
+node-gyp rebuild
+exit -1
+node ${NPM_HOME}/npm-cli.js install -g bson
+exit -1
+"${NODE_HOME}/node.exe" "${NPM_HOME}/npm-cli.js" install
+[ ! -f "${NODE_HOME}/node.exe" ] && {
+	exit -1
+}
+export NODE_PATH="${NODEJS_HOME}/node_modules/npm/node_modules":"${NODEJS_HOME}/node_modules/npm"
+echo Running "${NODE_HOME}/node.exe"
+"${NODE_HOME}/node.exe" "${NODEJS_HOME}/jarvis-bootstrap.js"
 exit $?

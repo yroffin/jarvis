@@ -38,6 +38,14 @@
 		<appender-ref ref="console" />
 	</logger>
 
+	<logger name="memory">
+		<appender-ref ref="console" />
+	</logger>
+
+	<logger name="mongodb">
+		<appender-ref ref="console" />
+	</logger>
+
 	<root level="trace">
 		<appender-ref ref="file_pattern" />
 		<appender-ref ref="file_json" />

@@ -19,38 +19,44 @@
 /* Services */
 
 var jarvisServicesUrl = '/services';
-var myAppServices = angular.module('myApp.services', ['ngResource']);
+var myAppServices = angular.module('myApp.services', [ 'ngResource' ]);
 
-myAppServices.factory('jarvisServices', ['$resource', 
-function ($resource,$windows) {
-    return $resource('', {}, {
-                   getProperties: {
-                        method: 'GET',
-                        url: jarvisServicesUrl + '/info/properties',
-                        params: {},
-                        isArray: false,
-                        cache: false
-                    },
-                   getClients: {
-                       method: 'GET',
-                       url: jarvisServicesUrl + '/info/clients',
-                       params: {},
-                       isArray: false,
-                       cache: false
-                   },
-                   getEvents: {
-                       method: 'GET',
-                       url: jarvisServicesUrl + '/info/events',
-                       params: {},
-                       isArray: false,
-                       cache: false
-                   },
-                   send: {
-                       method: 'GET',
-                       url: jarvisServicesUrl + '/send',
-                       params: {},
-                       isArray: false,
-                       cache: false
-                   }
-    })}
-]);
+myAppServices.factory('jarvisServices', [ '$resource', function($resource, $windows) {
+	return $resource('', {}, {
+		getProperties : {
+			method : 'GET',
+			url : jarvisServicesUrl + '/info/properties',
+			params : {},
+			isArray : false,
+			cache : false
+		},
+		getClients : {
+			method : 'GET',
+			url : jarvisServicesUrl + '/info/clients',
+			params : {},
+			isArray : false,
+			cache : false
+		},
+		getEvents : {
+			method : 'GET',
+			url : jarvisServicesUrl + '/info/events',
+			params : {},
+			isArray : false,
+			cache : false
+		},
+		send : {
+			method : 'GET',
+			url : jarvisServicesUrl + '/send',
+			params : {},
+			isArray : false,
+			cache : false
+		},
+		getMongoCollections : {
+			method : 'GET',
+			url : jarvisServicesUrl + '/mongodb/collections',
+			params : {},
+			isArray : false,
+			cache : false
+		},
+	})
+} ]);

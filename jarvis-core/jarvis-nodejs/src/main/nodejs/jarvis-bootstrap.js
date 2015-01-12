@@ -34,6 +34,7 @@ function main() {
 	/**
 	 * core services
 	 */
+	var mongo = require(__dirname + '/services/core/mongodb');
 	var listener = require(__dirname + '/services/core/listener');
 	var kernel = require(__dirname + '/services/core/kernel');
 
@@ -47,9 +48,7 @@ function main() {
 	var app = express();
 
 	// Activate cookies, sessions and forms
-	app.use(express.logger()).use(express.static(__dirname + '/public')).use(
-			express.favicon(__dirname + '/public/favicon.ico')).use(
-			express.cookieParser()).use(express.session({
+	app.use(express.logger()).use(express.static(__dirname + '/public')).use(express.favicon(__dirname + '/public/favicon.ico')).use(express.cookieParser()).use(express.session({
 		secret : 'secretkey'
 	})).use(express.bodyParser());
 
@@ -99,12 +98,12 @@ function main() {
 	 */
 	function plugin(js) {
 		var plugin = require(__dirname + '/plugins/' + js.plugin);
-		if(js.params != undefined) {
+		if (js.params != undefined) {
 			kernel.notify("Running plugin " + js.plugin + " " + JSON.stringify(js.params));
 			plugin.execute(js.params);
 			return;
 		} else {
-			if(js.args != undefined) {
+			if (js.args != undefined) {
 				kernel.notify("Running plugin " + js.plugin + " " + JSON.stringify(js.args));
 				plugin.execute(js.args);
 				return;
@@ -119,44 +118,44 @@ function main() {
 	 * infinite loop for processing event
 	 */
 	function process() {
-	    kernel.process(function(e) {
-	    	try {
-	    		/**
-	    		 * standard event
-	    		 */
-				if(e.code == 'event') {
-					if(e.event.script != undefined) {
+		kernel.process(function(e) {
+			try {
+				/**
+				 * standard event
+				 */
+				if (e.code == 'event') {
+					if (e.event.script != undefined) {
 						/**
 						 * run this plugin
 						 */
-						if(e.event.script != '') {
+						if (e.event.script != '') {
 							plugin(JSON.parse(e.event.script));
 						}
 					}
-		    	}
-	    		/**
-	    		 * standard event, but call evt
-	    		 * event is a reserved keyword in .Net
-	    		 */
-				if(e.code == 'evt') {
-					if(e.evt.script != undefined) {
+				}
+				/**
+				 * standard event, but call evt event is a reserved keyword in
+				 * .Net
+				 */
+				if (e.code == 'evt') {
+					if (e.evt.script != undefined) {
 						/**
 						 * run this plugin
 						 */
-						if(e.evt.script != '') {
+						if (e.evt.script != '') {
 							plugin(JSON.parse(e.evt.script));
 						}
 					}
-		    	}
+				}
 				/**
 				 * TODO store event in history
 				 */
-	    	} catch(e) {
+			} catch (e) {
 				console.log('Exception: ', e);
 				throw e;
-	    	}
-	    });
-	    setTimeout(process, 1000);
+			}
+		});
+		setTimeout(process, 1000);
 	}
 
 	process();
