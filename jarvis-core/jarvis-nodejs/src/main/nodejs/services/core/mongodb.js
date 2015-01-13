@@ -25,19 +25,34 @@ var logger = require('blammo').LoggerFactory.getLogger('mongodb');
 var mongoclient = require('mongodb');
 var ___mongoconnector = undefined;
 
-mongoclient.connect("mongodb://localhost:27017/jarvis", function(err, database) {
-	if (err) {
-		logger.error("Error(s), while connecting to mongodb");
-	} else {
-		logger.info("Successfull connection to mongodb:", database.databaseName);
-		___mongoconnector = database;
-	}
-});
-
 /**
  * object model oriented mongodb driver
  */
-var mongoose = require('mongoose').connect('mongodb://localhost:27017/jarvis');
+var mongooseclient = require('mongoose');
+
+/**
+ * retrieve all collections stored in mongodb
+ */
+exports.init = function() {
+	mongoclient.connect("mongodb://localhost:27017/jarvis", function(err, database) {
+		if (err) {
+			logger.error("Error(s), while connecting to mongodb");
+		} else {
+			logger.info("Successfull connection to mongodb:", database.databaseName);
+			___mongoconnector = database;
+		}
+	});
+
+	mongooseclient.connect('mongodb://localhost:27017/jarvis');
+}
+
+function sleep(ms) {
+    var fiber = Fiber.current;
+    setTimeout(function() {
+        fiber.run();
+    }, ms);
+    Fiber.yield();
+}
 
 /**
  * retrieve all collections stored in mongodb
@@ -51,6 +66,8 @@ exports.getCollections = function() {
 	___mongoconnector.collectionNames(function(err, cols) {
 		if (cols) {
 			collections = cols;
+		} else {
+			collections = err;
 		}
 	});
 
@@ -58,7 +75,28 @@ exports.getCollections = function() {
 		/**
 		 * default collections are needed
 		 */
-		___mongoconnector.createCollection("config");
+		logger.info("Create default mongodb objects:", ___mongoconnector.databaseName);
+		___mongoconnector.createCollection("config", function() {});
 	}
-	return {};
+
+	/**
+	 * find collections
+	 */
+	var EventEmitter = require('events').EventEmitter;
+	function StreamLibrary(resourceName) { 
+	}
+	StreamLibrary.prototype.__proto__ = EventEmitter.prototype;
+	var stream = new StreamLibrary('fooResource');
+
+	___mongoconnector.collectionNames(function(err, replies) {
+		stream.emit('data', replies);
+	});
+
+	stream.on('data', function(chunk) {
+    	console.log('Received: ' + chunk);
+	});
+
+	require('deasync').sleep(10);
+	logger.info("Collections:", collections);
+	return collections;
 };

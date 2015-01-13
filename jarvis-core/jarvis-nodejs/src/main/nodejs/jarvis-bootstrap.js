@@ -35,6 +35,8 @@ function main() {
 	 * core services
 	 */
 	var mongo = require(__dirname + '/services/core/mongodb');
+	mongo.init();
+
 	var listener = require(__dirname + '/services/core/listener');
 	var kernel = require(__dirname + '/services/core/kernel');
 
@@ -60,7 +62,11 @@ function main() {
 	/**
 	 * build all routes
 	 */
-	routes.init(app);
+	try {
+		routes.init(app);
+	} catch(e) {
+		logger.warn('routes.init:', e);
+	}
 
 	// Create an HTTP service.
 	logger.info('Create an HTTP service');
@@ -75,8 +81,14 @@ function main() {
 		}
 	});
 
-	httpServer.listen(80);
+	try {
+		httpServer.listen(80);
+	} catch(e) {
+		logger.warn('httpServer.listen:', e);
+	}
+
 	logger.info('Create an HTTP service done');
+
 	// Create an HTTPS service identical to the HTTP service.
 	logger.info("Create an HTTPS service identical to the HTTP service");
 	var httpsServer = https.createServer(options, app);

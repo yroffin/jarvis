@@ -17,7 +17,7 @@
 var blammo = require('blammo');
 var logger = blammo.LoggerFactory.getLogger('mongodb');
 
-var mongodb = require(__dirname + '/../core/mongodb');
+var mongoclient = require(__dirname + '/../core/mongodb');
 
 exports.init = function() {
 	return;
@@ -33,8 +33,9 @@ exports.info = function(req, res) {
 	 */
 	if (req.params.key == 'collections') {
 		res.json({
-			collections : mongodb.getCollections()
+			collections : mongoclient.getCollections()
 		});
+		logger.info('info() key [%s] output', req.params.key);
 		return;
 	}
 	res.json({});

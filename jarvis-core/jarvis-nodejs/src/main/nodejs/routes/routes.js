@@ -35,7 +35,7 @@ exports.init = function(app) {
 	 */
 	app.get('/services/send', interact.send);
 	/**
-	 * interactions services
+	 * collections services
 	 */
 	app.get('/services/mongodb/:key', mongodb.info);
 	return;

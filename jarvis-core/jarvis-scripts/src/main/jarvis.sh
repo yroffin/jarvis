@@ -128,26 +128,14 @@ export JARVIS_LOGS="${TEMP}/logs"
 echo LOGS: "${JARVIS_LOGS}"
 mkdir -p "${JARVIS_LOGS}"
 
-rm -rf "${NODEJS_HOME}/node_modules"
-mkdir -p "${NODEJS_HOME}/node_modules"
-mkdir -p "${NODEJS_HOME}/node_modules/bson"
 cd "${NODEJS_HOME}" && ls -lrt
 
-[ ! -d "${NPM_HOME}" ] && {
-	echo Error, directory "${NPM_HOME}" does not exist
-	exit -1
-}
-echo Running "${NPM_HOME}/npm"
-npm install node-gyp
-node-gyp rebuild
-exit -1
-node ${NPM_HOME}/npm-cli.js install -g bson
-exit -1
 "${NODE_HOME}/node.exe" "${NPM_HOME}/npm-cli.js" install
 [ ! -f "${NODE_HOME}/node.exe" ] && {
 	exit -1
 }
-export NODE_PATH="${NODEJS_HOME}/node_modules/npm/node_modules":"${NODEJS_HOME}/node_modules/npm"
+
+export NODE_PATH="${NODEJS_HOME}"
 echo Running "${NODE_HOME}/node.exe"
 "${NODE_HOME}/node.exe" "${NODEJS_HOME}/jarvis-bootstrap.js"
 exit $?

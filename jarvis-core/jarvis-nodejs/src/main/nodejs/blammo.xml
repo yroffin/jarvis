@@ -17,7 +17,7 @@
 		</filters>
 
 		<config>
-			<filename>${JARVIS_LOGS}/blammo.log</filename>
+			<filename>/tmp/blammo.log</filename>
 		</config>
 	</appender>
 
@@ -26,7 +26,7 @@
 		<layout type="json_layout" />
 
 		<config>
-			<filename>${JARVIS_LOGS}/blammo.json</filename>
+			<filename>/tmp/blammo.json</filename>
 		</config>
 	</appender>
 
