@@ -12,6 +12,7 @@
 	    "express": "3.3.5",
 	    "mongodb": "1.4.28",
 	    "mongoose": "3.8.21",
+	    "deasync": "0.0.7",
 	    "blammo": "0.4.5"
 	  },
   "repository": "xxx",

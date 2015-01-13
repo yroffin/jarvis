@@ -18,12 +18,13 @@
  * logging
  */
 var logger = require('blammo').LoggerFactory.getLogger('mongodb');
+var deasync = require('deasync');
 
 /**
  * native mongo driver for raw operation
  */
 var mongoclient = require('mongodb');
-var ___mongoconnector = undefined;
+var _db = undefined;
 
 /**
  * object model oriented mongodb driver
@@ -39,64 +40,67 @@ exports.init = function() {
 			logger.error("Error(s), while connecting to mongodb");
 		} else {
 			logger.info("Successfull connection to mongodb:", database.databaseName);
-			___mongoconnector = database;
+			_db = database;
 		}
 	});
 
 	mongooseclient.connect('mongodb://localhost:27017/jarvis');
 }
 
-function sleep(ms) {
-    var fiber = Fiber.current;
-    setTimeout(function() {
-        fiber.run();
-    }, ms);
-    Fiber.yield();
+/**
+ * wait for initialization
+ * 
+ * @param variable
+ */
+function waitFor(data) {
+	logger.info("Waiting for ", data);
+	while (data.result === undefined) {
+		logger.info("Waiting for ", data);
+		deasync.sleep(10);
+	}
+}
+
+/**
+ * private function
+ * 
+ * @returns
+ */
+function __getSyncCollections() {
+	var collections = {
+		'result' : undefined
+	};
+
+	/**
+	 * find collections
+	 */
+	_db.collectionNames(function(err, replies) {
+		collections.result = replies;
+	});
+	waitFor(collections);
+
+	return collections.result;
 }
 
 /**
  * retrieve all collections stored in mongodb
  */
-exports.getCollections = function() {
-	var collections = [];
-
-	/**
-	 * find collections
-	 */
-	___mongoconnector.collectionNames(function(err, cols) {
-		if (cols) {
-			collections = cols;
-		} else {
-			collections = err;
-		}
-	});
+exports.getSyncCollections = function() {
+	var collections = __getSyncCollections();
 
 	if (collections.length == 0) {
 		/**
 		 * default collections are needed
 		 */
-		logger.info("Create default mongodb objects:", ___mongoconnector.databaseName);
-		___mongoconnector.createCollection("config", function() {});
+		_db.createCollection("config", function() {
+			logger.info("Create default mongodb objects:", _db.databaseName);
+		});
+
+		/**
+		 * refresh it
+		 */
+		collections = __getSyncCollections();
 	}
 
-	/**
-	 * find collections
-	 */
-	var EventEmitter = require('events').EventEmitter;
-	function StreamLibrary(resourceName) { 
-	}
-	StreamLibrary.prototype.__proto__ = EventEmitter.prototype;
-	var stream = new StreamLibrary('fooResource');
-
-	___mongoconnector.collectionNames(function(err, replies) {
-		stream.emit('data', replies);
-	});
-
-	stream.on('data', function(chunk) {
-    	console.log('Received: ' + chunk);
-	});
-
-	require('deasync').sleep(10);
 	logger.info("Collections:", collections);
 	return collections;
 };

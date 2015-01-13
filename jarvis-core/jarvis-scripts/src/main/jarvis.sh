@@ -117,7 +117,7 @@ export PYTHON_HOME="`findPythonExecutable`"
 export NPM_HOME="`findNpmExecutable`"
 export NODEJS_HOME="`findServerJs`"
 export NODE_PATH=""
-export PATH="${PYTHON_HOME}:${NODE_HOME}:${PATH}"
+export PATH="${NODE_HOME}:${PATH}"
 
 echo '***' ${NODE_HOME}
 echo '***' ${NPM_HOME}
@@ -129,7 +129,16 @@ mkdir -p "${JARVIS_LOGS}"
 
 cd "${NODEJS_HOME}" && ls -lrt
 
-"${NODE_HOME}/node.exe" "${NPM_HOME}/npm-cli.js" install
+[ ! -f "${NODE_HOME}/npm.cmd" ] && {
+	exit -1
+}
+
+"${NODE_HOME}/npm.cmd" install
+
+[ "${?}" -ne 0 ] && {
+	exit -1
+}
+
 [ ! -f "${NODE_HOME}/node.exe" ] && {
 	exit -1
 }

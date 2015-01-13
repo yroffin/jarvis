@@ -51,11 +51,14 @@ myAppServices.factory('jarvisServices', [ '$resource', function($resource, $wind
 			isArray : false,
 			cache : false
 		},
-		getMongoCollections : {
+		/**
+		 * retrieve mongodb collections
+		 */
+		getDbCollections : {
 			method : 'GET',
 			url : jarvisServicesUrl + '/mongodb/collections',
 			params : {},
-			isArray : false,
+			isArray : true,
 			cache : false
 		},
 	})

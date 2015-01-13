@@ -32,10 +32,7 @@ exports.info = function(req, res) {
 	 * properties
 	 */
 	if (req.params.key == 'collections') {
-		res.json({
-			collections : mongoclient.getCollections()
-		});
-		logger.info('info() key [%s] output', req.params.key);
+		res.json(mongoclient.getSyncCollections());
 		return;
 	}
 	res.json({});

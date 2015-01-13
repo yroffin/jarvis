@@ -103,15 +103,15 @@ angular.module('myApp.controllers', []).controller('BootstrapCtrl', [ '$rootScop
 		/**
 		 * loading mongodb collections
 		 */
-		jarvisServices.getMongoCollections({}, function(data) {
+		jarvisServices.getDbCollections({}, function(data) {
 			console.log(data);
-			$scope.jarvis.mongodb.collections = data.collections;
+			$scope.jarvis.mongodb.collections = data;
 			/**
 			 * refresh jquerymobile widget
 			 */
 			setTimeout(function() {
 				$("#mongodb-collections").table("refresh");
-				console.log("events loaded ...");
+				console.log("collections loaded ...");
 			}, 100);
 		}, function(failure) {
 			/**

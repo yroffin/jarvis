@@ -43,7 +43,7 @@ limitations under the License.
                     <ul>
                         <li><a href="#home" id="home" data-transition="flip" data-icon="home">Accueil</a></li>
                         <li><a href="#configuration" id="configuration" data-transition="flip" data-icon="grid" ng-click="loadConfiguration()">Configuration</a></li>
-                        <li><a href="#mongodb" id="mongodb" data-transition="flip" data-icon="user">Mongodb</a></li>
+                        <li><a href="#mongodb" id="mongodb" data-transition="flip" data-icon="user" ng-click="loadMongodb()">Mongodb</a></li>
                         <li><a href="#groups" id="groups" data-transition="flip" data-icon="tag" ng-click="loadGroups()">Groupes</a></li>
                     </ul>
                 </div>
@@ -144,24 +144,12 @@ limitations under the License.
                     <table data-role="table" id="mongodb-collections" data-mode="reflow" class="ui-responsive table-stroke">
                       <thead>
                         <tr>
-                          <th data-priority = "1">Sequence</th>
-                          <th data-priority = "1">Timestamp</th>
-                          <th data-priority = "1">Sender/Id</th>
-                          <th data-priority = "1">Sender/Name</th>
-                          <th data-priority = "1">Target/Id</th>
-                          <th data-priority = "1">Target/Name</th>
-                          <th data-priority = "1">Data</th>
+                          <th data-priority = "1">Name</th>
                         </tr>
                       </thead>
                       <tbody>
                           <tr ng-repeat="item in jarvis.mongodb.collections">
-                            <td>{{item.sequence}}</td>
-                            <td>{{item.timestamp}}</td>
-                            <td>{{item.sender.id}}</td>
-                            <td>{{item.sender.name}}</td>
-                            <td>{{item.target.id}}</td>
-                            <td>{{item.target.name}}</td>
-                            <td>{{item}}</td>
+                            <td>{{item.name}}</td>
                           </tr>
                       </tbody>
                     </table>
