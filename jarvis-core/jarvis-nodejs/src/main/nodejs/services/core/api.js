@@ -17,7 +17,7 @@
 /**
  * logging
  */
-var logger = require('blammo').LoggerFactory.getLogger('logger1');
+var logger = require('blammo').LoggerFactory.getLogger('kernel');
 
 var kernel = require(__dirname + '/kernel');
 var cycle = require(__dirname + '/cycle');
@@ -82,8 +82,7 @@ exports.findDescriptorBySocket = function(socket) {
 			break;
 		}
 	}
-	logger.debug("getClientIndexOf(%s) => %s", socket.remoteAddress + ":"
-			+ socket.remotePort, result.index);
+	logger.debug("getClientIndexOf(%s) => %s", socket.remoteAddress + ":" + socket.remotePort, result.index);
 	return result;
 };
 
@@ -137,6 +136,7 @@ exports.findAnswerDescriptor = function() {
 
 /**
  * add a new descriptor for this client
+ * 
  * @param Object
  *            client descriptor
  */
@@ -165,8 +165,8 @@ exports.sendMessage = function write(message, target, socket) {
 	socket.write(JSON.stringify(message));
 	socket.write("\r\n");
 	/**
-	 * each message are event and must be notified / traced to
-	 * the system event queue
+	 * each message are event and must be notified / traced to the system event
+	 * queue
 	 */
 	kernel.register({
 		'id' : -1,
@@ -178,16 +178,16 @@ exports.sendMessage = function write(message, target, socket) {
 }
 
 /**
- * api aiml
- * send stream to aiml renderer
+ * api aiml send stream to aiml renderer
+ * 
  * @target object {id: target id, message: message to send}
  */
-exports.aiml = function (target) {
+exports.aiml = function(target) {
 	/**
 	 * find target client
 	 */
 	var descriptor;
-	if(target.id != undefined) {
+	if (target.id != undefined) {
 		/**
 		 * find descriptor by id
 		 */
@@ -213,4 +213,3 @@ exports.aiml = function (target) {
 		}
 	}, descriptor, descriptor.socket);
 }
-

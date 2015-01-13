@@ -17,9 +17,7 @@
 /**
  * logging
  */
-var blammo = require('blammo');
-var root = blammo.LoggerFactory.getLogger(blammo.Logger.ROOT_LOGGER_NAME);
-var logger = blammo.LoggerFactory.getLogger('logger1');
+var logger = require('blammo').LoggerFactory.getLogger('kernel');
 
 function main() {
 	// Middleware
@@ -64,7 +62,7 @@ function main() {
 	 */
 	try {
 		routes.init(app);
-	} catch(e) {
+	} catch (e) {
 		logger.warn('routes.init:', e);
 	}
 
@@ -83,7 +81,7 @@ function main() {
 
 	try {
 		httpServer.listen(80);
-	} catch(e) {
+	} catch (e) {
 		logger.warn('httpServer.listen:', e);
 	}
 

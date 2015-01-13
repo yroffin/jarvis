@@ -17,7 +17,7 @@
 /**
  * logging
  */
-var logger = require('blammo').LoggerFactory.getLogger('logger1');
+var logger = require('blammo').LoggerFactory.getLogger('plugins');
 var api = require(__dirname + '/../services/core/api');
 
 /**
@@ -29,5 +29,7 @@ exports.execute = function(params) {
 	/**
 	 * use api to send this message
 	 */
-	api.aiml({message:params.sentence});
+	api.aiml({
+		message : params.sentence
+	});
 };

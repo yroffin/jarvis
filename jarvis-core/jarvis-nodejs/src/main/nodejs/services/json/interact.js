@@ -14,19 +14,18 @@
  * limitations under the License.
  */
 
-var blammo = require('blammo');
-var logger = blammo.LoggerFactory.getLogger('logger1');
+var logger = require('blammo').LoggerFactory.getLogger('services');
 
 var api = require(__dirname + '/../core/api');
 
-exports.init = function () {
-  return;
+exports.init = function() {
+	return;
 };
 
 /**
  * send services
  */
-exports.send = function (req, res) {
+exports.send = function(req, res) {
 	var target = JSON.parse(req.query.target);
 
 	logger.info('send() [%s, %s]', target.id, req.query.message);
@@ -34,7 +33,10 @@ exports.send = function (req, res) {
 	/**
 	 * use api to send this message
 	 */
-	api.aiml({id: target.id, message:req.query.message});
+	api.aiml({
+		id : target.id,
+		message : req.query.message
+	});
 
 	res.json({});
 };

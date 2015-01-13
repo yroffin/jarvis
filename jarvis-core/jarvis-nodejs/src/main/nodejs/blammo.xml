@@ -1,54 +1,43 @@
 <configuration>
 	<appender name="console" type="console_appender">
-		<encoder type="dummy_encoder"/>
+		<encoder type="dummy_encoder" />
 		<layout type="pattern_layout">%timestamp|%pid|%logger|%level|%message</layout>
+	</appender>
+
+	<appender name="mongodb" module="blammo-mongodb-appender">
+		<encoder type="dummy_encoder" />
+		<layout type="dummy_layout" />
 
 		<config>
-			<colorize>1</colorize>
+			<hostname>localhost</hostname>
+			<port>27017</port>
+			<database>blammo</database>
+			<collection>log</collection>
 		</config>
 	</appender>
 
-	<appender name="file_pattern" type="file_appender">
-		<encoder type="dummy_encoder"/>
-		<layout type="pattern_layout">%timestamp|%pid|%logger|%level|%message</layout>
-
-		<filters>
-			<filter type="threshold_filter">WARN</filter>
-		</filters>
-
-		<config>
-			<filename>/tmp/blammo.log</filename>
-		</config>
-	</appender>
-
-	<appender name="file_json" type="file_appender">
-		<encoder type="dummy_encoder"/>
-		<layout type="json_layout" />
-
-		<config>
-			<filename>/tmp/blammo.json</filename>
-		</config>
-	</appender>
-
-	<logger name="logger1">
+	<logger name="services">
 		<appender-ref ref="console" />
+		<appender-ref ref="mongodb" />
+	</logger>
+
+	<logger name="plugins">
+		<appender-ref ref="console" />
+		<appender-ref ref="mongodb" />
 	</logger>
 
 	<logger name="kernel">
 		<appender-ref ref="console" />
-	</logger>
-
-	<logger name="memory">
-		<appender-ref ref="console" />
+		<appender-ref ref="mongodb" />
 	</logger>
 
 	<logger name="mongodb">
 		<appender-ref ref="console" />
+		<appender-ref ref="mongodb" />
 	</logger>
 
 	<root level="trace">
-		<appender-ref ref="file_pattern" />
-		<appender-ref ref="file_json" />
 		<appender-ref ref="console" />
+		<appender-ref ref="mongodb" />
 	</root>
 </configuration>

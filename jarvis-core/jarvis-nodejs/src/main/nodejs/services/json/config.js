@@ -14,39 +14,56 @@
  * limitations under the License.
  */
 
-var blammo = require('blammo');
-var logger = blammo.LoggerFactory.getLogger('logger1');
+var logger = require('blammo').LoggerFactory.getLogger('services');
 
 var api = require(__dirname + '/../core/api');
 
-exports.init = function () {
-  return;
+exports.init = function() {
+	return;
 };
 
 /**
  * info services
  */
-exports.info = function (req, res) {
+exports.info = function(req, res) {
 	logger.info('info() key [%s]', req.params.key);
 	/**
 	 * properties
 	 */
-	if(req.params.key == 'properties') {
-		res.json({properties:[{key:'test', value:'test'},{key:'test', value:'test'},{key:'test', value:'test'},{key:'test', value:'test'}]});
+	if (req.params.key == 'properties') {
+		res.json({
+			properties : [ {
+				key : 'test',
+				value : 'test'
+			}, {
+				key : 'test',
+				value : 'test'
+			}, {
+				key : 'test',
+				value : 'test'
+			}, {
+				key : 'test',
+				value : 'test'
+			} ]
+		});
 		return;
 	}
 	/**
 	 * clients
 	 */
-	if(req.params.key == 'clients') {
-		res.json({clients:api.getClients()});
+	if (req.params.key == 'clients') {
+		res.json({
+			clients : api.getClients()
+		});
 		return;
 	}
 	/**
 	 * clients
 	 */
-	if(req.params.key == 'events') {
-		res.json({events:api.getEvents()});
+	if (req.params.key == 'events') {
+		res.json({
+			events : api.getEvents()
+		});
 		return;
 	}
 	res.json({});

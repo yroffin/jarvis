@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-var blammo = require('blammo');
-var logger = blammo.LoggerFactory.getLogger('mongodb');
+var logger = require('blammo').LoggerFactory.getLogger('services');
 
 var mongoclient = require(__dirname + '/../core/mongodb');
 

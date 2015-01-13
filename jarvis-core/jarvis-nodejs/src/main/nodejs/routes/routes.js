@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-var blammo = require('blammo');
-var logger = blammo.LoggerFactory.getLogger('kernel');
+var logger = require('blammo').LoggerFactory.getLogger('kernel');
 var config = require('../services/json/config');
 var interact = require('../services/json/interact');
 var mongodb = require('../services/json/mongodb');

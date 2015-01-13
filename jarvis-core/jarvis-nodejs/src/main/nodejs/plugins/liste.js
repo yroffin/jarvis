@@ -17,7 +17,7 @@
 /**
  * logging
  */
-var logger = require('blammo').LoggerFactory.getLogger('logger1');
+var logger = require('blammo').LoggerFactory.getLogger('plugins');
 
 /**
  * run this plugin
