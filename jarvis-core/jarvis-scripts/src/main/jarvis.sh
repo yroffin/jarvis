@@ -71,19 +71,19 @@ findPythonExecutable()
 findNpmExecutable()
 {
 	# first find it locally (in design mode)
-	for executable in `cd "${SCRIPT_WORKSPACE}" && find ../../../jarvis-nodejs/node -type f -name 'npm.cmd' 2>/dev/null`
+	for executable in `cd "${SCRIPT_WORKSPACE}" && find ../../../jarvis-nodejs/node -type f -name 'node.exe' 2>/dev/null`
 	do
 		echo ${SCRIPT_WORKSPACE}/`dirname $executable`
 		return
 	done
 	# find it in subdirs
-	for executable in `cd "${SCRIPT_WORKSPACE}" && find ../node -type f -name 'npm.cmd' 2>/dev/null`
+	for executable in `cd "${SCRIPT_WORKSPACE}" && find ../node -type f -name 'node.exe' 2>/dev/null`
 	do
 		echo ${SCRIPT_WORKSPACE}/`dirname $executable`
 		return
 	done
 	# find it in subdirs
-	for executable in `cd "${SCRIPT_WORKSPACE}" && find ../../node -type f -name 'npm.cmd' 2>/dev/null`
+	for executable in `cd "${SCRIPT_WORKSPACE}" && find ../../node -type f -name 'node.exe' 2>/dev/null`
 	do
 		echo ${SCRIPT_WORKSPACE}/`dirname $executable`
 		return
@@ -116,13 +116,12 @@ export NODE_HOME="`findNodeExecutable`"
 export PYTHON_HOME="`findPythonExecutable`"
 export NPM_HOME="`findNpmExecutable`"
 export NODEJS_HOME="`findServerJs`"
-export NODE_PATH="${NODE_HOME}/node_modules/npm/node_modules":"${NODE_HOME}/node_modules"
-export PATH="${PYTHON_HOME}:${NODE_HOME}:${NPM_HOME}:${NODE_HOME}/node_modules/npm/bin/node-gyp-bin:${PATH}"
-echo "PATH: ${PATH}"
+export NODE_PATH=""
+export PATH="${PYTHON_HOME}:${NODE_HOME}:${PATH}"
 
-set | grep SCRIPT_WORKSPACE
-set | grep NODE
-set | grep NPM
+echo '***' ${NODE_HOME}
+echo '***' ${NPM_HOME}
+echo '***' ${PYTHON_HOME}
 
 export JARVIS_LOGS="${TEMP}/logs"
 echo LOGS: "${JARVIS_LOGS}"
