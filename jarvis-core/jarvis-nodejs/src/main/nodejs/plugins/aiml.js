@@ -18,7 +18,7 @@
  * logging
  */
 var logger = require('blammo').LoggerFactory.getLogger('plugins');
-var api = require(__dirname + '/../services/core/api');
+var kernel = require(__dirname + '/../services/core/kernel');
 
 /**
  * run this plugin
@@ -29,7 +29,7 @@ exports.execute = function(params) {
 	/**
 	 * use api to send this message
 	 */
-	api.aiml({
+	kernel.aiml({
 		message : params.sentence
 	});
 };

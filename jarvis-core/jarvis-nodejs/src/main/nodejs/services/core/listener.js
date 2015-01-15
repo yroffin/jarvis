@@ -20,7 +20,6 @@
 var net = require('net');
 
 var kernel = require(__dirname + '/kernel');
-var api = require(__dirname + '/api');
 
 /**
  * main listener
@@ -29,7 +28,7 @@ exports.start = function() {
 	/**
 	 * Keep track of the chat clients
 	 */
-	api.clearClients();
+	kernel.clearClients();
 
 	/**
 	 * Start a TCP Server
@@ -74,7 +73,7 @@ exports.handler = function(socket) {
 	/**
 	 * Send a nice welcome message and announce
 	 */
-	api.sendMessage({
+	kernel.sendMessage({
 		'code' : 'welcome',
 		'welcome' : {
 			'data' : descriptor.id + ' connexion'
@@ -89,7 +88,7 @@ exports.handler = function(socket) {
 	/**
 	 * store descriptor/socket in context put this new client in the list
 	 */
-	api.addClient(descriptor);
+	kernel.addClient(descriptor);
 
 	/**
 	 * Handle incoming messages from clients.
@@ -106,14 +105,14 @@ exports.handler = function(socket) {
 	 * Remove the client from the list when it leaves
 	 */
 	socket.on('error', function() {
-		kernel.getClients().splice(api.findDescriptorBySocket(socket).index, 1);
+		kernel.removeClient(socket);
 	});
 
 	/**
 	 * Remove the client from the list when it leaves
 	 */
 	socket.on('end', function() {
-		kernel.getClients().splice(api.findDescriptorBySocket(socket).index, 1);
+		kernel.removeClient(socket);
 	});
 
 	/**
@@ -124,7 +123,7 @@ exports.handler = function(socket) {
 		 * handle welcome reply
 		 */
 		if (message.code == 'welcome') {
-			var descriptor = api.findDescriptorBySocket(sender).descriptor;
+			var descriptor = kernel.findDescriptorBySocket(sender).descriptor;
 			/**
 			 * store element from client in session onto descriptor element
 			 */
@@ -142,7 +141,7 @@ exports.handler = function(socket) {
 		 * handle event
 		 */
 		if (message.code == 'event') {
-			var descriptor = api.findDescriptorBySocket(sender).descriptor;
+			var descriptor = kernel.findDescriptorBySocket(sender).descriptor;
 			kernel.register(descriptor, {
 				'id' : -1,
 				'name' : 'kernel'
@@ -150,7 +149,7 @@ exports.handler = function(socket) {
 			return;
 		}
 		if (message.code == 'evt') {
-			var descriptor = api.findDescriptorBySocket(sender).descriptor;
+			var descriptor = kernel.findDescriptorBySocket(sender).descriptor;
 			kernel.register(descriptor, {
 				'id' : -1,
 				'name' : 'kernel'

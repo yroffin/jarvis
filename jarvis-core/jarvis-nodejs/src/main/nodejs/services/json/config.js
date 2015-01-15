@@ -15,8 +15,7 @@
  */
 
 var logger = require('blammo').LoggerFactory.getLogger('services');
-
-var api = require(__dirname + '/../core/api');
+var kernel = require(__dirname + '/../core/kernel');
 
 exports.init = function() {
 	return;
@@ -53,7 +52,7 @@ exports.info = function(req, res) {
 	 */
 	if (req.params.key == 'clients') {
 		res.json({
-			clients : api.getClients()
+			clients : kernel.getConnectors()
 		});
 		return;
 	}
@@ -62,7 +61,7 @@ exports.info = function(req, res) {
 	 */
 	if (req.params.key == 'events') {
 		res.json({
-			events : api.getEvents()
+			events : kernel.getEvents()
 		});
 		return;
 	}

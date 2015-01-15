@@ -15,8 +15,7 @@
  */
 
 var logger = require('blammo').LoggerFactory.getLogger('services');
-
-var api = require(__dirname + '/../core/api');
+var kernel = require(__dirname + '/../core/kernel');
 
 exports.init = function() {
 	return;
@@ -33,7 +32,7 @@ exports.send = function(req, res) {
 	/**
 	 * use api to send this message
 	 */
-	api.aiml({
+	kernel.aiml({
 		id : target.id,
 		message : req.query.message
 	});
