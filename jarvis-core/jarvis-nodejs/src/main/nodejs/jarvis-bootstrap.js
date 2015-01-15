@@ -27,7 +27,7 @@ function main() {
 	var fs = require('fs');
 
 	// App part
-	var routes = require(__dirname + '/routes/routes');
+	var routes = require(__dirname + '/services/routes/routes');
 	var servicesConfig = require(__dirname + '/services/json/config');
 	/**
 	 * core services

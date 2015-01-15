@@ -144,11 +144,13 @@ limitations under the License.
                     <table data-role="table" id="mongodb-collections" data-mode="reflow" class="ui-responsive table-stroke">
                       <thead>
                         <tr>
-                          <th data-priority = "1">Name</th>
+                          <th data-priority = "1">Database</th>
+                          <th data-priority = "2">Name</th>
                         </tr>
                       </thead>
                       <tbody>
                           <tr ng-repeat="item in jarvis.mongodb.collections">
+                            <td>{{item.db}}</td>
                             <td>{{item.name}}</td>
                           </tr>
                       </tbody>

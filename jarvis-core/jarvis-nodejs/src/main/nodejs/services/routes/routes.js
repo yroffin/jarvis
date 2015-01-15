@@ -15,9 +15,9 @@
  */
 
 var logger = require('blammo').LoggerFactory.getLogger('kernel');
-var config = require('../services/json/config');
-var interact = require('../services/json/interact');
-var mongodb = require('../services/json/mongodb');
+var config = require(__dirname + '/../json/config');
+var interact = require(__dirname + '/../json/interact');
+var mongodb = require(__dirname + '/../json/mongodb');
 
 /**
  * initialise all routes
@@ -36,6 +36,8 @@ exports.init = function(app) {
 	/**
 	 * collections services
 	 */
-	app.get('/services/mongodb/:key', mongodb.info);
+	app.get('/services/mongodb/:key', mongodb.collections);
+	app.get('/services/mongodb/crud/:database/:name/count', mongodb.collectionCount);
+	app.get('/services/mongodb/crud/:database/:name/page', mongodb.collectionPages);
 	return;
 };
