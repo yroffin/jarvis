@@ -128,12 +128,16 @@ exports.getSyncCollections = function() {
 	collections_jarvis.forEach(function(item) {
 		item.db = 'jarvis';
 		item.name = item.name.replace('jarvis.', '');
+		col = _db_jarvis.collection(item.name);
+		item.count = __syncCountCollection(col);
 		collections.push(item);
 	});
 
 	collections_blammo.forEach(function(item) {
 		item.db = 'blammo';
 		item.name = item.name.replace('blammo.', '');
+		col = _db_blammo.collection(item.name);
+		item.count = __syncCountCollection(col);
 		collections.push(item);
 	});
 
@@ -144,7 +148,7 @@ exports.getSyncCollections = function() {
 /**
  * sync count collections
  */
-function __syncCountCollectionByName(col) {
+function __syncCountCollection(col) {
 
 	var collections = {
 		'result' : undefined
@@ -173,6 +177,13 @@ function __syncCountCollectionByName(col) {
  * sync page collections
  */
 function __syncPageCollectionByName(col, offset, page) {
+	if (offset < 0) {
+		offset = 0;
+	}
+
+	if (page < 0) {
+		page = 1;
+	}
 
 	var collections = {
 		'result' : undefined
@@ -214,7 +225,9 @@ exports.syncCountCollectionByName = function(database, name) {
 		col = _db_blammo.collection(name);
 	}
 	logger.info('syncCountCollectionByName(%s)', name);
-	return __syncCountCollectionByName(col);
+	return {
+		'count' : __syncCountCollection(col)
+	};
 };
 
 /**

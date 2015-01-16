@@ -61,5 +61,25 @@ myAppServices.factory('jarvisServices', [ '$resource', function($resource, $wind
 			isArray : true,
 			cache : false
 		},
+		/**
+		 * count collection tupple
+		 */
+		countDbCollections : {
+			method : 'GET',
+			url : jarvisServicesUrl + '/mongodb/crud/:database/:name/count',
+			params : {},
+			isArray : false,
+			cache : false
+		},
+		/**
+		 * count collection tupple
+		 */
+		getCollection : {
+			method : 'GET',
+			url : jarvisServicesUrl + '/mongodb/crud/:database/:name/page?offset=:offset&page=:page',
+			params : {},
+			isArray : true,
+			cache : false
+		}
 	})
 } ]);

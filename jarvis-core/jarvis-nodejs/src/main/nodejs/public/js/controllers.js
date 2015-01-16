@@ -32,7 +32,7 @@ angular.module('myApp.controllers', []).controller('BootstrapCtrl', [ '$rootScop
 	/**
 	 * load configuration
 	 */
-	$scope.loadConfiguration = function() {
+	$scope.loadConfiguration = function(target) {
 		/**
 		 * load configuration elements
 		 */
@@ -41,15 +41,9 @@ angular.module('myApp.controllers', []).controller('BootstrapCtrl', [ '$rootScop
 		 * loading properties
 		 */
 		jarvisServices.getProperties({}, function(data) {
-			console.log(data);
-			$scope.jarvis.configuration.properties = data.properties;
 			/**
-			 * refresh jquerymobile widget
+			 * deprecated
 			 */
-			setTimeout(function() {
-				$("#configuration-properties").table("refresh");
-				console.log("properties loaded ...");
-			}, 100);
 		}, function(failure) {
 			/**
 			 * TODO : handle error message
@@ -59,15 +53,16 @@ angular.module('myApp.controllers', []).controller('BootstrapCtrl', [ '$rootScop
 		 * loading clients
 		 */
 		jarvisServices.getClients({}, function(data) {
-			console.log(data);
 			$scope.jarvis.configuration.clients = data.clients;
 			/**
 			 * refresh jquerymobile widget
 			 */
-			setTimeout(function() {
-				$("#configuration-clients").table("refresh");
-				console.log("clients loaded ...");
-			}, 100);
+			/**
+			 * navigate to target
+			 */
+			$.mobile.navigate(target, {
+				info : "navigate to " + target
+			});
 		}, function(failure) {
 			/**
 			 * TODO : handle error message
@@ -95,24 +90,62 @@ angular.module('myApp.controllers', []).controller('BootstrapCtrl', [ '$rootScop
 	/**
 	 * load mongodb
 	 */
-	$scope.loadMongodb = function() {
+	$scope.loadMongodb = function(target) {
 		/**
 		 * load mongodb elements
 		 */
 		$scope.jarvis.mongodb = {};
 		/**
-		 * loading mongodb collections
+		 * loading mongodb collections then navigate to target
 		 */
 		jarvisServices.getDbCollections({}, function(data) {
-			console.log(data);
 			$scope.jarvis.mongodb.collections = data;
 			/**
-			 * refresh jquerymobile widget
+			 * navigate to target
 			 */
-			setTimeout(function() {
-				$("#mongodb-collections").table("refresh");
-				console.log("collections loaded ...");
-			}, 100);
+			$.mobile.navigate(target, {
+				info : "navigate to " + target
+			});
+		}, function(failure) {
+			/**
+			 * TODO : handle error message
+			 */
+		});
+	}
+	/**
+	 * load collection in current scope
+	 * 
+	 * @param collection
+	 *            the selected collection
+	 */
+	$scope.loadCollection = function(collection, target) {
+		/**
+		 * loading mongodb collections then navigate to target
+		 */
+		jarvisServices.getCollection({
+			'database' : collection.db,
+			'name' : collection.name,
+			'offset' : collection.count - 20,
+			'page' : 20
+		}, function(data) {
+			var columns = [];
+			for ( var column in data[0]) {
+				if (column.indexOf('$') == -1 && column.indexOf('toJSON') == -1) {
+					columns.push(column);
+				}
+			}
+			$scope.jarvis.mongodb.current = collection;
+			$scope.jarvis.mongodb.collection = data;
+			$scope.jarvis.mongodb.columns = columns;
+			$scope.jarvis.mongodb.offset = collection.count - 20;
+			$scope.jarvis.mongodb.page = 20;
+
+			/**
+			 * navigate to target
+			 */
+			$.mobile.navigate(target, {
+				info : "navigate to " + target
+			});
 		}, function(failure) {
 			/**
 			 * TODO : handle error message

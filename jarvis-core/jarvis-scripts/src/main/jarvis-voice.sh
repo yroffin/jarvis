@@ -53,5 +53,5 @@ echo LOGS: "${JARVIS_LOGS}"
 mkdir -p "${JARVIS_LOGS}"
 
 cd "${NODEJS_HOME}"
-"${JAVA_HOME}/bin/java.exe" -jar "${TARGET_HOME}/jarvis-voice-0.0.1-SNAPSHOT.jar"
+"${JAVA_HOME}/bin/java.exe" -jar "${TARGET_HOME}/jarvis-voice-0.0.1-SNAPSHOT-jar*.jar"
 exit $?

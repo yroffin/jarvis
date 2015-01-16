@@ -31,6 +31,13 @@ limitations under the License.
         <div data-role="page" id="home" data-theme="{{theme}}">
 
             <div data-role="header">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="#home" id="home" data-icon="home">Accueil</a></li>
+                        <li><a href="#" id="configuration" data-icon="grid" ng-click="loadConfiguration('#configuration')">Configuration</a></li>
+                        <li><a href="#" data-transition="flip" data-icon="user" ng-click="loadMongodb('#mongodb')">Mongodb</a></li>
+                    </ul>
+                </div>
                 <h1>Jarvis</h1>
             </div><!-- /header -->
 
@@ -39,39 +46,21 @@ limitations under the License.
             </div><!-- /content -->
 
             <div data-role="footer">
-                <div data-role="navbar">
-                    <ul>
-                        <li><a href="#home" id="home" data-transition="flip" data-icon="home">Accueil</a></li>
-                        <li><a href="#configuration" id="configuration" data-transition="flip" data-icon="grid" ng-click="loadConfiguration()">Configuration</a></li>
-                        <li><a href="#mongodb" id="mongodb" data-transition="flip" data-icon="user" ng-click="loadMongodb()">Mongodb</a></li>
-                        <li><a href="#groups" id="groups" data-transition="flip" data-icon="tag" ng-click="loadGroups()">Groupes</a></li>
-                    </ul>
-                </div>
             </div>
         </div><!-- /page -->
 
         <!-- Configuration page -->
         <div data-role="page" id="configuration" data-theme="{{theme}}">
             <div data-role="header">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="#home" id="home" data-icon="home">Accueil</a></li>
+                    </ul>
+                </div>
                 <h1>Configuration</h1>
             </div>
             <div role="main" class="ui-content">
                 <div>
-                	<h1>Properties</h1>
-                    <table data-role="table" id="configuration-properties" data-mode="reflow" class="ui-responsive table-stroke">
-                    	<thead>
-                    		<tr>
-                    			<th data-priority = "1">Key</th>
-                    			<th data-priority = "1">Value</th>
-                    		</tr>
-                    	</thead>
-                    	<tbody>
-                        	<tr ng-repeat="item in jarvis.configuration.properties">
-                        		<td>{{item.key}}</td>
-                        		<td>{{item.value}}</td>
-                        	</tr>
-                    	</tbody>
-                    </table>
                 	<h1>Clients</h1>
                     <table data-role="table" id="configuration-clients" data-mode="reflow" class="ui-responsive table-stroke">
                     	<thead>
@@ -125,18 +114,18 @@ limitations under the License.
                 </div>
             </div>
             <div data-role="footer">
-                <div data-role="navbar">
-                    <ul>
-                        <li><a href="#home" id="home" data-transition="flip" data-icon="home">Accueil</a></li>
-                    </ul>
-                </div>
             </div>
         </div>
 
         <!-- mongodb page -->
         <div data-role="page" id="mongodb" data-theme="{{theme}}">
             <div data-role="header">
-                <h1>Membres</h1>
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="#home" id="home" data-icon="home">Accueil</a></li>
+                    </ul>
+                </div>
+                <h1>Base MongoDB</h1>
             </div>
             <div role="main" class="ui-content">
                 <div>
@@ -146,29 +135,62 @@ limitations under the License.
                         <tr>
                           <th data-priority = "1">Database</th>
                           <th data-priority = "2">Name</th>
+                          <th data-priority = "3">Count</th>
                         </tr>
                       </thead>
                       <tbody>
-                          <tr ng-repeat="item in jarvis.mongodb.collections">
+                          <tr href="#mongodb-collection" ng-repeat="item in jarvis.mongodb.collections" ng-click="loadCollection(item,'#mongodb-collection')" >
                             <td>{{item.db}}</td>
                             <td>{{item.name}}</td>
+                            <td>{{item.count}}</td>
                           </tr>
                       </tbody>
                     </table>
                 </div>
             </div>
             <div data-role="footer">
+            </div>
+        </div>
+
+        <!-- mongodb collection detail page -->
+        <div data-role="page" id="mongodb-collection" data-theme="{{theme}}">
+            <div data-role="header">
                 <div data-role="navbar">
                     <ul>
-                        <li><a href="#home" id="home" data-transition="flip" data-icon="home">Accueil</a></li>
+                        <li><a href="#home" id="home" data-icon="home">Accueil</a></li>
                     </ul>
                 </div>
+                <h1>Collection</h1>
+            </div>
+            <div role="main" class="ui-content">
+                <div>
+                  <h1>Collection {{jarvis.mongodb.current.name}}</h1>
+                    <table data-role="table" id="mongodb-collection" data-mode="reflow" class="ui-responsive table-stroke">
+                      <thead>
+                        <tr>
+                          <th data-priority = "1" ng-repeat="item in jarvis.mongodb.columns">{{item}}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                          <tr ng-repeat="item in jarvis.mongodb.collection" >
+                            <td ng-repeat="name in jarvis.mongodb.columns">{{$eval('item.' + name)}}</td>
+                          </tr>
+                      </tbody>
+                    </table>
+                </div>
+            </div>
+            <div data-role="footer">
             </div>
         </div>
 
         <!-- Groups page -->
         <div data-role="page" id="groups" data-theme="{{theme}}">
             <div data-role="header">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="#home" id="home" data-transition="flip" data-icon="home">Accueil</a></li>
+                    </ul>
+                </div>
                 <h1>Groupes</h1>
             </div>
             <div role="main" class="ui-content">
@@ -179,60 +201,6 @@ limitations under the License.
                 </div>
             </div>
             <div data-role="footer">
-                <div data-role="navbar">
-                    <ul>
-                        <li><a href="#home" id="home" data-transition="flip" data-icon="home">Accueil</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- Inventory detail page -->
-        <div data-role="page" id="inventory-detail" data-theme="{{theme}}">
-            <div data-role="header">
-                <h1>Inventaire</h1>
-            </div>
-            <div role="main" class="ui-content">	
-                <div>
-                    <form ng-show="inventoryItem" >
-                        <label for="text-basic">Nom</label>
-                        <input type="text" name="text-basic" id="text-basic" value="{{inventoryItem.name}}" />
-                        <label for="text-basic">Image</label>
-                        <img width="128px" src="{{inventoryItem.href}}" />
-                        <label for="text-basic">Description</label>
-                        <input type="text" name="text-basic" id="text-basic" value="{{inventoryItem.description}}" />
-                    </form>
-                </div>
-            </div>
-            <div data-role="footer">
-                <div data-role="navbar">
-                    <ul>
-                        <li><a href="#home" id="home" data-transition="flip" data-icon="home">Accueil</a></li>
-                        <li><a href="#inventory" id="email" data-transition="flip" data-icon="grid" ng-click="loadInventory()">Inventaire</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- Groups detail page -->
-        <div data-role="page" id="groups-detail" data-theme="{{theme}}">
-            <div data-role="header">
-                <h1>Groupe {{groupItem.email}}</h1>
-            </div>
-            <div role="main" class="ui-content">
-                <div>
-                    <ul data-role="listview" id="groupsDetailList">
-                        <li ng-repeat="user in groupItem.users">{{user.email}}</li>
-                    </ul>
-                </div>
-            </div>
-            <div data-role="footer">
-                <div data-role="navbar">
-                    <ul>
-                        <li><a href="#home" id="home" data-transition="flip" data-icon="home">Accueil</a></li>
-                        <li><a href="#groups" id="groups" data-transition="flip" data-icon="tag" ng-click="loadGroups()">Groupes</a></li>
-                    </ul>
-                </div>
             </div>
         </div>
 
