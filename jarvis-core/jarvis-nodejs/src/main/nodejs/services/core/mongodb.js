@@ -36,6 +36,13 @@ var mongooseclient = require('mongoose');
  * retrieve all collections stored in mongodb
  */
 exports.init = function() {
+	var con_jarvis = {
+		'result' : undefined
+	};
+	var con_blammo = {
+		'result' : undefined
+	};
+
 	/**
 	 * main database
 	 */
@@ -45,8 +52,11 @@ exports.init = function() {
 		} else {
 			logger.info("Successfull connection to mongodb:", database.databaseName);
 			_db_jarvis = database;
+			con_jarvis.result = database;
 		}
 	});
+
+	waitFor(con_jarvis);
 
 	/**
 	 * log database
@@ -57,8 +67,11 @@ exports.init = function() {
 		} else {
 			logger.info("Successfull connection to mongodb:", database.databaseName);
 			_db_blammo = database;
+			con_blammo.result = database;
 		}
 	});
+
+	waitFor(con_blammo);
 
 	/**
 	 * object database
@@ -243,4 +256,26 @@ exports.syncPageCollectionByName = function(database, name, offset, page) {
 	}
 	logger.info('syncCountCollectionByName(%s)', name);
 	return __syncPageCollectionByName(col, offset, page);
+};
+
+/**
+ * find
+ */
+exports.syncStoreInCollectionByName = function(database, name, item) {
+	var col = undefined;
+	if (database == 'jarvis') {
+		col = _db_jarvis.collection(name);
+	}
+	if (database == 'blammo') {
+		col = _db_blammo.collection(name);
+	}
+
+	/**
+	 * insert this document
+	 */
+	col.insert(item, function() {
+		logger.info('syncStoreInCollectionByName(%s,%s,%s)', database, name, item);
+	});
+
+	return item;
 };

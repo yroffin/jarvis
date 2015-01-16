@@ -54,33 +54,24 @@ angular.module('myApp.controllers', []).controller('BootstrapCtrl', [ '$rootScop
 		 */
 		jarvisServices.getClients({}, function(data) {
 			$scope.jarvis.configuration.clients = data.clients;
+			console.warn('client', data);
 			/**
-			 * refresh jquerymobile widget
+			 * loading events
 			 */
-			/**
-			 * navigate to target
-			 */
-			$.mobile.navigate(target, {
-				info : "navigate to " + target
+			jarvisServices.getEvents({}, function(data) {
+				console.warn('event', target);
+				$scope.jarvis.configuration.events = data.events;
+				/**
+				 * navigate to target
+				 */
+				$.mobile.navigate(target, {
+					info : "navigate to " + target
+				});
+			}, function(failure) {
+				/**
+				 * TODO : handle error message
+				 */
 			});
-		}, function(failure) {
-			/**
-			 * TODO : handle error message
-			 */
-		});
-		/**
-		 * loading events
-		 */
-		jarvisServices.getEvents({}, function(data) {
-			console.log(data);
-			$scope.jarvis.configuration.events = data.events;
-			/**
-			 * refresh jquerymobile widget
-			 */
-			setTimeout(function() {
-				$("#configuration-events").table("refresh");
-				console.log("events loaded ...");
-			}, 100);
 		}, function(failure) {
 			/**
 			 * TODO : handle error message

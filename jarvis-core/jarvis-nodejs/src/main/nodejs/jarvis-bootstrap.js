@@ -158,8 +158,9 @@ function main() {
 					}
 				}
 				/**
-				 * TODO store event in history
+				 * Store event in history
 				 */
+				mongo.syncStoreInCollectionByName('jarvis', 'events', e);
 			} catch (e) {
 				console.log('Exception: ', e);
 				throw e;
