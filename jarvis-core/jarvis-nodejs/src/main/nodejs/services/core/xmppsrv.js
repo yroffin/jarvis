@@ -1,0 +1,155 @@
+/**
+ * Copyright 2014 Yannick Roffin.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
+
+var logger = require('blammo').LoggerFactory.getLogger('kernel');
+
+'use strict';
+
+var xmpp = require('node-xmpp-server');
+var Message = require('node-xmpp-core').Stanza.Message;
+var Element = require('node-xmpp-core').Stanza.Element;
+
+var clients = {}
+
+// start server
+exports.start = function(done) {
+
+	// Sets up the server.
+	var c2s = new xmpp.C2SServer({
+		port : 5222,
+		bindAddress : 'localhost'
+	})
+
+	// error handler
+	c2s.on('error', function(err) {
+		logger.warn('c2s error: ' + err.message);
+	})
+
+	// register handler
+	c2s.on('register', function(opts, cb) {
+		logger.warn('register: ' + opts.jid + ' -> ' + opts.password);
+		cb(true);
+	})
+
+	// connect handler
+	c2s.on('connect', function(client) {
+		logger.warn('connect');
+
+		// allow anything
+		client.on('authenticate', function(opts, cb) {
+			logger.warn('authenticate: ' + opts.jid + ' -> ' + opts.password);
+			clients[opts.jid] = client;
+			cb(null, opts)
+		})
+
+		// online handler
+		client.on('online', function() {
+			logger.warn('online');
+		})
+
+		// stanza handler
+		client.on('stanza', function(stanza) {
+			logger.trace('stanza', stanza.attrs.from, stanza.attrs.to, stanza.attrs.type);
+			var emitType = null;
+			if (stanza.getChild('query')) { // Info query get or set
+				emitType = 'query:' + stanza.attrs.type + ':' + stanza.getChild('query').attrs.xmlns;
+			} else if (stanza.getName() == "presence") { // Presence
+				emitType = 'presence';
+			} else if (stanza.getName() == "message") { // Message
+				emitType = 'message';
+			} else if (stanza.getChild('ping') != null) {
+				emitType = 'ping';
+			}
+			if (emitType) {
+				logger.warn(emitType + '!' + stanza);
+				this.emit(emitType, stanza);
+			} else {
+				logger.trace("stanza not found " + stanza);
+			}
+		})
+
+		// handler
+		client.on('disconnect', function() {
+			logger.warn('disconnect');
+		})
+
+		// handler
+		client.on('end', function() {
+			logger.warn('end');
+		})
+
+		// handler
+		client.on('close', function() {
+			logger.warn('close');
+		})
+
+		// handler
+		client.on('error', function() {
+			logger.error('error');
+		})
+
+		// handler
+		client.on('message', function(message) {
+			logger.warn('message');
+
+			if (clients[message.attrs.to])
+				clients[message.attrs.to].send(message);
+		});
+
+		// handler
+		client.on('query:get:jabber:iq:search', function(query) {
+			var result = new Element('iq', {
+				type : 'result',
+				from : query.attrs.to,
+				to : query.attrs.from,
+				id : query.attrs.id
+			}).c("query", {
+				xmlns : 'jabber:iq:search'
+			});
+
+			result.c("item", {}).up();
+
+			client.send(result)
+		});
+
+		// handler
+		client.on('query:set:jabber:iq:search', function(query) {
+			var result = new Element('iq', {
+				type : 'result',
+				from : query.attrs.to,
+				to : query.attrs.from,
+				id : query.attrs.id
+			}).c("query", {
+				xmlns : 'jabber:iq:search'
+			});
+
+			for ( var cli in clients) {
+				var user = clients[cli];
+				var jid = user.jid.local + '@' + user.jid.domain;
+				result.c("item", {
+					jid : jid
+				}).up();
+			}
+
+			client.send(result)
+		});
+	})
+
+	/**
+	 * callback handler
+	 */
+	done()
+}
