@@ -34,6 +34,11 @@
 			</dependency>
 			<dependency>
 				<groupId>org.yroffin.com.bob</groupId>
+				<artifactId>jarvis-common</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>org.yroffin.com.bob</groupId>
 				<artifactId>jarvis-java-client</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
@@ -103,6 +108,13 @@
 				<version>${jackson.version}</version>
 			</dependency>
 
+			<!-- mongo -->
+			<dependency>
+				<groupId>org.mongodb</groupId>
+				<artifactId>mongo-java-driver</artifactId>
+				<version>2.13.0</version>
+			</dependency>
+
 			<!-- sphinx -->
 			<dependency>
 				<groupId>edu.cmu.sphinx</groupId>
@@ -141,6 +153,7 @@
 		<module>jarvis-java-client</module>
 		<module>jarvis-scripts</module>
 		<module>jarvis-mongodb</module>
+		<module>jarvis-common</module>
 	</modules>
 
 	<repositories>
