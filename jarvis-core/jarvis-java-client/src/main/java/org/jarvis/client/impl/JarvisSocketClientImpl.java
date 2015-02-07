@@ -163,6 +163,16 @@ public class JarvisSocketClientImpl implements IJarvisSocketClient {
 	}
 
 	/**
+	 * request handler
+	 * 
+	 * @param message
+	 * @throws IOException
+	 */
+	public void onNewRequestMessage(JarvisDatagram message) throws IOException {
+
+	}
+
+	/**
 	 * message handler
 	 * 
 	 * @param message
@@ -176,6 +186,10 @@ public class JarvisSocketClientImpl implements IJarvisSocketClient {
 		if (message.getCode().startsWith("welcome")) {
 			JarvisDatagram nextMessage = new JarvisDatagram();
 			sendMessage(nextMessage);
+		}
+		if (message.getCode().startsWith("request")) {
+			JarvisDatagram nextMessage = new JarvisDatagram();
+			onNewRequestMessage(nextMessage);
 		}
 	}
 
