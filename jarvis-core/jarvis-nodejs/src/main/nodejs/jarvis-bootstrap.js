@@ -26,7 +26,6 @@ function main() {
 	var https = require('https');
 	var http = require('http');
 	var fs = require('fs');
-	var xmppcli = require('node-xmpp-client'), Element = require('node-xmpp-core').Stanza.Element, Message = require('node-xmpp-core').Stanza.Message;
 
 	// App part
 	var routes = require(__dirname + '/services/routes/routes');
@@ -39,6 +38,7 @@ function main() {
 	var listener = require(__dirname + '/services/core/listener');
 	var kernel = require(__dirname + '/services/core/kernel');
 	var xmppsrv = require(__dirname + '/services/core/xmppsrv');
+	var xmppcli = require(__dirname + '/services/core/xmppcli');
 
 	// Default options for this htts server
 	var options = {
@@ -55,70 +55,13 @@ function main() {
 	})).use(express.bodyParser());
 
 	/**
-	 * start xmpp server
+	 * start xmpp server and xmppcli
 	 */
 	xmppsrv.start(function() {
 		kernel.notify("xmpp server done");
-
-		deasync.sleep(10);
-
-		// Internal client
-		cl = new xmppcli.Client({
-			jid : 'internal@localhost',
-			password : 'alice',
-			host : 'localhost',
-			port : 5222,
-			register : true
-		})
-
-		cl.on('online', function(e) {
-			logger.warn('online/cli', e);
-			cl.send('<presence/>')
-			// Set client's presence
-			var status_message = "test";
-			cl.send(new Element('presence', {
-				type : 'available'
-			}).c('show').t('chat').up().c('status').t(status_message));
-		})
-
-		cl.on('error', function(e) {
-			logger.warn('error/cli', e);
-		})
-
-		cl.on('stanza', function(stanza) {
-			logger.warn('stanza/cli', stanza.type, stanza.from, stanza.to);
-
-			cl.send('<presence/>')
-
-			// always log error stanzas
-			if (stanza.attrs.type == 'error') {
-				logger.error('[error] ' + stanza);
-				return;
-			}
-
-			// ignore everything that isn't a room message
-			if (!stanza.is('message') || !stanza.attrs.type == 'chat') {
-				return;
-			}
-
-			var body = stanza.getChild('body');
-			// message without body is probably a topic change
-			if (!body) {
-				return;
-			}
-
-			// Extract username
-			var from, room, _ref;
-			_ref = stanza.attrs.from.split('/'), room = _ref[0], from = _ref[1];
-			var message = body.getText();
-			logger.warn('stanza/cli', message);
-		})
-
-		cl.on('end', function() {
-			logger.warn('end/cli');
-		})
-
-		kernel.notify("xmpp client done");
+		xmppcli.start(function() {
+			kernel.notify("xmpp client done");
+		});
 	});
 
 	/**

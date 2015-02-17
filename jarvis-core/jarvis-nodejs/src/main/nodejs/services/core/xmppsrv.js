@@ -14,7 +14,7 @@
  * the License.
  */
 
-var logger = require('blammo').LoggerFactory.getLogger('kernel');
+var logger = require('blammo').LoggerFactory.getLogger('xmppsrv');
 
 'use strict';
 
@@ -23,6 +23,14 @@ var Message = require('node-xmpp-core').Stanza.Message;
 var Element = require('node-xmpp-core').Stanza.Element;
 
 var clients = {}
+
+/**
+ * send message
+ */
+var send = function(client, msg) {
+	logger.debug('send', msg);
+	client.send(msg);
+}
 
 // start server
 exports.start = function(done) {
@@ -48,24 +56,37 @@ exports.start = function(done) {
 	c2s.on('connect', function(client) {
 		logger.warn('connect');
 
-		// allow anything
+		/**
+		 * allow all connection
+		 * 
+		 * @todo implements password validation
+		 */
 		client.on('authenticate', function(opts, cb) {
 			logger.warn('authenticate: ' + opts.jid + ' -> ' + opts.password);
+			/**
+			 * store this client
+			 */
 			clients[opts.jid] = client;
 			cb(null, opts)
 		})
 
-		// online handler
+		/**
+		 * online handler
+		 */
 		client.on('online', function() {
 			logger.warn('online');
 		})
 
-		// stanza handler
+		/**
+		 * stanza handler
+		 */
 		client.on('stanza', function(stanza) {
-			logger.trace('stanza', stanza.attrs.from, stanza.attrs.to, stanza.attrs.type);
+			logger.trace('stanza', stanza.attrs.from, stanza.attrs.to,
+					stanza.attrs.type);
 			var emitType = null;
 			if (stanza.getChild('query')) { // Info query get or set
-				emitType = 'query:' + stanza.attrs.type + ':' + stanza.getChild('query').attrs.xmlns;
+				emitType = 'query:' + stanza.attrs.type + ':'
+						+ stanza.getChild('query').attrs.xmlns;
 			} else if (stanza.getName() == "presence") { // Presence
 				emitType = 'presence';
 			} else if (stanza.getName() == "message") { // Message
@@ -106,45 +127,89 @@ exports.start = function(done) {
 			logger.warn('message');
 
 			if (clients[message.attrs.to])
-				clients[message.attrs.to].send(message);
+				send(clients[message.attrs.to], message);
 		});
 
 		// handler
-		client.on('query:get:jabber:iq:search', function(query) {
+		client.on('presence', function(message) {
+			logger.warn('presence', message);
+
+			if (clients[message.attrs.to])
+				send(clients[message.attrs.to], message);
+		});
+
+		/**
+		 * IQ result builder
+		 */
+		var _buildIqResult = function(query, xmlns) {
+			return new Element('iq', {
+				type : 'result',
+				from : query.attrs.to,
+				to : query.attrs.from,
+				id : query.attrs.id
+			}).c("query", {
+				xmlns : xmlns
+			});
+		}
+
+		/**
+		 * Cf. http://xmpp.org/extensions/xep-0016.html
+		 */
+		client.on('query:get:jabber:iq:privacy', function(query) {
+			var result = new Element('iq', {
+				type : 'result',
+				to : query.attrs.from,
+				id : query.attrs.id
+			}).c("query", {
+				xmlns : 'jabber:iq:privacy'
+			}).c("active", {
+				name : 'jarvis'
+			}).up().c("default", {
+				name : 'jarvis'
+			}).up().c("list", {
+				name : 'jarvis'
+			}).up();
+			send(client, result);
+		});
+
+		/**
+		 * Cf. http://xmpp.org/extensions/xep-0049.html
+		 */
+		client.on('query:get:jabber:iq:private', function(query) {
 			var result = new Element('iq', {
 				type : 'result',
 				from : query.attrs.to,
 				to : query.attrs.from,
 				id : query.attrs.id
 			}).c("query", {
-				xmlns : 'jabber:iq:search'
+				xmlns : 'jabber:iq:private'
 			});
 
-			result.c("item", {}).up();
+			/**
+			 * @todo identify roster get behaviour
+			 */
 
-			client.send(result)
+			send(client, result)
 		});
 
-		// handler
-		client.on('query:set:jabber:iq:search', function(query) {
-			var result = new Element('iq', {
-				type : 'result',
-				from : query.attrs.to,
-				to : query.attrs.from,
-				id : query.attrs.id
-			}).c("query", {
-				xmlns : 'jabber:iq:search'
-			});
-
+		/**
+		 * Cf. http://xmpp.org/extensions/xep-0083.html
+		 */
+		client.on('query:get:jabber:iq:roster', function(query) {
+			var result = _buildIqResult(query, 'jabber:iq:roster');
+			/**
+			 * add local jid
+			 */
 			for ( var cli in clients) {
 				var user = clients[cli];
 				var jid = user.jid.local + '@' + user.jid.domain;
 				result.c("item", {
-					jid : jid
-				}).up();
+					name : user.jid.local,
+					jid : jid,
+					subscription : 'both'
+				}).c("group", {}).t('jarvis').up();
 			}
-
-			client.send(result)
+			send(client, result)
 		});
 	})
 

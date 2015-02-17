@@ -2,6 +2,9 @@
 	<appender name="console" type="console_appender">
 		<encoder type="dummy_encoder" />
 		<layout type="pattern_layout">%timestamp|%pid|%logger|%level|%message</layout>
+		<filters>
+			<filter type="threshold_filter">WARN</filter>
+		</filters>
 	</appender>
 
 	<appender name="mongodb" module="blammo-mongodb-appender">
@@ -13,6 +16,22 @@
 			<port>27017</port>
 			<database>blammo</database>
 			<collection>log</collection>
+		</config>
+	</appender>
+
+	<appender name="xmppsrv" type="file_appender">
+		<encoder type="dummy_encoder"/>
+		<layout type="pattern_layout">%timestamp|%pid|%logger|%level|%message</layout>
+		<config>
+			<filename>d:/tmp/xmppsrv.log</filename>
+		</config>
+	</appender>
+
+	<appender name="xmppcli" type="file_appender">
+		<encoder type="dummy_encoder"/>
+		<layout type="pattern_layout">%timestamp|%pid|%logger|%level|%message</layout>
+		<config>
+			<filename>d:/tmp/xmppcli.log</filename>
 		</config>
 	</appender>
 
@@ -29,6 +48,18 @@
 	<logger name="kernel">
 		<appender-ref ref="console" />
 		<appender-ref ref="mongodb" />
+	</logger>
+
+	<logger name="xmppcli">
+		<appender-ref ref="console" />
+		<appender-ref ref="mongodb" />
+		<appender-ref ref="xmppcli" />
+	</logger>
+
+	<logger name="xmppsrv">
+		<appender-ref ref="console" />
+		<appender-ref ref="mongodb" />
+		<appender-ref ref="xmppsrv" />
 	</logger>
 
 	<logger name="mongodb">
