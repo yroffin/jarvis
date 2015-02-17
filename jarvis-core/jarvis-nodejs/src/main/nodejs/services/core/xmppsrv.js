@@ -24,35 +24,34 @@ var Element = require('node-xmpp-core').Stanza.Element;
 
 var clients = {}
 
-/**
- * send message
- */
-var send = function(client, msg) {
-	logger.debug('send', msg);
-	client.send(msg);
-}
-
-// start server
 exports.start = function(done) {
 
-	// Sets up the server.
+	/**
+	 * set up the server
+	 */
 	var c2s = new xmpp.C2SServer({
 		port : 5222,
 		bindAddress : 'localhost'
 	})
 
-	// error handler
+	/**
+	 * error handler
+	 */
 	c2s.on('error', function(err) {
 		logger.warn('c2s error: ' + err.message);
 	})
 
-	// register handler
+	/**
+	 * register handler
+	 */
 	c2s.on('register', function(opts, cb) {
 		logger.warn('register: ' + opts.jid + ' -> ' + opts.password);
 		cb(true);
 	})
 
-	// connect handler
+	/**
+	 * server connect
+	 */
 	c2s.on('connect', function(client) {
 		logger.warn('connect');
 
@@ -63,30 +62,32 @@ exports.start = function(done) {
 		 */
 		client.on('authenticate', function(opts, cb) {
 			logger.warn('authenticate: ' + opts.jid + ' -> ' + opts.password);
+			cb(null, opts)
 			/**
 			 * store this client
 			 */
 			clients[opts.jid] = client;
-			cb(null, opts)
 		})
 
 		/**
 		 * online handler
 		 */
 		client.on('online', function() {
-			logger.warn('online');
+			logger.warn('online' + client.jid);
+			/**
+			 * store this client
+			 */
+			clients[client.jid] = client;
 		})
 
 		/**
 		 * stanza handler
 		 */
 		client.on('stanza', function(stanza) {
-			logger.trace('stanza', stanza.attrs.from, stanza.attrs.to,
-					stanza.attrs.type);
+			logger.trace('stanza', stanza.attrs.from, stanza.attrs.to, stanza.attrs.type);
 			var emitType = null;
 			if (stanza.getChild('query')) { // Info query get or set
-				emitType = 'query:' + stanza.attrs.type + ':'
-						+ stanza.getChild('query').attrs.xmlns;
+				emitType = 'query:' + stanza.attrs.type + ':' + stanza.getChild('query').attrs.xmlns;
 			} else if (stanza.getName() == "presence") { // Presence
 				emitType = 'presence';
 			} else if (stanza.getName() == "message") { // Message
@@ -102,7 +103,9 @@ exports.start = function(done) {
 			}
 		})
 
-		// handler
+		/**
+		 * diconnect
+		 */
 		client.on('disconnect', function() {
 			logger.warn('disconnect');
 		})
@@ -124,10 +127,12 @@ exports.start = function(done) {
 
 		// handler
 		client.on('message', function(message) {
-			logger.warn('message');
+			logger.warn('message to : ' + message.attrs.to);
+			logger.warn('message from : ' + message.attrs.from);
 
-			if (clients[message.attrs.to])
-				send(clients[message.attrs.to], message);
+			if (clients[message.attrs.to]) {
+				clients[message.attrs.to].send(message);
+			}
 		});
 
 		// handler
@@ -135,7 +140,7 @@ exports.start = function(done) {
 			logger.warn('presence', message);
 
 			if (clients[message.attrs.to])
-				send(clients[message.attrs.to], message);
+				clients[message.attrs.to].send(message);
 		});
 
 		/**
@@ -169,7 +174,7 @@ exports.start = function(done) {
 			}).up().c("list", {
 				name : 'jarvis'
 			}).up();
-			send(client, result);
+			client.send(result);
 		});
 
 		/**
@@ -188,8 +193,7 @@ exports.start = function(done) {
 			/**
 			 * @todo identify roster get behaviour
 			 */
-
-			send(client, result)
+			client.send(result);
 		});
 
 		/**
@@ -202,14 +206,14 @@ exports.start = function(done) {
 			 */
 			for ( var cli in clients) {
 				var user = clients[cli];
-				var jid = user.jid.local + '@' + user.jid.domain;
+				var jid = user.jid.local + '@' + user.jid.domain + '/' + user.jid.resource;
 				result.c("item", {
-					name : user.jid.local,
+					name : jid,
 					jid : jid,
 					subscription : 'both'
 				}).c("group", {}).t('jarvis').up();
 			}
-			send(client, result)
+			client.send(result);
 		});
 	})
 

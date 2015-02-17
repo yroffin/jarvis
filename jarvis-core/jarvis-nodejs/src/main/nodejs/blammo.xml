@@ -23,7 +23,7 @@
 		<encoder type="dummy_encoder"/>
 		<layout type="pattern_layout">%timestamp|%pid|%logger|%level|%message</layout>
 		<config>
-			<filename>d:/tmp/xmppsrv.log</filename>
+			<filename>u:/tmp/xmppsrv.log</filename>
 		</config>
 	</appender>
 
@@ -31,7 +31,7 @@
 		<encoder type="dummy_encoder"/>
 		<layout type="pattern_layout">%timestamp|%pid|%logger|%level|%message</layout>
 		<config>
-			<filename>d:/tmp/xmppcli.log</filename>
+			<filename>u:/tmp/xmppcli.log</filename>
 		</config>
 	</appender>
 

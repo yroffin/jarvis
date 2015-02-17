@@ -16,7 +16,8 @@
 
 var logger = require('blammo').LoggerFactory.getLogger('kernel');
 
-var Dequeue = require('./dequeue')
+var Dequeue = require(__dirname + '/dequeue')
+var Xmppcli = require(__dirname + '/xmppcli');
 
 /**
  * events queue store all event acquire by this system before any treatment
@@ -32,18 +33,18 @@ var context = {
  * @param none
  * @return nothing
  */
-exports.clearClients = function() {
+var clearClients = function() {
 	/**
 	 * clear current client context
 	 */
-	this.getContext().clients = [];
+	getContext().clients = [];
 	logger.info("clearClients()");
 };
 
 /**
  * register a new event, only for system internal use
  */
-exports.notify = function(message) {
+var notify = function(message) {
 	var copy = {
 		'data' : message
 	};
@@ -71,7 +72,7 @@ exports.notify = function(message) {
 /**
  * register a new event
  */
-exports.register = function(sender, target, event) {
+var register = function(sender, target, event) {
 	var copy = event;
 	/**
 	 * update event context
@@ -97,7 +98,7 @@ exports.register = function(sender, target, event) {
 /**
  * process event queue
  */
-exports.process = function(callback) {
+var process = function(callback) {
 	while (context.events.length > 0) {
 		callback(context.events.pop());
 	}
@@ -106,33 +107,33 @@ exports.process = function(callback) {
 /**
  * retrieve events
  */
-exports.getEvents = function() {
+var getEvents = function() {
 	return context.events.all();
 };
 
 /**
  * retrieve current kernel context
  */
-exports.getContext = function() {
+var getContext = function() {
 	return context;
 };
 
 /**
  * retrieve current kernel client
  */
-exports.setSession = function() {
+var setSession = function() {
 	return context.session;
 };
 
 /**
  * retrieve current clients connected (without internal information like socket)
  */
-exports.getConnectors = function() {
+var getConnectors = function() {
 	/**
 	 * api must not expose internal structure for security reason
 	 */
 	var result = [];
-	this.getContext().clients.forEach(function(descriptor) {
+	getContext().clients.forEach(function(descriptor) {
 		var descriptor = {
 			'id' : descriptor.id,
 			'name' : descriptor.name,
@@ -149,32 +150,32 @@ exports.getConnectors = function() {
 /**
  * retrieve current kernel client
  */
-exports.getClients = function() {
+var getClients = function() {
 	return context.clients;
 };
 
 /**
  * retrieve current clients connected
  */
-exports.removeClient = function(socket) {
+var removeClient = function(socket) {
 	logger.info("removeClient(%s)", socket);
-	this.getClients().splice(this.findDescriptorBySocket(socket).index, 1);
+	getClients().splice(findDescriptorBySocket(socket).index, 1);
 }
 
 /**
  * retrieve current clients connected
  */
-exports.findDescriptorBySocket = function(socket) {
+var findDescriptorBySocket = function(socket) {
 	/**
 	 * api must not expose internal structure for security reason
 	 */
 	var index = 0;
-	var length = this.getContext().clients.length;
+	var length = getContext().clients.length;
 	var result = {
 		index : -1
 	};
 	for (; index < length; index++) {
-		var descriptor = this.getContext().clients[index];
+		var descriptor = getContext().clients[index];
 		if (descriptor.socket == socket) {
 			result.index = index;
 			result.descriptor = descriptor;
@@ -188,17 +189,17 @@ exports.findDescriptorBySocket = function(socket) {
 /**
  * retrieve current clients connected
  */
-exports.findDescriptorById = function(id) {
+var findDescriptorById = function(id) {
 	/**
 	 * api must not expose internal structure for security reason
 	 */
 	var index = 0;
-	var length = this.getContext().clients.length;
+	var length = getContext().clients.length;
 	var result = {
 		index : -1
 	};
 	for (; index < length; index++) {
-		var descriptor = this.getContext().clients[index];
+		var descriptor = getContext().clients[index];
 		if (descriptor.id == id) {
 			result.index = index;
 			result.descriptor = descriptor;
@@ -212,17 +213,17 @@ exports.findDescriptorById = function(id) {
 /**
  * retrieve current clients connected
  */
-exports.findAnswerDescriptor = function() {
+var findAnswerDescriptor = function() {
 	/**
 	 * api must not expose internal structure for security reason
 	 */
 	var index = 0;
-	var length = this.getContext().clients.length;
+	var length = getContext().clients.length;
 	var result = {
 		index : -1
 	};
 	for (; index < length; index++) {
-		var descriptor = this.getContext().clients[index];
+		var descriptor = getContext().clients[index];
 		if (descriptor.canAnswer == true) {
 			result.index = index;
 			result.descriptor = descriptor;
@@ -239,13 +240,13 @@ exports.findAnswerDescriptor = function() {
  * @param Object
  *            client descriptor
  */
-exports.addClient = function(descriptor) {
+var addClient = function(descriptor) {
 	logger.info("addClient(%s)", descriptor.id);
 	/**
 	 * add this client to current context note : client is a pure socket nodejs
 	 * object
 	 */
-	this.getContext().clients.push(descriptor)
+	getContext().clients.push(descriptor)
 	return descriptor;
 };
 
@@ -257,7 +258,7 @@ exports.addClient = function(descriptor) {
  * @param Object
  *            target descriptor to send to
  */
-exports.sendMessage = function write(message, target, socket) {
+var sendMessage = function write(message, target, socket) {
 	/**
 	 * send message on network
 	 */
@@ -267,7 +268,7 @@ exports.sendMessage = function write(message, target, socket) {
 	 * each message are event and must be notified / traced to the system event
 	 * queue
 	 */
-	this.register({
+	register({
 		'id' : -1,
 		'name' : 'kernel'
 	}, {
@@ -281,7 +282,7 @@ exports.sendMessage = function write(message, target, socket) {
  * 
  * @target object {id: target id, message: message to send}
  */
-exports.aiml = function(target) {
+var aiml = function(target) {
 	/**
 	 * find target client
 	 */
@@ -290,17 +291,17 @@ exports.aiml = function(target) {
 		/**
 		 * find descriptor by id
 		 */
-		descriptor = this.findDescriptorById(target.id).descriptor;
+		descriptor = findDescriptorById(target.id).descriptor;
 	} else {
 		/**
 		 * find descriptor by attribute
 		 */
-		descriptor = this.findAnswerDescriptor().descriptor;
+		descriptor = findAnswerDescriptor().descriptor;
 	}
 	/**
 	 * Send a nice welcome message and announce
 	 */
-	this.sendMessage({
+	sendMessage({
 		'code' : 'request',
 		'request' : {
 			'data' : target.message
@@ -311,4 +312,42 @@ exports.aiml = function(target) {
 			}
 		}
 	}, descriptor, descriptor.socket);
+}
+
+/**
+ * xmppcli client
+ * 
+ * @param none
+ * @return nothing
+ */
+var xmppcli = function(descid, jid, kern) {
+	Xmppcli.start(jid, function(message) {
+		aiml({
+			id : descid,
+			message : message
+		});
+	});
+}
+
+/**
+ * exports
+ */
+module.exports = {
+	getClients : getClients,
+	getConnectors : getConnectors,
+	removeClient : removeClient,
+	findDescriptorBySocket : findDescriptorBySocket,
+	findDescriptorById : findDescriptorById,
+	findAnswerDescriptor : findAnswerDescriptor,
+	addClient : addClient,
+	sendMessage : sendMessage,
+	register : register,
+	clearClients : clearClients,
+	notify : notify,
+	xmppcli : xmppcli,
+	aiml : aiml,
+	process : process,
+	getEvents : getEvents,
+	getContext : getContext,
+	setSession : setSession
 }

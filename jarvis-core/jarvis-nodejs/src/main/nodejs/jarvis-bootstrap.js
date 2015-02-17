@@ -59,8 +59,12 @@ function main() {
 	 */
 	xmppsrv.start(function() {
 		kernel.notify("xmpp server done");
-		xmppcli.start(function() {
-			kernel.notify("xmpp client done");
+		/**
+		 * internal xmppcli
+		 */
+		xmppcli.start('internal@jarvis.org', function(message) {
+			kernel.notify("xmpp client : " + message);
+			return message;
 		});
 	});
 

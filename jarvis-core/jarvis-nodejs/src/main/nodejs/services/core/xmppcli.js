@@ -23,26 +23,28 @@ var xmppcli = require('node-xmpp-client'), Element = require('node-xmpp-core').S
 /**
  * start xmppcli
  */
-exports.start = function(done) {
-	// Internal client
+exports.start = function(jid, done) {
+	/**
+	 * Internal client
+	 */
 	client = new xmppcli.Client({
-		jid : 'internal@jarvis.org',
+		jid : jid,
 		password : 'alice',
 		host : 'localhost',
 		port : 5222,
 		register : true
 	})
 
-	client.on('online', function(e) {
-		logger.warn('online/cli', e);
-		client.send('<presence/>')
-		// Set client's presence
-		var status_message = "test";
-		client.send(new Element('presence', {
-			type : 'available'
-		}).c('show').t('chat').up().c('status').t(status_message));
+	/**
+	 * online status
+	 */
+	client.on('online', function() {
+		logger.warn('online');
 	})
 
+	/**
+	 * error handler
+	 */
 	client.on('error', function(e) {
 		logger.warn('error/cli', e);
 	})
@@ -51,12 +53,10 @@ exports.start = function(done) {
 	 * stanza handler
 	 */
 	client.on('stanza', function(stanza) {
-		logger.trace('stanza', stanza.attrs.from, stanza.attrs.to,
-				stanza.attrs.type);
+		logger.trace('stanza', stanza.attrs.from, stanza.attrs.to, stanza.attrs.type);
 		var emitType = null;
 		if (stanza.getChild('query')) { // Info query get or set
-			emitType = 'query:' + stanza.attrs.type + ':'
-					+ stanza.getChild('query').attrs.xmlns;
+			emitType = 'query:' + stanza.attrs.type + ':' + stanza.getChild('query').attrs.xmlns;
 		} else if (stanza.getName() == "presence") { // Presence
 			emitType = 'presence';
 		} else if (stanza.getName() == "message") { // Message
@@ -83,7 +83,7 @@ exports.start = function(done) {
 	 * presence handler
 	 */
 	client.on('message', function(message) {
-		logger.warn('message', message);
+		logger.warn('message');
 
 		/**
 		 * ignore everything that isn't a room message
@@ -100,45 +100,21 @@ exports.start = function(done) {
 			return;
 		}
 
-		logger.debug('message/text', body.getText());
-	})
+		var answer = done(body.getText());
 
-	client.on('stanzaa', function(stanza) {
-		logger.warn('stanza/cli', stanza.type, stanza.from, stanza.to);
-
-		client.send('<presence/>')
-
-		// always log error stanzas
-		if (stanza.attrs.type == 'error') {
-			logger.error('[error] ' + stanza);
-			return;
-		}
-
-		// ignore everything that isn't a room message
-		if (!stanza.is('message') || !stanza.attrs.type == 'chat') {
-			return;
-		}
-
-		var body = stanza.getChild('body');
-		// message without body is probably a topic change
-		if (!body) {
-			return;
-		}
-
-		return;
-		// Extract username
-		var from, room, _ref;
-		_ref = stanza.attrs.from.split('/'), room = _ref[0], from = _ref[1];
-		var message = body.getText();
-		logger.warn('stanza/cli', message);
-	})
-
-	client.on('end', function() {
-		logger.warn('end/cli');
+		/**
+		 * answer
+		 */
+		client.send(new Message({
+			type : 'chat',
+			to : message.attrs.from
+		}).c('body').t(answer));
 	})
 
 	/**
-	 * callback handler
+	 * end handler
 	 */
-	done()
+	client.on('end', function() {
+		logger.warn('end');
+	})
 }
