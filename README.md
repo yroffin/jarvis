@@ -27,6 +27,8 @@ Jarvis use Java and .Net technologies
 windows platforms
 -----------------
 
+Ide is [Visual Studio Community 2013/update4](http://www.visualstudio.com/en-us/products/visual-studio-community-vs)
+
 Windows installation process is build with innoSetup
 
 bundles
