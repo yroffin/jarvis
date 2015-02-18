@@ -29,6 +29,7 @@ exports.start = function(args) {
 	 */
 	var client = new xmppcli.Client({
 		jid : args.jid,
+		resource : 'jarvis',
 		password : 'alice',
 		host : 'localhost',
 		port : 5222,

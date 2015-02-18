@@ -66,6 +66,13 @@ function main() {
 			fn : kernel.xmppcliEcho,
 			jid : 'internal@jarvis.org'
 		});
+		/**
+		 * internal xmppcli
+		 */
+		kernel.xmppcli({
+			fn : kernel.xmppcliScript,
+			jid : 'script@jarvis.org'
+		});
 	});
 
 	/**
@@ -178,8 +185,8 @@ function main() {
 				 */
 				mongo.syncStoreInCollectionByName('jarvis', 'events', e);
 			} catch (e) {
-				console.log('Exception: ', e);
-				throw e;
+				logger.error('Exception: ', e);
+				console.trace(e);
 			}
 		});
 		setTimeout(process, 1000);

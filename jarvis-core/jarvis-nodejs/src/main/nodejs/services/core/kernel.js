@@ -42,7 +42,7 @@ var clearClients = function() {
 };
 
 /**
- * register a new event, only for system internal use
+ * notify a new event, only for system internal use
  */
 var notify = function(message) {
 	var copy = {
@@ -91,7 +91,6 @@ var register = function(sender, target, event) {
 	 * register it
 	 */
 	context.events.push(copy);
-	logger.info("Register new event", copy);
 	return event;
 }
 
@@ -334,6 +333,33 @@ var xmppcliAiml = function(args) {
  * @param args
  * @return nothing
  */
+var xmppcliScript = function(args) {
+	try {
+		var evt = JSON.parse(args.message);
+	} catch (e) {
+		return e;
+	}
+	register({
+		'id' : -1,
+		'name' : 'xmppcli'
+	}, {
+		'id' : -1,
+		'name' : 'xmppcli'
+	}, {
+		code : 'event',
+		event : {
+			script : '{"plugin":"' + evt.plugin + '", "params":"' + evt.params + '"}'
+		}
+	});
+	return JSON.stringify(evt) + ' ok ...';
+}
+
+/**
+ * xmppcli client for simple echo
+ * 
+ * @param args
+ * @return nothing
+ */
 var xmppcliEcho = function(args) {
 	return args.message;
 }
@@ -367,6 +393,7 @@ module.exports = {
 	 * xmppcli
 	 */
 	xmppcli : xmppcli,
+	xmppcliScript : xmppcliScript,
 	xmppcliAiml : xmppcliAiml,
 	xmppcliEcho : xmppcliEcho,
 	aiml : aiml,

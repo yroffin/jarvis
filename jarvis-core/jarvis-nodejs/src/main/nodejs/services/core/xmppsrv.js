@@ -61,7 +61,7 @@ exports.start = function(done) {
 		 * @todo implements password validation
 		 */
 		client.on('authenticate', function(opts, cb) {
-			logger.warn('authenticate: ' + opts.jid + ' -> ' + opts.password);
+			logger.warn('authenticate: ' + opts.jid + '::' + opts.password);
 			cb(null, opts)
 			/**
 			 * store this client
@@ -206,11 +206,10 @@ exports.start = function(done) {
 			 */
 			for ( var cli in clients) {
 				var user = clients[cli];
-				var jid = user.jid.local + '@' + user.jid.domain + '/' + user.jid.resource;
 				result.c("item", {
-					name : jid,
-					jid : jid,
-					subscription : 'both'
+					name : user.jid.local + '@' + user.jid.domain,
+					jid : user.jid.local + '@' + user.jid.domain + '/' + user.jid.resource,
+					subscription : 'none'
 				}).c("group", {}).t('jarvis').up();
 			}
 			client.send(result);
