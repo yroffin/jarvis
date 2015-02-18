@@ -7,9 +7,9 @@ Introduction
 ------------
 
 Jarvis system aim to introduce a human to machine interface capability with :
-- sphinx 4
+- sphinx 4 (integrated in windows express 2013 components)
 - google TTS
-- and a custom aiml renderer
+- and a custom aiml renderer (in java)
 
 [description can be found here](https://www.googledrive.com/host/0B-1rUiMKBiO4RXQzNUNjS0JGWmM/documentation/cartography.html)
 
