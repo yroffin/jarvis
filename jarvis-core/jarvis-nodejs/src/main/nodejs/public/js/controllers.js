@@ -61,11 +61,23 @@ angular.module('myApp.controllers', []).controller('BootstrapCtrl', [ '$rootScop
 			jarvisServices.getEvents({}, function(data) {
 				console.warn('event', target);
 				$scope.jarvis.configuration.events = data.events;
+
 				/**
-				 * navigate to target
+				 * loading events
 				 */
-				$.mobile.navigate(target, {
-					info : "navigate to " + target
+				jarvisServices.getJobs({}, function(data) {
+					console.warn('jobs', target);
+					$scope.jarvis.configuration.jobs = data;
+					/**
+					 * navigate to target
+					 */
+					$.mobile.navigate(target, {
+						info : "navigate to " + target
+					});
+				}, function(failure) {
+					/**
+					 * TODO : handle error message
+					 */
 				});
 			}, function(failure) {
 				/**

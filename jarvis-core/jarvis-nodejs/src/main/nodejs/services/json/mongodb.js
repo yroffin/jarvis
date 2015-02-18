@@ -37,6 +37,13 @@ exports.collections = function(req, res) {
 		}
 		return;
 	}
+	if (req.params.key == 'crontab') {
+		if (req.params.operation == undefined) {
+			res.json(mongoclient.getSyncCollections());
+			return;
+		}
+		return;
+	}
 	res.json({});
 };
 
@@ -65,4 +72,30 @@ exports.collectionPages = function(req, res) {
 	 * count
 	 */
 	res.json(mongoclient.syncPageCollectionByName(req.params.database, req.params.name, req.query.offset, req.query.page));
+};
+
+/**
+ * crud operation for crontab
+ */
+exports.cronPlugin = function(req, res) {
+	logger.info('cronPlugin() request', req.query);
+	logger.info('cronPlugin() params', req.params);
+
+	/**
+	 * job, cronTime, plugin, params
+	 */
+	res.json(mongoclient.syncCronPlugin(req.query.job, req.query.cronTime, req.params.plugin, JSON.parse(req.query.params)));
+}
+
+/**
+ * crud operation for crontab
+ */
+exports.cronList = function(req, res) {
+	logger.error('cronList() request', req.query);
+	logger.error('cronList() params', req.params);
+
+	/**
+	 * job, cronTime, plugin, params
+	 */
+	res.json(mongoclient.syncCronList(req.query.filter));
 };

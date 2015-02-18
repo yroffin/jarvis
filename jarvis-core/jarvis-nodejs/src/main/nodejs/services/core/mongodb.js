@@ -244,6 +244,33 @@ exports.syncCountCollectionByName = function(database, name) {
 };
 
 /**
+ * sync page collections
+ */
+function __syncCronList(col) {
+	var collections = {
+		'result' : undefined
+	};
+
+	/**
+	 * find in collection
+	 */
+	col.find({}).toArray(function(err, items) {
+		if (err == null) {
+			collections.result = items;
+		}
+	});
+
+	/**
+	 * wait for completion
+	 */
+	waitFor(collections);
+
+	logger.info('__syncCronList => %s', collections.result.length);
+
+	return collections.result;
+};
+
+/**
  * find
  */
 exports.syncPageCollectionByName = function(database, name, offset, page) {
@@ -279,3 +306,36 @@ exports.syncStoreInCollectionByName = function(database, name, item) {
 
 	return item;
 };
+
+/**
+ * register a new plugin for cron jobs
+ */
+exports.syncCronPlugin = function(job, cronTime, plugin, params) {
+	var col = undefined;
+	col = _db_jarvis.collection('crontab');
+
+	/**
+	 * insert this document
+	 */
+	var item = {
+		job : job,
+		cronTime : cronTime,
+		plugin : plugin,
+		params : params,
+		started : false,
+		timestamp : new Date()
+	};
+	col.insert(item, function() {
+		logger.error('syncCronPlugin(%s,%s,%s)', cronTime, plugin, JSON.stringify(params));
+	});
+
+	return item;
+};
+
+/**
+ * register a new plugin for cron jobs
+ */
+exports.syncCronList = function(filter) {
+	var col = _db_jarvis.collection('crontab');
+	return __syncCronList(col);
+}

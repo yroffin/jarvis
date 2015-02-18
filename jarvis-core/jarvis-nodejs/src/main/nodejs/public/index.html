@@ -86,30 +86,53 @@ limitations under the License.
                         	</tr>
                     	</tbody>
                     </table>
-                	<h1>Events</h1>
-                    <table data-role="table" id="configuration-events" data-mode="reflow" class="ui-responsive table-stroke">
+                	<h1>Jobs</h1>
+                    <table data-role="table" id="configuration-jobs" data-mode="reflow" class="ui-responsive table-stroke">
                     	<thead>
                     		<tr>
-                    			<th data-priority = "1">Sequence</th>
+                    			<th data-priority = "1">Job name</th>
+                    			<th data-priority = "1">Cron</th>
+                    			<th data-priority = "1">Plugin</th>
+                    			<th data-priority = "1">Arguments</th>
+                    			<th data-priority = "1">Started</th>
                     			<th data-priority = "1">Timestamp</th>
-                    			<th data-priority = "1">Sender/Id</th>
-                    			<th data-priority = "1">Sender/Name</th>
-                    			<th data-priority = "1">Target/Id</th>
-                    			<th data-priority = "1">Target/Name</th>
-                    			<th data-priority = "1">Data</th>
                     		</tr>
                     	</thead>
                     	<tbody>
-                        	<tr ng-repeat="item in jarvis.configuration.events">
-                        		<td>{{item.sequence}}</td>
+                        	<tr ng-repeat="item in jarvis.configuration.jobs">
+                        		<td>{{item.job}}</td>
+                        		<td>{{item.cronTime}}</td>
+                        		<td>{{item.plugin}}</td>
+                        		<td>{{item.params}}</td>
+                        		<td>{{item.started}}</td>
                         		<td>{{item.timestamp}}</td>
-                        		<td>{{item.sender.id}}</td>
-                        		<td>{{item.sender.name}}</td>
-                        		<td>{{item.target.id}}</td>
-                        		<td>{{item.target.name}}</td>
-                        		<td>{{item}}</td>
                         	</tr>
                     	</tbody>
+                    </table>
+                  <h1>Events</h1>
+                    <table data-role="table" id="configuration-events" data-mode="reflow" class="ui-responsive table-stroke">
+                      <thead>
+                        <tr>
+                          <th data-priority = "1">Sequence</th>
+                          <th data-priority = "1">Timestamp</th>
+                          <th data-priority = "1">Sender/Id</th>
+                          <th data-priority = "1">Sender/Name</th>
+                          <th data-priority = "1">Target/Id</th>
+                          <th data-priority = "1">Target/Name</th>
+                          <th data-priority = "1">Data</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                          <tr ng-repeat="item in jarvis.configuration.events">
+                            <td>{{item.sequence}}</td>
+                            <td>{{item.timestamp}}</td>
+                            <td>{{item.sender.id}}</td>
+                            <td>{{item.sender.name}}</td>
+                            <td>{{item.target.id}}</td>
+                            <td>{{item.target.name}}</td>
+                            <td>{{item}}</td>
+                          </tr>
+                      </tbody>
                     </table>
                 </div>
             </div>

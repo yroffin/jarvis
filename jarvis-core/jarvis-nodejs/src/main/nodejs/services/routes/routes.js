@@ -39,5 +39,11 @@ exports.init = function(app) {
 	app.get('/services/mongodb/:key', mongodb.collections);
 	app.get('/services/mongodb/crud/:database/:name/count', mongodb.collectionCount);
 	app.get('/services/mongodb/crud/:database/:name/page', mongodb.collectionPages);
+	/**
+	 * cron plugin
+	 */
+	app.get('/services/mongodb/crontab/:plugin/create', mongodb.cronPlugin);
+	app.post('/services/mongodb/crontab/:plugin/create', mongodb.cronPlugin);
+	app.get('/services/mongodb/crontabs/list', mongodb.cronList);
 	return;
 };

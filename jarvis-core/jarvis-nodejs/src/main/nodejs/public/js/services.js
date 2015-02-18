@@ -80,6 +80,26 @@ myAppServices.factory('jarvisServices', [ '$resource', function($resource, $wind
 			params : {},
 			isArray : true,
 			cache : false
+		},
+		/**
+		 * count collection tupple
+		 */
+		createJob : {
+			method : 'POST',
+			url : jarvisServicesUrl + '/mongodb/crontab/:plugin/create?job=:job&params=:params&cronTime=:cronTime',
+			params : {},
+			isArray : true,
+			cache : false
+		},
+		/**
+		 * count collection tupple
+		 */
+		getJobs : {
+			method : 'GET',
+			url : jarvisServicesUrl + '/mongodb/crontabs/list',
+			params : {},
+			isArray : true,
+			cache : false
 		}
 	})
 } ]);
