@@ -23,17 +23,23 @@ var xmppcli = require('node-xmpp-client'), Element = require('node-xmpp-core').S
 /**
  * start xmppcli
  */
-exports.start = function(jid, done) {
+exports.start = function(args) {
 	/**
 	 * Internal client
 	 */
-	client = new xmppcli.Client({
-		jid : jid,
+	var client = new xmppcli.Client({
+		jid : args.jid,
 		password : 'alice',
 		host : 'localhost',
 		port : 5222,
-		register : true
+		register : true,
+		args : args
 	})
+
+	/**
+	 * store for internal use
+	 */
+	client.args = args;
 
 	/**
 	 * online status
@@ -100,7 +106,8 @@ exports.start = function(jid, done) {
 			return;
 		}
 
-		var answer = done(body.getText());
+		args.message = body.getText();
+		var answer = args.fn(args);
 
 		/**
 		 * answer

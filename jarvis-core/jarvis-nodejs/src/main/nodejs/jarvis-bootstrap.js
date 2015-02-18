@@ -62,9 +62,9 @@ function main() {
 		/**
 		 * internal xmppcli
 		 */
-		xmppcli.start('internal@jarvis.org', function(message) {
-			kernel.notify("xmpp client : " + message);
-			return message;
+		kernel.xmppcli({
+			fn : kernel.xmppcliEcho,
+			jid : 'internal@jarvis.org'
 		});
 	});
 

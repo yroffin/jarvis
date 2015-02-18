@@ -138,7 +138,11 @@ exports.handler = function(socket) {
 			/**
 			 * declare xmppclient
 			 */
-			kernel.xmppcli(descriptor.id, descriptor.id + '@jarvis.org');
+			kernel.xmppcli({
+				fn : kernel.xmppcliAiml,
+				jid : descriptor.id + '@jarvis.org',
+				descriptorId : descriptor.id
+			});
 			return;
 		}
 		/**

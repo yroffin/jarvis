@@ -315,18 +315,37 @@ var aiml = function(target) {
 }
 
 /**
+ * xmppcli client for aiml exchange
+ * 
+ * @param args
+ * @return nothing
+ */
+var xmppcliAiml = function(args) {
+	logger.warn('xmppcliAiml', args);
+	aiml({
+		id : args.desccriptorId,
+		message : args.message
+	}, args);
+}
+
+/**
+ * xmppcli client for simple echo
+ * 
+ * @param args
+ * @return nothing
+ */
+var xmppcliEcho = function(args) {
+	return args.message;
+}
+
+/**
  * xmppcli client
  * 
  * @param none
  * @return nothing
  */
-var xmppcli = function(descid, jid, kern) {
-	Xmppcli.start(jid, function(message) {
-		aiml({
-			id : descid,
-			message : message
-		});
-	});
+var xmppcli = function(fn, args) {
+	Xmppcli.start(fn, args);
 }
 
 /**
@@ -344,7 +363,12 @@ module.exports = {
 	register : register,
 	clearClients : clearClients,
 	notify : notify,
+	/**
+	 * xmppcli
+	 */
 	xmppcli : xmppcli,
+	xmppcliAiml : xmppcliAiml,
+	xmppcliEcho : xmppcliEcho,
 	aiml : aiml,
 	process : process,
 	getEvents : getEvents,
