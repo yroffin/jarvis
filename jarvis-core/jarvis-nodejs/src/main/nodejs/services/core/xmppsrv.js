@@ -23,6 +23,7 @@ var Message = require('node-xmpp-core').Stanza.Message;
 var Element = require('node-xmpp-core').Stanza.Element;
 
 var clients = {}
+var resources = {}
 
 exports.start = function(done) {
 
@@ -31,7 +32,7 @@ exports.start = function(done) {
 	 */
 	var c2s = new xmpp.C2SServer({
 		port : 5222,
-		bindAddress : 'localhost'
+		bindAddress : '192.168.0.157'
 	})
 
 	/**
@@ -56,6 +57,17 @@ exports.start = function(done) {
 		logger.warn('connect');
 
 		/**
+		 * boradcast message
+		 */
+		client.broadcast = function(message) {
+			for (cl in clients) {
+				if (client != client[cl]) {
+					clients[cl].send(message);
+				}
+			}
+		}
+
+		/**
 		 * allow all connection
 		 * 
 		 * @todo implements password validation
@@ -66,18 +78,31 @@ exports.start = function(done) {
 			/**
 			 * store this client
 			 */
-			clients[opts.jid] = client;
+			resources[client.jid] = client;
 		})
 
 		/**
 		 * online handler
 		 */
 		client.on('online', function() {
-			logger.warn('online' + client.jid);
+			logger.warn('online:', client.jid);
 			/**
 			 * store this client
 			 */
 			clients[client.jid] = client;
+			resources[client.jid] = client;
+
+			/**
+			 * send reconfigure, for inject logs
+			 */
+			client.sendAlt = client.send;
+			client.send = function(message) {
+				logger.warn('jid:' + client.jid);
+				logger.warn('to:' + message.attrs.to);
+				logger.warn('from:' + message.attrs.from);
+				logger.warn("send:", message.toString());
+				this.sendAlt(message);
+			}
 		})
 
 		/**
@@ -108,39 +133,65 @@ exports.start = function(done) {
 		 */
 		client.on('disconnect', function() {
 			logger.warn('disconnect');
+			delete clients[client.jid];
+			delete resources[client.jid];
 		})
 
-		// handler
+		/**
+		 * end handler
+		 */
 		client.on('end', function() {
 			logger.warn('end');
+			delete clients[client.jid];
+			delete resources[client.jid];
 		})
 
-		// handler
+		/**
+		 * close handler
+		 */
 		client.on('close', function() {
 			logger.warn('close');
 		})
 
-		// handler
+		/**
+		 * error handler
+		 */
 		client.on('error', function() {
 			logger.error('error');
 		})
 
-		// handler
-		client.on('message', function(message) {
-			logger.warn('message to : ' + message.attrs.to);
-			logger.warn('message from : ' + message.attrs.from);
+		/**
+		 * Cf. http://xmpp.org/extensions/xep-0199.html
+		 */
+		client.on('ping', function(ping) {
+			logger.warn('ping', ping);
+			/**
+			 * answer to this ping
+			 */
+			var answer = new Element('iq', {
+				type : 'result',
+				to : ping.attrs.from,
+				id : ping.attrs.id
+			});
+			clients[ping.attrs.from].send(answer);
+		})
 
-			if (clients[message.attrs.to]) {
-				clients[message.attrs.to].send(message);
+		/**
+		 * message handler
+		 */
+		client.on('message', function(message) {
+			logger.warn('message', client.jid);
+			if (resources[message.attrs.to]) {
+				resources[message.attrs.to].send(message);
 			}
 		});
 
-		// handler
+		/**
+		 * presence handler
+		 */
 		client.on('presence', function(message) {
-			logger.warn('presence', message);
-
-			if (clients[message.attrs.to])
-				clients[message.attrs.to].send(message);
+			logger.warn('presence', client.jid);
+			client.broadcast(message);
 		});
 
 		/**
@@ -209,7 +260,7 @@ exports.start = function(done) {
 				result.c("item", {
 					name : user.jid.local + '@' + user.jid.domain,
 					jid : user.jid.local + '@' + user.jid.domain + '/' + user.jid.resource,
-					subscription : 'none'
+					subscription : 'both'
 				}).c("group", {}).t('jarvis').up();
 			}
 			client.send(result);

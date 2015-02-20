@@ -31,7 +31,7 @@ exports.start = function(args) {
 		jid : args.jid,
 		resource : 'jarvis',
 		password : 'alice',
-		host : 'localhost',
+		host : '192.168.0.157',
 		port : 5222,
 		register : true,
 		args : args
@@ -41,6 +41,15 @@ exports.start = function(args) {
 	 * store for internal use
 	 */
 	client.args = args;
+
+	setInterval(function() {
+		/**
+		 * send presence
+		 */
+		client.send(new Element('presence', {
+			type : 'probe'
+		}).c('show').t('chat').up().c('status').t('Hi'));
+	}, 10000);
 
 	/**
 	 * online status
@@ -53,7 +62,7 @@ exports.start = function(args) {
 	 * error handler
 	 */
 	client.on('error', function(e) {
-		logger.warn('error/cli', e);
+		logger.warn('error', e);
 	})
 
 	/**
@@ -83,11 +92,11 @@ exports.start = function(args) {
 	 * presence handler
 	 */
 	client.on('presence', function(message) {
-		logger.warn('presence', message);
+		logger.warn('presence', client.jid);
 	})
 
 	/**
-	 * presence handler
+	 * message handler
 	 */
 	client.on('message', function(message) {
 		logger.warn('message');
