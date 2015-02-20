@@ -145,12 +145,12 @@
 
 	<modules>
 		<module>jarvis-aiml</module>
-		<module>jarvis-voice</module>
 		<module>jarvis-gtranslate</module>
 		<module>jarvis-gtranslate-libs</module>
 		<module>sphinx-core</module>
 		<module>jarvis-nodejs</module>
 		<module>jarvis-java-client</module>
+		<module>jarvis-java-engine</module>
 		<module>jarvis-scripts</module>
 		<module>jarvis-mongodb</module>
 		<module>jarvis-common</module>

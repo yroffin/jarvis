@@ -7,7 +7,7 @@
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
-	<artifactId>jarvis-voice</artifactId>
+	<artifactId>jarvis-java-engine</artifactId>
 	<dependencies>
 		<dependency>
 			<groupId>org.yroffin.com.bob</groupId>
