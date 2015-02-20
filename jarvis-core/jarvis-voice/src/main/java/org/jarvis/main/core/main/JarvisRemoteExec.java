@@ -6,7 +6,7 @@ import org.jarvis.client.IJarvisSocketClient;
 import org.jarvis.client.impl.JarvisSocketClientImpl;
 import org.jarvis.client.model.JarvisDatagram;
 import org.jarvis.client.model.JarvisDatagramEvent;
-import org.jarvis.client.model.JarvisDatagramExec;
+import org.jarvis.main.core.JarvisDatagramExec;
 import org.jarvis.runtime.ProcessExec;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,10 +18,9 @@ public class JarvisRemoteExec extends JarvisSocketClientImpl implements
 
 	protected Logger logger = LoggerFactory.getLogger(JarvisRemoteExec.class);
 
-	public JarvisRemoteExec(String hostName, int portNumber) {
-		super(hostName, portNumber);
+	public JarvisRemoteExec(String name, String hostName, int portNumber) {
+		super(name, hostName, portNumber);
 
-		setName("Jarvis AIML Advisor");
 		setRenderer(true);
 		setSensor(true);
 		setCanAswer(true);
@@ -49,16 +48,4 @@ public class JarvisRemoteExec extends JarvisSocketClientImpl implements
 			return;
 		}
 	}
-
-	/**
-	 * main entry
-	 * 
-	 * @param args
-	 * @throws Exception
-	 */
-	public static void main(String[] args) throws Exception {
-		JarvisSocketClientImpl client = new JarvisRemoteExec("localhost", 5000);
-		client.sync();
-	}
-
 }

@@ -154,7 +154,6 @@
 		<module>jarvis-scripts</module>
 		<module>jarvis-mongodb</module>
 		<module>jarvis-common</module>
-		<module>jarvis-remote-exec</module>
 	</modules>
 
 	<repositories>

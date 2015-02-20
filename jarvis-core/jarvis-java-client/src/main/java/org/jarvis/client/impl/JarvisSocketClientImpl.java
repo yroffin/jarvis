@@ -39,7 +39,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @author yannick
  *
  */
-public class JarvisSocketClientImpl implements IJarvisSocketClient {
+public class JarvisSocketClientImpl implements IJarvisSocketClient, Runnable {
 	protected Logger logger = LoggerFactory
 			.getLogger(JarvisSocketClientImpl.class);
 
@@ -54,10 +54,10 @@ public class JarvisSocketClientImpl implements IJarvisSocketClient {
 	/**
 	 * internal member
 	 */
-	JarvisDatagramSession session = null;
-	String hostName;
-	int portNumber = 5000;
-	Socket socket = null;
+	private JarvisDatagramSession session = null;
+	private String hostName;
+	private int portNumber = 5000;
+	private Socket socket = null;
 	private LinkedBlockingQueue<JarvisDatagram> linked = new LinkedBlockingQueue<JarvisDatagram>();
 	private ObjectMapper mapper;
 	private OutputStream output;
@@ -65,11 +65,14 @@ public class JarvisSocketClientImpl implements IJarvisSocketClient {
 	/**
 	 * constructor
 	 * 
+	 * @param hostName2
+	 * 
 	 * @param hostname
 	 */
-	public JarvisSocketClientImpl(String hostName, int portNumber) {
+	public JarvisSocketClientImpl(String name, String hostName, int portNumber) {
 		this.hostName = hostName;
 		this.portNumber = portNumber;
+		this.name = name;
 		mapper = new ObjectMapper();
 
 		output = new OutputStream() {
@@ -93,7 +96,8 @@ public class JarvisSocketClientImpl implements IJarvisSocketClient {
 	 * 
 	 * @throws Exception
 	 */
-	public void sync() throws Exception {
+	@Override
+	public void run() {
 		try {
 			/**
 			 * initialize socket
@@ -111,7 +115,7 @@ public class JarvisSocketClientImpl implements IJarvisSocketClient {
 			boolean identified = false;
 			JarvisDatagram message = null;
 			if (logger.isDebugEnabled()) {
-				logger.error("Waiting for new message");
+				logger.debug("Waiting for new message");
 			}
 			while ((message = linked.take()) != null && message.code != null) {
 				if (!identified) {
@@ -159,7 +163,11 @@ public class JarvisSocketClientImpl implements IJarvisSocketClient {
 			logger.error("Error {} while syncing the system", e);
 		}
 
-		onDisconnect();
+		try {
+			onDisconnect();
+		} catch (Exception e) {
+			logger.error("Error {} while disconnecting the system", e);
+		}
 	}
 
 	/**
@@ -169,7 +177,6 @@ public class JarvisSocketClientImpl implements IJarvisSocketClient {
 	 * @throws IOException
 	 */
 	public void onNewRequestMessage(JarvisDatagram message) throws IOException {
-
 	}
 
 	/**
@@ -188,8 +195,7 @@ public class JarvisSocketClientImpl implements IJarvisSocketClient {
 			sendMessage(nextMessage);
 		}
 		if (message.getCode().startsWith("request")) {
-			JarvisDatagram nextMessage = new JarvisDatagram();
-			onNewRequestMessage(nextMessage);
+			onNewRequestMessage(message);
 		}
 	}
 
@@ -255,22 +261,6 @@ public class JarvisSocketClientImpl implements IJarvisSocketClient {
 				logger.error("While stopping {}", e);
 			}
 		}
-	}
-
-	/**
-	 * standard main procedure
-	 * 
-	 * @param argv
-	 * @throws Exception
-	 */
-	public static void main(String argv[]) throws Exception {
-		JarvisSocketClientImpl client = new JarvisSocketClientImpl("localhost",
-				5000);
-		client.sync();
-		JarvisDatagram message = new JarvisDatagram();
-		message.setCode("list");
-		client.sendMessage(message);
-		System.in.read();
 	}
 
 	/**

@@ -19,10 +19,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.yroffin.com.bob</groupId>
-			<artifactId>jarvis-gtranslate-libs</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.yroffin.com.bob</groupId>
 			<artifactId>jarvis-java-client</artifactId>
 		</dependency>
 		<dependency>
@@ -32,6 +28,14 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.yroffin.com.bob</groupId>
+			<artifactId>jarvis-gtranslate-libs</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>

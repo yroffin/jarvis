@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.jarvis.client.model;
+package org.jarvis.main.core;
 
 import java.util.List;
 
