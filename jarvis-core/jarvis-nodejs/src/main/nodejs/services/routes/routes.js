@@ -44,6 +44,8 @@ exports.init = function(app) {
 	 */
 	app.get('/services/mongodb/crontab/:plugin/create', mongodb.cronPlugin);
 	app.post('/services/mongodb/crontab/:plugin/create', mongodb.cronPlugin);
+	app.get('/services/mongodb/crontab/:plugin/test', mongodb.cronTestPlugin);
+	app.post('/services/mongodb/crontab/:plugin/test', mongodb.cronTestPlugin);
 	app.get('/services/mongodb/crontabs/list', mongodb.cronList);
 	return;
 };

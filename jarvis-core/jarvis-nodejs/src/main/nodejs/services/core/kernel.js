@@ -212,6 +212,30 @@ var findDescriptorById = function(id) {
 /**
  * retrieve current clients connected
  */
+var findDescriptorByName = function(name) {
+	/**
+	 * api must not expose internal structure for security reason
+	 */
+	var index = 0;
+	var length = getContext().clients.length;
+	var result = {
+		index : -1
+	};
+	for (; index < length; index++) {
+		var descriptor = getContext().clients[index];
+		if (descriptor.name == name) {
+			result.index = index;
+			result.descriptor = descriptor;
+			break;
+		}
+	}
+	logger.debug("findDescriptorByName(%s) => %s", descriptor.name, result.index);
+	return result;
+};
+
+/**
+ * retrieve current clients connected
+ */
 var findAnswerDescriptor = function() {
 	/**
 	 * api must not expose internal structure for security reason
@@ -281,7 +305,7 @@ var sendMessage = function write(message, target, socket) {
  * 
  * @target object {id: target id, message: message to send}
  */
-var aiml = function(target) {
+var remoteModuleRender = function(target) {
 	/**
 	 * find target client
 	 */
@@ -292,6 +316,17 @@ var aiml = function(target) {
 		 */
 		descriptor = findDescriptorById(target.id).descriptor;
 	} else {
+		if (target.name != undefined) {
+			/**
+			 * find descriptor by id
+			 */
+			descriptor = findDescriptorByName(target.name).descriptor;
+		}
+	}
+	/**
+	 * last chance
+	 */
+	if (!descriptor) {
 		/**
 		 * find descriptor by attribute
 		 */
@@ -314,14 +349,14 @@ var aiml = function(target) {
 }
 
 /**
- * xmppcli client for aiml exchange
+ * xmppcli client for remoteModuleRender exchange
  * 
  * @param args
  * @return nothing
  */
 var xmppcliAiml = function(args) {
 	logger.warn('xmppcliAiml', args);
-	aiml({
+	remoteModuleRender({
 		id : args.desccriptorId,
 		message : args.message
 	}, args);
@@ -425,7 +460,10 @@ module.exports = {
 	/**
 	 * aiml api
 	 */
-	aiml : aiml,
+	remoteModuleRender : remoteModuleRender,
+	/**
+	 * internal api
+	 */
 	process : process,
 	getEvents : getEvents,
 	getContext : getContext,

@@ -82,7 +82,7 @@ myAppServices.factory('jarvisServices', [ '$resource', function($resource, $wind
 			cache : false
 		},
 		/**
-		 * count collection tupple
+		 * create a new crontab entry
 		 */
 		createJob : {
 			method : 'POST',
@@ -92,7 +92,7 @@ myAppServices.factory('jarvisServices', [ '$resource', function($resource, $wind
 			cache : false
 		},
 		/**
-		 * count collection tupple
+		 * get all crontab
 		 */
 		getJobs : {
 			method : 'GET',
@@ -100,6 +100,16 @@ myAppServices.factory('jarvisServices', [ '$resource', function($resource, $wind
 			params : {},
 			isArray : true,
 			cache : false
-		}
+		},
+		/**
+		 * test current selected job
+		 */
+		testJob : {
+			method : 'GET',
+			url : jarvisServicesUrl + '/mongodb/crontab/:plugin/test?job=:job',
+			params : {},
+			isArray : true,
+			cache : false
+		},
 	})
 } ]);

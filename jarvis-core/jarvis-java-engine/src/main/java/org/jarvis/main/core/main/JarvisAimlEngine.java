@@ -85,7 +85,8 @@ public class JarvisAimlEngine extends JarvisSocketClientImpl implements
 	public void onNewRequestMessage(JarvisDatagram message) throws IOException {
 		super.onNewRequestMessage(message);
 		try {
-			List<IAimlHistory> result = jarvis.ask(message.request.getData());
+			List<IAimlHistory> result = jarvis.askSilent(message.request
+					.getData());
 			for (IAimlHistory value : result) {
 				/**
 				 * on event per answer
@@ -96,6 +97,9 @@ public class JarvisAimlEngine extends JarvisSocketClientImpl implements
 				nextMessage.event.setData(value.getAnswer());
 				nextMessage.event.setScript(value.getJavascript());
 				sendMessage(nextMessage);
+			}
+			for (IAimlHistory value : result) {
+				jarvis.speak(value.getAnswer());
 			}
 		} catch (AimlParsingError e) {
 			logger.error("Error, while accessing to jarvis with {}",

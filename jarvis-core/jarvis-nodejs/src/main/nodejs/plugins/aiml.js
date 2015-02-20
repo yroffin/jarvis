@@ -29,7 +29,8 @@ exports.execute = function(params) {
 	/**
 	 * use api to send this message
 	 */
-	kernel.aiml({
+	kernel.remoteModuleRender({
+		id : 'jarvis-aiml-engine',
 		message : params.sentence
 	});
 };

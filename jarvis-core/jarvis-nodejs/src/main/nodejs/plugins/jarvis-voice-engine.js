@@ -25,4 +25,12 @@ var kernel = require(__dirname + '/../services/core/kernel');
  */
 exports.execute = function(params) {
 	logger.warn("default:", JSON.stringify(params));
+	return;
+	/**
+	 * use api to send this message
+	 */
+	kernel.remoteModuleRender({
+		name : params.id,
+		message : params.sentence
+	});
 };

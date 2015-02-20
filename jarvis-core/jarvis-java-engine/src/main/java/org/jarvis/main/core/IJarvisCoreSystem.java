@@ -37,4 +37,6 @@ public interface IJarvisCoreSystem {
 	public void speak(String value) throws IOException;
 
 	IAimlCoreEngine getEngine();
+
+	List<IAimlHistory> askSilent(String sentence) throws AimlParsingError;
 }

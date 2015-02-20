@@ -136,6 +136,13 @@ public class JarvisCoreSystemImpl implements IJarvisCoreSystem {
 	}
 
 	@Override
+	public List<IAimlHistory> askSilent(String sentence)
+			throws AimlParsingError {
+		List<IAimlHistory> answers = chat(sentence);
+		return answers;
+	}
+
+	@Override
 	public IAimlCoreEngine getEngine() {
 		return engine;
 	}

@@ -32,7 +32,7 @@ exports.send = function(req, res) {
 	/**
 	 * use api to send this message
 	 */
-	kernel.aiml({
+	kernel.remoteModuleRender({
 		id : target.id,
 		message : req.query.message
 	});

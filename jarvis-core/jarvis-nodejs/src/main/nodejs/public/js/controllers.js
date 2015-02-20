@@ -170,7 +170,20 @@ angular.module('myApp.controllers', []).controller('BootstrapCtrl', [ '$rootScop
 			 */
 		});
 	}
-	$scope.loadGroups = function() {
+	$scope.testJob = function(target) {
+		/**
+		 * loading clients
+		 */
+		jarvisServices.testJob({
+			plugin : target.plugin,
+			job : target.job
+		}, function(data) {
+			console.log(data);
+		}, function(failure) {
+			/**
+			 * TODO : handle error message
+			 */
+		});
 	}
 	$scope.selectItem = function(item) {
 	}

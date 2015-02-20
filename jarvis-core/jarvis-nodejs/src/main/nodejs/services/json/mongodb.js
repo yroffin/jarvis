@@ -16,7 +16,8 @@
 
 var logger = require('blammo').LoggerFactory.getLogger('services');
 
-var mongoclient = require(__dirname + '/../core/mongodb');
+var mongo = require(__dirname + '/../core/mongodb');
+var kernel = require(__dirname + '/../core/kernel');
 
 exports.init = function() {
 	return;
@@ -32,14 +33,14 @@ exports.collections = function(req, res) {
 	logger.info('info() key [%s]', req.params.key);
 	if (req.params.key == 'collections') {
 		if (req.params.operation == undefined) {
-			res.json(mongoclient.getSyncCollections());
+			res.json(mongo.getSyncCollections());
 			return;
 		}
 		return;
 	}
 	if (req.params.key == 'crontab') {
 		if (req.params.operation == undefined) {
-			res.json(mongoclient.getSyncCollections());
+			res.json(mongo.getSyncCollections());
 			return;
 		}
 		return;
@@ -58,7 +59,7 @@ exports.collectionCount = function(req, res) {
 	/**
 	 * count
 	 */
-	res.json(mongoclient.syncCountCollectionByName(req.params.database, req.params.name));
+	res.json(mongo.syncCountCollectionByName(req.params.database, req.params.name));
 };
 
 /**
@@ -71,7 +72,7 @@ exports.collectionPages = function(req, res) {
 	/**
 	 * count
 	 */
-	res.json(mongoclient.syncPageCollectionByName(req.params.database, req.params.name, req.query.offset, req.query.page));
+	res.json(mongo.syncPageCollectionByName(req.params.database, req.params.name, req.query.offset, req.query.page));
 };
 
 /**
@@ -84,18 +85,35 @@ exports.cronPlugin = function(req, res) {
 	/**
 	 * job, cronTime, plugin, params
 	 */
-	res.json(mongoclient.syncCronCreate(req.query.job, req.query.cronTime, req.params.plugin, JSON.parse(req.query.params)));
+	res.json(mongo.syncCronCreate(req.query.job, req.query.cronTime, req.params.plugin, JSON.parse(req.query.params)));
+}
+
+/**
+ * crud operation for crontab
+ */
+exports.cronTestPlugin = function(req, res) {
+	logger.info('cronPlugin() request', req.query);
+	logger.info('cronPlugin() params', req.params);
+
+	/**
+	 * job, cronTime, plugin, params
+	 */
+	var job = mongo.syncCronList({
+		job : req.query.job
+	})[0];
+	logger.error(kernel.xmppcliForkScript(job));
+	res.json(job);
 }
 
 /**
  * crud operation for crontab
  */
 exports.cronList = function(req, res) {
-	logger.error('cronList() request', req.query);
-	logger.error('cronList() params', req.params);
+	logger.info('cronList() request', req.query);
+	logger.info('cronList() params', req.params);
 
 	/**
 	 * job, cronTime, plugin, params
 	 */
-	res.json(mongoclient.syncCronList(req.query.filter));
+	res.json(mongo.syncCronList(req.query.filter));
 };

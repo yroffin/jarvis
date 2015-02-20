@@ -199,6 +199,7 @@ function main() {
 			} catch (e) {
 				logger.error('Exception: ', e);
 				console.trace(e);
+				throw e;
 			}
 		});
 		setTimeout(process, 1000);
