@@ -39,6 +39,7 @@ function main() {
 	var kernel = require(__dirname + '/services/core/kernel');
 	var xmppsrv = require(__dirname + '/services/core/xmppsrv');
 	var xmppcli = require(__dirname + '/services/core/xmppcli');
+	var crontab = require(__dirname + '/services/core/crontab');
 
 	// Default options for this htts server
 	var options = {
@@ -125,6 +126,17 @@ function main() {
 
 	httpsServer.listen(443);
 	kernel.notify("Create an HTTPS service identical to the HTTP service done");
+
+	/**
+	 * crontab
+	 */
+	kernel.notify("Clear crontab (revert from initial state)");
+	crontab.clear();
+	kernel.notify("Start all jobs");
+	crontab.start(function(job) {
+		kernel.xmppcliForkScript(job);
+	});
+	kernel.notify("Start all jobs done");
 
 	/**
 	 * plugin execute

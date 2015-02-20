@@ -84,7 +84,7 @@ exports.cronPlugin = function(req, res) {
 	/**
 	 * job, cronTime, plugin, params
 	 */
-	res.json(mongoclient.syncCronPlugin(req.query.job, req.query.cronTime, req.params.plugin, JSON.parse(req.query.params)));
+	res.json(mongoclient.syncCronCreate(req.query.job, req.query.cronTime, req.params.plugin, JSON.parse(req.query.params)));
 }
 
 /**

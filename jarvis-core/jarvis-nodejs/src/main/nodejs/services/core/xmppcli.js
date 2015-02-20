@@ -55,14 +55,14 @@ exports.start = function(args) {
 	 * online status
 	 */
 	client.on('online', function() {
-		logger.warn('online');
+		logger.info('online');
 	})
 
 	/**
 	 * error handler
 	 */
 	client.on('error', function(e) {
-		logger.warn('error', e);
+		logger.error('error', e);
 	})
 
 	/**
@@ -81,7 +81,7 @@ exports.start = function(args) {
 			emitType = 'ping';
 		}
 		if (emitType) {
-			logger.warn(emitType + '!' + stanza);
+			logger.debug(emitType + '!' + stanza);
 			this.emit(emitType, stanza);
 		} else {
 			logger.trace("stanza not found " + stanza);
@@ -92,14 +92,14 @@ exports.start = function(args) {
 	 * presence handler
 	 */
 	client.on('presence', function(message) {
-		logger.warn('presence', client.jid);
+		logger.debug('presence', client.jid);
 	})
 
 	/**
 	 * message handler
 	 */
 	client.on('message', function(message) {
-		logger.warn('message');
+		logger.debug('message');
 
 		/**
 		 * ignore everything that isn't a room message
@@ -132,6 +132,6 @@ exports.start = function(args) {
 	 * end handler
 	 */
 	client.on('end', function() {
-		logger.warn('end');
+		logger.info('end');
 	})
 }

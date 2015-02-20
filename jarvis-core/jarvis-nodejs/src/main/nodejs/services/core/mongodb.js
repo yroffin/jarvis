@@ -30,12 +30,12 @@ var _db_blammo = undefined;
 /**
  * object model oriented mongodb driver
  */
-var mongooseclient = require('mongoose');
+var mongoose = require('mongoose');
 
 /**
  * retrieve all collections stored in mongodb
  */
-exports.init = function() {
+var init = function() {
 	var con_jarvis = {
 		'result' : undefined
 	};
@@ -76,7 +76,7 @@ exports.init = function() {
 	/**
 	 * object database
 	 */
-	mongooseclient.connect('mongodb://localhost:27017/jarvis');
+	mongoose.connect('mongodb://localhost:27017/jarvis');
 }
 
 /**
@@ -116,7 +116,7 @@ function __getSyncCollections(database) {
 /**
  * retrieve all collections stored in mongodb
  */
-exports.getSyncCollections = function() {
+var getSyncCollections = function() {
 	var collections_jarvis = __getSyncCollections(_db_jarvis);
 	var collections_blammo = __getSyncCollections(_db_blammo);
 	var collections = [];
@@ -229,7 +229,7 @@ function __syncPageCollectionByName(col, offset, page) {
 /**
  * find
  */
-exports.syncCountCollectionByName = function(database, name) {
+var syncCountCollectionByName = function(database, name) {
 	var col = undefined;
 	if (database == 'jarvis') {
 		col = _db_jarvis.collection(name);
@@ -246,15 +246,19 @@ exports.syncCountCollectionByName = function(database, name) {
 /**
  * sync page collections
  */
-function __syncCronList(col) {
+function __syncCronList(col, filter) {
 	var collections = {
 		'result' : undefined
 	};
 
+	if (!filter) {
+		filter = {};
+	}
+
 	/**
 	 * find in collection
 	 */
-	col.find({}).toArray(function(err, items) {
+	col.find(filter).toArray(function(err, items) {
 		if (err == null) {
 			collections.result = items;
 		}
@@ -273,7 +277,7 @@ function __syncCronList(col) {
 /**
  * find
  */
-exports.syncPageCollectionByName = function(database, name, offset, page) {
+var syncPageCollectionByName = function(database, name, offset, page) {
 	var col = undefined;
 	if (database == 'jarvis') {
 		col = _db_jarvis.collection(name);
@@ -288,7 +292,7 @@ exports.syncPageCollectionByName = function(database, name, offset, page) {
 /**
  * find
  */
-exports.syncStoreInCollectionByName = function(database, name, item) {
+var syncStoreInCollectionByName = function(database, name, item) {
 	var col = undefined;
 	if (database == 'jarvis') {
 		col = _db_jarvis.collection(name);
@@ -310,7 +314,7 @@ exports.syncStoreInCollectionByName = function(database, name, item) {
 /**
  * register a new plugin for cron jobs
  */
-exports.syncCronPlugin = function(job, cronTime, plugin, params) {
+var syncCronCreate = function(job, cronTime, plugin, params) {
 	var col = undefined;
 	col = _db_jarvis.collection('crontab');
 
@@ -326,7 +330,7 @@ exports.syncCronPlugin = function(job, cronTime, plugin, params) {
 		timestamp : new Date()
 	};
 	col.insert(item, function() {
-		logger.error('syncCronPlugin(%s,%s,%s)', cronTime, plugin, JSON.stringify(params));
+		logger.error('syncCronCreate(%s,%s,%s)', cronTime, plugin, JSON.stringify(params));
 	});
 
 	return item;
@@ -335,7 +339,63 @@ exports.syncCronPlugin = function(job, cronTime, plugin, params) {
 /**
  * register a new plugin for cron jobs
  */
-exports.syncCronList = function(filter) {
+var syncCronUpdate = function(job, cronTime, plugin, params, timestamp, started) {
 	var col = _db_jarvis.collection('crontab');
-	return __syncCronList(col);
+
+	var collections = {
+		'result' : undefined
+	};
+
+	/**
+	 * update this document
+	 */
+	col.update({
+		job : job
+	}, {
+		$set : {
+			cronTime : cronTime,
+			plugin : plugin,
+			params : params,
+			timestamp : timestamp,
+			started : started
+		}
+	}, function(err, result) {
+		if (err) {
+			logger.error("While updating crontab", err);
+		} else {
+			logger.debug("Updating crontab", result);
+		}
+		collections.result = true;
+	});
+
+	waitFor(collections);
+};
+
+/**
+ * register a new plugin for cron jobs
+ */
+var syncCronList = function(filter) {
+	var col = _db_jarvis.collection('crontab');
+	return __syncCronList(col, filter);
+}
+
+/**
+ * exports
+ */
+module.exports = {
+	init : init,
+	getSyncCollections : getSyncCollections,
+	syncCountCollectionByName : syncCountCollectionByName,
+	syncStoreInCollectionByName : syncStoreInCollectionByName,
+	syncPageCollectionByName : syncPageCollectionByName,
+	/**
+	 * crontab
+	 */
+	syncCronCreate : syncCronCreate,
+	syncCronUpdate : syncCronUpdate,
+	syncCronList : syncCronList,
+	/**
+	 * internal members
+	 */
+	mongoose : mongoose
 }

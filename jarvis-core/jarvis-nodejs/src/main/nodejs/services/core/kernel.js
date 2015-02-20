@@ -65,7 +65,7 @@ var notify = function(message) {
 	 * register it
 	 */
 	context.events.push(copy);
-	logger.info("Register new event", copy);
+	logger.warn("notification:", copy.data);
 	return copy;
 }
 
@@ -348,10 +348,32 @@ var xmppcliScript = function(args) {
 	}, {
 		code : 'event',
 		event : {
-			script : '{"plugin":"' + evt.plugin + '", "params":"' + evt.params + '"}'
+			script : '{"plugin":"' + evt.plugin + '", "params":' + JSON.stringify(evt.params) + '}'
 		}
 	});
 	return JSON.stringify(evt) + ' ok ...';
+}
+
+/**
+ * xmppcli client for simple echo
+ * 
+ * @param args
+ * @return nothing
+ */
+var xmppcliForkScript = function(job) {
+	register({
+		'id' : -1,
+		'name' : 'xmppcli'
+	}, {
+		'id' : -1,
+		'name' : 'xmppcli'
+	}, {
+		code : 'event',
+		event : {
+			script : '{"plugin":"' + job.plugin + '", "params":' + JSON.stringify(job.params) + '}'
+		}
+	});
+	return JSON.stringify(job) + ' ok ...';
 }
 
 /**
@@ -378,16 +400,19 @@ var xmppcli = function(fn, args) {
  * exports
  */
 module.exports = {
+	/**
+	 * client management
+	 */
 	getClients : getClients,
-	getConnectors : getConnectors,
+	addClient : addClient,
 	removeClient : removeClient,
+	clearClients : clearClients,
+	getConnectors : getConnectors,
 	findDescriptorBySocket : findDescriptorBySocket,
 	findDescriptorById : findDescriptorById,
 	findAnswerDescriptor : findAnswerDescriptor,
-	addClient : addClient,
 	sendMessage : sendMessage,
 	register : register,
-	clearClients : clearClients,
 	notify : notify,
 	/**
 	 * xmppcli
@@ -396,6 +421,10 @@ module.exports = {
 	xmppcliScript : xmppcliScript,
 	xmppcliAiml : xmppcliAiml,
 	xmppcliEcho : xmppcliEcho,
+	xmppcliForkScript : xmppcliForkScript,
+	/**
+	 * aiml api
+	 */
 	aiml : aiml,
 	process : process,
 	getEvents : getEvents,

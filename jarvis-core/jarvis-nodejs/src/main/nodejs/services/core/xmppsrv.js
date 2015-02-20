@@ -46,7 +46,7 @@ exports.start = function(done) {
 	 * register handler
 	 */
 	c2s.on('register', function(opts, cb) {
-		logger.warn('register: ' + opts.jid + ' -> ' + opts.password);
+		logger.info('register: ' + opts.jid + ' -> ' + opts.password);
 		cb(true);
 	})
 
@@ -54,7 +54,7 @@ exports.start = function(done) {
 	 * server connect
 	 */
 	c2s.on('connect', function(client) {
-		logger.warn('connect');
+		logger.info('connect');
 
 		/**
 		 * boradcast message
@@ -73,7 +73,7 @@ exports.start = function(done) {
 		 * @todo implements password validation
 		 */
 		client.on('authenticate', function(opts, cb) {
-			logger.warn('authenticate: ' + opts.jid + '::' + opts.password);
+			logger.info('authenticate: ' + opts.jid + '::' + opts.password);
 			cb(null, opts)
 			/**
 			 * store this client
@@ -85,7 +85,7 @@ exports.start = function(done) {
 		 * online handler
 		 */
 		client.on('online', function() {
-			logger.warn('online:', client.jid);
+			logger.info('online:', client.jid);
 			/**
 			 * store this client
 			 */
@@ -97,10 +97,10 @@ exports.start = function(done) {
 			 */
 			client.sendAlt = client.send;
 			client.send = function(message) {
-				logger.warn('jid:' + client.jid);
-				logger.warn('to:' + message.attrs.to);
-				logger.warn('from:' + message.attrs.from);
-				logger.warn("send:", message.toString());
+				logger.debug('jid:' + client.jid);
+				logger.debug('to:' + message.attrs.to);
+				logger.debug('from:' + message.attrs.from);
+				logger.debug("send:", message.toString());
 				this.sendAlt(message);
 			}
 		})
@@ -121,7 +121,7 @@ exports.start = function(done) {
 				emitType = 'ping';
 			}
 			if (emitType) {
-				logger.warn(emitType + '!' + stanza);
+				logger.debug(emitType + '!' + stanza);
 				this.emit(emitType, stanza);
 			} else {
 				logger.trace("stanza not found " + stanza);
@@ -132,7 +132,7 @@ exports.start = function(done) {
 		 * diconnect
 		 */
 		client.on('disconnect', function() {
-			logger.warn('disconnect');
+			logger.debug('disconnect', client.jid);
 			delete clients[client.jid];
 			delete resources[client.jid];
 		})
@@ -141,7 +141,7 @@ exports.start = function(done) {
 		 * end handler
 		 */
 		client.on('end', function() {
-			logger.warn('end');
+			logger.debug('end');
 			delete clients[client.jid];
 			delete resources[client.jid];
 		})
@@ -150,7 +150,7 @@ exports.start = function(done) {
 		 * close handler
 		 */
 		client.on('close', function() {
-			logger.warn('close');
+			logger.debug('close');
 		})
 
 		/**
@@ -164,7 +164,7 @@ exports.start = function(done) {
 		 * Cf. http://xmpp.org/extensions/xep-0199.html
 		 */
 		client.on('ping', function(ping) {
-			logger.warn('ping', ping);
+			logger.debug('ping', ping);
 			/**
 			 * answer to this ping
 			 */
@@ -180,7 +180,7 @@ exports.start = function(done) {
 		 * message handler
 		 */
 		client.on('message', function(message) {
-			logger.warn('message', client.jid);
+			logger.debug('message', client.jid);
 			if (resources[message.attrs.to]) {
 				resources[message.attrs.to].send(message);
 			}
@@ -190,7 +190,7 @@ exports.start = function(done) {
 		 * presence handler
 		 */
 		client.on('presence', function(message) {
-			logger.warn('presence', client.jid);
+			logger.debug('presence', client.jid);
 			client.broadcast(message);
 		});
 
