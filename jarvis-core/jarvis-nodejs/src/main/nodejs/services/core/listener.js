@@ -24,7 +24,7 @@ var kernel = require(__dirname + '/kernel');
 /**
  * main listener
  */
-exports.start = function() {
+exports.start = function(host, port) {
 	/**
 	 * Keep track of the chat clients
 	 */
@@ -39,13 +39,14 @@ exports.start = function() {
 	 */
 	listener.on('error', function(e) {
 		if (e.code == 'EADDRINUSE') {
-			console.log('Address 5000 in use, retrying...');
+			console.log('Address ' + port + ' in use, retrying...');
 			setTimeout(function() {
-				listener.listen(5000);
-			}, 5000);
+				listener.listen(port);
+			}, port);
 		}
 	});
-	listener.listen(5000);
+	listener.listen(port, host);
+	kernel.notify("Listener started done on " + host + ':' + port);
 }
 
 /**

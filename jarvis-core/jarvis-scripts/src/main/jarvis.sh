@@ -143,7 +143,7 @@ cd "${NODEJS_HOME}" && ls -lrt
 	exit -1
 }
 
-export NODE_PATH="${NODEJS_HOME}"
+export NODE_PATH="${NODEJS_HOME};${SCRIPT_WORKSPACE}"
 echo Running "${NODE_HOME}/node.exe"
 "${NODE_HOME}/node.exe" "${NODEJS_HOME}/jarvis-bootstrap.js"
 exit $?

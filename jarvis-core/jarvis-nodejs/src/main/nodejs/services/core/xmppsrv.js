@@ -25,14 +25,14 @@ var Element = require('node-xmpp-core').Stanza.Element;
 var clients = {}
 var resources = {}
 
-exports.start = function(done) {
+exports.start = function(host, port, done) {
 
 	/**
 	 * set up the server
 	 */
 	var c2s = new xmpp.C2SServer({
-		port : 5222,
-		bindAddress : '192.168.0.157'
+		bindAddress : host,
+		port : port
 	})
 
 	/**

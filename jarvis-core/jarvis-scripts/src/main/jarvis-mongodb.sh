@@ -58,4 +58,5 @@ mkdir -p "${JARVIS_DATA}/mongodb"
 
 cd "${JARVIS_DATA}"
 "${MONGO_HOME}/mongod.exe" --dbpath "${JARVIS_DATA}/mongodb"
+#"${MONGO_HOME}/mongod.exe" --httpinterface --rest --dbpath "${JARVIS_DATA}/mongodb"
 exit $?

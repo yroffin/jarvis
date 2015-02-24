@@ -35,7 +35,7 @@ var mongoose = require('mongoose');
 /**
  * retrieve all collections stored in mongodb
  */
-var init = function() {
+var init = function(jarvisUrl, blammoUrl) {
 	var con_jarvis = {
 		'result' : undefined
 	};
@@ -46,7 +46,7 @@ var init = function() {
 	/**
 	 * main database
 	 */
-	mongoclient.connect("mongodb://localhost:27017/jarvis", function(err, database) {
+	mongoclient.connect(jarvisUrl, function(err, database) {
 		if (err) {
 			logger.error("Error(s), while connecting to mongodb");
 		} else {
@@ -61,7 +61,7 @@ var init = function() {
 	/**
 	 * log database
 	 */
-	mongoclient.connect("mongodb://localhost:27017/blammo", function(err, database) {
+	mongoclient.connect(blammoUrl, function(err, database) {
 		if (err) {
 			logger.error("Error(s), while connecting to mongodb");
 		} else {
@@ -76,7 +76,7 @@ var init = function() {
 	/**
 	 * object database
 	 */
-	mongoose.connect('mongodb://localhost:27017/jarvis');
+	mongoose.connect(jarvisUrl);
 }
 
 /**

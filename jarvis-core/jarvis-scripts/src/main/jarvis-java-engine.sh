@@ -56,6 +56,14 @@ echo LOGS: "${JARVIS_LOGS}"
 mkdir -p "${JARVIS_LOGS}"
 
 cd "${NODEJS_HOME}"
-[ -f "${TARGET_HOME}/jarvis-java-engine-0.0.1-SNAPSHOT-jar-with-dependencies.jar" ] && "${JAVA_HOME}/bin/java.exe" -jar "${TARGET_HOME}/jarvis-java-engine-0.0.1-SNAPSHOT-jar-with-dependencies.jar"
-[ -f "${TARGET_HOME}/jarvis-java-engine-0.0.1-SNAPSHOT.jar" ] && "${JAVA_HOME}/bin/java.exe" -jar "${TARGET_HOME}/jarvis-java-engine-0.0.1-SNAPSHOT.jar"
+[ -f "${TARGET_HOME}/jarvis-java-engine-0.0.1-SNAPSHOT-jar-with-dependencies.jar" ] && {
+	export CLASSPATH="${TARGET_HOME}/jarvis-java-engine-0.0.1-SNAPSHOT-jar-with-dependencies.jar;${SCRIPT_WORKSPACE}"
+	"${JAVA_HOME}/bin/java.exe" org.jarvis.main.core.main.JarvisClient $*
+	exit $?
+}
+[ -f "${TARGET_HOME}/jarvis-java-engine-0.0.1-SNAPSHOT.jar" ] && {
+	export CLASSPATH="${TARGET_HOME}/jarvis-java-engine-0.0.1-SNAPSHOT.jar;${SCRIPT_WORKSPACE}"
+	"${JAVA_HOME}/bin/java.exe" org.jarvis.main.core.main.JarvisClient $*
+	exit $?
+}
 exit $?

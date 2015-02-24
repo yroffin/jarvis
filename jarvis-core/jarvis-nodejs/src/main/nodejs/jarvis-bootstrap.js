@@ -22,6 +22,8 @@ var deasync = require('deasync');
 
 function main() {
 	// Middleware
+	var path = require('path');
+	var properties = require("java-properties");
 	var express = require('express');
 	var https = require('https');
 	var http = require('http');
@@ -33,7 +35,6 @@ function main() {
 
 	// core services
 	var mongo = require(__dirname + '/services/core/mongodb');
-	mongo.init();
 
 	var listener = require(__dirname + '/services/core/listener');
 	var kernel = require(__dirname + '/services/core/kernel');
@@ -41,11 +42,22 @@ function main() {
 	var xmppcli = require(__dirname + '/services/core/xmppcli');
 	var crontab = require(__dirname + '/services/core/crontab');
 
+	/**
+	 * default properties from jarvis.properties stored in ${SCRIPT_WORKSPACE}
+	 */
+	var jarvis_properties = properties.of(path.resolve(process.env.SCRIPT_WORKSPACE + '/jarvis.properties'));
+	console.error(jarvis_properties);
 	// Default options for this htts server
 	var options = {
-		key : fs.readFileSync('keys/agent2-key.pem'),
-		cert : fs.readFileSync('keys/agent2-cert.pem')
+		key : fs.readFileSync(jarvis_properties.get('jarvis.srv.https.key')),
+		cert : fs.readFileSync(jarvis_properties.get('jarvis.srv.https.cert'))
 	};
+
+	/**
+	 * init mongodb
+	 */
+	mongo.init(jarvis_properties.get('jarvis.mongodb.jarvis'), jarvis_properties.get('jarvis.mongodb.blammo'));
+	kernel.notify("Mongodb connexions ok");
 
 	// Create a service (the app object is just a callback).
 	var app = express();
@@ -58,19 +70,19 @@ function main() {
 	/**
 	 * start xmpp server and xmppcli
 	 */
-	xmppsrv.start(function() {
+	xmppsrv.start(jarvis_properties.get('jarvis.xmpp.srv.host'), jarvis_properties.get('jarvis.xmpp.srv.port'), function() {
 		kernel.notify("xmpp server done");
 		/**
 		 * internal xmppcli
 		 */
-		kernel.xmppcli({
+		kernel.xmppcli(jarvis_properties.get('jarvis.xmpp.srv.host'), jarvis_properties.get('jarvis.xmpp.srv.port'), {
 			fn : kernel.xmppcliEcho,
 			jid : 'internal@jarvis.org'
 		});
 		/**
 		 * internal xmppcli
 		 */
-		kernel.xmppcli({
+		kernel.xmppcli(jarvis_properties.get('jarvis.xmpp.srv.host'), jarvis_properties.get('jarvis.xmpp.srv.port'), {
 			fn : kernel.xmppcliScript,
 			jid : 'script@jarvis.org'
 		});
@@ -79,7 +91,7 @@ function main() {
 	/**
 	 * start listener
 	 */
-	listener.start()
+	listener.start(jarvis_properties.get('jarvis.srv.host'), jarvis_properties.get('jarvis.srv.listener.port'))
 
 	/**
 	 * build all routes
@@ -96,15 +108,15 @@ function main() {
 
 	httpServer.on('error', function(e) {
 		if (e.code == 'EADDRINUSE') {
-			console.log('Address 80 in use, retrying...');
+			console.log('Address ' + jarvis_properties.get('jarvis.srv.http.port') + ' in use, retrying...');
 			setTimeout(function() {
-				httpServer.listen(80);
+				httpServer.listen(jarvis_properties.get('jarvis.srv.http.port'));
 			}, 5000);
 		}
 	});
 
 	try {
-		httpServer.listen(80);
+		httpServer.listen(jarvis_properties.get('jarvis.srv.http.port'));
 	} catch (e) {
 		logger.warn('httpServer.listen:', e);
 	}
@@ -117,14 +129,14 @@ function main() {
 
 	httpsServer.on('error', function(e) {
 		if (e.code == 'EADDRINUSE') {
-			console.log('Address 443 in use, retrying...');
+			logger.error('Address ' + jarvis_properties.get('jarvis.srv.https.port') + ' in use, retrying...');
 			setTimeout(function() {
-				httpServer.listen(443);
+				httpServer.listen(jarvis_properties.get('jarvis.srv.https.port'));
 			}, 5000);
 		}
 	});
 
-	httpsServer.listen(443);
+	httpsServer.listen(jarvis_properties.get('jarvis.srv.https.port'));
 	kernel.notify("Create an HTTPS service identical to the HTTP service done");
 
 	/**
@@ -162,7 +174,7 @@ function main() {
 	/**
 	 * infinite loop for processing event
 	 */
-	function process() {
+	function processIt() {
 		kernel.process(function(e) {
 			try {
 				/**
@@ -202,10 +214,10 @@ function main() {
 				throw e;
 			}
 		});
-		setTimeout(process, 1000);
+		setTimeout(processIt, 1000);
 	}
 
-	process();
+	processIt();
 }
 
 main()

@@ -23,7 +23,7 @@ var xmppcli = require('node-xmpp-client'), Element = require('node-xmpp-core').S
 /**
  * start xmppcli
  */
-exports.start = function(args) {
+exports.start = function(host, port, args) {
 	/**
 	 * Internal client
 	 */
@@ -31,8 +31,8 @@ exports.start = function(args) {
 		jid : args.jid,
 		resource : 'jarvis',
 		password : 'alice',
-		host : '192.168.0.157',
-		port : 5222,
+		host : host,
+		port : port,
 		register : true,
 		args : args
 	})

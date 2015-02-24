@@ -427,8 +427,8 @@ var xmppcliEcho = function(args) {
  * @param none
  * @return nothing
  */
-var xmppcli = function(fn, args) {
-	Xmppcli.start(fn, args);
+var xmppcli = function(host, port, fn, args) {
+	Xmppcli.start(host, port, fn, args);
 }
 
 /**
