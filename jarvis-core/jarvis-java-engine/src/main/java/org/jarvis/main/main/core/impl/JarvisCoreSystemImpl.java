@@ -59,7 +59,7 @@ public class JarvisCoreSystemImpl implements IJarvisCoreSystem {
 		byte[] b = new byte[is.available()];
 		is.read(b);
 		List<String> res = new ArrayList<String>();
-		for (String resource : new String(b).split("\n")) {
+		for (String resource : new String(b).replace("\r", "").split("\n")) {
 			if (resource.trim().length() > 0) {
 				logger.warn("Read resource : " + resource);
 				res.add(resource);

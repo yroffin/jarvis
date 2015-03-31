@@ -77,21 +77,21 @@ function main() {
 		 */
 		kernel.xmppcli(jarvis_properties.get('jarvis.xmpp.srv.host'), jarvis_properties.get('jarvis.xmpp.srv.port'), {
 			fn : kernel.xmppcliEcho,
-			jid : 'internal@jarvis.org'
+			jid : 'internal@jarvis.org/local'
 		});
 		/**
 		 * internal xmppcli
 		 */
 		kernel.xmppcli(jarvis_properties.get('jarvis.xmpp.srv.host'), jarvis_properties.get('jarvis.xmpp.srv.port'), {
 			fn : kernel.xmppcliScript,
-			jid : 'script@jarvis.org'
+			jid : 'script@jarvis.org/local'
 		});
 	});
 
 	/**
 	 * start listener
 	 */
-	listener.start(jarvis_properties.get('jarvis.srv.host'), jarvis_properties.get('jarvis.srv.listener.port'))
+	listener.start(jarvis_properties);
 
 	/**
 	 * build all routes

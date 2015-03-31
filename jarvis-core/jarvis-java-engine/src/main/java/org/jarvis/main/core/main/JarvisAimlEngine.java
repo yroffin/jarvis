@@ -38,14 +38,19 @@ public class JarvisAimlEngine extends JarvisSocketClientImpl implements
 
 	IJarvisCoreSystem jarvis;
 
+	private boolean voice;
+
 	/**
 	 * constructor
 	 * 
 	 * @param hostName
 	 * @param portNumber
 	 */
-	public JarvisAimlEngine(String id, String hostName, int portNumber) {
+	public JarvisAimlEngine(String id, String hostName, int portNumber,
+			boolean voice) {
 		super(id, hostName, portNumber);
+
+		this.voice = voice;
 
 		setRenderer(true);
 		setSensor(true);
@@ -66,6 +71,16 @@ public class JarvisAimlEngine extends JarvisSocketClientImpl implements
 	public void onDisconnect() throws Exception {
 	}
 
+	/**
+	 * internal init method
+	 * 
+	 * @throws NoSuchFieldException
+	 * @throws SecurityException
+	 * @throws IllegalArgumentException
+	 * @throws IllegalAccessException
+	 * @throws AimlParsingError
+	 * @throws IOException
+	 */
 	private void initialize() throws NoSuchFieldException, SecurityException,
 			IllegalArgumentException, IllegalAccessException, AimlParsingError,
 			IOException {
@@ -77,7 +92,7 @@ public class JarvisAimlEngine extends JarvisSocketClientImpl implements
 		logger.info("Default encoding: {}", Charset.defaultCharset()
 				.displayName());
 		logger.info("Initializing ...");
-		jarvis.initialize("jarvis", "jarvis.txt");
+		jarvis.initialize("baymax", "baymax.txt");
 		logger.info("Ready ...");
 	}
 
@@ -85,21 +100,41 @@ public class JarvisAimlEngine extends JarvisSocketClientImpl implements
 	public void onNewRequestMessage(JarvisDatagram message) throws IOException {
 		super.onNewRequestMessage(message);
 		try {
+			/**
+			 * aiml render
+			 */
 			List<IAimlHistory> result = jarvis.askSilent(message.request
 					.getData());
 			for (IAimlHistory value : result) {
 				/**
-				 * on event per answer
+				 * on event per answer, for plugin mecanism
 				 */
 				JarvisDatagram nextMessage = new JarvisDatagram();
 				nextMessage.setCode("event");
 				nextMessage.event = new JarvisDatagramEvent();
 				nextMessage.event.setData(value.getAnswer());
 				nextMessage.event.setScript(value.getJavascript());
+				nextMessage.event.setTarget(message.request.getFrom());
 				sendMessage(nextMessage);
+				/**
+				 * on event per answer, for plugin mecanism
+				 */
+				JarvisDatagram answerMessage = new JarvisDatagram();
+				answerMessage.setCode("event");
+				answerMessage.event = new JarvisDatagramEvent();
+				answerMessage.event.setData(value.getAnswer());
+				answerMessage.event.setScript(value.getJavascript());
+				answerMessage.event.setTarget(message.request.getFrom());
+				sendMessage(answerMessage);
 			}
-			for (IAimlHistory value : result) {
-				jarvis.speak(value.getAnswer());
+			/**
+			 * render to local default output
+			 */
+			logger.warn("Voice status {}", voice);
+			if (voice) {
+				for (IAimlHistory value : result) {
+					jarvis.speak(value.getAnswer());
+				}
 			}
 		} catch (AimlParsingError e) {
 			logger.error("Error, while accessing to jarvis with {}",

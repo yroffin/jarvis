@@ -20,6 +20,16 @@ var logger = require('blammo').LoggerFactory.getLogger('xmppcli');
 
 var xmppcli = require('node-xmpp-client'), Element = require('node-xmpp-core').Stanza.Element, Message = require('node-xmpp-core').Stanza.Message;
 
+var clients = {}
+
+/**
+ * start xmppcli
+ */
+exports.end = function(host, port, args) {
+	logger.warn("Client end", args.jid);
+	clients[args.jid].end();
+}
+
 /**
  * start xmppcli
  */
@@ -35,13 +45,17 @@ exports.start = function(host, port, args) {
 		port : port,
 		register : true,
 		args : args
-	})
+	});
+	clients[args.jid] = client;
 
 	/**
 	 * store for internal use
 	 */
 	client.args = args;
 
+	/**
+	 * periodic timer to send alive
+	 */
 	setInterval(function() {
 		/**
 		 * send presence

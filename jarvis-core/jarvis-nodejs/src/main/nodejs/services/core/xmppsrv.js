@@ -25,6 +25,51 @@ var Element = require('node-xmpp-core').Stanza.Element;
 var clients = {}
 var resources = {}
 
+var internal = {
+	/**
+	 * map client put and remove
+	 */
+	clients : {
+		put : function(key, value) {
+			logger.debug('clients::put(' + key + ')');
+			clients[key] = value;
+		},
+		exist : function(key) {
+			logger.debug('clients::exist(' + key + ') = ' + (clients[key] != undefined));
+			return clients[key] != undefined;
+		},
+		get : function(key) {
+			logger.debug('clients::get(' + key + ')');
+			return clients[key];
+		},
+		remove : function(key) {
+			logger.debug('clients::remove(' + key + ')');
+			delete clients[key];
+		}
+	},
+	/**
+	 * map client put and remove
+	 */
+	resources : {
+		put : function(key, value) {
+			logger.debug('resources::put(' + key + ')');
+			resources[key] = value;
+		},
+		exist : function(key) {
+			logger.debug('resources::exist(' + key + ') = ' + (resources[key] != undefined));
+			return resources[key] != undefined;
+		},
+		get : function(key) {
+			logger.debug('resources::get(' + key + ')');
+			return resources[key];
+		},
+		remove : function(key) {
+			logger.debug('resources::remove(' + key + ')');
+			delete resources[key];
+		}
+	}
+}
+
 exports.start = function(host, port, done) {
 
 	/**
@@ -57,12 +102,15 @@ exports.start = function(host, port, done) {
 		logger.info('connect');
 
 		/**
-		 * boradcast message
+		 * broadcast message on other
+		 * 
+		 * @param message
+		 *            the message to broadcast
 		 */
 		client.broadcast = function(message) {
 			for (cl in clients) {
-				if (client != client[cl]) {
-					clients[cl].send(message);
+				if (client != internal.clients.get(cl)) {
+					internal.clients.get(cl).send(message);
 				}
 			}
 		}
@@ -78,7 +126,7 @@ exports.start = function(host, port, done) {
 			/**
 			 * store this client
 			 */
-			resources[client.jid] = client;
+			internal.resources.put(client.jid, client);
 		})
 
 		/**
@@ -89,8 +137,8 @@ exports.start = function(host, port, done) {
 			/**
 			 * store this client
 			 */
-			clients[client.jid] = client;
-			resources[client.jid] = client;
+			internal.clients.put(client.jid, client);
+			internal.resources.put(client.jid, client);
 
 			/**
 			 * send reconfigure, for inject logs
@@ -129,28 +177,28 @@ exports.start = function(host, port, done) {
 		})
 
 		/**
-		 * diconnect
+		 * disconnect handler
 		 */
 		client.on('disconnect', function() {
-			logger.debug('disconnect', client.jid);
-			delete clients[client.jid];
-			delete resources[client.jid];
+			logger.warn('disconnect', client.jid);
+			internal.clients.remove(client.jid);
+			internal.resources.remove(client.jid);
 		})
 
 		/**
 		 * end handler
 		 */
 		client.on('end', function() {
-			logger.debug('end');
-			delete clients[client.jid];
-			delete resources[client.jid];
+			logger.debug('end', client.jid);
+			internal.clients.remove(client.jid);
+			internal.resources.remove(client.jid);
 		})
 
 		/**
 		 * close handler
 		 */
 		client.on('close', function() {
-			logger.debug('close');
+			logger.debug('close', client.jid);
 		})
 
 		/**
@@ -173,7 +221,7 @@ exports.start = function(host, port, done) {
 				to : ping.attrs.from,
 				id : ping.attrs.id
 			});
-			clients[ping.attrs.from].send(answer);
+			internal.clients.get(ping.attrs.from).send(answer);
 		})
 
 		/**
@@ -181,8 +229,8 @@ exports.start = function(host, port, done) {
 		 */
 		client.on('message', function(message) {
 			logger.debug('message', client.jid);
-			if (resources[message.attrs.to]) {
-				resources[message.attrs.to].send(message);
+			if (internal.resources.exist(message.attrs.to)) {
+				internal.resources.get(message.attrs.to).send(message);
 			}
 		});
 
@@ -256,7 +304,7 @@ exports.start = function(host, port, done) {
 			 * add local jid
 			 */
 			for ( var cli in clients) {
-				var user = clients[cli];
+				var user = internal.clients.get(cli);
 				result.c("item", {
 					name : user.jid.local + '@' + user.jid.domain,
 					jid : user.jid.local + '@' + user.jid.domain + '/' + user.jid.resource,
@@ -264,6 +312,19 @@ exports.start = function(host, port, done) {
 				}).c("group", {}).t('jarvis').up();
 			}
 			client.send(result);
+		});
+
+		/**
+		 * Cf. http://xmpp.org/extensions/xep-0144.html
+		 */
+		client.on('query:set:jabber:iq:roster', function(query) {
+			var item = query.getChild('query').getChild('item');
+			/**
+			 * read query
+			 */
+			if (internal.clients.exist(item.attrs.jid)) {
+				logger.warn("query:set:jabber:iq:roster", item.attrs);
+			}
 		});
 	})
 

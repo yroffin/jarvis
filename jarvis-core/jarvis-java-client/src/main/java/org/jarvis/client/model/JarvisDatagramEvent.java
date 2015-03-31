@@ -25,8 +25,30 @@ public class JarvisDatagramEvent {
 	@JsonProperty("script")
 	private String script;
 
+	@JsonProperty("from")
+	private String from;
+
+	@JsonProperty("target")
+	private String target;
+
+	public String getFrom() {
+		return from;
+	}
+
+	public String getTarget() {
+		return target;
+	}
+
 	public String getData() {
 		return data;
+	}
+
+	public void setFrom(String from) {
+		this.from = from;
+	}
+
+	public void setTarget(String target) {
+		this.target = target;
 	}
 
 	public String getScript() {
@@ -43,6 +65,7 @@ public class JarvisDatagramEvent {
 
 	@Override
 	public String toString() {
-		return "JarvisDatagramEvent [data=" + data + ", script=" + script + "]";
+		return "JarvisDatagramEvent [data=" + data + ", script=" + script
+				+ ", from=" + from + ", target=" + target + "]";
 	}
 }

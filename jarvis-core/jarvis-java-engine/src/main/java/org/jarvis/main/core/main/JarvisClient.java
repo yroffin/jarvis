@@ -19,6 +19,62 @@ package org.jarvis.main.core.main;
 import org.jarvis.config.GlobalConfig;
 
 public class JarvisClient {
+
+	/**
+	 * Aiml engine
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public static Thread jarvisAimlEngine() throws Exception {
+		/**
+		 * get instance properties
+		 */
+		GlobalConfig globalProperties = GlobalConfig.instance();
+
+		Thread jarvisAimlEngine = new Thread(new JarvisAimlEngine(
+				"jarvis-aiml-engine-v1.0b", globalProperties.getJarvisHost(),
+				globalProperties.getJarvisLsnPort(),
+				globalProperties.getJarvisVoice()));
+		return jarvisAimlEngine;
+	}
+
+	/**
+	 * Remote exec
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public static Thread jarvisRemoteExec() throws Exception {
+		/**
+		 * get instance properties
+		 */
+		GlobalConfig globalProperties = GlobalConfig.instance();
+
+		Thread jarvisRemoteExec = new Thread(new JarvisRemoteExec(
+				"jarvis-remote-engine-v1.0b", globalProperties.getJarvisHost(),
+				globalProperties.getJarvisLsnPort()));
+		return jarvisRemoteExec;
+	}
+
+	/**
+	 * voice engine
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public static Thread jarvisVoiceEngine() throws Exception {
+		/**
+		 * get instance properties
+		 */
+		GlobalConfig globalProperties = GlobalConfig.instance();
+
+		Thread jarvisVoiceEngine = new Thread(new JarvisVoiceEngine(
+				"jarvis-voice-engine-v1.0b", globalProperties.getJarvisHost(),
+				globalProperties.getJarvisLsnPort()));
+		return jarvisVoiceEngine;
+	}
+
 	/**
 	 * standard main procedure
 	 * 
@@ -27,28 +83,18 @@ public class JarvisClient {
 	 */
 	public static void main(String argv[]) throws Exception {
 		/**
-		 * get instance properties
-		 */
-		GlobalConfig globalProperties = GlobalConfig.instance();
-
-		/**
 		 * aiml renderer
 		 */
-		Thread jarvisAimlEngine = new Thread(new JarvisAimlEngine(
-				"jarvis-aiml-engine", globalProperties.getJarvisHost(),
-				globalProperties.getJarvisLsnPort()));
+		Thread jarvisAimlEngine = jarvisAimlEngine();
 		/**
 		 * remote exec
 		 */
-		Thread jarvisRemoteExec = new Thread(new JarvisRemoteExec(
-				"jarvis-remote-engine", globalProperties.getJarvisHost(),
-				globalProperties.getJarvisLsnPort()));
+		Thread jarvisRemoteExec = jarvisRemoteExec();
 		/**
 		 * voice only renderer
 		 */
-		Thread jarvisVoiceEngine = new Thread(new JarvisVoiceEngine(
-				"jarvis-voice-engine", globalProperties.getJarvisHost(),
-				globalProperties.getJarvisLsnPort()));
+		Thread jarvisVoiceEngine = jarvisVoiceEngine();
+
 		jarvisAimlEngine.start();
 		jarvisRemoteExec.start();
 		jarvisVoiceEngine.start();

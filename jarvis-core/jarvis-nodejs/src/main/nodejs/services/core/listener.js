@@ -20,11 +20,23 @@
 var net = require('net');
 
 var kernel = require(__dirname + '/kernel');
+var host;
+var port;
+var hostXmpp;
+var portXmpp;
 
 /**
  * main listener
  */
-exports.start = function(host, port) {
+exports.start = function(jarvis_properties) {
+	/**
+	 * global vars
+	 */
+	host = jarvis_properties.get('jarvis.srv.host');
+	port = jarvis_properties.get('jarvis.srv.listener.port');
+	hostXmpp = jarvis_properties.get('jarvis.xmpp.srv.host');
+	portXmpp = jarvis_properties.get('jarvis.xmpp.srv.port');
+
 	/**
 	 * Keep track of the chat clients
 	 */
@@ -45,6 +57,9 @@ exports.start = function(host, port) {
 			}, port);
 		}
 	});
+	/**
+	 * listen on this port
+	 */
 	listener.listen(port, host);
 	kernel.notify("Listener started done on " + host + ':' + port);
 }
@@ -70,6 +85,7 @@ exports.handler = function(socket) {
 		'id' : socket.remoteAddress + ":" + socket.remotePort,
 		'socket' : socket
 	};
+	socket.descriptor = descriptor;
 
 	/**
 	 * Send a nice welcome message and announce
@@ -106,13 +122,22 @@ exports.handler = function(socket) {
 	 * Remove the client from the list when it leaves
 	 */
 	socket.on('error', function() {
+		console.error("Socket error", socket.descriptor.id);
 		kernel.removeClient(socket);
+		/**
+		 * remove xmppclient
+		 */
+		kernel.xmppcliExit(hostXmpp, portXmpp, {
+			jid : socket.descriptor.name + '@jarvis.org/local',
+			descriptorId : socket.descriptor.id
+		});
 	});
 
 	/**
 	 * Remove the client from the list when it leaves
 	 */
 	socket.on('end', function() {
+		console.error("Socket end", socket.descriptor.id);
 		kernel.removeClient(socket);
 	});
 
@@ -139,9 +164,10 @@ exports.handler = function(socket) {
 			/**
 			 * declare xmppclient
 			 */
-			kernel.xmppcli({
+			kernel.xmppcli(hostXmpp, portXmpp, {
 				fn : kernel.xmppcliAiml,
-				jid : descriptor.id + '@jarvis.org',
+				jid : descriptor.name + '@jarvis.org/local',
+				from : descriptor.name + '@jarvis.org/local',
 				descriptorId : descriptor.id
 			});
 			return;

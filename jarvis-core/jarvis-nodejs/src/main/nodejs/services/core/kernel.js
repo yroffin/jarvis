@@ -338,6 +338,7 @@ var remoteModuleRender = function(target) {
 	sendMessage({
 		'code' : 'request',
 		'request' : {
+			'from' : target.from,
 			'data' : target.message
 		},
 		'session' : {
@@ -358,6 +359,7 @@ var xmppcliAiml = function(args) {
 	logger.warn('xmppcliAiml', args);
 	remoteModuleRender({
 		id : args.desccriptorId,
+		from : args.from,
 		message : args.message
 	}, args);
 }
@@ -432,6 +434,19 @@ var xmppcli = function(host, port, fn, args) {
 }
 
 /**
+ * xmppcli client
+ * 
+ * @param host
+ * @param port
+ * @param fn
+ * @param args
+ * @return nothing
+ */
+var xmppcliExit = function(host, port, fn, args) {
+	Xmppcli.end(host, port, fn, args);
+}
+
+/**
  * exports
  */
 module.exports = {
@@ -453,6 +468,7 @@ module.exports = {
 	 * xmppcli
 	 */
 	xmppcli : xmppcli,
+	xmppcliExit : xmppcliExit,
 	xmppcliScript : xmppcliScript,
 	xmppcliAiml : xmppcliAiml,
 	xmppcliEcho : xmppcliEcho,
