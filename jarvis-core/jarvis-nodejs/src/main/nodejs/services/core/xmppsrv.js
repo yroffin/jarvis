@@ -45,6 +45,7 @@ var internal = {
 		remove : function(key) {
 			logger.debug('clients::remove(' + key + ')');
 			delete clients[key];
+			clients[key] = undefined;
 		}
 	},
 	/**
@@ -66,6 +67,7 @@ var internal = {
 		remove : function(key) {
 			logger.debug('resources::remove(' + key + ')');
 			delete resources[key];
+			resources[key] = undefined;
 		}
 	}
 }
@@ -110,7 +112,9 @@ exports.start = function(host, port, done) {
 		client.broadcast = function(message) {
 			for (cl in clients) {
 				if (client != internal.clients.get(cl)) {
-					internal.clients.get(cl).send(message);
+					if (internal.clients.exist(cl)) {
+						internal.clients.get(cl).send(message);
+					}
 				}
 			}
 		}

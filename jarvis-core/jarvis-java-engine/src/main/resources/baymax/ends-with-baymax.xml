@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="1.0">
+<!-- -->
+<!-- Copyright 2015 Yannick Roffin
+<!-- -->
+<!-- Licensed under the Apache License, Version 2.0 (the "License");
+<!-- you may not use this file except in compliance with the License.
+<!-- You may obtain a copy of the License at
+<!-- -->
+<!-- http://www.apache.org/licenses/LICENSE-2.0
+<!-- -->
+<!-- Unless required by applicable law or agreed to in writing, software
+<!-- distributed under the License is distributed on an "AS IS" BASIS,
+<!-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+<!-- See the License for the specific language governing permissions and
+<!-- limitations under the License.
+<!-- -->
+
+<topic name="ENDS WITH BAYMAX">
+
+<category><pattern>TEST BOTNAME</pattern>
+<template><bot name="name"/> fonctionne correctement.<think><set name="matched">true</set></think></template>
+</category>
+
+<category><pattern>CALL ME BOTNAME</pattern>
+<template>My name is <set name="name"><bot name="name"/></set> too!
+<think><set name="matched">true</set></think>
+</template>
+</category>
+
+<category><pattern>WHAT IS BOTNAME</pattern>
+<template><srai>WHAT ARE YOU</srai>
+<think><set name="matched">true</set></think>
+</template>
+</category>
+
+<category><pattern>WHO IS BOTNAME</pattern>
+<template>I am <bot name="name"/>.
+<think><set name="matched">true</set></think>
+</template>
+</category>
+
+<category><pattern>YOU ARE BOTNAME</pattern>
+<that>WHO IS THE BEST ROBOT</that>
+<template><srai><bot name="name"/> IS THE BEST ROBOT</srai>
+<think><set name="matched">true</set></think>
+</template>
+</category>
+
+<category><pattern>I AM BOTNAME</pattern>
+<template><srai>CALL ME BOTNAME</srai>
+<think><set name="matched">true</set></think>
+</template>
+</category>
+
+<category><pattern>DO YOU KNOW BOTNAME</pattern>
+<template><srai>WHO IS BOTNAME</srai><!-- REDUCTION --></template>
+</category>
+
+<category><pattern>IS THIS THE SAME BOTNAME</pattern>
+<template>Yes.
+<think><set name="matched">true</set></think>
+</template>
+</category>
+
+<category><pattern>WHY WERE YOU NAMED BOTNAME</pattern>
+<template><srai>WHAT DOES BAYMAX STAND FOR</srai>
+<think><set name="matched">true</set></think>
+ </template>
+</category>
+
+<category><pattern>* NAME BOTNAME</pattern>
+<template><srai>What does <bot name="name"/>  stand for </srai>
+<think><set name="matched">true</set></think>
+</template>
+</category>
+
+<category><pattern>WHO IS DANCING BOTNAME</pattern>
+<template>Another AIML chat bot.
+<think><set name="matched">true</set></think>
+</template>
+</category>
+
+<category><pattern>WHO IS GERMAN BOTNAME</pattern>
+<template>A German speaking version of the <bot name="name"/> <bot name="genus"/>.
+<think><set name="matched">true</set></think>
+</template>
+</category>
+
+<category><pattern>IS RICHARD WALLACE * BOTNAME</pattern>
+<template>He is the botmaster of BAYMAX.
+<think><set name="topic">RICHARD WALLACE</set></think>
+<think><set name="matched">true</set></think>
+</template>
+</category>
+
+<category><pattern>IS RICHARD WALLACE BOTNAME</pattern>
+<template>He is the botmaster of BAYMAX.
+<think><set name="topic">RICHARD WALLACE</set></think>
+<think><set name="matched">true</set></think>
+</template>
+</category>
+
+<category><pattern>WHAT IS FULL FORM OF BOTNAME</pattern>
+<template><srai>WHAT DOES BAYMAX STAND FOR</srai>
+<think><set name="matched">true</set></think>
+</template>
+</category>
+</topic>
+
+</aiml>

@@ -75,6 +75,10 @@ public class GlobalConfig {
 			return def;
 	}
 
+	public boolean getJarvisVoice() {
+		return getProperty("jarvis.voice", "true").startsWith("true");
+	}
+
 	public String getJarvisHost() {
 		return getProperty("jarvis.srv.host", "localhost");
 	}

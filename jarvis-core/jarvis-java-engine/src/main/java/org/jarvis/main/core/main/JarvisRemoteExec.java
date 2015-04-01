@@ -43,8 +43,9 @@ public class JarvisRemoteExec extends JarvisSocketClientImpl implements
 			nextMessage.event.setScript(result);
 			sendMessage(nextMessage);
 		} catch (Exception e) {
-			logger.error("Error, while accessing to jarvis with {}",
-					message.request.getData());
+			logger.error(
+					"Error, while accessing to jarvis with {} exception {}",
+					message.request.getData(), e.getMessage());
 			return;
 		}
 	}

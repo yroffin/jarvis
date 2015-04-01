@@ -330,6 +330,7 @@ var remoteModuleRender = function(target) {
 		/**
 		 * find descriptor by attribute
 		 */
+		logger.error('Impossible de trouver le descripteur pour ', target);
 		descriptor = findAnswerDescriptor().descriptor;
 	}
 	/**
@@ -358,7 +359,7 @@ var remoteModuleRender = function(target) {
 var xmppcliAiml = function(args) {
 	logger.warn('xmppcliAiml', args);
 	remoteModuleRender({
-		id : args.desccriptorId,
+		id : args.descriptorId,
 		from : args.from,
 		message : args.message
 	}, args);
