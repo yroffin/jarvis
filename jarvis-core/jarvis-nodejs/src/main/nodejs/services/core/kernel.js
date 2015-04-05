@@ -16,7 +16,7 @@
 
 var logger = require('blammo').LoggerFactory.getLogger('kernel');
 
-var Dequeue = require(__dirname + '/dequeue')
+var Dequeue = require(__dirname + '/dequeue');
 var Xmppcli = require(__dirname + '/xmppcli');
 
 /**
@@ -282,6 +282,7 @@ var addClient = function(descriptor) {
  *            target descriptor to send to
  */
 var sendMessage = function write(message, target, socket) {
+	logger.info("[SENDV]", JSON.stringify(message));
 	/**
 	 * send message on network
 	 */
@@ -334,11 +335,12 @@ var remoteModuleRender = function(target) {
 		descriptor = findAnswerDescriptor().descriptor;
 	}
 	/**
-	 * Send a nice welcome message and announce
+	 * Send a request message
 	 */
 	sendMessage({
 		'code' : 'request',
 		'request' : {
+			'to' : target.to,
 			'from' : target.from,
 			'data' : target.message
 		},
@@ -357,9 +359,12 @@ var remoteModuleRender = function(target) {
  * @return nothing
  */
 var xmppcliAiml = function(args) {
-	logger.warn('xmppcliAiml', args);
+	/**
+	 * send this message to render only if it's not a reply
+	 */
 	remoteModuleRender({
 		id : args.descriptorId,
+		to : args.to,
 		from : args.from,
 		message : args.message
 	}, args);

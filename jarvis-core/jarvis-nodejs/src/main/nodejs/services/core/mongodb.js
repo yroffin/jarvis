@@ -50,7 +50,7 @@ var init = function(jarvisUrl, blammoUrl) {
 		if (err) {
 			logger.error("Error(s), while connecting to mongodb");
 		} else {
-			logger.info("Successfull connection to mongodb:", database.databaseName);
+			logger.debug("Successfull connection to mongodb:", database.databaseName);
 			_db_jarvis = database;
 			con_jarvis.result = database;
 		}
@@ -65,7 +65,7 @@ var init = function(jarvisUrl, blammoUrl) {
 		if (err) {
 			logger.error("Error(s), while connecting to mongodb");
 		} else {
-			logger.info("Successfull connection to mongodb:", database.databaseName);
+			logger.debug("Successfull connection to mongodb:", database.databaseName);
 			_db_blammo = database;
 			con_blammo.result = database;
 		}
@@ -85,9 +85,9 @@ var init = function(jarvisUrl, blammoUrl) {
  * @param variable
  */
 function waitFor(data) {
-	logger.info("Waiting for ", data);
+	logger.debug("Waiting for ", data);
 	while (data.result === undefined) {
-		logger.info("Waiting for ", data);
+		logger.debug("Waiting for ", data);
 		deasync.sleep(10);
 	}
 }
@@ -126,7 +126,7 @@ var getSyncCollections = function() {
 		 * default collections are needed
 		 */
 		_db_jarvis.createCollection("config", function() {
-			logger.info("Create default mongodb objects:", _db_jarvis.databaseName);
+			logger.debug("Create default mongodb objects:", _db_jarvis.databaseName);
 		});
 
 		/**
@@ -135,8 +135,8 @@ var getSyncCollections = function() {
 		collections_jarvis = __getSyncCollections();
 	}
 
-	logger.info("Collections/jarvis:", collections_jarvis.length);
-	logger.info("Collections/blammo:", collections_blammo.length);
+	logger.debug("Collections/jarvis:", collections_jarvis.length);
+	logger.debug("Collections/blammo:", collections_blammo.length);
 
 	collections_jarvis.forEach(function(item) {
 		item.db = 'jarvis';
@@ -154,7 +154,7 @@ var getSyncCollections = function() {
 		collections.push(item);
 	});
 
-	logger.info("Collections:", collections);
+	logger.debug("Collections:", collections);
 	return collections;
 };
 
@@ -181,7 +181,7 @@ function __syncCountCollection(col) {
 	 */
 	waitFor(collections);
 
-	logger.info('syncCountCollectionByName => %s', collections.result);
+	logger.debug('syncCountCollectionByName => %s', collections.result);
 
 	return Number(collections.result);
 };
@@ -221,7 +221,7 @@ function __syncPageCollectionByName(col, offset, page) {
 	 */
 	waitFor(collections);
 
-	logger.info('__syncPageCollectionByName => %s', collections.result.length);
+	logger.debug('__syncPageCollectionByName => %s', collections.result.length);
 
 	return collections.result;
 };
@@ -237,7 +237,7 @@ var syncCountCollectionByName = function(database, name) {
 	if (database == 'blammo') {
 		col = _db_blammo.collection(name);
 	}
-	logger.info('syncCountCollectionByName(%s)', name);
+	logger.debug('syncCountCollectionByName(%s)', name);
 	return {
 		'count' : __syncCountCollection(col)
 	};
@@ -269,7 +269,7 @@ function __syncCronList(col, filter) {
 	 */
 	waitFor(collections);
 
-	logger.info('__syncCronList => %s', collections.result.length);
+	logger.debug('__syncCronList => %s', collections.result.length);
 
 	return collections.result;
 };
@@ -285,7 +285,7 @@ var syncPageCollectionByName = function(database, name, offset, page) {
 	if (database == 'blammo') {
 		col = _db_blammo.collection(name);
 	}
-	logger.info('syncCountCollectionByName(%s)', name);
+	logger.debug('syncCountCollectionByName(%s)', name);
 	return __syncPageCollectionByName(col, offset, page);
 };
 
@@ -305,7 +305,7 @@ var syncStoreInCollectionByName = function(database, name, item) {
 	 * insert this document
 	 */
 	col.insert(item, function() {
-		logger.info('syncStoreInCollectionByName(%s,%s,%s)', database, name, item);
+		logger.debug('syncStoreInCollectionByName(%s,%s,%s)', database, name, item);
 	});
 
 	return item;

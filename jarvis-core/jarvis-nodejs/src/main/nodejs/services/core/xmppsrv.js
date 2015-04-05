@@ -72,6 +72,25 @@ var internal = {
 	}
 }
 
+/**
+ * emit a message
+ */
+exports.emit = function(msg) {
+	var message = new Message({
+		type : 'chat',
+		from : msg.from,
+		to : msg.to
+	}).c('body').t(msg.data);
+	if (internal.clients.exist(msg.to)) {
+		internal.clients.get(msg.to).send(message);
+	} else {
+		logger.warn("La cible %s n'existe pas", msg.to);
+	}
+}
+
+/**
+ * start this serveur
+ */
 exports.start = function(host, port, done) {
 
 	/**
@@ -93,7 +112,7 @@ exports.start = function(host, port, done) {
 	 * register handler
 	 */
 	c2s.on('register', function(opts, cb) {
-		logger.info('register: ' + opts.jid + ' -> ' + opts.password);
+		logger.debug('register: ' + opts.jid + ' -> ' + opts.password);
 		cb(true);
 	})
 
@@ -101,7 +120,7 @@ exports.start = function(host, port, done) {
 	 * server connect
 	 */
 	c2s.on('connect', function(client) {
-		logger.info('connect');
+		logger.debug('connect');
 
 		/**
 		 * broadcast message on other
@@ -110,6 +129,7 @@ exports.start = function(host, port, done) {
 		 *            the message to broadcast
 		 */
 		client.broadcast = function(message) {
+			logger.debug('broadcast: ' + message);
 			for (cl in clients) {
 				if (client != internal.clients.get(cl)) {
 					if (internal.clients.exist(cl)) {
@@ -125,7 +145,7 @@ exports.start = function(host, port, done) {
 		 * @todo implements password validation
 		 */
 		client.on('authenticate', function(opts, cb) {
-			logger.info('authenticate: ' + opts.jid + '::' + opts.password);
+			logger.debug('authenticate: ' + opts.jid + '::' + opts.password);
 			cb(null, opts)
 			/**
 			 * store this client
@@ -137,7 +157,7 @@ exports.start = function(host, port, done) {
 		 * online handler
 		 */
 		client.on('online', function() {
-			logger.info('online:', client.jid);
+			logger.debug('online:', client.jid);
 			/**
 			 * store this client
 			 */
@@ -149,10 +169,7 @@ exports.start = function(host, port, done) {
 			 */
 			client.sendAlt = client.send;
 			client.send = function(message) {
-				logger.debug('jid:' + client.jid);
-				logger.debug('to:' + message.attrs.to);
-				logger.debug('from:' + message.attrs.from);
-				logger.debug("send:", message.toString());
+				logger.debug('[SEND/cli] ', message);
 				this.sendAlt(message);
 			}
 		})
@@ -163,11 +180,11 @@ exports.start = function(host, port, done) {
 		client.on('stanza', function(stanza) {
 			logger.trace('stanza', stanza.attrs.from, stanza.attrs.to, stanza.attrs.type);
 			var emitType = null;
-			if (stanza.getChild('query')) { // Info query get or set
+			if (stanza.getChild('query')) {
 				emitType = 'query:' + stanza.attrs.type + ':' + stanza.getChild('query').attrs.xmlns;
-			} else if (stanza.getName() == "presence") { // Presence
+			} else if (stanza.getName() == "presence") {
 				emitType = 'presence';
-			} else if (stanza.getName() == "message") { // Message
+			} else if (stanza.getName() == "message") {
 				emitType = 'message';
 			} else if (stanza.getChild('ping') != null) {
 				emitType = 'ping';
@@ -229,10 +246,10 @@ exports.start = function(host, port, done) {
 		})
 
 		/**
-		 * message handler
+		 * message handler with routing method using attrs.to
 		 */
 		client.on('message', function(message) {
-			logger.debug('message', client.jid);
+			logger.debug('message:', client.jid);
 			if (internal.resources.exist(message.attrs.to)) {
 				internal.resources.get(message.attrs.to).send(message);
 			}

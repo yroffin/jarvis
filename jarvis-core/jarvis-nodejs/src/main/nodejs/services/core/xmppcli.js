@@ -23,7 +23,7 @@ var xmppcli = require('node-xmpp-client'), Element = require('node-xmpp-core').S
 var clients = {}
 
 /**
- * start xmppcli
+ * end client
  */
 exports.end = function(host, port, args) {
 	logger.warn("Client end", args.jid);
@@ -31,7 +31,7 @@ exports.end = function(host, port, args) {
 }
 
 /**
- * start xmppcli
+ * start new client
  */
 exports.start = function(host, port, args) {
 	/**
@@ -60,16 +60,14 @@ exports.start = function(host, port, args) {
 		/**
 		 * send presence
 		 */
-		client.send(new Element('presence', {
-			type : 'probe'
-		}).c('show').t('chat').up().c('status').t('Hi'));
-	}, 10000);
+		client.send(new Element('presence', {}).c('show').t('chat').up().c('status').t('Hi'));
+	}, 60000);
 
 	/**
 	 * online status
 	 */
 	client.on('online', function() {
-		logger.info('online');
+		logger.debug('online');
 	})
 
 	/**
@@ -85,11 +83,14 @@ exports.start = function(host, port, args) {
 	client.on('stanza', function(stanza) {
 		logger.trace('stanza', stanza.attrs.from, stanza.attrs.to, stanza.attrs.type);
 		var emitType = null;
-		if (stanza.getChild('query')) { // Info query get or set
+		/**
+		 * info query get, set, presence ... see documentation
+		 */
+		if (stanza.getChild('query')) {
 			emitType = 'query:' + stanza.attrs.type + ':' + stanza.getChild('query').attrs.xmlns;
-		} else if (stanza.getName() == "presence") { // Presence
+		} else if (stanza.getName() == "presence") {
 			emitType = 'presence';
-		} else if (stanza.getName() == "message") { // Message
+		} else if (stanza.getName() == "message") {
 			emitType = 'message';
 		} else if (stanza.getChild('ping') != null) {
 			emitType = 'ping';
@@ -113,7 +114,9 @@ exports.start = function(host, port, args) {
 	 * message handler
 	 */
 	client.on('message', function(message) {
-		logger.debug('message');
+		logger.debug('message/cli: ', message);
+		logger.debug('message.to/cli: ', message.attrs.to);
+		logger.debug('message.from/cli: ', message.attrs.from);
 
 		/**
 		 * ignore everything that isn't a room message
@@ -122,30 +125,34 @@ exports.start = function(host, port, args) {
 			return;
 		}
 
-		var body = message.getChild('body');
+		/**
+		 * cycli message are not autorized
+		 */
+		if (message.attrs.to == message.attrs.from) {
+			return;
+		}
+
 		/**
 		 * message without body is probably a topic change
 		 */
+		var body = message.getChild('body');
 		if (!body) {
 			return;
 		}
 
-		args.message = body.getText();
-		var answer = args.fn(args);
-
 		/**
-		 * answer
+		 * apply function, and send message with attrs.to and attrs.from
 		 */
-		client.send(new Message({
-			type : 'chat',
-			to : message.attrs.from
-		}).c('body').t(answer));
+		args.to = message.attrs.to;
+		args.from = message.attrs.from;
+		args.message = body.getText();
+		args.fn(args);
 	})
 
 	/**
 	 * end handler
 	 */
 	client.on('end', function() {
-		logger.info('end');
+		logger.debug('end');
 	})
 }

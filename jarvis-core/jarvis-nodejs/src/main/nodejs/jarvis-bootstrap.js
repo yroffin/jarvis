@@ -154,6 +154,11 @@ function main() {
 	 * plugin execute
 	 */
 	function plugin(js) {
+		/**
+		 * if plugin is not defined, return
+		 */
+		if (!js.plugin)
+			return;
 		var plugin = require(__dirname + '/plugins/' + js.plugin);
 		if (js.params != undefined) {
 			kernel.notify("Running plugin " + js.plugin + " " + JSON.stringify(js.params));

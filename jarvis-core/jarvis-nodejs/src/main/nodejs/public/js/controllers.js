@@ -155,6 +155,9 @@ angular.module('myApp.controllers', []).controller('BootstrapCtrl', [ '$rootScop
 			 */
 		});
 	}
+	/**
+	 * send a message to this renderer
+	 */
 	$scope.send = function(target, element) {
 		/**
 		 * loading clients

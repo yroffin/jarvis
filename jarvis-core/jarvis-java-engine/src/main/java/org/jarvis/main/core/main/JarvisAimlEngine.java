@@ -114,18 +114,9 @@ public class JarvisAimlEngine extends JarvisSocketClientImpl implements
 				nextMessage.event = new JarvisDatagramEvent();
 				nextMessage.event.setData(value.getAnswer());
 				nextMessage.event.setScript(value.getJavascript());
-				nextMessage.event.setTarget(message.request.getFrom());
+				nextMessage.event.setFrom(message.request.getTo());
+				nextMessage.event.setTo(message.request.getFrom());
 				sendMessage(nextMessage);
-				/**
-				 * on event per answer, for plugin mecanism
-				 */
-				JarvisDatagram answerMessage = new JarvisDatagram();
-				answerMessage.setCode("event");
-				answerMessage.event = new JarvisDatagramEvent();
-				answerMessage.event.setData(value.getAnswer());
-				answerMessage.event.setScript(value.getJavascript());
-				answerMessage.event.setTarget(message.request.getFrom());
-				sendMessage(answerMessage);
 			}
 			/**
 			 * render to local default output

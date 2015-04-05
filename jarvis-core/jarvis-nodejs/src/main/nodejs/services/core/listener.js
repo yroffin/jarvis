@@ -18,8 +18,12 @@
  * Load the TCP Library
  */
 var net = require('net');
+var logger = require('blammo').LoggerFactory.getLogger('listener');
 
 var kernel = require(__dirname + '/kernel');
+var xmppcli = require(__dirname + '/xmppcli');
+var xmppsrv = require(__dirname + '/xmppsrv');
+
 var host;
 var port;
 var hostXmpp;
@@ -51,7 +55,7 @@ exports.start = function(jarvis_properties) {
 	 */
 	listener.on('error', function(e) {
 		if (e.code == 'EADDRINUSE') {
-			console.log('Address ' + port + ' in use, retrying...');
+			logger.warn('Address ' + port + ' in use, retrying...');
 			setTimeout(function() {
 				listener.listen(port);
 			}, port);
@@ -75,7 +79,7 @@ exports.handler = function(socket) {
 		/**
 		 * unable to build exchange protocol with this client
 		 */
-		console.error(e);
+		logger.error(e);
 	});
 
 	/**
@@ -114,7 +118,7 @@ exports.handler = function(socket) {
 		/**
 		 * handle this new message
 		 */
-		console.info("message to parse[%s]", data);
+		logger.info("[RECV] %s", data);
 		handle(socket, JSON.parse(data));
 	});
 
@@ -122,7 +126,7 @@ exports.handler = function(socket) {
 	 * Remove the client from the list when it leaves
 	 */
 	socket.on('error', function() {
-		console.error("Socket error", socket.descriptor.id);
+		logger.error("Socket error", socket.descriptor.id);
 		kernel.removeClient(socket);
 		/**
 		 * remove xmppclient
@@ -137,7 +141,7 @@ exports.handler = function(socket) {
 	 * Remove the client from the list when it leaves
 	 */
 	socket.on('end', function() {
-		console.error("Socket end", socket.descriptor.id);
+		logger.error("Socket end", socket.descriptor.id);
 		kernel.removeClient(socket);
 	});
 
@@ -162,7 +166,7 @@ exports.handler = function(socket) {
 				'name' : 'kernel'
 			}, message);
 			/**
-			 * declare xmppclient
+			 * declare xmppcli with it's processor xmppcliAiml
 			 */
 			kernel.xmppcli(hostXmpp, portXmpp, {
 				fn : kernel.xmppcliAiml,
@@ -181,6 +185,19 @@ exports.handler = function(socket) {
 				'id' : -1,
 				'name' : 'kernel'
 			}, message);
+			/**
+			 * callback (server side) on xmpp if target defined, post a reply to
+			 * caller
+			 */
+			if (message.event.to) {
+				xmppsrv.emit({
+					to : message.event.to,
+					from : message.event.from,
+					data : message.event.data
+				});
+			} else {
+				logger.warn("La cible n'est pas definie");
+			}
 			return;
 		}
 		if (message.code == 'evt') {
@@ -189,6 +206,14 @@ exports.handler = function(socket) {
 				'id' : -1,
 				'name' : 'kernel'
 			}, message);
+			/**
+			 * callback on xmpp if target defined, post a reply to caller
+			 */
+			if (message.evt.target) {
+				/**
+				 * TODO, emit message
+				 */
+			}
 			return;
 		}
 	}
