@@ -81,7 +81,7 @@ exports.start = function(host, port, args) {
 	 * stanza handler
 	 */
 	client.on('stanza', function(stanza) {
-		logger.trace('stanza', stanza.attrs.from, stanza.attrs.to, stanza.attrs.type);
+		logger.debug('stanza/cli', stanza.attrs.from, stanza.attrs.to, stanza.attrs.type);
 		var emitType = null;
 		/**
 		 * info query get, set, presence ... see documentation
@@ -114,9 +114,8 @@ exports.start = function(host, port, args) {
 	 * message handler
 	 */
 	client.on('message', function(message) {
-		logger.debug('message/cli: ', message);
-		logger.debug('message.to/cli: ', message.attrs.to);
-		logger.debug('message.from/cli: ', message.attrs.from);
+		logger.info('message.to/cli: ', message.attrs.to);
+		logger.info('message.from/cli: ', message.attrs.from);
 
 		/**
 		 * ignore everything that isn't a room message
@@ -139,6 +138,7 @@ exports.start = function(host, port, args) {
 		if (!body) {
 			return;
 		}
+		logger.info('message/cli: ', body);
 
 		/**
 		 * apply function, and send message with attrs.to and attrs.from

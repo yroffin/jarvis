@@ -212,12 +212,17 @@ exports.handler = function(socket) {
 				'name' : 'kernel'
 			}, message);
 			/**
-			 * callback on xmpp if target defined, post a reply to caller
+			 * callback (server side) on xmpp if target defined, post a reply to
+			 * caller
 			 */
-			if (message.evt.target) {
-				/**
-				 * TODO, emit message
-				 */
+			if (message.evt.to) {
+				xmppsrv.emit({
+					to : message.evt.to,
+					from : message.evt.from,
+					data : message.evt.data
+				});
+			} else {
+				logger.warn("La cible n'est pas definie");
 			}
 			return;
 		}

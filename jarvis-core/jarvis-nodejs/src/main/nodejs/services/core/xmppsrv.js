@@ -178,7 +178,7 @@ exports.start = function(host, port, done) {
 		 * stanza handler
 		 */
 		client.on('stanza', function(stanza) {
-			logger.trace('stanza', stanza.attrs.from, stanza.attrs.to, stanza.attrs.type);
+			logger.debug('stanza/srv', stanza.attrs.from, stanza.attrs.to, stanza.attrs.type);
 			var emitType = null;
 			if (stanza.getChild('query')) {
 				emitType = 'query:' + stanza.attrs.type + ':' + stanza.getChild('query').attrs.xmlns;

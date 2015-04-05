@@ -18,6 +18,7 @@ var logger = require('blammo').LoggerFactory.getLogger('kernel');
 
 var Dequeue = require(__dirname + '/dequeue');
 var Xmppcli = require(__dirname + '/xmppcli');
+var xmppsrv = require(__dirname + '/xmppsrv');
 
 /**
  * events queue store all event acquire by this system before any treatment
@@ -380,8 +381,19 @@ var xmppcliScript = function(args) {
 	try {
 		var evt = JSON.parse(args.message);
 	} catch (e) {
-		return e;
+		/**
+		 * emit internal answer to script@jarvis.org
+		 */
+		xmppsrv.emit({
+			to : args.from,
+			from : args.to,
+			data : '' + e
+		});
+		return;
 	}
+	/**
+	 * register this plugin for execute
+	 */
 	register({
 		'id' : -1,
 		'name' : 'xmppcli'
