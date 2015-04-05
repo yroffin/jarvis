@@ -85,9 +85,7 @@ var init = function(jarvisUrl, blammoUrl) {
  * @param variable
  */
 function waitFor(data) {
-	logger.debug("Waiting for ", data);
 	while (data.result === undefined) {
-		logger.debug("Waiting for ", data);
 		deasync.sleep(10);
 	}
 }
