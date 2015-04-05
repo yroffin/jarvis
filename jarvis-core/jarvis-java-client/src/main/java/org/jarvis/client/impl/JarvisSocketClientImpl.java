@@ -20,7 +20,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.Socket;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -60,7 +59,6 @@ public class JarvisSocketClientImpl implements IJarvisSocketClient, Runnable {
 	private Socket socket = null;
 	private LinkedBlockingQueue<JarvisDatagram> linked = new LinkedBlockingQueue<JarvisDatagram>();
 	private ObjectMapper mapper;
-	private OutputStream output;
 
 	/**
 	 * constructor
@@ -74,21 +72,6 @@ public class JarvisSocketClientImpl implements IJarvisSocketClient, Runnable {
 		this.portNumber = portNumber;
 		this.name = name;
 		mapper = new ObjectMapper();
-
-		output = new OutputStream() {
-			private StringBuilder string = new StringBuilder();
-
-			@Override
-			public void write(int b) throws IOException {
-				this.string.append((char) b);
-			}
-
-			public String toString() {
-				String result = this.string.toString();
-				string.setLength(0);
-				return result;
-			}
-		};
 	}
 
 	/**
@@ -202,11 +185,11 @@ public class JarvisSocketClientImpl implements IJarvisSocketClient, Runnable {
 	@Override
 	public void sendMessage(JarvisDatagram message) throws IOException {
 		message.session = session;
-		mapper.writeValue(output, message);
+		String output = mapper.writeValueAsString(message);
 		if (logger.isDebugEnabled()) {
 			logger.debug("Message {}", message);
 		}
-		socket.getOutputStream().write(output.toString().getBytes());
+		socket.getOutputStream().write(output.getBytes("UTF-8"));
 	}
 
 	/**

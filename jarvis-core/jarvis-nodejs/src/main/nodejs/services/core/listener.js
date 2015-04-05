@@ -73,6 +73,11 @@ exports.start = function(jarvis_properties) {
  */
 exports.handler = function(socket) {
 	/**
+	 * set socket to UTF-8
+	 */
+	socket.setEncoding('utf8');
+
+	/**
 	 * Error handler
 	 */
 	socket.on('error', function(e) {
