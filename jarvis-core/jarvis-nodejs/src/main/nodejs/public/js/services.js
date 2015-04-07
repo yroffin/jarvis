@@ -85,10 +85,10 @@ myAppServices.factory('jarvisServices', [ '$resource', function($resource, $wind
 		 * create a new crontab entry
 		 */
 		createJob : {
-			method : 'POST',
+			method : 'GET',
 			url : jarvisServicesUrl + '/mongodb/crontab/:plugin/create?job=:job&params=:params&cronTime=:cronTime',
 			params : {},
-			isArray : true,
+			isArray : false,
 			cache : false
 		},
 		/**

@@ -159,7 +159,12 @@ function main() {
 		 */
 		if (!js.plugin)
 			return;
-		var plugin = require(__dirname + '/plugins/' + js.plugin);
+		try {
+			var plugin = require(__dirname + '/plugins/' + js.plugin);
+		} catch (e) {
+			logger.warn('' + e);
+			return;
+		}
 		if (js.params != undefined) {
 			kernel.notify("Running plugin " + js.plugin + " " + JSON.stringify(js.params));
 			plugin.execute(js.params);

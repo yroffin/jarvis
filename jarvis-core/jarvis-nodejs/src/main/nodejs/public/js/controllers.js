@@ -28,15 +28,13 @@ angular.module('myApp.controllers', []).controller('BootstrapCtrl', [ '$rootScop
 			href : ''
 		};
 		$scope.jarvis = {};
+		$scope.jarvis.newjob = {};
+		$scope.jarvis.configuration = {};
 	}
 	/**
 	 * load configuration
 	 */
 	$scope.loadConfiguration = function(target) {
-		/**
-		 * load configuration elements
-		 */
-		$scope.jarvis.configuration = {};
 		/**
 		 * loading properties
 		 */
@@ -153,6 +151,40 @@ angular.module('myApp.controllers', []).controller('BootstrapCtrl', [ '$rootScop
 			/**
 			 * TODO : handle error message
 			 */
+		});
+	}
+	/**
+	 * send a message to this renderer
+	 */
+	$scope.createJob = function(target) {
+		var job = $scope.jarvis.newjob;
+		console.info(job);
+		/**
+		 * loading jobs
+		 */
+		jarvisServices.createJob({
+			job : job.jobname,
+			plugin : job.plugin,
+			cronTime : job.cron,
+			params : job.args
+		}, function(data) {
+			/**
+			 * loading jobs
+			 */
+			jarvisServices.getJobs({}, function(data) {
+				console.warn('jobs', target, data);
+				$scope.jarvis.configuration.jobs = data;
+				/**
+				 * navigate to target
+				 */
+				$.mobile.navigate(target, {
+					info : "navigate to " + target
+				});
+			}, function(failure) {
+				/**
+				 * TODO : handle error message
+				 */
+			});
 		});
 	}
 	/**

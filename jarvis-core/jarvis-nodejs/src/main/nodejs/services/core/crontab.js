@@ -42,35 +42,43 @@ exports.start = function(callback) {
 	for (index in jobs) {
 		var job = jobs[index];
 		if (!job.started) {
-			/**
-			 * set status to started
-			 */
-			mongo.syncCronUpdate(job.job, job.cronTime, job.plugin, job.params, job.timestamp, true);
-			/**
-			 * fork this jobs if not started
-			 */
-			cronJobs[job] = new cron.CronJob({
-				cronTime : job.cronTime,
-				onTick : function() {
-					/**
-					 * recover last version of job from database
-					 */
-					var newJobs = mongo.syncCronList({
-						job : this.job
-					});
-					var updateJob = newJobs[0];
-					this.started = true;
-					this.timestamp = new Date();
-					this.plugin = updateJob.plugin;
-					this.params = updateJob.params;
-					mongo.syncCronUpdate(this.job, this.cronTime, this.plugin, this.params, this.timestamp, true);
-					callback(this);
-				},
-				start : false,
-				timeZone : "Europe/Paris",
-				context : job
-			});
-			cronJobs[job].start();
+			try {
+				/**
+				 * set status to started
+				 */
+				mongo.syncCronUpdate(job.job, job.cronTime, job.plugin, job.params, job.timestamp, true);
+				/**
+				 * fork this jobs if not started
+				 */
+				cronJobs[job] = new cron.CronJob({
+					cronTime : job.cronTime,
+					onTick : function() {
+						/**
+						 * recover last version of job from database
+						 */
+						var newJobs = mongo.syncCronList({
+							job : this.job
+						});
+						var updateJob = newJobs[0];
+						this.started = true;
+						this.timestamp = new Date();
+						this.plugin = updateJob.plugin;
+						this.params = updateJob.params;
+						mongo.syncCronUpdate(this.job, this.cronTime, this.plugin, this.params, this.timestamp, true);
+						callback(this);
+					},
+					start : false,
+					timeZone : "Europe/Paris",
+					context : job
+				});
+				cronJobs[job].start();
+			} catch (e) {
+				/**
+				 * mark job in error (not started)
+				 */
+				mongo.syncCronUpdate(job.job, job.cronTime, job.plugin, job.params, job.timestamp, false);
+				logger.warn('' + e);
+			}
 		}
 	}
 }
