@@ -77,6 +77,11 @@
 		<appender-ref ref="mongodb" />
 	</logger>
 
+	<logger name="neo4j">
+		<appender-ref ref="console" />
+		<appender-ref ref="mongodb" />
+	</logger>
+
 	<root level="trace">
 		<appender-ref ref="console" />
 		<appender-ref ref="mongodb" />
