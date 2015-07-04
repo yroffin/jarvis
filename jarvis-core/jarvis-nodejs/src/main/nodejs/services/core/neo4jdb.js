@@ -18,42 +18,177 @@
  * logging
  */
 var logger = require('blammo').LoggerFactory.getLogger('neo4j');
-var deasync = require('deasync');
 
 /**
  * native mongo driver for raw operation
  */
 var neo4j = require('neo4j');
-var _db_jarvis = undefined;
+var neo4jDriver = require('./neo4j-driver');
+var _neo4j_jarvis = undefined;
+var _neo4j_driver = undefined;
 
 /**
- * retrieve all collections stored in mongodb
+ * check if it's a field
+ * @param key
+ * @param val
+ * @returns {boolean}
  */
-var init = function(jarvisUrl) {
-	/**
-	 * main database
-	 */
-	_db_jarvis = new neo4j.GraphDatabase(jarvisUrl);
-
-	_db_jarvis.cypher({
-		query : 'MATCH (n) RETURN n LIMIT 1',
-		params : {},
-	}, function(err, results) {
-		if (err)
-			throw err;
-		var result = results[0];
-		if (!result) {
-			logger.error('No row found.');
-		} else {
-			var user = result['u'];
-			logger.debug("Neo4j test : ", JSON.stringify(result, null, 4));
-		}
-	});
+var isField = function(key, val) {
+	return typeof (val) != 'object' || val instanceof Date;
 }
 
 /**
- * exports
+ * object visitor
+ * @param visited
+ * @param node
+ * @param fn
+ * @returns {*}
+ */
+var objectVisitor = function(visited, filled, keys, postCreate, ownerId, label) {
+	var len = keys.length;
+	/**
+	 * first iterate on all plain field such as string, number etc ...
+	 */
+	for(var index = 0;index < len;index++) {
+		var key = keys[index];
+		var val = visited[key];
+		if (isField(key,val)) {
+			/**
+			 * new field detection
+			 */
+			filled[key] = val;
+		}
+		var i = 0;
+	}
+	/**
+	 * entity is now filled, we can create it on neo4j
+	 */
+	neo4jDriver.node.create(
+		_neo4j_driver,
+		filled,
+		/**
+		 * call back for first new entity
+		 * @param filledEntity, fresh neo4j entity created
+		 */
+		function(filledEntity) {
+			/**
+			 * postCreate is used to produce relationship callback
+			 */
+			if(postCreate) {
+				postCreate(filledEntity.id, ownerId, label);
+			}
+			/**
+			 * now iterate on each sub object for recursive creation
+			 */
+			for(var index = 0;index < len;index++) {
+				var key = keys[index];
+				var val = visited[key];
+				if (!isField(key,val)) {
+					/**
+					 * recursive call
+					 */
+					objectVisitor(val, {}, Object.keys(val),
+						/**
+						 * callback function to produce relationship
+						 * @param ownerId
+						 * @param entityId
+						 * @param label
+						 */
+						function(ownerId, entityId, label) {
+							neo4jDriver.relationship.create(
+								_neo4j_driver,
+								entityId,
+								ownerId,
+								label
+							);
+						},
+						filledEntity.id,
+						key
+					);
+				}
+			}
+		}
+	);
+}
+
+/**
+ * public method
+ * @type {{init: Function, cypher: {query: Function}, node: {create: Function, prop: Function}, relationship: {create: Function}}}
  */
 module.exports = {
-	init : init,
+	/**
+	 * retrieve all collections stored in mongodb
+	 */
+	init: function (jarvisUrl, drop) {
+		/**
+		 * main database
+		 */
+		_neo4j_jarvis = new neo4j.GraphDatabase(jarvisUrl);
+
+		_neo4j_driver = neo4jDriver.init(jarvisUrl);
+		if (drop) {
+			/**
+			 * just make a single select to test access
+			 */
+			neo4jDriver.cypher.query(_neo4j_driver, 'MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE n,r',
+				function (response) {
+					logger.debug("Neo4j test : ", JSON.stringify(response));
+				}
+			);
+		}
+	},
+	/**
+	 * get collection by label
+	 * @param label
+	 * @param offset
+	 * @param page
+	 */
+	syncPageCollectionByName: function (label, offset, page) {
+		neo4jDriver.cypher.query(_neo4j_driver, 'MATCH (n) WHERE labels(n) = [\''+label+'\']  RETURN n LIMIT ' + page,
+			function (response) {
+				logger.debug("Neo4j test : ", JSON.stringify(response));
+			}
+		);
+	},
+	/**
+	 * create cron job
+	 * @param job
+	 * @param cronTime
+	 * @param plugin
+	 * @param params
+	 */
+	syncCronCreate: function(job, cronTime, plugin, params) {
+		var blob = {
+			job : job,
+			cronTime : cronTime,
+			plugin : plugin,
+			params : params,
+			started : false,
+			timestamp : new Date()
+		};
+		objectVisitor(blob, {}, Object.keys(blob),
+			/**
+			 * post create function
+			 * @param label
+			 */
+			function(nodeId) {
+				neo4jDriver.node.label(_neo4j_driver, nodeId, 'crontab');
+			}
+		);
+	},
+	/**
+	 * store object
+	 * @param blobEntity
+	 */
+	syncStoreInCollectionByName: function (name, blob) {
+		objectVisitor(blob, {}, Object.keys(blob),
+			/**
+			 * post create function
+			 * @param label
+			 */
+			function(nodeId) {
+				neo4jDriver.node.label(_neo4j_driver, nodeId, name);
+			}
+		);
+	}
 }
