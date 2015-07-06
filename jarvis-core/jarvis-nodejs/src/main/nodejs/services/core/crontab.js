@@ -19,7 +19,7 @@ var logger = require('blammo').LoggerFactory.getLogger('crontab');
 'use strict';
 
 var cron = require('cron');
-var mongo = require(__dirname + '/mongodb');
+var neo4j = require(__dirname + '/neo4jdb');
 
 var cronJobs = {}
 
@@ -27,10 +27,10 @@ var cronJobs = {}
  * clear started status in current database set all them to not started
  */
 exports.clear = function() {
-	var jobs = mongo.syncCronList();
+	var jobs = neo4j.syncCronList();
 	for (index in jobs) {
 		var job = jobs[index];
-		mongo.syncCronUpdate(job.job, job.cronTime, job.plugin, job.params, job.timestamp, false);
+		neo4j.syncCronUpdate(job.job, job.cronTime, job.plugin, job.params, job.timestamp, false);
 	}
 }
 
@@ -38,7 +38,7 @@ exports.clear = function() {
  * start jobs
  */
 exports.start = function(callback) {
-	var jobs = mongo.syncCronList();
+	var jobs = neo4j.syncCronList();
 	for (index in jobs) {
 		var job = jobs[index];
 		if (!job.started) {
@@ -46,7 +46,7 @@ exports.start = function(callback) {
 				/**
 				 * set status to started
 				 */
-				mongo.syncCronUpdate(job.job, job.cronTime, job.plugin, job.params, job.timestamp, true);
+				neo4j.syncCronUpdate(job.job, job.cronTime, job.plugin, job.params, job.timestamp, true);
 				/**
 				 * fork this jobs if not started
 				 */
@@ -56,7 +56,7 @@ exports.start = function(callback) {
 						/**
 						 * recover last version of job from database
 						 */
-						var newJobs = mongo.syncCronList({
+						var newJobs = neo4j.syncCronList({
 							job : this.job
 						});
 						var updateJob = newJobs[0];
@@ -64,7 +64,7 @@ exports.start = function(callback) {
 						this.timestamp = new Date();
 						this.plugin = updateJob.plugin;
 						this.params = updateJob.params;
-						mongo.syncCronUpdate(this.job, this.cronTime, this.plugin, this.params, this.timestamp, true);
+						neo4j.syncCronUpdate(this.job, this.cronTime, this.plugin, this.params, this.timestamp, true);
 						callback(this);
 					},
 					start : false,
@@ -76,7 +76,7 @@ exports.start = function(callback) {
 				/**
 				 * mark job in error (not started)
 				 */
-				mongo.syncCronUpdate(job.job, job.cronTime, job.plugin, job.params, job.timestamp, false);
+				neo4j.syncCronUpdate(job.job, job.cronTime, job.plugin, job.params, job.timestamp, false);
 				logger.warn('' + e);
 			}
 		}

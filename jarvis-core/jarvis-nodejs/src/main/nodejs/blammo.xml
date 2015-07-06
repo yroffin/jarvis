@@ -7,18 +7,6 @@
 		</filters>
 	</appender>
 
-	<appender name="mongodb" module="blammo-mongodb-appender">
-		<encoder type="dummy_encoder" />
-		<layout type="dummy_layout" />
-
-		<config>
-			<hostname>localhost</hostname>
-			<port>27017</port>
-			<database>blammo</database>
-			<collection>log</collection>
-		</config>
-	</appender>
-
 	<appender name="xmppsrv" type="file_appender">
 		<encoder type="dummy_encoder"/>
 		<layout type="pattern_layout">%timestamp|%pid|%logger|%level|%message</layout>
@@ -37,53 +25,39 @@
 
 	<logger name="listener">
 		<appender-ref ref="console" />
-		<appender-ref ref="mongodb" />
 	</logger>
 
 	<logger name="crontab">
 		<appender-ref ref="console" />
-		<appender-ref ref="mongodb" />
 	</logger>
 
 	<logger name="services">
 		<appender-ref ref="console" />
-		<appender-ref ref="mongodb" />
 	</logger>
 
 	<logger name="plugins">
 		<appender-ref ref="console" />
-		<appender-ref ref="mongodb" />
 	</logger>
 
 	<logger name="kernel">
 		<appender-ref ref="console" />
-		<appender-ref ref="mongodb" />
 	</logger>
 
 	<logger name="xmppcli">
 		<appender-ref ref="console" />
-		<appender-ref ref="mongodb" />
 		<appender-ref ref="xmppcli" />
 	</logger>
 
 	<logger name="xmppsrv">
 		<appender-ref ref="console" />
-		<appender-ref ref="mongodb" />
 		<appender-ref ref="xmppsrv" />
-	</logger>
-
-	<logger name="mongodb">
-		<appender-ref ref="console" />
-		<appender-ref ref="mongodb" />
 	</logger>
 
 	<logger name="neo4j">
 		<appender-ref ref="console" />
-		<appender-ref ref="mongodb" />
 	</logger>
 
 	<root level="trace">
 		<appender-ref ref="console" />
-		<appender-ref ref="mongodb" />
 	</root>
 </configuration>

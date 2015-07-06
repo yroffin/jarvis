@@ -34,7 +34,6 @@ function main() {
 	var config = require(__dirname + '/services/json/config');
 
 	// core services
-	var mongo = require(__dirname + '/services/core/mongodb');
 	var neo4j = require(__dirname + '/services/core/neo4jdb');
 
 	var listener = require(__dirname + '/services/core/listener');
@@ -53,12 +52,6 @@ function main() {
 		key : fs.readFileSync(jarvis_properties.get('jarvis.srv.https.key')),
 		cert : fs.readFileSync(jarvis_properties.get('jarvis.srv.https.cert'))
 	};
-
-	/**
-	 * init mongodb
-	 */
-	mongo.init(jarvis_properties.get('jarvis.mongodb.jarvis'), jarvis_properties.get('jarvis.mongodb.blammo'));
-	kernel.notify("Mongodb connexions ok");
 
 	/**
 	 * init neo4j
@@ -222,7 +215,7 @@ function main() {
 				/**
 				 * Store event in history
 				 */
-				mongo.syncStoreInCollectionByName('jarvis', 'events', e);
+				neo4j.syncStoreInCollectionByName('events', e);
 			} catch (e) {
 				logger.error('Exception: ', e);
 				console.trace(e);
