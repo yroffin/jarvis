@@ -89,18 +89,18 @@ angular.module('myApp.controllers', []).controller('BootstrapCtrl', [ '$rootScop
 		});
 	}
 	/**
-	 * load mongodb
+	 * load neo4jdb
 	 */
-	$scope.loadMongodb = function(target) {
+	$scope.loadNeo4jdb = function(target) {
 		/**
-		 * load mongodb elements
+		 * load neo4jdb elements
 		 */
-		$scope.jarvis.mongodb = {};
+		$scope.jarvis.neo4jdb = {};
 		/**
-		 * loading mongodb collections then navigate to target
+		 * loading neo4jdb collections then navigate to target
 		 */
 		jarvisServices.getDbCollections({}, function(data) {
-			$scope.jarvis.mongodb.collections = data;
+			$scope.jarvis.neo4jdb.collections = data;
 			/**
 			 * navigate to target
 			 */
@@ -120,13 +120,17 @@ angular.module('myApp.controllers', []).controller('BootstrapCtrl', [ '$rootScop
 	 *            the selected collection
 	 */
 	$scope.loadCollection = function(collection, target) {
+		var offset = collection.count - 20;
+		if(offset < 0) {
+			offset = 0;
+		}
 		/**
-		 * loading mongodb collections then navigate to target
+		 * loading neo4jdb collections then navigate to target
 		 */
 		jarvisServices.getCollection({
 			'database' : collection.db,
 			'name' : collection.name,
-			'offset' : collection.count - 20,
+			'offset' : offset,
 			'page' : 20
 		}, function(data) {
 			var columns = [];
@@ -135,11 +139,11 @@ angular.module('myApp.controllers', []).controller('BootstrapCtrl', [ '$rootScop
 					columns.push(column);
 				}
 			}
-			$scope.jarvis.mongodb.current = collection;
-			$scope.jarvis.mongodb.collection = data;
-			$scope.jarvis.mongodb.columns = columns;
-			$scope.jarvis.mongodb.offset = collection.count - 20;
-			$scope.jarvis.mongodb.page = 20;
+			$scope.jarvis.neo4jdb.current = collection;
+			$scope.jarvis.neo4jdb.collection = data;
+			$scope.jarvis.neo4jdb.columns = columns;
+			$scope.jarvis.neo4jdb.offset = offset;
+			$scope.jarvis.neo4jdb.page = 20;
 
 			/**
 			 * navigate to target

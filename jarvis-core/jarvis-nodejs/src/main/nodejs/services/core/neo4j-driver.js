@@ -105,14 +105,14 @@ module.exports = {
          * get node
          * http://neo4j.com/docs/2.2.2/rest-api-nodes.html#rest-api-get-node
          */
-        get: function (handle, id, cb, cberr) {
+        get: function (handle, id, ctx, cb, cberr) {
             restCall(
                 handle,
                 {},
                 '/db/data/node/' + id,
                 'GET',
                 function (response) {
-                    cb(response.entity.metadata, response.entity.data);
+                    cb(ctx, response.entity.metadata, response.entity.data);
                 },
                 function (err) {
                     if(cberr) cberr(err);

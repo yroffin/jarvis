@@ -66,7 +66,7 @@ myAppServices.factory('jarvisServices', [ '$resource', function($resource, $wind
 		 */
 		countDbCollections : {
 			method : 'GET',
-			url : jarvisServicesUrl + '/neo4j/crud/:database/:name/count',
+			url : jarvisServicesUrl + '/neo4j/crud/:name/count',
 			params : {},
 			isArray : false,
 			cache : false
@@ -76,7 +76,7 @@ myAppServices.factory('jarvisServices', [ '$resource', function($resource, $wind
 		 */
 		getCollection : {
 			method : 'GET',
-			url : jarvisServicesUrl + '/neo4j/crud/:database/:name/page?offset=:offset&page=:page',
+			url : jarvisServicesUrl + '/neo4j/crud/:name/page?offset=:offset&page=:page',
 			params : {},
 			isArray : true,
 			cache : false

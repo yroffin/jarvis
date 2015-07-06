@@ -35,7 +35,7 @@ limitations under the License.
                     <ul>
                         <li><a href="#home" data-icon="home">Accueil</a></li>
                         <li><a href="#" data-icon="grid" ng-click="loadConfiguration('#configuration')">Configuration</a></li>
-                        <li><a href="#" data-transition="flip" data-icon="user" ng-click="loadMongodb('#mongodb')">Mongodb</a></li>
+                        <li><a href="#" data-transition="flip" data-icon="user" ng-click="loadNeo4jdb('#neo4jdb')">Neo4j</a></li>
                     </ul>
                 </div>
                 <h1>Jarvis</h1>
@@ -161,20 +161,20 @@ limitations under the License.
             <a ng-click="createJob('#configuration')" data-transition="flip" class="ui-btn">Create</a>
         </div>
   
-        <!-- mongodb page -->
-        <div data-role="page" id="mongodb" data-theme="{{theme}}">
+        <!-- neo4jdb page -->
+        <div data-role="page" id="neo4jdb" data-theme="{{theme}}">
             <div data-role="header">
                 <div data-role="navbar">
                     <ul>
                         <li><a href="#home" id="home" data-icon="home">Accueil</a></li>
                     </ul>
                 </div>
-                <h1>Base MongoDB</h1>
+                <h1>Base Neo4jDB</h1>
             </div>
             <div role="main" class="ui-content">
                 <div>
                   <h1>Collections</h1>
-                    <table data-role="table" id="mongodb-collections" data-mode="reflow" class="ui-responsive table-stroke">
+                    <table data-role="table" id="neo4jdb-collections" data-mode="reflow" class="ui-responsive table-stroke">
                       <thead>
                         <tr>
                           <th data-priority = "1">Database</th>
@@ -183,7 +183,7 @@ limitations under the License.
                         </tr>
                       </thead>
                       <tbody>
-                          <tr href="#mongodb-collection" ng-repeat="item in jarvis.mongodb.collections" ng-click="loadCollection(item,'#mongodb-collection')" >
+                          <tr href="#neo4jdb-collection" ng-repeat="item in jarvis.neo4jdb.collections" ng-click="loadCollection(item,'#neo4jdb-collection')" >
                             <td>{{item.db}}</td>
                             <td>{{item.name}}</td>
                             <td>{{item.count}}</td>
@@ -196,8 +196,8 @@ limitations under the License.
             </div>
         </div>
 
-        <!-- mongodb collection detail page -->
-        <div data-role="page" id="mongodb-collection" data-theme="{{theme}}">
+        <!-- neo4jdb collection detail page -->
+        <div data-role="page" id="neo4jdb-collection" data-theme="{{theme}}">
             <div data-role="header">
                 <div data-role="navbar">
                     <ul>
@@ -208,16 +208,16 @@ limitations under the License.
             </div>
             <div role="main" class="ui-content">
                 <div>
-                  <h1>Collection {{jarvis.mongodb.current.name}}</h1>
-                    <table data-role="table" id="mongodb-collection" data-mode="reflow" class="ui-responsive table-stroke">
+                  <h1>Collection {{jarvis.neo4jdb.current.name}}</h1>
+                    <table data-role="table" id="neo4jdb-collections" data-mode="reflow" class="ui-responsive table-stroke">
                       <thead>
                         <tr>
-                          <th data-priority = "1" ng-repeat="item in jarvis.mongodb.columns">{{item}}</th>
+                          <th data-priority = "1" ng-repeat="item in jarvis.neo4jdb.columns">{{item}}</th>
                         </tr>
                       </thead>
                       <tbody>
-                          <tr ng-repeat="item in jarvis.mongodb.collection" >
-                            <td ng-repeat="name in jarvis.mongodb.columns">{{$eval('item.' + name)}}</td>
+                          <tr ng-repeat="item in jarvis.neo4jdb.collection" >
+                            <td ng-repeat="name in jarvis.neo4jdb.columns">{{$eval('item.' + name)}}</td>
                           </tr>
                       </tbody>
                     </table>

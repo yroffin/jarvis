@@ -119,7 +119,7 @@ var objectVisitor = function(visited, filled, keys, postCreate, ownerId, label) 
  * @param type
  * @param cb
  */
-var findRelationshipEnd = function(id, idx, type, cb) {
+var findRelationshipEnd = function(ctx, id, idx, type, cb) {
 	/**
 	 * find relationship
 	 */
@@ -133,7 +133,7 @@ var findRelationshipEnd = function(id, idx, type, cb) {
 			/**
 			 * enrich with param entity
 			 */
-			neo4jDriver.node.get(_neo4j_driver, endId, cb);
+			neo4jDriver.node.get(_neo4j_driver, endId, ctx, cb);
 		}
 	);
 }
@@ -325,8 +325,8 @@ module.exports = {
 				/**
 				 * find params entity and update it
 				 */
-				findRelationshipEnd(cron.id, 0, 'params',
-					function (metadata,data) {
+				findRelationshipEnd({}, cron.id, 0, 'params',
+					function (ctx, metadata,data) {
 						neo4jDriver.node.update(_neo4j_driver, metadata.id, params,
 							function(entity) {
 								syncCronUpdate.result = true;
@@ -358,15 +358,18 @@ module.exports = {
 		 * get all cron element
 		 */
 		var len = crons.length;
+		var params = len;
 		for(var index = 0; index < len; index ++) {
-			var cron = crons[index];
-			findRelationshipEnd(crons[index].id, 0, 'params',
-				function (metadata,data) {
+			findRelationshipEnd({
+					index:index,
+					crons:crons}, crons[index].id, 0, 'params',
+				function (ctx, metadata,data) {
 					/**
 					 * assume only one params by node
 					 */
-					cron.params = data;
-					if (index == len) {
+					ctx.crons[ctx.index].params = data;
+					params--;
+					if (params == 0) {
 						cronlist.result = true;
 					}
 				}

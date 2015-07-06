@@ -37,8 +37,8 @@ exports.init = function(app) {
 	 * collections services
 	 */
 	app.get('/services/neo4j/:key', neo4j.collections);
-	app.get('/services/neo4j/crud/:database/:name/count', neo4j.collectionCount);
-	app.get('/services/neo4j/crud/:database/:name/page', neo4j.collectionPages);
+	app.get('/services/neo4j/crud/:name/count', neo4j.collectionCount);
+	app.get('/services/neo4j/crud/:name/page', neo4j.collectionPages);
 	/**
 	 * cron plugin
 	 */
