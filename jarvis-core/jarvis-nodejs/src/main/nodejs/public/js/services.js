@@ -52,11 +52,11 @@ myAppServices.factory('jarvisServices', [ '$resource', function($resource, $wind
 			cache : false
 		},
 		/**
-		 * retrieve mongodb collections
+		 * retrieve neo4j data
 		 */
 		getDbCollections : {
 			method : 'GET',
-			url : jarvisServicesUrl + '/mongodb/collections',
+			url : jarvisServicesUrl + '/neo4j/collections',
 			params : {},
 			isArray : true,
 			cache : false
@@ -66,7 +66,7 @@ myAppServices.factory('jarvisServices', [ '$resource', function($resource, $wind
 		 */
 		countDbCollections : {
 			method : 'GET',
-			url : jarvisServicesUrl + '/mongodb/crud/:database/:name/count',
+			url : jarvisServicesUrl + '/neo4j/crud/:database/:name/count',
 			params : {},
 			isArray : false,
 			cache : false
@@ -76,7 +76,7 @@ myAppServices.factory('jarvisServices', [ '$resource', function($resource, $wind
 		 */
 		getCollection : {
 			method : 'GET',
-			url : jarvisServicesUrl + '/mongodb/crud/:database/:name/page?offset=:offset&page=:page',
+			url : jarvisServicesUrl + '/neo4j/crud/:database/:name/page?offset=:offset&page=:page',
 			params : {},
 			isArray : true,
 			cache : false
@@ -86,7 +86,7 @@ myAppServices.factory('jarvisServices', [ '$resource', function($resource, $wind
 		 */
 		createJob : {
 			method : 'GET',
-			url : jarvisServicesUrl + '/mongodb/crontab/:plugin/create?job=:job&params=:params&cronTime=:cronTime',
+			url : jarvisServicesUrl + '/neo4j/crontab/:plugin/create?job=:job&params=:params&cronTime=:cronTime',
 			params : {},
 			isArray : false,
 			cache : false
@@ -96,7 +96,7 @@ myAppServices.factory('jarvisServices', [ '$resource', function($resource, $wind
 		 */
 		getJobs : {
 			method : 'GET',
-			url : jarvisServicesUrl + '/mongodb/crontabs/list',
+			url : jarvisServicesUrl + '/neo4j/crontabs/list',
 			params : {},
 			isArray : true,
 			cache : false
@@ -106,7 +106,7 @@ myAppServices.factory('jarvisServices', [ '$resource', function($resource, $wind
 		 */
 		testJob : {
 			method : 'GET',
-			url : jarvisServicesUrl + '/mongodb/crontab/:plugin/test?job=:job',
+			url : jarvisServicesUrl + '/neo4j/crontab/:plugin/test?job=:job',
 			params : {},
 			isArray : true,
 			cache : false

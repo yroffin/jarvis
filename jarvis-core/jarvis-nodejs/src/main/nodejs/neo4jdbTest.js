@@ -22,6 +22,9 @@ var neo4j = require(__dirname + '/services/core/neo4jdb');
 neo4j.init('http://neo4j:123456@localhost:7474', true);
 
 neo4j.syncCronCreate('job #1','* * * * ', 'date', {a:2});
+neo4j.syncCronCreate('job #2','* * * * ', 'date', {a:2});
+neo4j.syncCronCreate('job #3','* * * * ', 'date', {a:2});
+
 neo4j.syncStoreInCollectionByName('blob',{
 	tab:[0,{a:2},2,3,new Date(),5],
 	username : 'yroffin',
@@ -47,4 +50,16 @@ neo4j.syncStoreInCollectionByName('blob',{
 	}
 });
 
-neo4j.syncPageCollectionByName('crontab',0,100);
+var res = neo4j.syncPageCollectionByName('crontab', {offset:1, page:100});
+
+var crons = neo4j.syncCronList();
+var altc = neo4j.syncCronList(undefined)
+
+var job = crons[0];
+job.plugin = 'new';
+
+neo4j.syncCronUpdate(job.job, job.cronTime, 'new', {b:1,c:4}, job.timestamp, job.started);
+var count = neo4j.syncCountCollectionByName('crontab');
+var count = neo4j.getSyncCollections();
+
+var i =0;

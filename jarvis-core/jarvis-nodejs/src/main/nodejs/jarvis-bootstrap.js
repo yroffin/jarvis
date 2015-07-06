@@ -70,9 +70,7 @@ function main() {
 	var app = express();
 
 	// Activate cookies, sessions and forms
-	app.use(express.logger()).use(express.static(__dirname + '/public')).use(express.favicon(__dirname + '/public/favicon.ico')).use(express.cookieParser()).use(express.session({
-		secret : 'secretkey'
-	})).use(express.bodyParser());
+	app.use(express.static(__dirname + '/public'));
 
 	/**
 	 * start xmpp server and xmppcli

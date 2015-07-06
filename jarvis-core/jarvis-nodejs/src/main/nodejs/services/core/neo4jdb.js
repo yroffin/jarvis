@@ -19,12 +19,14 @@
  */
 var logger = require('blammo').LoggerFactory.getLogger('neo4j');
 
+var deasync = require('deasync');
+var EventEmitter = require('events').EventEmitter;
+
 /**
  * native mongo driver for raw operation
  */
 var neo4j = require('neo4j');
 var neo4jDriver = require('./neo4j-driver');
-var _neo4j_jarvis = undefined;
 var _neo4j_driver = undefined;
 
 /**
@@ -112,6 +114,42 @@ var objectVisitor = function(visited, filled, keys, postCreate, ownerId, label) 
 }
 
 /**
+ * find target entity by relationship
+ * @param id
+ * @param type
+ * @param cb
+ */
+var findRelationshipEnd = function(id, idx, type, cb) {
+	/**
+	 * find relationship
+	 */
+	neo4jDriver.node.relationships(_neo4j_driver, id,type,
+		function (entity) {
+			/**
+			 * assume only one params by node
+			 */
+			var lastIndex = entity[idx].end.lastIndexOf('/');
+			var endId = entity[idx].end.substr(lastIndex + 1);
+			/**
+			 * enrich with param entity
+			 */
+			neo4jDriver.node.get(_neo4j_driver, endId, cb);
+		}
+	);
+}
+
+/**
+ * wait for initialization
+ *
+ * @param variable
+ */
+function waitFor(data) {
+	while (data.result === undefined) {
+		deasync.sleep(10);
+	}
+}
+
+/**
  * public method
  * @type {{init: Function, cypher: {query: Function}, node: {create: Function, prop: Function}, relationship: {create: Function}}}
  */
@@ -123,8 +161,6 @@ module.exports = {
 		/**
 		 * main database
 		 */
-		_neo4j_jarvis = new neo4j.GraphDatabase(jarvisUrl);
-
 		_neo4j_driver = neo4jDriver.init(jarvisUrl);
 		if (drop) {
 			/**
@@ -138,17 +174,211 @@ module.exports = {
 		}
 	},
 	/**
-	 * get collection by label
+	 * get collection count by label
 	 * @param label
-	 * @param offset
-	 * @param page
 	 */
-	syncPageCollectionByName: function (label, offset, page) {
-		neo4jDriver.cypher.query(_neo4j_driver, 'MATCH (n) WHERE labels(n) = [\''+label+'\']  RETURN n LIMIT ' + page,
+	getSyncCollections: function (label) {
+		var collections = {
+			'result' : undefined
+		};
+
+		/**
+		 * query by labels
+		 */
+		neo4jDriver.cypher.query(_neo4j_driver, 'START n=node(*) RETURN distinct labels(n), count(*)',
 			function (response) {
-				logger.debug("Neo4j test : ", JSON.stringify(response));
+				var resultset = response[0].data;
+				var result = [];
+				var len = resultset.length;
+				for(var index = 0;index < len;index++) {
+					result[index] = {name:resultset[index].row[0][0], count:resultset[index].row[1]};
+				}
+				collections.result = result;
 			}
 		);
+
+		/**
+		 * wait for completion
+		 */
+		waitFor(collections);
+		return collections.result;
+	},
+	/**
+	 * get collection count by label
+	 * @param label
+	 */
+	syncCountCollectionByName: function (label) {
+		var collections = {
+			'result' : undefined
+		};
+
+		/**
+		 * query by labels
+		 */
+		neo4jDriver.cypher.query(_neo4j_driver, 'MATCH (n) WHERE labels(n) = [\''+label+'\']  RETURN count(n)',
+			function (response) {
+				collections.result = response[0].data[0].row[0];
+			}
+		);
+
+		/**
+		 * wait for completion
+		 */
+		waitFor(collections);
+		return collections.result;
+	},
+	/**
+	 * get collection by label
+	 * @param label
+	 * @param filter {filter, offset, page}
+	 */
+	syncPageCollectionByName: function (label, filter) {
+		var collections = {
+			'result' : undefined
+		};
+
+		/**
+		 * create filter if undefined
+		 */
+		if(!filter) {
+			filter = {};
+		}
+
+		/**
+		 * skip offset rows, warn to order by it correctly
+		 * @type {string}
+		 */
+		var skip = '';
+		if(filter.offset) {
+			skip = 'SKIP ' + filter.offset;
+		}
+
+		/**
+		 * limit resultset
+		 * @type {string}
+		 */
+		var limit = '';
+		if(filter.page) {
+			limit = 'LIMIT ' + filter.page;
+		}
+
+		/**
+		 * filter resultset
+		 * @type {string}
+		 */
+		var where = '';
+		if(filter.filter) {
+			where = ' AND (' + filter.filter + ')';
+		}
+
+		/**
+		 * query by labels
+		 */
+		neo4jDriver.cypher.query(_neo4j_driver, 'MATCH (n) WHERE labels(n) = [\''+label+'\']  ' + where + ' RETURN n, id(n) ' + skip + ' ' + limit,
+			function (response) {
+				var resultset = response[0].data;
+				var result = [];
+				var len = resultset.length;
+				for(var index = 0;index < len;index++) {
+					result[index] = resultset[index].row[0];
+					result[index].id  = resultset[index].row[1];
+				}
+				collections.result = result;
+			},
+			function (err) {
+				throw err;
+			}
+		);
+
+		/**
+		 * wait for completion
+		 */
+		waitFor(collections);
+		return collections.result;
+	},
+	/**
+	 * update cron job, ex: register a new plugin for cron jobs
+	 *
+	 * @param job
+	 * @param cronTime
+	 * @param plugin
+	 * @param params
+	 * @param timestamp
+	 * @param started
+	 * @returns {*}
+	 */
+	syncCronUpdate: function(job, cronTime, plugin, params, timestamp, started) {
+		var syncCronUpdate = {
+			'result' : undefined
+		};
+
+		/**
+		 * find entity from database
+		 */
+		var cron = this.syncPageCollectionByName('crontab',{filter:"n.job = '" + job + "'"})[0];
+
+		/**
+		 * update this node
+		 */
+		neo4jDriver.node.update(_neo4j_driver, cron.id, {job:job, cronTime:cronTime, plugin:plugin, timestamp:timestamp, started:started},
+			function (entity) {
+				/**
+				 * find params entity and update it
+				 */
+				findRelationshipEnd(cron.id, 0, 'params',
+					function (metadata,data) {
+						neo4jDriver.node.update(_neo4j_driver, metadata.id, params,
+							function(entity) {
+								syncCronUpdate.result = true;
+							}
+						);
+					}
+				);
+			}
+		);
+
+		/**
+		 * sync wait
+		 */
+		waitFor(syncCronUpdate);
+
+	},
+	/**
+	 * create cron job
+	 *
+	 * @param filter
+	 */
+	syncCronList: function(filter) {
+		var cronlist = {
+			'result' : undefined
+		};
+		var crons = this.syncPageCollectionByName('crontab', filter);
+
+		/**
+		 * get all cron element
+		 */
+		var len = crons.length;
+		for(var index = 0; index < len; index ++) {
+			var cron = crons[index];
+			findRelationshipEnd(crons[index].id, 0, 'params',
+				function (metadata,data) {
+					/**
+					 * assume only one params by node
+					 */
+					cron.params = data;
+					if (index == len) {
+						cronlist.result = true;
+					}
+				}
+			);
+		}
+
+		/**
+		 * sync wait
+		 */
+		waitFor(cronlist);
+
+		return crons;
 	},
 	/**
 	 * create cron job
@@ -158,6 +388,10 @@ module.exports = {
 	 * @param params
 	 */
 	syncCronCreate: function(job, cronTime, plugin, params) {
+		var label = {
+			'result' : undefined
+		};
+
 		var blob = {
 			job : job,
 			cronTime : cronTime,
@@ -172,9 +406,17 @@ module.exports = {
 			 * @param label
 			 */
 			function(nodeId) {
-				neo4jDriver.node.label(_neo4j_driver, nodeId, 'crontab');
+				neo4jDriver.node.label(_neo4j_driver, nodeId, 'crontab',
+				function() {
+					label.result = true;
+				});
 			}
 		);
+
+		/**
+		 * sync wait
+		 */
+		waitFor(label);
 	},
 	/**
 	 * store object

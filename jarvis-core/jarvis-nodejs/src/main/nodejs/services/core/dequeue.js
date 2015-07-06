@@ -86,7 +86,6 @@ Dequeue.prototype.empty = function() {
 }
 
 Dequeue.prototype.all = function() {
-	debugger;
 	var result = [];
 	if (this.head.prev === this.head)
 		return result;

@@ -17,6 +17,8 @@
 /**
  * neo4j driver based on api rest
  */
+var rest = require('rest');
+var mime = require('rest/interceptor/mime');
 
 /**
  * node create
@@ -31,8 +33,7 @@ var restCall = function(handle, node, path, method, cb, err) {
         path: handle._url + path,
         method: method,
         headers: {} };
-    request.headers['Content-Type'] = 'application/json; charset=UTF-8';
-    handle._client(request).then(cb).otherwise(err);
+    var res = rest.wrap(mime, { mime: 'application/json' })(request).done(cb,err);
 }
 
 /**
@@ -101,8 +102,27 @@ module.exports = {
             );
         },
         /**
-         * property add
-         * Cf. http://neo4j.com/docs/2.2.2/rest-api-node-properties.html#rest-api-set-property-on-node
+         * get node
+         * http://neo4j.com/docs/2.2.2/rest-api-nodes.html#rest-api-get-node
+         */
+        get: function (handle, id, cb, cberr) {
+            restCall(
+                handle,
+                {},
+                '/db/data/node/' + id,
+                'GET',
+                function (response) {
+                    cb(response.entity.metadata, response.entity.data);
+                },
+                function (err) {
+                    if(cberr) cberr(err);
+                    else throw err;
+                }
+            );
+        },
+        /**
+         * label add
+         * http://neo4j.com/docs/2.2.2/rest-api-node-labels.html#rest-api-adding-a-label-to-a-node
          *
          * @param handle
          * @param id
@@ -134,6 +154,163 @@ module.exports = {
             );
         },
         /**
+         * degrees list
+         * http://neo4j.com/docs/2.2.2/rest-api-node-degree.html#rest-api-get-the-degree-of-a-node
+         *
+         * @param handle
+         * @param id
+         * @param cb
+         * @param cberr
+         */
+        degrees : function(handle, id, cb, cberr) {
+            restCall(
+                handle,
+                {},
+                '/db/data/node/'+id+'/degree/all',
+                'GET',
+                function(response) {
+                    if(response.entity.errors) {
+                        if(cberr) cberr(response.entity.errors);
+                        else throw response.entity.errors;
+                    } else {
+                        if(cb) {
+                            cb(response.entity);
+                        }
+                    }
+                },
+                function (err) {
+                    if(cberr) cberr(err);
+                    else throw err;
+                }
+            );
+        },
+        /**
+         * degrees out
+         * http://neo4j.com/docs/2.2.2/rest-api-node-degree.html#rest-api-get-the-degree-of-a-node-by-direction
+         *
+         * @param handle
+         * @param id
+         * @param cb
+         * @param cberr
+         */
+        degreesOut : function(handle, id, cb, cberr) {
+            restCall(
+                handle,
+                {},
+                '/db/data/node/'+id+'/degree/out',
+                'GET',
+                function(response) {
+                    if(response.entity.errors) {
+                        if(cberr) cberr(response.entity.errors);
+                        else throw response.entity.errors;
+                    } else {
+                        if(cb) {
+                            cb(response.entity);
+                        }
+                    }
+                },
+                function (err) {
+                    if(cberr) cberr(err);
+                    else throw err;
+                }
+            );
+        },
+        /**
+         * degree
+         * http://neo4j.com/docs/2.2.2/rest-api-node-degree.html#rest-api-get-the-degree-of-a-node-by-direction-and-types
+         *
+         * @param handle
+         * @param id
+         * @param name
+         * @param cb
+         * @param cberr
+         */
+        degree : function(handle, id, name, cb, cberr) {
+            restCall(
+                handle,
+                {},
+                '/db/data/node/'+id+'/degree/out/' + name,
+                'GET',
+                function(response) {
+                    if(response.entity.errors) {
+                        if(cberr) cberr(response.entity.errors);
+                        else throw response.entity.errors;
+                    } else {
+                        if(cb) {
+                            cb(response.entity);
+                        }
+                    }
+                },
+                function (err) {
+                    if(cberr) cberr(err);
+                    else throw err;
+                }
+            );
+        },
+        /**
+         * get typed relationships
+         * http://neo4j.com/docs/2.2.2/rest-api-relationships.html#rest-api-get-typed-relationships
+         *
+         * @param handle
+         * @param id
+         * @param name
+         * @param cb
+         * @param cberr
+         */
+        relationships : function(handle, id, name, cb, cberr) {
+            restCall(
+                handle,
+                {},
+                '/db/data/node/'+id+'/relationships/out/' + name,
+                'GET',
+                function(response) {
+                    if(response.entity.errors) {
+                        if(cberr) cberr(response.entity.errors);
+                        else throw response.entity.errors;
+                    } else {
+                        if(cb) {
+                            cb(response.entity);
+                        }
+                    }
+                },
+                function (err) {
+                    if(cberr) cberr(err);
+                    else throw err;
+                }
+            );
+        },
+        /**
+         * update properties
+         * Cf. http://neo4j.com/docs/2.2.2/rest-api-node-properties.html#rest-api-update-node-properties
+         *
+         * @param handle
+         * @param id
+         * @param properties
+         * @param cb
+         * @param cberr
+         */
+        update : function(handle, id, properties, cb, cberr) {
+            restCall(
+                handle,
+                properties,
+                '/db/data/node/'+id+'/properties',
+                'PUT',
+                function(response) {
+                    if(response.entity.errors) {
+                        cberr(response.entity.errors);
+                    } else {
+                        if(cb) {
+                            cb(response.entity);
+                        }
+                    }
+                },
+                function (err) {
+                    if(cberr) cberr(err);
+                    else throw err;
+                }
+            );
+        },
+        /**
          * property add
          * Cf. http://neo4j.com/docs/2.2.2/rest-api-node-properties.html#rest-api-set-property-on-node
          *
@@ -144,7 +321,7 @@ module.exports = {
          * @param cb
          * @param cberr
          */
-        prop : function(handle, id, prop, value, cb, cberr) {
+        properties : function(handle, id, prop, value, cb, cberr) {
             restCall(
                 handle,
                 value,

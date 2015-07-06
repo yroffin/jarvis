@@ -17,7 +17,7 @@
 var logger = require('blammo').LoggerFactory.getLogger('kernel');
 var config = require(__dirname + '/../json/config');
 var interact = require(__dirname + '/../json/interact');
-var mongodb = require(__dirname + '/../json/mongodb');
+var neo4j = require(__dirname + '/../json/neo4jdb');
 
 /**
  * initialise all routes
@@ -36,16 +36,16 @@ exports.init = function(app) {
 	/**
 	 * collections services
 	 */
-	app.get('/services/mongodb/:key', mongodb.collections);
-	app.get('/services/mongodb/crud/:database/:name/count', mongodb.collectionCount);
-	app.get('/services/mongodb/crud/:database/:name/page', mongodb.collectionPages);
+	app.get('/services/neo4j/:key', neo4j.collections);
+	app.get('/services/neo4j/crud/:database/:name/count', neo4j.collectionCount);
+	app.get('/services/neo4j/crud/:database/:name/page', neo4j.collectionPages);
 	/**
 	 * cron plugin
 	 */
-	app.get('/services/mongodb/crontab/:plugin/create', mongodb.cronPlugin);
-	app.post('/services/mongodb/crontab/:plugin/create', mongodb.cronPlugin);
-	app.get('/services/mongodb/crontab/:plugin/test', mongodb.cronTestPlugin);
-	app.post('/services/mongodb/crontab/:plugin/test', mongodb.cronTestPlugin);
-	app.get('/services/mongodb/crontabs/list', mongodb.cronList);
+	app.get('/services/neo4j/crontab/:plugin/create', neo4j.cronPlugin);
+	app.post('/services/neo4j/crontab/:plugin/create', neo4j.cronPlugin);
+	app.get('/services/neo4j/crontab/:plugin/test', neo4j.cronTestPlugin);
+	app.post('/services/neo4j/crontab/:plugin/test', neo4j.cronTestPlugin);
+	app.get('/services/neo4j/crontabs/list', neo4j.cronList);
 	return;
 };
