@@ -27,7 +27,9 @@ var clients = {}
  */
 exports.end = function(host, port, args) {
 	logger.warn("Client end", args.jid);
-	clients[args.jid].end();
+	if(clients[args.jid]) {
+		clients[args.jid].end();
+	}
 }
 
 /**
