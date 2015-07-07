@@ -21,6 +21,8 @@ var neo4j = require(__dirname + '/services/core/neo4jdb');
 
 neo4j.init('http://neo4j:123456@localhost:7474', true);
 
+var crons = neo4j.syncCronList();
+
 neo4j.syncCronCreate('job #1','* * * * ', 'date', {a:2});
 neo4j.syncCronCreate('job #2','* * * * ', 'date', {a:2});
 neo4j.syncCronCreate('job #3','* * * * ', 'date', {a:2});

@@ -25,7 +25,6 @@ var EventEmitter = require('events').EventEmitter;
 /**
  * native mongo driver for raw operation
  */
-var neo4j = require('neo4j');
 var neo4jDriver = require('./neo4j-driver');
 var _neo4j_driver = undefined;
 
@@ -358,28 +357,31 @@ module.exports = {
 		 * get all cron element
 		 */
 		var len = crons.length;
-		var params = len;
-		for(var index = 0; index < len; index ++) {
-			findRelationshipEnd({
-					index:index,
-					crons:crons}, crons[index].id, 0, 'params',
-				function (ctx, metadata,data) {
-					/**
-					 * assume only one params by node
-					 */
-					ctx.crons[ctx.index].params = data;
-					params--;
-					if (params == 0) {
-						cronlist.result = true;
+		if(len > 0) {
+			var params = len;
+			for (var index = 0; index < len; index++) {
+				findRelationshipEnd({
+						index: index,
+						crons: crons
+					}, crons[index].id, 0, 'params',
+					function (ctx, metadata, data) {
+						/**
+						 * assume only one params by node
+						 */
+						ctx.crons[ctx.index].params = data;
+						params--;
+						if (params == 0) {
+							cronlist.result = true;
+						}
 					}
-				}
-			);
-		}
+				);
+			}
 
-		/**
-		 * sync wait
-		 */
-		waitFor(cronlist);
+			/**
+			 * sync wait
+			 */
+			waitFor(cronlist);
+		}
 
 		return crons;
 	},
