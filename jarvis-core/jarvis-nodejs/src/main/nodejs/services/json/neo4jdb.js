@@ -98,7 +98,7 @@ exports.cronTestPlugin = function(req, res) {
     /**
      * job, cronTime, plugin, params
      */
-    var job = neo4j.syncCronList({filter:"n.job = '" + job + "'"})[0];
+    var job = neo4j.syncCronList({filter:"n.job = '" + req.query.job + "'"})[0];
     logger.error(kernel.xmppcliForkScript(job));
     res.json(job);
 }

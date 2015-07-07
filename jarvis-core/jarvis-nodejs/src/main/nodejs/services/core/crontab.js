@@ -57,7 +57,7 @@ exports.start = function(callback) {
 						 * recover last version of job from database
 						 */
 						var newJobs = neo4j.syncCronList({
-							job : this.job
+							filter:"n.job = '" + job.job + "'"
 						});
 						var updateJob = newJobs[0];
 						this.started = true;
