@@ -60,12 +60,18 @@ exports.start = function(callback) {
 							filter:"n.job = '" + job.job + "'"
 						});
 						var updateJob = newJobs[0];
-						this.started = true;
-						this.timestamp = new Date();
-						this.plugin = updateJob.plugin;
-						this.params = updateJob.params;
-						neo4j.syncCronUpdate(this.job, this.cronTime, this.plugin, this.params, this.timestamp, true);
-						callback(this);
+						/**
+						 * protect update from undefined
+						 * values
+						 */
+						if(updateJob) {
+							this.started = true;
+							this.timestamp = new Date();
+							this.plugin = updateJob.plugin;
+							this.params = updateJob.params;
+							neo4j.syncCronUpdate(this.job, this.cronTime, this.plugin, this.params, this.timestamp, true);
+							callback(this);
+						}
 					},
 					start : false,
 					timeZone : "Europe/Paris",
