@@ -35,7 +35,7 @@ var _neo4j_driver = undefined;
  * @returns {boolean}
  */
 var isField = function(key, val) {
-	return typeof (val) != 'object' || val instanceof Date;
+	return typeof (val) != 'object' || val == null || val instanceof Date;
 }
 
 /**
@@ -57,7 +57,11 @@ var objectVisitor = function(visited, filled, keys, postCreate, ownerId, label) 
 			/**
 			 * new field detection
 			 */
-			filled[key] = val;
+			var realValue = val;
+			if(realValue == null) {
+				realValue = undefined;
+			}
+			filled[key] = realValue;
 		}
 		var i = 0;
 	}
