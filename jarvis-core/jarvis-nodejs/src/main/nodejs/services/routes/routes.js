@@ -47,5 +47,6 @@ exports.init = function(app) {
 	app.get('/services/neo4j/crontab/:plugin/test', neo4j.cronTestPlugin);
 	app.post('/services/neo4j/crontab/:plugin/test', neo4j.cronTestPlugin);
 	app.get('/services/neo4j/crontabs/list', neo4j.cronList);
+	app.delete('/services/neo4j/crontab', neo4j.cronRemoveByName);
 	return;
 };

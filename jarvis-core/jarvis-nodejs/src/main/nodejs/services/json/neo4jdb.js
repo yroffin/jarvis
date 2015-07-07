@@ -85,7 +85,14 @@ exports.cronPlugin = function(req, res) {
     /**
      * job, cronTime, plugin, params
      */
-    res.json(neo4j.syncCronCreate(req.query.job, req.query.cronTime, req.params.plugin, JSON.parse(req.query.params)));
+    var jobToCreate = {};
+    try {
+        jobToCreate = neo4j.syncCronCreate(req.query.job, req.query.cronTime, req.params.plugin, JSON.parse(req.query.params));
+    } catch(e) {
+        res.json({exception:e});
+        return;
+    }
+    res.json(jobToCreate);
 }
 
 /**
@@ -115,4 +122,18 @@ exports.cronList = function(req, res) {
      */
     var lst = neo4j.syncCronList(req.query.filter);
     res.json(lst);
+};
+
+/**
+ * crud operation for crontab
+ */
+exports.cronRemoveByName = function(req, res) {
+    logger.info('cronList() request', req.query);
+    logger.info('cronList() params', req.params);
+
+    /**
+     * delete by name
+     */
+    neo4j.deleteCron(req.query.name);
+    res.json({});
 };

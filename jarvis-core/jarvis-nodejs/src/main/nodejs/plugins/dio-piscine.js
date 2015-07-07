@@ -18,10 +18,18 @@
  * logging
  */
 var logger = require('blammo').LoggerFactory.getLogger('plugins');
+var kernel = require(__dirname + '/../services/core/kernel');
 
 /**
  * run this plugin
  */
 exports.execute = function(params) {
 	logger.info("execute()", params);
+	/**
+	 * use api to send this message
+	 */
+	kernel.remoteModuleRender({
+		name : params.name,
+		message : params.command
+	});
 };

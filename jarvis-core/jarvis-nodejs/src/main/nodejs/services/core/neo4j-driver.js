@@ -72,7 +72,7 @@ module.exports = {
                 '/db/data/transaction/commit',
                 'POST',
                 function (response) {
-                    cb(response.entity.results);
+                    if(cb) cb(response.entity.results);
                 },
                 function (err) {
                     if(cberr) cberr(err);

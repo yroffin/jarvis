@@ -61,7 +61,7 @@ angular.module('myApp.controllers', []).controller('BootstrapCtrl', [ '$rootScop
 				$scope.jarvis.configuration.events = data.events;
 
 				/**
-				 * loading events
+				 * loading jobs
 				 */
 				jarvisServices.getJobs({}, function(data) {
 					console.warn('jobs', target);
@@ -218,6 +218,30 @@ angular.module('myApp.controllers', []).controller('BootstrapCtrl', [ '$rootScop
 			job : target.job
 		}, function(data) {
 			console.log(data);
+		}, function(failure) {
+			/**
+			 * TODO : handle error message
+			 */
+		});
+	}
+	$scope.deleteJobByName = function(target) {
+		/**
+		 * loading clients
+		 */
+		jarvisServices.deleteJobByName({
+			name : target.job
+		}, function(data) {
+			/**
+			 * loading jobs
+			 */
+			jarvisServices.getJobs({}, function(data) {
+				console.warn('jobs updated', data);
+				$scope.jarvis.configuration.jobs = data;
+			}, function(failure) {
+				/**
+				 * TODO : handle error message
+				 */
+			});
 		}, function(failure) {
 			/**
 			 * TODO : handle error message

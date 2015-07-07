@@ -111,5 +111,15 @@ myAppServices.factory('jarvisServices', [ '$resource', function($resource, $wind
 			isArray : true,
 			cache : false
 		},
+		/**
+		 * test current selected job
+		 */
+		deleteJobByName : {
+			method : 'DELETE',
+			url : jarvisServicesUrl + '/neo4j/crontab?name=:name',
+			params : {},
+			isArray : false,
+			cache : false
+		}
 	})
 } ]);

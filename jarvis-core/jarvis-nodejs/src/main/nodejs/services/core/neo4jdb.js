@@ -177,6 +177,22 @@ module.exports = {
 		}
 	},
 	/**
+	 * delete crontab by name
+	 * @param label
+	 */
+	deleteCron: function (name) {
+		var collections = {
+			'result' : undefined
+		};
+
+		/**
+		 * query by labels
+		 */
+		neo4jDriver.cypher.query(_neo4j_driver, 'MATCH (n) WHERE n.job=\''+name+'\' OPTIONAL MATCH (n)-[r]-() DELETE n,r');
+
+		return {};
+	},
+	/**
 	 * get collection count by label
 	 * @param label
 	 */
@@ -320,31 +336,38 @@ module.exports = {
 		 */
 		var cron = this.syncPageCollectionByName('crontab',{filter:"n.job = '" + job + "'"})[0];
 
-		/**
-		 * update this node
-		 */
-		neo4jDriver.node.update(_neo4j_driver, cron.id, {job:job, cronTime:cronTime, plugin:plugin, timestamp:timestamp, started:started},
-			function (entity) {
-				/**
-				 * find params entity and update it
-				 */
-				findRelationshipEnd({}, cron.id, 0, 'params',
-					function (ctx, metadata,data) {
-						neo4jDriver.node.update(_neo4j_driver, metadata.id, params,
-							function(entity) {
-								syncCronUpdate.result = true;
-							}
-						);
-					}
-				);
-			}
-		);
+		if(cron) {
+			/**
+			 * update this node
+			 */
+			neo4jDriver.node.update(_neo4j_driver, cron.id, {
+					job: job,
+					cronTime: cronTime,
+					plugin: plugin,
+					timestamp: timestamp,
+					started: started
+				},
+				function (entity) {
+					/**
+					 * find params entity and update it
+					 */
+					findRelationshipEnd({}, cron.id, 0, 'params',
+						function (ctx, metadata, data) {
+							neo4jDriver.node.update(_neo4j_driver, metadata.id, params,
+								function (entity) {
+									syncCronUpdate.result = true;
+								}
+							);
+						}
+					);
+				}
+			);
 
-		/**
-		 * sync wait
-		 */
-		waitFor(syncCronUpdate);
-
+			/**
+			 * sync wait
+			 */
+			waitFor(syncCronUpdate);
+		}
 	},
 	/**
 	 * create cron job

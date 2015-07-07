@@ -230,7 +230,9 @@ var findDescriptorByName = function(name) {
 			break;
 		}
 	}
-	logger.debug("findDescriptorByName(%s) => %s", descriptor.name, result.index);
+	if(descriptor) {
+		logger.debug("findDescriptorByName(%s) => %s", descriptor.name, result.index);
+	}
 	return result;
 };
 
@@ -254,7 +256,9 @@ var findAnswerDescriptor = function() {
 			break;
 		}
 	}
-	logger.debug("findAnswerDescriptor() %s => %s", descriptor.id, result.index);
+	if(descriptor) {
+		logger.debug("findAnswerDescriptor() %s => %s", descriptor.id, result.index);
+	}
 	return result;
 };
 
@@ -334,6 +338,12 @@ var remoteModuleRender = function(target) {
 		 */
 		logger.error('Impossible de trouver le descripteur pour ', target);
 		descriptor = findAnswerDescriptor().descriptor;
+	}
+	/**
+	 * no descriptor no message
+	 */
+	if (!descriptor) {
+		return;
 	}
 	/**
 	 * Send a request message
