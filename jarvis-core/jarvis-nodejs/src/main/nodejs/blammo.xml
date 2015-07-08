@@ -11,7 +11,7 @@
 		<encoder type="dummy_encoder"/>
 		<layout type="pattern_layout">%timestamp|%pid|%logger|%level|%message</layout>
 		<config>
-			<filename>u:/tmp/xmppsrv.log</filename>
+			<filter type="threshold_filter">INFO</filter>
 		</config>
 	</appender>
 
@@ -19,7 +19,7 @@
 		<encoder type="dummy_encoder"/>
 		<layout type="pattern_layout">%timestamp|%pid|%logger|%level|%message</layout>
 		<config>
-			<filename>u:/tmp/xmppcli.log</filename>
+			<filter type="threshold_filter">INFO</filter>
 		</config>
 	</appender>
 
