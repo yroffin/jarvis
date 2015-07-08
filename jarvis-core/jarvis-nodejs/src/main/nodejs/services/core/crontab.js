@@ -50,14 +50,14 @@ exports.start = function(callback) {
 				/**
 				 * fork this jobs if not started
 				 */
-				cronJobs[job] = new cron.CronJob({
+				cronJobs[job.job] = new cron.CronJob({
 					cronTime : job.cronTime,
 					onTick : function() {
 						/**
 						 * recover last version of job from database
 						 */
 						var newJobs = neo4j.syncCronList({
-							filter:"n.job = '" + job.job + "'"
+							filter:"n.job = '" + this.job + "'"
 						});
 						var updateJob = newJobs[0];
 						/**
@@ -77,7 +77,7 @@ exports.start = function(callback) {
 					timeZone : "Europe/Paris",
 					context : job
 				});
-				cronJobs[job].start();
+				cronJobs[job.job].start();
 			} catch (e) {
 				/**
 				 * mark job in error (not started)
