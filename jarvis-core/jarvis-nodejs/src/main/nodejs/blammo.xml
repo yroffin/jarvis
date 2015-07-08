@@ -10,17 +10,17 @@
 	<appender name="xmppsrv" type="file_appender">
 		<encoder type="dummy_encoder"/>
 		<layout type="pattern_layout">%timestamp|%pid|%logger|%level|%message</layout>
-		<config>
+		<filters>
 			<filter type="threshold_filter">INFO</filter>
-		</config>
+		</filters>
 	</appender>
 
 	<appender name="xmppcli" type="file_appender">
 		<encoder type="dummy_encoder"/>
 		<layout type="pattern_layout">%timestamp|%pid|%logger|%level|%message</layout>
-		<config>
+		<filters>
 			<filter type="threshold_filter">INFO</filter>
-		</config>
+		</filters>
 	</appender>
 
 	<logger name="listener">
