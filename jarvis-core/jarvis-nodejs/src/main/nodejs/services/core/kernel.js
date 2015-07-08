@@ -19,6 +19,7 @@ var logger = require('blammo').LoggerFactory.getLogger('kernel');
 var Dequeue = require(__dirname + '/dequeue');
 var Xmppcli = require(__dirname + '/xmppcli');
 var xmppsrv = require(__dirname + '/xmppsrv');
+var mailer = require(__dirname + '/mailer');
 
 /**
  * events queue store all event acquire by this system before any treatment
@@ -426,6 +427,13 @@ var xmppcliScript = function(args) {
  * @return nothing
  */
 var xmppcliForkScript = function(job) {
+	/**
+	 * send mail for each message
+	 */
+	mailer.sendmail('[Jarvis]', 'Job activation', job);
+	/**
+	 * register it
+	 */
 	register({
 		'id' : -1,
 		'name' : 'xmppcli'

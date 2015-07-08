@@ -38,6 +38,7 @@ function main() {
 
 	var listener = require(__dirname + '/services/core/listener');
 	var kernel = require(__dirname + '/services/core/kernel');
+	var mailer = require(__dirname + '/services/core/mailer');
 	var xmppsrv = require(__dirname + '/services/core/xmppsrv');
 	var xmppcli = require(__dirname + '/services/core/xmppcli');
 	var crontab = require(__dirname + '/services/core/crontab');

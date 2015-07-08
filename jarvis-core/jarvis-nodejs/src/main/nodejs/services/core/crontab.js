@@ -65,6 +65,7 @@ exports.start = function(callback) {
 						 * values
 						 */
 						if(updateJob) {
+							logger.info('Activate ', this.job);
 							this.started = true;
 							this.timestamp = new Date();
 							this.plugin = updateJob.plugin;
