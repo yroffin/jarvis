@@ -19,6 +19,8 @@ var config = require(__dirname + '/../json/config');
 var interact = require(__dirname + '/../json/interact');
 var neo4j = require(__dirname + '/../json/neo4jdb');
 
+var jobs = require(__dirname + '/../resources/jobs');
+
 /**
  * initialise all routes
  */
@@ -48,5 +50,33 @@ exports.init = function(app) {
 	app.post('/services/neo4j/crontab/:plugin/test', neo4j.cronTestPlugin);
 	app.get('/services/neo4j/crontabs/list', neo4j.cronList);
 	app.delete('/services/neo4j/crontab', neo4j.cronRemoveByName);
+	/**
+	 * job resource
+	 * Method	Scope	Semantics
+	 * GET	collection	Retrieve all resources in a collection
+	 * GET	resource	Retrieve a single resource
+	 * HEAD	collection	Retrieve all resources in a collection (header only)
+	 * HEAD	resource	Retrieve a single resource (header only)
+	 * POST	collection	Create a new resource in a collection
+	 * PUT	resource	Update a resource
+	 * PATCH	resource	Update a resource
+	 * DELETE	resource	Delete a resource
+	 */
+	logger.info("jobs resources loading")
+	app.get('/api/job/:id', jobs.job.get);
+	app.get('/api/job', jobs.job.get);
+	/**
+	 * HEAD method not seem to work
+	 * app.head('/api/job/:id', jobs.job.head);
+	 **/
+	app.put('/api/job', jobs.job.put);
+	app.patch('/api/job/:id', jobs.job.patch);
+	app.delete('/api/job/:id', jobs.job.delete);
+	app.delete('/api/job', jobs.job.delete);
+	app.get('/api/jobs', jobs.jobs.get);
+	app.head('/api/jobs', jobs.jobs.head);
+	app.post('/api/jobs', jobs.jobs.post);
+	app.delete('/api/jobs', jobs.jobs.delete);
+	logger.info("jobs resources loaded")
 	return;
 };

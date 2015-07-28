@@ -14,87 +14,103 @@
  * limitations under the License.
  */
 
+var express = require('express')
+var app = express()
+
+app.put('/api/job', function (req, res) {
+	res.send('Hello World')
+})
+
+app.listen(8081)
+
 /**
  * logging
  */
 var logger = require('blammo').LoggerFactory.getLogger('kernel');
-var deasync = require('deasync');
 
-function main() {
-	// Middleware
+var __options;
+var __neo4j;
+
+/**
+ * options
+ *
+ * @returns {*}
+ */
+function options() {
 	var path = require('path');
 	var properties = require("java-properties");
-	var express = require('express');
-	var https = require('https');
-	var http = require('http');
 	var fs = require('fs');
 
-	// App part
-	var routes = require(__dirname + '/services/routes/routes');
-	var config = require(__dirname + '/services/json/config');
-
-	// core services
-	var neo4j = require(__dirname + '/services/core/neo4jdb');
-
-	var listener = require(__dirname + '/services/core/listener');
-	var kernel = require(__dirname + '/services/core/kernel');
-	var mailer = require(__dirname + '/services/core/mailer');
-	var xmppsrv = require(__dirname + '/services/core/xmppsrv');
-	var xmppcli = require(__dirname + '/services/core/xmppcli');
-	var crontab = require(__dirname + '/services/core/crontab');
-
+	if(__options) {
+		return __options;
+	}
 	/**
 	 * default properties from jarvis.properties stored in ${SCRIPT_WORKSPACE}
 	 */
 	var jarvis_properties = properties.of(path.resolve(process.env.SCRIPT_WORKSPACE + '/jarvis.properties'));
 	console.error(jarvis_properties);
 	// Default options for this htts server
-	var options = {
+	__options = {
 		key : fs.readFileSync(jarvis_properties.get('jarvis.srv.https.key')),
-		cert : fs.readFileSync(jarvis_properties.get('jarvis.srv.https.cert'))
+		cert : fs.readFileSync(jarvis_properties.get('jarvis.srv.https.cert')),
+		properties : jarvis_properties,
+		kernel : require(__dirname + '/services/core/kernel')
 	};
 
+	return __options;
+}
+
+/**
+ * neo4j layer
+ *
+ * @param options
+ * @returns {*}
+ */
+function neo4j(options) {
+	var properties = options.properties;
+	var kernel = options.kernel;
+
+	if(__neo4j) {
+		return __neo4j;
+	}
 	/**
 	 * init neo4j
 	 */
-	neo4j.init(jarvis_properties.get('jarvis.neo4jdb.jarvis'));
+	__neo4j = require(__dirname + '/services/core/neo4jdb');
+	__neo4j.init(properties.get('jarvis.neo4jdb.jarvis'));
 	kernel.notify("Neo4jDb connexions ok");
+
+	return __neo4j;
+}
+
+/**
+ * web module
+ *
+ * @param options
+ */
+function webModule(options) {
+	var properties = options.properties;
+	var kernel = options.kernel;
+
+	// Middleware
+	var express = require('express');
+	var bodyParser = require('body-parser');
+	var https = require('https');
+	var http = require('http');
+
+	http.globalAgent.maxSockets = Infinity
+
+	// App part
+	var routes = require(__dirname + '/services/routes/routes');
 
 	// Create a service (the app object is just a callback).
 	var app = express();
 
 	// Activate cookies, sessions and forms
 	app.use(express.static(__dirname + '/public'));
+	app.use(bodyParser.json()); // for parsing application/json
 
-	/**
-	 * start xmpp server and xmppcli
-	 */
-	xmppsrv.start(jarvis_properties.get('jarvis.xmpp.srv.host'), jarvis_properties.get('jarvis.xmpp.srv.port'), function() {
-		kernel.notify("xmpp server done");
-		/**
-		 * internal xmppcli
-		 */
-		kernel.xmppcli(jarvis_properties.get('jarvis.xmpp.srv.host'), jarvis_properties.get('jarvis.xmpp.srv.port'), {
-			fn : kernel.xmppcliEcho,
-			jid : 'internal@jarvis.org/local'
-		});
-		/**
-		 * internal xmppcli
-		 */
-		kernel.xmppcli(jarvis_properties.get('jarvis.xmpp.srv.host'), jarvis_properties.get('jarvis.xmpp.srv.port'), {
-			fn : kernel.xmppcliScript,
-			jid : 'script@jarvis.org/local'
-		});
-	});
-
-	/**
-	 * start listener
-	 */
-	listener.start(jarvis_properties);
-
-	/**
-	 * build all routes
-	 */
+	// build all routes
 	try {
 		routes.init(app);
 	} catch (e) {
@@ -107,15 +123,15 @@ function main() {
 
 	httpServer.on('error', function(e) {
 		if (e.code == 'EADDRINUSE') {
-			console.log('Address ' + jarvis_properties.get('jarvis.srv.http.port') + ' in use, retrying...');
+			console.log('Address ' + properties.get('jarvis.srv.http.port') + ' in use, retrying...');
 			setTimeout(function() {
-				httpServer.listen(jarvis_properties.get('jarvis.srv.http.port'));
+				httpServer.listen(properties.get('jarvis.srv.http.port'));
 			}, 5000);
 		}
 	});
 
 	try {
-		httpServer.listen(jarvis_properties.get('jarvis.srv.http.port'));
+		httpServer.listen(properties.get('jarvis.srv.http.port'));
 	} catch (e) {
 		logger.warn('httpServer.listen:', e);
 	}
@@ -126,28 +142,102 @@ function main() {
 	logger.info("Create an HTTPS service identical to the HTTP service");
 	var httpsServer = https.createServer(options, app);
 
-	httpsServer.on('error', function(e) {
+	httpsServer.on('error', function (e) {
 		if (e.code == 'EADDRINUSE') {
-			logger.error('Address ' + jarvis_properties.get('jarvis.srv.https.port') + ' in use, retrying...');
-			setTimeout(function() {
-				httpServer.listen(jarvis_properties.get('jarvis.srv.https.port'));
+			logger.error('Address ' + properties.get('jarvis.srv.https.port') + ' in use, retrying...');
+			setTimeout(function () {
+				httpServer.listen(properties.get('jarvis.srv.https.port'));
 			}, 5000);
 		}
 	});
 
-	httpsServer.listen(jarvis_properties.get('jarvis.srv.https.port'));
+	httpsServer.listen(properties.get('jarvis.srv.https.port'));
 	kernel.notify("Create an HTTPS service identical to the HTTP service done");
+}
+
+/**
+ * xmpp module
+ *
+ * @param options
+ */
+function xmppModule(options) {
+	var xmppsrv = require(__dirname + '/services/core/xmppsrv');
+	var xmppcli = require(__dirname + '/services/core/xmppcli');
+
+	var properties = options.properties;
+	var kernel = options.kernel;
+
+	/**
+	 * start xmpp server and xmppcli
+	 */
+	xmppsrv.start(properties.get('jarvis.xmpp.srv.host'), properties.get('jarvis.xmpp.srv.port'), function () {
+		kernel.notify("xmpp server done");
+		/**
+		 * internal xmppcli
+		 */
+		kernel.xmppcli(properties.get('jarvis.xmpp.srv.host'), properties.get('jarvis.xmpp.srv.port'), {
+			fn: kernel.xmppcliEcho,
+			jid: 'internal@jarvis.org/local'
+		});
+		/**
+		 * internal xmppcli
+		 */
+		kernel.xmppcli(properties.get('jarvis.xmpp.srv.host'), properties.get('jarvis.xmpp.srv.port'), {
+			fn: kernel.xmppcliScript,
+			jid: 'script@jarvis.org/local'
+		});
+	});
+}
+
+/**
+ * listenerModule
+ * @param options
+ */
+function listenerModule(options) {
+	var listener = require(__dirname + '/services/core/listener');
+
+	var properties = options.properties;
+	var kernel = options.kernel;
+
+	/**
+	 * start listener
+	 */
+	listener.start(properties);
+}
+
+/**
+ * crontab module
+ *
+ * @param options
+ */
+function crontabModule(options) {
+	var jobs = require(__dirname + '/services/resources/jobs');
+
+	var properties = options.properties;
+	var kernel = options.kernel;
 
 	/**
 	 * crontab
 	 */
 	kernel.notify("Clear crontab (revert from initial state)");
-	crontab.clear();
+	jobs.services.clear();
 	kernel.notify("Start all jobs");
-	crontab.start(function(job) {
+	jobs.services.start(function (job) {
 		kernel.xmppcliForkScript(job);
 	});
 	kernel.notify("Start all jobs done");
+}
+
+/**
+ * event module
+ *
+ * @param options
+ */
+function eventModule(options) {
+	var neo4jdb = require(__dirname + '/services/core/neo4jdb');
+
+	var properties = options.properties;
+	var kernel = options.kernel;
 
 	/**
 	 * plugin execute
@@ -216,7 +306,7 @@ function main() {
 				/**
 				 * Store event in history
 				 */
-				neo4j.syncStoreInCollectionByName('events', e);
+				neo4jdb.label.store('events', e);
 			} catch (e) {
 				logger.error('Exception: ', e);
 				console.trace(e);
@@ -229,4 +319,27 @@ function main() {
 	processIt();
 }
 
+/**
+ * main entry
+ */
+function main() {
+	//var config = require(__dirname + '/services/json/config');
+
+	// core services
+	//var mailer = require(__dirname + '/services/core/mailer');
+
+	setImmediate(options);
+	var kernel = options().kernel;
+
+	neo4j(options());
+	webModule(options());
+	xmppModule(options());
+	listenerModule(options());
+	crontabModule(options());
+	eventModule(options());
+}
+
+/**
+ * main entry
+ */
 main()

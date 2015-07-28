@@ -17,11 +17,21 @@
 /**
  * neo4j driver based on api rest
  */
-var rest = require('rest');
+var rest = require('rest/client/node');
+var basicAuth = require('rest/interceptor/basicAuth');
 var mime = require('rest/interceptor/mime');
+var errorCode = require('rest/interceptor/errorCode');
+var timeout = require('rest/interceptor/timeout');
 
 /**
- * node create
+ * generic rest call
+ *
+ * @param handle
+ * @param node
+ * @param path
+ * @param method
+ * @param cb
+ * @param err
  */
 var restCall = function(handle, node, path, method, cb, err) {
     /**
@@ -33,7 +43,23 @@ var restCall = function(handle, node, path, method, cb, err) {
         path: handle._url + path,
         method: method,
         headers: {} };
-    var res = rest.wrap(mime, { mime: 'application/json' })(request).done(cb,err);
+
+    request.headers['Access-Control-Allow-Origin'] = '*';
+
+    /**
+     * initialize client interceptors
+     * @type {Client|*}
+     */
+    var res = rest
+        .wrap(basicAuth, {username: 'neo4j', password: '123456'})
+        .wrap(mime, { mime: 'application/json' })
+        .wrap(errorCode, { code: 400 })
+        .wrap(timeout, { timeout: 1000 });
+
+    /**
+     * make rest call
+     */
+    res(request).then(cb,err, function(e) {console.error(e);});
 }
 
 /**
@@ -47,7 +73,6 @@ module.exports = {
      */
     init : function(url) {
         return {
-            _client: require('rest').wrap(require('rest/interceptor/mime')),
             _url: url
         }
     },
@@ -65,21 +90,21 @@ module.exports = {
             restCall(
                 handle,
                 {
-                    "statements" : [ {
-                        "statement" : statement
-                    } ]
+                    "statements": [{
+                        "statement": statement
+                    }]
                 },
                 '/db/data/transaction/commit',
                 'POST',
                 function (response) {
-                    if(cb) cb(response.entity.results);
+                    if (cb) cb(response.entity.results);
                 },
                 function (err) {
-                    if(cberr) cberr(err);
+                    if (cberr) cberr(err);
                     else throw err;
                 }
-            );
-        },
+            )
+        }
     },
     node : {
         /**
@@ -300,7 +325,7 @@ module.exports = {
                         cberr(response.entity.errors);
                     } else {
                         if(cb) {
-                            cb(response.entity);
+                            cb(properties);
                         }
                     }
                 },

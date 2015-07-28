@@ -3,7 +3,7 @@
 		<encoder type="dummy_encoder" />
 		<layout type="pattern_layout">%timestamp|%pid|%logger|%level|%message</layout>
 		<filters>
-			<filter type="threshold_filter">INFO</filter>
+			<filter type="threshold_filter">DEBUG</filter>
 		</filters>
 	</appender>
 
@@ -45,12 +45,10 @@
 
 	<logger name="xmppcli">
 		<appender-ref ref="console" />
-		<appender-ref ref="xmppcli" />
 	</logger>
 
 	<logger name="xmppsrv">
 		<appender-ref ref="console" />
-		<appender-ref ref="xmppsrv" />
 	</logger>
 
 	<logger name="neo4j">

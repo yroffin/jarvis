@@ -24,6 +24,10 @@ var clients = {}
 
 /**
  * end client
+ *
+ * @param host
+ * @param port
+ * @param args
  */
 exports.end = function(host, port, args) {
 	logger.warn("Client end", args.jid);
@@ -34,6 +38,10 @@ exports.end = function(host, port, args) {
 
 /**
  * start new client
+ *
+ * @param host
+ * @param port
+ * @param args
  */
 exports.start = function(host, port, args) {
 	/**
@@ -76,7 +84,7 @@ exports.start = function(host, port, args) {
 	 * error handler
 	 */
 	client.on('error', function(e) {
-		logger.error('error', e);
+		logger.error('emit::error', e);
 	})
 
 	/**
