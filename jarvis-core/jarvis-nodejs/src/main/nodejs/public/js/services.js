@@ -19,6 +19,7 @@
 /* Services */
 
 var jarvisServicesUrl = '/services';
+var jarvisApiUrl = '/api';
 var myAppServices = angular.module('myApp.services', [ 'ngResource' ]);
 
 myAppServices.factory('jarvisServices', [ '$resource', function($resource, $windows) {
@@ -85,8 +86,8 @@ myAppServices.factory('jarvisServices', [ '$resource', function($resource, $wind
 		 * create a new crontab entry
 		 */
 		createJob : {
-			method : 'GET',
-			url : jarvisServicesUrl + '/neo4j/crontab/:plugin/create?job=:job&params=:params&cronTime=:cronTime',
+			method : 'PUT',
+			url : jarvisApiUrl + '/job',
 			params : {},
 			isArray : false,
 			cache : false
@@ -96,7 +97,7 @@ myAppServices.factory('jarvisServices', [ '$resource', function($resource, $wind
 		 */
 		getJobs : {
 			method : 'GET',
-			url : jarvisServicesUrl + '/neo4j/crontabs/list',
+			url : jarvisApiUrl + '/jobs',
 			params : {},
 			isArray : true,
 			cache : false
@@ -105,8 +106,8 @@ myAppServices.factory('jarvisServices', [ '$resource', function($resource, $wind
 		 * test current selected job
 		 */
 		testJob : {
-			method : 'GET',
-			url : jarvisServicesUrl + '/neo4j/crontab/:plugin/test?job=:job',
+			method : 'PATCH',
+			url : jarvisApiUrl + '/job/test?job=:job',
 			params : {},
 			isArray : true,
 			cache : false
