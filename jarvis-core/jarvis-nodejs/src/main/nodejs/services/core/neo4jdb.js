@@ -122,7 +122,7 @@ var objectVisitor = function(visited, filled, keys, postCreate, ownerId, label) 
  * @param type
  * @param cb
  */
-var findRelationshipEnd = function(ctx, id, idx, type, cb) {
+var findRelationshipEnd = function(ctx, id, idx, type, callback) {
 	/**
 	 * find relationship
 	 */
@@ -131,12 +131,22 @@ var findRelationshipEnd = function(ctx, id, idx, type, cb) {
 			/**
 			 * assume only one params by node
 			 */
-			var lastIndex = entity[idx].end.lastIndexOf('/');
-			var endId = entity[idx].end.substr(lastIndex + 1);
-			/**
-			 * enrich with param entity
-			 */
-			neo4jDriver.node.get(_neo4j_driver, endId, ctx, cb);
+			if(!entity[idx]) {
+				logger.error("No index " + idx + " found");
+				callback({},{},{});
+			} else {
+				var lastIndex = entity[idx].end.lastIndexOf('/');
+				var endId = entity[idx].end.substr(lastIndex + 1);
+				/**
+				 * enrich with param entity
+				 */
+				neo4jDriver.node.get(_neo4j_driver, endId, ctx, callback, function() {
+					/**
+					 * no relationship
+					 */
+					callback({},{},{});
+				});
+			}
 		}
 	);
 }
@@ -297,7 +307,9 @@ module.exports = {
 								/**
 								 * assume only one params by node
 								 */
-								ctx.crons[ctx.index].params = data;
+								if(ctx.index) {
+									ctx.crons[ctx.index].params = data;
+								}
 								params--;
 								if (params == 0) {
 									/**
