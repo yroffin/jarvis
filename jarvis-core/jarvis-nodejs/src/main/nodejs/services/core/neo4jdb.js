@@ -334,18 +334,18 @@ module.exports = {
 		 * @param started
 		 * @returns {*}
 		 */
-		update: function (job, cronTime, plugin, params, timestamp, started, callback) {
+		update: function (name, cronTime, plugin, params, timestamp, started, callback) {
 			/**
 			 * find entity from database
 			 */
-			module.exports.raw.cypher('crontab', {filter: "n.job = '" + job + "'"}, function (existingJobs) {
+			module.exports.raw.cypher('crontab', {filter: "n.job = '" + name + "'"}, function (existingJobs) {
 				var cron = existingJobs[0];
 				if (cron) {
 					/**
 					 * update this node
 					 */
 					neo4jDriver.node.update(_neo4j_driver, cron.id, {
-							job: job,
+							name: name,
 							cronTime: cronTime,
 							plugin: plugin,
 							timestamp: timestamp,

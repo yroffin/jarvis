@@ -255,15 +255,16 @@ function eventModule(options) {
 			return;
 		}
 		if (js.params != undefined) {
-			kernel.notify("Running plugin " + js.plugin + " " + JSON.stringify(js.params));
+			kernel.notify("Running plugin " + js.plugin + " with params " + JSON.stringify(js.params));
 			plugin.execute(js.params);
 			return;
 		} else {
 			if (js.args != undefined) {
-				kernel.notify("Running plugin " + js.plugin + " " + JSON.stringify(js.args));
+				kernel.notify("Running plugin " + js.plugin + " with args " + JSON.stringify(js.args));
 				plugin.execute(js.args);
 				return;
 			} else {
+				kernel.notify("Running plugin " + js.plugin);
 				plugin.execute();
 				return;
 			}
@@ -310,7 +311,6 @@ function eventModule(options) {
 			} catch (e) {
 				logger.error('Exception: ', e);
 				console.trace(e);
-				throw e;
 			}
 		});
 		setTimeout(processIt, 1000);

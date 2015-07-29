@@ -29,36 +29,34 @@ var createCrontabEntry = function (job, callback) {
     /**
      * fork this jobs if not started
      */
-    logger.info('Create crontab entry for ', job.id, job.job, job.cronTime);
-    cronJobs[job.job] = new cron.CronJob({
+    logger.info('Create crontab entry for ', job.id, job.name, job.cronTime);
+    cronJobs[job.id] = new cron.CronJob({
         cronTime: job.cronTime,
         onTick: function () {
             /**
              * recover last version of job from database
              */
+            logger.info('Activate with cron ' + job.name);
             var that = this;
-            neo4jdb.cron.get({filter: "n.job = '" + this.job + "'"},
-                function(newJobs) {
-                    var updateJob = newJobs[0];
-
-                    logger.info('Activate ', updateJob.job);
-                    that.started = true;
-                    that.timestamp = new Date();
-                    that.plugin = updateJob.plugin;
-                    that.params = updateJob.params;
-                    neo4jdb.cron.update(that.job, that.cronTime, that.plugin, that.params, that.timestamp, true, function() {
-                        /**
-                         * callback
-                         */
-                        callback(this);
-                    });
+            that.id = job.id;
+            that.name = job.name;
+            that.started = true;
+            that.timestamp = new Date();
+            that.plugin = job.plugin;
+            that.params = job.params;
+            neo4jdb.cron.update(that.name, that.cronTime, that.plugin, that.params, that.timestamp, true, function() {
+                /**
+                 * no callback
+                 */
             });
         },
         start: false,
         timeZone: "Europe/Paris",
         context: job
     });
-    cronJobs[job.job].start();
+    cronJobs[job.id].start();
+    job.started = true;
+    callback(job);
 }
 
 /**
@@ -116,7 +114,7 @@ var _job = {
         /**
          * raw cypher query to find any existing job with this name
          */
-        neo4jdb.raw.cypher('crontab', {filter: "n.job = '" + job.job + "'"}, function (existingJobs) {
+        neo4jdb.raw.cypher('crontab', {filter: "n.name = '" + job.name + "'"}, function (existingJobs) {
             var existingJob = existingJobs[0];
             if (existingJob) {
                 /**
@@ -125,27 +123,95 @@ var _job = {
                  * TODO
                  * synchronize this new version with active crontab
                  */
-                neo4jdb.cron.update(job.job, job.cronTime, job.plugin, job.params, new Date(), false, function (response) {
+                neo4jdb.cron.update(job.name, job.cronTime, job.plugin, job.params, new Date(), false, function (response) {
                     callback(response);
                 });
             } else {
                 /**
                  * create a new one
                  */
-                neo4jdb.cron.create(job.job, job.cronTime, job.plugin, job.params, function (response) {
+                neo4jdb.cron.create(job.name, job.cronTime, job.plugin, job.params, function (response) {
                     callback(response);
                 });
             }
         });
     },
-    patch: function (req, res) {
-        return {};
+    /**
+     * patch resource
+     * @param id
+     * @returns {{}}
+     */
+    patch: function (id, body, callback) {
+        this.getById(id, function(job) {
+            /**
+             * patch it
+             */
+            delete job.job;
+            if(body.cronTime != undefined) {
+                job.cronTime = body.cronTime;
+            }
+            if(body.plugin != undefined) {
+                job.plugin = body.plugin;
+            }
+            if(body.name != undefined) {
+                job.name = body.name;
+            }
+            if(body.params != undefined) {
+                job.params = body.params;
+            }
+            /**
+             * and modify status
+             */
+            if(body.started != undefined) {
+                if(body.started) {
+                    if(cronJobs[job.id]) {
+                        /**
+                         * job exist and is deployed
+                         * stop it first
+                         */
+                        cronJobs[job.id].stop();
+                        createCrontabEntry(job, function(updatedJob) {
+                            callback(updatedJob);
+                        });
+                    } else {
+                        /**
+                         * new deployment
+                         */
+                        createCrontabEntry(job, function(updatedJob) {
+                            callback(updatedJob);
+                        });
+                    }
+                } else {
+                    /**
+                     * clean any crontab entry
+                     */
+                    if(cronJobs[job.id]) {
+                        cronJobs[job.id].stop();
+                        delete cronJobs[job.id];
+                    }
+                    job.started = false;
+                    neo4jdb.cron.update(job.name, job.cronTime, job.plugin, job.params, job.timestamp, false, function(updatedJob) {
+                        callback(updatedJob);
+                    });
+                }
+            }
+        });
     },
+    /**
+     * delete resource by id
+     * @param id
+     * @param callback
+     */
     deleteById: function (id, callback) {
         neo4jdb.cron.deleteById(id, function (response) {
             callback(response);
         });
     },
+    /**
+     * delete resource by name
+     * @param id
+     * @param callback
+     */
     deleteByName: function (name, callback) {
         neo4jdb.cron.deleteByName(name, function (response) {
             callback(response);
@@ -203,7 +269,7 @@ module.exports = {
                  */
                 for (index in jobs) {
                     var job = jobs[index];
-                    neo4jdb.cron.update(job.job, job.cronTime, job.plugin, job.params, new Date(), false, function(){
+                    neo4jdb.cron.update(job.name, job.cronTime, job.plugin, job.params, new Date(), false, function(){
                         /**
                          * null callback
                          */
@@ -229,7 +295,7 @@ module.exports = {
                              * set status to started, update job and create
                              * associated entry
                              */
-                            neo4jdb.cron.update(job.job, job.cronTime, job.plugin, job.params, new Date(), true,
+                            neo4jdb.cron.update(job.name, job.cronTime, job.plugin, job.params, new Date(), true,
                                 function(entity) {
                                     createCrontabEntry(entity, callback);
                                 });
@@ -237,7 +303,7 @@ module.exports = {
                             /**
                              * mark job in error (not started)
                              */
-                            neo4jdb.cron.update(job.job, job.cronTime, job.plugin, job.params, new Date(), false, function() {
+                            neo4jdb.cron.update(job.name, job.cronTime, job.plugin, job.params, new Date(), false, function() {
                                 /**
                                  * handle error
                                  */
@@ -270,12 +336,11 @@ module.exports = {
             /**
              * core get functions
              */
-            var _result;
             if(req.params.id) {
-                _result = _job.getById(req.params.id, callback);
+                _job.getById(req.params.id, callback);
             } else {
                 if(req.query.name) {
-                    _result = _job.getByName(req.query.name, callback);
+                    _job.getByName(req.query.name, callback);
                 }
             }
         },
@@ -289,9 +354,28 @@ module.exports = {
                 res.json(_result);
             });
         },
+        /**
+         * path resource
+         * @param req
+         * @param res
+         * @returns {ServerResponse|*}
+         */
         patch : function(req, res) {
-            var _result = _job.patch(req.query.id);
-            return res.json(_result);
+            /**
+             * simple call back to handle result
+             * @param _result
+             * @returns {*}
+             */
+            function callback(_result) {
+                if(!_result) {
+                    return res.status(404).json({});
+                } else return res.json(_result);
+            }
+
+            /**
+             * patch resource
+             */
+            _job.patch(req.params.id, req.body, callback);
         },
         /**
          * delete this resource
