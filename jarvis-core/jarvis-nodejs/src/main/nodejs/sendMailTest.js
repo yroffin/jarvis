@@ -16,4 +16,5 @@
 
 var mailer = require(__dirname + '/services/core/mailer');
 
-mailer.sendmail('test', 'raw text', {name:'yannick', sur:'roffin'});
+new mailer.Mailer('Automate <yannick.roffin@laposte.net>', 'yroffin@gmail.com');
+mailer.send('test', 'raw text', {name:'yannick', sur:'roffin'});

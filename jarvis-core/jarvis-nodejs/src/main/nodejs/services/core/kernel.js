@@ -426,35 +426,6 @@ var xmppcliScript = function(args) {
  * @param args
  * @return nothing
  */
-var xmppcliForkScript = function(job) {
-	/**
-	 * send mail for each message
-	 */
-	mailer.sendmail('[Jarvis]', 'Job activation', job);
-	/**
-	 * register it
-	 */
-	register({
-		'id' : -1,
-		'name' : 'xmppcli'
-	}, {
-		'id' : -1,
-		'name' : 'xmppcli'
-	}, {
-		code : 'event',
-		event : {
-			script : '{"plugin":"' + job.plugin + '", "params":' + JSON.stringify(job.params) + '}'
-		}
-	});
-	return JSON.stringify(job) + ' ok ...';
-}
-
-/**
- * xmppcli client for simple echo
- * 
- * @param args
- * @return nothing
- */
 var xmppcliEcho = function(args) {
 	return args.message;
 }
@@ -508,7 +479,33 @@ module.exports = {
 	xmppcliScript : xmppcliScript,
 	xmppcliAiml : xmppcliAiml,
 	xmppcliEcho : xmppcliEcho,
-	xmppcliForkScript : xmppcliForkScript,
+	/**
+	 * execute plugin
+	 * @param job
+	 * @returns {string}
+	 */
+	xmppcliForkScript : function(job) {
+		/**
+		 * send mail for each message
+		 */
+		mailer.send('[Jarvis]', 'Job activation', job);
+		/**
+		 * register it
+		 */
+		register({
+			'id' : -1,
+			'name' : 'xmppcli'
+		}, {
+			'id' : -1,
+			'name' : 'xmppcli'
+		}, {
+			code : 'event',
+			event : {
+				script : '{"plugin":"' + job.plugin + '", "params":' + JSON.stringify(job.params) + '}'
+			}
+		});
+		return JSON.stringify(job) + ' ok ...';
+	},
 	/**
 	 * aiml api
 	 */

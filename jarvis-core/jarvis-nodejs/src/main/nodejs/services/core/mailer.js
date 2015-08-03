@@ -40,11 +40,40 @@ var transporter = nodemailer.createTransport({
  * @type {{sendmail: Function}}
  */
 module.exports = {
-	// send mail with defined transport object
-	sendmail: function(subject, text, context) {
+	lastInstance: undefined,
+	/**
+	 * constructor
+	 * @param from
+	 * @param to
+	 * @constructor
+	 */
+	Mailer : function(from, to) {
+		/**
+		 * sample
+		 * from: 'Automate <yannick.roffin@laposte.net>'
+		 * to: 'yroffin@gmail.com'
+		 */
+		this.from = from;
+		this.to = to;
+		module.exports.lastInstance = this;
+	},
+	/**
+	 * send mail with defined transport object
+	 * @param subject
+	 * @param text
+	 * @param context
+	 */
+	send: function(subject, text, context, handle) {
+		/**
+		 * use internal instance if undefined
+		 */
+		if(handle == undefined) {
+			handle = module.exports.lastInstance;
+			console.warn(handle);
+		}
 		var mailOptions = {};
-		mailOptions.from = 'Automate <yannick.roffin@laposte.net>'; // sender address
-		mailOptions.to = 'yroffin@gmail.com';
+		mailOptions.from = handle.from; // sender address
+		mailOptions.to = handle.to; // target adresse
 		mailOptions.subject = subject; // Subject line
 		if(context) {
 			text = text + '\n*** context ***\n' + JSON.stringify(context);

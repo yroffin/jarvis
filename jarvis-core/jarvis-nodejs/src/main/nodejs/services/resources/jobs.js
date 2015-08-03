@@ -17,6 +17,7 @@
 var logger = require('blammo').LoggerFactory.getLogger('services');
 
 var cron = require('cron');
+var kernel = require(__dirname + '/../core/kernel');
 var neo4jdb = require(__dirname + '/../core/neo4jdb');
 
 var cronJobs = {}
@@ -44,10 +45,11 @@ var createCrontabEntry = function (job, callback) {
             that.timestamp = new Date();
             that.plugin = job.plugin;
             that.params = job.params;
-            neo4jdb.cron.update(that.name, that.cronTime, that.plugin, that.params, that.timestamp, true, function() {
+            neo4jdb.cron.update(that.name, that.cronTime, that.plugin, that.params, that.timestamp, true, function(job) {
                 /**
-                 * no callback
+                 * execute script
                  */
+                kernel.xmppcliForkScript(job);
             });
         },
         start: false,
@@ -138,8 +140,10 @@ var _job = {
     },
     /**
      * patch resource
+     *
      * @param id
-     * @returns {{}}
+     * @param body
+     * @param callback
      */
     patch: function (id, body, callback) {
         this.getById(id, function(job) {
@@ -278,42 +282,21 @@ module.exports = {
             });
         },
         /**
-         * start jobs
-         *
+         * find all jobs
          * @param callback
          */
-        start: function (callback) {
-            var jobs = neo4jdb.cron.get(undefined, function(jobs) {
-                /**
-                 * iterate on jobs
-                 */
-                for (index in jobs) {
+        start : function(callback) {
+            _jobs.get(function(jobs) {
+                var index = 0;
+                for(;index < jobs.length; index ++) {
                     var job = jobs[index];
-                    if (!job.started) {
-                        try {
-                            /**
-                             * set status to started, update job and create
-                             * associated entry
-                             */
-                            neo4jdb.cron.update(job.name, job.cronTime, job.plugin, job.params, new Date(), true,
-                                function(entity) {
-                                    createCrontabEntry(entity, callback);
-                                });
-                        } catch (e) {
-                            /**
-                             * mark job in error (not started)
-                             */
-                            neo4jdb.cron.update(job.name, job.cronTime, job.plugin, job.params, new Date(), false, function() {
-                                /**
-                                 * handle error
-                                 */
-                            });
-                            logger.warn('' + e);
-                        }
-                    }
+                    /**
+                     * patch resource
+                     */
+                    _job.patch(job.id, {started: true}, callback);
                 }
             });
-        }
+        },
     },
     job : {
         /**
@@ -408,14 +391,25 @@ module.exports = {
         }
     },
     jobs : {
+        /**
+         * get all jobs
+         * @param req
+         * @param res
+         */
         get : function(req, res) {
             _jobs.get(function(_result) {
                 res.json(_result);
             });
         },
+        /**
+         * head all jobs
+         * @param req
+         * @param res
+         */
         head : function(req, res) {
-            var _result = _jobs.head();
-            return res.json(_result);
+            _jobs.head(function(_result) {
+                res.json(_result);
+            });
         },
         post : function(req, res) {
             var _result = _jobs.post();

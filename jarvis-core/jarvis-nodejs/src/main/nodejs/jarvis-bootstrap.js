@@ -61,6 +61,23 @@ function options() {
 }
 
 /**
+ * mail module
+ * @param options
+ */
+function mail(options) {
+	var properties = options.properties;
+	var kernel = options.kernel;
+	var mailer = require(__dirname + '/services/core/mailer');
+
+	/**
+	 * init mailing system
+	 */
+	new mailer.Mailer(
+		properties.get('jarvis.mail.from'),
+		properties.get('jarvis.mail.to'));
+}
+
+/**
  * neo4j layer
  *
  * @param options
@@ -76,9 +93,20 @@ function neo4j(options) {
 	/**
 	 * init neo4j
 	 */
+	cycle = require(__dirname + '/services/core/cycle');
 	__neo4j = require(__dirname + '/services/core/neo4jdb');
-	__neo4j.init(properties.get('jarvis.neo4jdb.jarvis'));
-	kernel.notify("Neo4jDb connexions ok");
+	__neo4j.init( {
+		url:properties.get('jarvis.neo4jdb.jarvis.url'),
+		user: properties.get('jarvis.neo4jdb.jarvis.user'),
+		password: properties.get('jarvis.neo4jdb.jarvis.password')
+		},
+		function(response) {
+			kernel.notify("Neo4jDb : " + JSON.stringify(response));
+		},
+		function(response) {
+			kernel.notify("Neo4jDb : \r\n" + response.entity);
+		}
+	);
 
 	return __neo4j;
 }
@@ -216,16 +244,15 @@ function crontabModule(options) {
 	var properties = options.properties;
 	var kernel = options.kernel;
 
+	kernel.notify("Restart all jobs");
 	/**
-	 * crontab
+	 * just find all and restart job
 	 */
-	kernel.notify("Clear crontab (revert from initial state)");
-	jobs.services.clear();
-	kernel.notify("Start all jobs");
-	jobs.services.start(function (job) {
-		kernel.xmppcliForkScript(job);
-	});
-	kernel.notify("Start all jobs done");
+	jobs.services.start(function(job) {
+		kernel.notify("Restart job " + job.name);
+	})
+
+	kernel.notify("Restart all jobs done");
 }
 
 /**
@@ -323,14 +350,13 @@ function eventModule(options) {
  * main entry
  */
 function main() {
-	//var config = require(__dirname + '/services/json/config');
-
-	// core services
-	//var mailer = require(__dirname + '/services/core/mailer');
-
 	setImmediate(options);
 	var kernel = options().kernel;
 
+	/**
+	 * init internal modules
+	 */
+	mail(options());
 	neo4j(options());
 	webModule(options());
 	xmppModule(options());

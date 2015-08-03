@@ -40,7 +40,7 @@ var restCall = function(handle, node, path, method, cb, err) {
      */
     var request = {
         entity: node,
-        path: handle._url + path,
+        path: handle.url + path,
         method: method,
         headers: {} };
 
@@ -51,7 +51,7 @@ var restCall = function(handle, node, path, method, cb, err) {
      * @type {Client|*}
      */
     var res = rest
-        .wrap(basicAuth, {username: 'neo4j', password: '123456'})
+        .wrap(basicAuth, {username: handle.user, password: handle.password})
         .wrap(mime, { mime: 'application/json' })
         .wrap(errorCode, { code: 400 })
         .wrap(timeout, { timeout: 1000 });
@@ -71,10 +71,10 @@ module.exports = {
      * init driver
      * @param url
      */
-    init : function(url) {
-        return {
-            _url: url
-        }
+    Neo4jDriver : function(url, user, password) {
+        this.url = url;
+        this.user = user;
+        this.password = password;
     },
     cypher:{
         /**
@@ -83,10 +83,10 @@ module.exports = {
          *
          * @param handle
          * @param statement
-         * @param cb
+         * @param callback
          * @param cberr
          */
-        query: function (handle, statement, cb, cberr) {
+        query: function (handle, statement, callback, cberr) {
             restCall(
                 handle,
                 {
@@ -97,10 +97,21 @@ module.exports = {
                 '/db/data/transaction/commit',
                 'POST',
                 function (response) {
-                    if (cb) cb(response.entity.results);
+                    if(response.entity.errors && response.entity.errors.length > 0) {
+                        if (cberr) {
+                            cberr(response.entity.errors[0]);
+                        }
+                        else throw response.entity.errors[0];
+                    } else {
+                        if (callback) {
+                            callback(response.entity.results);
+                        }
+                    }
                 },
                 function (err) {
-                    if (cberr) cberr(err);
+                    if (cberr) {
+                        cberr(err);
+                    }
                     else throw err;
                 }
             )
@@ -129,15 +140,21 @@ module.exports = {
         /**
          * get node
          * http://neo4j.com/docs/2.2.2/rest-api-nodes.html#rest-api-get-node
+         *
+         * @param handle
+         * @param id
+         * @param ctx
+         * @param callback
+         * @param cberr
          */
-        get: function (handle, id, ctx, cb, cberr) {
+        get: function (handle, id, ctx, callback, cberr) {
             restCall(
                 handle,
                 {},
                 '/db/data/node/' + id,
                 'GET',
                 function (response) {
-                    cb(ctx, response.entity.metadata, response.entity.data);
+                    callback(ctx, response.entity.metadata, response.entity.data);
                 },
                 function (err) {
                     if(cberr) cberr(err);

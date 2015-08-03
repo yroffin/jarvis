@@ -19,9 +19,6 @@
  */
 var logger = require('blammo').LoggerFactory.getLogger('neo4j');
 
-var deasync = require('deasync');
-var EventEmitter = require('events').EventEmitter;
-
 /**
  * native mongo driver for raw operation
  */
@@ -36,14 +33,17 @@ var _neo4j_driver = undefined;
  */
 var isField = function(key, val) {
 	return typeof (val) != 'object' || val == null || val instanceof Date;
-}
+};
 
 /**
- * object visitor
+ * object introspector
+ *
  * @param visited
- * @param node
- * @param fn
- * @returns {*}
+ * @param filled
+ * @param keys
+ * @param postCreate
+ * @param ownerId
+ * @param label
  */
 var objectVisitor = function(visited, filled, keys, postCreate, ownerId, label) {
 	var len = keys.length;
@@ -63,7 +63,6 @@ var objectVisitor = function(visited, filled, keys, postCreate, ownerId, label) 
 			}
 			filled[key] = realValue;
 		}
-		var i = 0;
 	}
 	/**
 	 * entity is now filled, we can create it on neo4j
@@ -114,13 +113,16 @@ var objectVisitor = function(visited, filled, keys, postCreate, ownerId, label) 
 			}
 		}
 	);
-}
+};
 
 /**
  * find target entity by relationship
+ *
+ * @param ctx
  * @param id
+ * @param idx
  * @param type
- * @param cb
+ * @param callback
  */
 var findRelationshipEnd = function(ctx, id, idx, type, callback) {
 	/**
@@ -149,32 +151,29 @@ var findRelationshipEnd = function(ctx, id, idx, type, callback) {
 			}
 		}
 	);
-}
+};
 
 /**
  * public method
  *
- * @type {{init: Function, raw: {relationship: Function, cypher: Function}, cron: {get: Function, update: Function, create: Function, delete: Function}, label: {get: Function, count: Function, store: Function}}}
+ * @type {{init: Function, raw: {relationship: Function, cypher: Function}, cron: {get: Function, update: Function, create: Function, deleteByName: Function, deleteById: Function}, label: {get: Function, count: Function, store: Function}}}
  */
 module.exports = {
 	/**
 	 * retrieve all collections stored in mongodb
 	 */
-	init: function (jarvisUrl, drop) {
+	init: function (config, callback, cberr) {
 		/**
 		 * main database
 		 */
-		_neo4j_driver = neo4jDriver.init(jarvisUrl);
-		if (drop) {
-			/**
-			 * just make a single select to test access
-			 */
-			neo4jDriver.cypher.query(_neo4j_driver, 'MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE n,r',
-				function (response) {
-					logger.debug("Neo4j test : ", JSON.stringify(response));
-				}
-			);
-		}
+		_neo4j_driver = new neo4jDriver.Neo4jDriver(config.url, config.user, config.password);
+
+		/**
+		 * just make a single select to test access
+		 */
+		neo4jDriver.cypher.query(_neo4j_driver, 'START n=node(*) RETURN distinct labels(n), count(*)',
+			callback, cberr
+		);
 	},
 	raw : {
 		/**
@@ -214,7 +213,7 @@ module.exports = {
 		 * filtered cypher query (generic)
 		 * @param label
 		 * @param filter
-		 * @param cb
+		 * @param callback
 		 */
 		cypher: function (label, filter, callback) {
 			/**
@@ -326,13 +325,13 @@ module.exports = {
 		/**
 		 * update cron job, ex: register a new plugin for cron jobs
 		 *
-		 * @param job
+		 * @param name
 		 * @param cronTime
 		 * @param plugin
 		 * @param params
 		 * @param timestamp
 		 * @param started
-		 * @returns {*}
+		 * @param callback
 		 */
 		update: function (name, cronTime, plugin, params, timestamp, started, callback) {
 			/**
@@ -356,7 +355,7 @@ module.exports = {
 							 * find params entity and update it
 							 */
 							findRelationshipEnd({}, cron.id, 0, 'params',
-								function (ctx, metadata, data) {
+								function (ctx, metadata) {
 									neo4jDriver.node.update(_neo4j_driver, metadata.id, params,
 										function (relation) {
 											var updated = entity;
@@ -395,7 +394,7 @@ module.exports = {
 			objectVisitor(blob, {}, Object.keys(blob),
 				/**
 				 * post create function
-				 * @param label
+				 * @param nodeId
 				 */
 				function (nodeId) {
 					neo4jDriver.node.label(_neo4j_driver, nodeId, 'crontab',
@@ -407,7 +406,9 @@ module.exports = {
 		},
 		/**
 		 * delete crontab by name
-		 * @param label
+		 *
+		 * @param name
+		 * @param callback
 		 */
 		deleteByName: function (name, callback) {
 			/**
@@ -434,7 +435,8 @@ module.exports = {
 	label : {
 		/**
 		 * get collection count by label
-		 * @param label
+		 *
+		 * @param callback
 		 */
 		get: function (callback) {
 			/**
@@ -454,13 +456,11 @@ module.exports = {
 		},
 		/**
 		 * get collection count by label
-		 * @param label name
+		 *
+		 * @param label
+		 * @param callback
 		 */
 		count: function (label, callback) {
-			var syncCountCollectionByNameRes = {
-				'result' : undefined
-			};
-
 			/**
 			 * query by labels
 			 */
@@ -472,7 +472,9 @@ module.exports = {
 		},
 		/**
 		 * store object
-		 * @param blobEntity
+		 *
+		 * @param name
+		 * @param blob
 		 */
 		store: function (name, blob) {
 			/**
@@ -481,12 +483,12 @@ module.exports = {
 			objectVisitor(blob, {}, Object.keys(blob),
 				/**
 				 * post create function
-				 * @param label
+				 * @param nodeId
 				 */
 				function(nodeId) {
 					neo4jDriver.node.label(_neo4j_driver, nodeId, name);
 				}
 			);
 		}
-	},
-}
+	}
+};
