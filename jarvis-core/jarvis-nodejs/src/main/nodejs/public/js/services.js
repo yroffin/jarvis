@@ -20,7 +20,7 @@
 
 var jarvisServicesUrl = '/services';
 var jarvisApiUrl = '/api';
-var myAppServices = angular.module('myApp.services', [ 'ngResource' ]);
+var myAppServices = angular.module('JarvisApp.services', [ 'ngResource' ]);
 
 myAppServices.factory('jarvisServices', [ '$resource', function($resource, $windows) {
 	return $resource('', {}, {

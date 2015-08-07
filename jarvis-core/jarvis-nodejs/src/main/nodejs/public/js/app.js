@@ -19,10 +19,10 @@
 /**
  * Declare app level module which depends on filters, and services
  */
-angular.module('myApp', [
+
+angular.module('JarvisApp', [
   'ngResource',
-  'myApp.filters',
-  'myApp.services',
-  'myApp.directives',
-  'myApp.controllers'
+  'ngRoute',
+  'ngMaterial',
+  'ngAnimate'
 ]);

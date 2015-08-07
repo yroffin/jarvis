@@ -15,252 +15,70 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<html lang="en" ng-app="myApp">
-    <head>
-        <title>My AngularJS App</title>
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-status-bar-style" content="black">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta charset="utf-8">
-        <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jquerymobile/1.4.3/jquery.mobile.min.css" />
-        <script src="config.js"></script>
-    </head>
-    <body ng-controller="BootstrapCtrl" ng-init="load()">
+<html lang="en" ng-app="JarvisApp">
+<head>
+    <title>Jarvis Application</title>
 
-        <!-- Main page -->
-        <div data-role="page" id="home" data-theme="{{theme}}">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
 
-            <div data-role="header">
-                <div data-role="navbar">
-                    <ul>
-                        <li><a href="#home" data-icon="home">Accueil</a></li>
-                        <li><a href="#" data-icon="grid" ng-click="loadConfiguration('#configuration')">Configuration</a></li>
-                        <li><a href="#" data-transition="flip" data-icon="user" ng-click="loadNeo4jdb('#neo4jdb')">Neo4j</a></li>
-                    </ul>
-                </div>
-                <h1>Jarvis</h1>
-            </div><!-- /header -->
+    <!-- AngularJS Material Design -->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.css">
 
-            <div role="main" class="ui-content">
-                <p>Bienvenu sur la page d'accueil du système jarvis.</p>
-            </div><!-- /content -->
+    <style>
+        .md-toolbar-tools h1 {
+            font-size: inherit;
+            font-weight: inherit;
+            margin: inherit;
+        }
+    </style>
+    <!-- Just for external configuration -->
+    <script src="config.js"></script>
+</head>
+<body layout="column" ng-controller="JarvisAppCtrl as ctrl" ng-init="ctrl.load()" >
 
-            <div data-role="footer">
+<md-toolbar layout="row">
+    <div class="md-toolbar-tools">
+        <md-button ng-click="toggleSidenav('left')" hide-gt-sm class="md-icon-button">
+            <md-icon aria-label="Menu" md-svg-icon="https://s3-us-west-2.amazonaws.com/s.cdpn.io/68133/menu.svg"></md-icon>
+        </md-button>
+        <h1>Jarvis</h1>
+    </div>
+</md-toolbar>
+<div layout="row" flex>
+    <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
+        <md-button ng-click="load(0);">Jobs</md-button>
+        <a href="#/jobs">jobs</a>
+        <a href="#/configuration">configuration</a>
+        <a href="#/neo4j">Neo4j</a>
+    </md-sidenav>
+    <div layout="column" flex id="content">
+        <md-content layout="column" flex class="md-padding">
+            <div class="view-animate-container">
+                <div class="view-animate" flex><ng-view onload="ctrl.load(1)"></ng-view></div>
             </div>
-        </div><!-- /page -->
+        </md-content>
+    </div>
+</div>
 
-        <!-- Configuration page -->
-        <div data-role="page" id="configuration" data-theme="{{theme}}">
-            <div data-role="header">
-                <div data-role="navbar">
-                    <ul>
-                        <li><a href="#home" id="home" data-icon="home">Accueil</a></li>
-                    </ul>
-                </div>
-                <h1>Configuration</h1>
-            </div>
-            <div role="main" class="ui-content">
-                <div>
-                	<h1>Clients</h1>
-                    <table data-role="table" id="configuration-clients" data-mode="reflow" class="ui-responsive table-stroke">
-                    	<thead>
-                    		<tr>
-                    			<th data-priority = "1">Id</th>
-                    			<th data-priority = "1">Name</th>
-                    			<th data-priority = "1">isRenderer</th>
-                    			<th data-priority = "1">isSensor</th>
-                    			<th data-priority = "1">canAnswer</th>
-                    		</tr>
-                    	</thead>
-                    	<tbody>
-                        	<tr ng-repeat="item in jarvis.configuration.clients">
-                        		<td>{{item.id}}</td>
-                        		<td>{{item.name}}</td>
-                        		<td>{{item.isRenderer}}</td>
-                        		<td>{{item.isSensor}}</td>
-                        		<td>{{item.canAnswer}}</td>
-                        		<td ng-show="item.canAnswer">
-                       				<input type="text" ng-enter="notif()" ng-model="renderer.message"></input>
-                       				<button data-inline="true" ng-click="send(item,renderer.message)">Send</button>
-                        		</td>
-                        	</tr>
-                    	</tbody>
-                    </table>
-                	<h1>Jobs</h1>
-                    <a href="#new-job" data-transition="flip" class="ui-btn">New</a>
-                    <table data-role="table" id="configuration-jobs" data-mode="reflow" class="ui-responsive table-stroke">
-                    	<thead>
-                    		<tr>
-                    			<th data-priority = "1">Job name</th>
-                    			<th data-priority = "1">Cron</th>
-                    			<th data-priority = "1">Plugin</th>
-                    			<th data-priority = "1">Arguments</th>
-                    			<th data-priority = "1">Started</th>
-                    			<th data-priority = "1">Timestamp</th>
-                    		</tr>
-                    	</thead>
-                    	<tbody>
-                        	<tr ng-repeat="item in jarvis.configuration.jobs">
-                        		<td>{{item.job}}</td>
-                        		<td>{{item.cronTime}}</td>
-                        		<td>{{item.plugin}}</td>
-                        		<td>{{item.params}}</td>
-                        		<td>{{item.started}}</td>
-                        		<td>{{item.timestamp}}</td>
-                                <td><button ng-click="testJob(item)">Test</button></td>
-                                <td><button ng-click="deleteJobByName(item)">Delete</button></td>
-                        	</tr>
-                    	</tbody>
-                    </table>
-                  <h1>Events</h1>
-                    <table data-role="table" id="configuration-events" data-mode="reflow" class="ui-responsive table-stroke">
-                      <thead>
-                        <tr>
-                          <th data-priority = "1">Sequence</th>
-                          <th data-priority = "1">Timestamp</th>
-                          <th data-priority = "1">Sender/Id</th>
-                          <th data-priority = "1">Sender/Name</th>
-                          <th data-priority = "1">Target/Id</th>
-                          <th data-priority = "1">Target/Name</th>
-                          <th data-priority = "1">Data</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                          <tr ng-repeat="item in jarvis.configuration.events">
-                            <td>{{item.sequence}}</td>
-                            <td>{{item.timestamp}}</td>
-                            <td>{{item.sender.id}}</td>
-                            <td>{{item.sender.name}}</td>
-                            <td>{{item.target.id}}</td>
-                            <td>{{item.target.name}}</td>
-                            <td>{{item}}</td>
-                          </tr>
-                      </tbody>
-                    </table>
-                </div>
-            </div>
-            <div data-role="footer">
-            </div>
-        </div>
+<!-- AngularJS -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-route.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-resource.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-animate.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-aria.min.js"></script>
 
-        <!-- new job page -->
-        <div data-role="page" id="new-job" data-theme="{{theme}}">
-            <div data-role="header">
-                <div data-role="navbar">
-                    <ul>
-                        <li><a href="#configuration" id="home" data-icon="grid">Configuration</a></li>
-                    </ul>
-                </div>
-                <h1>New job</h1>
-            </div>
-            <div role="main" class="ui-content">
-              <input ng-model="jarvis.newjob.jobname" type="text" name="jobname" id="new-job-jobname" placeholder="Job name" value="">
-              <input ng-model="jarvis.newjob.cron" type="text" name="cron" id="new-job-cron" placeholder="Cron declaration" value="">
-              <input ng-model="jarvis.newjob.plugin" type="text" name="plugin" id="new-job-plugin" placeholder="Plugin name" value="">
-              <input ng-model="jarvis.newjob.args" type="text" name="args" id="new-job-args" placeholder="Arguments" value="">
-            </div>
-            <a ng-click="createJob('#configuration')" data-transition="flip" class="ui-btn">Create</a>
-        </div>
-  
-        <!-- neo4jdb page -->
-        <div data-role="page" id="neo4jdb" data-theme="{{theme}}">
-            <div data-role="header">
-                <div data-role="navbar">
-                    <ul>
-                        <li><a href="#home" id="home" data-icon="home">Accueil</a></li>
-                    </ul>
-                </div>
-                <h1>Base Neo4jDB</h1>
-            </div>
-            <div role="main" class="ui-content">
-                <div>
-                  <h1>Collections</h1>
-                    <table data-role="table" id="neo4jdb-collections" data-mode="reflow" class="ui-responsive table-stroke">
-                      <thead>
-                        <tr>
-                          <th data-priority = "1">Database</th>
-                          <th data-priority = "2">Name</th>
-                          <th data-priority = "3">Count</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                          <tr href="#neo4jdb-collection" ng-repeat="item in jarvis.neo4jdb.collections" ng-click="loadCollection(item,'#neo4jdb-collection')" >
-                            <td>{{item.db}}</td>
-                            <td>{{item.name}}</td>
-                            <td>{{item.count}}</td>
-                          </tr>
-                      </tbody>
-                    </table>
-                </div>
-            </div>
-            <div data-role="footer">
-            </div>
-        </div>
+<!-- AngularJS Material Design -->
+<script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.js"></script>
 
-        <!-- neo4jdb collection detail page -->
-        <div data-role="page" id="neo4jdb-collection" data-theme="{{theme}}">
-            <div data-role="header">
-                <div data-role="navbar">
-                    <ul>
-                        <li><a href="#home" id="home" data-icon="home">Accueil</a></li>
-                    </ul>
-                </div>
-                <h1>Collection</h1>
-            </div>
-            <div role="main" class="ui-content">
-                <div>
-                  <h1>Collection {{jarvis.neo4jdb.current.name}}</h1>
-                    <table data-role="table" id="neo4jdb-collections" data-mode="reflow" class="ui-responsive table-stroke">
-                      <thead>
-                        <tr>
-                          <th data-priority = "1" ng-repeat="item in jarvis.neo4jdb.columns">{{item}}</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                          <tr ng-repeat="item in jarvis.neo4jdb.collection" >
-                            <td ng-repeat="name in jarvis.neo4jdb.columns">{{$eval('item.' + name)}}</td>
-                          </tr>
-                      </tbody>
-                    </table>
-                </div>
-            </div>
-            <div data-role="footer">
-            </div>
-        </div>
+<!-- Application -->
+<script src="js/app.js"></script>
+<script src="js/services.js"></script>
+<script src="js/controllers.js"></script>
+<script src="js/filters.js"></script>
+<script src="js/directives.js"></script>
 
-        <!-- Groups page -->
-        <div data-role="page" id="groups" data-theme="{{theme}}">
-            <div data-role="header">
-                <div data-role="navbar">
-                    <ul>
-                        <li><a href="#home" id="home" data-transition="flip" data-icon="home">Accueil</a></li>
-                    </ul>
-                </div>
-                <h1>Groupes</h1>
-            </div>
-            <div role="main" class="ui-content">
-                <div>
-                    <ul data-role="listview" id="groupsList">
-                        <li ng-repeat="item in groups"><a href="#groups-detail" ng-click="selectGroup(item)">{{item.email}} ({{item.count}} personne(s))</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div data-role="footer">
-            </div>
-        </div>
-
-        <!-- JQuery -->
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-        <script src="//ajax.googleapis.com/ajax/libs/jquerymobile/1.4.3/jquery.mobile.min.js"></script>
-        <!-- AngularJS -->
-        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular.min.js"></script>
-        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular-resource.min.js"></script>
-
-        <!-- Application -->
-        <script src="js/app.js"></script>
-        <script src="js/services.js"></script>
-        <script src="js/controllers.js"></script>
-        <script src="js/filters.js"></script>
-        <script src="js/directives.js"></script>
-    </body>
+</body>
 </html>

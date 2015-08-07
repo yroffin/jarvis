@@ -1,0 +1,37 @@
+<div layout="column" flex layout-fill>
+    <md-content md-theme="altTheme">
+        <section>
+            <md-subheader class="md-primary">Jobs</md-subheader>
+            <md-list layout-padding>
+                <md-list-item class="md-2-line" ng-repeat="job in jarvis.configuration.jobs">
+                    <img ng-src="{{iconPath}}" class="md-avatar" alt="{{job.id}}" />
+                    <div ng-init="job.pm = JSON.stringify(job.params)" class="md-list-item-text">
+                        <div layout layout-sm="column">
+                            <md-input-container>
+                                <md-tooltip>{{job.id}} {{job.name}}</md-tooltip>
+                                <label>Name</label>
+                                <input ng-model="job.name" flex />
+                            </md-input-container>
+                            <md-input-container>
+                                <md-tooltip>{{job.timestamp}} {{job.started}}</md-tooltip>
+                                <label>Crontab</label>
+                                <input ng-model="job.cronTime" flex />
+                            </md-input-container>
+                            <md-input-container>
+                                <label>Plugin</label>
+                                <input ng-model="job.plugin" flex />
+                            </md-input-container>
+                            <md-input-container>
+                                <label>Params</label>
+                                <input ng-model="job.text" flex />
+                            </md-input-container>
+                            </div>
+                        <p>
+                            {{job.crontab}}
+                        </p>
+                    </div>
+                </md-list-item>
+            </md-list>
+        </section>
+    </md-content>
+</div>

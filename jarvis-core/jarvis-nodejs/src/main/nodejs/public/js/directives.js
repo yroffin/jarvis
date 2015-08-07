@@ -19,16 +19,9 @@
 /* Directives */
 
 
-angular.module('myApp.directives', []).
-  directive('appVersion', ['version', function(version) {
-    return function(scope, elm, attrs) {
-      elm.text(version);
-    };
-  }]).
-  directive('jqueryMobileTpl', function() {
-  return {
-    link: function(scope, elm, attr) {
-      elm.trigger('create');
-    }
-  };});
- 
+angular.module('JarvisApp.directives', []).
+    directive('appVersion', ['version', function(version) {
+      return function(scope, elm, attrs) {
+        elm.text(version);
+      };
+    }]);
