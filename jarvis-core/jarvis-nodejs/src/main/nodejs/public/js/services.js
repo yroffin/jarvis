@@ -105,6 +105,16 @@ myAppServices.factory('jarvisServices', [ '$resource', function($resource, $wind
 		/**
 		 * test current selected job
 		 */
+		deleteJob : {
+			method : 'DELETE',
+			url : jarvisApiUrl + '/job/:id',
+			params : {},
+			isArray : true,
+			cache : false
+		},
+		/**
+		 * test current selected job
+		 */
 		testJob : {
 			method : 'PATCH',
 			url : jarvisApiUrl + '/job/test?job=:job',

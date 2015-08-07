@@ -38,6 +38,12 @@ angular.module('JarvisApp',['ngMaterial', 'ngRoute','JarvisApp.services'])
                 redirectTo: '/js/partials/jobs.html'
             });
     }])
+    .config( function($mdThemingProvider){
+        // Configure a dark theme with primary foreground yellow
+        $mdThemingProvider.theme('docs-dark', 'default')
+            .primaryPalette('yellow')
+            .dark();
+    })
     /**
      * main controller
      */
@@ -270,7 +276,18 @@ angular.module('JarvisApp',['ngMaterial', 'ngRoute','JarvisApp.services'])
      * job view controller
      */
     .controller('JarvisAppJobCtrl',
-        ['$scope', 'jarvisServices', function($scope, jarvisServices) {
+        ['$scope', 'jarvisServices', '$mdToast', function($scope, jarvisServices, $mdToast) {
+            $scope.toastPosition = {
+                bottom: false,
+                top: true,
+                left: false,
+                right: true
+            };
+            $scope.getToastPosition = function() {
+                return Object.keys($scope.toastPosition)
+                    .filter(function(pos) { return $scope.toastPosition[pos]; })
+                    .join(' ');
+            };
             $scope.iconPath = 'https://cdn4.iconfinder.com/data/icons/SOPHISTIQUE/web_design/png/128/our_process_2.png';
             /**
              * some init
@@ -289,6 +306,100 @@ angular.module('JarvisApp',['ngMaterial', 'ngRoute','JarvisApp.services'])
                  * TODO : handle error message
                  */
             });
+            /**
+             * delete this job
+             * @param job
+             */
+            $scope.delete = function(jobs, job) {
+                /**
+                 * loading clients
+                 */
+                jarvisServices.deleteJob({
+                    id : job.id
+                }, function(data) {
+                    var search = -1;
+                    for(var item in jobs) {
+                        if(jobs[item].id == job.id) {
+                            search = item;
+                        }
+                    }
+                    if(search >= 0) {
+                        delete jobs[search];
+                        jobs.splice(search, 1);
+                    }
+                    $mdToast.show(
+                        $mdToast.simple()
+                            .content('Job ' + job.name + ' supprimé')
+                            .position($scope.getToastPosition())
+                            .hideDelay(3000)
+                    );
+                });
+            }
+            /**
+             * update this job
+             * @param job
+             */
+            $scope.save = function(job) {
+                var update = {
+                    job : job.name,
+                    plugin : job.plugin,
+                    cronTime : job.cronTime
+                };
+                if(job.text) {
+                    update.params = JSON.parse(job.text);
+                }
+                /**
+                 * create or update this job
+                 */
+                jarvisServices.createJob(update, function(data) {
+                    $mdToast.show(
+                        $mdToast.simple()
+                            .content('Job ' + job.name + ' enregistré')
+                            .position($scope.getToastPosition())
+                            .hideDelay(3000)
+                    );
+                    },
+                    function(failure) {
+                        /**
+                         * TODO : handle error message
+                         */
+                    });
+            }
+            /**
+             * update this job
+             * @param job
+             */
+            $scope.new = function() {
+                /**
+                 * create a new job
+                 */
+                jarvisServices.createJob({"name":"No name"}, function(data) {
+                        jarvisServices.getJobs({}, function(data) {
+                            for(var job in data) {
+                                var params = data[job].params;
+                                if(params) {
+                                    data[job].text = JSON.stringify(data[job].params);
+                                }
+                            }
+                            $scope.jarvis.configuration.jobs = data;
+                            $mdToast.show(
+                                $mdToast.simple()
+                                    .content('Job ' + job.name + ' créé')
+                                    .position($scope.getToastPosition())
+                                    .hideDelay(3000)
+                            );
+                        }, function(failure) {
+                            /**
+                             * TODO : handle error message
+                             */
+                        });
+                    },
+                    function(failure) {
+                        /**
+                         * TODO : handle error message
+                         */
+                    });
+            }
         }
         ]
     )
