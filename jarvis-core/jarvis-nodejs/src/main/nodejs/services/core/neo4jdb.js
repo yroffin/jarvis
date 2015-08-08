@@ -402,7 +402,7 @@ module.exports = {
 		 */
 		create: function (job, cronTime, plugin, params, callback) {
 			var blob = {
-				job: job,
+				name: job,
 				cronTime: cronTime,
 				plugin: plugin,
 				params: params,
@@ -420,7 +420,7 @@ module.exports = {
 				function (nodeId) {
 					neo4jDriver.node.label(_neo4j_driver, nodeId, 'crontab',
 						function () {
-							callback(true);
+							callback(blob);
 						});
 				}
 			);
@@ -435,8 +435,8 @@ module.exports = {
 			/**
 			 * query by labels
 			 */
-			neo4jDriver.cypher.query(_neo4j_driver, 'MATCH (n) WHERE n.job=\'' + name + '\' OPTIONAL MATCH (n)-[r]-() DELETE n,r', function (response) {
-				callback(response);
+			neo4jDriver.cypher.query(_neo4j_driver, 'MATCH (n) WHERE n.name=\'' + name + '\' OPTIONAL MATCH (n)-[r]-() DELETE n,r', function (response) {
+				callback({});
 			});
 		},
 		/**
@@ -449,7 +449,7 @@ module.exports = {
 			 * query by labels
 			 */
 			neo4jDriver.cypher.query(_neo4j_driver, 'MATCH (n) WHERE id(n) =' + id + ' OPTIONAL MATCH (n)-[r]-() DELETE n,r', function (response) {
-				callback(response);
+				callback({});
 			});
 		}
 	},

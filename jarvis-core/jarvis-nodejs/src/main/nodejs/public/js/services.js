@@ -24,78 +24,82 @@ var myAppServices = angular.module('JarvisApp.services', [ 'ngResource' ]);
 
 myAppServices.factory('jarvisServices', [ '$resource', function($resource, $windows) {
 	return $resource('', {}, {
-		getProperties : {
-			method : 'GET',
-			url : jarvisServicesUrl + '/info/properties',
-			params : {},
-			isArray : false,
-			cache : false
+		getProperties: {
+			method: 'GET',
+			url: jarvisServicesUrl + '/info/properties',
+			params: {},
+			isArray: false,
+			cache: false
 		},
-		getClients : {
-			method : 'GET',
-			url : jarvisServicesUrl + '/info/clients',
-			params : {},
-			isArray : false,
-			cache : false
+		getClients: {
+			method: 'GET',
+			url: jarvisServicesUrl + '/info/clients',
+			params: {},
+			isArray: false,
+			cache: false
 		},
-		getEvents : {
-			method : 'GET',
-			url : jarvisServicesUrl + '/info/events',
-			params : {},
-			isArray : false,
-			cache : false
+		getEvents: {
+			method: 'GET',
+			url: jarvisServicesUrl + '/info/events',
+			params: {},
+			isArray: false,
+			cache: false
 		},
-		send : {
-			method : 'GET',
-			url : jarvisServicesUrl + '/send',
-			params : {},
-			isArray : false,
-			cache : false
+		send: {
+			method: 'GET',
+			url: jarvisServicesUrl + '/send',
+			params: {},
+			isArray: false,
+			cache: false
 		},
 		/**
 		 * retrieve neo4j data
 		 */
-		getDbCollections : {
-			method : 'GET',
-			url : jarvisServicesUrl + '/neo4j/collections',
-			params : {},
-			isArray : true,
-			cache : false
+		getDbCollections: {
+			method: 'GET',
+			url: jarvisServicesUrl + '/neo4j/collections',
+			params: {},
+			isArray: true,
+			cache: false
 		},
 		/**
 		 * count collection tupple
 		 */
-		countDbCollections : {
-			method : 'GET',
-			url : jarvisServicesUrl + '/neo4j/crud/:name/count',
-			params : {},
-			isArray : false,
-			cache : false
+		countDbCollections: {
+			method: 'GET',
+			url: jarvisServicesUrl + '/neo4j/crud/:name/count',
+			params: {},
+			isArray: false,
+			cache: false
 		},
 		/**
 		 * count collection tupple
 		 */
-		getCollection : {
-			method : 'GET',
-			url : jarvisServicesUrl + '/neo4j/crud/:name/page?offset=:offset&page=:page',
-			params : {},
-			isArray : true,
-			cache : false
-		},
+		getCollection: {
+			method: 'GET',
+			url: jarvisServicesUrl + '/neo4j/crud/:name/page?offset=:offset&page=:page',
+			params: {},
+			isArray: true,
+			cache: false
+		}
+	})
+}]);
+
+myAppServices.factory('jarvisJobsResource', [ '$resource', function($resource, $windows) {
+	return $resource('', {}, {
 		/**
 		 * create a new crontab entry
 		 */
-		createJob : {
+		put : {
 			method : 'PUT',
-			url : jarvisApiUrl + '/job',
-			params : {},
+			url : jarvisApiUrl + '/jobs/:id',
 			isArray : false,
 			cache : false
 		},
 		/**
 		 * get all crontab
 		 */
-		getJobs : {
+		get : {
 			method : 'GET',
 			url : jarvisApiUrl + '/jobs',
 			params : {},
@@ -105,17 +109,27 @@ myAppServices.factory('jarvisServices', [ '$resource', function($resource, $wind
 		/**
 		 * test current selected job
 		 */
-		deleteJob : {
+		delete : {
 			method : 'DELETE',
-			url : jarvisApiUrl + '/job/:id',
+			url : jarvisApiUrl + '/jobs/:id',
 			params : {},
-			isArray : true,
+			isArray : false,
 			cache : false
 		},
 		/**
 		 * test current selected job
 		 */
-		testJob : {
+		post : {
+			method : 'POST',
+			url : jarvisApiUrl + '/jobs',
+			params : {},
+			isArray : false,
+			cache : false
+		},
+		/**
+		 * test current selected job
+		 */
+		test : {
 			method : 'PATCH',
 			url : jarvisApiUrl + '/job/test?job=:job',
 			params : {},
@@ -123,9 +137,9 @@ myAppServices.factory('jarvisServices', [ '$resource', function($resource, $wind
 			cache : false
 		},
 		/**
-		 * test current selected job
+		 * delete by name
 		 */
-		deleteJobByName : {
+		deleteByName : {
 			method : 'DELETE',
 			url : jarvisServicesUrl + '/neo4j/crontab?name=:name',
 			params : {},
@@ -133,4 +147,4 @@ myAppServices.factory('jarvisServices', [ '$resource', function($resource, $wind
 			cache : false
 		}
 	})
-} ]);
+}]);

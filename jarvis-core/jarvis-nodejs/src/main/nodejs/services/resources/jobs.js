@@ -45,7 +45,7 @@ var createCrontabEntry = function (job, callback) {
             that.timestamp = new Date();
             that.plugin = job.plugin;
             that.params = job.params;
-            neo4jdb.cron.update(that.name, that.cronTime, that.plugin, that.params, that.timestamp, true, function(job) {
+            neo4jdb.cron.update(that.id, that.name, that.cronTime, that.plugin, that.params, that.timestamp, true, function(job) {
                 /**
                  * execute script
                  */
@@ -67,46 +67,6 @@ var createCrontabEntry = function (job, callback) {
  * @private
  */
 var _job = {
-    /**
-     * find it by id
-     * @param jobId
-     * @param callback
-     */
-    getById: function (jobId, callback) {
-        neo4jdb.raw.cypher('crontab', {filter: "id(n) = " + jobId + ""}, function (existingJobs) {
-            var job = existingJobs[0];
-            if (job) {
-                neo4jdb.raw.relationship(jobId, 'params', 0, function (params) {
-                    job.params = params;
-                    /**
-                     * produce result
-                     */
-                    callback(job);
-                });
-            }
-            else callback(undefined);
-        });
-    },
-    /**
-     * find it by name
-     * @param jobName
-     * @param callback
-     */
-    getByName: function (jobName, callback) {
-        neo4jdb.raw.cypher('crontab', {filter: "n.job = '" + jobName + "'"}, function (existingJobs) {
-            var job = existingJobs[0];
-            if (job) {
-                neo4jdb.raw.relationship(job.id, 'params', 0, function (params) {
-                    job.params = params;
-                    /**
-                     * produce result
-                     */
-                    callback(job);
-                });
-            }
-            else callback(undefined);
-        });
-    },
     /**
      * update (or create) a new job
      * @param job
@@ -146,12 +106,115 @@ var _job = {
     /**
      * patch resource
      *
+     * @param body
+     * @param callback
+     */
+    post: function (body, callback) {
+        if(body.id) {
+            delete body.id;
+        }
+        /**
+         * create this object
+         */
+        neo4jdb.cron.create(body.name, body.cronTime, body.plugin, body.params, callback);
+    },
+    /**
+     * delete resource by id
+     * @param id
+     * @param callback
+     */
+    deleteById: function (id, callback) {
+        neo4jdb.cron.deleteById(id, function (response) {
+            callback(response);
+        });
+    },
+    /**
+     * delete resource by name
+     * @param id
+     * @param callback
+     */
+    deleteByName: function (name, callback) {
+        neo4jdb.cron.deleteByName(name, function (response) {
+            callback(response);
+        });
+    }
+}
+
+/**
+ * jobs resource
+ * @type {{get: Function, head: Function, post: Function, delete: Function}}
+ * @private
+ */
+var _jobs = {
+    /**
+     * find it by id
+     * @param jobId
+     * @param callback
+     */
+    getById: function (jobId, callback, notfound) {
+        neo4jdb.raw.cypher('crontab', {filter: "id(n) = " + jobId + ""}, function (existingJobs) {
+            var job = existingJobs[0];
+            if (job) {
+                neo4jdb.raw.relationship(jobId, 'params', 0, function (params) {
+                    job.params = params;
+                    /**
+                     * produce result
+                     */
+                    callback(job);
+                });
+            }
+            else notfound();
+        }, notfound);
+    },
+    /**
+     * find it by name
+     * @param jobName
+     * @param callback
+     */
+    getByName: function (jobName, callback) {
+        neo4jdb.raw.cypher('crontab', {filter: "n.name = '" + jobName + "'"}, function (existingJobs) {
+            var job = existingJobs[0];
+            if (job) {
+                neo4jdb.raw.relationship(job.id, 'params', 0, function (params) {
+                    job.params = params;
+                    /**
+                     * produce result
+                     */
+                    callback(job);
+                });
+            }
+            else callback(undefined);
+        });
+    },
+    /**
+     * get all jobs
+     * @param callback
+     */
+    get : function(callback) {
+        neo4jdb.cron.get(undefined, function(crons) {
+            callback(crons);
+        });
+    },
+    head : function(req, res) {
+        neo4jdb.cron.get(undefined, function(crons) {
+            callback(crons);
+        });
+    },
+    post : function(req, res) {
+        return [];
+    },
+    delete : function(req, res) {
+        return [];
+    },
+    /**
+     * patch resource
+     *
      * @param id
      * @param body
      * @param callback
      */
     patch: function (id, body, callback) {
-        this.getById(id, function(job) {
+        _jobs.getById(id, function(job) {
             /**
              * patch it
              */
@@ -204,55 +267,7 @@ var _job = {
                     });
                 }
             }
-        });
-    },
-    /**
-     * delete resource by id
-     * @param id
-     * @param callback
-     */
-    deleteById: function (id, callback) {
-        neo4jdb.cron.deleteById(id, function (response) {
-            callback(response);
-        });
-    },
-    /**
-     * delete resource by name
-     * @param id
-     * @param callback
-     */
-    deleteByName: function (name, callback) {
-        neo4jdb.cron.deleteByName(name, function (response) {
-            callback(response);
-        });
-    }
-}
-
-/**
- * jobs resource
- * @type {{get: Function, head: Function, post: Function, delete: Function}}
- * @private
- */
-var _jobs = {
-    /**
-     * get all jobs
-     * @param callback
-     */
-    get : function(callback) {
-        neo4jdb.cron.get(undefined, function(crons) {
-            callback(crons);
-        });
-    },
-    head : function(req, res) {
-        neo4jdb.cron.get(undefined, function(crons) {
-            callback(crons);
-        });
-    },
-    post : function(req, res) {
-        return [];
-    },
-    delete : function(req, res) {
-        return [];
+        }, callback);
     }
 }
 
@@ -298,49 +313,16 @@ module.exports = {
                     /**
                      * patch resource
                      */
-                    _job.patch(job.id, {started: true}, callback);
+                    _jobs.patch(job.id, {started: true}, callback);
                 }
             });
         },
     },
     job : {
-        /**
-         * get this resource
-         * @param req
-         * @param res
-         */
-        get : function(req, res) {
-            /**
-             * simple call back to handle result
-             * @param _result
-             * @returns {*}
-             */
-            function callback(_result) {
-                if(!_result) {
-                    return res.status(404).json({});
-                } else return res.json(_result);
-            }
-
-            /**
-             * core get functions
-             */
-            if(req.params.id) {
-                _job.getById(req.params.id, callback);
-            } else {
-                if(req.query.name) {
-                    _job.getByName(req.query.name, callback);
-                }
-            }
-        },
         head : function(req, res) {
             /**
              * no HEAD handle by REST api
              */
-        },
-        put : function(req, res) {
-            _job.put(req.body, function(_result) {
-                res.json(_result);
-            });
         },
         /**
          * path resource
@@ -363,13 +345,80 @@ module.exports = {
             /**
              * patch resource
              */
-            _job.patch(req.params.id, req.body, callback);
+            _jobs.patch(req.params.id, req.body, callback);
+        }
+    },
+    jobs : {
+        put : function(req, res) {
+            /**
+             * simple call back to handle result
+             * @param _result
+             * @returns {*}
+             */
+            function callback(_result) {
+                if(!_result) {
+                    return res.status(404).json({});
+                } else return res.json(_result);
+            }
+
+            _job.put(req.body, callback);
         },
         /**
-         * delete this resource
+         * get all jobs
          * @param req
          * @param res
          */
+        get : function(req, res) {
+            /**
+             * simple call back to handle result
+             * @param _result
+             * @returns {*}
+             */
+            function callback(_result) {
+                if(!_result) {
+                    return res.status(404).json({});
+                } else return res.json(_result);
+            }
+
+            /**
+             * core get functions
+             * if any id or name then it's a single resource request
+             * else recover all exiting resources
+             */
+            if(req.params.id) {
+                _jobs.getById(req.params.id, callback, callback);
+            } else {
+                if (req.query.name) {
+                    _jobs.getByName(req.query.name, callback, callback);
+                } else {
+                    _jobs.get(callback);
+                }
+            }
+        },
+        /**
+         * head all jobs
+         * @param req
+         * @param res
+         */
+        head : function(req, res) {
+            _jobs.head(function(_result) {
+                res.json(_result);
+            });
+        },
+        post : function(req, res) {
+            /**
+             * simple call back to handle result
+             * @param _result
+             * @returns {*}
+             */
+            function callback(_result) {
+                if(!_result) {
+                    return res.status(404).json({});
+                } else return res.json(_result);
+            }
+
+            _job.post(req.body, callback);
+        },
         delete : function(req, res) {
             /**
              * simple call back to handle result
@@ -393,36 +442,28 @@ module.exports = {
                     _result = _job.deleteByName(req.query.name, callback);
                 }
             }
-        }
-    },
-    jobs : {
-        /**
-         * get all jobs
-         * @param req
-         * @param res
-         */
-        get : function(req, res) {
-            _jobs.get(function(_result) {
-                res.json(_result);
-            });
         },
-        /**
-         * head all jobs
-         * @param req
-         * @param res
-         */
-        head : function(req, res) {
-            _jobs.head(function(_result) {
-                res.json(_result);
-            });
-        },
-        post : function(req, res) {
-            var _result = _jobs.post();
-            return res.json(_result);
-        },
-        delete : function(req, res) {
-            var _result = _jobs.delete();
-            return res.json(_result);
+        patch : function(req, res) {
+            /**
+             * simple call back to handle result
+             * @param _result
+             * @returns {*}
+             */
+            function callback(_result) {
+                if(!_result) {
+                    return res.status(404).json({});
+                } else return res.json(_result);
+            }
+
+            /**
+             * core get functions
+             */
+            var _result;
+            if(req.params.id) {
+                _result = _jobs.patch(req.params.id, req.body, callback);
+            } else {
+                return res.status(400).json({});
+            }
         }
     }
 }

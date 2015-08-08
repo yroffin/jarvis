@@ -276,7 +276,8 @@ angular.module('JarvisApp',['ngMaterial', 'ngRoute','JarvisApp.services'])
      * job view controller
      */
     .controller('JarvisAppJobCtrl',
-        ['$scope', 'jarvisServices', '$mdToast', function($scope, jarvisServices, $mdToast) {
+        ['$scope', 'jarvisServices', 'jarvisJobsResource', '$mdToast',
+            function($scope, jarvisServices, jarvisJobsResource, $mdToast) {
             $scope.toastPosition = {
                 bottom: false,
                 top: true,
@@ -293,7 +294,7 @@ angular.module('JarvisApp',['ngMaterial', 'ngRoute','JarvisApp.services'])
              * some init
              * loading jobs
              */
-            jarvisServices.getJobs({}, function(data) {
+            jarvisJobsResource.get({}, function(data) {
                 for(var job in data) {
                     var params = data[job].params;
                     if(params) {
@@ -314,7 +315,7 @@ angular.module('JarvisApp',['ngMaterial', 'ngRoute','JarvisApp.services'])
                 /**
                  * loading clients
                  */
-                jarvisServices.deleteJob({
+                jarvisJobsResource.delete({
                     id : job.id
                 }, function(data) {
                     var search = -1;
@@ -332,6 +333,13 @@ angular.module('JarvisApp',['ngMaterial', 'ngRoute','JarvisApp.services'])
                             .content('Job ' + job.name + ' supprimé')
                             .position($scope.getToastPosition())
                             .hideDelay(3000)
+                    );
+                }, function(err) {
+                    $mdToast.show(
+                        $mdToast.simple()
+                            .content(err)
+                            .position($scope.getToastPosition())
+                            .hideDelay(3000).theme("failure-toast")
                     );
                 });
             }
@@ -352,54 +360,72 @@ angular.module('JarvisApp',['ngMaterial', 'ngRoute','JarvisApp.services'])
                 /**
                  * create or update this job
                  */
-                jarvisServices.createJob(update, function(data) {
-                    $mdToast.show(
-                        $mdToast.simple()
-                            .content('Job ' + job.name + ' enregistré')
-                            .position($scope.getToastPosition())
-                            .hideDelay(3000)
-                    );
+                jarvisJobsResource.put(update, update, function(data) {
+                        $mdToast.show(
+                            $mdToast.simple()
+                                .content('Job ' + job.name + ' enregistré')
+                                .position($scope.getToastPosition())
+                                .hideDelay(3000)
+                        );
                     },
                     function(failure) {
-                        /**
-                         * TODO : handle error message
-                         */
+                        $mdToast.show(
+                            $mdToast.simple()
+                                .content('Job ' + job.name + ' non enregistré')
+                                .position($scope.getToastPosition())
+                                .hideDelay(3000).theme("failure-toast")
+                        );
                     });
             }
             /**
-             * update this job
+             * create a new job
              * @param job
              */
             $scope.new = function() {
                 /**
                  * create a new job
                  */
-                jarvisServices.createJob({"name":"No name"}, function(data) {
-                        jarvisServices.getJobs({}, function(data) {
-                            for(var job in data) {
-                                var params = data[job].params;
-                                if(params) {
-                                    data[job].text = JSON.stringify(data[job].params);
+                try {
+                    jarvisJobsResource.post({"name": "No name"}, function (data) {
+                            jarvisJobsResource.get({}, function (data) {
+                                for (var job in data) {
+                                    var params = data[job].params;
+                                    if (params) {
+                                        data[job].text = JSON.stringify(data[job].params);
+                                    }
                                 }
-                            }
-                            $scope.jarvis.configuration.jobs = data;
+                                $scope.jarvis.configuration.jobs = data;
+                                $mdToast.show(
+                                    $mdToast.simple()
+                                        .content('Job No name créé')
+                                        .position($scope.getToastPosition())
+                                        .hideDelay(3000)
+                                );
+                            }, function (failure) {
+                                $mdToast.show(
+                                    $mdToast.simple()
+                                        .content('Job ' + job.name + ' non créé')
+                                        .position($scope.getToastPosition())
+                                        .hideDelay(3000).theme("failure-toast")
+                                );
+                            });
+                        },
+                        function (failure) {
                             $mdToast.show(
                                 $mdToast.simple()
-                                    .content('Job ' + job.name + ' créé')
+                                    .content('Job non créé')
                                     .position($scope.getToastPosition())
-                                    .hideDelay(3000)
+                                    .hideDelay(3000).theme("failure-toast")
                             );
-                        }, function(failure) {
-                            /**
-                             * TODO : handle error message
-                             */
                         });
-                    },
-                    function(failure) {
-                        /**
-                         * TODO : handle error message
-                         */
-                    });
+                } catch(e) {
+                    $mdToast.show(
+                        $mdToast.simple()
+                            .content(''+e)
+                            .position($scope.getToastPosition())
+                            .hideDelay(3000).theme("failure-toast")
+                    );
+                }
             }
         }
         ]
