@@ -333,11 +333,17 @@ module.exports = {
 		 * @param started
 		 * @param callback
 		 */
-		update: function (name, cronTime, plugin, params, timestamp, started, callback) {
+		update: function (id, name, cronTime, plugin, params, timestamp, started, callback) {
 			/**
 			 * find entity from database
 			 */
-			module.exports.raw.cypher('crontab', {filter: "n.job = '" + name + "'"}, function (existingJobs) {
+			var filter;
+			if(id) {
+				filter = {filter: "id(n) = " + id};
+			} else {
+				filter = {filter: "n.name = '" + name + "'"};
+			}
+			module.exports.raw.cypher('crontab', filter, function (existingJobs) {
 				var cron = existingJobs[0];
 				if (cron) {
 					/**
@@ -356,13 +362,28 @@ module.exports = {
 							 */
 							findRelationshipEnd({}, cron.id, 0, 'params',
 								function (ctx, metadata) {
-									neo4jDriver.node.update(_neo4j_driver, metadata.id, params,
-										function (relation) {
-											var updated = entity;
-											updated.params = relation;
-											callback(updated);
-										}
-									);
+									if(metadata.id) {
+										neo4jDriver.node.update(_neo4j_driver, metadata.id, params,
+											function (relation) {
+												var updated = entity;
+												updated.params = relation;
+												callback(updated);
+											}
+										);
+									} else {
+										/**
+										 * no such relation, it must be created
+										 */
+										neo4jDriver.node.create(_neo4j_driver, params,
+											function (entity) {
+												neo4jDriver.relationship.create(_neo4j_driver, cron.id, entity.id, 'params',
+													function (relation) {
+														callback(relation);
+													}
+												);
+											}
+										);
+									}
 								}
 							);
 						}

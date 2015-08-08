@@ -341,7 +341,8 @@ angular.module('JarvisApp',['ngMaterial', 'ngRoute','JarvisApp.services'])
              */
             $scope.save = function(job) {
                 var update = {
-                    job : job.name,
+                    id : job.id,
+                    name : job.name,
                     plugin : job.plugin,
                     cronTime : job.cronTime
                 };

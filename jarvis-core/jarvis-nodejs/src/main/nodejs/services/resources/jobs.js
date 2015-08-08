@@ -115,17 +115,22 @@ var _job = {
     put: function (job, callback) {
         /**
          * raw cypher query to find any existing job with this name
+         * or its id if defined
          */
-        neo4jdb.raw.cypher('crontab', {filter: "n.name = '" + job.name + "'"}, function (existingJobs) {
+        var filter;
+        if(job.id) {
+            filter = {filter: "id(n) = " + job.id};
+        } else {
+            filter = {filter: "n.name = '" + job.name + "'"};
+        }
+        neo4jdb.raw.cypher('crontab', filter, function (existingJobs) {
             var existingJob = existingJobs[0];
             if (existingJob) {
                 /**
                  * job exist just update it
-                 *
-                 * TODO
                  * synchronize this new version with active crontab
                  */
-                neo4jdb.cron.update(job.name, job.cronTime, job.plugin, job.params, new Date(), false, function (response) {
+                neo4jdb.cron.update(job.id, job.name, job.cronTime, job.plugin, job.params, new Date(), false, function (response) {
                     callback(response);
                 });
             } else {
