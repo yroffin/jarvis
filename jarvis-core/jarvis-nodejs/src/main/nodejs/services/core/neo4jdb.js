@@ -306,7 +306,7 @@ module.exports = {
 								/**
 								 * assume only one params by node
 								 */
-								if(ctx.index) {
+								if(ctx.index != undefined) {
 									ctx.crons[ctx.index].params = data;
 								}
 								params--;
