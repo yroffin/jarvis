@@ -48,7 +48,7 @@ angular.module('JarvisApp',['ngMaterial', 'ngRoute','JarvisApp.services'])
      * main controller
      */
     .controller('JarvisAppCtrl',
-    ['$scope', '$mdSidenav', function($scope, $mdSidenav){
+    ['$scope', '$mdSidenav', '$location', function($scope, $mdSidenav, $location){
 
         /**
          * initialize jarvis configuration
@@ -68,7 +68,12 @@ angular.module('JarvisApp',['ngMaterial', 'ngRoute','JarvisApp.services'])
         $scope.toggleSidenav = function(menuId) {
             $mdSidenav(menuId).toggle();
         };
-
+        /**
+         * load configuration
+         */
+        $scope.location = function(target) {
+            $location.path(target);
+        }
         /**
          * load configuration
          */
@@ -352,7 +357,8 @@ angular.module('JarvisApp',['ngMaterial', 'ngRoute','JarvisApp.services'])
                     id : job.id,
                     name : job.name,
                     plugin : job.plugin,
-                    cronTime : job.cronTime
+                    cronTime : job.cronTime,
+                    started : job.started
                 };
                 if(job.text) {
                     update.params = JSON.parse(job.text);
@@ -361,6 +367,7 @@ angular.module('JarvisApp',['ngMaterial', 'ngRoute','JarvisApp.services'])
                  * create or update this job
                  */
                 jarvisJobsResource.put(update, update, function(data) {
+                        job.started = data.started;
                         $mdToast.show(
                             $mdToast.simple()
                                 .content('Job ' + job.name + ' enregistré')

@@ -30,7 +30,25 @@ var createCrontabEntry = function (job, callback) {
     /**
      * fork this jobs if not started
      */
-    logger.info('Create crontab entry for ', job.id, job.name, job.cronTime);
+    logger.info('Create crontab entry for ', job.id, job.name, job.cronTime, job.started);
+    /**
+     * job exist and is deployed
+     * stop it first
+     */
+    if(cronJobs[job.id]) {
+        logger.info('Stop running instance for ', job.id, job.name, job.cronTime, job.started);
+        cronJobs[job.id].stop();
+        delete cronJobs[job.id];
+    }
+    neo4jdb.cron.update(job.id, job.name, job.cronTime, job.plugin, job.params, new Date(), true, function(job) {
+        /**
+         * nothing to do
+         */
+    });
+    /**
+     * create entry
+     * @type {*|CronJob}
+     */
     cronJobs[job.id] = new cron.CronJob({
         cronTime: job.cronTime,
         onTick: function () {
@@ -45,7 +63,7 @@ var createCrontabEntry = function (job, callback) {
             that.timestamp = new Date();
             that.plugin = job.plugin;
             that.params = job.params;
-            neo4jdb.cron.update(that.id, that.name, that.cronTime, that.plugin, that.params, that.timestamp, true, function(job) {
+            neo4jdb.cron.update(that.id, that.name, that.cronTime, that.plugin, that.params, new Date(), true, function(job) {
                 /**
                  * execute script
                  */
@@ -59,6 +77,25 @@ var createCrontabEntry = function (job, callback) {
     cronJobs[job.id].start();
     job.started = true;
     callback(job);
+}
+
+/**
+ * create a new crontab job
+ * @param job
+ */
+var removeCrontabEntry = function (job, callback) {
+    logger.info('Remove crontab entry for ', job.id, job.name, job.cronTime, job.started);
+    /**
+     * clean any crontab entry
+     */
+    if(cronJobs[job.id]) {
+        cronJobs[job.id].stop();
+        delete cronJobs[job.id];
+    }
+    job.started = false;
+    neo4jdb.cron.update(job.id, job.name, job.cronTime, job.plugin, job.params, job.timestamp, false, function(updatedJob) {
+        callback(updatedJob);
+    });
 }
 
 /**
@@ -90,8 +127,16 @@ var _job = {
                  * job exist just update it
                  * synchronize this new version with active crontab
                  */
+                var that = job;
                 neo4jdb.cron.update(job.id, job.name, job.cronTime, job.plugin, job.params, new Date(), false, function (response) {
-                    callback(response);
+                    if(job.started != undefined) {
+                        /**
+                         * handle crontab status
+                         */
+                        _jobs.patch(that.id, {started: that.started}, callback);
+                    } else {
+                        callback(response);
+                    }
                 });
             } else {
                 /**
@@ -104,7 +149,7 @@ var _job = {
         });
     },
     /**
-     * patch resource
+     * post resource
      *
      * @param body
      * @param callback
@@ -236,33 +281,17 @@ var _jobs = {
              */
             if(body.started != undefined) {
                 if(body.started) {
-                    if(cronJobs[job.id]) {
-                        /**
-                         * job exist and is deployed
-                         * stop it first
-                         */
-                        cronJobs[job.id].stop();
-                        createCrontabEntry(job, function(updatedJob) {
-                            callback(updatedJob);
-                        });
-                    } else {
-                        /**
-                         * new deployment
-                         */
-                        createCrontabEntry(job, function(updatedJob) {
-                            callback(updatedJob);
-                        });
-                    }
+                    /**
+                     * create, or re-create entry
+                     */
+                    createCrontabEntry(job, function(updatedJob) {
+                        callback(updatedJob);
+                    });
                 } else {
                     /**
-                     * clean any crontab entry
+                     * remove any crontab entry
                      */
-                    if(cronJobs[job.id]) {
-                        cronJobs[job.id].stop();
-                        delete cronJobs[job.id];
-                    }
-                    job.started = false;
-                    neo4jdb.cron.update(job.name, job.cronTime, job.plugin, job.params, job.timestamp, false, function(updatedJob) {
+                    removeCrontabEntry(job, function(updatedJob) {
                         callback(updatedJob);
                     });
                 }
@@ -313,7 +342,12 @@ module.exports = {
                     /**
                      * patch resource
                      */
-                    _jobs.patch(job.id, {started: true}, callback);
+                    if(job.started) {
+                        logger.info('[JOB] starting ', job.id, job.name, job.cronTime, job.started);
+                        _jobs.patch(job.id, {started: true}, callback);
+                    } else {
+                        logger.info('[JOB] ignored ', job.id, job.name, job.cronTime, job.started);
+                    }
                 }
             });
         },

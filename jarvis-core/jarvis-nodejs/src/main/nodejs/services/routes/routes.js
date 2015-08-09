@@ -55,12 +55,13 @@ exports.init = function(app) {
 	 * Method	Scope	Semantics
 	 * GET	collection	Retrieve all resources in a collection
 	 * GET	resource	Retrieve a single resource (with filter on field)
-	 * HEAD	collection	Retrieve all resources in a collection (header only)
-	 * HEAD	resource	Retrieve a single resource (header only)
 	 * POST	collection	Create a new resource in a collection
 	 * PUT	resource	Update a resource
 	 * PATCH	resource	Update a resource
 	 * DELETE	resource	Delete a resource
+	 * TODO HEAD
+	 * HEAD	collection	Retrieve all resources in a collection (header only)
+	 * HEAD	resource	Retrieve a single resource (header only)
 	 */
 	app.get('/api/jobs', jobs.jobs.get);
 	app.get('/api/jobs/:id', jobs.jobs.get);
@@ -69,9 +70,5 @@ exports.init = function(app) {
 	app.delete('/api/jobs/:id', jobs.jobs.delete);
 	app.delete('/api/jobs', jobs.jobs.delete);
 	app.patch('/api/jobs/:id', jobs.jobs.patch);
-
-	app.head('/api/job', jobs.job.head);
-
-	app.head('/api/jobs', jobs.jobs.head);
 	return;
 };

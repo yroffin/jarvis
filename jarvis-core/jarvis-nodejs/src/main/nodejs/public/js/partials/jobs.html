@@ -9,6 +9,8 @@
                         <md-button ng-click="save(job)">Save</md-button>
                         <md-button ng-click="new(jarvis.configuration.jobs)">New</md-button>
                         <div layout layout-sm="column">
+                            <md-switch ng-model="job.started" aria-label="Started">
+                            </md-switch>
                             <md-input-container>
                                 <md-tooltip>{{job.id}} {{job.name}}</md-tooltip>
                                 <label>Name</label>
