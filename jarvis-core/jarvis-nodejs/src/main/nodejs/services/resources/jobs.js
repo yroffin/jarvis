@@ -99,13 +99,27 @@ var removeCrontabEntry = function (job, callback) {
 }
 
 /**
- * job resource
- * @type {{get: Function, head: Function, put: Function, patch: Function, delete: Function}}
+ * jobs resource
+ *
+ * @type {
+ *  {
+ *  put: Function,
+ *  post: Function,
+ *  deleteById: Function,
+ *  deleteByName: Function,
+ *  getById: Function,
+ *  getByName: Function,
+ *  get: Function,
+ *  head: Function,
+ *  post: Function,
+ *  delete: Function,
+ *  patch: Function,
+ *  test: Function}}
  * @private
  */
-var _job = {
+var _jobs = {
     /**
-     * update (or create) a new job
+     * update existing job
      * @param job
      * @param callback
      */
@@ -182,15 +196,7 @@ var _job = {
         neo4jdb.cron.deleteByName(name, function (response) {
             callback(response);
         });
-    }
-}
-
-/**
- * jobs resource
- * @type {{get: Function, head: Function, post: Function, delete: Function}}
- * @private
- */
-var _jobs = {
+    },
     /**
      * find it by id
      * @param jobId
@@ -239,17 +245,6 @@ var _jobs = {
         neo4jdb.cron.get(undefined, function(crons) {
             callback(crons);
         });
-    },
-    head : function(req, res) {
-        neo4jdb.cron.get(undefined, function(crons) {
-            callback(crons);
-        });
-    },
-    post : function(req, res) {
-        return [];
-    },
-    delete : function(req, res) {
-        return [];
     },
     /**
      * patch resource
@@ -414,14 +409,13 @@ module.exports = {
                 } else return res.json(_result);
             }
 
-            _job.put(req.body, callback);
+            _jobs.put(req.body, callback);
         },
         /**
          * get all jobs
          * @param req
          * @param res
-         */
-        get : function(req, res) {
+         */get : function(req, res) {
             /**
              * simple call back to handle result
              * @param _result
@@ -491,7 +485,7 @@ module.exports = {
                 } else return res.json(_result);
             }
 
-            _job.post(req.body, callback);
+            _jobs.post(req.body, callback);
         },
         delete : function(req, res) {
             /**
@@ -510,10 +504,10 @@ module.exports = {
              */
             var _result;
             if(req.params.id) {
-                _result = _job.deleteById(req.params.id, callback);
+                _result = _jobs.deleteById(req.params.id, callback);
             } else {
                 if(req.query.name) {
-                    _result = _job.deleteByName(req.query.name, callback);
+                    _result = _jobs.deleteByName(req.query.name, callback);
                 }
             }
         },

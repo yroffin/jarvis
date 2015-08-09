@@ -59,9 +59,6 @@ exports.init = function(app) {
 	 * PUT	resource	Update a resource
 	 * PATCH	resource	Update a resource
 	 * DELETE	resource	Delete a resource
-	 * TODO HEAD
-	 * HEAD	collection	Retrieve all resources in a collection (header only)
-	 * HEAD	resource	Retrieve a single resource (header only)
 	 */
 	app.get('/api/jobs', jobs.jobs.get);
 	app.get('/api/jobs/:id', jobs.jobs.get);
@@ -71,5 +68,15 @@ exports.init = function(app) {
 	app.delete('/api/jobs', jobs.jobs.delete);
 	app.patch('/api/jobs/:id', jobs.jobs.patch);
 	app.post('/api/jobs/execute', jobs.jobs.execute);
+	/**
+	 * configuration
+	 * - crontab
+	 * Method	Scope	Semantics
+	 * GET	collection	Retrieve all resources in a collection
+	 * GET	resource	Retrieve a single resource (with filter on field)
+	 */
+	app.get('/api/configurations', jobs.jobs.get);
+	app.get('/api/configurations/crontabs', jobs.jobs.get);
+	app.get('/api/configurations/modules', jobs.jobs.get);
 	return;
 };
