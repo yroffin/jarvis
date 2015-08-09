@@ -117,7 +117,7 @@ myAppServices.factory('jarvisJobsResource', [ '$resource', function($resource, $
 			cache : false
 		},
 		/**
-		 * test current selected job
+		 * post current selected job
 		 */
 		post : {
 			method : 'POST',
@@ -129,11 +129,20 @@ myAppServices.factory('jarvisJobsResource', [ '$resource', function($resource, $
 		/**
 		 * test current selected job
 		 */
-		test : {
+		patch : {
 			method : 'PATCH',
-			url : jarvisApiUrl + '/job/test?job=:job',
+			url : jarvisApiUrl + '/jobs/:id',
 			params : {},
-			isArray : true,
+			isArray : false,
+			cache : false
+		},
+		/**
+		 * test current selected job
+		 */
+		execute : {
+			method : 'POST',
+			url : jarvisApiUrl + '/jobs/execute?id=:id&method=:method',
+			isArray : false,
 			cache : false
 		},
 		/**

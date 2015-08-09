@@ -70,5 +70,6 @@ exports.init = function(app) {
 	app.delete('/api/jobs/:id', jobs.jobs.delete);
 	app.delete('/api/jobs', jobs.jobs.delete);
 	app.patch('/api/jobs/:id', jobs.jobs.patch);
+	app.post('/api/jobs/execute', jobs.jobs.execute);
 	return;
 };

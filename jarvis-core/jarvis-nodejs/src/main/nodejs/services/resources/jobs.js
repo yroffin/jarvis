@@ -297,6 +297,25 @@ var _jobs = {
                 }
             }
         }, callback);
+    },
+    /**
+     * test resource
+     *
+     * @param id
+     * @param body
+     * @param callback
+     */
+    test: function (id, callback) {
+        _jobs.getById(id, function(job) {
+            /**
+             * execute script
+             */
+            kernel.xmppcliForkScript(job);
+            /**
+             * callback notifications
+             */
+            callback(job);
+        }, callback);
     }
 }
 
@@ -430,14 +449,35 @@ module.exports = {
             }
         },
         /**
-         * head all jobs
+         * head on jobs
          * @param req
          * @param res
          */
-        head : function(req, res) {
-            _jobs.head(function(_result) {
-                res.json(_result);
-            });
+        execute : function(req, res) {
+            /**
+             * simple call back to handle result
+             * @param _result
+             * @returns {*}
+             */
+            function callback(_result) {
+                if(!_result) {
+                    return res.status(404).json({});
+                } else return res.json(_result);
+            }
+
+            /**
+             * core get functions
+             */
+            var _result;
+            if(req.query.id && req.query.method) {
+                if(req.query.method == 'test') {
+                    _result = _jobs.test(req.query.id, callback);
+                    return;
+                }
+                return res.status(400).json({});
+            } else {
+                return res.status(400).json({});
+            }
         },
         post : function(req, res) {
             /**
