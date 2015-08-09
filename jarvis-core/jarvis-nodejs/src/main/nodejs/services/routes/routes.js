@@ -76,7 +76,8 @@ exports.init = function(app) {
 	 * GET	resource	Retrieve a single resource (with filter on field)
 	 */
 	app.get('/api/configurations', jobs.jobs.get);
-	app.get('/api/configurations/crontabs', jobs.jobs.get);
+	app.get('/api/configurations/crontabs', jobs.crontabs.get);
+	app.get('/api/configurations/crontabs/:id', jobs.crontabs.get);
 	app.get('/api/configurations/modules', jobs.jobs.get);
 	return;
 };

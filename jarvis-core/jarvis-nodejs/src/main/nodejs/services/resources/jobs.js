@@ -98,6 +98,42 @@ var removeCrontabEntry = function (job, callback) {
     });
 }
 
+var _crontabs = {
+    /**
+     * get all jobs
+     * @param callback
+     */
+    get : function(callback) {
+        var filtered = {};
+        for(var key in cronJobs) {
+            filtered[key] = {
+                context : cronJobs[key].context,
+                cronTime : cronJobs[key].cronTime,
+                running : cronJobs[key].running
+            }
+        }
+        callback(filtered);
+    },
+    /**
+     * get by id
+     * @param id
+     * @param callback
+     */
+    getById: function (id, callback) {
+        var result = {};
+        for(var key in cronJobs) {
+            if(key+'' == id+'') {
+                result = {
+                    context : cronJobs[key].context,
+                    cronTime : cronJobs[key].cronTime,
+                    running : cronJobs[key].running
+                }
+            }
+        }
+        callback(result);
+    }
+}
+
 /**
  * jobs resource
  *
@@ -366,12 +402,37 @@ module.exports = {
             });
         },
     },
-    job : {
-        head : function(req, res) {
+    crontabs : {
+        /**
+         * get all internal crontab (not neo4jdb but in memory crontab)
+         * @param req
+         * @param res
+         */
+        get : function(req, res) {
             /**
-             * no HEAD handle by REST api
+             * simple call back to handle result
+             * @param _result
+             * @returns {*}
              */
+            function callback(_result) {
+                if(!_result) {
+                    return res.status(404).json({});
+                } else return res.json(_result);
+            }
+
+            /**
+             * core get functions
+             * if any id or name then it's a single resource request
+             * else recover all exiting resources
+             */
+            if(req.params.id) {
+                _crontabs.getById(req.params.id, callback);
+            } else {
+                _crontabs.get(callback);
+            }
         },
+    },
+    job : {
         /**
          * path resource
          * @param req
