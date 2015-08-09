@@ -476,7 +476,8 @@ module.exports = {
          * get all jobs
          * @param req
          * @param res
-         */get : function(req, res) {
+         */
+        get : function(req, res) {
             /**
              * simple call back to handle result
              * @param _result

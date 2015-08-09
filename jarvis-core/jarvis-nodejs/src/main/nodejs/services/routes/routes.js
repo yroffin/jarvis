@@ -17,9 +17,9 @@
 var logger = require('blammo').LoggerFactory.getLogger('kernel');
 var config = require(__dirname + '/../json/config');
 var interact = require(__dirname + '/../json/interact');
-var neo4j = require(__dirname + '/../json/neo4jdb');
 
 var jobs = require(__dirname + '/../resources/jobs');
+var neo4j = require(__dirname + '/../resources/neo4j');
 
 /**
  * initialise all routes
@@ -38,18 +38,18 @@ exports.init = function(app) {
 	/**
 	 * collections services
 	 */
-	app.get('/services/neo4j/:key', neo4j.collections);
-	app.get('/services/neo4j/crud/:name/count', neo4j.collectionCount);
-	app.get('/services/neo4j/crud/:name/page', neo4j.collectionPages);
+	//app.get('/services/neo4j/:key', neo4j.collections);
+	//app.get('/services/neo4j/crud/:name/count', neo4j.collectionCount);
+	//app.get('/services/neo4j/crud/:name/page', neo4j.collectionPages);
 	/**
 	 * cron plugin
 	 */
-	app.get('/services/neo4j/crontab/:plugin/create', neo4j.cronPlugin);
-	app.post('/services/neo4j/crontab/:plugin/create', neo4j.cronPlugin);
-	app.get('/services/neo4j/crontab/:plugin/test', neo4j.cronTestPlugin);
-	app.post('/services/neo4j/crontab/:plugin/test', neo4j.cronTestPlugin);
-	app.get('/services/neo4j/crontabs/list', neo4j.cronList);
-	app.delete('/services/neo4j/crontab', neo4j.cronRemoveByName);
+	//app.get('/services/neo4j/crontab/:plugin/create', neo4j.cronPlugin);
+	//app.post('/services/neo4j/crontab/:plugin/create', neo4j.cronPlugin);
+	//app.get('/services/neo4j/crontab/:plugin/test', neo4j.cronTestPlugin);
+	//app.post('/services/neo4j/crontab/:plugin/test', neo4j.cronTestPlugin);
+	//app.get('/services/neo4j/crontabs/list', neo4j.cronList);
+	//app.delete('/services/neo4j/crontab', neo4j.cronRemoveByName);
 	/**
 	 * jobs resource
 	 * Method	Scope	Semantics
@@ -71,6 +71,8 @@ exports.init = function(app) {
 	/**
 	 * configuration
 	 * - crontab
+	 * - neo4j
+	 *   - labels
 	 * Method	Scope	Semantics
 	 * GET	collection	Retrieve all resources in a collection
 	 * GET	resource	Retrieve a single resource (with filter on field)
@@ -79,5 +81,9 @@ exports.init = function(app) {
 	app.get('/api/configurations/crontabs', jobs.crontabs.get);
 	app.get('/api/configurations/crontabs/:id', jobs.crontabs.get);
 	app.get('/api/configurations/modules', jobs.jobs.get);
+	app.get('/api/configurations/modules/:id', jobs.jobs.get);
+	app.get('/api/configurations/neo4j', neo4j.get);
+	app.get('/api/configurations/neo4j/labels', neo4j.labels.get);
+	app.get('/api/configurations/neo4j/labels/:id', neo4j.labels.get);
 	return;
 };

@@ -492,6 +492,26 @@ module.exports = {
 			);
 		},
 		/**
+		 * get collection count by label
+		 *
+		 * @param label
+		 * @param callback
+		 */
+		all: function (label, callback) {
+			/**
+			 * query by labels
+			 */
+			neo4jDriver.cypher.query(_neo4j_driver, 'MATCH (n) WHERE labels(n) = [\''+label+'\']  RETURN n',
+				function (response) {
+					var rows = [];
+					for(var index = 0;index < response[0].data.length; index ++) {
+						rows.push(response[0].data[index].row[0]);
+					}
+					callback(rows);
+				}
+			);
+		},
+		/**
 		 * store object
 		 *
 		 * @param name
