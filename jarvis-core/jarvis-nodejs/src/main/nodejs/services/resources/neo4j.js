@@ -31,9 +31,9 @@ var _neo4jLabels = {
      * @param id
      * @param callback
      */
-    getById: function (id, callback) {
+    getById: function (id, limit, callback) {
         var result = {};
-        neo4jdb.label.all(id, function(rows) {
+        neo4jdb.label.all(id, {skip: 0, limit: limit}, function(rows) {
             callback(rows);
         });
     }
@@ -81,7 +81,7 @@ module.exports = {
              * labels extraction
              */
             if(req.params.id) {
-                _neo4jLabels.getById(req.params.id, callback, callback);
+                _neo4jLabels.getById(req.params.id, req.query.limit, callback, callback);
             } else {
                 _neo4jLabels.get(callback);
             }

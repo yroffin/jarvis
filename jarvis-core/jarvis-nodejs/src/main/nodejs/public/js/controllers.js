@@ -60,6 +60,18 @@ angular.module('JarvisApp',['ngMaterial', 'ngMdIcons', 'ngRoute','JarvisApp.serv
         $scope.jarvis.configuration = {};
         $scope.jarvis.neo4jdb = {};
 
+        $scope.toastPosition = {
+            bottom: false,
+            top: true,
+            left: false,
+            right: true
+        };
+        $scope.getToastPosition = function() {
+            return Object.keys($scope.toastPosition)
+                .filter(function(pos) { return $scope.toastPosition[pos]; })
+                .join(' ');
+        };
+
         /**
          * toggle navbar
          * @param menuId
@@ -71,29 +83,133 @@ angular.module('JarvisApp',['ngMaterial', 'ngMdIcons', 'ngRoute','JarvisApp.serv
         /**
          * load configuration
          */
-        $scope.location = function(target) {
+        $scope.location = function(menuId, target) {
+            $mdSidenav(menuId).toggle();
             $location.path(target);
         };
     }
     ]
-)
+    )
+    /**
+     * configuration
+     */
+    .controller('JarvisAppLabelsDetailCtrl',
+    ['$scope', 'jarvisServices', 'jarvisConfigurationResource', '$mdToast', '$mdDialog',
+        function($scope, jarvisServices, jarvisConfigurationResource, $mdToast, $mdDialog) {
+            /**
+             * load detail on labels
+             */
+            $scope.label = function(name, ev, $scope, $mdDialog, callback) {
+                jarvisConfigurationResource.label({id:name, limit:100}, {id:name, limit:100}, function(data) {
+                    $mdToast.show(
+                        $mdToast.simple()
+                            .content("Labels "+name+" loaded")
+                            .position($scope.getToastPosition())
+                            .hideDelay(3000)
+                    );
+                    callback(ev, $scope, $mdDialog, data);
+                }, function(failure) {
+                    $mdToast.show(
+                        $mdToast.simple()
+                            .content(failure)
+                            .position($scope.getToastPosition())
+                            .hideDelay(3000).theme("failure-toast")
+                    );
+                });
+            }
+
+            $scope.showAdvanced = function(ev,item) {
+                $scope.label(item.name, ev, $scope, $mdDialog, function(ev, $scope, $mdDialog, data) {
+                    $mdDialog.show({
+                        controller: function($scope, $mdDialog) {
+                            $scope.hide = function() {
+                                $mdDialog.hide();
+                            };
+                            $scope.cancel = function() {
+                                $mdDialog.cancel();
+                            };
+                            $scope.answer = function(answer) {
+                                $mdDialog.hide(answer);
+                            };
+                            $scope.item = item;
+                            $scope.data = data;
+                        },
+                        templateUrl: 'js/partials/dialog/labels.tmpl.html',
+                        parent: angular.element(document.body),
+                        targetEvent: ev,
+                    })
+                    .then(function(answer) {
+                        $scope.alert = 'You said the information was "' + answer + '".';
+                    }, function() {
+                        $scope.alert = 'You cancelled the dialog.';
+                    });
+                });
+            }
+        }
+    ])
+    /**
+     * configuration
+     */
+    .controller('JarvisAppConfigCtrl',
+    ['$scope', 'jarvisServices', 'jarvisConfigurationResource', '$mdToast', '$mdDialog',
+        function($scope, jarvisServices, jarvisConfigurationResource, $mdToast, $mdDialog) {
+            $scope.jarvis.configuration.crontabs = undefined;
+            $scope.jarvis.configuration.labels = undefined;
+
+            /**
+             * load crontabs
+             */
+            $scope.crontabs = function() {
+                jarvisConfigurationResource.crontabs({}, function(data) {
+                    $scope.jarvis.configuration.crontabs = data;
+                    $mdToast.show(
+                        $mdToast.simple()
+                            .content("Crontabs loaded")
+                            .position($scope.getToastPosition())
+                            .hideDelay(3000)
+                    );
+                }, function(failure) {
+                    $mdToast.show(
+                        $mdToast.simple()
+                            .content(failure)
+                            .position($scope.getToastPosition())
+                            .hideDelay(3000).theme("failure-toast")
+                    );
+                });
+            }
+
+            /**
+             * load crontabs
+             */
+            $scope.labels = function() {
+                jarvisConfigurationResource.labels({}, function(data) {
+                    $scope.jarvis.configuration.labels = data;
+                    $mdToast.show(
+                        $mdToast.simple()
+                            .content("Labels loaded")
+                            .position($scope.getToastPosition())
+                            .hideDelay(3000)
+                    );
+                }, function(failure) {
+                    $mdToast.show(
+                        $mdToast.simple()
+                            .content(failure)
+                            .position($scope.getToastPosition())
+                            .hideDelay(3000).theme("failure-toast")
+                    );
+                });
+            }
+
+            $scope.crontabs();
+            $scope.labels();
+        }
+    ])
     /**
      * job view controller
      */
     .controller('JarvisAppJobCtrl',
     ['$scope', 'jarvisServices', 'jarvisJobsResource', '$mdToast',
         function($scope, jarvisServices, jarvisJobsResource, $mdToast) {
-            $scope.toastPosition = {
-                bottom: false,
-                top: true,
-                left: false,
-                right: true
-            };
-            $scope.getToastPosition = function() {
-                return Object.keys($scope.toastPosition)
-                    .filter(function(pos) { return $scope.toastPosition[pos]; })
-                    .join(' ');
-            };
             $scope.iconPath = 'https://cdn4.iconfinder.com/data/icons/SOPHISTIQUE/web_design/png/128/our_process_2.png';
             /**
              * some init

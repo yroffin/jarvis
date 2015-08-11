@@ -104,13 +104,14 @@ var _crontabs = {
      * @param callback
      */
     get : function(callback) {
-        var filtered = {};
+        var filtered = [];
         for(var key in cronJobs) {
-            filtered[key] = {
+            filtered.push({
+                key : key,
                 context : cronJobs[key].context,
                 cronTime : cronJobs[key].cronTime,
                 running : cronJobs[key].running
-            }
+            });
         }
         callback(filtered);
     },

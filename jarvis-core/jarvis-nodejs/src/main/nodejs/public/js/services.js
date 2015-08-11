@@ -85,6 +85,45 @@ myAppServices.factory('jarvisServices', [ '$resource', function($resource, $wind
 	})
 }]);
 
+/**
+ * configuration services
+ * - /configuration/crontabs
+ * - /configuration/neo4j
+ */
+myAppServices.factory('jarvisConfigurationResource', [ '$resource', function($resource, $windows) {
+	return $resource('', {}, {
+			/**
+			 * get all crontab (raw configuration resource)
+			 */
+			crontabs: {
+				method: 'GET',
+				url: jarvisApiUrl + '/configurations/crontabs',
+				params: {},
+				isArray: true,
+				cache: false
+			},
+			/**
+			 * get all labels (raw configuration resource)
+			 */
+			labels: {
+				method: 'GET',
+				url: jarvisApiUrl + '/configurations/neo4j/labels',
+				params: {},
+				isArray: true,
+				cache: false
+			},
+			/**
+			 * get label detail (raw configuration resource)
+			 */
+			label: {
+				method: 'GET',
+				url: jarvisApiUrl + '/configurations/neo4j/labels/:id?limit=:limit',
+				isArray: true,
+				cache: false
+			}
+		}
+	)}]);
+
 myAppServices.factory('jarvisJobsResource', [ '$resource', function($resource, $windows) {
 	return $resource('', {}, {
 		/**

@@ -115,6 +115,61 @@ module.exports = {
                     else throw err;
                 }
             )
+        },
+        /**
+         * node create
+         * http://neo4j.com/docs/2.2.2/rest-api-transactional.html#rest-api-begin-and-commit-a-transaction-in-one-request
+         *
+         * @param handle
+         * @param statement
+         * @param callback
+         * @param cberr
+         */
+        queryPaginated: function (handle, statement, filter, callback, failure) {
+            var dml = '';
+            /**
+             * filter
+             * ORDER BY {{filter.sort}} SKIP {{filter.skip}} LIMIT {{filter.limit}}
+             */
+            if(filter != undefined) {
+                if(filter.sort) {
+                    dml = dml + ' ORDER BY ' + filter.sort;
+                }
+                if(filter.skip) {
+                    dml = dml + ' SKIP ' + filter.skip;
+                }
+                if(filter.limit) {
+                    dml = dml + ' LIMIT ' + filter.limit;
+                }
+            }
+            restCall(
+                handle,
+                {
+                    "statements": [{
+                        "statement": statement + dml
+                    }]
+                },
+                '/db/data/transaction/commit',
+                'POST',
+                function (response) {
+                    if(response.entity.errors && response.entity.errors.length > 0) {
+                        if (cberr) {
+                            cberr(response.entity.errors[0]);
+                        }
+                        else throw response.entity.errors[0];
+                    } else {
+                        if (callback) {
+                            callback(response.entity.results);
+                        }
+                    }
+                },
+                function (fault) {
+                    if (failure) {
+                        failure(fault);
+                    }
+                    else throw fault;
+                }
+            )
         }
     },
     node : {

@@ -497,11 +497,17 @@ module.exports = {
 		 * @param label
 		 * @param callback
 		 */
-		all: function (label, callback) {
+		all: function (label, filter, callback) {
 			/**
 			 * query by labels
 			 */
-			neo4jDriver.cypher.query(_neo4j_driver, 'MATCH (n) WHERE labels(n) = [\''+label+'\']  RETURN n',
+			neo4jDriver.cypher.queryPaginated(_neo4j_driver,
+				'MATCH (n) WHERE labels(n) = [\''+label+'\']  RETURN n',
+				{
+					sort:'id(n) DESC',
+					skip: filter.skip,
+					limit: filter.limit
+				},
 				function (response) {
 					var rows = [];
 					for(var index = 0;index < response[0].data.length; index ++) {

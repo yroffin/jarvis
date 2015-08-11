@@ -1,4 +1,52 @@
-<pre>
-    configuration
-    conf: {{jarvis.configuration.clients}}
-</pre>
+<div>
+    <md-content class="md-padding">
+        <md-tabs md-dynamic-height md-border-bottom>
+            <md-tab label="crontabs">
+                <md-content ng-controller="JarvisAppConfigCtrl" class="md-padding">
+                    <h1 class="md-display-2">Crontabs</h1>
+                    <md-list ng-if="jarvis.configuration.crontabs">
+                        <md-subheader class="md-no-sticky">{{jarvis.configuration.crontabs.length}} active crontab entry</md-subheader>
+                        <md-list-item class="md-3-line" ng-repeat="item in jarvis.configuration.crontabs">
+                            <div class="md-list-item-text">
+                                <md-whiteframe class="md-whiteframe-z5" layout layout-align="left">
+                                    <span>
+                                        <p>Id: {{item.context.id}}</p>
+                                        <p>Name: {{item.context.name}}</p>
+                                        <p>Last modified: {{item.context.timestamp}}</p>
+                                        <p>Cron: {{item.context.cronTime}}</p>
+                                        <p>Plugin: {{item.context.plugin}}</p>
+                                        <p>Started: {{item.context.started}}</p>
+                                        <p>Params: {{item.context.params}}</p>
+                                    </span>
+                                </md-whiteframe>
+                            </div>
+                        </md-list-item>
+                    </md-list>
+                </md-content>
+            </md-tab>
+            <md-tab label="labels">
+                <md-content class="md-padding">
+                    <h1 class="md-display-2">Labels</h1>
+                    <md-list ng-if="jarvis.configuration.labels">
+                        <md-subheader class="md-no-sticky">{{jarvis.configuration.labels.length}} active labels</md-subheader>
+                        <md-list-item class="md-3-line" ng-repeat="item in jarvis.configuration.labels">
+                            <div ng-controller="JarvisAppLabelsDetailCtrl" class="md-list-item-text">
+                                <md-whiteframe ng-click="showAdvanced($event,item)" class="md-whiteframe-z5" layout layout-align="left">
+                                    <span>
+                                        <p>Label: {{item.name}}</p>
+                                        <p>Count: {{item.count}}</p>
+                                    </span>
+                                </md-whiteframe>
+                            </div>
+                        </md-list-item>
+                    </md-list>
+                </md-content>
+            </md-tab>
+            <md-tab label="three">
+                <md-content class="md-padding">
+                    <h1 class="md-display-2">Todo</h1>
+                </md-content>
+            </md-tab>
+        </md-tabs>
+    </md-content>
+</div>
