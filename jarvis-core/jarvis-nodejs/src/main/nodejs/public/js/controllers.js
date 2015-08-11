@@ -30,9 +30,9 @@ angular.module('JarvisApp',['ngMaterial', 'ngMdIcons', 'ngRoute','JarvisApp.serv
                     controller: 'JarvisAppConfCtrl',
                     templateUrl: '/js/partials/configuration.html'
                 }).
-                when('/neo4j', {
-                    controller: 'JarvisAppNeo4jCtrl',
-                    templateUrl: '/js/partials/neo4j.html'
+                when('/scenario', {
+                    controller: 'JarvisAppScenarioCtrl',
+                    templateUrl: '/js/partials/scenario.html'
                 }).
                 otherwise({
                     redirectTo: '/js/partials/jobs.html'
@@ -432,18 +432,68 @@ angular.module('JarvisApp',['ngMaterial', 'ngMdIcons', 'ngRoute','JarvisApp.serv
     /**
      * neo4j view controller
      */
-    .controller('JarvisAppNeo4jCtrl',
-    ['$scope', 'jarvisServices', function($scope, jarvisServices) {
-        /**
-         * loading neo4jdb collections then navigate to target
-         */
-        jarvisServices.getDbCollections({}, function(data) {
-            $scope.jarvis.neo4jdb.collections = data;
-        }, function(failure) {
+    .controller('JarvisAppScenarioCtrl',
+    ['$scope', 'jarvisServices', 'jarvisJobsResource', '$mdToast',
+        function($scope, jarvisServices, jarvisJobsResource, $mdToast) {
             /**
-             * TODO : handle error message
+             * some init
+             * loading jobs
              */
-        });
-    }
+            jarvisJobsResource.get({}, function (data) {
+                for (var index in data) {
+                    var params = data[index].params;
+                    if (params) {
+                        data[index].text = JSON.stringify(data[index].params);
+                    }
+                }
+                $scope.jarvis.configuration.jobs = data;
+            }, function (failure) {
+                $mdToast.show(
+                    $mdToast.simple()
+                        .content(failure)
+                        .position($scope.getToastPosition())
+                        .hideDelay(3000).theme("failure-toast")
+                );
+            });
+            /**
+             * test plugin associated to this job
+             */
+            $scope.execute = function(job) {
+                $mdToast.show(
+                    $mdToast.simple()
+                        .content('Test du plugin du job '+job.name)
+                        .position($scope.getToastPosition())
+                        .hideDelay(3000)
+                );
+                /**
+                 * loading clients
+                 */
+                jarvisJobsResource.execute(
+                    {
+                        id: job.id,
+                        method: 'test'
+                    },
+                    {
+                        id: job.id,
+                        method: 'test'
+                    },
+                    function(data) {
+                        $mdToast.show(
+                            $mdToast.simple()
+                                .content('Plugin du job '+job.name+' executé')
+                                .position($scope.getToastPosition())
+                                .hideDelay(3000)
+                        );
+                    },
+                    function(failure) {
+                        $mdToast.show(
+                            $mdToast.simple()
+                                .content('Plugin du job '+job.name+' non executé')
+                                .position($scope.getToastPosition())
+                                .hideDelay(3000).theme("failure-toast")
+                        );
+                    });
+            };
+        }
     ]
 );
