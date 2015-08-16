@@ -20,6 +20,7 @@ var interact = require(__dirname + '/../json/interact');
 
 var jobs = require(__dirname + '/../resources/jobs');
 var neo4j = require(__dirname + '/../resources/neo4j');
+var clients = require(__dirname + '/../resources/clients');
 
 /**
  * initialise all routes
@@ -80,10 +81,10 @@ exports.init = function(app) {
 	app.get('/api/configurations', jobs.jobs.get);
 	app.get('/api/configurations/crontabs', jobs.crontabs.get);
 	app.get('/api/configurations/crontabs/:id', jobs.crontabs.get);
-	app.get('/api/configurations/modules', jobs.jobs.get);
-	app.get('/api/configurations/modules/:id', jobs.jobs.get);
 	app.get('/api/configurations/neo4j', neo4j.get);
 	app.get('/api/configurations/neo4j/labels', neo4j.labels.get);
 	app.get('/api/configurations/neo4j/labels/:id', neo4j.labels.get);
+	app.get('/api/configurations/clients', clients.listener.get);
+	app.get('/api/configurations/clients/:id', clients.listener.get);
 	return;
 };
