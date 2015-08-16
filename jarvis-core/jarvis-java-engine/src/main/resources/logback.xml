@@ -9,15 +9,7 @@
 		</encoder>
 	</appender>
 
-	<appender name="MONGODB" class="org.jarvis.logback.MongoAppender">
-		<host>localhost</host>
-		<port>27017</port>
-		<db>blammo</db>
-		<collection>log</collection>
-	</appender>
-
 	<root level="DEBUG">
 		<appender-ref ref="STDOUT" />
-		<appender-ref ref="MONGODB" />
 	</root>
 </configuration>

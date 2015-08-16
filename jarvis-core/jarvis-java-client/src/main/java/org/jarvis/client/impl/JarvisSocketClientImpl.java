@@ -20,6 +20,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.ConnectException;
 import java.net.Socket;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -39,8 +40,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  *
  */
 public class JarvisSocketClientImpl implements IJarvisSocketClient, Runnable {
-	protected Logger logger = LoggerFactory
-			.getLogger(JarvisSocketClientImpl.class);
+	protected Logger logger = LoggerFactory.getLogger(JarvisSocketClientImpl.class);
 
 	/**
 	 * public member
@@ -85,7 +85,17 @@ public class JarvisSocketClientImpl implements IJarvisSocketClient, Runnable {
 			/**
 			 * initialize socket
 			 */
-			socket = new Socket(hostName, portNumber);
+			do {
+				try {
+					socket = new Socket(hostName, portNumber);
+				} catch (ConnectException e) {
+					/**
+					 * unable to connect
+					 */
+					logger.info("Unable to connect, retry in few seconds");
+					Thread.sleep(5000);
+				}
+			} while (socket == null);
 
 			onConnect();
 
@@ -107,10 +117,8 @@ public class JarvisSocketClientImpl implements IJarvisSocketClient, Runnable {
 					 * client must answer on this welcome message and transmit
 					 * all its properties
 					 */
-					if (message.getCode().startsWith("welcome")
-							&& message.session != null
-							&& message.session.client != null
-							&& message.session.client.id != null) {
+					if (message.getCode().startsWith("welcome") && message.session != null
+							&& message.session.client != null && message.session.client.id != null) {
 						/**
 						 * fill element session session will be send with each
 						 * message
@@ -206,8 +214,7 @@ public class JarvisSocketClientImpl implements IJarvisSocketClient, Runnable {
 		}
 
 		public void run() {
-			BufferedReader in = new BufferedReader(
-					new InputStreamReader(stream));
+			BufferedReader in = new BufferedReader(new InputStreamReader(stream));
 			ObjectMapper mapper = new ObjectMapper();
 			try {
 				boolean cont = true;
@@ -221,27 +228,42 @@ public class JarvisSocketClientImpl implements IJarvisSocketClient, Runnable {
 					if (logger.isDebugEnabled()) {
 						logger.debug("Line {}", line);
 					}
-					JarvisDatagram datagram = mapper.readValue(line,
-							JarvisDatagram.class);
+					JarvisDatagram datagram = mapper.readValue(line, JarvisDatagram.class);
 					try {
 						if (logger.isDebugEnabled()) {
 							logger.debug("Datagram {}", datagram);
 						}
 						linked.put(datagram);
 					} catch (InterruptedException e) {
-						logger.error(
-								"InterruptedException while waiting for a new message {}",
-								e);
+						logger.error("InterruptedException while waiting for a new message {}", e);
 						cont = false;
 					}
 				}
 			} catch (IOException e) {
 				logger.error("While waiting for a new message {}", e);
+				/**
+				 * throw empty message
+				 */
+				try {
+					linked.put(new JarvisDatagram());
+				} catch (InterruptedException e1) {
+					logger.error("While trying to unblock internal message {}", e);
+				}
+				return;
 			}
 			try {
 				linked.put(new JarvisDatagram());
 			} catch (InterruptedException e) {
 				logger.error("While stopping {}", e);
+				/**
+				 * throw empty message
+				 */
+				try {
+					linked.put(new JarvisDatagram());
+				} catch (InterruptedException e1) {
+					logger.error("While trying to unblock internal message {}", e);
+				}
+				return;
 			}
 		}
 	}
@@ -293,8 +315,7 @@ public class JarvisSocketClientImpl implements IJarvisSocketClient, Runnable {
 
 	@Override
 	public String toString() {
-		return "JarvisSocketClientImpl [name=" + name + ", isRenderer="
-				+ isRenderer + ", isSensor=" + isSensor + ", canAnswer="
-				+ canAnswer + "]";
+		return "JarvisSocketClientImpl [name=" + name + ", isRenderer=" + isRenderer + ", isSensor=" + isSensor
+				+ ", canAnswer=" + canAnswer + "]";
 	}
 }

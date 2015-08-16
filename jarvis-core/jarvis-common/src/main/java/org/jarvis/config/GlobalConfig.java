@@ -46,11 +46,9 @@ public class GlobalConfig {
 	 * @throws IOException
 	 */
 	private GlobalConfig() throws IOException {
-		InputStream stream = this.getClass().getResourceAsStream(
-				"/jarvis.properties");
+		InputStream stream = this.getClass().getResourceAsStream("/jarvis.properties");
 		if (stream == null) {
-			throw new RuntimeException(
-					"Cannot find jarvis.properties in classpath");
+			throw new RuntimeException("Cannot find jarvis.properties in classpath");
 		}
 		/**
 		 * load properties
@@ -85,5 +83,11 @@ public class GlobalConfig {
 
 	public int getJarvisLsnPort() {
 		return getProperty("jarvis.srv.listener.port", 5000);
+	}
+
+	@Override
+	public String toString() {
+		return "GlobalConfig [getJarvisVoice()=" + getJarvisVoice() + ", getJarvisHost()=" + getJarvisHost()
+				+ ", getJarvisLsnPort()=" + getJarvisLsnPort() + "]";
 	}
 }

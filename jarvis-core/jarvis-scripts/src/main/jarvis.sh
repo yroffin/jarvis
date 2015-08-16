@@ -6,8 +6,12 @@
 # - linux
 # - windows (shell.w32-ix86 based Cf. http://sourceforge.net/projects/win-bash)
 #
+# Prerequisite
+# - node js installed and runnable
+# - npm installed and runnable
+#
 
-# Description : find node executable
+# Description : clean environnement
 # Arguments: None
 # Returns: None
 cleanup()
@@ -15,84 +19,9 @@ cleanup()
 	return 0
 }
 
-# Description : find node executable
+# Description : find bootstrap jarvis script
 # Arguments: None
-# Returns: None
-findNodeExecutable()
-{
-	# first find it locally (in design mode)
-	for executable in `cd "${SCRIPT_WORKSPACE}" && find ../../../jarvis-nodejs/node -type f -name 'node.exe' 2>/dev/null`
-	do
-		echo ${SCRIPT_WORKSPACE}/`dirname $executable`
-		return
-	done
-	# find it in subdirs
-	for executable in `cd "${SCRIPT_WORKSPACE}" && find ../node -type f -name 'node.exe' 2>/dev/null`
-	do
-		echo ${SCRIPT_WORKSPACE}/`dirname $executable`
-		return
-	done
-	# find it in subdirs
-	for executable in `cd "${SCRIPT_WORKSPACE}" && find ../../node -type f -name 'node.exe' 2>/dev/null`
-	do
-		echo ${SCRIPT_WORKSPACE}/`dirname $executable`
-		return
-	done
-}
-
-# Description : find node executable
-# Arguments: None
-# Returns: None
-findPythonExecutable()
-{
-	# first find it locally (in design mode)
-	for executable in `cd "${SCRIPT_WORKSPACE}" && find ../../../jarvis-nodejs/python -type f -name 'python.exe' 2>/dev/null`
-	do
-		echo ${SCRIPT_WORKSPACE}/`dirname $executable`
-		return
-	done
-	# find it in subdirs
-	for executable in `cd "${SCRIPT_WORKSPACE}" && find ../python -type f -name 'python.exe' 2>/dev/null`
-	do
-		echo ${SCRIPT_WORKSPACE}/`dirname $executable`
-		return
-	done
-	# find it in subdirs
-	for executable in `cd "${SCRIPT_WORKSPACE}" && find ../../python -type f -name 'python.exe' 2>/dev/null`
-	do
-		echo ${SCRIPT_WORKSPACE}/`dirname $executable`
-		return
-	done
-}
-
-# Description : find node executable
-# Arguments: None
-# Returns: None
-findNpmExecutable()
-{
-	# first find it locally (in design mode)
-	for executable in `cd "${SCRIPT_WORKSPACE}" && find ../../../jarvis-nodejs/node -type f -name 'node.exe' 2>/dev/null`
-	do
-		echo ${SCRIPT_WORKSPACE}/`dirname $executable`
-		return
-	done
-	# find it in subdirs
-	for executable in `cd "${SCRIPT_WORKSPACE}" && find ../node -type f -name 'node.exe' 2>/dev/null`
-	do
-		echo ${SCRIPT_WORKSPACE}/`dirname $executable`
-		return
-	done
-	# find it in subdirs
-	for executable in `cd "${SCRIPT_WORKSPACE}" && find ../../node -type f -name 'node.exe' 2>/dev/null`
-	do
-		echo ${SCRIPT_WORKSPACE}/`dirname $executable`
-		return
-	done
-}
-
-# Description : find node executable
-# Arguments: None
-# Returns: None
+# Returns: jarvis script directory
 findServerJs()
 {
 	# first find it locally (in design mode)
@@ -109,41 +38,37 @@ findServerJs()
 	done
 }
 
+# fix nodejs environnement
+NODE_BINARY=`which node.exe`
+NPM_BINARY=`which npm.cmd`
+
+NODE_VERSION=`"${NODE_BINARY}" -v`
+echo '***' ${NODE_BINARY} '***' ${NODE_VERSION}
+
+NPM_VERSION=`"${NPM_BINARY}" -version`
+echo '***' ${NPM_BINARY} '***' ${NPM_VERSION}
+
+# fix jarvis environnement
 echo CWD: `pwd`
 export SCRIPT_WORKSPACE="`pwd`"
+export JARVIS_BOOTSTRAP_HOME="`findServerJs`"
+echo '***' ${JARVIS_BOOTSTRAP_HOME} '***' ${JARVIS_BOOTSTRAP_VERSION}
 
-export NODE_HOME="`findNodeExecutable`"
-export PYTHON_HOME="`findPythonExecutable`"
-export NPM_HOME="`findNpmExecutable`"
-export NODEJS_HOME="`findServerJs`"
-export NODE_PATH=""
-export PATH="${NODE_HOME}:${PATH}"
-
-echo '***' ${NODE_HOME}
-echo '***' ${NPM_HOME}
-echo '***' ${PYTHON_HOME}
 
 export JARVIS_LOGS="${TEMP}/logs"
-echo LOGS: "${JARVIS_LOGS}"
 mkdir -p "${JARVIS_LOGS}"
+echo LOGS: "${JARVIS_LOGS}"
 
-cd "${NODEJS_HOME}" && ls -lrt
+# install npm modules if needed
+cd "${JARVIS_BOOTSTRAP_HOME}" && ls -lrt
+cd "${JARVIS_BOOTSTRAP_HOME}" && "${NPM_BINARY}" install
 
-[ ! -f "${NODE_HOME}/npm.cmd" ] && {
-	exit -1
-}
-
-"${NODE_HOME}/npm.cmd" install
-
+# check if install is ok
 [ "${?}" -ne 0 ] && {
 	exit -1
 }
 
-[ ! -f "${NODE_HOME}/node.exe" ] && {
-	exit -1
-}
-
-export NODE_PATH="${NODEJS_HOME};${SCRIPT_WORKSPACE}"
+export NODE_PATH="${JARVIS_BOOTSTRAP_HOME};${SCRIPT_WORKSPACE}"
 echo Running "${NODE_HOME}/node.exe"
-"${NODE_HOME}/node.exe" "${NODEJS_HOME}/jarvis-bootstrap.js"
+"${NODE_BINARY}" "${JARVIS_BOOTSTRAP_HOME}/jarvis-bootstrap.js"
 exit $?
