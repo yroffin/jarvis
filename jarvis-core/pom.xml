@@ -148,6 +148,7 @@
 		<module>jarvis-mongodb</module>
 		<module>jarvis-common</module>
 		<module>jarvis-dio</module>
+		<module>jarvis-google-speech</module>
 	</modules>
 
 	<repositories>
