@@ -6,15 +6,14 @@ import org.jarvis.client.IJarvisSocketClient;
 import org.jarvis.client.impl.JarvisSocketClientImpl;
 import org.jarvis.client.model.JarvisDatagram;
 import org.jarvis.client.model.JarvisDatagramEvent;
-import org.jarvis.main.core.JarvisDatagramExec;
+import org.jarvis.client.model.JarvisDatagramExec;
 import org.jarvis.runtime.ProcessExec;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class JarvisRemoteExec extends JarvisSocketClientImpl implements
-		IJarvisSocketClient {
+public class JarvisRemoteExec extends JarvisSocketClientImpl implements IJarvisSocketClient {
 
 	protected Logger logger = LoggerFactory.getLogger(JarvisRemoteExec.class);
 
@@ -34,8 +33,7 @@ public class JarvisRemoteExec extends JarvisSocketClientImpl implements
 	public void onNewMessage(JarvisDatagram message) throws IOException {
 		try {
 			String result = ProcessExec.execute(message.request.getData());
-			JarvisDatagramExec resultConsole = mapper.readValue(result,
-					JarvisDatagramExec.class);
+			JarvisDatagramExec resultConsole = mapper.readValue(result, JarvisDatagramExec.class);
 			JarvisDatagram nextMessage = new JarvisDatagram();
 			nextMessage.setCode("event");
 			nextMessage.event = new JarvisDatagramEvent();
@@ -43,9 +41,8 @@ public class JarvisRemoteExec extends JarvisSocketClientImpl implements
 			nextMessage.event.setScript(result);
 			sendMessage(nextMessage);
 		} catch (Exception e) {
-			logger.error(
-					"Error, while accessing to jarvis with {} exception {}",
-					message.request.getData(), e.getMessage());
+			logger.error("Error, while accessing to jarvis with {} exception {}", message.request.getData(),
+					e.getMessage());
 			return;
 		}
 	}

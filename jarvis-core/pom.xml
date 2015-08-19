@@ -10,6 +10,8 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jackson.version>2.4.3</jackson.version>
+		<spark.version>2.2</spark.version>
+		<spring.version>4.2.0.RELEASE</spring.version>
 	</properties>
 
 	<distributionManagement>
@@ -39,6 +41,11 @@
 			</dependency>
 			<dependency>
 				<groupId>org.yroffin.com.bob</groupId>
+				<artifactId>jarvis-java-engine</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>org.yroffin.com.bob</groupId>
 				<artifactId>jarvis-java-client</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
@@ -63,6 +70,28 @@
 				<groupId>commons-io</groupId>
 				<artifactId>commons-io</artifactId>
 				<version>2.4</version>
+			</dependency>
+
+			<dependency>
+				<groupId>us.monoid.web</groupId>
+				<artifactId>resty</artifactId>
+				<version>0.3.2</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-core</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.sparkjava</groupId>
+				<artifactId>spark-core</artifactId>
+				<version>${spark.version}</version>
 			</dependency>
 
 			<!-- junit -->
