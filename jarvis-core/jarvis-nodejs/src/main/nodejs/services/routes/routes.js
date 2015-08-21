@@ -21,6 +21,7 @@ var interact = require(__dirname + '/../json/interact');
 var jobs = require(__dirname + '/../resources/jobs');
 var neo4j = require(__dirname + '/../resources/neo4j');
 var clients = require(__dirname + '/../resources/clients');
+var connectors = require(__dirname + '/../resources/connectors');
 
 /**
  * initialise all routes
@@ -36,21 +37,6 @@ exports.init = function(app) {
 	 * interactions services
 	 */
 	app.get('/services/send', interact.send);
-	/**
-	 * collections services
-	 */
-	//app.get('/services/neo4j/:key', neo4j.collections);
-	//app.get('/services/neo4j/crud/:name/count', neo4j.collectionCount);
-	//app.get('/services/neo4j/crud/:name/page', neo4j.collectionPages);
-	/**
-	 * cron plugin
-	 */
-	//app.get('/services/neo4j/crontab/:plugin/create', neo4j.cronPlugin);
-	//app.post('/services/neo4j/crontab/:plugin/create', neo4j.cronPlugin);
-	//app.get('/services/neo4j/crontab/:plugin/test', neo4j.cronTestPlugin);
-	//app.post('/services/neo4j/crontab/:plugin/test', neo4j.cronTestPlugin);
-	//app.get('/services/neo4j/crontabs/list', neo4j.cronList);
-	//app.delete('/services/neo4j/crontab', neo4j.cronRemoveByName);
 	/**
 	 * jobs resource
 	 * Method	Scope	Semantics
@@ -86,5 +72,15 @@ exports.init = function(app) {
 	app.get('/api/configurations/neo4j/labels/:id', neo4j.labels.get);
 	app.get('/api/configurations/clients', clients.listener.get);
 	app.get('/api/configurations/clients/:id', clients.listener.get);
+	/**
+	 * connectors
+	 * Method	Scope	Semantics
+	 * GET	collection	Retrieve all resources in a collection
+	 * GET	resource	Retrieve a single resource (with filter on field)
+	 * POST	collection	Create a new resource in a collection
+	 */
+	app.get('/api/connectors', connectors.resources.get);
+	app.get('/api/connectors/:id', connectors.resources.get);
+	app.post('/api/connectors/task', connectors.services.task);
 	return;
 };
