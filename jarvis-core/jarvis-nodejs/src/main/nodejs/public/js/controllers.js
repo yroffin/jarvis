@@ -34,6 +34,10 @@ angular.module('JarvisApp',['ngMaterial', 'ngMdIcons', 'ngRoute','JarvisApp.serv
                     controller: 'JarvisAppScenarioCtrl',
                     templateUrl: '/js/partials/scenario.html'
                 }).
+                when('/connectors', {
+                    controller: 'JarvisAppConnectorsCtrl',
+                    templateUrl: '/js/partials/connectors.html'
+                }).
                 otherwise({
                     redirectTo: '/js/partials/jobs.html'
                 });
@@ -428,9 +432,9 @@ angular.module('JarvisApp',['ngMaterial', 'ngMdIcons', 'ngRoute','JarvisApp.serv
         });
     }
     ]
-    )
+)
     /**
-     * neo4j view controller
+     * scenario view controller
      */
     .controller('JarvisAppScenarioCtrl',
     ['$scope', 'jarvisServices', 'jarvisJobsResource', '$mdToast',
@@ -496,4 +500,35 @@ angular.module('JarvisApp',['ngMaterial', 'ngMdIcons', 'ngRoute','JarvisApp.serv
             };
         }
     ]
-);
+)
+    /**
+     * scenario view controller
+     */
+    .controller('JarvisAppConnectorsCtrl',
+    ['$scope', 'jarvisConnectorsResource', '$mdToast',
+        function($scope, jarvisConnectorsResource, $mdToast) {
+            /**
+             * some init
+             * loading connectors
+             */
+            jarvisConnectorsResource.get({},
+                function (data) {
+                $mdToast.show(
+                    $mdToast.simple()
+                        .content('Connectors loaded')
+                        .position($scope.getToastPosition())
+                        .hideDelay(3000)
+                );
+                $scope.jarvis.connectors = data;
+            }, function (failure) {
+                $mdToast.show(
+                    $mdToast.simple()
+                        .content(failure)
+                        .position($scope.getToastPosition())
+                        .hideDelay(3000).theme("failure-toast")
+                );
+            });
+        }
+    ]
+)
+

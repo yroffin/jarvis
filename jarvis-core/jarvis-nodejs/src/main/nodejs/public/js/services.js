@@ -86,6 +86,33 @@ myAppServices.factory('jarvisServices', [ '$resource', function($resource, $wind
 }]);
 
 /**
+ * connectors services
+ */
+myAppServices.factory('jarvisConnectorsResource', [ '$resource', function($resource, $windows) {
+	return $resource('', {}, {
+			/**
+			 * get all crontab (raw configuration resource)
+			 */
+			get: {
+				method: 'GET',
+				url: jarvisApiUrl + '/connectors',
+				params: {},
+				isArray: true,
+				cache: false
+			},
+			/**
+			 * get label detail (raw configuration resource)
+			 */
+			byId: {
+				method: 'GET',
+				url: jarvisApiUrl + '/connector/:id',
+				isArray: false,
+				cache: false
+			}
+		}
+	)}]);
+
+/**
  * configuration services
  * - /configuration/crontabs
  * - /configuration/neo4j

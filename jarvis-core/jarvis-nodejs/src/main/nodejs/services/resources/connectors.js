@@ -25,6 +25,7 @@ var _connectors = {
      * @param callback
      */
     register : function(body, callback) {
+        var body = body.session.client;
         if(body.id != undefined) {
             if(_registry[body.id] === undefined) {
                 /**
@@ -46,7 +47,12 @@ var _connectors = {
         var filtered = [];
         for(var key in _registry) {
             filtered.push({
-                id : _registry[key].id
+                id : _registry[key].id,
+                href : _registry[key].href,
+                name : _registry[key].name,
+                isRenderer : _registry[key].isRenderer,
+                isSensor : _registry[key].isSensor,
+                canAnswer : _registry[key].canAnswer
             });
         }
         callback(filtered);
@@ -56,9 +62,16 @@ var _connectors = {
      * @param id
      * @param callback
      */
-    getById: function (id, callback) {
-        if (_registry[id] !== undefined) {
-            var result = _registry[id];
+    getById: function (key, callback) {
+        if (_registry[key] !== undefined) {
+            var result = {
+                id : _registry[key].id,
+                href : _registry[key].href,
+                name : _registry[key].name,
+                isRenderer : _registry[key].isRenderer,
+                isSensor : _registry[key].isSensor,
+                canAnswer : _registry[key].canAnswer
+            };
             callback(result);
         } else {
             callback();
@@ -75,6 +88,13 @@ var _connectors = {
  */
 module.exports = {
     services: {
+        /**
+         * task handler
+         * - register
+         * @param req
+         * @param res
+         * @returns {*|ServerResponse}
+         */
         task : function(req, res) {
             /**
              * simple call back to handle result
@@ -100,6 +120,16 @@ module.exports = {
             } else {
                 return res.status(400).json({});
             }
+        },
+        /**
+         * push a single body on connector by id
+         * @param id
+         * @param body
+         * @param callback
+         * @param failure
+         */
+        push : function(id, body, callback, failure) {
+            new Client(_registry[id].href).call('/' + _registry[id], body, 'post', callback, failure);
         }
     },
     resources : {
