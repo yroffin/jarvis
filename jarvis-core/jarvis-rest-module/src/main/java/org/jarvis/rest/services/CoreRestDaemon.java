@@ -19,9 +19,12 @@ package org.jarvis.rest.services;
 import static spark.Spark.post;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 @Component
+@PropertySource("classpath:connector.properties")
 public class CoreRestDaemon {
 
 	@Autowired
@@ -30,20 +33,33 @@ public class CoreRestDaemon {
 	@Autowired
 	CoreRestClient coreRestClient;
 
-	public void server(String url) {
+	@Autowired
+	Environment env;
+
+	public void server() {
+		String url = env.getProperty("jarvis.server.url");
+		String iface = env.getProperty("jarvis.connector.interface");
+		int port = Integer.parseInt(env.getProperty("jarvis.connector.port"));
+		spark.Spark.ipAddress(iface);
+
 		/**
 		 * start broadcaster
 		 */
-		coreRestClient.start(url);
+		coreRestClient.start(url, "http://" + iface + ":" + port + "/connectors");
+
+		/**
+		 * port
+		 */
+		spark.Spark.port(port);
 
 		/**
 		 * mount resources
 		 */
-		post("/module/remote",
+		post("/connectors/remote",
 				(request, response) -> coreRestServices.handler(CoreRestServices.Handler.remote, request, response));
-		post("/module/aiml",
+		post("/connectors/aiml",
 				(request, response) -> coreRestServices.handler(CoreRestServices.Handler.aiml, request, response));
-		post("/module/voice",
+		post("/connectors/voice",
 				(request, response) -> coreRestServices.handler(CoreRestServices.Handler.voice, request, response));
 	}
 }

@@ -50,7 +50,7 @@ public class JarvisAimlEngine extends JarvisRestClientImpl implements IJarvisRes
 	 * @param portNumber
 	 */
 	public JarvisAimlEngine() {
-		super("jarvis-aiml-engine-v1.0b");
+		super(CoreRestServices.Handler.aiml.name(), "jarvis-aiml-engine-v1.0b");
 
 		this.voice = voice;
 

@@ -23,6 +23,8 @@ public class JarvisDatagramClient {
 	public String id;
 	@JsonProperty("name")
 	public String name;
+	@JsonProperty("href")
+	public String href;
 	@JsonProperty("isRenderer")
 	public boolean isRenderer;
 	@JsonProperty("isSensor")
@@ -32,8 +34,7 @@ public class JarvisDatagramClient {
 
 	@Override
 	public String toString() {
-		return "JarvisDatagramClient [id=" + id + ", name=" + name
-				+ ", isRenderer=" + isRenderer + ", isSensor=" + isSensor
-				+ ", canAnswer=" + canAnswer + "]";
+		return "JarvisDatagramClient [id=" + id + ", name=" + name + ", isRenderer=" + isRenderer + ", isSensor="
+				+ isSensor + ", canAnswer=" + canAnswer + "]";
 	}
 }

@@ -16,17 +16,22 @@
 
 package org.jarvis.rest.services.impl;
 
-public abstract class JarvisRestClientImpl {
+import org.jarvis.rest.services.IJarvisRestClient;
 
+public abstract class JarvisRestClientImpl implements IJarvisRestClient {
+
+	private String id;
 	private String name;
 	private boolean isRenderer;
 	private boolean isSensor;
 	private boolean canAnswer;
 
-	public JarvisRestClientImpl(String name) {
+	public JarvisRestClientImpl(String id, String name) {
+		this.setId(id);
 		this.setName(name);
 	}
 
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -35,6 +40,7 @@ public abstract class JarvisRestClientImpl {
 		this.name = name;
 	}
 
+	@Override
 	public boolean isRenderer() {
 		return isRenderer;
 	}
@@ -43,6 +49,7 @@ public abstract class JarvisRestClientImpl {
 		this.isRenderer = isRenderer;
 	}
 
+	@Override
 	public boolean isSensor() {
 		return isSensor;
 	}
@@ -51,12 +58,22 @@ public abstract class JarvisRestClientImpl {
 		this.isSensor = isSensor;
 	}
 
+	@Override
 	public boolean canAnswer() {
 		return canAnswer;
 	}
 
 	public void setCanAnswer(boolean canAnswer) {
 		this.canAnswer = canAnswer;
+	}
+
+	@Override
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 }

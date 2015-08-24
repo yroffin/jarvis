@@ -23,4 +23,13 @@ public interface IJarvisRestClient {
 
 	JarvisDatagram onNewMessage(JarvisDatagram message) throws JarvisModuleException;
 
+	public String getId();
+
+	public String getName();
+
+	public boolean isRenderer();
+
+	public boolean isSensor();
+
+	public boolean canAnswer();
 }

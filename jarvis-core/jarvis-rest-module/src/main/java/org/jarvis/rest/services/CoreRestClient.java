@@ -16,16 +16,19 @@
 
 package org.jarvis.rest.services;
 
-import static us.monoid.web.Resty.content;
-import static us.monoid.web.Resty.put;
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import org.jarvis.client.model.JarvisDatagram;
+import org.jarvis.client.model.JarvisDatagramClient;
+import org.jarvis.client.model.JarvisDatagramSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -38,6 +41,15 @@ public class CoreRestClient {
 
 	static private ObjectMapper mapper = new ObjectMapper();
 
+	@Autowired
+	JarvisRemoteExec jarvisRemoteExec;
+
+	@Autowired
+	JarvisAimlEngine jarvisAimlEngine;
+
+	@Autowired
+	JarvisVoiceEngine jarvisVoiceEngine;
+
 	/**
 	 * send message to target
 	 * 
@@ -46,7 +58,8 @@ public class CoreRestClient {
 	 * @throws IOException
 	 */
 	static public void send(Resty client, URI url, JarvisDatagram message) throws IOException {
-		client.json(url, put(content(mapper.writeValueAsString(message))));
+		client.withHeader("Content-Type", "application/json");
+		client.json(url, Resty.content(mapper.writeValueAsBytes(message)));
 	}
 
 	/**
@@ -54,8 +67,18 @@ public class CoreRestClient {
 	 * 
 	 * @param url
 	 */
-	public void start(String url) {
-		Thread runner = (new Thread(new InternalThread(url)));
+	public void start(String url, String href) {
+		InternalThread internal = new InternalThread(url,
+				Collections.synchronizedList(new ArrayList<JarvisDatagram>()));
+
+		/**
+		 * add internal rest id and its href
+		 */
+		internal.add(jarvisRemoteExec, href);
+		internal.add(jarvisAimlEngine, href);
+		internal.add(jarvisVoiceEngine, href);
+
+		Thread runner = (new Thread(internal));
 		runner.start();
 	}
 
@@ -65,21 +88,57 @@ public class CoreRestClient {
 	protected class InternalThread implements Runnable {
 
 		private String url;
+		private List<JarvisDatagram> clients;
 
-		public InternalThread(String url) {
+		/**
+		 * constructor
+		 * 
+		 * @param url
+		 * @param clients
+		 */
+		public InternalThread(String url, List<JarvisDatagram> clients) {
 			this.url = url;
+			this.clients = clients;
+		}
+
+		/**
+		 * add new client
+		 * 
+		 * @param id
+		 * @return
+		 */
+		JarvisDatagram add(IJarvisRestClient connector, String href) {
+			JarvisDatagram message = new JarvisDatagram();
+			message.session = new JarvisDatagramSession();
+			message.session.client = new JarvisDatagramClient();
+			message.session.client.id = connector.getId();
+			message.session.client.href = href + "/" + connector.getId();
+			message.session.client.name = connector.getName();
+			message.session.client.isRenderer = connector.isRenderer();
+			message.session.client.isSensor = connector.isSensor();
+			message.session.client.canAnswer = connector.canAnswer();
+			clients.add(message);
+			return message;
 		}
 
 		@Override
 		public void run() {
 			while (true) {
 				try {
-					CoreRestClient.send(new Resty(), new URI(url), new JarvisDatagram());
+					/**
+					 * periodicaly register this connector to server
+					 */
+					for (JarvisDatagram msg : clients) {
+						URI uri = new URI(url + "/task?method=register");
+						CoreRestClient.send(new Resty(), uri, msg);
+					}
 				} catch (IOException e) {
 				} catch (URISyntaxException e) {
 				}
 				try {
-					logger.warn("sleep");
+					/**
+					 * sleeping
+					 */
 					Thread.sleep(10000);
 				} catch (InterruptedException e) {
 				}

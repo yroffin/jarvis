@@ -25,7 +25,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * simple bootstrap for rest bootstrap
  */
 public class bootstrap {
-	private static final String CONFIG_PATH = "classpath*:org/jarvis/application-config.xml";
+	private static final String CONFIG_PATH = "classpath*:application-config.xml";
 
 	/**
 	 * main entry
@@ -36,7 +36,7 @@ public class bootstrap {
 		final ApplicationContext context = new ClassPathXmlApplicationContext(CONFIG_PATH);
 
 		final CoreRestDaemon daemon = context.getBean(CoreRestDaemon.class);
-		daemon.server("http://192.168.1.157/module/register");
+		daemon.server();
 		((AbstractApplicationContext) context).close();
 	}
 }

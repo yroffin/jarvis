@@ -34,7 +34,7 @@ public class JarvisRemoteExec extends JarvisRestClientImpl implements IJarvisRes
 	protected Logger logger = LoggerFactory.getLogger(JarvisRemoteExec.class);
 
 	public JarvisRemoteExec() {
-		super("jarvis-remote-engine-v1.0b");
+		super(CoreRestServices.Handler.remote.name(), "jarvis-remote-engine-v1.0b");
 
 		setRenderer(true);
 		setSensor(true);

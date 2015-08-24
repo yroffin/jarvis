@@ -45,7 +45,7 @@ public class JarvisVoiceEngine extends JarvisRestClientImpl implements IJarvisRe
 	 * @param portNumber
 	 */
 	public JarvisVoiceEngine() {
-		super("jarvis-voice-engine-v1.0b");
+		super(CoreRestServices.Handler.voice.name(), "jarvis-voice-engine-v1.0b");
 
 		setRenderer(true);
 		setSensor(true);
