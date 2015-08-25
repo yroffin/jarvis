@@ -1,3 +1,5 @@
+/.project
+/.classpath
 /target/
 /target
 /jarvis-gtranslate-libs.iml
