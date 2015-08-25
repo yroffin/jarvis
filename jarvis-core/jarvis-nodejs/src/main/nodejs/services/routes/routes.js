@@ -15,8 +15,6 @@
  */
 
 var logger = require('blammo').LoggerFactory.getLogger('kernel');
-var config = require(__dirname + '/../json/config');
-var interact = require(__dirname + '/../json/interact');
 
 var jobs = require(__dirname + '/../resources/jobs');
 var neo4j = require(__dirname + '/../resources/neo4j');
@@ -28,15 +26,6 @@ var connectors = require(__dirname + '/../resources/connectors');
  */
 exports.init = function(app) {
 	logger.info('Store routes configuration');
-	/**
-	 * configuration services
-	 */
-	app.get('/services/info', config.info);
-	app.get('/services/info/:key', config.info);
-	/**
-	 * interactions services
-	 */
-	app.get('/services/send', interact.send);
 	/**
 	 * jobs resource
 	 * Method	Scope	Semantics

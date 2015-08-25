@@ -218,22 +218,6 @@ function xmppModule(options) {
 }
 
 /**
- * listenerModule
- * @param options
- */
-function listenerModule(options) {
-	var listener = require(__dirname + '/services/core/listener');
-
-	var properties = options.properties;
-	var kernel = options.kernel;
-
-	/**
-	 * start listener
-	 */
-	listener.start(properties);
-}
-
-/**
  * crontab module
  *
  * @param options
@@ -359,8 +343,7 @@ function main() {
 	mail(options());
 	neo4j(options());
 	webModule(options());
-	xmppModule(options());
-	listenerModule(options());
+	//xmppModule(options());
 	crontabModule(options());
 	eventModule(options());
 }

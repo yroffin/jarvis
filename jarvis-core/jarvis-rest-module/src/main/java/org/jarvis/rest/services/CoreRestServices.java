@@ -59,10 +59,13 @@ public class CoreRestServices {
 			switch (h) {
 			case remote:
 				result = coreRestDefault.remote(mapper.readValue(request.body(), JarvisDatagram.class));
+				break;
 			case aiml:
 				result = coreRestDefault.aiml(mapper.readValue(request.body(), JarvisDatagram.class));
+				break;
 			case voice:
 				result = coreRestDefault.voice(mapper.readValue(request.body(), JarvisDatagram.class));
+				break;
 			}
 			return mapper.writeValueAsString(result);
 		} catch (IOException e) {

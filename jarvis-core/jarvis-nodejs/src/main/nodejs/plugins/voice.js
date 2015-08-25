@@ -18,10 +18,22 @@
  * logging
  */
 var logger = require('blammo').LoggerFactory.getLogger('plugins');
+var connectors = require(__dirname + '/../services/resources/connectors');
 
 /**
  * run this plugin
  */
 exports.execute = function(params) {
 	logger.info("execute()", params);
+	/**
+	 * use api to send this message
+	 */
+	connectors.services.request("voice", params.sentence,
+		function(message) {
+			logger.info("execute() - success", params, message);
+		},
+		function(failure) {
+			logger.error("execute() - failure", params, failure);
+		}
+	);
 };

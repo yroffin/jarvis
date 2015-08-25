@@ -30,7 +30,20 @@ module.exports = {
      * @constructor
      */
     instance: function(url) {
-        this.url = url;
+        return {
+            /**
+             * call internal member
+             * @param path
+             * @param body
+             * @param method
+             * @param callback
+             * @param failure
+             * @returns {*}
+             */
+            call: function(path, body, method, callback, failure) {
+                return module.exports.call(url, path, body, method, callback, failure);
+            }
+        }
     },
     /**
      * default method
@@ -41,14 +54,14 @@ module.exports = {
      * @param callback
      * @param failure
      */
-    call: function (path, body, method, callback, failure) {
+    call: function (url, path, body, method, callback, failure) {
         /**
          * build a default rest request
          * @type {{entity: *, path: *, method: *, headers: {}}}
          */
         var request = {
             entity: body,
-            path: this.url + path,
+            path: url + path,
             method: method,
             headers: {}
         };
@@ -64,10 +77,9 @@ module.exports = {
          * @type {Client|*}
          */
         var res = rest
-            .wrap(basicAuth, {username: handle.user, password: handle.password})
             .wrap(mime, {mime: 'application/json'})
             .wrap(errorCode, {code: 400})
-            .wrap(timeout, {timeout: 2000});
+            .wrap(timeout, {timeout: 5000});
 
         /**
          * make rest call

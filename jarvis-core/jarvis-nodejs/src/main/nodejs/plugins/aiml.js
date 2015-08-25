@@ -18,19 +18,26 @@
  * logging
  */
 var logger = require('blammo').LoggerFactory.getLogger('plugins');
-var kernel = require(__dirname + '/../services/core/kernel');
+var connectors = require(__dirname + '/../services/resources/connectors');
 
 /**
  * run this plugin
  */
 exports.execute = function(params) {
 	logger.info("execute()", params);
-
 	/**
 	 * use api to send this message
 	 */
-	kernel.remoteModuleRender({
-		id : 'jarvis-aiml-engine',
-		message : params.sentence
-	});
+	connectors.services.request("aiml", params.sentence,
+		function(message) {
+			if(message && message.entity) {
+				logger.info("execute() - success", params, message.entity);
+			} else {
+				logger.info("execute() - success", params, message);
+			}
+		},
+		function(failure) {
+			logger.error("execute() - failure", params, failure);
+		}
+	);
 };

@@ -49,10 +49,11 @@ public class JarvisAimlEngine extends JarvisRestClientImpl implements IJarvisRes
 	 * @param hostName
 	 * @param portNumber
 	 */
-	public JarvisAimlEngine() {
-		super(CoreRestServices.Handler.aiml.name(), "jarvis-aiml-engine-v1.0b");
+	@PostConstruct
+	public void init() {
+		super.init(CoreRestServices.Handler.aiml.name(), "jarvis-aiml-engine-v1.0b");
 
-		this.voice = voice;
+		this.voice = Boolean.parseBoolean(env.getProperty("jarvis.aiml.voice"));
 
 		setRenderer(true);
 		setSensor(true);
@@ -89,6 +90,8 @@ public class JarvisAimlEngine extends JarvisRestClientImpl implements IJarvisRes
 
 	@Override
 	public JarvisDatagram onNewMessage(JarvisDatagram message) throws JarvisModuleException {
+		JarvisDatagram nextMessage = new JarvisDatagram();
+
 		try {
 			/**
 			 * aiml render
@@ -98,14 +101,12 @@ public class JarvisAimlEngine extends JarvisRestClientImpl implements IJarvisRes
 				/**
 				 * on event per answer, for plugin mecanism
 				 */
-				JarvisDatagram nextMessage = new JarvisDatagram();
 				nextMessage.setCode("event");
 				nextMessage.event = new JarvisDatagramEvent();
 				nextMessage.event.setData(value.getAnswer());
 				nextMessage.event.setScript(value.getJavascript());
 				nextMessage.event.setFrom(message.request.getTo());
 				nextMessage.event.setTo(message.request.getFrom());
-				return nextMessage;
 			}
 			/**
 			 * render to local default output
@@ -116,6 +117,8 @@ public class JarvisAimlEngine extends JarvisRestClientImpl implements IJarvisRes
 					jarvis.speak(value.getAnswer());
 				}
 			}
+
+			return nextMessage;
 		} catch (AimlParsingError e) {
 			logger.error("Error, while accessing to jarvis with {}", message.request.getData());
 			throw new JarvisModuleException(e);
@@ -123,6 +126,5 @@ public class JarvisAimlEngine extends JarvisRestClientImpl implements IJarvisRes
 			logger.error("Error, while accessing to jarvis with {}", message.request.getData());
 			throw new JarvisModuleException(e);
 		}
-		return message;
 	}
 }

@@ -1,2 +1,6 @@
+/.classpath
+/.project
+/.settings/
 /target
 /jarvis-gtranslate.iml
+/bin/

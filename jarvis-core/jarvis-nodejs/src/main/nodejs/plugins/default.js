@@ -18,7 +18,6 @@
  * logging
  */
 var logger = require('blammo').LoggerFactory.getLogger('plugins');
-var kernel = require(__dirname + '/../services/core/kernel');
 
 /**
  * run this plugin

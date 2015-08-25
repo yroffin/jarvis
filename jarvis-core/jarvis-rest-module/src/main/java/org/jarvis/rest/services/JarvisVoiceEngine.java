@@ -19,6 +19,8 @@ package org.jarvis.rest.services;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.annotation.PostConstruct;
+
 import org.jarvis.client.model.JarvisDatagram;
 import org.jarvis.rest.services.impl.JarvisModuleException;
 import org.jarvis.rest.services.impl.JarvisRestClientImpl;
@@ -44,8 +46,9 @@ public class JarvisVoiceEngine extends JarvisRestClientImpl implements IJarvisRe
 	 * @param hostName
 	 * @param portNumber
 	 */
-	public JarvisVoiceEngine() {
-		super(CoreRestServices.Handler.voice.name(), "jarvis-voice-engine-v1.0b");
+	@PostConstruct
+	public void init() {
+		super.init(CoreRestServices.Handler.voice.name(), "jarvis-voice-engine-v1.0b");
 
 		setRenderer(true);
 		setSensor(true);

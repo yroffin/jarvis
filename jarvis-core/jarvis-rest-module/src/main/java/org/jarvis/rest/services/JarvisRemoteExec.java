@@ -16,6 +16,8 @@
 
 package org.jarvis.rest.services;
 
+import javax.annotation.PostConstruct;
+
 import org.jarvis.client.model.JarvisDatagram;
 import org.jarvis.client.model.JarvisDatagramEvent;
 import org.jarvis.client.model.JarvisDatagramExec;
@@ -33,8 +35,9 @@ public class JarvisRemoteExec extends JarvisRestClientImpl implements IJarvisRes
 
 	protected Logger logger = LoggerFactory.getLogger(JarvisRemoteExec.class);
 
-	public JarvisRemoteExec() {
-		super(CoreRestServices.Handler.remote.name(), "jarvis-remote-engine-v1.0b");
+	@PostConstruct
+	public void init() {
+		super.init(CoreRestServices.Handler.remote.name(), "jarvis-remote-engine-v1.0b");
 
 		setRenderer(true);
 		setSensor(true);

@@ -16,6 +16,7 @@
 
 var logger = require('blammo').LoggerFactory.getLogger('services');
 var kernel = require(__dirname + '/../core/kernel');
+var rest = require(__dirname + '/../core/rest');
 
 var _registry = {};
 
@@ -129,7 +130,26 @@ module.exports = {
          * @param failure
          */
         push : function(id, body, callback, failure) {
-            new Client(_registry[id].href).call('/' + _registry[id], body, 'post', callback, failure);
+            var connector = _registry[id];
+            if(connector !== undefined) {
+                var handler = new rest.instance(connector.href);
+                handler.call('', body, 'post', callback, failure);
+            } else {
+                logger.error("No such connector " + id);
+            }
+        },
+        /**
+         * use api to send this message
+         */
+        request : function(id, body, callback, failure) {
+            this.push(id, {
+                "code": "request",
+                "request": {
+                    "to": id,
+                    "from": "jarvis",
+                    "data": body
+                }
+            }, callback, failure);
         }
     },
     resources : {

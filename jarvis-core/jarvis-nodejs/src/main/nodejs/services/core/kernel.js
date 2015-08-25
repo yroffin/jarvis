@@ -30,20 +30,6 @@ var context = {
 };
 
 /**
- * clear clients
- * 
- * @param none
- * @return nothing
- */
-var clearClients = function() {
-	/**
-	 * clear current client context
-	 */
-	getContext().clients = [];
-	logger.info("clearClients()");
-};
-
-/**
  * notify a new event, only for system internal use
  */
 var notify = function(message) {
@@ -125,244 +111,6 @@ var getContext = function() {
 var setSession = function() {
 	return context.session;
 };
-
-/**
- * retrieve current clients connected (without internal information like socket)
- */
-var getConnectors = function() {
-	/**
-	 * api must not expose internal structure for security reason
-	 */
-	var result = [];
-	getContext().clients.forEach(function(descriptor) {
-		var descriptor = {
-			'id' : descriptor.id,
-			'name' : descriptor.name,
-			'isRenderer' : descriptor.isRenderer,
-			'canAnswer' : descriptor.canAnswer,
-			'isSensor' : descriptor.isSensor
-		};
-		result.push(descriptor);
-		logger.debug("getClients(%s)", JSON.stringify(descriptor));
-	});
-	return result;
-};
-
-/**
- * retrieve current kernel client
- */
-var getClients = function() {
-	return context.clients;
-};
-
-/**
- * retrieve current clients connected
- */
-var removeClient = function(socket) {
-	logger.info("removeClient(%s)", socket);
-	getClients().splice(findDescriptorBySocket(socket).index, 1);
-}
-
-/**
- * retrieve current clients connected
- */
-var findDescriptorBySocket = function(socket) {
-	/**
-	 * api must not expose internal structure for security reason
-	 */
-	var index = 0;
-	var length = getContext().clients.length;
-	var result = {
-		index : -1
-	};
-	for (; index < length; index++) {
-		var descriptor = getContext().clients[index];
-		if (descriptor.socket == socket) {
-			result.index = index;
-			result.descriptor = descriptor;
-			break;
-		}
-	}
-	logger.debug("getClientIndexOf(%s) => %s", socket.remoteAddress + ":" + socket.remotePort, result.index);
-	return result;
-};
-
-/**
- * retrieve current clients connected
- */
-var findDescriptorById = function(id) {
-	/**
-	 * api must not expose internal structure for security reason
-	 */
-	var index = 0;
-	var length = getContext().clients.length;
-	var result = {
-		index : -1
-	};
-	for (; index < length; index++) {
-		var descriptor = getContext().clients[index];
-		if (descriptor.id == id) {
-			result.index = index;
-			result.descriptor = descriptor;
-			break;
-		}
-	}
-	logger.debug("findDescriptorById(%s) => %s", descriptor.id, result.index);
-	return result;
-};
-
-/**
- * retrieve current clients connected
- */
-var findDescriptorByName = function(name) {
-	/**
-	 * api must not expose internal structure for security reason
-	 */
-	var index = 0;
-	var length = getContext().clients.length;
-	var result = {
-		index : -1
-	};
-	for (; index < length; index++) {
-		var descriptor = getContext().clients[index];
-		if (descriptor.name == name) {
-			result.index = index;
-			result.descriptor = descriptor;
-			break;
-		}
-	}
-	if(descriptor) {
-		logger.debug("findDescriptorByName(%s) => %s", descriptor.name, result.index);
-	}
-	return result;
-};
-
-/**
- * retrieve current clients connected
- */
-var findAnswerDescriptor = function() {
-	/**
-	 * api must not expose internal structure for security reason
-	 */
-	var index = 0;
-	var length = getContext().clients.length;
-	var result = {
-		index : -1
-	};
-	for (; index < length; index++) {
-		var descriptor = getContext().clients[index];
-		if (descriptor.canAnswer == true) {
-			result.index = index;
-			result.descriptor = descriptor;
-			break;
-		}
-	}
-	if(descriptor) {
-		logger.debug("findAnswerDescriptor() %s => %s", descriptor.id, result.index);
-	}
-	return result;
-};
-
-/**
- * add a new descriptor for this client
- * 
- * @param Object
- *            client descriptor
- */
-var addClient = function(descriptor) {
-	logger.info("addClient(%s)", descriptor.id);
-	/**
-	 * add this client to current context note : client is a pure socket nodejs
-	 * object
-	 */
-	getContext().clients.push(descriptor)
-	return descriptor;
-};
-
-/**
- * write on socket
- * 
- * @param Object
- *            message to send
- * @param Object
- *            target descriptor to send to
- */
-var sendMessage = function write(message, target, socket) {
-	logger.info("[SENDV]", JSON.stringify(message));
-	/**
-	 * send message on network
-	 */
-	socket.write(JSON.stringify(message));
-	socket.write("\r\n");
-	/**
-	 * each message are event and must be notified / traced to the system event
-	 * queue
-	 */
-	register({
-		'id' : -1,
-		'name' : 'kernel'
-	}, {
-		'id' : target.id,
-		'name' : target.name
-	}, message);
-}
-
-/**
- * api aiml send stream to aiml renderer
- * 
- * @target object {id: target id, message: message to send}
- */
-var remoteModuleRender = function(target) {
-	/**
-	 * find target client
-	 */
-	var descriptor;
-	if (target.id != undefined) {
-		/**
-		 * find descriptor by id
-		 */
-		descriptor = findDescriptorById(target.id).descriptor;
-	} else {
-		if (target.name != undefined) {
-			/**
-			 * find descriptor by id
-			 */
-			descriptor = findDescriptorByName(target.name).descriptor;
-		}
-	}
-	/**
-	 * last chance
-	 */
-	if (!descriptor) {
-		/**
-		 * find descriptor by attribute
-		 */
-		logger.error('Impossible de trouver le descripteur pour ', target);
-		descriptor = findAnswerDescriptor().descriptor;
-	}
-	/**
-	 * no descriptor no message
-	 */
-	if (!descriptor) {
-		return;
-	}
-	/**
-	 * Send a request message
-	 */
-	sendMessage({
-		'code' : 'request',
-		'request' : {
-			'to' : target.to,
-			'from' : target.from,
-			'data' : target.message
-		},
-		'session' : {
-			'client' : {
-				'id' : descriptor.id
-			}
-		}
-	}, descriptor, descriptor.socket);
-}
 
 /**
  * xmppcli client for remoteModuleRender exchange
@@ -458,17 +206,8 @@ var xmppcliExit = function(host, port, fn, args) {
  */
 module.exports = {
 	/**
-	 * client management
+	 * event management
 	 */
-	getClients : getClients,
-	addClient : addClient,
-	removeClient : removeClient,
-	clearClients : clearClients,
-	getConnectors : getConnectors,
-	findDescriptorBySocket : findDescriptorBySocket,
-	findDescriptorById : findDescriptorById,
-	findAnswerDescriptor : findAnswerDescriptor,
-	sendMessage : sendMessage,
 	register : register,
 	notify : notify,
 	/**
@@ -506,10 +245,6 @@ module.exports = {
 		});
 		return JSON.stringify(job) + ' ok ...';
 	},
-	/**
-	 * aiml api
-	 */
-	remoteModuleRender : remoteModuleRender,
 	/**
 	 * internal api
 	 */

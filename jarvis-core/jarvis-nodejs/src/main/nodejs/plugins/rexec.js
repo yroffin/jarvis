@@ -18,7 +18,7 @@
  * logging
  */
 var logger = require('blammo').LoggerFactory.getLogger('plugins');
-var kernel = require(__dirname + '/../services/core/kernel');
+var connectors = require(__dirname + '/../services/resources/connectors');
 
 /**
  * run this plugin
@@ -28,8 +28,12 @@ exports.execute = function(params) {
 	/**
 	 * use api to send this message
 	 */
-	kernel.remoteModuleRender({
-		name : params.name,
-		message : params.command
-	});
+	connectors.services.request("remote", params.command,
+		function(message) {
+			logger.info("execute() - success", params, message);
+		},
+		function(failure) {
+			logger.error("execute() - failure", params, failure);
+		}
+	);
 };

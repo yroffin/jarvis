@@ -17,7 +17,11 @@
 package org.jarvis.rest.services.impl;
 
 import org.jarvis.rest.services.IJarvisRestClient;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 
+@PropertySource("classpath:connector.properties")
 public abstract class JarvisRestClientImpl implements IJarvisRestClient {
 
 	private String id;
@@ -26,7 +30,10 @@ public abstract class JarvisRestClientImpl implements IJarvisRestClient {
 	private boolean isSensor;
 	private boolean canAnswer;
 
-	public JarvisRestClientImpl(String id, String name) {
+	@Autowired
+	protected Environment env;
+
+	public void init(String id, String name) {
 		this.setId(id);
 		this.setName(name);
 	}
