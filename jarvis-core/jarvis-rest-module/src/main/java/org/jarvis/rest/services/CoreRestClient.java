@@ -26,6 +26,9 @@ import java.util.List;
 import org.jarvis.client.model.JarvisDatagram;
 import org.jarvis.client.model.JarvisDatagramClient;
 import org.jarvis.client.model.JarvisDatagramSession;
+import org.jarvis.rest.services.impl.JarvisAimlEngine;
+import org.jarvis.rest.services.impl.JarvisRemoteExec;
+import org.jarvis.rest.services.impl.JarvisVoiceEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,7 +110,7 @@ public class CoreRestClient {
 		 * @param id
 		 * @return
 		 */
-		JarvisDatagram add(IJarvisRestClient connector, String href) {
+		JarvisDatagram add(JarvisConnector connector, String href) {
 			JarvisDatagram message = new JarvisDatagram();
 			message.session = new JarvisDatagramSession();
 			message.session.client = new JarvisDatagramClient();

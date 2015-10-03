@@ -167,17 +167,14 @@
 
 	<modules>
 		<module>jarvis-aiml</module>
-		<module>jarvis-gtranslate</module>
-		<module>jarvis-gtranslate-libs</module>
 		<module>sphinx-core</module>
 		<module>jarvis-nodejs</module>
 		<module>jarvis-java-client</module>
-		<module>jarvis-java-engine</module>
 		<module>jarvis-scripts</module>
 		<module>jarvis-common</module>
 		<module>jarvis-dio</module>
-		<module>jarvis-google-speech</module>
 		<module>jarvis-rest-module</module>
+		<module>jarvis-mary-tts</module>
 	</modules>
 
 	<repositories>

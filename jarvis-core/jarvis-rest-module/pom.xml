@@ -19,7 +19,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.yroffin.com.bob</groupId>
-			<artifactId>jarvis-java-engine</artifactId>
+			<artifactId>jarvis-mary-tts</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>us.monoid.web</groupId>
@@ -45,5 +45,36 @@
 			<groupId>com.sparkjava</groupId>
 			<artifactId>spark-core</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>runtime</id>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<phase>install</phase>
+					</execution>
+				</executions>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>org.jarvis.rest.bootstrap</mainClass>
+						</manifest>
+					</archive>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
