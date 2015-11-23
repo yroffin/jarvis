@@ -23,7 +23,6 @@ import org.jarvis.client.model.JarvisDatagramEvent;
 import org.jarvis.client.model.JarvisDatagramExec;
 import org.jarvis.rest.services.CoreRestServices;
 import org.jarvis.rest.services.JarvisConnector;
-import org.jarvis.rest.services.CoreRestServices.Handler;
 import org.jarvis.runtime.ProcessExec;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

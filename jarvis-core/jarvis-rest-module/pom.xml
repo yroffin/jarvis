@@ -2,24 +2,21 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.yroffin.com.bob</groupId>
-		<artifactId>bob</artifactId>
+		<groupId>org.yroffin.com.jarvis</groupId>
+		<artifactId>jarvis</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<artifactId>jarvis-rest-module</artifactId>
 
 	<dependencies>
 		<dependency>
-			<groupId>org.yroffin.com.bob</groupId>
+			<groupId>org.yroffin.com.jarvis</groupId>
 			<artifactId>jarvis-common</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.yroffin.com.bob</groupId>
+			<groupId>org.yroffin.com.jarvis</groupId>
 			<artifactId>jarvis-aiml</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.yroffin.com.bob</groupId>
-			<artifactId>jarvis-mary-tts</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>us.monoid.web</groupId>

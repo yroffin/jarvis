@@ -2,8 +2,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.yroffin.com.bob</groupId>
-	<artifactId>bob</artifactId>
+	<groupId>org.yroffin.com.jarvis</groupId>
+	<artifactId>jarvis</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
@@ -12,6 +12,7 @@
 		<jackson.version>2.4.3</jackson.version>
 		<spark.version>2.2</spark.version>
 		<spring.version>4.2.0.RELEASE</spring.version>
+		<sphinx.version>5prealpha-SNAPSHOT</sphinx.version>
 	</properties>
 
 	<distributionManagement>
@@ -25,27 +26,22 @@
 		<dependencies>
 			<!-- internal/app -->
 			<dependency>
-				<groupId>org.yroffin.com.bob</groupId>
+				<groupId>org.yroffin.com.jarvis</groupId>
 				<artifactId>jarvis-aiml</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
 			<dependency>
-				<groupId>org.yroffin.com.bob</groupId>
+				<groupId>org.yroffin.com.jarvis</groupId>
 				<artifactId>jarvis-gtranslate-libs</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
 			<dependency>
-				<groupId>org.yroffin.com.bob</groupId>
+				<groupId>org.yroffin.com.jarvis</groupId>
 				<artifactId>jarvis-common</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
 			<dependency>
-				<groupId>org.yroffin.com.bob</groupId>
-				<artifactId>jarvis-java-engine</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
-			</dependency>
-			<dependency>
-				<groupId>org.yroffin.com.bob</groupId>
+				<groupId>org.yroffin.com.jarvis</groupId>
 				<artifactId>jarvis-java-client</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
@@ -141,12 +137,12 @@
 			<dependency>
 				<groupId>edu.cmu.sphinx</groupId>
 				<artifactId>sphinx4-core</artifactId>
-				<version>1.0-SNAPSHOT</version>
+				<version>${sphinx.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>edu.cmu.sphinx</groupId>
 				<artifactId>sphinx4-data</artifactId>
-				<version>1.0-SNAPSHOT</version>
+				<version>${sphinx.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -174,7 +170,6 @@
 		<module>jarvis-common</module>
 		<module>jarvis-dio</module>
 		<module>jarvis-rest-module</module>
-		<module>jarvis-mary-tts</module>
 	</modules>
 
 	<repositories>

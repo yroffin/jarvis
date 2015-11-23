@@ -1,40 +1,48 @@
 package org.jarvis.sphinx;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 
-import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.LineUnavailableException;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
-import com.darkprograms.speech.microphone.Microphone;
-import com.darkprograms.speech.recognizer.Recognizer;
+import edu.cmu.sphinx.api.Configuration;
+import edu.cmu.sphinx.api.SpeechResult;
+import edu.cmu.sphinx.api.StreamSpeechRecognizer;
 
 public class SimpleTest {
 
 	@Test
 	public void go() throws IOException {
-		File waveFile = new File(
-				"C:/Users/yannick/AppData/Local/Temp/test7331341722432731118.wav");
-		System.err.println(waveFile.getAbsolutePath());
-		Recognizer r = new Recognizer();
-		r.getRecognizedDataForWave(waveFile);
 	}
 
 	@Test
+	@Ignore
 	public void testLiveSpeechRecognizer() throws MalformedURLException,
 			IOException, LineUnavailableException, InterruptedException {
-		Microphone m = new Microphone(AudioFileFormat.Type.WAVE);
-		File waveFile = File.createTempFile("test", ".wav");
-		waveFile.deleteOnExit();
-		m.captureAudioToFile(waveFile);
-		System.err.println("Go !!");
-		System.in.read();
-		m.close();
-		System.err.println(waveFile.getAbsolutePath());
-		Recognizer r = new Recognizer();
-		r.getRecognizedDataForWave(waveFile);
+		Configuration configuration = new Configuration();
+
+        configuration
+                .setAcousticModelPath("resource:/edu/cmu/sphinx/models/en-us/en-us");
+        configuration
+                .setDictionaryPath("resource:/edu/cmu/sphinx/models/en-us/cmudict-en-us.dict");
+        configuration
+                .setLanguageModelPath("resource:/edu/cmu/sphinx/models/en-us/en-us.lm.bin");
+
+        StreamSpeechRecognizer recognizer = new StreamSpeechRecognizer(
+                configuration);
+        InputStream stream = new FileInputStream(new File("test.wav"));
+
+        recognizer.startRecognition(stream);
+        SpeechResult result;
+        while ((result = recognizer.getResult()) != null) {
+            System.out.format("Hypothesis: %s\n", result.getHypothesis());
+        }
+        recognizer.stopRecognition();
 	}
 }

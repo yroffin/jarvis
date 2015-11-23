@@ -17,8 +17,6 @@
 package org.jarvis.rest.services.impl;
 
 import java.io.IOException;
-import java.util.Locale;
-import java.util.Set;
 
 import javax.annotation.PostConstruct;
 
@@ -34,8 +32,6 @@ public class JarvisVoiceEngine extends JarvisRestClientImpl implements JarvisCon
 
 	protected Logger logger = LoggerFactory.getLogger(JarvisVoiceEngine.class);
 
-	MaryInterface marytts;
-
 	/**
 	 * constructor
 	 * 
@@ -50,10 +46,10 @@ public class JarvisVoiceEngine extends JarvisRestClientImpl implements JarvisCon
 		setSensor(true);
 		setCanAnswer(true);
 
-		marytts = new LocalMaryInterface();
-		marytts.setLocale(Locale.FRENCH);
-		Set<String> voices = marytts.getAvailableVoices();
-		marytts.setVoice(voices.iterator().next());
+		/**
+		 * TODO
+		 * fix voices here
+		 */
 	}
 
 	public void speak(String value) throws IOException {

@@ -30,7 +30,6 @@ import org.jarvis.main.main.core.impl.JarvisCoreSystemImpl;
 import org.jarvis.main.model.parser.history.IAimlHistory;
 import org.jarvis.rest.services.CoreRestServices;
 import org.jarvis.rest.services.JarvisConnector;
-import org.jarvis.rest.services.CoreRestServices.Handler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
