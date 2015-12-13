@@ -30,15 +30,15 @@ public class DioHelper {
 	/**
 	 * logger
 	 */
-	protected Logger logger = LoggerFactory.getLogger(DioHelper.class);
+	protected static Logger logger = LoggerFactory.getLogger(DioHelper.class);
 	
 	private int pin;
 	private int sender;
 	private int interruptor;
-	int bit2sender[] = new int[26];     // 26 bit sender identifier
-	int bit2Interruptor[] = new int[4]; // 4 bit interuptor
+	private int bit2sender[] = new int[26];     // 26 bit sender identifier
+	private int bit2Interruptor[] = new int[4]; // 4 bit interuptor
 
-	final GpioController gpio;
+	private static GpioController gpio;
 	
 	/**
 	 * constructor
@@ -47,12 +47,18 @@ public class DioHelper {
 	 * @param interruptor
 	 */
 	DioHelper(int pin, int sender, int interruptor) {
-		// create gpio controller
-        gpio = GpioFactory.getInstance();
-        
 		this.pin = pin;
 		this.sender = sender;
 		this.interruptor = interruptor;
+	}
+	
+	boolean init() {
+		try {
+			// create gpio controller
+	        gpio = GpioFactory.getInstance();
+		} catch(UnsatisfiedLinkError e) {
+			return false;
+		}
 
 		logger.info("Pin {} Sender {} Interuptor {}", this.pin, this.sender, this.interruptor);
 		logger.info("Fix pin {} to output mode", pin);
@@ -66,6 +72,7 @@ public class DioHelper {
 		 */
 		logger.info("[SENDER] {}", itob(sender, bit2sender));
 		logger.info("[INTRUP] {}", itob(interruptor, bit2Interruptor));
+		return true;
 	}
 
 	/**
@@ -244,11 +251,15 @@ public class DioHelper {
 	 */
 	public static void main(String[] argv) throws InterruptedException {
 		DioHelper dioHelper = new DioHelper(Integer.parseInt(argv[0]),Integer.parseInt(argv[1]),Integer.parseInt(argv[2]));
-		if(argv[3].startsWith("on")) {
-			dioHelper.switchOn();
-		}
-		if(argv[3].startsWith("off")) {
-			dioHelper.switchOff();
+		if(dioHelper.init()) {
+			if(argv[3].startsWith("on")) {
+				dioHelper.switchOn();
+			}
+			if(argv[3].startsWith("off")) {
+				dioHelper.switchOff();
+			}
+		} else {
+			logger.warn("Unable to detect wiring PI");
 		}
 	}
 }

@@ -182,6 +182,7 @@
 		<module>jarvis-common</module>
 		<module>jarvis-dio</module>
 		<module>jarvis-rest-module</module>
+		<module>jarvis-core-server</module>
 	</modules>
 
 	<repositories>
