@@ -1,0 +1,87 @@
+<!doctype html>
+<!--
+Copyright 2014 Yannick Roffin.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<html lang="en" ng-app="JarvisApp">
+<head>
+    <title>Jarvis Application</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <!-- AngularJS Material Design -->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.css">
+    <link rel="stylesheet" href="css/specific.css">
+
+    <style>
+        .md-toolbar-tools h1 {
+            font-size: inherit;
+            font-weight: inherit;
+            margin: inherit;
+        }
+    </style>
+    <!-- Just for external configuration -->
+    <script src="config.js"></script>
+</head>
+<body layout="column" ng-controller="JarvisAppCtrl as ctrl" ng-init="ctrl.load()" >
+
+<md-toolbar layout="row">
+    <div class="md-toolbar-tools">
+        <md-button ng-click="toggleSidenav('left')" hide-gt-sm class="md-icon-button">
+            <md-icon aria-label="Menu" md-svg-icon="https://s3-us-west-2.amazonaws.com/s.cdpn.io/68133/menu.svg"></md-icon>
+        </md-button>
+        <h1>Jarvis</h1>
+    </div>
+</md-toolbar>
+<div layout="row" flex>
+    <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
+        <md-button ng-click="location('left', '/jobs');">Jobs</md-button>
+        <md-button ng-click="location('left', '/configuration');">Configuration</md-button>
+        <md-button ng-click="location('left', '/scenario');">Scenario</md-button>
+        <md-button ng-click="location('left', '/connectors');">Connector</md-button>
+    </md-sidenav>
+    <div layout="column" flex id="content">
+        <md-content layout="column" flex class="md-padding">
+            <div class="view-animate-container">
+                <div class="view-animate" flex><ng-view></ng-view></div>
+            </div>
+        </md-content>
+    </div>
+</div>
+
+<!-- AngularJS -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-route.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-resource.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-animate.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-aria.min.js"></script>
+
+<!-- AngularJS Material Design -->
+<script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.js"></script>
+<!-- Cf.  https://klarsys.github.io/angular-material-icons -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular-material-icons/0.5.0/angular-material-icons.min.js"></script>
+
+<!-- Application -->
+<script src="js/app.js"></script>
+<script src="js/services.js"></script>
+<script src="js/controllers.js"></script>
+<script src="js/filters.js"></script>
+<script src="js/directives.js"></script>
+
+</body>
+</html>

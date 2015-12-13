@@ -1,0 +1,40 @@
+<div layout="column" flex layout-fill>
+    <md-content>
+        <section>
+            <md-subheader>{{jarvis.connectors.length}} Connector(s)</md-subheader>
+            <md-list layout-padding>
+                <md-list-item ng-repeat="connector in jarvis.connectors">
+                    <div layout layout-sm="column">
+                        <ng-md-icon ng-click="test(connector)" icon="input"></ng-md-icon>
+                    </div>
+                    <div layout layout-sm="column" layout-fill>
+                        <md-input-container>
+                            <label>Id</label>
+                            <input ng-model="connector.id" flex />
+                        </md-input-container>
+                        <md-input-container>
+                            <label>Href</label>
+                            <input ng-model="connector.href" flex />
+                        </md-input-container>
+                        <md-input-container>
+                            <label>Name</label>
+                            <input ng-model="connector.name" flex />
+                        </md-input-container>
+                        <md-input-container>
+                            <label>is renderer</label>
+                            <input ng-model="connector.isRenderer" flex />
+                        </md-input-container>
+                        <md-input-container>
+                            <label>is sensor</label>
+                            <input ng-model="connector.isSensor" flex />
+                        </md-input-container>
+                        <md-input-container>
+                            <label>can answer</label>
+                            <input ng-model="connector.canAnswer" flex />
+                        </md-input-container>
+                    </div>
+                </md-list-item>
+            </md-list>
+        </section>
+    </md-content>
+</div>

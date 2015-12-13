@@ -10,7 +10,7 @@ import (
 	"github.com/emicklei/go-restful"
 	"github.com/emicklei/go-restful/swagger"
 
-	"server-api/user"
+	"server-api/models"
 )
 
 func check(e error) {
