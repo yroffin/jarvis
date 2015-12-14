@@ -49,7 +49,7 @@ func Boot() {
 
 	// scan static files
 	log.Printf("[http/ui] %v%v is mapped to folder %v", config.WebServicesUrl, "/ui", "resources/public/ui")
-	wsContainer.Handle("/ui", http.StripPrefix("/ui", http.FileServer(http.Dir("resources/public/ui"))))
+	wsContainer.Handle("/ui", http.StripPrefix("/", http.FileServer(http.Dir("resources/public/ui"))))
 
 	log.Printf("start listening on localhost:8080")
 	server := &http.Server{Addr: ":8080", Handler: wsContainer}

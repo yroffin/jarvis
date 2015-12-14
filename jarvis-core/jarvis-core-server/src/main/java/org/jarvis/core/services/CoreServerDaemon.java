@@ -21,6 +21,7 @@ import static spark.Spark.get;
 import java.io.InputStream;
 import java.io.Writer;
 
+import org.jarvis.core.resources.ApiJobResources;
 import org.jarvis.core.resources.CoreResources;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
@@ -43,6 +44,9 @@ public class CoreServerDaemon {
 	@Autowired
 	CoreResources coreResources;
 
+	@Autowired
+	ApiJobResources apiJobResources;
+
 	public void server() {
 		String url = env.getProperty("jarvis.server.url");
 		String iface = env.getProperty("jarvis.server.interface");
@@ -58,5 +62,6 @@ public class CoreServerDaemon {
 		 * mount resources
 		 */
 		coreResources.mount();
+		apiJobResources.mount();
 	}
 }
