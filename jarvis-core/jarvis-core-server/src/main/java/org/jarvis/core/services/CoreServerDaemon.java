@@ -16,23 +16,12 @@
 
 package org.jarvis.core.services;
 
-import static spark.Spark.get;
-
-import java.io.InputStream;
-import java.io.Writer;
-
-import org.jarvis.core.resources.ApiJobResources;
 import org.jarvis.core.resources.CoreResources;
+import org.jarvis.core.resources.api.ApiJobResources;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
-
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.Spark;
-import spark.utils.IOUtils;
 
 @Component
 @PropertySource("classpath:server.properties")
@@ -47,8 +36,10 @@ public class CoreServerDaemon {
 	@Autowired
 	ApiJobResources apiJobResources;
 
+	/**
+	 * start component
+	 */
 	public void server() {
-		String url = env.getProperty("jarvis.server.url");
 		String iface = env.getProperty("jarvis.server.interface");
 		int port = Integer.parseInt(env.getProperty("jarvis.server.port"));
 		spark.Spark.ipAddress(iface);

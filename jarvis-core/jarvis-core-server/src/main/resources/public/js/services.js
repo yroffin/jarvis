@@ -151,15 +151,34 @@ myAppServices.factory('jarvisConfigurationResource', [ '$resource', function($re
 		}
 	)}]);
 
+/**
+ * jobResourceService
+ */
+myAppServices.factory('jobResourceService', function($q, $window, $rootScope, Restangular) {
+  return {
+        findAll: function(callback,failure) {
+        	// Restangular returns promises
+        	Restangular.all('jobs').getList().then(function(jobs) {
+        	  callback(jobs);
+        	},function(errors){
+        		failure(errors);
+        	});
+        }
+  }
+});
+
 myAppServices.factory('jarvisJobsResource', [ '$resource', function($resource, $windows) {
 	return $resource('', {}, {
 		/**
-		 * create a new crontab entry
+		 * create a new job
 		 */
 		put : {
 			method : 'PUT',
 			url : jarvisApiUrl + '/jobs/:id',
 			isArray : false,
+			headers: {
+	            'Content-Type': 'application/json'
+	        },
 			cache : false
 		},
 		/**
@@ -169,7 +188,11 @@ myAppServices.factory('jarvisJobsResource', [ '$resource', function($resource, $
 			method : 'GET',
 			url : jarvisApiUrl + '/jobs',
 			params : {},
-			isArray : true,
+			isArray : false,
+			headers: {
+				'Accept': 'application/json, text/javascript',
+				'Content-Type': 'application/json; charset=utf-8'
+	        },
 			cache : false
 		},
 		/**
@@ -180,6 +203,9 @@ myAppServices.factory('jarvisJobsResource', [ '$resource', function($resource, $
 			url : jarvisApiUrl + '/jobs/:id',
 			params : {},
 			isArray : false,
+			headers: {
+	            'Content-Type': 'application/json'
+	        },
 			cache : false
 		},
 		/**
@@ -190,6 +216,9 @@ myAppServices.factory('jarvisJobsResource', [ '$resource', function($resource, $
 			url : jarvisApiUrl + '/jobs',
 			params : {},
 			isArray : false,
+			headers: {
+	            'Content-Type': 'application/json'
+	        },
 			cache : false
 		},
 		/**
@@ -200,6 +229,9 @@ myAppServices.factory('jarvisJobsResource', [ '$resource', function($resource, $
 			url : jarvisApiUrl + '/jobs/:id',
 			params : {},
 			isArray : false,
+			headers: {
+	            'Content-Type': 'application/json'
+	        },
 			cache : false
 		},
 		/**
@@ -209,6 +241,9 @@ myAppServices.factory('jarvisJobsResource', [ '$resource', function($resource, $
 			method : 'POST',
 			url : jarvisApiUrl + '/jobs/execute?id=:id&method=:method',
 			isArray : false,
+			headers: {
+	            'Content-Type': 'application/json'
+	        },
 			cache : false
 		},
 		/**
@@ -219,6 +254,9 @@ myAppServices.factory('jarvisJobsResource', [ '$resource', function($resource, $
 			url : jarvisServicesUrl + '/neo4j/crontab?name=:name',
 			params : {},
 			isArray : false,
+			headers: {
+	            'Content-Type': 'application/json'
+	        },
 			cache : false
 		}
 	})

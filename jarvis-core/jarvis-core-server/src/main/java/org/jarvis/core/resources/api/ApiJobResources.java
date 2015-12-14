@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package org.jarvis.core.resources;
+package org.jarvis.core.resources.api;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
@@ -44,8 +44,7 @@ public class ApiJobResources extends ApiResources<JobRest> {
 
 	@Override
 	public JobRest doGetById(String id) {
-		// TODO Auto-generated method stub
-		return null;
+    	return apiJobService.getById(id);
 	}
 
 	@Override
@@ -58,6 +57,7 @@ public class ApiJobResources extends ApiResources<JobRest> {
     	return apiJobService.update(id, jobRest);
 	}
 
+	@Override
 	public void mount() {
 		/**
 		 * mount resources

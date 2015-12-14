@@ -18,7 +18,12 @@
 
 /* Controllers */
 
-angular.module('JarvisApp',['ngMaterial', 'ngMdIcons', 'ngRoute','JarvisApp.services'])
+angular.module('JarvisApp',['ngMaterial', 'ngMdIcons', 'ngRoute', 'restangular', 'JarvisApp.services'])
+    .config(['RestangularProvider',
+        function(RestangularProvider) {
+    		RestangularProvider.setBaseUrl('/api');
+    		RestangularProvider.setDefaultHeaders({ 'content-type': 'application/json' });
+        }])
     .config(['$routeProvider', '$locationProvider',
         function($routeProvider, $locationProvider) {
             $routeProvider.
@@ -212,14 +217,14 @@ angular.module('JarvisApp',['ngMaterial', 'ngMdIcons', 'ngRoute','JarvisApp.serv
      * job view controller
      */
     .controller('JarvisAppJobCtrl',
-    ['$scope', 'jarvisServices', 'jarvisJobsResource', '$mdToast',
-        function($scope, jarvisServices, jarvisJobsResource, $mdToast) {
+    ['$scope', 'jarvisServices', 'jobResourceService', 'jarvisJobsResource', '$mdToast',
+        function($scope, jarvisServices, jobResourceService, jarvisJobsResource, $mdToast) {
             $scope.iconPath = 'https://cdn4.iconfinder.com/data/icons/SOPHISTIQUE/web_design/png/128/our_process_2.png';
             /**
              * some init
              * loading jobs
              */
-            jarvisJobsResource.get({}, function(data) {
+            jobResourceService.findAll(function(data) {
                 for(var index in data) {
                     var params = data[index].params;
                     if(params) {

@@ -1,8 +1,23 @@
-package org.jarvis.core.resources;
+/**
+ *  Copyright 2015 Yannick Roffin
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
+package org.jarvis.core.resources.api;
 
 import java.util.List;
 
-import org.jarvis.core.model.rest.JobRest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 
@@ -17,9 +32,37 @@ public abstract class ApiResources<Klass> {
 	
 	protected ObjectMapper mapper = new ObjectMapper();
 
+	/**
+	 * mount resource
+	 */
+	public abstract void mount();
+	
+	/**
+	 * find all elements
+	 * @return
+	 */
 	public abstract List<Klass> doFindAll();
+	
+	/**
+	 * find element by id
+	 * @param id
+	 * @return
+	 */
 	public abstract Klass doGetById(String id);
+	
+	/**
+	 * create new entity
+	 * @param k
+	 * @return
+	 */
 	public abstract Klass doCreate(Klass k);
+	
+	/**
+	 * update entity
+	 * @param id
+	 * @param k
+	 * @return
+	 */
 	public abstract Klass doUpdate(String id, Klass k);
 
 	/**
@@ -30,10 +73,6 @@ public abstract class ApiResources<Klass> {
 	 * @throws Exception
 	 */
 	public Object doFindAll(Request request, Response response) throws Exception {
-    	if(request.contentType() == null || !request.contentType().equals("application/json")) {
-    		response.status(403);
-    		return "";
-    	}
     	return mapper.writeValueAsString(doFindAll());
     }
 
@@ -53,6 +92,14 @@ public abstract class ApiResources<Klass> {
     	return mapper.writeValueAsString(doGetById(request.params(id)));
     }
 
+	/**
+	 * create entity
+	 * @param request
+	 * @param response
+	 * @param klass
+	 * @return
+	 * @throws Exception
+	 */
 	public Object doCreate(Request request, Response response, Class<Klass> klass) throws Exception {
     	if(request.contentType() == null || !request.contentType().equals("application/json")) {
     		response.status(403);
@@ -62,6 +109,15 @@ public abstract class ApiResources<Klass> {
     	return mapper.writeValueAsString(doCreate(k));
     }
 
+	/**
+	 * update entity
+	 * @param request
+	 * @param id
+	 * @param response
+	 * @param klass
+	 * @return
+	 * @throws Exception
+	 */
 	public Object doUpdate(Request request, String id, Response response, Class<Klass> klass) throws Exception {
     	if(request.contentType() == null || !request.contentType().equals("application/json")) {
     		response.status(403);

@@ -25,5 +25,6 @@ angular.module('JarvisApp', [
   'ngRoute',
   'ngMaterial',
   'ngAnimate',
-  'ngMdIcons'
+  'ngMdIcons',
+  'restangular'
 ]);
