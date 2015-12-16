@@ -167,6 +167,54 @@ myAppServices.factory('jobResourceService', function($q, $window, $rootScope, Re
   }
 });
 
+/**
+ * clientResourceService
+ */
+myAppServices.factory('clientResourceService', function($q, $window, $rootScope, Restangular) {
+  return {
+        findAll: function(callback,failure) {
+        	// Restangular returns promises
+        	Restangular.all('clients').getList().then(function(clients) {
+        	  callback(clients);
+        	},function(errors){
+        		failure(errors);
+        	});
+        }
+  }
+});
+
+/**
+ * crontabResourceService
+ */
+myAppServices.factory('crontabResourceService', function($q, $window, $rootScope, Restangular) {
+  return {
+        findAll: function(callback,failure) {
+        	// Restangular returns promises
+        	Restangular.all('crontabs').getList().then(function(crontabs) {
+        	  callback(crontabs);
+        	},function(errors){
+        		failure(errors);
+        	});
+        }
+  }
+});
+
+/**
+ * labelResourceService
+ */
+myAppServices.factory('labelResourceService', function($q, $window, $rootScope, Restangular) {
+  return {
+        findAll: function(callback,failure) {
+        	// Restangular returns promises
+        	Restangular.all('labels').getList().then(function(labels) {
+        	  callback(labels);
+        	},function(errors){
+        		failure(errors);
+        	});
+        }
+  }
+});
+
 myAppServices.factory('jarvisJobsResource', [ '$resource', function($resource, $windows) {
 	return $resource('', {}, {
 		/**

@@ -17,11 +17,16 @@
 package org.jarvis.core.services;
 
 import org.jarvis.core.resources.CoreResources;
-import org.jarvis.core.resources.api.ApiJobResources;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
+import org.jarvis.core.resources.api.ApiJobResources;
+import org.jarvis.core.resources.api.ApiClientResources;
+import org.jarvis.core.resources.api.ApiLabelResources;
+import org.jarvis.core.resources.api.ApiScenarioResources;
+import org.jarvis.core.resources.api.ApiConnectorResources;
+import org.jarvis.core.resources.api.ApiCrontabResources;
 
 @Component
 @PropertySource("classpath:server.properties")
@@ -35,6 +40,21 @@ public class CoreServerDaemon {
 
 	@Autowired
 	ApiJobResources apiJobResources;
+
+	@Autowired
+	ApiClientResources apiClientResources;
+
+	@Autowired
+	ApiConnectorResources apiConnectorResources;
+
+	@Autowired
+	ApiLabelResources apiLabelResources;
+
+	@Autowired
+	ApiCrontabResources apiCrontabResources;
+
+	@Autowired
+	ApiScenarioResources apiScenarioResources;
 
 	/**
 	 * start component
@@ -54,5 +74,10 @@ public class CoreServerDaemon {
 		 */
 		coreResources.mount();
 		apiJobResources.mount();
+		apiClientResources.mount();
+		apiConnectorResources.mount();
+		apiCrontabResources.mount();
+		apiLabelResources.mount();
+		apiScenarioResources.mount();
 	}
 }
