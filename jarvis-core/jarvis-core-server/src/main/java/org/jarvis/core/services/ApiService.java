@@ -21,31 +21,29 @@ import java.util.List;
 import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.services.neo4j.Neo4jService;
 
-public class ApiService<T> extends Neo4jService<T> {
+public class ApiService<Bean> extends Neo4jService<Bean> {
 
 	/**
 	 * base class
 	 */
-	Class<T> genericTypeClass = null;
+	Class<Bean> beanClass = null;
 
-	public Class<T> fake(Class<T> genericTypeClass) {
-		return genericTypeClass;
+	public void setBeanClass(Class<Bean> beanClass) {
+		this.beanClass = beanClass;
 	}
 
 	/**
 	 * default constructor
 	 */
-	@SuppressWarnings("unchecked")
 	public ApiService() {
-		genericTypeClass = (Class<T>) getClass().getMethods()[0].getReturnType();		
 	}
 	
 	/**
 	 * find all
 	 * @return
 	 */
-	public List<T> findAll() {
-		return super.findAll(genericTypeClass);
+	public List<Bean> findAll() {
+		return super.findAll(beanClass);
 	}
 
 	/**
@@ -54,14 +52,14 @@ public class ApiService<T> extends Neo4jService<T> {
 	 * @return
 	 * @throws TechnicalNotFoundException
 	 */
-	public T getById(String id) throws TechnicalNotFoundException {
-		return super.getById(genericTypeClass, id);
+	public Bean getById(String id) throws TechnicalNotFoundException {
+		return super.getById(beanClass, id);
 	}
 
 	/**
 	 * create this bean
 	 */
-	public T create(T bean) {
+	public Bean create(Bean bean) {
 		return super.create(bean);
 	}
 
@@ -72,7 +70,7 @@ public class ApiService<T> extends Neo4jService<T> {
 	 * @return
 	 * @throws TechnicalNotFoundException
 	 */
-	public T update(String id, T bean) throws TechnicalNotFoundException {
-		return super.update(genericTypeClass, bean, id);
+	public Bean update(String id, Bean bean) throws TechnicalNotFoundException {
+		return super.update(beanClass, bean, id);
 	}
 }

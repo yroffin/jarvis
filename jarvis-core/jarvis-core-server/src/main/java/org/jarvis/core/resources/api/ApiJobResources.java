@@ -20,10 +20,6 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.put;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.JobBean;
 import org.jarvis.core.model.rest.JobRest;
 import org.springframework.stereotype.Component;
@@ -35,32 +31,12 @@ import spark.Route;
 @Component
 public class ApiJobResources extends ApiResources<JobRest,JobBean> {
 
-	@Override
-	public List<JobRest> doFindAll() {
-		List<JobRest> result = new ArrayList<JobRest>();
-		for(JobBean item : apiService.findAll()) {
-			result.add(mapperFactory.getMapperFacade().map(item, JobRest.class));
-		}
-		return result;
-	}
-
-	@Override
-	public JobRest doGetById(String id) throws TechnicalNotFoundException {
-		return mapperFactory.getMapperFacade().map(apiService.getById(id), JobRest.class);
-	}
-
-	@Override
-	public JobRest doCreate(JobRest jobRest) {
-		return mapperFactory.getMapperFacade().map(
-				apiService.create(mapperFactory.getMapperFacade().map(jobRest, JobBean.class)),
-				JobRest.class);
-	}
-
-	@Override
-	public JobRest doUpdate(String id, JobRest jobRest) throws TechnicalNotFoundException {
-		return mapperFactory.getMapperFacade().map(
-				apiService.update(id, mapperFactory.getMapperFacade().map(jobRest, JobBean.class)), 
-				JobRest.class);
+	/**
+	 * constructor
+	 */
+	public ApiJobResources() {
+		setRestClass(JobRest.class);
+		setBeanClass(JobBean.class);
 	}
 
 	@Override

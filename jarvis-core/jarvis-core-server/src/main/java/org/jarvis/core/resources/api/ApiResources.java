@@ -16,6 +16,7 @@
 
 package org.jarvis.core.resources.api;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -33,7 +34,7 @@ import ma.glasnost.orika.impl.DefaultMapperFactory;
 import spark.Request;
 import spark.Response;
 
-public abstract class ApiResources<T,K> {
+public abstract class ApiResources<Rest,Bean> {
 	@Autowired
 	Environment env;
 	
@@ -46,12 +47,42 @@ public abstract class ApiResources<T,K> {
 	/**
 	 * internal api service
 	 */
-	ApiService<K> apiService = new ApiService<K>();
+	ApiService<Bean> apiService = new ApiService<Bean>();
 
+	/**
+	 * bean class
+	 */
+	private Class<Bean> beanClass;
+
+	/**
+	 * rest class
+	 */
+	private Class<Rest> restClass;
+
+	/**
+	 * spring init
+	 */
 	@PostConstruct
 	void init() {
 		mapperFactory = new DefaultMapperFactory.Builder().build();
 		apiService.setApiNeo4Service(apiNeo4Service);
+		apiService.setBeanClass(beanClass);
+	}
+
+	/**
+	 * set bean class
+	 * @param klass
+	 */
+	protected void setBeanClass(Class<Bean> klass) {
+		beanClass = klass;
+	}
+
+	/**
+	 * set rest class
+	 * @param klass
+	 */
+	protected void setRestClass(Class<Rest> klass) {
+		restClass = klass;		
 	}
 
 	/**
@@ -61,33 +92,49 @@ public abstract class ApiResources<T,K> {
 	
 	/**
 	 * find all elements
-	 * @return
+	 * @return List<Rest>
 	 */
-	public abstract List<T> doFindAll();
-	
+	public List<Rest> doFindAll() {
+		List<Rest> result = new ArrayList<Rest>();
+		for(Bean item : apiService.findAll()) {
+			result.add(mapperFactory.getMapperFacade().map(item, restClass));
+		}
+		return result;
+	}
+
 	/**
 	 * find element by id
 	 * @param id
-	 * @return
+	 * @return Rest
 	 * @throws TechnicalNotFoundException 
 	 */
-	public abstract T doGetById(String id) throws TechnicalNotFoundException;
+	public Rest doGetById(String id) throws TechnicalNotFoundException {
+		return mapperFactory.getMapperFacade().map(apiService.getById(id), restClass);
+	}
 	
 	/**
 	 * create new entity
 	 * @param k
-	 * @return
+	 * @return Rest
 	 */
-	public abstract T doCreate(T k);
+	public Rest doCreate(Rest r) {
+		return mapperFactory.getMapperFacade().map(
+				apiService.create(mapperFactory.getMapperFacade().map(r, beanClass)),
+				restClass);
+	}
 	
 	/**
 	 * update entity
 	 * @param id
 	 * @param k
-	 * @return
+	 * @return Rest
 	 * @throws TechnicalNotFoundException 
 	 */
-	public abstract T doUpdate(String id, T k) throws TechnicalNotFoundException;
+	public Rest doUpdate(String id, Rest r) throws TechnicalNotFoundException {
+		return mapperFactory.getMapperFacade().map(
+				apiService.update(id, mapperFactory.getMapperFacade().map(r, beanClass)), 
+				restClass);
+	}
 
 	/**
 	 * find all elements
@@ -113,7 +160,12 @@ public abstract class ApiResources<T,K> {
     		response.status(403);
     		return "";
     	}
-    	return mapper.writeValueAsString(doGetById(request.params(id)));
+    	try {
+    		return mapper.writeValueAsString(doGetById(request.params(id)));
+    	} catch(TechnicalNotFoundException e) {
+    		response.status(404);
+    		return "";
+    	}
     }
 
 	/**
@@ -124,12 +176,12 @@ public abstract class ApiResources<T,K> {
 	 * @return
 	 * @throws Exception
 	 */
-	public Object doCreate(Request request, Response response, Class<T> klass) throws Exception {
+	public Object doCreate(Request request, Response response, Class<Rest> klass) throws Exception {
     	if(request.contentType() == null || !request.contentType().equals("application/json")) {
     		response.status(403);
     		return "";
     	}
-		T k = mapper.readValue(request.body(), klass);
+		Rest k = mapper.readValue(request.body(), klass);
     	return mapper.writeValueAsString(doCreate(k));
     }
 
@@ -142,12 +194,12 @@ public abstract class ApiResources<T,K> {
 	 * @return
 	 * @throws Exception
 	 */
-	public Object doUpdate(Request request, String id, Response response, Class<T> klass) throws Exception {
+	public Object doUpdate(Request request, String id, Response response, Class<Rest> klass) throws Exception {
     	if(request.contentType() == null || !request.contentType().equals("application/json")) {
     		response.status(403);
     		return "";
     	}
-		T k = mapper.readValue(request.body(), klass);
+		Rest k = mapper.readValue(request.body(), klass);
     	return mapper.writeValueAsString(doUpdate(request.params(id), k));
     }
 }

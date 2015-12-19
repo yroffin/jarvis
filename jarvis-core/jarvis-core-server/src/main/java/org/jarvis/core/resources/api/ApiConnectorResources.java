@@ -20,10 +20,6 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.put;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.ConnectorBean;
 import org.jarvis.core.model.rest.ConnectorRest;
 import org.springframework.stereotype.Component;
@@ -35,32 +31,12 @@ import spark.Route;
 @Component
 public class ApiConnectorResources extends ApiResources<ConnectorRest,ConnectorBean> {
 
-	@Override
-	public List<ConnectorRest> doFindAll() {
-		List<ConnectorRest> result = new ArrayList<ConnectorRest>();
-		for(ConnectorBean item : apiService.findAll()) {
-			result.add(mapperFactory.getMapperFacade().map(item, ConnectorRest.class));
-		}
-		return result;
-	}
-
-	@Override
-	public ConnectorRest doGetById(String id) throws TechnicalNotFoundException {
-		return mapperFactory.getMapperFacade().map(apiService.getById(id), ConnectorRest.class);
-	}
-
-	@Override
-	public ConnectorRest doCreate(ConnectorRest rest) {
-		return mapperFactory.getMapperFacade().map(
-				apiService.create(mapperFactory.getMapperFacade().map(rest, ConnectorBean.class)),
-				ConnectorRest.class);
-	}
-
-	@Override
-	public ConnectorRest doUpdate(String id, ConnectorRest rest) throws TechnicalNotFoundException {
-		return mapperFactory.getMapperFacade().map(
-				apiService.update(id, mapperFactory.getMapperFacade().map(rest, ConnectorBean.class)), 
-				ConnectorRest.class);
+	/**
+	 * constructor
+	 */
+	public ApiConnectorResources() {
+		setRestClass(ConnectorRest.class);
+		setBeanClass(ConnectorBean.class);
 	}
 
 	@Override

@@ -20,10 +20,6 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.put;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.CrontabBean;
 import org.jarvis.core.model.rest.CrontabRest;
 import org.springframework.stereotype.Component;
@@ -35,32 +31,12 @@ import spark.Route;
 @Component
 public class ApiCrontabResources extends ApiResources<CrontabRest,CrontabBean> {
 
-	@Override
-	public List<CrontabRest> doFindAll() {
-		List<CrontabRest> result = new ArrayList<CrontabRest>();
-		for(CrontabBean item : apiService.findAll()) {
-			result.add(mapperFactory.getMapperFacade().map(item, CrontabRest.class));
-		}
-		return result;
-	}
-
-	@Override
-	public CrontabRest doGetById(String id) throws TechnicalNotFoundException {
-		return mapperFactory.getMapperFacade().map(apiService.getById(id), CrontabRest.class);
-	}
-
-	@Override
-	public CrontabRest doCreate(CrontabRest rest) {
-		return mapperFactory.getMapperFacade().map(
-				apiService.create(mapperFactory.getMapperFacade().map(rest, CrontabBean.class)),
-				CrontabRest.class);
-	}
-
-	@Override
-	public CrontabRest doUpdate(String id, CrontabRest rest) throws TechnicalNotFoundException {
-		return mapperFactory.getMapperFacade().map(
-				apiService.update(id, mapperFactory.getMapperFacade().map(rest, CrontabBean.class)), 
-				CrontabRest.class);
+	/**
+	 * constructor
+	 */
+	public ApiCrontabResources() {
+		setRestClass(CrontabRest.class);
+		setBeanClass(CrontabBean.class);
 	}
 
 	@Override

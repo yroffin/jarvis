@@ -21,10 +21,6 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.put;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.ScenarioBean;
 import org.jarvis.core.model.rest.ScenarioRest;
 import org.springframework.stereotype.Component;
@@ -33,37 +29,24 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
+/**
+ * Scenario resource
+ *
+ */
 @Component
 public class ApiScenarioResources extends ApiResources<ScenarioRest,ScenarioBean> {
 
-	@Override
-	public List<ScenarioRest> doFindAll() {
-		List<ScenarioRest> result = new ArrayList<ScenarioRest>();
-		for(ScenarioBean item : apiService.findAll()) {
-			result.add(mapperFactory.getMapperFacade().map(item, ScenarioRest.class));
-		}
-		return result;
+	/**
+	 * constructor
+	 */
+	public ApiScenarioResources() {
+		setRestClass(ScenarioRest.class);
+		setBeanClass(ScenarioBean.class);
 	}
 
-	@Override
-	public ScenarioRest doGetById(String id) throws TechnicalNotFoundException {
-		return mapperFactory.getMapperFacade().map(apiService.getById(id), ScenarioRest.class);
-	}
-
-	@Override
-	public ScenarioRest doCreate(ScenarioRest rest) {
-		return mapperFactory.getMapperFacade().map(
-				apiService.create(mapperFactory.getMapperFacade().map(rest, ScenarioBean.class)),
-				ScenarioRest.class);
-	}
-
-	@Override
-	public ScenarioRest doUpdate(String id, ScenarioRest rest) throws TechnicalNotFoundException {
-		return mapperFactory.getMapperFacade().map(
-				apiService.update(id, mapperFactory.getMapperFacade().map(rest, ScenarioBean.class)), 
-				ScenarioRest.class);
-	}
-
+	/**
+	 * mount resources
+	 */
 	@Override
 	public void mount() {
 		/**

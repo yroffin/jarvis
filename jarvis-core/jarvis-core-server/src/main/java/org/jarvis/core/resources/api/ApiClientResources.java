@@ -20,10 +20,6 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.put;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.ClientBean;
 import org.jarvis.core.model.rest.ClientRest;
 import org.springframework.stereotype.Component;
@@ -35,34 +31,14 @@ import spark.Route;
 @Component
 public class ApiClientResources extends ApiResources<ClientRest,ClientBean> {
 
-	@Override
-	public List<ClientRest> doFindAll() {
-		List<ClientRest> result = new ArrayList<ClientRest>();
-		for(ClientBean item : apiService.findAll()) {
-			result.add(mapperFactory.getMapperFacade().map(item, ClientRest.class));
-		}
-		return result;
+	/**
+	 * constructor
+	 */
+	public ApiClientResources() {
+		setRestClass(ClientRest.class);
+		setBeanClass(ClientBean.class);
 	}
-
-	@Override
-	public ClientRest doGetById(String id) throws TechnicalNotFoundException {
-		return mapperFactory.getMapperFacade().map(apiService.getById(id), ClientRest.class);
-	}
-
-	@Override
-	public ClientRest doCreate(ClientRest rest) {
-		return mapperFactory.getMapperFacade().map(
-				apiService.create(mapperFactory.getMapperFacade().map(rest, ClientBean.class)),
-				ClientRest.class);
-	}
-
-	@Override
-	public ClientRest doUpdate(String id, ClientRest rest) throws TechnicalNotFoundException {
-		return mapperFactory.getMapperFacade().map(
-				apiService.update(id, mapperFactory.getMapperFacade().map(rest, ClientBean.class)), 
-				ClientRest.class);
-	}
-
+	
 	@Override
 	public void mount() {
 		/**

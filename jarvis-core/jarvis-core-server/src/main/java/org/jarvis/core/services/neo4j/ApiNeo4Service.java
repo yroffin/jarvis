@@ -43,8 +43,16 @@ public class ApiNeo4Service  {
 	@Autowired
 	Environment env;
 
+	/**
+	 * static graph db handle
+	 */
 	static GraphDatabaseService graphDb = null;
 	
+	/**
+	 * spring init
+	 * @throws IllegalArgumentException
+	 * @throws MalformedURLException
+	 */
 	@PostConstruct
 	public void init() throws IllegalArgumentException, MalformedURLException {
 		File dbFile = new File(env.getProperty("jarvis.neo4j.dir"));
@@ -67,19 +75,37 @@ public class ApiNeo4Service  {
 	    } );
 	}
 
+	/**
+	 * create node
+	 * @return Node
+	 */
 	public Node createNode() {
 		return graphDb.createNode();
 	}
 
+	/**
+	 * begin a new transaction
+	 * @return Transaction
+	 */
 	public Transaction beginTx() {
 		return graphDb.beginTx();
 	}
 
+	/**
+	 * execute cypher query
+	 * @param query
+	 * @return Result
+	 */
 	public Result execute(String query) {
-		logger.error(query);
+		logger.debug(query);
 		return graphDb.execute(query);
 	}
 
+	/**
+	 * create node with label
+	 * @param label
+	 * @return
+	 */
 	public Node createNode(Label label) {
 		return graphDb.createNode(label);
 	}
