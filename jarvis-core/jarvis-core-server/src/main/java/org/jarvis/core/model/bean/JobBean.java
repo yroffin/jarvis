@@ -18,4 +18,7 @@ package org.jarvis.core.model.bean;
 
 public class JobBean extends GenericBean {
 	public String name;
+	public String cronTime;
+	public String plugin;
+	public String text;
 }

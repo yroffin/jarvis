@@ -186,6 +186,38 @@ public class Neo4jService<T> {
 	}
 
 	/**
+	 * remove node
+	 * @param klass
+	 * @param id
+	 * @return
+	 * @throws TechnicalNotFoundException
+	 */
+	public T remove(Class<T> klass, String id) throws TechnicalNotFoundException {
+		String classname = klass.getSimpleName();
+		/**
+		 * cypher query
+		 */
+		try (Transaction ignored = apiNeo4Service.beginTx();
+				Result result = apiNeo4Service.execute("MATCH (node:"+classname+") WHERE id(node) = "+id+" RETURN node")) {
+			if (result.hasNext()) {
+				/**
+				 * delete node
+				 */
+				apiNeo4Service.execute("MATCH (node:"+classname+") WHERE id(node) = "+id+" DETACH DELETE node");
+				return instance(klass, result.next());
+			} else {
+				throw new TechnicalNotFoundException();
+			}
+		} catch (InstantiationException e) {
+			logger.error("Exception", e);
+			throw new TechnicalException(e);
+		} catch (IllegalAccessException e) {
+			logger.error("Exception", e);
+			throw new TechnicalException(e);
+		}
+	}
+
+	/**
 	 * build instance with node
 	 * @param klass
 	 * @param row

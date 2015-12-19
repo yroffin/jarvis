@@ -217,29 +217,33 @@ angular.module('JarvisApp',['ngMaterial', 'ngMdIcons', 'ngRoute', 'restangular',
      * job view controller
      */
     .controller('JarvisAppJobCtrl',
-    ['$scope', 'jarvisServices', 'jobResourceService', 'jarvisJobsResource', '$mdToast',
-        function($scope, jarvisServices, jobResourceService, jarvisJobsResource, $mdToast) {
+    ['$scope', 'jarvisServices', 'jobResourceService', 'jarvisJobsResource', 'toastService', '$log', '$mdToast',
+        function($scope, jarvisServices, jobResourceService, jarvisJobsResource, toastService, $log, $mdToast) {
             $scope.iconPath = 'https://cdn4.iconfinder.com/data/icons/SOPHISTIQUE/web_design/png/128/our_process_2.png';
             /**
-             * some init
              * loading jobs
              */
             jobResourceService.findAll(function(data) {
-                for(var index in data) {
-                    var params = data[index].params;
-                    if(params) {
-                        data[index].text = JSON.stringify(data[index].params);
+                var arr = [];
+            	_.forEach(data, function(element) {
+                    /**
+                     * convert internal json params
+                     */
+                    if(element.params) {
+                    	element.text = JSON.stringify(element.params);
                     }
-                }
-                $scope.jarvis.configuration.jobs = data;
-            }, function(failure) {
-                $mdToast.show(
-                    $mdToast.simple()
-                        .content(failure)
-                        .position($scope.getToastPosition())
-                        .hideDelay(3000).theme("failure-toast")
-                );
-            });
+                    arr.push({
+                    	'id':element.id,
+                    	'name':element.name,
+                    	'cronTime':element.cronTime,
+                    	'params':element.params,
+                    	'plugin':element.plugin,
+                    	'text':element.text,
+                    });
+                });
+            	toastService.info(arr.length + ' job(s)');
+                $scope.jarvis.configuration.jobs = arr;
+            }, toastService.failure);
 
             /**
              * delete this job
@@ -248,35 +252,11 @@ angular.module('JarvisApp',['ngMaterial', 'ngMdIcons', 'ngRoute', 'restangular',
              */
             $scope.delete = function(jobs, job) {
                 /**
-                 * loading clients
+                 * remove one job
                  */
-                jarvisJobsResource.delete({
-                    id : job.id
-                }, function(data) {
-                    var search = -1;
-                    for(var index in jobs) {
-                        if(jobs[index].id == job.id) {
-                            search = index;
-                        }
-                    }
-                    if(search >= 0) {
-                        delete jobs[search];
-                        jobs.splice(search, 1);
-                    }
-                    $mdToast.show(
-                        $mdToast.simple()
-                            .content('Job ' + job.name + ' supprimé')
-                            .position($scope.getToastPosition())
-                            .hideDelay(3000)
-                    );
-                }, function(err) {
-                    $mdToast.show(
-                        $mdToast.simple()
-                            .content(err)
-                            .position($scope.getToastPosition())
-                            .hideDelay(3000).theme("failure-toast")
-                    );
-                });
+                jobResourceService.findAll(function(data) {
+                	$log.error(job.id);
+                }, toastService.failure);
             };
 
             /**

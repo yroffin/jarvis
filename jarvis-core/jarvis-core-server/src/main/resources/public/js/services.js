@@ -154,12 +154,59 @@ myAppServices.factory('jarvisConfigurationResource', [ '$resource', function($re
 /**
  * jobResourceService
  */
+myAppServices.factory('toastService', function($log, $mdToast) {
+  var toastServiceInstance;
+  toastServiceInstance = {
+		toastPosition: {
+		          bottom: false,
+		          top: true,
+		          left: false,
+		          right: true
+		},
+		getToastPosition: function() {
+		     return Object.keys(toastServiceInstance.toastPosition)
+		         .filter(function(pos) { return toastServiceInstance.toastPosition[pos]; })
+		         .join(' ');
+		},
+        failure: function(failure) {
+        	$log.error(failure);
+            $mdToast.show(
+                    $mdToast.simple()
+                        .content(failure)
+                        .position(this.getToastPosition())
+                        .hideDelay(3000).theme("failure-toast")
+                );
+        },
+        info: function(message) {
+        	$log.info(message);
+            $mdToast.show(
+                    $mdToast.simple()
+                        .content(message)
+                        .position(this.getToastPosition())
+                        .hideDelay(3000)
+                );
+        }
+  }
+  return toastServiceInstance;
+});
+
+/**
+ * jobResourceService
+ */
 myAppServices.factory('jobResourceService', function($q, $window, $rootScope, Restangular) {
   return {
-        findAll: function(callback,failure) {
+        findAll: function(callback, failure) {
         	// Restangular returns promises
         	Restangular.all('jobs').getList().then(function(jobs) {
-        	  callback(jobs);
+        		callback(jobs);
+        	},function(errors){
+        		failure(errors);
+        	});
+        },
+        delete: function(id, callback, failure) {
+        	// Restangular returns promises
+        	Restangular.one('jobs', id).remove().then(function(jobs) {
+        		callback(jobs);
         	},function(errors){
         		failure(errors);
         	});
@@ -175,7 +222,7 @@ myAppServices.factory('clientResourceService', function($q, $window, $rootScope,
         findAll: function(callback,failure) {
         	// Restangular returns promises
         	Restangular.all('clients').getList().then(function(clients) {
-        	  callback(clients);
+        		callback(clients);
         	},function(errors){
         		failure(errors);
         	});

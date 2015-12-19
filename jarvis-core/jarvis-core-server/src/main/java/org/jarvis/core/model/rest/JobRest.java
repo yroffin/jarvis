@@ -23,4 +23,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class JobRest extends GenericEntity {
 	@JsonProperty("name")
 	public String name;
+	@JsonProperty("cronTime")
+	public String cronTime;
+	@JsonProperty("plugin")
+	public String plugin;
+	@JsonProperty("text")
+	public String text;
 }

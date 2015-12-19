@@ -19,6 +19,7 @@ package org.jarvis.core.resources.api;
 import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.put;
+import static spark.Spark.delete;
 
 import org.jarvis.core.model.bean.JobBean;
 import org.jarvis.core.model.rest.JobRest;
@@ -66,6 +67,12 @@ public class ApiJobResources extends ApiResources<JobRest,JobBean> {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
 		    	return doUpdate(request, ":id", response, JobRest.class);
+		    }
+		});
+		delete("/api/jobs/:id", new Route() {
+		    @Override
+			public Object handle(Request request, Response response) throws Exception {
+		    	return doDelete(request, ":id", response, JobRest.class);
 		    }
 		});
 	}

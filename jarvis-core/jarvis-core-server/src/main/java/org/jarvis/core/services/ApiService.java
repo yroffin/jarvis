@@ -64,6 +64,14 @@ public class ApiService<Bean> extends Neo4jService<Bean> {
 	}
 
 	/**
+	 * create this bean
+	 * @throws TechnicalNotFoundException 
+	 */
+	public Bean remove(String id) throws TechnicalNotFoundException {
+		return super.remove(beanClass, id);
+	}
+
+	/**
 	 * update this bean
 	 * @param id
 	 * @param bean

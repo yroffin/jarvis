@@ -22,6 +22,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import org.jarvis.core.exception.TechnicalNotFoundException;
+import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.services.ApiService;
 import org.jarvis.core.services.neo4j.ApiNeo4Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -124,6 +125,18 @@ public abstract class ApiResources<Rest,Bean> {
 	}
 	
 	/**
+	 * delete by id
+	 * @param id
+	 * @return
+	 * @throws TechnicalNotFoundException
+	 */
+	public Rest doDelete(String id) throws TechnicalNotFoundException {
+		return mapperFactory.getMapperFacade().map(
+				apiService.remove(id),
+				restClass);
+	}
+
+	/**
 	 * update entity
 	 * @param id
 	 * @param k
@@ -183,6 +196,22 @@ public abstract class ApiResources<Rest,Bean> {
     	}
 		Rest k = mapper.readValue(request.body(), klass);
     	return mapper.writeValueAsString(doCreate(k));
+    }
+
+	/**
+	 * delete node
+	 * @param request
+	 * @param response
+	 * @param klass
+	 * @return
+	 * @throws Exception
+	 */
+	public Object doDelete(Request request, String id, Response response, Class<Rest> klass) throws Exception {
+    	if(request.contentType() == null || !request.contentType().equals("application/json")) {
+    		response.status(403);
+    		return "";
+    	}
+    	return mapper.writeValueAsString(doDelete(id));
     }
 
 	/**
