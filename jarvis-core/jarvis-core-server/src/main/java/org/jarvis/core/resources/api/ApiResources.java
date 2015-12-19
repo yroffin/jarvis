@@ -18,19 +18,41 @@ package org.jarvis.core.resources.api;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
+import org.jarvis.core.exception.TechnicalNotFoundException;
+import org.jarvis.core.services.ApiService;
+import org.jarvis.core.services.neo4j.ApiNeo4Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import ma.glasnost.orika.MapperFactory;
+import ma.glasnost.orika.impl.DefaultMapperFactory;
 import spark.Request;
 import spark.Response;
 
-public abstract class ApiResources<Klass> {
+public abstract class ApiResources<T,K> {
 	@Autowired
 	Environment env;
 	
+	@Autowired
+	ApiNeo4Service apiNeo4Service;
+
 	protected ObjectMapper mapper = new ObjectMapper();
+	MapperFactory mapperFactory = null;
+
+	/**
+	 * internal api service
+	 */
+	ApiService<K> apiService = new ApiService<K>();
+
+	@PostConstruct
+	void init() {
+		mapperFactory = new DefaultMapperFactory.Builder().build();
+		apiService.setApiNeo4Service(apiNeo4Service);
+	}
 
 	/**
 	 * mount resource
@@ -41,29 +63,31 @@ public abstract class ApiResources<Klass> {
 	 * find all elements
 	 * @return
 	 */
-	public abstract List<Klass> doFindAll();
+	public abstract List<T> doFindAll();
 	
 	/**
 	 * find element by id
 	 * @param id
 	 * @return
+	 * @throws TechnicalNotFoundException 
 	 */
-	public abstract Klass doGetById(String id);
+	public abstract T doGetById(String id) throws TechnicalNotFoundException;
 	
 	/**
 	 * create new entity
 	 * @param k
 	 * @return
 	 */
-	public abstract Klass doCreate(Klass k);
+	public abstract T doCreate(T k);
 	
 	/**
 	 * update entity
 	 * @param id
 	 * @param k
 	 * @return
+	 * @throws TechnicalNotFoundException 
 	 */
-	public abstract Klass doUpdate(String id, Klass k);
+	public abstract T doUpdate(String id, T k) throws TechnicalNotFoundException;
 
 	/**
 	 * find all elements
@@ -100,12 +124,12 @@ public abstract class ApiResources<Klass> {
 	 * @return
 	 * @throws Exception
 	 */
-	public Object doCreate(Request request, Response response, Class<Klass> klass) throws Exception {
+	public Object doCreate(Request request, Response response, Class<T> klass) throws Exception {
     	if(request.contentType() == null || !request.contentType().equals("application/json")) {
     		response.status(403);
     		return "";
     	}
-		Klass k = mapper.readValue(request.body(), klass);
+		T k = mapper.readValue(request.body(), klass);
     	return mapper.writeValueAsString(doCreate(k));
     }
 
@@ -118,12 +142,12 @@ public abstract class ApiResources<Klass> {
 	 * @return
 	 * @throws Exception
 	 */
-	public Object doUpdate(Request request, String id, Response response, Class<Klass> klass) throws Exception {
+	public Object doUpdate(Request request, String id, Response response, Class<T> klass) throws Exception {
     	if(request.contentType() == null || !request.contentType().equals("application/json")) {
     		response.status(403);
     		return "";
     	}
-		Klass k = mapper.readValue(request.body(), klass);
+		T k = mapper.readValue(request.body(), klass);
     	return mapper.writeValueAsString(doUpdate(request.params(id), k));
     }
 }

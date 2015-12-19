@@ -1,0 +1,225 @@
+package org.jarvis.core.services.neo4j;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import javax.annotation.PostConstruct;
+
+import org.jarvis.core.exception.TechnicalException;
+import org.jarvis.core.exception.TechnicalNotFoundException;
+import org.jarvis.core.model.bean.GenericBean;
+import org.neo4j.graphdb.DynamicLabel;
+import org.neo4j.graphdb.Label;
+import org.neo4j.graphdb.Node;
+import org.neo4j.graphdb.Result;
+import org.neo4j.graphdb.Transaction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ReflectionUtils;
+import org.springframework.util.ReflectionUtils.FieldCallback;
+
+/**
+ *  Neo4j wrapper
+ */
+public class Neo4jService<T> {
+	protected Logger logger = LoggerFactory.getLogger(Neo4jService.class);
+
+	ApiNeo4Service apiNeo4Service;
+
+	public void setApiNeo4Service(ApiNeo4Service apiNeo4Service) {
+		this.apiNeo4Service = apiNeo4Service;
+	}
+
+	/**
+	 * constructor
+	 * @param source
+	 * @return Node
+	 */
+	private Node toNode(Node node, T source) {
+		ReflectionUtils.doWithFields(source.getClass(), new FieldCallback() {
+			@Override
+			public void doWith(final Field field) throws IllegalArgumentException, IllegalAccessException {
+				field.setAccessible(true);
+				Object value = field.get(source);
+				if (value != null) {
+					node.setProperty(field.getName(), value);
+				}
+			}
+		});
+		/**
+		 * fix id
+		 */
+		((GenericBean) source).id = node.getId()+"";
+		return node;
+	}
+
+	/**
+	 * constructor
+	 * @param source
+	 * @return Node
+	 */
+	private Node toNode(T source) {
+		Label label = DynamicLabel.label( source.getClass().getSimpleName() );
+		Node node = apiNeo4Service.createNode(label);
+		return toNode(node, source);
+	}
+
+	/**
+	 * create new resource
+	 * @param source
+	 * @return
+	 */
+	protected T create(T source) {
+		try (Transaction tx = apiNeo4Service.beginTx()) {
+			toNode(source);
+			tx.success();
+		}
+		return source;
+	}
+
+	/**
+	 * find all node by label
+	 * @param klass
+	 * @return
+	 */
+	public List<T> findAll(Class<T> klass) {
+		String classname = klass.getSimpleName();
+		ArrayList<T> resultset = new ArrayList<T>();
+		/**
+		 * cypher query
+		 */
+		try (Transaction ignored = apiNeo4Service.beginTx();
+				Result result = apiNeo4Service.execute("MATCH (node:"+classname+") RETURN node")) {
+			while (result.hasNext()) {
+				resultset.add(instance(klass, result.next()));
+			}
+		} catch (InstantiationException e) {
+			logger.error("Exception", e);
+			throw new TechnicalException(e);
+		} catch (IllegalAccessException e) {
+			logger.error("Exception", e);
+			throw new TechnicalException(e);
+		}
+		return resultset;
+	}
+
+	/**
+	 * get by id
+	 * @param klass
+	 * @param id
+	 * @return
+	 * @throws TechnicalNotFoundException
+	 */
+	public T getById(Class<T> klass, String id) throws TechnicalNotFoundException {
+		String classname = klass.getSimpleName();
+		/**
+		 * cypher query
+		 */
+		try (Transaction ignored = apiNeo4Service.beginTx();
+				Result result = apiNeo4Service.execute("MATCH (node:"+classname+") WHERE id(node) = "+id+" RETURN node")) {
+			if (result.hasNext()) {
+				/**
+				 * iterate on nodes
+				 */
+				return instance(klass, result.next());
+			} else {
+				throw new TechnicalNotFoundException();
+			}
+		} catch (InstantiationException e) {
+			logger.error("Exception", e);
+			throw new TechnicalException(e);
+		} catch (IllegalAccessException e) {
+			logger.error("Exception", e);
+			throw new TechnicalException(e);
+		}
+	}
+
+	/**
+	 * update entity
+	 * @param klass
+	 * @param instance
+	 * @param id
+	 * @return
+	 * @throws TechnicalNotFoundException
+	 */
+	public T update(Class<T> klass, T instance, String id) throws TechnicalNotFoundException {
+		String classname = klass.getSimpleName();
+		/**
+		 * cypher query
+		 */
+		try (Transaction tx = apiNeo4Service.beginTx();
+				Result result = apiNeo4Service.execute("MATCH (node:"+classname+") WHERE id(node) = "+id+" RETURN node")) {
+			if (result.hasNext()) {
+				/**
+				 * iterate on nodes
+				 */
+				update(klass, instance, result.next());
+				tx.success();
+				return instance;
+			} else {
+				throw new TechnicalNotFoundException();
+			}
+		} catch (InstantiationException e) {
+			logger.error("Exception", e);
+			throw new TechnicalException(e);
+		} catch (IllegalAccessException e) {
+			logger.error("Exception", e);
+			throw new TechnicalException(e);
+		}
+	}
+
+	/**
+	 * build instance with node
+	 * @param klass
+	 * @param row
+	 * @return
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 */
+	private T instance(Class<T> klass, Map<String, Object> row) throws InstantiationException, IllegalAccessException {
+		/**
+		 * create new instance
+		 */
+		T target = klass.newInstance();
+
+		for (Entry<String, Object> column : row.entrySet()) {
+			Node node = (Node) column.getValue();
+			Map<String, Object> maps = node.getAllProperties();
+			/**
+			 * iterate on fields to set values
+			 */
+			ReflectionUtils.doWithFields(klass, new FieldCallback() {
+				@Override
+				public void doWith(final Field field) throws IllegalArgumentException, IllegalAccessException {
+					field.setAccessible(true);
+					if(maps.containsKey(field.getName())) {
+						field.set(target, node.getProperty(field.getName()));
+					}
+				}
+			});
+			((GenericBean) target).id = node.getId()+"";
+		}
+		
+		return target;
+	}
+
+	/**
+	 * build instance with node
+	 * @param klass
+	 * @param row
+	 * @return
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 */
+	private T update(Class<T> klass, T source, Map<String, Object> row) throws InstantiationException, IllegalAccessException {
+		for (Entry<String, Object> column : row.entrySet()) {
+			Node node = (Node) column.getValue();
+			toNode(node, source);
+		}
+		return source;
+	}
+}

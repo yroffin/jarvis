@@ -16,15 +16,17 @@
 
 package org.jarvis.core.resources.api;
 
+
 import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.put;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.jarvis.core.exception.TechnicalNotFoundException;
+import org.jarvis.core.model.bean.LabelBean;
 import org.jarvis.core.model.rest.LabelRest;
-import org.jarvis.core.services.ApiLabelService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import spark.Request;
@@ -32,29 +34,34 @@ import spark.Response;
 import spark.Route;
 
 @Component
-public class ApiLabelResources extends ApiResources<LabelRest> {
-
-	@Autowired
-	ApiLabelService apiLabelService;
+public class ApiLabelResources extends ApiResources<LabelRest,LabelBean> {
 
 	@Override
 	public List<LabelRest> doFindAll() {
-    	return apiLabelService.findAll();
+		List<LabelRest> result = new ArrayList<LabelRest>();
+		for(LabelBean item : apiService.findAll()) {
+			result.add(mapperFactory.getMapperFacade().map(item, LabelRest.class));
+		}
+		return result;
 	}
 
 	@Override
-	public LabelRest doGetById(String id) {
-    	return apiLabelService.getById(id);
+	public LabelRest doGetById(String id) throws TechnicalNotFoundException {
+		return mapperFactory.getMapperFacade().map(apiService.getById(id), LabelRest.class);
 	}
 
 	@Override
-	public LabelRest doCreate(LabelRest labelRest) {
-		return apiLabelService.create(labelRest);
+	public LabelRest doCreate(LabelRest rest) {
+		return mapperFactory.getMapperFacade().map(
+				apiService.create(mapperFactory.getMapperFacade().map(rest, LabelBean.class)),
+				LabelRest.class);
 	}
 
 	@Override
-	public LabelRest doUpdate(String id, LabelRest labelRest) {
-    	return apiLabelService.update(id, labelRest);
+	public LabelRest doUpdate(String id, LabelRest rest) throws TechnicalNotFoundException {
+		return mapperFactory.getMapperFacade().map(
+				apiService.update(id, mapperFactory.getMapperFacade().map(rest, LabelBean.class)), 
+				LabelRest.class);
 	}
 
 	@Override

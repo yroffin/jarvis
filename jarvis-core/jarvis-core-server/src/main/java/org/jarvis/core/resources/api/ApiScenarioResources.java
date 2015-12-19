@@ -16,15 +16,17 @@
 
 package org.jarvis.core.resources.api;
 
+
 import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.put;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.jarvis.core.exception.TechnicalNotFoundException;
+import org.jarvis.core.model.bean.ScenarioBean;
 import org.jarvis.core.model.rest.ScenarioRest;
-import org.jarvis.core.services.ApiScenarioService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import spark.Request;
@@ -32,29 +34,34 @@ import spark.Response;
 import spark.Route;
 
 @Component
-public class ApiScenarioResources extends ApiResources<ScenarioRest> {
-
-	@Autowired
-	ApiScenarioService apiScenarioService;
+public class ApiScenarioResources extends ApiResources<ScenarioRest,ScenarioBean> {
 
 	@Override
 	public List<ScenarioRest> doFindAll() {
-    	return apiScenarioService.findAll();
+		List<ScenarioRest> result = new ArrayList<ScenarioRest>();
+		for(ScenarioBean item : apiService.findAll()) {
+			result.add(mapperFactory.getMapperFacade().map(item, ScenarioRest.class));
+		}
+		return result;
 	}
 
 	@Override
-	public ScenarioRest doGetById(String id) {
-    	return apiScenarioService.getById(id);
+	public ScenarioRest doGetById(String id) throws TechnicalNotFoundException {
+		return mapperFactory.getMapperFacade().map(apiService.getById(id), ScenarioRest.class);
 	}
 
 	@Override
-	public ScenarioRest doCreate(ScenarioRest ScenarioRest) {
-		return apiScenarioService.create(ScenarioRest);
+	public ScenarioRest doCreate(ScenarioRest rest) {
+		return mapperFactory.getMapperFacade().map(
+				apiService.create(mapperFactory.getMapperFacade().map(rest, ScenarioBean.class)),
+				ScenarioRest.class);
 	}
 
 	@Override
-	public ScenarioRest doUpdate(String id, ScenarioRest ScenarioRest) {
-    	return apiScenarioService.update(id, ScenarioRest);
+	public ScenarioRest doUpdate(String id, ScenarioRest rest) throws TechnicalNotFoundException {
+		return mapperFactory.getMapperFacade().map(
+				apiService.update(id, mapperFactory.getMapperFacade().map(rest, ScenarioBean.class)), 
+				ScenarioRest.class);
 	}
 
 	@Override

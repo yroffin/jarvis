@@ -20,11 +20,12 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.put;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.jarvis.core.exception.TechnicalNotFoundException;
+import org.jarvis.core.model.bean.ConnectorBean;
 import org.jarvis.core.model.rest.ConnectorRest;
-import org.jarvis.core.services.ApiConnectorService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import spark.Request;
@@ -32,29 +33,34 @@ import spark.Response;
 import spark.Route;
 
 @Component
-public class ApiConnectorResources extends ApiResources<ConnectorRest> {
-
-	@Autowired
-	ApiConnectorService apiConnectorService;
+public class ApiConnectorResources extends ApiResources<ConnectorRest,ConnectorBean> {
 
 	@Override
 	public List<ConnectorRest> doFindAll() {
-    	return apiConnectorService.findAll();
+		List<ConnectorRest> result = new ArrayList<ConnectorRest>();
+		for(ConnectorBean item : apiService.findAll()) {
+			result.add(mapperFactory.getMapperFacade().map(item, ConnectorRest.class));
+		}
+		return result;
 	}
 
 	@Override
-	public ConnectorRest doGetById(String id) {
-    	return apiConnectorService.getById(id);
+	public ConnectorRest doGetById(String id) throws TechnicalNotFoundException {
+		return mapperFactory.getMapperFacade().map(apiService.getById(id), ConnectorRest.class);
 	}
 
 	@Override
-	public ConnectorRest doCreate(ConnectorRest ConnectorRest) {
-		return apiConnectorService.create(ConnectorRest);
+	public ConnectorRest doCreate(ConnectorRest rest) {
+		return mapperFactory.getMapperFacade().map(
+				apiService.create(mapperFactory.getMapperFacade().map(rest, ConnectorBean.class)),
+				ConnectorRest.class);
 	}
 
 	@Override
-	public ConnectorRest doUpdate(String id, ConnectorRest ConnectorRest) {
-    	return apiConnectorService.update(id, ConnectorRest);
+	public ConnectorRest doUpdate(String id, ConnectorRest rest) throws TechnicalNotFoundException {
+		return mapperFactory.getMapperFacade().map(
+				apiService.update(id, mapperFactory.getMapperFacade().map(rest, ConnectorBean.class)), 
+				ConnectorRest.class);
 	}
 
 	@Override
