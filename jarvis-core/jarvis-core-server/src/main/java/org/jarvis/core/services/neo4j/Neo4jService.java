@@ -197,14 +197,19 @@ public class Neo4jService<T> {
 		/**
 		 * cypher query
 		 */
-		try (Transaction ignored = apiNeo4Service.beginTx();
+		try (Transaction delete = apiNeo4Service.beginTx();
 				Result result = apiNeo4Service.execute("MATCH (node:"+classname+") WHERE id(node) = "+id+" RETURN node")) {
 			if (result.hasNext()) {
 				/**
 				 * delete node
 				 */
-				apiNeo4Service.execute("MATCH (node:"+classname+") WHERE id(node) = "+id+" DETACH DELETE node");
-				return instance(klass, result.next());
+				T deleted = instance(klass, result.next());
+				Result deleteNode = apiNeo4Service.execute("MATCH (node:"+classname+") WHERE id(node) = "+id+" DETACH DELETE node");
+				if(deleteNode.hasNext()) {
+					throw new TechnicalNotFoundException();
+				}
+				delete.success();
+				return deleted;
 			} else {
 				throw new TechnicalNotFoundException();
 			}

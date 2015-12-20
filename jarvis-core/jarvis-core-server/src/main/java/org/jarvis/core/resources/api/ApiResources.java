@@ -22,7 +22,6 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import org.jarvis.core.exception.TechnicalNotFoundException;
-import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.services.ApiService;
 import org.jarvis.core.services.neo4j.ApiNeo4Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -211,7 +210,12 @@ public abstract class ApiResources<Rest,Bean> {
     		response.status(403);
     		return "";
     	}
-    	return mapper.writeValueAsString(doDelete(id));
+    	try {
+        	return mapper.writeValueAsString(doDelete(request.params(id)));
+    	} catch(TechnicalNotFoundException e) {
+    		response.status(404);
+    		return "";
+    	}
     }
 
 	/**

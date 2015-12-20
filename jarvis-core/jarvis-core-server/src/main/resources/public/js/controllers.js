@@ -254,8 +254,23 @@ angular.module('JarvisApp',['ngMaterial', 'ngMdIcons', 'ngRoute', 'restangular',
                 /**
                  * remove one job
                  */
-                jobResourceService.findAll(function(data) {
-                	$log.error(job.id);
+            	var idToDelete = job.id;
+                jobResourceService.delete(job.id, function(data) {
+                	toastService.info('job ' + data.name + '#' + data.id +' deleted');
+                	
+                    var search = -1;
+                    var index = 0;
+                	_.forEach(jobs, function(element) {
+                        if(element.id === idToDelete) {
+                            search = index;
+                        }
+                        index++;
+                    });
+                    if(search >= 0) {
+                        delete jobs[search];
+                        jobs.splice(search, 1);
+                    }
+
                 }, toastService.failure);
             };
 
