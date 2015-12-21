@@ -22,9 +22,10 @@
 
 angular.module('JarvisApp', [
   'ngResource',
-  'ngRoute',
   'ngMaterial',
   'ngAnimate',
   'ngMdIcons',
-  'restangular'
+  'restangular',
+  'ui.router',
+  'ui.router.router'
 ]);

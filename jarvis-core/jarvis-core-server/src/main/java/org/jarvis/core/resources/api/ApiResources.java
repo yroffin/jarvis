@@ -167,7 +167,7 @@ public abstract class ApiResources<Rest,Bean> extends ApiMapper {
 	 * @throws Exception
 	 */
 	public String doGetById(Request request, String id, Response response) throws Exception {
-    	if(request.contentType() == null || !request.contentType().equals("application/json")) {
+    	if(request.body() != null && request.body().length() > 0) {
     		response.status(403);
     		return "";
     	}

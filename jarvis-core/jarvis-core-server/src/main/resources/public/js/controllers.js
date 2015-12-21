@@ -18,35 +18,67 @@
 
 /* Controllers */
 
-angular.module('JarvisApp',['ngMaterial', 'ngMdIcons', 'ngRoute', 'restangular', 'JarvisApp.services'])
+angular.module('JarvisApp',[
+                            'ngMaterial',
+                            'ngMdIcons',
+                            'restangular',
+                            'ui.router',
+                            'ui.router.router',
+                            'JarvisApp.services'
+                            ])
     .config(['RestangularProvider',
         function(RestangularProvider) {
     		RestangularProvider.setBaseUrl('/api');
     		RestangularProvider.setDefaultHeaders({ 'content-type': 'application/json' });
+    		/**
+    		 * request interceptor
+    		 */
+    	    RestangularProvider.setFullRequestInterceptor(function(element, operation, route, url, headers, params, httpConfig) {
+    	      return {
+    	        element: element,
+    	        params: params,
+    	        headers: headers,
+    	        httpConfig: httpConfig
+    	      };
+    	    });
         }])
-    .config(['$routeProvider', '$locationProvider',
-        function($routeProvider, $locationProvider) {
-            $routeProvider.
-                when('/jobs', {
-                    controller: 'JarvisAppJobCtrl',
-                    templateUrl: '/ui/js/partials/jobs.html'
-                }).
-                when('/configuration', {
-                    controller: 'JarvisAppConfCtrl',
-                    templateUrl: '/ui/js/partials/configuration.html'
-                }).
-                when('/scenario', {
-                    controller: 'JarvisAppScenarioCtrl',
-                    templateUrl: '/ui/js/partials/scenario.html'
-                }).
-                when('/connectors', {
-                    controller: 'JarvisAppConnectorsCtrl',
-                    templateUrl: '/ui/js/partials/connectors.html'
-                }).
-                otherwise({
-                    redirectTo: '/ui/js/partials/jobs.html'
-                });
-        }])
+    .config(function($urlRouterProvider) {
+        /**
+         * default state
+         */
+        $urlRouterProvider.otherwise('/jobs');
+    })
+    .config(function($stateProvider) {
+        /**
+         * now set up the state
+         */
+        $stateProvider
+        .state('jobs', {
+            url: '/jobs',
+            templateUrl: '/ui/js/partials/jobs.html'
+        })
+        .state('jobs-id', {
+            url: '/jobs/:id',
+            templateUrl: '/ui/js/partials/jobs/job.html',
+            parent: 'jobs'
+        })
+        .state('configuration', {
+            url: '/configuration',
+            controller: 'JarvisAppConfCtrl',
+            templateUrl: '/ui/js/partials/configuration.html'
+        })
+        .state('scenario', {
+            url: '/scenario',
+            controller: 'JarvisAppScenarioCtrl',
+            templateUrl: '/ui/js/partials/scenario.html'
+        })
+        .state('connectors', {
+            url: '/connectors',
+            controller: 'JarvisAppConnectorsCtrl',
+            templateUrl: '/ui/js/partials/connectors.html'
+        })
+        ;
+    })
     .config(function($mdThemingProvider){
         // Configure a dark theme with primary foreground yellow
         $mdThemingProvider.theme('default')
@@ -57,7 +89,7 @@ angular.module('JarvisApp',['ngMaterial', 'ngMdIcons', 'ngRoute', 'restangular',
      * main controller
      */
     .controller('JarvisAppCtrl',
-    ['$scope', '$mdSidenav', '$location', function($scope, $mdSidenav, $location){
+    ['$scope', '$mdSidenav', '$location', '$state', function($scope, $mdSidenav, $location, $state){
         /**
          * initialize jarvis configuration
          */
@@ -216,7 +248,7 @@ angular.module('JarvisApp',['ngMaterial', 'ngMdIcons', 'ngRoute', 'restangular',
     /**
      * job view controller
      */
-    .controller('JarvisAppJobCtrl',
+    .controller('jarvisJobsCtrl',
     ['$scope', 'jarvisServices', 'jobResourceService', 'jarvisJobsResource', 'toastService', '$log', '$mdToast',
         function($scope, jarvisServices, jobResourceService, jarvisJobsResource, toastService, $log, $mdToast) {
             $scope.iconPath = 'https://cdn4.iconfinder.com/data/icons/SOPHISTIQUE/web_design/png/128/our_process_2.png';
@@ -236,9 +268,7 @@ angular.module('JarvisApp',['ngMaterial', 'ngMdIcons', 'ngRoute', 'restangular',
                     	'id':element.id,
                     	'name':element.name,
                     	'cronTime':element.cronTime,
-                    	'params':element.params,
                     	'plugin':element.plugin,
-                    	'text':element.text,
                     });
                 });
             	toastService.info(arr.length + ' job(s)');
@@ -281,13 +311,8 @@ angular.module('JarvisApp',['ngMaterial', 'ngMdIcons', 'ngRoute', 'restangular',
                 var update = {
                     id : job.id,
                     name : job.name,
-                    plugin : job.plugin,
-                    cronTime : job.cronTime,
-                    started : job.started
+                    plugin : job.plugin
                 };
-                if(job.text) {
-                    update.params = JSON.parse(job.text);
-                }
                 /**
                  * create or update this job
                  */
@@ -311,6 +336,20 @@ angular.module('JarvisApp',['ngMaterial', 'ngMdIcons', 'ngRoute', 'restangular',
                 jobResourceService.post(update, function(data) {
                         toastService.info('job ' + data.name + '#' + data.id +' created');
                         jobs.push(data);
+                    }, toastService.failure);
+            }
+
+            /**
+             * update this job
+             * @param job
+             */
+            $scope.putParam = function(param) {
+                /**
+                 * add params
+                 */
+                jobResourceService.param.put(param, function(data) {
+                        job.started = data.started;
+                        toastService.info('parameter ' + data.name + '#' + data.id +' added');
                     }, toastService.failure);
             }
 
@@ -363,11 +402,21 @@ angular.module('JarvisApp',['ngMaterial', 'ngMdIcons', 'ngRoute', 'restangular',
                     });
             }
         }
-    ]
-)
-/**
- * neo4j view controller
- */
+    ])
+    /**
+     * job view controller
+     */
+    .controller('jarvisJobCtrl',
+    ['$scope', '$stateParams', 'jobResourceService', 'jarvisJobsResource', 'toastService',
+        function($scope, $stateParams, jobResourceService, jarvisJobsResource, toastService) {
+        jobResourceService.get($stateParams.id, function(data) {
+        	$scope.job = data;
+        	toastService.info('Job ' + data.name + '#' + $stateParams.id);
+        }, toastService.failure);
+    }])
+	/**
+	 * neo4j view controller
+	 */
     .controller('JarvisAppConfCtrl',
     ['$scope', 'jarvisServices', function($scope, jarvisServices) {
         /**

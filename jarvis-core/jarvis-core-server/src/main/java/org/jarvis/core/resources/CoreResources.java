@@ -49,6 +49,9 @@ public class CoreResources {
 		        	if(path.endsWith(".html")) {
 		        		response.type("text/html");
 		        	}
+		        	if(path.endsWith(".css")) {
+		        		response.type("text/css");
+		        	}
 		        	if(path.endsWith(".js")) {
 		        		response.type("application/javascript");
 		        	}

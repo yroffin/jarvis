@@ -1,4 +1,4 @@
-<div layout="column" flex layout-fill>
+<div ng-controller="jarvisJobsCtrl" layout="column" flex layout-fill ng-cloak>
     <md-content>
         <section>
             <md-subheader>{{jarvis.configuration.jobs.length}} Jobs</md-subheader>
@@ -11,6 +11,7 @@
                         <ng-md-icon ng-if="!job.started" ng-click="status(job, true)" icon="thumb_down"></ng-md-icon>
                         <ng-md-icon ng-if="job.started" ng-click="status(job, false)" icon="thumb_up"></ng-md-icon>
                         <ng-md-icon ng-click="execute(job)" icon="input"></ng-md-icon>
+				        <md-button ng-click="location('left', '/jobs/' + job.id);">Détail</md-button>
                     </div>
                     <div layout layout-sm="column" layout-fill>
                         <md-input-container>
@@ -27,11 +28,6 @@
                             <md-tooltip>Plugin à lancer (dans  le répértoire plugin)</md-tooltip>
                             <label>Plugin</label>
                             <input ng-model="job.plugin" flex />
-                        </md-input-container>
-                        <md-input-container>
-                            <md-tooltip>Paramètres du plugin (un objet JSON)</md-tooltip>
-                            <label>Params</label>
-                            <input ng-model="job.text" flex />
                         </md-input-container>
                     </div>
                 </md-list-item>

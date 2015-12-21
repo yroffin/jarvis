@@ -173,7 +173,7 @@ myAppServices.factory('toastService', function($log, $mdToast) {
             $mdToast.show(
                     $mdToast.simple()
                         .content(failure)
-                        .position(this.getToastPosition())
+                        .position(toastServiceInstance.getToastPosition())
                         .hideDelay(3000).theme("failure-toast")
                 );
         },
@@ -195,35 +195,56 @@ myAppServices.factory('toastService', function($log, $mdToast) {
  */
 myAppServices.factory('jobResourceService', function($q, $window, $rootScope, Restangular) {
   return {
-        findAll: function(callback, failure) {
-        	// Restangular returns promises
-        	Restangular.all('jobs').getList().then(function(jobs) {
-        		callback(jobs);
-        	},function(errors){
-        		failure(errors);
-        	});
-        },
-        delete: function(id, callback, failure) {
-        	Restangular.one('jobs', id).remove().then(function(jobs) {
-        		callback(jobs);
-        	},function(errors){
-        		failure(errors);
-        	});
-        },
-        put: function(element, callback, failure) {
-        	Restangular.one('jobs', element.id).customPUT(element).then(function(jobs) {
-        		callback(jobs);
-        	},function(errors){
-        		failure(errors);
-        	});
-        },
-        post: function(element, callback, failure) {
-        	Restangular.all('jobs').post(element).then(function(jobs) {
-        		callback(jobs);
-        	},function(errors){
-        		failure(errors);
-        	});
-        }
+		/**
+		 * base services : findAll, delete, put and post
+		 */
+		findAll: function(callback, failure) {
+			Restangular.all('jobs').getList().then(function(jobs) {
+				callback(jobs);
+			},function(errors){
+				failure(errors);
+			});
+		},
+		get: function(id, callback, failure) {
+			Restangular.one('jobs', id).get().then(function(job) {
+				callback(job);
+			},function(errors){
+				failure(errors);
+			});
+		},
+		delete: function(id, callback, failure) {
+			Restangular.one('jobs', id).remove().then(function(jobs) {
+				callback(jobs);
+			},function(errors){
+				failure(errors);
+			});
+		},
+		put: function(element, callback, failure) {
+			Restangular.one('jobs', element.id).customPUT(element).then(function(jobs) {
+				callback(jobs);
+			},function(errors){
+				failure(errors);
+			});
+		},
+		post: function(element, callback, failure) {
+			Restangular.all('jobs').post(element).then(function(jobs) {
+				callback(jobs);
+			},function(errors){
+				failure(errors);
+			});
+		},
+		params : {
+	        /**
+	         * param services
+	         */
+	        put: function(param, callback, failure) {
+	        	Restangular.one('jobs', element.id).all('params').customPUT(element).then(function(jobs) {
+	        		callback(jobs);
+	        	},function(errors){
+	        		failure(errors);
+	        	});
+	        }
+		}
   }
 });
 
