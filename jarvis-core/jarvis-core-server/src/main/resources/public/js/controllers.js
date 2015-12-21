@@ -418,10 +418,24 @@ angular.module('JarvisApp',[
     	$scope.params = [];
     	$scope.allParams = [];
 
+        $scope.remove = function(chip) {
+        	jobResourceService.params.delete($scope.job.id, chip.id, chip.instance, function(element) {
+            	toastService.info('Parameter ' + chip.value + '#' + chip.id + ' :: ' + element.instance + ' removed');
+            }, toastService.failure);
+        }
+
+        $scope.append = function(chip) {
+        	jobResourceService.params.put($scope.job.id, chip.id, function(element) {
+            	toastService.info('Parameter ' + chip.value + '#' + chip.id + ' :: ' + element.instance + ' added');
+            	chip.instance = element.instance;
+            }, toastService.failure);
+        }
+
         $scope.querySearch = function(query) {
             function createFilterFor(query) {
                 var lowercaseQuery = angular.lowercase(query);
                 return function filterFn(param) {
+                	console.error(param);
                   return (param.value.indexOf(lowercaseQuery) === 0) ||
                       (param.type.indexOf(lowercaseQuery) === 0);
                 };

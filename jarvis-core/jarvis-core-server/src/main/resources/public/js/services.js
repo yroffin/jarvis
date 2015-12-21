@@ -286,8 +286,9 @@ myAppServices.factory('jobResourceService', function(Restangular, paramResourceS
 						callback(params);
 					});
 					var params = [];
-	            	_.forEach(elements, function(element, index) {
+	            	_.forEach(elements, function(element) {
 	            		paramResourceService.get(element.id, function(param) {
+	            			param.instance = element.instance;
 	            			params.push(param);
 	            			done(params);
 	            		},function(errors){
@@ -299,15 +300,25 @@ myAppServices.factory('jobResourceService', function(Restangular, paramResourceS
 				});
 			},
 	        /**
-	         * param services
+	         * put link
 	         */
-	        put: function(param, callback, failure) {
-	        	Restangular.one('jobs', element.id).all('params').customPUT(element).then(function(jobs) {
-	        		callback(jobs);
+	        put: function(job, param, callback, failure) {
+	        	Restangular.one('jobs', job).one('params',param).customPUT({}).then(function(href) {
+	        		callback(href);
 	        	},function(errors){
 	        		failure(errors);
 	        	});
-	        }
+	        },
+	        /**
+	         * delete link
+	         */
+			delete: function(id, param, instance, callback, failure) {
+				Restangular.one('jobs', id).one('params', param).remove({'instance':instance}).then(function(href) {
+					callback(href);
+				},function(errors){
+					failure(errors);
+				});
+			}
 		}
   }
 });

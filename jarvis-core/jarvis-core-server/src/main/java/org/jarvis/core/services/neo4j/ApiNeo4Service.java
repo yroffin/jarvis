@@ -134,7 +134,7 @@ public class ApiNeo4Service  {
 	 * @return Result
 	 */
 	public Result cypherAllLink(String leftLabel, String leftId, String rightLabel, String relType, String label) {
-		Result result = execute("MATCH (left:"+leftLabel+")-[r:"+relType+"]->("+label+":"+rightLabel+") WHERE id(left) = "+leftId+" RETURN "+label);
+		Result result = execute("MATCH (left:"+leftLabel+")-[r:"+relType+"]->("+label+":"+rightLabel+") WHERE id(left) = "+leftId+" RETURN r,"+label);
 		return result;
 	}
 
@@ -149,6 +149,21 @@ public class ApiNeo4Service  {
 	 */
 	public Result cypherAddLink(String leftLabel, String leftId, String rightLabel, String rightId, String relType) {
 		Result result = execute("MATCH (left:"+leftLabel+"),(right:"+rightLabel+") WHERE id(left) = "+leftId+" AND id(right) = "+rightId+" CREATE (left)-[r:"+relType+"]->(right) RETURN id(r)");
+		return result;
+	}
+
+	/**
+	 * delete relationship
+	 * @param leftLabel
+	 * @param leftId
+	 * @param rightLabel
+	 * @param rightId
+	 * @param relType
+	 * @param instance
+	 * @return Result
+	 */
+	public Result cypherDeleteLink(String leftLabel, String leftId, String rightLabel, String rightId, String relType, String instance) {
+		Result result = execute("MATCH (left:"+leftLabel+")-[r:"+relType+"]->(right:"+rightLabel+") WHERE id(left) = "+leftId+" AND id(right) = "+rightId+" AND id(r) = "+instance+" DELETE r RETURN r");
 		return result;
 	}
 }

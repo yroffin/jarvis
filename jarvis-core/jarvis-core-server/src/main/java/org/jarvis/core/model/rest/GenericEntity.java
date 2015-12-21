@@ -18,9 +18,23 @@ package org.jarvis.core.model.rest;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * simple generic entity
+ */
 public class GenericEntity {
+	/**
+	 * resource id
+	 */
 	@JsonProperty("id")
 	public String id;
+	/**
+	 * href of this resource
+	 */
 	@JsonProperty("href")
 	public String href;
+	/**
+	 * instance of this resource (relationship)
+	 */
+	@JsonProperty("instance")
+	public String instance;
 }

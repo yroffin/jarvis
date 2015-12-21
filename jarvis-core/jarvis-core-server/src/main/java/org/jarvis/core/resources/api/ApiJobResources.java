@@ -23,6 +23,7 @@ import static spark.Spark.delete;
 
 import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.JobBean;
+import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.model.rest.JobRest;
 import org.jarvis.core.model.rest.job.ParamRest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,7 +110,26 @@ public class ApiJobResources extends ApiResources<JobRest,JobBean> {
 			    	JobRest job = doGetById(request.params(":id"));
 			    	try {
 				    	ParamRest param = apiParamResources.doGetById(request.params(":param"));
-				    	apiHrefResources.add(job, param);
+				    	GenericEntity instance = apiHrefResources.add(job, param);
+				    	return mapper.writeValueAsString(instance);
+			    	} catch(TechnicalNotFoundException e) {
+			    		response.status(404);
+			    		return "";
+			    	}
+		    	} catch(TechnicalNotFoundException e) {
+		    		response.status(404);
+		    		return "";
+		    	}
+		    }
+		});
+		delete("/api/jobs/:id/params/:param", new Route() {
+		    @Override
+			public Object handle(Request request, Response response) throws Exception {
+		    	try {
+			    	JobRest job = doGetById(request.params(":id"));
+			    	try {
+				    	ParamRest param = apiParamResources.doGetById(request.params(":param"));
+				    	apiHrefResources.remove(job, param, request.queryParams("instance"));
 			    	} catch(TechnicalNotFoundException e) {
 			    		response.status(404);
 			    		return "";

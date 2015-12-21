@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.JobBean;
 import org.jarvis.core.model.bean.job.ParamBean;
 import org.jarvis.core.model.rest.GenericEntity;
@@ -27,6 +28,7 @@ import org.jarvis.core.model.rest.JobRest;
 import org.jarvis.core.model.rest.job.ParamRest;
 import org.jarvis.core.services.neo4j.ApiNeo4Service;
 import org.neo4j.graphdb.Node;
+import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.Result;
 import org.neo4j.graphdb.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,12 +46,22 @@ public class ApiHrefResources extends ApiMapper {
 	/**
 	 * @param job
 	 * @param param
+	 * @return String
+	 * @throws TechnicalNotFoundException 
 	 */
-	public void add(JobRest job, ParamRest param) {
+	public GenericEntity add(JobRest job, ParamRest param) throws TechnicalNotFoundException {
 		try (Transaction create = apiNeo4Service.beginTx()) {
-			apiNeo4Service.cypherAddLink(JobBean.class.getSimpleName(), job.id, ParamBean.class.getSimpleName(), param.id, "HREF");
+			Result result = apiNeo4Service.cypherAddLink(JobBean.class.getSimpleName(), job.id, ParamBean.class.getSimpleName(), param.id, "HREF");
 			create.success();
+			if(result.hasNext()) {
+				GenericEntity genericEntity = new GenericEntity();
+				genericEntity.id = param.id;
+				genericEntity.instance = result.next().get("id(r)")+"";
+				genericEntity.href = "/api/params/" + genericEntity.id;
+				return genericEntity;
+			}
 		}
+		throw new TechnicalNotFoundException();
 	}
 
 	/**
@@ -64,9 +76,33 @@ public class ApiHrefResources extends ApiMapper {
 			GenericEntity genericEntity = new GenericEntity();
 			Map<String, Object> fields = result.next();
 			genericEntity.id = ((Node) fields.get("node")).getId()+"";
+			genericEntity.instance = ((Relationship) fields.get("r")).getId()+"";
 			genericEntity.href = "/api/params/" + genericEntity.id;
 			resultset.add(genericEntity);
 		}
 		return resultset;
+	}
+
+	/**
+	 * remove relationship
+	 * @param job
+	 * @param param
+	 * @param instance
+	 * @return GenericEntity
+	 * @throws TechnicalNotFoundException 
+	 */
+	public GenericEntity remove(JobRest job, ParamRest param, String instance) throws TechnicalNotFoundException {
+		try (Transaction create = apiNeo4Service.beginTx()) {
+			Result result = apiNeo4Service.cypherDeleteLink(JobBean.class.getSimpleName(), job.id, ParamBean.class.getSimpleName(), param.id, "HREF", instance);
+			create.success();
+			if(result.hasNext()) {
+				GenericEntity genericEntity = new GenericEntity();
+				genericEntity.id = param.id;
+				genericEntity.instance = instance;
+				genericEntity.href = "/api/params/" + genericEntity.id;
+				return genericEntity;
+			}
+		}
+		throw new TechnicalNotFoundException();
 	}
 }

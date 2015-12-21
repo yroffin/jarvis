@@ -167,10 +167,6 @@ public abstract class ApiResources<Rest,Bean> extends ApiMapper {
 	 * @throws Exception
 	 */
 	public String doGetById(Request request, String id, Response response) throws Exception {
-    	if(request.body() != null && request.body().length() > 0) {
-    		response.status(403);
-    		return "";
-    	}
     	try {
     		return mapper.writeValueAsString(doGetById(request.params(id)));
     	} catch(TechnicalNotFoundException e) {
