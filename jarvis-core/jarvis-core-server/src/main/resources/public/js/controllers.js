@@ -24,7 +24,8 @@ angular.module('JarvisApp',[
                             'restangular',
                             'ui.router',
                             'ui.router.router',
-                            'JarvisApp.services'
+                            'JarvisApp.services',
+                            'JarvisApp.directives'
                             ])
     .config(['RestangularProvider',
         function(RestangularProvider) {

@@ -25,3 +25,37 @@ angular.module('JarvisApp.directives', []).
         elm.text(version);
       };
     }]);
+
+angular.module('JarvisApp.directives', [])
+/**
+ * job-directive
+ */
+.controller('jobDirectiveCtrl',
+['$scope', '$log', function($scope, $log){
+	$log.info('job-directive-ctrl');
+}])
+.directive('jobDirective', ['$log', '$stateParams', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/partials/directives/job-directive.html',
+    link: function(scope, element, attrs) {
+    	$log.info('job-directive', scope.job);
+    }
+  }
+}])
+/**
+ * job-detail-directive
+ */
+.controller('jobDetailDirectiveCtrl',
+['$scope', '$log', function($scope, $log){
+	$log.info('job-directive-detail-ctrl');
+}])
+.directive('jobDetailDirective', ['$log', '$stateParams', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/partials/directives/job-detail-directive.html',
+    link: function(scope, element, attrs) {
+    	$log.info('job-detail-directive', scope.job);
+    }
+  }
+}])
