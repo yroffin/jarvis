@@ -193,7 +193,53 @@ myAppServices.factory('toastService', function($log, $mdToast) {
 /**
  * jobResourceService
  */
-myAppServices.factory('jobResourceService', function($q, $window, $rootScope, Restangular) {
+myAppServices.factory('paramResourceService', function(Restangular) {
+  return {
+		/**
+		 * base services : findAll, delete, put and post
+		 */
+		findAll: function(callback, failure) {
+			Restangular.all('params').getList().then(function(jobs) {
+				callback(jobs);
+			},function(errors){
+				failure(errors);
+			});
+		},
+		get: function(id, callback, failure) {
+			Restangular.one('params', id).get().then(function(job) {
+				callback(job);
+			},function(errors){
+				failure(errors);
+			});
+		},
+		delete: function(id, callback, failure) {
+			Restangular.one('params', id).remove().then(function(jobs) {
+				callback(jobs);
+			},function(errors){
+				failure(errors);
+			});
+		},
+		put: function(element, callback, failure) {
+			Restangular.one('params', element.id).customPUT(element).then(function(jobs) {
+				callback(jobs);
+			},function(errors){
+				failure(errors);
+			});
+		},
+		post: function(element, callback, failure) {
+			Restangular.all('params').post(element).then(function(jobs) {
+				callback(jobs);
+			},function(errors){
+				failure(errors);
+			});
+		}
+  	}
+});
+
+/**
+ * jobResourceService
+ */
+myAppServices.factory('jobResourceService', function(Restangular, paramResourceService) {
   return {
 		/**
 		 * base services : findAll, delete, put and post
@@ -234,6 +280,24 @@ myAppServices.factory('jobResourceService', function($q, $window, $rootScope, Re
 			});
 		},
 		params : {
+			findAll: function(id, callback, failure) {
+				Restangular.one('jobs', id).all('params').getList().then(function(elements) {
+					var done = _.after(elements.length, function(params) {
+						callback(params);
+					});
+					var params = [];
+	            	_.forEach(elements, function(element, index) {
+	            		paramResourceService.get(element.id, function(param) {
+	            			params.push(param);
+	            			done(params);
+	            		},function(errors){
+	        				failure(errors);
+	        			})
+	            	});
+				},function(errors){
+					failure(errors);
+				});
+			},
 	        /**
 	         * param services
 	         */

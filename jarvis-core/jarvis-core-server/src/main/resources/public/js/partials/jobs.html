@@ -1,4 +1,4 @@
-<div ng-controller="jarvisJobsCtrl" layout="column" flex layout-fill ng-cloak>
+<div layout="column" flex layout-fill ng-cloak>
     <md-content>
         <section>
             <md-subheader>{{jarvis.configuration.jobs.length}} Jobs</md-subheader>
@@ -11,7 +11,7 @@
                         <ng-md-icon ng-if="!job.started" ng-click="status(job, true)" icon="thumb_down"></ng-md-icon>
                         <ng-md-icon ng-if="job.started" ng-click="status(job, false)" icon="thumb_up"></ng-md-icon>
                         <ng-md-icon ng-click="execute(job)" icon="input"></ng-md-icon>
-				        <md-button ng-click="location('left', '/jobs/' + job.id);">Détail</md-button>
+				        <md-button ng-click="location('left', '/jobs/' + job.id);">Détail for {{job.id}}</md-button>
                     </div>
                     <div layout layout-sm="column" layout-fill>
                         <md-input-container>

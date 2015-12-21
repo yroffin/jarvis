@@ -41,7 +41,12 @@ angular.module('JarvisApp',[
     	        httpConfig: httpConfig
     	      };
     	    });
-        }])
+    	    RestangularProvider.setResponseExtractor(function(response) {
+    	    	  var newResponse = response;
+    	    	  newResponse.originalElement = response;
+    	    	  return newResponse
+    	    });
+    }])
     .config(function($urlRouterProvider) {
         /**
          * default state
@@ -55,12 +60,13 @@ angular.module('JarvisApp',[
         $stateProvider
         .state('jobs', {
             url: '/jobs',
+            controller: 'jarvisJobsCtrl',
             templateUrl: '/ui/js/partials/jobs.html'
         })
         .state('jobs-id', {
             url: '/jobs/:id',
-            templateUrl: '/ui/js/partials/jobs/job.html',
-            parent: 'jobs'
+            controller: 'jarvisJobCtrl',
+            templateUrl: '/ui/js/partials/jobs/job.html'
         })
         .state('configuration', {
             url: '/configuration',
@@ -407,11 +413,38 @@ angular.module('JarvisApp',[
      * job view controller
      */
     .controller('jarvisJobCtrl',
-    ['$scope', '$stateParams', 'jobResourceService', 'jarvisJobsResource', 'toastService',
-        function($scope, $stateParams, jobResourceService, jarvisJobsResource, toastService) {
-        jobResourceService.get($stateParams.id, function(data) {
+    ['$scope', '$stateParams', 'jobResourceService', 'paramResourceService', 'toastService',
+        function($scope, $stateParams, jobResourceService, paramResourceService, toastService) {
+    	$scope.params = [];
+    	$scope.allParams = [];
+
+        $scope.querySearch = function(query) {
+            function createFilterFor(query) {
+                var lowercaseQuery = angular.lowercase(query);
+                return function filterFn(param) {
+                  return (param.value.indexOf(lowercaseQuery) === 0) ||
+                      (param.type.indexOf(lowercaseQuery) === 0);
+                };
+              }
+
+            var results = query ? $scope.allParams.filter(createFilterFor(query)) : [];
+            return results;
+          }
+
+    	jobResourceService.get($stateParams.id, function(data) {
         	$scope.job = data;
         	toastService.info('Job ' + data.name + '#' + $stateParams.id);
+            jobResourceService.params.findAll($stateParams.id, function(params) {
+            	$scope.params = params;
+            	toastService.info(params.length + ' parameter(s)');
+            	/**
+            	 * load all params
+            	 */
+                paramResourceService.findAll(function(params) {
+                	$scope.allParams = params;
+                	toastService.info(params.length + ' parameter(s) loaded');
+                }, toastService.failure);
+            }, toastService.failure);
         }, toastService.failure);
     }])
 	/**

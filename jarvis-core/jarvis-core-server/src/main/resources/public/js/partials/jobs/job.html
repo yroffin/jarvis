@@ -1,4 +1,4 @@
-<div ng-controller="jarvisJobCtrl"  ng-cloak>
+<div ng-cloak>
   <md-content class="md-padding" layout="row" layout-wrap layout-align="center start" layout-xs="column">
     <div flex="100" flex-sm="100" flex-xs="100" layout="column">
       <md-card>
@@ -22,10 +22,26 @@
             <input ng-model="job.cronTime" flex />
         </md-input-container>
         <md-input-container>
-            <md-tooltip>Plugin � lancer (dans  le r�p�rtoire plugin)</md-tooltip>
+            <md-tooltip>Plugin � lancer (dans  le répertoire plugin)</md-tooltip>
             <label>Plugin</label>
             <input ng-model="job.plugin" flex />
         </md-input-container>
+        <md-chips ng-model="params" placeholder="Parameter(s)">
+			<md-autocomplete
+			    md-selected-item="selectedItem"
+			    md-search-text="searchText"
+			    md-items="item in querySearch(searchText)"
+			    md-item-text="item.value"
+			    placeholder="Search for a parameter">
+			  <span md-highlight-text="searchText">{{item.value}} :: {{item.type}}</span>
+			</md-autocomplete>
+			<md-chip-template>
+				<span>
+				<strong>{{$chip.value}}</strong>
+				<em>({{$chip.type}})</em>
+				</span>
+			</md-chip-template>
+        </md-chips>
         <md-card-actions layout="row" layout-align="end center">
 			<md-button ng-click="save(job)">
 				<ng-md-icon icon="save"></ng-md-icon>
