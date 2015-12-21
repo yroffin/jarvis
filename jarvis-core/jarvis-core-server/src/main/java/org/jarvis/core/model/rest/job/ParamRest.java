@@ -14,23 +14,18 @@
  *   limitations under the License.
  */
 
-package org.jarvis.core.model.rest;
+package org.jarvis.core.model.rest.job;
 
-import java.util.List;
-
-import org.jarvis.core.model.rest.job.ParamRest;
+import org.jarvis.core.model.rest.GenericEntity;
+import org.jarvis.core.type.ParamType;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class JobRest extends GenericEntity {
-	@JsonProperty("name")
-	public String name;
-	@JsonProperty("cronTime")
-	public String cronTime;
-	@JsonProperty("plugin")
-	public String plugin;
-	@JsonProperty("params")
-	public List<ParamRest> params;
+public class ParamRest extends GenericEntity {
+	@JsonProperty("value")
+	public String value;
+	@JsonProperty("type")
+	public ParamType type = ParamType.STRING;
 }

@@ -21,4 +21,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class GenericEntity {
 	@JsonProperty("id")
 	public String id;
+	@JsonProperty("href")
+	public String href;
 }

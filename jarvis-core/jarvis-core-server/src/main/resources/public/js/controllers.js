@@ -254,14 +254,13 @@ angular.module('JarvisApp',['ngMaterial', 'ngMdIcons', 'ngRoute', 'restangular',
                 /**
                  * remove one job
                  */
-            	var idToDelete = job.id;
                 jobResourceService.delete(job.id, function(data) {
                 	toastService.info('job ' + data.name + '#' + data.id +' deleted');
                 	
                     var search = -1;
                     var index = 0;
                 	_.forEach(jobs, function(element) {
-                        if(element.id === idToDelete) {
+                        if(element.id === job.id) {
                             search = index;
                         }
                         index++;
@@ -292,7 +291,7 @@ angular.module('JarvisApp',['ngMaterial', 'ngMdIcons', 'ngRoute', 'restangular',
                 /**
                  * create or update this job
                  */
-                jarvisJobsResource.put(update, update,
+                jobResourceService.put(update, update,
                     function(data) {
                         job.started = data.started;
                         $mdToast.show(

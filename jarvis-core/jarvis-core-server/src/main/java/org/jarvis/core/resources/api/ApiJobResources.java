@@ -21,8 +21,11 @@ import static spark.Spark.post;
 import static spark.Spark.put;
 import static spark.Spark.delete;
 
+import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.JobBean;
 import org.jarvis.core.model.rest.JobRest;
+import org.jarvis.core.model.rest.job.ParamRest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import spark.Request;
@@ -31,6 +34,12 @@ import spark.Route;
 
 @Component
 public class ApiJobResources extends ApiResources<JobRest,JobBean> {
+
+	@Autowired
+	ApiParamResources apiParamResources;
+
+	@Autowired
+	ApiHrefResources apiHrefResources;
 
 	/**
 	 * constructor
@@ -73,6 +82,40 @@ public class ApiJobResources extends ApiResources<JobRest,JobBean> {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
 		    	return doDelete(request, ":id", response, JobRest.class);
+		    }
+		});
+		/**
+		 * params
+		 */
+		get("/api/jobs/:id/params", new Route() {
+		    @Override
+			public Object handle(Request request, Response response) throws Exception {
+		    	try {
+			    	JobRest job = doGetById(request.params(":id"));
+			    	return mapper.writeValueAsString(apiHrefResources.findAll(job, ParamRest.class));
+		    	} catch(TechnicalNotFoundException e) {
+		    		response.status(404);
+		    		return "";
+		    	}
+		    }
+		});
+		put("/api/jobs/:id/params/:param", new Route() {
+		    @Override
+			public Object handle(Request request, Response response) throws Exception {
+		    	try {
+			    	JobRest job = doGetById(request.params(":id"));
+			    	try {
+				    	ParamRest param = apiParamResources.doGetById(request.params(":param"));
+				    	apiHrefResources.add(job, param);
+			    	} catch(TechnicalNotFoundException e) {
+			    		response.status(404);
+			    		return "";
+			    	}
+		    	} catch(TechnicalNotFoundException e) {
+		    		response.status(404);
+		    		return "";
+		    	}
+		    	return doGetById(request, ":id", response);
 		    }
 		});
 	}

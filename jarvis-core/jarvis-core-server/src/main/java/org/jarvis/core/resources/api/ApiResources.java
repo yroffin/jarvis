@@ -27,22 +27,15 @@ import org.jarvis.core.services.neo4j.ApiNeo4Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import ma.glasnost.orika.MapperFactory;
-import ma.glasnost.orika.impl.DefaultMapperFactory;
 import spark.Request;
 import spark.Response;
 
-public abstract class ApiResources<Rest,Bean> {
+public abstract class ApiResources<Rest,Bean> extends ApiMapper {
 	@Autowired
 	Environment env;
 	
 	@Autowired
 	ApiNeo4Service apiNeo4Service;
-
-	protected ObjectMapper mapper = new ObjectMapper();
-	MapperFactory mapperFactory = null;
 
 	/**
 	 * internal api service
@@ -64,7 +57,7 @@ public abstract class ApiResources<Rest,Bean> {
 	 */
 	@PostConstruct
 	void init() {
-		mapperFactory = new DefaultMapperFactory.Builder().build();
+		super.init();
 		apiService.setApiNeo4Service(apiNeo4Service);
 		apiService.setBeanClass(beanClass);
 	}
@@ -188,7 +181,7 @@ public abstract class ApiResources<Rest,Bean> {
 	 * @return
 	 * @throws Exception
 	 */
-	public Object doCreate(Request request, Response response, Class<Rest> klass) throws Exception {
+	public String doCreate(Request request, Response response, Class<Rest> klass) throws Exception {
     	if(request.contentType() == null || !request.contentType().equals("application/json")) {
     		response.status(403);
     		return "";

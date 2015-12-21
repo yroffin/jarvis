@@ -25,6 +25,7 @@ import java.util.Map.Entry;
 import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.GenericBean;
+import org.jarvis.core.type.ParamType;
 import org.neo4j.graphdb.DynamicLabel;
 import org.neo4j.graphdb.Label;
 import org.neo4j.graphdb.Node;
@@ -41,10 +42,28 @@ import org.springframework.util.ReflectionUtils.FieldCallback;
 public class Neo4jService<T> {
 	protected Logger logger = LoggerFactory.getLogger(Neo4jService.class);
 
+	/**
+	 * Neo4j service
+	 */
 	ApiNeo4Service apiNeo4Service;
 
 	public void setApiNeo4Service(ApiNeo4Service apiNeo4Service) {
 		this.apiNeo4Service = apiNeo4Service;
+	}
+
+	/**
+	 * tranform type
+	 * @param field
+	 * @return
+	 */
+	private ParamType getType(Field field) {
+		if(field.getType() == java.lang.String.class) {
+			return ParamType.STRING;
+		}
+		if(field.getType() == org.jarvis.core.type.ParamType.class) {
+			return ParamType.TYPE;
+		}
+		return ParamType.STRING;
 	}
 
 	/**
@@ -59,7 +78,18 @@ public class Neo4jService<T> {
 				field.setAccessible(true);
 				Object value = field.get(source);
 				if (value != null) {
-					node.setProperty(field.getName(), value);
+					switch(getType(field)) {
+						case STRING:
+						case INT:
+						case FLOAT:
+							node.setProperty(field.getName(), value);
+							break;
+						case TYPE:
+							node.setProperty(field.getName(), ((ParamType) value).name());
+							break;
+					default:
+						break;
+					}
 				}
 			}
 		});
@@ -76,7 +106,7 @@ public class Neo4jService<T> {
 	 * @return Node
 	 */
 	private Node toNode(T source) {
-		Label label = DynamicLabel.label( source.getClass().getSimpleName() );
+		Label label = DynamicLabel.label(source.getClass().getSimpleName());
 		Node node = apiNeo4Service.createNode(label);
 		return toNode(node, source);
 	}
@@ -101,7 +131,7 @@ public class Neo4jService<T> {
 	 */
 	public List<T> findAll(Class<T> klass) {
 		String classname = klass.getSimpleName();
-		ArrayList<T> resultset = new ArrayList<T>();
+		List<T> resultset = new ArrayList<T>();
 		/**
 		 * cypher query
 		 */
@@ -128,12 +158,11 @@ public class Neo4jService<T> {
 	 * @throws TechnicalNotFoundException
 	 */
 	public T getById(Class<T> klass, String id) throws TechnicalNotFoundException {
-		String classname = klass.getSimpleName();
 		/**
 		 * cypher query
 		 */
 		try (Transaction ignored = apiNeo4Service.beginTx();
-				Result result = apiNeo4Service.execute("MATCH (node:"+classname+") WHERE id(node) = "+id+" RETURN node")) {
+				Result result = apiNeo4Service.cypherOne(klass.getSimpleName(), id)) {
 			if (result.hasNext()) {
 				/**
 				 * iterate on nodes
@@ -247,7 +276,18 @@ public class Neo4jService<T> {
 				public void doWith(final Field field) throws IllegalArgumentException, IllegalAccessException {
 					field.setAccessible(true);
 					if(maps.containsKey(field.getName())) {
-						field.set(target, node.getProperty(field.getName()));
+						switch(getType(field)) {
+						case STRING:
+						case INT:
+						case FLOAT:
+							field.set(target, node.getProperty(field.getName()));
+							break;
+						case TYPE:
+							field.set(target, ParamType.valueOf(node.getProperty(field.getName()).toString()));
+							break;
+						default:
+							break;
+						}
 					}
 				}
 			});

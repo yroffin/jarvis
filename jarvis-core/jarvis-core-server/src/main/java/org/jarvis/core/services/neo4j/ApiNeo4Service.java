@@ -97,7 +97,7 @@ public class ApiNeo4Service  {
 	 * @return Result
 	 */
 	public Result execute(String query) {
-		logger.debug(query);
+		logger.error(query);
 		return graphDb.execute(query);
 	}
 
@@ -108,5 +108,42 @@ public class ApiNeo4Service  {
 	 */
 	public Node createNode(Label label) {
 		return graphDb.createNode(label);
+	}
+
+	/**
+	 * cypher query to find one element
+	 * @param label
+	 * @param id
+	 * @return
+	 */
+	public Result cypherOne(String label, String id) {
+		Result result = execute("MATCH (node:"+label+") WHERE id(node) = "+id+" RETURN node");
+		return result;
+	}
+
+	/**
+	 * find all relationship
+	 * @param leftLabel
+	 * @param leftId
+	 * @param rightLabel
+	 * @param rightId
+	 * @return
+	 */
+	public Result cypherAllLink(String leftLabel, String leftId, String rightLabel) {
+		Result result = execute("MATCH (left:"+leftLabel+")-[r:RELTYPE]->(right:"+rightLabel+") WHERE id(left) = "+leftId+" RETURN right");
+		return result;
+	}
+
+	/**
+	 * find all relationship
+	 * @param leftLabel
+	 * @param leftId
+	 * @param rightLabel
+	 * @param rightId
+	 * @return
+	 */
+	public Result cypherAddLink(String leftLabel, String leftId, String rightLabel, String rightId) {
+		Result result = execute("MATCH (left:"+leftLabel+"),(right:"+rightLabel+") WHERE id(left) = "+leftId+" AND id(right) = "+rightId+" CREATE (left)-[r:RELTYPE]->(right) RETURN id(r)");
+		return result;
 	}
 }

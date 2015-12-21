@@ -16,9 +16,14 @@
 
 package org.jarvis.core.model.bean;
 
+import java.util.List;
+
+import org.jarvis.core.model.bean.job.ParamBean;
+
 public class JobBean extends GenericBean {
 	public String name;
 	public String cronTime;
 	public String plugin;
 	public String text;
+	public List<ParamBean> params;
 }

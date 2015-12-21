@@ -24,6 +24,7 @@ import org.springframework.stereotype.Component;
 import org.jarvis.core.resources.api.ApiJobResources;
 import org.jarvis.core.resources.api.ApiClientResources;
 import org.jarvis.core.resources.api.ApiLabelResources;
+import org.jarvis.core.resources.api.ApiParamResources;
 import org.jarvis.core.resources.api.ApiScenarioResources;
 import org.jarvis.core.resources.api.ApiConnectorResources;
 import org.jarvis.core.resources.api.ApiCrontabResources;
@@ -56,6 +57,9 @@ public class CoreServerDaemon {
 	@Autowired
 	ApiScenarioResources apiScenarioResources;
 
+	@Autowired
+	ApiParamResources apiParamResources;
+
 	/**
 	 * start component
 	 */
@@ -79,5 +83,6 @@ public class CoreServerDaemon {
 		apiCrontabResources.mount();
 		apiLabelResources.mount();
 		apiScenarioResources.mount();
+		apiParamResources.mount();
 	}
 }

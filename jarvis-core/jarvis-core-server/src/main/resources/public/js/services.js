@@ -210,6 +210,14 @@ myAppServices.factory('jobResourceService', function($q, $window, $rootScope, Re
         	},function(errors){
         		failure(errors);
         	});
+        },
+        put: function(element, callback, failure) {
+        	// Restangular returns promises
+        	Restangular.one('jobs', element.id).customPUT(element).then(function(jobs) {
+        		callback(jobs);
+        	},function(errors){
+        		failure(errors);
+        	});
         }
   }
 });
