@@ -291,26 +291,28 @@ angular.module('JarvisApp',['ngMaterial', 'ngMdIcons', 'ngRoute', 'restangular',
                 /**
                  * create or update this job
                  */
-                jobResourceService.put(update, update,
-                    function(data) {
+                jobResourceService.put(update, function(data) {
                         job.started = data.started;
-                        $mdToast.show(
-                            $mdToast.simple()
-                                .content('Job ' + job.name + ' enregistré')
-                                .position($scope.getToastPosition())
-                                .hideDelay(3000)
-                        );
-                    },
-                    function(failure) {
-                        $mdToast.show(
-                            $mdToast.simple()
-                                .content('Job ' + job.name + ' non enregistré')
-                                .position($scope.getToastPosition())
-                                .hideDelay(3000).theme("failure-toast")
-                        );
-                    }
-                );
-            };
+                        toastService.info('job ' + data.name + '#' + data.id +' updated');
+                    }, toastService.failure);
+            }
+
+            /**
+             * create a new job
+             * @param job
+             */
+            $scope.new = function(jobs) {
+                var update = {
+                    name : "Job name"
+                };
+                /**
+                 * create or update this job
+                 */
+                jobResourceService.post(update, function(data) {
+                        toastService.info('job ' + data.name + '#' + data.id +' created');
+                        jobs.push(data);
+                    }, toastService.failure);
+            }
 
             /**
              * set started field
@@ -359,57 +361,6 @@ angular.module('JarvisApp',['ngMaterial', 'ngMdIcons', 'ngRoute', 'restangular',
                                 .hideDelay(3000).theme("failure-toast")
                         );
                     });
-            };
-
-            /**
-             * create a new job
-             * @param job
-             */
-            $scope.new = function() {
-                /**
-                 * create a new job
-                 */
-                try {
-                    jarvisJobsResource.post({"name": "No name"}, function (data) {
-                            jarvisJobsResource.get({}, function (data) {
-                                for (var index in data) {
-                                    var params = data[index].params;
-                                    if (params) {
-                                        data[index].text = JSON.stringify(data[index].params);
-                                    }
-                                }
-                                $scope.jarvis.configuration.jobs = data;
-                                $mdToast.show(
-                                    $mdToast.simple()
-                                        .content('Job No name créé')
-                                        .position($scope.getToastPosition())
-                                        .hideDelay(3000)
-                                );
-                            }, function (failure) {
-                                $mdToast.show(
-                                    $mdToast.simple()
-                                        .content('Job ' + job.name + ' non créé')
-                                        .position($scope.getToastPosition())
-                                        .hideDelay(3000).theme("failure-toast")
-                                );
-                            });
-                        },
-                        function (failure) {
-                            $mdToast.show(
-                                $mdToast.simple()
-                                    .content('Job non créé')
-                                    .position($scope.getToastPosition())
-                                    .hideDelay(3000).theme("failure-toast")
-                            );
-                        });
-                } catch(e) {
-                    $mdToast.show(
-                        $mdToast.simple()
-                            .content(''+e)
-                            .position($scope.getToastPosition())
-                            .hideDelay(3000).theme("failure-toast")
-                    );
-                }
             }
         }
     ]

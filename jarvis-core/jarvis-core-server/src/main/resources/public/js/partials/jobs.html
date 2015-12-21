@@ -7,7 +7,7 @@
                     <div layout layout-sm="column">
                         <ng-md-icon ng-click="delete(jarvis.configuration.jobs, job)" icon="delete"></ng-md-icon>
                         <ng-md-icon ng-click="save(job)" icon="save"></ng-md-icon>
-                        <ng-md-icon ng-click="new()" icon="create"></ng-md-icon>
+                        <ng-md-icon ng-click="new(jarvis.configuration.jobs)" icon="create"></ng-md-icon>
                         <ng-md-icon ng-if="!job.started" ng-click="status(job, true)" icon="thumb_down"></ng-md-icon>
                         <ng-md-icon ng-if="job.started" ng-click="status(job, false)" icon="thumb_up"></ng-md-icon>
                         <ng-md-icon ng-click="execute(job)" icon="input"></ng-md-icon>

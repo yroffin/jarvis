@@ -204,7 +204,6 @@ myAppServices.factory('jobResourceService', function($q, $window, $rootScope, Re
         	});
         },
         delete: function(id, callback, failure) {
-        	// Restangular returns promises
         	Restangular.one('jobs', id).remove().then(function(jobs) {
         		callback(jobs);
         	},function(errors){
@@ -212,8 +211,14 @@ myAppServices.factory('jobResourceService', function($q, $window, $rootScope, Re
         	});
         },
         put: function(element, callback, failure) {
-        	// Restangular returns promises
         	Restangular.one('jobs', element.id).customPUT(element).then(function(jobs) {
+        		callback(jobs);
+        	},function(errors){
+        		failure(errors);
+        	});
+        },
+        post: function(element, callback, failure) {
+        	Restangular.all('jobs').post(element).then(function(jobs) {
         		callback(jobs);
         	},function(errors){
         		failure(errors);
