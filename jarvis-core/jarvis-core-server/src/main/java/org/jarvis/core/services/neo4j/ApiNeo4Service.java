@@ -35,6 +35,9 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
+/**
+ * Neo4j driver
+ */
 @Component
 @PropertySource("classpath:server.properties")
 public class ApiNeo4Service  {
@@ -104,7 +107,7 @@ public class ApiNeo4Service  {
 	/**
 	 * create node with label
 	 * @param label
-	 * @return
+	 * @return Node
 	 */
 	public Node createNode(Label label) {
 		return graphDb.createNode(label);
@@ -114,7 +117,7 @@ public class ApiNeo4Service  {
 	 * cypher query to find one element
 	 * @param label
 	 * @param id
-	 * @return
+	 * @return Result
 	 */
 	public Result cypherOne(String label, String id) {
 		Result result = execute("MATCH (node:"+label+") WHERE id(node) = "+id+" RETURN node");
@@ -126,11 +129,12 @@ public class ApiNeo4Service  {
 	 * @param leftLabel
 	 * @param leftId
 	 * @param rightLabel
-	 * @param rightId
-	 * @return
+	 * @param relType 
+	 * @param label 
+	 * @return Result
 	 */
-	public Result cypherAllLink(String leftLabel, String leftId, String rightLabel) {
-		Result result = execute("MATCH (left:"+leftLabel+")-[r:RELTYPE]->(right:"+rightLabel+") WHERE id(left) = "+leftId+" RETURN right");
+	public Result cypherAllLink(String leftLabel, String leftId, String rightLabel, String relType, String label) {
+		Result result = execute("MATCH (left:"+leftLabel+")-[r:"+relType+"]->("+label+":"+rightLabel+") WHERE id(left) = "+leftId+" RETURN "+label);
 		return result;
 	}
 
@@ -140,10 +144,11 @@ public class ApiNeo4Service  {
 	 * @param leftId
 	 * @param rightLabel
 	 * @param rightId
-	 * @return
+	 * @param relType 
+	 * @return Result
 	 */
-	public Result cypherAddLink(String leftLabel, String leftId, String rightLabel, String rightId) {
-		Result result = execute("MATCH (left:"+leftLabel+"),(right:"+rightLabel+") WHERE id(left) = "+leftId+" AND id(right) = "+rightId+" CREATE (left)-[r:RELTYPE]->(right) RETURN id(r)");
+	public Result cypherAddLink(String leftLabel, String leftId, String rightLabel, String rightId, String relType) {
+		Result result = execute("MATCH (left:"+leftLabel+"),(right:"+rightLabel+") WHERE id(left) = "+leftId+" AND id(right) = "+rightId+" CREATE (left)-[r:"+relType+"]->(right) RETURN id(r)");
 		return result;
 	}
 }

@@ -32,6 +32,9 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
+/**
+ * JOB resource
+ */
 @Component
 public class ApiJobResources extends ApiResources<JobRest,JobBean> {
 

@@ -32,26 +32,38 @@ import org.neo4j.graphdb.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * HREF handler
+ */
 @Component
 public class ApiHrefResources extends ApiMapper {
 
 	@Autowired
 	ApiNeo4Service apiNeo4Service;
 
+	/**
+	 * @param job
+	 * @param param
+	 */
 	public void add(JobRest job, ParamRest param) {
 		try (Transaction create = apiNeo4Service.beginTx()) {
-			apiNeo4Service.cypherAddLink(JobBean.class.getSimpleName(), job.id, ParamBean.class.getSimpleName(), param.id);
+			apiNeo4Service.cypherAddLink(JobBean.class.getSimpleName(), job.id, ParamBean.class.getSimpleName(), param.id, "HREF");
 			create.success();
 		}
 	}
 
+	/**
+	 * @param job
+	 * @param param
+	 * @return List<GenericEntity>
+	 */
 	public List<GenericEntity> findAll(JobRest job, Class<ParamRest> param) {
-		Result result = apiNeo4Service.cypherAllLink(JobBean.class.getSimpleName(), job.id, ParamBean.class.getSimpleName());
+		Result result = apiNeo4Service.cypherAllLink(JobBean.class.getSimpleName(), job.id, ParamBean.class.getSimpleName(), "HREF", "node");
 		List<GenericEntity> resultset = new ArrayList<GenericEntity>();
 		while (result.hasNext()) {
 			GenericEntity genericEntity = new GenericEntity();
 			Map<String, Object> fields = result.next();
-			genericEntity.id = ((Node) fields.get("right")).getId()+"";
+			genericEntity.id = ((Node) fields.get("node")).getId()+"";
 			genericEntity.href = "/api/params/" + genericEntity.id;
 			resultset.add(genericEntity);
 		}

@@ -21,6 +21,10 @@ import java.util.List;
 import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.services.neo4j.Neo4jService;
 
+/**
+ * SERVICE resource
+ * @param <Bean>
+ */
 public class ApiService<Bean> extends Neo4jService<Bean> {
 
 	/**
@@ -28,6 +32,9 @@ public class ApiService<Bean> extends Neo4jService<Bean> {
 	 */
 	Class<Bean> beanClass = null;
 
+	/**
+	 * @param beanClass
+	 */
 	public void setBeanClass(Class<Bean> beanClass) {
 		this.beanClass = beanClass;
 	}
@@ -40,7 +47,7 @@ public class ApiService<Bean> extends Neo4jService<Bean> {
 	
 	/**
 	 * find all
-	 * @return
+	 * @return List<Bean>
 	 */
 	public List<Bean> findAll() {
 		return super.findAll(beanClass);
@@ -49,7 +56,7 @@ public class ApiService<Bean> extends Neo4jService<Bean> {
 	/**
 	 * get this bean by id
 	 * @param id
-	 * @return
+	 * @return Bean
 	 * @throws TechnicalNotFoundException
 	 */
 	public Bean getById(String id) throws TechnicalNotFoundException {
@@ -65,6 +72,8 @@ public class ApiService<Bean> extends Neo4jService<Bean> {
 
 	/**
 	 * create this bean
+	 * @param id 
+	 * @return Bean
 	 * @throws TechnicalNotFoundException 
 	 */
 	public Bean remove(String id) throws TechnicalNotFoundException {
@@ -75,7 +84,7 @@ public class ApiService<Bean> extends Neo4jService<Bean> {
 	 * update this bean
 	 * @param id
 	 * @param bean
-	 * @return
+	 * @return Bean
 	 * @throws TechnicalNotFoundException
 	 */
 	public Bean update(String id, Bean bean) throws TechnicalNotFoundException {

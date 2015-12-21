@@ -30,6 +30,12 @@ import org.springframework.core.env.Environment;
 import spark.Request;
 import spark.Response;
 
+/**
+ * RESOURCE api
+ *
+ * @param <Rest>
+ * @param <Bean>
+ */
 public abstract class ApiResources<Rest,Bean> extends ApiMapper {
 	@Autowired
 	Environment env;
@@ -107,7 +113,7 @@ public abstract class ApiResources<Rest,Bean> extends ApiMapper {
 	
 	/**
 	 * create new entity
-	 * @param k
+	 * @param r 
 	 * @return Rest
 	 */
 	public Rest doCreate(Rest r) {
@@ -119,7 +125,7 @@ public abstract class ApiResources<Rest,Bean> extends ApiMapper {
 	/**
 	 * delete by id
 	 * @param id
-	 * @return
+	 * @return Rest
 	 * @throws TechnicalNotFoundException
 	 */
 	public Rest doDelete(String id) throws TechnicalNotFoundException {
@@ -131,7 +137,7 @@ public abstract class ApiResources<Rest,Bean> extends ApiMapper {
 	/**
 	 * update entity
 	 * @param id
-	 * @param k
+	 * @param r 
 	 * @return Rest
 	 * @throws TechnicalNotFoundException 
 	 */
@@ -145,10 +151,10 @@ public abstract class ApiResources<Rest,Bean> extends ApiMapper {
 	 * find all elements
 	 * @param request
 	 * @param response
-	 * @return
+	 * @return String
 	 * @throws Exception
 	 */
-	public Object doFindAll(Request request, Response response) throws Exception {
+	public String doFindAll(Request request, Response response) throws Exception {
     	return mapper.writeValueAsString(doFindAll());
     }
 
@@ -157,10 +163,10 @@ public abstract class ApiResources<Rest,Bean> extends ApiMapper {
 	 * @param request
 	 * @param id
 	 * @param response
-	 * @return
+	 * @return String
 	 * @throws Exception
 	 */
-	public Object doGetById(Request request, String id, Response response) throws Exception {
+	public String doGetById(Request request, String id, Response response) throws Exception {
     	if(request.contentType() == null || !request.contentType().equals("application/json")) {
     		response.status(403);
     		return "";
@@ -178,7 +184,7 @@ public abstract class ApiResources<Rest,Bean> extends ApiMapper {
 	 * @param request
 	 * @param response
 	 * @param klass
-	 * @return
+	 * @return String
 	 * @throws Exception
 	 */
 	public String doCreate(Request request, Response response, Class<Rest> klass) throws Exception {
@@ -193,12 +199,13 @@ public abstract class ApiResources<Rest,Bean> extends ApiMapper {
 	/**
 	 * delete node
 	 * @param request
+	 * @param id 
 	 * @param response
 	 * @param klass
-	 * @return
+	 * @return String
 	 * @throws Exception
 	 */
-	public Object doDelete(Request request, String id, Response response, Class<Rest> klass) throws Exception {
+	public String doDelete(Request request, String id, Response response, Class<Rest> klass) throws Exception {
     	if(request.contentType() == null || !request.contentType().equals("application/json")) {
     		response.status(403);
     		return "";
@@ -217,10 +224,10 @@ public abstract class ApiResources<Rest,Bean> extends ApiMapper {
 	 * @param id
 	 * @param response
 	 * @param klass
-	 * @return
+	 * @return String
 	 * @throws Exception
 	 */
-	public Object doUpdate(Request request, String id, Response response, Class<Rest> klass) throws Exception {
+	public String doUpdate(Request request, String id, Response response, Class<Rest> klass) throws Exception {
     	if(request.contentType() == null || !request.contentType().equals("application/json")) {
     		response.status(403);
     		return "";
