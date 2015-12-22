@@ -28,7 +28,11 @@ import org.jarvis.core.resources.api.ApiParamResources;
 import org.jarvis.core.resources.api.ApiScenarioResources;
 import org.jarvis.core.resources.api.ApiConnectorResources;
 import org.jarvis.core.resources.api.ApiCrontabResources;
+import org.jarvis.core.resources.api.ApiIotResources;
 
+/**
+ * main daemon
+ */
 @Component
 @PropertySource("classpath:server.properties")
 public class CoreServerDaemon {
@@ -60,6 +64,9 @@ public class CoreServerDaemon {
 	@Autowired
 	ApiParamResources apiParamResources;
 
+	@Autowired
+	ApiIotResources apiIotResources;
+
 	/**
 	 * start component
 	 */
@@ -84,5 +91,6 @@ public class CoreServerDaemon {
 		apiLabelResources.mount();
 		apiScenarioResources.mount();
 		apiParamResources.mount();
+		apiIotResources.mount();
 	}
 }

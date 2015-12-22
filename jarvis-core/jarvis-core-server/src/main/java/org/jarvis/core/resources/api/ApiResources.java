@@ -22,6 +22,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import org.jarvis.core.exception.TechnicalNotFoundException;
+import org.jarvis.core.resources.api.mapper.ApiMapper;
 import org.jarvis.core.services.ApiService;
 import org.jarvis.core.services.neo4j.ApiNeo4Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,12 @@ import spark.Response;
  * @param <Bean>
  */
 public abstract class ApiResources<Rest,Bean> extends ApiMapper {
+
+	protected static final String IOT = ":iot";
+	protected static final String ID = ":id";
+	protected static final String PARAM = ":param";
+	protected static final String INSTANCE = "instance";
+
 	@Autowired
 	Environment env;
 	
@@ -62,6 +69,7 @@ public abstract class ApiResources<Rest,Bean> extends ApiMapper {
 	 * spring init
 	 */
 	@PostConstruct
+	protected
 	void init() {
 		super.init();
 		apiService.setApiNeo4Service(apiNeo4Service);

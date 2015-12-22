@@ -22,11 +22,10 @@ import static spark.Spark.put;
 import static spark.Spark.delete;
 
 import org.jarvis.core.exception.TechnicalNotFoundException;
-import org.jarvis.core.model.bean.JobBean;
+import org.jarvis.core.model.bean.IotBean;
 import org.jarvis.core.model.rest.GenericEntity;
-import org.jarvis.core.model.rest.JobRest;
-import org.jarvis.core.model.rest.job.ParamRest;
-import org.jarvis.core.resources.api.href.ApiHrefJobResources;
+import org.jarvis.core.model.rest.IotRest;
+import org.jarvis.core.resources.api.href.ApiHrefIotResources;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -35,23 +34,20 @@ import spark.Response;
 import spark.Route;
 
 /**
- * JOB resource
+ * IOT resource
  */
 @Component
-public class ApiJobResources extends ApiResources<JobRest,JobBean> {
+public class ApiIotResources extends ApiResources<IotRest,IotBean> {
 
 	@Autowired
-	ApiParamResources apiParamResources;
-
-	@Autowired
-	ApiHrefJobResources apiHrefResources;
+	ApiHrefIotResources apiHrefResources;
 
 	/**
 	 * constructor
 	 */
-	public ApiJobResources() {
-		setRestClass(JobRest.class);
-		setBeanClass(JobBean.class);
+	public ApiIotResources() {
+		setRestClass(IotRest.class);
+		setBeanClass(IotBean.class);
 	}
 
 	@Override
@@ -59,59 +55,59 @@ public class ApiJobResources extends ApiResources<JobRest,JobBean> {
 		/**
 		 * mount resources
 		 */
-		get("/api/jobs", new Route() {
+		get("/api/iots", new Route() {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
 		    	return doFindAll(request, response);
 		    }
 		});
-		get("/api/jobs/:id", new Route() {
+		get("/api/iots/:id", new Route() {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
-		    	return doGetById(request, ":id", response);
+		    	return doGetById(request, ID, response);
 		    }
 		});
-		post("/api/jobs", new Route() {
+		post("/api/iots", new Route() {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
-		    	return doCreate(request, response, JobRest.class);
+		    	return doCreate(request, response, IotRest.class);
 		    }
 		});
-		put("/api/jobs/:id", new Route() {
+		put("/api/iots/:id", new Route() {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
-		    	return doUpdate(request, ":id", response, JobRest.class);
+		    	return doUpdate(request, ID, response, IotRest.class);
 		    }
 		});
-		delete("/api/jobs/:id", new Route() {
+		delete("/api/iots/:id", new Route() {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
-		    	return doDelete(request, ":id", response, JobRest.class);
+		    	return doDelete(request, ID, response, IotRest.class);
 		    }
 		});
 		/**
 		 * params
 		 */
-		get("/api/jobs/:id/params", new Route() {
+		get("/api/iots/:id/iots", new Route() {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
 		    	try {
-			    	JobRest job = doGetById(request.params(":id"));
-			    	return mapper.writeValueAsString(apiHrefResources.findAll(job, ParamRest.class));
+		    		IotRest iot = doGetById(request.params(ID));
+			    	return mapper.writeValueAsString(apiHrefResources.findAll(iot, IotRest.class));
 		    	} catch(TechnicalNotFoundException e) {
 		    		response.status(404);
 		    		return "";
 		    	}
 		    }
 		});
-		put("/api/jobs/:id/params/:param", new Route() {
+		put("/api/iots/:id/iots/:iot", new Route() {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
 		    	try {
-			    	JobRest job = doGetById(request.params(":id"));
+		    		IotRest iot = doGetById(request.params(ID));
 			    	try {
-				    	ParamRest param = apiParamResources.doGetById(request.params(":param"));
-				    	GenericEntity instance = apiHrefResources.add(job, param);
+				    	IotRest child = doGetById(request.params(IOT));
+				    	GenericEntity instance = apiHrefResources.add(iot, child);
 				    	return mapper.writeValueAsString(instance);
 			    	} catch(TechnicalNotFoundException e) {
 			    		response.status(404);
@@ -127,10 +123,10 @@ public class ApiJobResources extends ApiResources<JobRest,JobBean> {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
 		    	try {
-			    	JobRest job = doGetById(request.params(":id"));
+		    		IotRest job = doGetById(request.params(ID));
 			    	try {
-				    	ParamRest param = apiParamResources.doGetById(request.params(":param"));
-				    	apiHrefResources.remove(job, param, request.queryParams("instance"));
+			    		IotRest param = doGetById(request.params(IOT));
+				    	apiHrefResources.remove(job, param, request.queryParams(INSTANCE));
 			    	} catch(TechnicalNotFoundException e) {
 			    		response.status(404);
 			    		return "";
@@ -139,7 +135,7 @@ public class ApiJobResources extends ApiResources<JobRest,JobBean> {
 		    		response.status(404);
 		    		return "";
 		    	}
-		    	return doGetById(request, ":id", response);
+		    	return doGetById(request, ID, response);
 		    }
 		});
 	}

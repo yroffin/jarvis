@@ -113,9 +113,7 @@ myAppServices.factory('jarvisConnectorsResource', [ '$resource', function($resou
 	)}]);
 
 /**
- * configuration services
- * - /configuration/crontabs
- * - /configuration/neo4j
+ * configuration services - /configuration/crontabs - /configuration/neo4j
  */
 myAppServices.factory('jarvisConfigurationResource', [ '$resource', function($resource, $windows) {
 	return $resource('', {}, {
@@ -152,7 +150,7 @@ myAppServices.factory('jarvisConfigurationResource', [ '$resource', function($re
 	)}]);
 
 /**
- * jobResourceService
+ * toastService
  */
 myAppServices.factory('toastService', function($log, $mdToast) {
   var toastServiceInstance;
@@ -191,7 +189,7 @@ myAppServices.factory('toastService', function($log, $mdToast) {
 });
 
 /**
- * jobResourceService
+ * paramResourceService
  */
 myAppServices.factory('paramResourceService', function(Restangular) {
   return {
@@ -300,8 +298,8 @@ myAppServices.factory('jobResourceService', function(Restangular, paramResourceS
 				});
 			},
 	        /**
-	         * put link
-	         */
+			 * put link
+			 */
 	        put: function(job, param, callback, failure) {
 	        	Restangular.one('jobs', job).one('params',param).customPUT({}).then(function(href) {
 	        		callback(href);
@@ -310,8 +308,8 @@ myAppServices.factory('jobResourceService', function(Restangular, paramResourceS
 	        	});
 	        },
 	        /**
-	         * delete link
-	         */
+			 * delete link
+			 */
 			delete: function(id, param, instance, callback, failure) {
 				Restangular.one('jobs', id).one('params', param).remove({'instance':instance}).then(function(href) {
 					callback(href);
@@ -320,6 +318,97 @@ myAppServices.factory('jobResourceService', function(Restangular, paramResourceS
 				});
 			}
 		}
+  }
+});
+
+/**
+ * iotResourceService
+ */
+myAppServices.factory('iotResourceService', function(Restangular) {
+  var base = {
+        /**
+		 * base services : findAll, delete, put and post
+		 */
+		findAll: function(callback, failure) {
+			Restangular.all('iots').getList().then(function(elements) {
+				callback(elements);
+			},function(errors){
+				failure(errors);
+			});
+		},
+		get: function(id, callback, failure) {
+			Restangular.one('iots', id).get().then(function(element) {
+				callback(element);
+			},function(errors){
+				failure(errors);
+			});
+		},
+		delete: function(id, callback, failure) {
+			Restangular.one('iots', id).remove().then(function(elements) {
+				callback(elements);
+			},function(errors){
+				failure(errors);
+			});
+		},
+		put: function(element, callback, failure) {
+			Restangular.one('iots', element.id).customPUT(element).then(function(jobs) {
+				callback(jobs);
+			},function(errors){
+				failure(errors);
+			});
+		},
+		post: function(element, callback, failure) {
+			Restangular.all('iots').post(element).then(function(elements) {
+				callback(elements);
+			},function(errors){
+				failure(errors);
+			});
+		}
+  };
+  var ext = {
+		findAll: function(owner, callback, failure) {
+			Restangular.one('iots', owner).all('iots').getList().then(function(elements) {
+				var done = _.after(elements.length, function(params) {
+					callback(params);
+				});
+				var params = [];
+            	_.forEach(elements, function(element) {
+            		base.get(element.id, function(param) {
+            			param.instance = element.instance;
+            			params.push(param);
+            			done(params);
+            		},function(errors){
+        				failure(errors);
+        			})
+            	});
+			},function(errors){
+				failure(errors);
+			});
+		},
+        /**
+		 * put link
+		 */
+        put: function(owner, child, callback, failure) {
+        	Restangular.one('iots', owner).one('iots',child).customPUT({}).then(function(href) {
+        		callback(href);
+        	},function(errors){
+        		failure(errors);
+        	});
+        },
+        /**
+		 * delete link
+		 */
+		delete: function(owner, child, instance, callback, failure) {
+			Restangular.one('iots', owner).one('iots', child).remove({'instance':instance}).then(function(href) {
+				callback(href);
+			},function(errors){
+				failure(errors);
+			});
+		}
+  }
+  return {
+	    base: base,
+		ext : ext  
   }
 });
 
@@ -405,6 +494,102 @@ myAppServices.factory('jarvisJobsResource', [ '$resource', function($resource, $
 		delete : {
 			method : 'DELETE',
 			url : jarvisApiUrl + '/jobs/:id',
+			params : {},
+			isArray : false,
+			headers: {
+	            'Content-Type': 'application/json'
+	        },
+			cache : false
+		},
+		/**
+		 * post current selected job
+		 */
+		post : {
+			method : 'POST',
+			url : jarvisApiUrl + '/jobs',
+			params : {},
+			isArray : false,
+			headers: {
+	            'Content-Type': 'application/json'
+	        },
+			cache : false
+		},
+		/**
+		 * test current selected job
+		 */
+		patch : {
+			method : 'PATCH',
+			url : jarvisApiUrl + '/jobs/:id',
+			params : {},
+			isArray : false,
+			headers: {
+	            'Content-Type': 'application/json'
+	        },
+			cache : false
+		},
+		/**
+		 * test current selected job
+		 */
+		execute : {
+			method : 'POST',
+			url : jarvisApiUrl + '/jobs/execute?id=:id&method=:method',
+			isArray : false,
+			headers: {
+	            'Content-Type': 'application/json'
+	        },
+			cache : false
+		},
+		/**
+		 * delete by name
+		 */
+		deleteByName : {
+			method : 'DELETE',
+			url : jarvisServicesUrl + '/neo4j/crontab?name=:name',
+			params : {},
+			isArray : false,
+			headers: {
+	            'Content-Type': 'application/json'
+	        },
+			cache : false
+		}
+	})
+}]);
+
+myAppServices.factory('jarvisIotsResource', [ '$resource', function($resource, $windows) {
+	return $resource('', {}, {
+		/**
+		 * PUT
+		 */
+		put : {
+			method : 'PUT',
+			url : jarvisApiUrl + '/iots/:id',
+			isArray : false,
+			headers: {
+				'Accept': 'application/json, text/javascript',
+				'Content-Type': 'application/json; charset=utf-8'
+	        },
+			cache : false
+		},
+		/**
+		 * GET
+		 */
+		get : {
+			method : 'GET',
+			url : jarvisApiUrl + '/iots',
+			params : {},
+			isArray : false,
+			headers: {
+				'Accept': 'application/json, text/javascript',
+				'Content-Type': 'application/json; charset=utf-8'
+	        },
+			cache : false
+		},
+		/**
+		 * DELETE
+		 */
+		delete : {
+			method : 'DELETE',
+			url : jarvisApiUrl + '/iots/:id',
 			params : {},
 			isArray : false,
 			headers: {

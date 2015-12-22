@@ -84,6 +84,11 @@ angular.module('JarvisApp',[
             controller: 'JarvisAppConnectorsCtrl',
             templateUrl: '/ui/js/partials/connectors.html'
         })
+        .state('iots', {
+            url: '/iots',
+            controller: 'jarvisIotsCtrl',
+            templateUrl: '/ui/js/partials/iots.html'
+        })
         ;
     })
     .config(function($mdThemingProvider){
@@ -462,6 +467,51 @@ angular.module('JarvisApp',[
             }, toastService.failure);
         }, toastService.failure);
     }])
+    /**
+     * job view controller
+     */
+    .controller('jarvisIotsCtrl',
+    ['$scope', 'iotResourceService', 'toastService',
+        function($scope, iotResourceService, toastService) {
+            /**
+             * loading jobs
+             */
+    		iotResourceService.base.findAll(function(data) {
+                var arr = [];
+            	_.forEach(data, function(element) {
+                    /**
+                     * convert internal json params
+                     */
+                    arr.push({
+                    	'id':element.id,
+                    	'name':element.name,
+                    	'owner':element.name,
+                    	'visible':element.visible,
+                    	'icon':element.icon
+                    });
+                });
+            	toastService.info(arr.length + ' iot(s)');
+                $scope.jarvis.iots = arr;
+            }, toastService.failure);
+
+            /**
+             * create a new job
+             * @param job
+             */
+            $scope.new = function(iots) {
+                var update = {
+                    name : "no name"
+                };
+                /**
+                 * create or update this job
+                 */
+                jobResourceService.post(update, function(data) {
+                        toastService.info('iot ' + data.name + '#' + data.id +' created');
+                        iots.push(data);
+                    }, toastService.failure);
+            }
+        }
+    ])
 	/**
 	 * neo4j view controller
 	 */
