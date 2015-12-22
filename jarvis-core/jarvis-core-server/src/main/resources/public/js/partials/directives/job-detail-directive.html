@@ -3,8 +3,8 @@
     <md-card>
       <md-card-title>
         <md-card-title-text>
-          <span class="md-headline">Job</span>
-          <span class="md-subhead">Détail</span>
+          <span class="md-headline">Job#{{job.id}}</span>
+          <span class="md-subhead">{{job.name}}</span>
         </md-card-title-text>
         <md-card-title-media>
           <div class="md-media-lg card-media"></div>
@@ -48,18 +48,8 @@
 	</md-chip-template>
       </md-chips>
       <md-card-actions layout="row" layout-align="end center">
-	<md-button ng-click="save(job)">
-		<ng-md-icon icon="save"></ng-md-icon>
-	</md-button>
-	<md-button ng-if="!job.started" ng-click="status(job, true)">
-		<ng-md-icon icon="thumb_down"></ng-md-icon>
-	</md-button>
-	<md-button ng-if="job.started" ng-click="status(job, false)">
-		<ng-md-icon icon="thumb_up"></ng-md-icon>
-	</md-button>
-	<md-button ng-click="execute(job)">
-		<ng-md-icon icon="input"></ng-md-icon>
-	</md-button>
+		<md-button ng-click="save(job)">Save</md-button>
+	    <md-button ng-click="location('left', '/jobs')">+</md-button>
       </md-card-actions>
     </md-card>
 </md-content>
