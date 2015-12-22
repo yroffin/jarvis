@@ -1,10 +1,7 @@
-<div layout="column" flex layout-fill ng-cloak>
-    <md-content>
-        <section>
-            <md-subheader>{{jarvis.iots.length}} Iot(s)</md-subheader>
-            <md-list layout-padding>
-				<iot-directive ng-controller="iotDirectiveCtrl" ng-repeat="iot in jarvis.iots" />
-            </md-list>
-        </section>
-    </md-content>
+<div ng-cloak>
+	<md-grid-list md-cols-sm="1" md-cols-md="2" md-cols-gt-md="6"
+        md-row-height-gt-md="1:1" md-row-height="4:3"
+        md-gutter="8px" md-gutter-gt-sm="4px" >
+		<iot-directive ng-controller="iotDirectiveCtrl" ng-repeat="iot in jarvis.iots" />
+	</md-grid-list>
 </div>
