@@ -1,10 +1,9 @@
- <md-grid-tile md-colspan="1" md-colspan-sm="3" md-colspan-md="5" ng-class="white">
-  <md-grid-tile-header>
-  	<h3>{{iot.name}}</h3>
-  </md-grid-tile-header>
-  <md-icon md-svg-icon="https://s3-us-west-2.amazonaws.com/s.cdpn.io/68133/menu.svg"></md-icon>
-  xxxxxxxxxxxx{{iot.name}}
-  <md-grid-tile-footer>
-  	<h3>{{iot.name}}</h3>
-  </md-grid-tile-footer>
-</md-grid-tile>
+<div ng-click="test()">
+	<md-grid-tile-header>
+		<h3>{{iot.name}} ({{iot.owner}})</h3>
+	</md-grid-tile-header>
+	<br />
+	<br />
+	<br />
+	<i class="material-icons md-64">{{iot.icon}}</i>
+</div>

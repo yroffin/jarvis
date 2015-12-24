@@ -27,6 +27,15 @@ angular.module('JarvisApp',[
                             'JarvisApp.services',
                             'JarvisApp.directives'
                             ])
+     .config(function($mdIconProvider) {
+	  // Configure URLs for icons specified by [set:]id.
+	  $mdIconProvider
+	       .defaultFontSet( 'fontawesome' )
+	       .defaultIconSet('my/app/icons.svg')       // Register a default set of SVG icons
+	       .iconSet('social', 'my/app/social.svg')   // Register a named icon set of SVGs
+	       .icon('android', 'my/app/android.svg')    // Register a specific icon (by name)
+	       .icon('work:chair', 'my/app/chair.svg');  // Register icon in a specific set
+	})
     .config(['RestangularProvider',
         function(RestangularProvider) {
     		RestangularProvider.setBaseUrl('/api');

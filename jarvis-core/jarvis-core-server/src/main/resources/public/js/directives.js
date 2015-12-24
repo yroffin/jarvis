@@ -65,13 +65,17 @@ angular.module('JarvisApp.directives', [])
 .controller('iotDirectiveCtrl',
 ['$scope', '$log', function($scope, $log){
 	$log.info('iot-directive-ctrl');
+	
+	$scope.test = function() {
+		$log.info('test',$scope.iot);
+	}
 }])
 .directive('iotDirective', ['$log', '$stateParams', function ($log, $stateParams) {
   return {
     restrict: 'E',
     templateUrl: '/ui/js/partials/directives/iot-directive.html',
     link: function(scope, element, attrs) {
-    	$log.info('iot-directive', scope.job);
+    	$log.info('iot-directive', scope.iot);
     }
   }
 }])

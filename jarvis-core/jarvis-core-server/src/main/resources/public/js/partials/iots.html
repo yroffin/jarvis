@@ -1,7 +1,11 @@
 <div ng-cloak>
-	<md-grid-list md-cols-sm="1" md-cols-md="2" md-cols-gt-md="6"
-        md-row-height-gt-md="1:1" md-row-height="4:3"
-        md-gutter="8px" md-gutter-gt-sm="4px" >
-		<iot-directive ng-controller="iotDirectiveCtrl" ng-repeat="iot in jarvis.iots" />
-	</md-grid-list>
+  <md-grid-list
+        md-cols="3" md-cols-sm="3" md-cols-md="6" md-cols-gt-md="12"
+        md-row-height-gt-md="128px" md-row-height="128px"
+        md-gutter="4px" md-gutter-gt-sm="4px" >
+    <md-grid-tile class="gray"
+        md-rowspan="1" md-colspan="2" md-colspan-sm="1" ng-repeat="iot in jarvis.iots">
+        <iot-directive ng-controller="iotDirectiveCtrl" />
+    </md-grid-tile>
+  </md-grid-list>
 </div>
