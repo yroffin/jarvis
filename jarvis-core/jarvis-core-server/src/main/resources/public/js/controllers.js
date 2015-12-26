@@ -533,12 +533,13 @@ angular.module('JarvisApp',[
              */
             $scope.new = function(iots) {
                 var update = {
-                    name : "no name"
+                    name: "...",
+                    icon: "star_border"
                 };
                 /**
                  * create or update this job
                  */
-                jobResourceService.post(update, function(data) {
+                iotResourceService.base.post(update, function(data) {
                         toastService.info('iot ' + data.name + '#' + data.id +' created');
                         iots.push(data);
                     }, toastService.failure);

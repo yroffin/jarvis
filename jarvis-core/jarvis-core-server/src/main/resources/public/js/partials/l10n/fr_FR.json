@@ -8,7 +8,8 @@
     "True"   		: "Oui",
     "False"   		: "Non",
     "Title"     	: "Titre",
-    "Close"   		: "Fermer",
+    "MyObjects"    	: "Me(s) objet(s) connecté(s)",
+	"Close"   		: "Fermer",
     "Duplicate"   	: "Dupliquer",
     "Delete"   		: "Supprimer",
     "Save"   		: "Sauvegarder"
