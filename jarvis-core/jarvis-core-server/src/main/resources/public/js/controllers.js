@@ -25,7 +25,9 @@ angular.module('JarvisApp',[
                             'ui.router',
                             'ui.router.router',
                             'JarvisApp.services',
-                            'JarvisApp.directives'
+                            'JarvisApp.directives',
+                            'pascalprecht.translate',
+                            'ngCookies'
                             ])
      .config(function($mdIconProvider) {
 	  // Configure URLs for icons specified by [set:]id.
@@ -36,6 +38,19 @@ angular.module('JarvisApp',[
 	       .icon('android', 'my/app/android.svg')    // Register a specific icon (by name)
 	       .icon('work:chair', 'my/app/chair.svg');  // Register icon in a specific set
 	})
+	.config(['$translateProvider', 
+	    function($translateProvider){
+		  // Register a loader for the static files
+		  // So, the module will search missing translation tables under the specified urls.
+		  // Those urls are [prefix][langKey][suffix].
+		  $translateProvider.useStaticFilesLoader({
+		    prefix: 'js/partials/l10n/',
+		    suffix: '.json'
+		  });
+		  // Tell the module what language to use by default
+		  $translateProvider.preferredLanguage('fr_FR');
+		  $translateProvider.useSanitizeValueStrategy(null);
+	}])
     .config(['RestangularProvider',
         function(RestangularProvider) {
     		RestangularProvider.setBaseUrl('/api');
@@ -96,7 +111,12 @@ angular.module('JarvisApp',[
         .state('iots', {
             url: '/iots',
             controller: 'jarvisIotsCtrl',
-            templateUrl: '/ui/js/partials/iots.html'
+            templateUrl: '/ui/js/partials/iots/iots.html'
+        })
+        .state('iots-id', {
+            url: '/iots/:id',
+            controller: 'jarvisIotCtrl',
+            templateUrl: '/ui/js/partials/iots/iot.html'
         })
         ;
     })
@@ -148,6 +168,13 @@ angular.module('JarvisApp',[
         $scope.location = function(menuId, target) {
             $mdSidenav(menuId).toggle();
             $location.path(target);
+        };
+
+        /**
+         * go to state
+         */
+        $scope.go = function(target,params) {
+            $state.go(target,params);
         };
     }
     ]
@@ -282,9 +309,6 @@ angular.module('JarvisApp',[
                     /**
                      * convert internal json params
                      */
-                    if(element.params) {
-                    	element.text = JSON.stringify(element.params);
-                    }
                     arr.push({
                     	'id':element.id,
                     	'name':element.name,
@@ -425,7 +449,7 @@ angular.module('JarvisApp',[
         }
     ])
     /**
-     * job view controller
+     * job detail controller
      */
     .controller('jarvisJobCtrl',
     ['$scope', '$stateParams', 'jobResourceService', 'paramResourceService', 'toastService',
@@ -521,6 +545,68 @@ angular.module('JarvisApp',[
             }
         }
     ])
+    /**
+     * iot detail controller
+     */
+    .controller('jarvisIotCtrl',
+        function($scope, $stateParams, iotResourceService, toastService, $log) {
+
+        $scope.remove = function(iot) {
+        	$log.debug('delete', iot);
+        	iotResourceService.base.delete(iot.id, function(element) {
+            	toastService.info('Iot ' + iot.name + '#' + iot.id + ' removed');
+            	$scope.go('iots');
+            }, toastService.failure);
+        }
+
+        $scope.save = function(iot) {
+        	$log.debug('save', iot);
+        	iotResourceService.base.put(iot, function(element) {
+            	toastService.info('Iot ' + iot.name + '#' + iot.id + ' updated');
+            	$scope.go('iots');
+            }, toastService.failure);
+        }
+
+        $scope.duplicate = function(iot) {
+        	$log.debug('duplicate', iot);
+        	iotResourceService.base.post(iot, function(element) {
+            	toastService.info('Iot ' + iot.name + '#' + iot.id + ' duplicated');
+            	$scope.go('iots');
+            }, toastService.failure);
+        }
+
+        /**
+         * init part
+         */
+    	$scope.allOwners = [];
+    	$scope.allVisibles = [
+    	   {id: true,value:'True'},
+    	   {id: false,value:'False'}
+    	];
+
+    	/**
+    	 * get current iot
+    	 */
+    	iotResourceService.base.get($stateParams.id, function(data) {
+        	$scope.iot = data;
+        	toastService.info('Iot ' + data.name + '#' + $stateParams.id);
+        }, toastService.failure);
+
+    	/**
+    	 * find all owner
+    	 */
+    	iotResourceService.base.findAll(function(data) {
+        	_.forEach(data, function(element) {
+                /**
+                 * convert internal json params
+                 */
+        		$scope.allOwners.push({
+                	'id':element.id,
+                	'name':element.name
+                });
+            });
+        }, toastService.failure);
+    })
 	/**
 	 * neo4j view controller
 	 */

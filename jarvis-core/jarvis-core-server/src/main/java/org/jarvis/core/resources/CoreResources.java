@@ -47,13 +47,16 @@ public class CoreResources {
 		        InputStream inputStream = getClass().getResourceAsStream(path);
 		        if (inputStream != null) {
 		        	if(path.endsWith(".html")) {
-		        		response.type("text/html");
+		        		response.type("text/html; charset=utf-8");
 		        	}
 		        	if(path.endsWith(".css")) {
-		        		response.type("text/css");
+		        		response.type("text/css; charset=utf-8");
 		        	}
 		        	if(path.endsWith(".js")) {
-		        		response.type("application/javascript");
+		        		response.type("application/javascript; charset=utf-8");
+		        	}
+		        	if(path.endsWith(".json")) {
+		        		response.type("text/html; charset=utf-8");
 		        	}
 		        	if(path.endsWith(".ico")) {
 		        		response.type("image/x-icon");

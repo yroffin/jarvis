@@ -324,21 +324,45 @@ myAppServices.factory('jobResourceService', function(Restangular, paramResourceS
 /**
  * iotResourceService
  */
-myAppServices.factory('iotResourceService', function(Restangular) {
+myAppServices.factory('filterService', function(Restangular) {
+  var base = {
+		  iot: function(element) {
+			  return {
+	          	'id':element.id,
+	        	'name':element.name,
+	        	'owner':element.owner,
+	        	'visible':element.visible,
+	        	'icon':element.icon,
+	        	'tagColor':element.tagColor,
+	        	'tagTextColor':element.tagTextColor
+			  }
+		  }
+  }
+  return base;
+});
+
+/**
+ * iotResourceService
+ */
+myAppServices.factory('iotResourceService', function(Restangular, filterService) {
   var base = {
         /**
 		 * base services : findAll, delete, put and post
 		 */
 		findAll: function(callback, failure) {
 			Restangular.all('iots').getList().then(function(elements) {
-				callback(elements);
+                var arr = [];
+            	_.forEach(elements, function(element) {
+                    arr.push(filterService.iot(element));
+                });
+				callback(arr);
 			},function(errors){
 				failure(errors);
 			});
 		},
 		get: function(id, callback, failure) {
 			Restangular.one('iots', id).get().then(function(element) {
-				callback(element);
+				callback(filterService.iot(element));
 			},function(errors){
 				failure(errors);
 			});

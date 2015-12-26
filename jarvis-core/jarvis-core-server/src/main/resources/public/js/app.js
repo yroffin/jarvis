@@ -27,5 +27,6 @@ angular.module('JarvisApp', [
   'ngMdIcons',
   'restangular',
   'ui.router',
-  'ui.router.router'
+  'ui.router.router',
+  'pascalprecht.translate'
 ]);

@@ -1,0 +1,15 @@
+{
+	"Icon"     		: "Icône",
+	"TagColor"     	: "Couleur du tag",
+	"TagTextColor"	: "Couleur du texte du tag",
+	"Owner"     	: "Propriétaire",
+    "Name"      	: "Nom",
+    "Visible"   	: "Visible",
+    "True"   		: "Oui",
+    "False"   		: "Non",
+    "Title"     	: "Titre",
+    "Close"   		: "Fermer",
+    "Duplicate"   	: "Dupliquer",
+    "Delete"   		: "Supprimer",
+    "Save"   		: "Sauvegarder"
+}

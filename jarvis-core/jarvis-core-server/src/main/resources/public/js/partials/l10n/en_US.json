@@ -1,0 +1,15 @@
+{
+	"Icon"     		: "Icon",
+	"TagColor"     	: "TagColor",
+	"TagTextColor"	: "TagTextColor",
+	"Owner"     	: "Owner",
+    "Name"      	: "Name",
+    "Visible"   	: "Visible",
+    "True"   		: "True",
+    "False"   		: "False",
+    "Title"     	: "Title",
+    "Close"   		: "Close",
+    "Duplicate"   	: "Duplicate",
+    "Delete"   		: "Delete",
+    "Save"   		: "Save"
+}

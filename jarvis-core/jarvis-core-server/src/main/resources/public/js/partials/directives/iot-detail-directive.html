@@ -1,0 +1,45 @@
+<div layout="column" ng-cloak>
+  <md-content layout-padding>
+  	<h2>Iot {{iot.id}}</h2>
+    <div layout="row">
+      <md-input-container>
+        <label translate="Name"></label>
+        <input ng-model="iot.name">
+      </md-input-container>
+      <md-input-container>
+        <label translate="Owner"></label>
+        <md-select ng-model="iot.owner">
+          <md-option ng-repeat="owner in allOwners" value="{{owner.id}}">
+            {{owner.name}}
+          </md-option>
+        </md-select>
+      </md-input-container>
+      <md-input-container>
+        <label translate="Visible"></label>
+        <md-select ng-model="iot.visible">
+          <md-option ng-repeat="visible in allVisibles" value="{{visible.id}}">
+            {{visible.value | translate}}
+          </md-option>
+        </md-select>
+      </md-input-container>
+    </div>
+    <div>
+      <md-input-container>
+        <label translate="Icon"></label>
+        <input ng-model="iot.icon">
+      </md-input-container>
+      <md-input-container>
+        <label translate="TagColor"></label>
+        <input ng-model="iot.tagColor">
+      </md-input-container>
+      <md-input-container>
+        <label translate="TagTextColor"></label>
+        <input ng-model="iot.tagTextColor">
+      </md-input-container>
+    </div>
+    <md-button translate="Delete" ng-click="remove(iot)"></md-button>
+    <md-button translate="Save" ng-click="save(iot)"></md-button>
+    <md-button translate="Duplicate" ng-click="duplicate(iot)"></md-button>
+    <md-button translate="Close" ng-click="go('iots')"></md-button>
+  </md-content>
+</div>
