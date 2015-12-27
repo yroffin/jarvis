@@ -324,26 +324,6 @@ myAppServices.factory('jobResourceService', function(Restangular, paramResourceS
 /**
  * iotResourceService
  */
-myAppServices.factory('filterService', function(Restangular) {
-  var base = {
-		  iot: function(element) {
-			  return {
-	          	'id':element.id,
-	        	'name':element.name,
-	        	'owner':element.owner,
-	        	'visible':element.visible,
-	        	'icon':element.icon,
-	        	'tagColor':element.tagColor,
-	        	'tagTextColor':element.tagTextColor
-			  }
-		  }
-  }
-  return base;
-});
-
-/**
- * iotResourceService
- */
 myAppServices.factory('iotResourceService', function(Restangular, filterService) {
   var base = {
         /**

@@ -65,5 +65,10 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
             controller: 'iotDirectiveCtrl',
             template: '<iot-directive />'
         })
+        .state('plugins', {
+            url: '/plugins',
+            controller: 'pluginsDirectiveCtrl',
+            template: '<plugins-directive />'
+        })
         ;
     })

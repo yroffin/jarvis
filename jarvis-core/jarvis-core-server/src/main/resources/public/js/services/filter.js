@@ -16,26 +16,26 @@
 
 'use strict';
 
-/**
- * Declare app level module which depends on filters, and services
- */
+/* Services */
 
-angular.module('JarvisApp', [
-     'ngMaterial',
-     'ngMdIcons',
-     'restangular',
-     'ui.router',
-     'ui.router.router',
-     'pascalprecht.translate',
-     'ngCookies',
-     'JarvisApp.config',
-     'JarvisApp.routes',
-     'JarvisApp.services',
-     'JarvisApp.services.filter',
-     'JarvisApp.services.plugin',
-     'JarvisApp.directives.plugins',
-     'JarvisApp.directives.jobs',
-     'JarvisApp.directives.job',
-     'JarvisApp.directives.iots',
-     'JarvisApp.directives.iot'
-]);
+var myAppServices = angular.module('JarvisApp.services.filter', []);
+
+/**
+ * filterService
+ */
+myAppServices.factory('filterService', function(Restangular) {
+  var base = {
+		  iot: function(element) {
+			  return {
+	          	'id':element.id,
+	        	'name':element.name,
+	        	'owner':element.owner,
+	        	'visible':element.visible,
+	        	'icon':element.icon,
+	        	'tagColor':element.tagColor,
+	        	'tagTextColor':element.tagTextColor
+			  }
+		  }
+  }
+  return base;
+});
