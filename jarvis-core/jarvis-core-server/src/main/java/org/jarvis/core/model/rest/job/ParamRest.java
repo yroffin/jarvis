@@ -22,10 +22,19 @@ import org.jarvis.core.type.ParamType;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * parameters
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ParamRest extends GenericEntity {
+	/**
+	 * value
+	 */
 	@JsonProperty("value")
 	public String value;
+	/**
+	 * type
+	 */
 	@JsonProperty("type")
 	public ParamType type = ParamType.STRING;
 }

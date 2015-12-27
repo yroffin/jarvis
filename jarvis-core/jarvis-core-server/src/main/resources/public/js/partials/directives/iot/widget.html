@@ -1,6 +1,10 @@
 <div layout="column" ng-cloak>
-  <md-content layout-padding>
   	<h2>Iot {{iot.id}}</h2>
+	<md-content layout-padding>
+	<md-button translate="Delete" aria-label="Todo" ng-click="remove(iot)"></md-button>
+	<md-button translate="Save" aria-label="Todo" ng-click="save(iot)"></md-button>
+	<md-button translate="Duplicate" aria-label="Todo" ng-click="duplicate(iot)"></md-button>
+	<md-button translate="Close" aria-label="Todo" ng-click="go('iots')"></md-button>
     <div layout="row">
       <md-input-container>
         <label translate="Name"></label>
@@ -37,9 +41,5 @@
         <input ng-model="iot.tagTextColor">
       </md-input-container>
     </div>
-    <md-button translate="Delete" ng-click="remove(iot)"></md-button>
-    <md-button translate="Save" ng-click="save(iot)"></md-button>
-    <md-button translate="Duplicate" ng-click="duplicate(iot)"></md-button>
-    <md-button translate="Close" ng-click="go('iots')"></md-button>
   </md-content>
 </div>

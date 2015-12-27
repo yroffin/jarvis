@@ -1,0 +1,57 @@
+<div ng-cloak>
+	<md-content class="md-padding" layout="row" layout-wrap layout-align="center start" layout-xs="column">
+	  <div flex="100" flex-sm="100" flex-xs="100" layout="column">
+	    <md-card>
+	      <md-card-title>
+	        <md-card-title-text>
+	          <span class="md-headline">Job#{{job.id}}</span>
+	          <span class="md-subhead">{{job.name}}</span>
+	        </md-card-title-text>
+	        <md-card-title-media>
+	          <div class="md-media-lg card-media"></div>
+	        </md-card-title-media>
+	      </md-card-title>
+	      <md-input-container>
+	          <md-tooltip>{{job.id}} {{job.name}}</md-tooltip>
+	          <label>Name</label>
+	          <input ng-model="job.name" flex />
+	      </md-input-container>
+	      <md-input-container>
+	          <md-tooltip>{{job.timestamp}} {{job.started}}</md-tooltip>
+	          <label>Crontab</label>
+	          <input ng-model="job.cronTime" flex />
+	      </md-input-container>
+	      <md-input-container>
+	          <md-tooltip>Plugin � lancer (dans  le répertoire plugin)</md-tooltip>
+	          <label>Plugin</label>
+	          <input ng-model="job.plugin" flex />
+	      </md-input-container>
+	      <md-chips
+	      	ng-model="params" 
+	      	placeholder="Parameter(s)"
+	      	md-require-match="true"
+	      	md-on-append="append($chip)"
+	      	md-on-remove="remove($chip)"
+	      >
+		<md-autocomplete
+		    md-selected-item="selectedItem"
+		    md-search-text="searchText"
+		    md-items="item in querySearch(searchText)"
+		    md-item-text="item.value"
+		    placeholder="Search for a parameter">
+		  <span md-highlight-text="searchText">{{item.value}} ({{item.type}})</span>
+		</md-autocomplete>
+		<md-chip-template>
+			<span>
+			<strong>{{$index}}: {{$chip.value}}</strong>
+			<em>({{$chip.type}}#{{$chip.instance}})</em>
+			</span>
+		</md-chip-template>
+	      </md-chips>
+	      <md-card-actions layout="row" layout-align="end center">
+			<md-button ng-click="save(job)">Save</md-button>
+		    <md-button ng-click="location('left', '/jobs')">+</md-button>
+	      </md-card-actions>
+	    </md-card>
+	</md-content>
+</div>

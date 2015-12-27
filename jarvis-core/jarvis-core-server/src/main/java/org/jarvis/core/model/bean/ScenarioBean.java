@@ -16,6 +16,12 @@
 
 package org.jarvis.core.model.bean;
 
+/**
+ * scenario
+ */
 public class ScenarioBean extends GenericBean {
+	/**
+	 * scenario name
+	 */
 	public String name;
 }

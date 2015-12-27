@@ -18,80 +18,9 @@
 
 /* Directives */
 
-
 angular.module('JarvisApp.directives', []).
     directive('appVersion', ['version', function(version) {
       return function(scope, elm, attrs) {
         elm.text(version);
       };
     }]);
-
-angular.module('JarvisApp.directives', [])
-/**
- * job-directive
- */
-.controller('jobDirectiveCtrl',
-['$scope', '$log', function($scope, $log){
-	$log.info('job-directive-ctrl');
-}])
-.directive('jobDirective', ['$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/directives/job-directive.html',
-    link: function(scope, element, attrs) {
-    	$log.info('job-directive', scope.job);
-    }
-  }
-}])
-/**
- * job-detail-directive
- */
-.controller('jobDetailDirectiveCtrl',
-['$scope', '$log', function($scope, $log){
-	$log.info('job-directive-detail-ctrl');
-}])
-.directive('jobDetailDirective', ['$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/directives/job-detail-directive.html',
-    link: function(scope, element, attrs) {
-    	$log.info('job-detail-directive', scope.job);
-    }
-  }
-}])
-/**
- * iot-directive
- */
-.controller('iotDirectiveCtrl',
-['$scope', '$log', function($scope, $log){
-	$log.info('iot-directive-ctrl');
-	
-	$scope.test = function() {
-		$log.info('test',$scope.iot);
-	}
-}])
-.directive('iotDirective', ['$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/directives/iot-directive.html',
-    link: function(scope, element, attrs) {
-    	$log.info('iot-directive', scope.iot);
-    }
-  }
-}])
-/**
- * iot-detail-directive
- */
-.controller('iotDetailDirectiveCtrl',
-['$scope', '$log', function($scope, $log){
-	$log.info('iot-directive-detail-ctrl');
-}])
-.directive('iotDetailDirective', ['$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/directives/iot-detail-directive.html',
-    link: function(scope, element, attrs) {
-    	$log.info('iot-detail-directive', scope.iot);
-    }
-  }
-}])

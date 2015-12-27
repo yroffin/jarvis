@@ -21,12 +21,18 @@
  */
 
 angular.module('JarvisApp', [
-  'ngResource',
-  'ngMaterial',
-  'ngAnimate',
-  'ngMdIcons',
-  'restangular',
-  'ui.router',
-  'ui.router.router',
-  'pascalprecht.translate'
+     'ngMaterial',
+     'ngMdIcons',
+     'restangular',
+     'ui.router',
+     'ui.router.router',
+     'pascalprecht.translate',
+     'ngCookies',
+     'JarvisApp.config',
+     'JarvisApp.routes',
+     'JarvisApp.services',
+     'JarvisApp.directives.jobs',
+     'JarvisApp.directives.job',
+     'JarvisApp.directives.iots',
+     'JarvisApp.directives.iot'
 ]);

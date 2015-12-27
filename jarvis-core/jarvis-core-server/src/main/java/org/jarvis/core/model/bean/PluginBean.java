@@ -14,19 +14,14 @@
  *   limitations under the License.
  */
 
-package org.jarvis.core.model.rest;
-
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+package org.jarvis.core.model.bean;
 
 /**
- * scenario
+ * plugin
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class ScenarioRest {
+public class PluginBean extends GenericBean {
 	/**
-	 * name
+	 * scenario name
 	 */
-	@JsonProperty("name")
 	public String name;
 }
