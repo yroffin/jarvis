@@ -22,7 +22,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
 .directive('jarvisPlugins', function ($log, $stateParams) {
   return {
     restrict: 'E',
-    templateUrl: '/ui/js/partials/directives/widget/jarvis-plugins.html',
+    templateUrl: '/ui/js/partials/widget/jarvis-plugins.html',
     link: function(scope, element, attrs) {
     	$log.info('jarvis-plugins');
     }
@@ -31,7 +31,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
 .directive('jarvisPluginCommon', function ($log, $stateParams) {
 	  return {
 	    restrict: 'E',
-	    templateUrl: '/ui/js/partials/directives/widget/jarvis-plugin-common.html',
+	    templateUrl: '/ui/js/partials/widget/jarvis-plugin-common.html',
 	    link: function(scope, element, attrs) {
 	    	$log.info('jarvis-plugin-common');
 	    }
@@ -40,7 +40,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
 .directive('jarvisPluginScript', function ($log, $stateParams) {
 	  return {
 	    restrict: 'E',
-	    templateUrl: '/ui/js/partials/directives/widget/jarvis-plugin-script.html',
+	    templateUrl: '/ui/js/partials/widget/jarvis-plugin-script.html',
 	    link: function(scope, element, attrs) {
 	    	$log.info('jarvis-plugin-script');
 	    }
@@ -49,7 +49,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
 .directive('jarvisIots', function ($log, $stateParams) {
   return {
     restrict: 'E',
-    templateUrl: '/ui/js/partials/directives/widget/jarvis-iots.html',
+    templateUrl: '/ui/js/partials/widget/jarvis-iots.html',
     link: function(scope, element, attrs) {
     	$log.info('iots-directive');
     }
@@ -58,7 +58,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
 .directive('jarvisIot', function ($log, $stateParams) {
   return {
     restrict: 'E',
-    templateUrl: '/ui/js/partials/directives/widget/jarvis-iot.html',
+    templateUrl: '/ui/js/partials/widget/jarvis-iot.html',
     link: function(scope, element, attrs) {
     	$log.info('iot-directive');
     }
@@ -67,7 +67,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
 .directive('jarvisJobs', function ($log, $stateParams) {
   return {
     restrict: 'E',
-    templateUrl: '/ui/js/partials/directives/widget/jarvis-jobs.html',
+    templateUrl: '/ui/js/partials/widget/jarvis-jobs.html',
     link: function(scope, element, attrs) {
     	$log.info('jobs-directive');
     }
@@ -76,7 +76,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
 .directive('jarvisJob', function ($log, $stateParams) {
   return {
     restrict: 'E',
-    templateUrl: '/ui/js/partials/directives/widget/jarvis-job.html',
+    templateUrl: '/ui/js/partials/widget/jarvis-job.html',
     link: function(scope, element, attrs) {
     	$log.info('job-directive');
     }
@@ -85,7 +85,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
 .directive('jarvisBottomSheetIot', function ($log, $stateParams) {
   return {
     restrict: 'E',
-    templateUrl: '/ui/js/partials/directives/widget/jarvis-bottom-sheet-iot.html',
+    templateUrl: '/ui/js/partials/widget/jarvis-bottom-sheet-iot.html',
     link: function(scope, element, attrs) {
     	$log.info('jarvis-bottom-sheet-iot');
     }
@@ -94,7 +94,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
 .directive('jarvisBottomSheetPlugin', function ($log, $stateParams) {
   return {
     restrict: 'E',
-    templateUrl: '/ui/js/partials/directives/widget/jarvis-bottom-sheet-plugin.html',
+    templateUrl: '/ui/js/partials/widget/jarvis-bottom-sheet-plugin.html',
     link: function(scope, element, attrs) {
     	$log.info('jarvis-bottom-sheet-plugin');
     }

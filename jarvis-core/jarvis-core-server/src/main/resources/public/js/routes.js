@@ -33,12 +33,12 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
         .state('jobs', {
             url: '/jobs',
             controller: 'jobsCtrl',
-            templateUrl: '/ui/js/partials/directives/jobs/job/page.html'
+            templateUrl: '/ui/js/partials/jobs/page.html'
         })
         .state('jobs-id', {
             url: '/jobs/:id',
             controller: 'jobCtrl',
-            templateUrl: '/ui/js/partials/directives/jobs/job/page.html'
+            templateUrl: '/ui/js/partials/jobs/job/page.html'
         })
         .state('configuration', {
             url: '/configuration',
@@ -58,22 +58,22 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
         .state('iots', {
             url: '/iots',
             controller: 'iotsCtrl',
-            templateUrl: '/ui/js/partials/directives/iots/page.html'
+            templateUrl: '/ui/js/partials/iots/page.html'
         })
         .state('iots-id', {
             url: '/iots/:id',
             controller: 'iotCtrl',
-            templateUrl: '/ui/js/partials/directives/iots/iot/page.html'
+            templateUrl: '/ui/js/partials/iots/iot/page.html'
         })
         .state('plugins', {
             url: '/plugins',
             controller: 'pluginsCtrl',
-            templateUrl: '/ui/js/partials/directives/plugins/page.html'
+            templateUrl: '/ui/js/partials/plugins/page.html'
         })
         .state('plugins-id-script', {
             url: '/plugins/scripts/:id',
             controller: 'pluginScriptCtrl',
-            templateUrl: '/ui/js/partials/directives/plugins/script/page.html'
+            templateUrl: '/ui/js/partials/plugins/script/page.html'
         })
         ;
     })
