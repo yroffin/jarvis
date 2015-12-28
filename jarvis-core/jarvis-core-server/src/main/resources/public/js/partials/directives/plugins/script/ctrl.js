@@ -32,6 +32,10 @@ angular.module('JarvisApp.directives.plugins.script', ['JarvisApp.services'])
 
     $scope.save = function(script) {
     	$log.debug('save', script);
+    	if(script.owner === '') {
+    		script.owner = undefined;
+        	$log.debug('save/owner', script);
+    	}
     	pluginResourceService.scripts.put(script, function(element) {
         	toastService.info('script ' + script.name + '#' + script.id + ' updated');
         	$scope.go('plugins');
@@ -65,7 +69,10 @@ angular.module('JarvisApp.directives.plugins.script', ['JarvisApp.services'])
 	    /**
 	     * init part
 	     */
-		$scope.allOwners = [];
+		$scope.allOwners = [{
+			id: undefined,
+			name: "Empty"
+		}];
 		$scope.allBooleans = [
 		               	   {id: true,value:'True'},
 		               	   {id: false,value:'False'}

@@ -16,8 +16,7 @@
       <md-input-container>
         <label translate="Owner"></label>
         <md-select ng-model="script.owner">
-          <md-option ng-repeat="owner in allOwners" value="{{owner.id}}">
-            {{owner.name}}
+          <md-option ng-repeat="owner in allOwners" value="{{owner.id}}" translate="{{owner.name}}">
           </md-option>
         </md-select>
       </md-input-container>

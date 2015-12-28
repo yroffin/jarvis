@@ -32,6 +32,10 @@ angular.module('JarvisApp.directives.iot', ['JarvisApp.services'])
 
     $scope.save = function(iot) {
     	$log.debug('save', iot);
+    	if(iot.owner === '') {
+    		iot.owner = undefined;
+        	$log.debug('save/owner', iot);
+    	}
     	iotResourceService.base.put(iot, function(element) {
         	toastService.info('Iot ' + iot.name + '#' + iot.id + ' updated');
         	$scope.go('iots');
@@ -65,7 +69,10 @@ angular.module('JarvisApp.directives.iot', ['JarvisApp.services'])
 	   /**
 	     * init part
 	     */
-		$scope.allOwners = [];
+		$scope.allOwners = [{
+			id: undefined,
+			name: "Empty"
+		}];
 		$scope.allVisibles = [
 		   {id: true,value:'True'},
 		   {id: false,value:'False'}
