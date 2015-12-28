@@ -33,6 +33,7 @@ angular.module('JarvisApp', [
      'JarvisApp.services',
      'JarvisApp.services.filter',
      'JarvisApp.services.plugin',
+     'JarvisApp.directives.widgets',
      'JarvisApp.directives.plugins',
      'JarvisApp.directives.plugins.script',
      'JarvisApp.directives.jobs',

@@ -65,4 +65,13 @@ angular.module('JarvisApp.directives.plugins', ['JarvisApp.services'])
     	$log.info('plugins-directive');
     }
   }
-});
+})
+.directive('pluginCommonDirective', function ($log, $stateParams) {
+	  return {
+	    restrict: 'E',
+	    templateUrl: '/ui/js/partials/directives/plugins/common/widget.html',
+	    link: function(scope, element, attrs) {
+	    	$log.info('plugin-common-directive');
+	    }
+	  }
+})

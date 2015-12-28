@@ -73,7 +73,7 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
         .state('plugins-id-script', {
             url: '/plugins/scripts/:id',
             controller: 'pluginScriptDirectiveCtrl',
-            template: '<plugin-script-directive />'
+            templateUrl: '/ui/js/partials/directives/plugins/script/page.html'
         })
         ;
     })
