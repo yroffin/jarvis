@@ -16,10 +16,48 @@
 
 'use strict';
 
-/* Directives */
+/* Ctrls */
 
-angular.module('JarvisApp.directives.plugins.script', ['JarvisApp.services'])
-.controller('pluginScriptDirectiveCtrl',
+angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
+.controller('pluginsCtrl', 
+	function($scope, $log, pluginResourceService, toastService){
+	
+    /**
+     * create a new job
+     * @param job
+     */
+    $scope.new = function(plugins) {
+        var update = {
+            name: "...",
+            icon: "star_border"
+        };
+        /**
+         * create or update this job
+         */
+        pluginResourceService.base.post(update, function(data) {
+                toastService.info('plugin ' + data.name + '#' + data.id +' created');
+                $scope.plugins.push(data);
+            }, toastService.failure);
+    }
+
+    /**
+     * loading jobs
+     */
+	pluginResourceService.base.findAll(function(data) {
+        var arr = [];
+    	_.forEach(data, function(element) {
+            /**
+             * convert internal json params
+             */
+            arr.push(element);
+        });
+    	toastService.info(arr.length + ' plugin(s)');
+        $scope.plugins = arr;
+    }, toastService.failure);
+
+	$log.info('plugins-ctrl');
+})
+.controller('pluginScriptCtrl',
 	function($scope, $log, $stateParams, $mdBottomSheet, pluginResourceService, iotResourceService, toastService){
 	
     $scope.remove = function(script) {
@@ -53,7 +91,7 @@ angular.module('JarvisApp.directives.plugins.script', ['JarvisApp.services'])
     $scope.showBottomSheet = function($event) {
         $mdBottomSheet.show({
           templateUrl: '/ui/js/partials/directives/plugins/script/action.html',
-          controller: 'pluginScriptDirectiveCtrl',
+          controller: 'pluginScriptCtrl',
           preserveScope: true,
           scope: $scope,
           targetEvent: $event,
@@ -101,15 +139,6 @@ angular.module('JarvisApp.directives.plugins.script', ['JarvisApp.services'])
 	        });
 	    }, toastService.failure);
 	
-		$log.info('script-directive-ctrl');
+		$log.info('script-ctrl');
     }
-})
-.directive('pluginScriptDirective', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/directives/plugins/script/widget.html',
-    link: function(scope, element, attrs) {
-    	$log.info('plugin-script-directive');
-    }
-  }
 })

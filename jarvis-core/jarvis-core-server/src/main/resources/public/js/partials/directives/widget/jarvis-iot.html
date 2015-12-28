@@ -1,0 +1,39 @@
+<md-content layout="column">
+	<div layout="row">
+	     <md-input-container>
+	       <label translate="Name"></label>
+	       <input ng-model="iot.name">
+	     </md-input-container>
+	     <md-input-container>
+	       <label translate="Owner"></label>
+	       <md-select ng-model="iot.owner">
+	         <md-option ng-repeat="owner in allOwners" value="{{owner.id}}" translate="{{owner.name}}">
+	         </md-option>
+	       </md-select>
+	     </md-input-container>
+	</div>
+	<div layout="row">
+	     <md-input-container>
+	       <label translate="Visible"></label>
+	       <md-select ng-model="iot.visible">
+	         <md-option ng-repeat="visible in allVisibles" value="{{visible.id}}">
+	           {{visible.value | translate}}
+	         </md-option>
+	       </md-select>
+	     </md-input-container>
+	     <md-input-container>
+	       <label translate="Icon"></label>
+	       <input ng-model="iot.icon">
+	     </md-input-container>
+	</div>
+	<div layout="row">
+	     <md-input-container>
+	       <label translate="TagColor"></label>
+	       <input ng-model="iot.tagColor">
+	     </md-input-container>
+	     <md-input-container>
+	       <label translate="TagTextColor"></label>
+	       <input ng-model="iot.tagTextColor">
+	     </md-input-container>
+	</div>
+</md-content>

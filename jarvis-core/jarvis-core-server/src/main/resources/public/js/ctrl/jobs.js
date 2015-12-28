@@ -16,10 +16,10 @@
 
 'use strict';
 
-/* Directives */
+/* Ctrls */
 
-angular.module('JarvisApp.directives.jobs', ['JarvisApp.services'])
-.controller('jobsDirectiveCtrl', 
+angular.module('JarvisApp.ctrl.jobs', ['JarvisApp.services'])
+.controller('jobsCtrl', 
 	function($scope, $log, jobResourceService, toastService){
 	
     /**
@@ -169,14 +169,58 @@ angular.module('JarvisApp.directives.jobs', ['JarvisApp.services'])
         $scope.jobs = arr;
     }, toastService.failure);
 
-	$log.debug('jobs-directive-ctrl');
+	$log.debug('jobs-ctrl');
 })
-.directive('jobsDirective', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/directives/jobs/widget.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jobs-directive');
+.controller('jobCtrl',
+	function($scope, $log, $stateParams, jobResourceService, paramResourceService, toastService){
+	
+    $scope.remove = function(chip) {
+    	jobResourceService.params.delete($scope.job.id, chip.id, chip.instance, function(element) {
+        	toastService.info('Parameter ' + chip.value + '#' + chip.id + ' :: ' + element.instance + ' removed');
+        }, toastService.failure);
     }
-  }
-});
+
+    $scope.append = function(chip) {
+    	jobResourceService.params.put($scope.job.id, chip.id, function(element) {
+        	toastService.info('Parameter ' + chip.value + '#' + chip.id + ' :: ' + element.instance + ' added');
+        	chip.instance = element.instance;
+        }, toastService.failure);
+    }
+
+    $scope.querySearch = function(query) {
+        function createFilterFor(query) {
+            var lowercaseQuery = angular.lowercase(query);
+            return function filterFn(param) {
+            	console.error(param);
+              return (param.value.indexOf(lowercaseQuery) === 0) ||
+                  (param.type.indexOf(lowercaseQuery) === 0);
+            };
+          }
+
+        var results = query ? $scope.allParams.filter(createFilterFor(query)) : [];
+        return results;
+      }
+
+	$log.debug('job-ctrl loading');
+
+	$scope.params = [];
+	$scope.allParams = [];
+
+	jobResourceService.get($stateParams.id, function(data) {
+    	$scope.job = data;
+    	toastService.info('Job ' + data.name + '#' + $stateParams.id);
+        jobResourceService.params.findAll($stateParams.id, function(params) {
+        	$scope.params = params;
+        	toastService.info(params.length + ' parameter(s)');
+        	/**
+        	 * load all params
+        	 */
+            paramResourceService.findAll(function(params) {
+            	$scope.allParams = params;
+            	toastService.info(params.length + ' parameter(s) loaded');
+            }, toastService.failure);
+        }, toastService.failure);
+    }, toastService.failure);
+
+	$log.debug('job-ctrl loaded');
+})

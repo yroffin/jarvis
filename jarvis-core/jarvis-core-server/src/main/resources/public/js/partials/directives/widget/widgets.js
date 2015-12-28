@@ -46,3 +46,57 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
 	    }
 	  }
 })
+.directive('jarvisIots', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/partials/directives/widget/jarvis-iots.html',
+    link: function(scope, element, attrs) {
+    	$log.info('iots-directive');
+    }
+  }
+})
+.directive('jarvisIot', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/partials/directives/widget/jarvis-iot.html',
+    link: function(scope, element, attrs) {
+    	$log.info('iot-directive');
+    }
+  }
+})
+.directive('jarvisJobs', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/partials/directives/widget/jarvis-jobs.html',
+    link: function(scope, element, attrs) {
+    	$log.info('jobs-directive');
+    }
+  }
+})
+.directive('jarvisJob', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/partials/directives/widget/jarvis-job.html',
+    link: function(scope, element, attrs) {
+    	$log.info('job-directive');
+    }
+  }
+})
+.directive('jarvisBottomSheetIot', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/partials/directives/widget/jarvis-bottom-sheet-iot.html',
+    link: function(scope, element, attrs) {
+    	$log.info('jarvis-bottom-sheet-iot');
+    }
+  }
+})
+.directive('jarvisBottomSheetPlugin', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/partials/directives/widget/jarvis-bottom-sheet-plugin.html',
+    link: function(scope, element, attrs) {
+    	$log.info('jarvis-bottom-sheet-plugin');
+    }
+  }
+})

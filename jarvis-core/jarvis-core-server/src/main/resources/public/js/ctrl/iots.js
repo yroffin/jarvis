@@ -16,10 +16,54 @@
 
 'use strict';
 
-/* Directives */
+/* Ctrls */
 
-angular.module('JarvisApp.directives.iot', ['JarvisApp.services'])
-.controller('iotDirectiveCtrl',
+angular.module('JarvisApp.ctrl.iots', ['JarvisApp.services'])
+.controller('iotsCtrl', 
+	function($scope, $log, iotResourceService, toastService){
+	
+    /**
+     * create a new job
+     * @param job
+     */
+    $scope.new = function(iots) {
+        var update = {
+            name: "...",
+            icon: "star_border"
+        };
+        /**
+         * create or update this job
+         */
+        iotResourceService.base.post(update, function(data) {
+                toastService.info('iot ' + data.name + '#' + data.id +' created');
+                $scope.iots.push(data);
+            }, toastService.failure);
+    }
+
+    /**
+     * loading jobs
+     */
+	iotResourceService.base.findAll(function(data) {
+        var arr = [];
+    	_.forEach(data, function(element) {
+            /**
+             * convert internal json params
+             */
+            arr.push({
+            	'id':element.id,
+            	'name':element.name,
+            	'owner':element.name,
+            	'visible':element.visible,
+            	'icon':element.icon
+            });
+        });
+    	toastService.info(arr.length + ' iot(s)');
+        $scope.iots = arr;
+    }, toastService.failure);
+
+	$log.info('iots-ctrl');
+})
+.controller('iotCtrl',
 	function($scope, $log, $stateParams, $mdBottomSheet, iotResourceService, toastService){
 	
     $scope.remove = function(iot) {
@@ -53,7 +97,7 @@ angular.module('JarvisApp.directives.iot', ['JarvisApp.services'])
     $scope.showBottomSheet = function($event) {
         $mdBottomSheet.show({
           templateUrl: '/ui/js/partials/directives/iot/action.html',
-          controller: 'iotDirectiveCtrl',
+          controller: 'iotCtrl',
           preserveScope: true,
           scope: $scope,
           targetEvent: $event,
@@ -101,15 +145,6 @@ angular.module('JarvisApp.directives.iot', ['JarvisApp.services'])
 	        });
 	    }, toastService.failure);
 	
-		$log.info('iot-directive-ctrl');
+		$log.info('iot-ctrl');
     }
-})
-.directive('iotDirective', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/directives/iots/iot/widget.html',
-    link: function(scope, element, attrs) {
-    	$log.info('iot-directive');
-    }
-  }
 })

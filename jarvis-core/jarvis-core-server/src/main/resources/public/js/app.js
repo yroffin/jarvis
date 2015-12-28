@@ -34,10 +34,7 @@ angular.module('JarvisApp', [
      'JarvisApp.services.filter',
      'JarvisApp.services.plugin',
      'JarvisApp.directives.widgets',
-     'JarvisApp.directives.plugins',
-     'JarvisApp.directives.plugins.script',
-     'JarvisApp.directives.jobs',
-     'JarvisApp.directives.job',
-     'JarvisApp.directives.iots',
-     'JarvisApp.directives.iot'
+     'JarvisApp.ctrl.plugins',
+     'JarvisApp.ctrl.jobs',
+     'JarvisApp.ctrl.iots',
 ]);
