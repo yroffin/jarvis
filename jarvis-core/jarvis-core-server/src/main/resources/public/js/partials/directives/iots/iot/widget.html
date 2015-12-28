@@ -1,9 +1,12 @@
 <div layout="column" ng-init="load()" ng-cloak>
   	<h2>
-  		<md-icon md-font-icon="material-icons md-24" ng-click="showBottomSheet($event)">menu</md-icon>
+  		<md-button aria-label="menu" class="md-fab md-primary" ng-click="showBottomSheet($event)">
+ 	 		<md-icon md-font-icon="material-icons md-16">menu</md-icon>
+		</md-button>
   		<span>Iot #{{iot.id}}</span>
   	</h2>
-<md-content layout="column">
+  	<h3 translate="plugin.general"></h3><md-divider></md-divider>
+	<md-content layout="column">
 	<div layout="row">
       <md-input-container>
         <label translate="Name"></label>

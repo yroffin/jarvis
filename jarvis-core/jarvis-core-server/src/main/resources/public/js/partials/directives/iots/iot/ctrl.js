@@ -107,7 +107,7 @@ angular.module('JarvisApp.directives.iot', ['JarvisApp.services'])
 .directive('iotDirective', function ($log, $stateParams) {
   return {
     restrict: 'E',
-    templateUrl: '/ui/js/partials/directives/iot/widget.html',
+    templateUrl: '/ui/js/partials/directives/iots/iot/widget.html',
     link: function(scope, element, attrs) {
     	$log.info('iot-directive');
     }
