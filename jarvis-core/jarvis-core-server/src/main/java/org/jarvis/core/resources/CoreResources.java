@@ -30,12 +30,18 @@ import spark.Response;
 import spark.Route;
 import spark.utils.IOUtils;
 
+/**
+ * core resources (ui, ...)
+ */
 @Component
 public class CoreResources {
 
 	@Autowired
 	Environment env;
 
+	/**
+	 * mount local resource
+	 */
 	public void mount() {
 		/**
 		 * mount resources

@@ -26,16 +26,39 @@ var api = 'plugins';
 /**
  * iotResourceService
  */
-myAppServices.factory('pluginResourceService', function(Restangular, filterService) {
+myAppServices.factory('pluginResourceService', function($log, Restangular, filterService) {
   var base = {
+	        /**
+			 * base services : findAll, delete, put and post
+			 */
+			findAll: function(callback, failure) {
+                var arr = [];
+                var plugins = ['scripts'];
+				var done = _.after(plugins.length, function(loaded) {
+					callback(loaded);
+				});
+				_.forEach(plugins, function(plugin) {
+					Restangular.all(api).all(plugin).getList().then(function(elements) {
+		            	_.forEach(elements, function(element) {
+		            		$log.debug(filterService.plugin(element));
+		                    arr.push(filterService.plugin(element));
+		                });
+		            	done(arr);
+					},function(errors){
+						failure(errors);
+					});
+				});
+			}
+  };
+  var scripts = {
         /**
 		 * base services : findAll, delete, put and post
 		 */
 		findAll: function(callback, failure) {
-			Restangular.all(api).getList().then(function(elements) {
+			Restangular.all(api).all('scripts').getList().then(function(elements) {
                 var arr = [];
             	_.forEach(elements, function(element) {
-                    arr.push(filterService.iot(element));
+                    arr.push(filterService.script(element));
                 });
 				callback(arr);
 			},function(errors){
@@ -43,28 +66,28 @@ myAppServices.factory('pluginResourceService', function(Restangular, filterServi
 			});
 		},
 		get: function(id, callback, failure) {
-			Restangular.one(api, id).get().then(function(element) {
-				callback(filterService.iot(element));
+			Restangular.all(api).one('scripts', id).get().then(function(element) {
+				callback(filterService.script(element));
 			},function(errors){
 				failure(errors);
 			});
 		},
 		delete: function(id, callback, failure) {
-			Restangular.one(api, id).remove().then(function(elements) {
+			Restangular.all(api).one('scripts', id).remove().then(function(elements) {
 				callback(elements);
 			},function(errors){
 				failure(errors);
 			});
 		},
 		put: function(element, callback, failure) {
-			Restangular.one(api, element.id).customPUT(element).then(function(jobs) {
+			Restangular.all(api).one('scripts', element.id).customPUT(element).then(function(jobs) {
 				callback(jobs);
 			},function(errors){
 				failure(errors);
 			});
 		},
 		post: function(element, callback, failure) {
-			Restangular.all(api).post(element).then(function(elements) {
+			Restangular.all(api).all('scripts').post(element).then(function(elements) {
 				callback(elements);
 			},function(errors){
 				failure(errors);
@@ -75,6 +98,7 @@ myAppServices.factory('pluginResourceService', function(Restangular, filterServi
   }
   return {
 	    base: base,
+	    scripts: scripts,
 		ext : ext  
   }
 });

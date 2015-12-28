@@ -32,24 +32,25 @@ limitations under the License.
     <!-- Just for external configuration -->
     <script src="config.js"></script>
 </head>
-<body layout="column" ng-controller="JarvisAppCtrl as ctrl" ng-init="ctrl.load()" >
+<body ng-controller="JarvisAppCtrl as ctrl" ng-init="ctrl.load()" ng-cloak>
+
 <md-toolbar layout="row">
     <div class="md-toolbar-tools">
         <md-button ng-click="toggleSidenav('left')" hide-gt-sm class="md-icon-button">
-            <md-icon aria-label="Menu" md-svg-icon="https://s3-us-west-2.amazonaws.com/s.cdpn.io/68133/menu.svg"></md-icon>
+        	<md-icon md-font-icon="material-icons md-24">menu</md-icon>
         </md-button>
         <h1>Jarvis</h1>
     </div>
 </md-toolbar>
 
-<div>
+<div layout="row">
     <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
         <md-button ng-click="location('left', '/jobs');">Jobs</md-button>
         <md-button ng-click="location('left', '/configuration');">Configuration</md-button>
         <md-button ng-click="location('left', '/scenario');">Scenario</md-button>
         <md-button ng-click="location('left', '/connectors');">Connector</md-button>
         <md-button ng-click="location('left', '/iots');">Connected object(s)</md-button>
-        <md-button ng-click="go('plugins');">Plugin(s)</md-button>
+        <md-button ng-click="location('left', '/plugins');">Plugin(s)</md-button>
     </md-sidenav>
     <md-content flex layout-padding>
          <ui-view></ui-view>
@@ -94,6 +95,7 @@ limitations under the License.
 <script src="js/partials/directives/job/ctrl.js"></script>
 <script src="js/partials/directives/jobs/ctrl.js"></script>
 <script src="js/partials/directives/plugins/ctrl.js"></script>
+<script src="js/partials/directives/plugins/script/ctrl.js"></script>
 
 </body>
 </html>

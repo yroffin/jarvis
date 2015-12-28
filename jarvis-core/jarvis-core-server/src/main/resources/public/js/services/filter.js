@@ -35,6 +35,28 @@ myAppServices.factory('filterService', function(Restangular) {
 	        	'tagColor':element.tagColor,
 	        	'tagTextColor':element.tagTextColor
 			  }
+		  },
+		  plugin: function(element) {
+			  return {
+	          	'id':element.id,
+	        	'name':element.name,
+	        	'owner':element.owner,
+	        	'type':element.type,
+	        	'icon':element.icon,
+	        	'active':element.active,
+	        	'visible':element.visible
+			  }
+		  },
+		  script: function(element) {
+			  return {
+	          	'id':element.id,
+	        	'name':element.name,
+	        	'owner':element.owner,
+	        	'type':element.type,
+	        	'icon':element.icon,
+	        	'active':element.active,
+	        	'visible':element.visible
+			  }
 		  }
   }
   return base;

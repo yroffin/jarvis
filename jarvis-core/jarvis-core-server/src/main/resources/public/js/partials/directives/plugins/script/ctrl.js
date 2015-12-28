@@ -18,38 +18,38 @@
 
 /* Directives */
 
-angular.module('JarvisApp.directives.iot', ['JarvisApp.services'])
-.controller('iotDirectiveCtrl',
-	function($scope, $log, $stateParams, $mdBottomSheet, iotResourceService, toastService){
+angular.module('JarvisApp.directives.plugins.script', ['JarvisApp.services'])
+.controller('pluginScriptDirectiveCtrl',
+	function($scope, $log, $stateParams, $mdBottomSheet, pluginResourceService, iotResourceService, toastService){
 	
-    $scope.remove = function(iot) {
-    	$log.debug('delete', iot);
-    	iotResourceService.base.delete(iot.id, function(element) {
-        	toastService.info('Iot ' + iot.name + '#' + iot.id + ' removed');
-        	$scope.go('iots');
+    $scope.remove = function(script) {
+    	$log.debug('delete', script);
+    	pluginResourceService.scripts.delete(script.id, function(element) {
+        	toastService.info('script ' + script.name + '#' + script.id + ' removed');
+        	$scope.go('plugins');
         }, toastService.failure);
     }
 
-    $scope.save = function(iot) {
-    	$log.debug('save', iot);
-    	iotResourceService.base.put(iot, function(element) {
-        	toastService.info('Iot ' + iot.name + '#' + iot.id + ' updated');
-        	$scope.go('iots');
+    $scope.save = function(script) {
+    	$log.debug('save', script);
+    	pluginResourceService.scripts.put(script, function(element) {
+        	toastService.info('script ' + script.name + '#' + script.id + ' updated');
+        	$scope.go('plugins');
         }, toastService.failure);
     }
 
-    $scope.duplicate = function(iot) {
-    	$log.debug('duplicate', iot);
-    	iotResourceService.base.post(iot, function(element) {
-        	toastService.info('Iot ' + iot.name + '#' + iot.id + ' duplicated');
-        	$scope.go('iots');
+    $scope.duplicate = function(script) {
+    	$log.debug('duplicate', script);
+    	pluginResourceService.scripts.post(script, function(element) {
+        	toastService.info('script ' + script.name + '#' + script.id + ' duplicated');
+        	$scope.go('plugins');
         }, toastService.failure);
     }
 
     $scope.showBottomSheet = function($event) {
         $mdBottomSheet.show({
-          templateUrl: '/ui/js/partials/directives/iot/action.html',
-          controller: 'iotDirectiveCtrl',
+          templateUrl: '/ui/js/partials/directives/plugins/script/action.html',
+          controller: 'pluginScriptDirectiveCtrl',
           preserveScope: true,
           scope: $scope,
           targetEvent: $event,
@@ -62,21 +62,21 @@ angular.module('JarvisApp.directives.iot', ['JarvisApp.services'])
       };
       
     $scope.load = function() {
-	   /**
+	    /**
 	     * init part
 	     */
 		$scope.allOwners = [];
-		$scope.allVisibles = [
-		   {id: true,value:'True'},
-		   {id: false,value:'False'}
-		];
+		$scope.allBooleans = [
+		               	   {id: true,value:'True'},
+		               	   {id: false,value:'False'}
+		               	];
 	
 		/**
-		 * get current iot
+		 * get current script
 		 */
-		iotResourceService.base.get($stateParams.id, function(data) {
-	    	$scope.iot = data;
-	    	toastService.info('Iot ' + data.name + '#' + $stateParams.id);
+		pluginResourceService.scripts.get($stateParams.id, function(data) {
+	    	$scope.script = data;
+	    	toastService.info('script ' + data.name + '#' + $stateParams.id);
 	    }, toastService.failure);
 	
 		/**
@@ -94,15 +94,15 @@ angular.module('JarvisApp.directives.iot', ['JarvisApp.services'])
 	        });
 	    }, toastService.failure);
 	
-		$log.info('iot-directive-ctrl');
+		$log.info('script-directive-ctrl');
     }
 })
-.directive('iotDirective', function ($log, $stateParams) {
+.directive('pluginScriptDirective', function ($log, $stateParams) {
   return {
     restrict: 'E',
-    templateUrl: '/ui/js/partials/directives/iot/widget.html',
+    templateUrl: '/ui/js/partials/directives/plugins/script/widget.html',
     link: function(scope, element, attrs) {
-    	$log.info('iot-directive');
+    	$log.info('plugin-script-directive');
     }
   }
 })

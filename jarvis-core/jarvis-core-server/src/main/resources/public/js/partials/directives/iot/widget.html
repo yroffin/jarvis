@@ -1,11 +1,10 @@
-<div layout="column" ng-cloak>
-  	<h2>Iot {{iot.id}}</h2>
-	<md-content layout-padding>
-	<md-button translate="Delete" aria-label="Todo" ng-click="remove(iot)"></md-button>
-	<md-button translate="Save" aria-label="Todo" ng-click="save(iot)"></md-button>
-	<md-button translate="Duplicate" aria-label="Todo" ng-click="duplicate(iot)"></md-button>
-	<md-button translate="Close" aria-label="Todo" ng-click="go('iots')"></md-button>
-    <div layout="row">
+<div layout="column" ng-init="load()" ng-cloak>
+  	<h2>
+  		<md-icon md-font-icon="material-icons md-24" ng-click="showBottomSheet($event)">menu</md-icon>
+  		<span>Iot #{{iot.id}}</span>
+  	</h2>
+<md-content layout="column">
+	<div layout="row">
       <md-input-container>
         <label translate="Name"></label>
         <input ng-model="iot.name">
@@ -18,6 +17,8 @@
           </md-option>
         </md-select>
       </md-input-container>
+	</div>
+	<div layout="row">
       <md-input-container>
         <label translate="Visible"></label>
         <md-select ng-model="iot.visible">
@@ -26,12 +27,12 @@
           </md-option>
         </md-select>
       </md-input-container>
-    </div>
-    <div>
       <md-input-container>
         <label translate="Icon"></label>
         <input ng-model="iot.icon">
       </md-input-container>
+	</div>
+	<div layout="row">
       <md-input-container>
         <label translate="TagColor"></label>
         <input ng-model="iot.tagColor">
@@ -40,6 +41,6 @@
         <label translate="TagTextColor"></label>
         <input ng-model="iot.tagTextColor">
       </md-input-container>
-    </div>
+	</div>
   </md-content>
 </div>

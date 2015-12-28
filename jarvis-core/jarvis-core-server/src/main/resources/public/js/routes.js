@@ -23,7 +23,7 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
         /**
          * default state
          */
-        $urlRouterProvider.otherwise('/jobs');
+        $urlRouterProvider.otherwise('/iots');
     })
     .config(function($stateProvider) {
         /**
@@ -69,6 +69,11 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
             url: '/plugins',
             controller: 'pluginsDirectiveCtrl',
             template: '<plugins-directive />'
+        })
+        .state('plugins-id-script', {
+            url: '/plugins/scripts/:id',
+            controller: 'pluginScriptDirectiveCtrl',
+            template: '<plugin-script-directive />'
         })
         ;
     })

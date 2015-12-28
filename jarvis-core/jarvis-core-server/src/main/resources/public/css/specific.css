@@ -1,6 +1,10 @@
 /**
  * CSS
  */
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
 md-toast.md-failure-toast-theme {
     background-color: red;
 }/**
@@ -13,7 +17,7 @@ md-toast.md-failure-toast-theme {
 // Rules for sizing the icon.
 .material-icons.md-18 { font-size: 18px; }
 .material-icons.md-24 { font-size: 24px; }
-.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-32 { font-size: 32px; }
 .material-icons.md-48 { font-size: 48px; }
 .material-icons.md-64 { font-size: 64px; }
 

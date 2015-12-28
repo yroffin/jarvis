@@ -49,13 +49,7 @@ angular.module('JarvisApp.directives.plugins', ['JarvisApp.services'])
             /**
              * convert internal json params
              */
-            arr.push({
-            	'id':element.id,
-            	'name':element.name,
-            	'owner':element.name,
-            	'visible':element.visible,
-            	'icon':element.icon
-            });
+            arr.push(element);
         });
     	toastService.info(arr.length + ' plugin(s)');
         $scope.plugins = arr;

@@ -1,0 +1,49 @@
+<div layout="column" ng-init="load()" ng-cloak>
+  	<h2>
+  		<md-icon md-font-icon="material-icons md-24" ng-click="showBottomSheet($event)">menu</md-icon>
+  		<span>Script {{script.type}}#{{script.id}}</span>
+  	</h2>
+	<md-content layout-padding>
+    <div layout="row">
+      <md-input-container>
+        <label translate="Name"></label>
+        <input ng-model="script.name">
+      </md-input-container>
+      <md-input-container>
+      <label translate="Category"></label>
+      <input ng-model="script.type">
+      </md-input-container>
+      <md-input-container>
+        <label translate="Owner"></label>
+        <md-select ng-model="script.owner">
+          <md-option ng-repeat="owner in allOwners" value="{{owner.id}}">
+            {{owner.name}}
+          </md-option>
+        </md-select>
+      </md-input-container>
+    </div>
+    <div layout="row">
+     <md-input-container>
+       <label translate="Icon"></label>
+       <input ng-model="script.icon">
+     </md-input-container>
+     <md-input-container>
+       <label translate="Active"></label>
+       <md-select ng-model="script.active">
+         <md-option ng-repeat="active in allBooleans" value="{{active.id}}">
+           {{active.value | translate}}
+         </md-option>
+       </md-select>
+     </md-input-container>
+     <md-input-container>
+       <label translate="Visible"></label>
+       <md-select ng-model="script.visible">
+         <md-option ng-repeat="visible in allBooleans" value="{{visible.id}}">
+           {{visible.value | translate}}
+         </md-option>
+       </md-select>
+     </md-input-container>
+     </div>
+     <md-divider>xx</md-divider>
+  </md-content>
+</div>

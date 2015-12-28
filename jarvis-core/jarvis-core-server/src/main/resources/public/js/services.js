@@ -176,12 +176,13 @@ myAppServices.factory('toastService', function($log, $mdToast) {
                 );
         },
         info: function(message) {
-        	$log.info(message);
+        	$log.info(message,toastServiceInstance.getToastPosition());
             $mdToast.show(
                     $mdToast.simple()
-                        .content(message)
-                        .position(this.getToastPosition())
+                        .position(toastServiceInstance.getToastPosition())
+                        .textContent(message)
                         .hideDelay(3000)
+                        .capsule(true)
                 );
         }
   }

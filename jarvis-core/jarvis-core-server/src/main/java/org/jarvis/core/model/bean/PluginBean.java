@@ -21,7 +21,27 @@ package org.jarvis.core.model.bean;
  */
 public class PluginBean extends GenericBean {
 	/**
-	 * scenario name
+	 * name
 	 */
 	public String name;
+	/**
+	 * type
+	 */
+	public String type;
+	/**
+	 * icon
+	 */
+	public String icon;
+	/**
+	 * owner
+	 */
+	public String owner;
+	/**
+	 * active
+	 */
+	public boolean active;
+	/**
+	 * visible
+	 */
+	public boolean visible;
 }

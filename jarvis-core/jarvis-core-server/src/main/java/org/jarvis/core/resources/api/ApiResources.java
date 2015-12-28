@@ -236,7 +236,12 @@ public abstract class ApiResources<Rest,Bean> extends ApiMapper {
     		response.status(403);
     		return "";
     	}
-		Rest k = mapper.readValue(request.body(), klass);
-    	return mapper.writeValueAsString(doUpdate(request.params(id), k));
+    	try {
+			Rest k = mapper.readValue(request.body(), klass);
+	    	return mapper.writeValueAsString(doUpdate(request.params(id), k));
+    	} catch(TechnicalNotFoundException e) {
+    		response.status(404);
+    		return "";
+    	}
     }
 }

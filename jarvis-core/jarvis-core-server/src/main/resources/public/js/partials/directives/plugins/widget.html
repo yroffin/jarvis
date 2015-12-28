@@ -12,9 +12,9 @@
 	</md-grid-tile>
     <md-grid-tile
         md-rowspan="1" md-colspan="2" md-colspan-sm="1" ng-repeat="plugin in plugins">
-		<div ng-click="go('plugins-id',{id:plugin.id})">
+		<div ng-click="go('plugins-id-'+plugin.type,{id:plugin.id})">
 			<md-grid-tile-header>
-				<h3>{{plugin.name}} (#{{plugin.id}})</h3>
+				<h3>{{plugin.name}} ({{plugin.type}}#{{plugin.id}})</h3>
 			</md-grid-tile-header>
 			<br />
 			<br />
