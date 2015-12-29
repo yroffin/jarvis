@@ -40,25 +40,27 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
             }, toastService.failure);
     }
 
-    /**
-     * loading jobs
-     */
-	pluginResourceService.base.findAll(function(data) {
-        var arr = [];
-    	_.forEach(data, function(element) {
-            /**
-             * convert internal json params
-             */
-            arr.push(element);
-        });
-    	toastService.info(arr.length + ' plugin(s)');
-        $scope.plugins = arr;
-    }, toastService.failure);
-
-	$log.info('plugins-ctrl');
+    $scope.load = function() {
+	    /**
+	     * loading plugins
+	     */
+		pluginResourceService.base.findAll(function(data) {
+	        var arr = [];
+	    	_.forEach(data, function(element) {
+	            /**
+	             * convert internal json params
+	             */
+	            arr.push(element);
+	        });
+	    	toastService.info(arr.length + ' plugin(s)');
+	        $scope.plugins = arr;
+	    }, toastService.failure);
+	
+		$log.info('plugins-ctrl');
+    }
 })
 .controller('pluginScriptCtrl',
-	function($scope, $log, $stateParams, $mdBottomSheet, pluginResourceService, iotResourceService, toastService){
+	function($scope, $log, $stateParams, $mdBottomSheet, pluginResourceService, iotResourceService, commandResourceService, toastService){
 	
     $scope.remove = function(script) {
     	$log.debug('delete', script);
@@ -90,7 +92,7 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
 
     $scope.showBottomSheet = function($event) {
         $mdBottomSheet.show({
-          templateUrl: '/ui/js/partials/directives/plugins/script/action.html',
+          template: '<jarvis-bottom-sheet-plugin></jarvis-bottom-sheet-plugin>',
           controller: 'pluginScriptCtrl',
           preserveScope: true,
           scope: $scope,
@@ -103,18 +105,36 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
         });
       };
       
+    $scope.add = function(command) {
+    	if(command != undefined && command.id != undefined && command.id != '') {
+        	$log.debug(command);
+    		pluginResourceService.commands.put($stateParams.id, command.id, function(data) {
+    	    	$scope.commands.push(data);
+    	    	toastService.debug('script ' + data.name + '#' + $stateParams.id + ' updated');
+    	    }, toastService.failure);
+    	}
+    }
+    
     $scope.load = function() {
+    	$scope.command = {};
+    	
 	    /**
 	     * init part
 	     */
-		$scope.allOwners = [{
-			id: undefined,
-			name: "Empty"
-		}];
-		$scope.allBooleans = [
+		$scope.combo = {
+				booleans: [
 		               	   {id: true,value:'True'},
 		               	   {id: false,value:'False'}
-		               	];
+		        ],
+		        owners: [{
+					id: undefined,
+					name: "owner.empty"
+				}],
+		        commands: [{
+					id: undefined,
+					name: "command.empty"
+				}]
+		};
 	
 		/**
 		 * get current script
@@ -125,6 +145,14 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
 	    }, toastService.failure);
 	
 		/**
+		 * get all commands
+		 */
+		pluginResourceService.commands.findAll($stateParams.id, function(data) {
+	    	$scope.commands = data;
+	    	toastService.debug(commands.length + ' commands');
+	    }, toastService.failure);
+
+		/**
 		 * find all owner
 		 */
 		iotResourceService.base.findAll(function(data) {
@@ -132,13 +160,28 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
 	            /**
 	             * convert internal json params
 	             */
-	    		$scope.allOwners.push({
+	    		$scope.combo.owners.push({
 	            	'id':element.id,
 	            	'name':element.name
 	            });
 	        });
 	    }, toastService.failure);
 	
+		/**
+		 * find all owner
+		 */
+		commandResourceService.base.findAll(function(data) {
+	    	_.forEach(data, function(element) {
+	            /**
+	             * convert internal json params
+	             */
+	    		$scope.combo.commands.push({
+	            	'id':element.id,
+	            	'name':element.name
+	            });
+	        });
+	    }, toastService.failure);
+
 		$log.info('script-ctrl');
     }
 })

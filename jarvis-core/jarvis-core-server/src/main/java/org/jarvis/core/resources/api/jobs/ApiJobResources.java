@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package org.jarvis.core.resources.api;
+package org.jarvis.core.resources.api.jobs;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
@@ -26,6 +26,7 @@ import org.jarvis.core.model.bean.JobBean;
 import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.model.rest.JobRest;
 import org.jarvis.core.model.rest.job.ParamRest;
+import org.jarvis.core.resources.api.ApiResources;
 import org.jarvis.core.resources.api.href.ApiHrefJobResources;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

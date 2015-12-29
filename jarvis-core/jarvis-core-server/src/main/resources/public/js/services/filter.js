@@ -57,6 +57,16 @@ myAppServices.factory('filterService', function(Restangular) {
 	        	'active':element.active,
 	        	'visible':element.visible
 			  }
+		  },
+		  command: function(element) {
+			  return {
+	          	'id':element.id,
+	        	'name':element.name,
+	        	'type':element.type,
+	        	'icon':element.icon,
+	        	'mode':element.mode,
+	        	'body':element.body
+			  }
 		  }
   }
   return base;

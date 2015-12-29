@@ -21,12 +21,12 @@
 var jarvisServicesUrl = '/services';
 var jarvisApiUrl = '/api';
 var myAppServices = angular.module('JarvisApp.services.plugin', []);
-var api = 'plugins';
 
 /**
  * iotResourceService
  */
 myAppServices.factory('pluginResourceService', function($log, Restangular, filterService) {
+  var api = 'plugins';
   var base = {
 	        /**
 			 * base services : findAll, delete, put and post
@@ -94,11 +94,50 @@ myAppServices.factory('pluginResourceService', function($log, Restangular, filte
 			});
 		}
   };
-  var ext = {
+  var commands = {
+		findAll: function(id, callback, failure) {
+			Restangular.all(api).one('scripts', id).all('commands').getList().then(function(elements) {
+				var done = _.after(elements.length, function(params) {
+					callback(params);
+				});
+				var params = [];
+            	_.forEach(elements, function(element) {
+            		paramResourceService.get(element.id, function(param) {
+            			param.instance = element.instance;
+            			params.push(param);
+            			done(params);
+            		},function(errors){
+        				failure(errors);
+        			})
+            	});
+			},function(errors){
+				failure(errors);
+			});
+		},
+        /**
+		 * put link
+		 */
+        put: function(id, param, callback, failure) {
+        	Restangular.all(api).one('scripts', id).one('commands',param).customPUT({}).then(function(href) {
+        		callback(href);
+        	},function(errors){
+        		failure(errors);
+        	});
+        },
+        /**
+		 * delete link
+		 */
+		delete: function(id, param, instance, callback, failure) {
+			Restangular.all(api).one('scripts', id).one('commands', param).remove({'instance':instance}).then(function(href) {
+				callback(href);
+			},function(errors){
+				failure(errors);
+			});
+		}
   }
   return {
 	    base: base,
 	    scripts: scripts,
-		ext : ext  
+		commands : commands  
   }
 });

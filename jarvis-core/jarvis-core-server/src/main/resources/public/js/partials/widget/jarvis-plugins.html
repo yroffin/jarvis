@@ -1,23 +1,20 @@
-<div ng-cloak>
-  <h3 translate="MyPlugins"></h3>
-  <md-grid-list
-        md-cols="3" md-cols-sm="3" md-cols-md="6" md-cols-gt-md="12"
-        md-row-height-gt-md="128px" md-row-height="128px"
-        md-gutter="4px" md-gutter-gt-sm="4px" >
-    <md-grid-tile
-        md-rowspan="1" md-colspan="2" md-colspan-sm="1">
-		<div ng-click="new(plugins)">
-			<md-icon md-font-icon="material-icons md-64">control_point</md-icon>
-		</div>
-	</md-grid-tile>
-    <md-grid-tile
-        md-rowspan="1" md-colspan="2" md-colspan-sm="1" ng-repeat="plugin in plugins">
-		<div ng-click="go('plugins-id-'+plugin.type,{id:plugin.id})">
-			<md-grid-tile-header>
-				<h3><md-icon md-font-icon="material-icons md-16">delete</md-icon> {{plugin.name}} ({{plugin.type}}#{{plugin.id}})</h3>
-			</md-grid-tile-header>
-			<md-icon md-font-icon="material-icons md-64">{{plugin.icon}}</md-icon>
-		</div>
-    </md-grid-tile>
-  </md-grid-list>
-</div>
+<md-grid-list
+      md-cols="3" md-cols-sm="3" md-cols-md="6" md-cols-gt-md="12"
+      md-row-height-gt-md="128px" md-row-height="128px"
+      md-gutter="4px" md-gutter-gt-sm="4px" >
+  <md-grid-tile
+      md-rowspan="1" md-colspan="2" md-colspan-sm="1">
+	<div ng-click="new(plugins)">
+		<md-icon md-font-icon="material-icons md-64">control_point</md-icon>
+	</div>
+  </md-grid-tile>
+  <md-grid-tile
+      md-rowspan="1" md-colspan="2" md-colspan-sm="1" ng-repeat="plugin in plugins">
+	<div ng-click="go('plugins-id-'+plugin.type,{id:plugin.id})">
+		<md-grid-tile-header>
+			<h3><md-icon md-font-icon="material-icons md-16">delete</md-icon> {{plugin.name}} ({{plugin.type}}#{{plugin.id}})</h3>
+		</md-grid-tile-header>
+		<md-icon md-font-icon="material-icons md-64">{{plugin.icon}}</md-icon>
+	</div>
+  </md-grid-tile>
+</md-grid-list>

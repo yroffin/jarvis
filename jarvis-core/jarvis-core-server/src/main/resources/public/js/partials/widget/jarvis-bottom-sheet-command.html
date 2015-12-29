@@ -1,0 +1,29 @@
+<md-bottom-sheet class="md-list md-has-header" ng-cloak>
+  <md-subheader>Comment Actions</md-subheader>
+  <md-list>
+    <md-list-item>
+		<md-button aria-label="Todo" ng-click="remove(command)">
+			<md-icon md-font-icon="material-icons md-24">delete</md-icon>
+			<span translate="Delete"></span>
+		</md-button>
+    </md-list-item>
+	<md-list-item>
+		<md-button aria-label="Todo" ng-click="save(command)" md-autofocus="true">
+			<md-icon md-font-icon="material-icons md-24">done</md-icon>
+			<span translate="Save"></span>
+		</md-button>
+    </md-list-item>
+	<md-list-item>
+		<md-button aria-label="Todo" ng-click="duplicate(command)">
+			<md-icon md-font-icon="material-icons md-24">content_copy</md-icon>
+			<span translate="Duplicate"></span>
+		</md-button>
+    </md-list-item>
+	<md-list-item>
+		<md-button aria-label="Todo" ng-click="go('plugins')">
+			<md-icon md-font-icon="material-icons md-24">clear</md-icon>
+			<span translate="Close"></span>
+		</md-button>
+	</md-list-item>
+  </md-list>
+</md-bottom-sheet>

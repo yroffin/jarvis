@@ -96,7 +96,7 @@ angular.module('JarvisApp.ctrl.iots', ['JarvisApp.services'])
 
     $scope.showBottomSheet = function($event) {
         $mdBottomSheet.show({
-          templateUrl: '/ui/js/partials/directives/iot/action.html',
+          template: '<jarvis-bottom-sheet-iot></jarvis-bottom-sheet-iot>',
           controller: 'iotCtrl',
           preserveScope: true,
           scope: $scope,

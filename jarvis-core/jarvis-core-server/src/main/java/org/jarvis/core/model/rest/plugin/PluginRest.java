@@ -1,4 +1,6 @@
-package org.jarvis.core.model.rest;
+package org.jarvis.core.model.rest.plugin;
+
+import org.jarvis.core.model.rest.GenericEntity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;

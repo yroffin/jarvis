@@ -51,7 +51,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     restrict: 'E',
     templateUrl: '/ui/js/partials/widget/jarvis-iots.html',
     link: function(scope, element, attrs) {
-    	$log.info('iots-directive');
+    	$log.info('jarvis-iots');
     }
   }
 })
@@ -60,7 +60,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     restrict: 'E',
     templateUrl: '/ui/js/partials/widget/jarvis-iot.html',
     link: function(scope, element, attrs) {
-    	$log.info('iot-directive');
+    	$log.info('jarvis-iot');
     }
   }
 })
@@ -69,7 +69,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     restrict: 'E',
     templateUrl: '/ui/js/partials/widget/jarvis-jobs.html',
     link: function(scope, element, attrs) {
-    	$log.info('jobs-directive');
+    	$log.info('jarvis-jobs');
     }
   }
 })
@@ -78,7 +78,25 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     restrict: 'E',
     templateUrl: '/ui/js/partials/widget/jarvis-job.html',
     link: function(scope, element, attrs) {
-    	$log.info('job-directive');
+    	$log.info('jarvis-job');
+    }
+  }
+})
+.directive('jarvisCommands', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/partials/widget/jarvis-commands.html',
+    link: function(scope, element, attrs) {
+    	$log.info('jarvis-commands');
+    }
+  }
+})
+.directive('jarvisCommand', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/partials/widget/jarvis-command.html',
+    link: function(scope, element, attrs) {
+    	$log.info('jarvis-command');
     }
   }
 })
@@ -97,6 +115,15 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     templateUrl: '/ui/js/partials/widget/jarvis-bottom-sheet-plugin.html',
     link: function(scope, element, attrs) {
     	$log.info('jarvis-bottom-sheet-plugin');
+    }
+  }
+})
+.directive('jarvisBottomSheetCommand', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/partials/widget/jarvis-bottom-sheet-command.html',
+    link: function(scope, element, attrs) {
+    	$log.info('jarvis-bottom-sheet-command');
     }
   }
 })

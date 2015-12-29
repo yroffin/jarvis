@@ -51,6 +51,7 @@ limitations under the License.
         <md-button ng-click="location('left', '/connectors');">Connector</md-button>
         <md-button ng-click="location('left', '/iots');">Connected object(s)</md-button>
         <md-button ng-click="location('left', '/plugins');">Plugin(s)</md-button>
+        <md-button ng-click="location('left', '/commands');">Command(s)</md-button>
     </md-sidenav>
     <md-content flex layout-padding>
          <ui-view></ui-view>
@@ -85,6 +86,7 @@ limitations under the License.
 <script src="js/services.js"></script>
 <script src="js/services/filter.js"></script>
 <script src="js/services/plugin.js"></script>
+<script src="js/services/command.js"></script>
 <script src="js/controllers.js"></script>
 <script src="js/routes.js"></script>
 <script src="js/directives.js"></script>
@@ -94,6 +96,7 @@ limitations under the License.
 <script src="js/ctrl/jobs.js"></script>
 <script src="js/ctrl/iots.js"></script>
 <script src="js/ctrl/plugins.js"></script>
+<script src="js/ctrl/commands.js"></script>
 
 </body>
 </html>

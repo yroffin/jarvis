@@ -21,11 +21,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
-import org.jarvis.core.resources.api.ApiJobResources;
 import org.jarvis.core.resources.api.ApiClientResources;
+import org.jarvis.core.resources.api.ApiCommandResources;
 import org.jarvis.core.resources.api.ApiLabelResources;
-import org.jarvis.core.resources.api.ApiParamResources;
 import org.jarvis.core.resources.api.ApiScenarioResources;
+import org.jarvis.core.resources.api.jobs.ApiJobResources;
+import org.jarvis.core.resources.api.jobs.ApiParamResources;
 import org.jarvis.core.resources.api.plugins.ApiScriptPluginResources;
 import org.jarvis.core.resources.api.ApiConnectorResources;
 import org.jarvis.core.resources.api.ApiCrontabResources;
@@ -71,6 +72,9 @@ public class CoreServerDaemon {
 	@Autowired
 	ApiScriptPluginResources apiScriptPluginResources;
 
+	@Autowired
+	ApiCommandResources apiCommandResources;
+
 	/**
 	 * start component
 	 */
@@ -100,5 +104,6 @@ public class CoreServerDaemon {
 		 * mount plugin resources
 		 */
 		apiScriptPluginResources.mount();
+		apiCommandResources.mount();
 	}
 }

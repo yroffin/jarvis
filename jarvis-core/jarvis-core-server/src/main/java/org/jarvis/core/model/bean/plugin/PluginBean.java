@@ -14,7 +14,9 @@
  *   limitations under the License.
  */
 
-package org.jarvis.core.model.bean;
+package org.jarvis.core.model.bean.plugin;
+
+import org.jarvis.core.model.bean.GenericBean;
 
 /**
  * plugin

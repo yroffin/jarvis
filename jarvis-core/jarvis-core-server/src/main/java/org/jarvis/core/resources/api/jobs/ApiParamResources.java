@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package org.jarvis.core.resources.api;
+package org.jarvis.core.resources.api.jobs;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
@@ -23,6 +23,7 @@ import static spark.Spark.delete;
 
 import org.jarvis.core.model.bean.job.ParamBean;
 import org.jarvis.core.model.rest.job.ParamRest;
+import org.jarvis.core.resources.api.ApiResources;
 import org.springframework.stereotype.Component;
 
 import spark.Request;

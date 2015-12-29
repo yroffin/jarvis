@@ -75,5 +75,15 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
             controller: 'pluginScriptCtrl',
             templateUrl: '/ui/js/partials/plugins/script/page.html'
         })
+        .state('commands', {
+            url: '/commands',
+            controller: 'commandsCtrl',
+            templateUrl: '/ui/js/partials/commands/page.html'
+        })
+        .state('commands-by-id', {
+            url: '/commands/:id',
+            controller: 'commandCtrl',
+            templateUrl: '/ui/js/partials/commands/command/page.html'
+        })
         ;
     })
