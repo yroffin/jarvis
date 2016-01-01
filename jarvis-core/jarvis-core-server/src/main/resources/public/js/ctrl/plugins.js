@@ -109,14 +109,29 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
     	if(command != undefined && command.id != undefined && command.id != '') {
         	$log.debug(command);
     		pluginResourceService.commands.put($stateParams.id, command.id, function(data) {
-    	    	$scope.commands.push(data);
-    	    	toastService.debug('script ' + data.name + '#' + $stateParams.id + ' updated');
+    			commandResourceService.base.get(data.id, function(command) {
+        	    	$scope.commands.push(command);
+        	    	toastService.info('script ' + command.name + '#' + command.id + ' added');
+    			});
     	    }, toastService.failure);
     	}
     }
     
+    $scope.drop = function(command) {
+    	if(command != undefined && command.id != undefined && command.id != '') {
+        	$log.debug('drop ', command);
+    		pluginResourceService.commands.delete($stateParams.id, command.id, command.instance, function(data) {
+    			var toremove = command.instance;
+    			_.remove($scope.commands, function(element) {
+    				return element.instance == toremove;
+    			});
+       	    	toastService.info('script ' + command.name + '#' + command.id + ' dropped');
+    	    }, toastService.failure);
+    	}
+    }
+
     $scope.load = function() {
-    	$scope.command = {};
+    	$scope.commands = {};
     	
 	    /**
 	     * init part
@@ -149,7 +164,8 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
 		 */
 		pluginResourceService.commands.findAll($stateParams.id, function(data) {
 	    	$scope.commands = data;
-	    	toastService.debug(commands.length + ' commands');
+	    	$log.debug('Linked commands', $scope.commands);
+	    	toastService.info($scope.commands.length + ' commands (linked)');
 	    }, toastService.failure);
 
 		/**

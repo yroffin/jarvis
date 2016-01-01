@@ -23,11 +23,13 @@ public abstract class ApiHrefMapper<Owner extends GenericEntity,Child extends Ge
 
 	private String ownerLabel;
 	private String childLabel;
+	private String type;
 
-	protected void init(String ownerLabel, String childLabel) {
+	protected void init(String ownerLabel, String childLabel, String type) {
 		super.init();
 		this.ownerLabel = ownerLabel;
 		this.childLabel = childLabel;
+		this.type = type;
 	}
 
 	@Autowired
@@ -36,10 +38,11 @@ public abstract class ApiHrefMapper<Owner extends GenericEntity,Child extends Ge
 	/**
 	 * @param owner 
 	 * @param child 
+	 * @param type 
 	 * @return String
 	 * @throws TechnicalNotFoundException 
 	 */
-	public GenericEntity add(Owner owner, Child child) throws TechnicalNotFoundException {
+	public GenericEntity add(Owner owner, Child child, String type) throws TechnicalNotFoundException {
 		try (Transaction create = apiNeo4Service.beginTx()) {
 			Result result = apiNeo4Service.cypherAddLink(ownerLabel, owner.id, childLabel, child.id, "HREF");
 			create.success();
@@ -47,7 +50,7 @@ public abstract class ApiHrefMapper<Owner extends GenericEntity,Child extends Ge
 				GenericEntity genericEntity = new GenericEntity();
 				genericEntity.id = child.id;
 				genericEntity.instance = result.next().get("id(r)")+"";
-				genericEntity.href = "/api/params/" + genericEntity.id;
+				genericEntity.href = "/api/"+type+"/" + genericEntity.id;
 				return genericEntity;
 			}
 		}
@@ -89,7 +92,7 @@ public abstract class ApiHrefMapper<Owner extends GenericEntity,Child extends Ge
 				GenericEntity genericEntity = new GenericEntity();
 				genericEntity.id = child.id;
 				genericEntity.instance = instance;
-				genericEntity.href = "/api/params/" + genericEntity.id;
+				genericEntity.href = "/api/"+type+"/" + genericEntity.id;
 				return genericEntity;
 			}
 		}

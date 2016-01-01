@@ -1,20 +1,22 @@
 <div layout="row">
-   <md-input-container>
-	 <md-icon md-font-icon="material-icons md-16" ng-click="add(command)">menu</md-icon></md-button>
-     <label translate="script.command"></label>
-     <md-select ng-model="command.id">
-       <md-option ng-repeat="command in combo.commands" value="{{command.id}}" translate="{{command.name}}">
-       </md-option>
-     </md-select>
-   </md-input-container>
-   <md-list>
-   	<md-list-item ng-repeat="command in commands">
-   		<md-icon md-font-icon="material-icons md-16">{{command.icon}}</md-icon></md-button>
-   		<div class="md-list-item-text" layout="column">
-          <h3>{{ command.name }}</h3>
-          <h4>{{ command.type }}</h4>
-          <p>{{ command.body }}</p>
-        </div>
-   	</md-list-item>
-   </md-list>
+	<div>
+	   <md-input-container>
+		 <md-icon md-font-icon="material-icons md-16" ng-click="add(command)">add</md-icon></md-button>
+	     <label translate="script.command"></label>
+	     <md-select ng-model="command.id">
+	       <md-option ng-repeat="command in combo.commands" value="{{command.id}}" translate="{{command.name}}">
+	       </md-option>
+	     </md-select>
+	   </md-input-container>
+	   <md-list>
+		   	<md-list-item ng-repeat="command in commands">
+		        <md-icon md-font-icon="material-icons md-16" ng-click="drop(command)">delete</md-icon></md-button>
+		   		<div class="md-list-item-text" layout="column">
+		  		  <md-icon md-font-icon="material-icons md-16">{{command.icon}}</md-icon>
+		  		  <code>{{command.type}}#{{command.id}} : {{command.name}} (instance {{command.instance}})</code><br>
+		  		  <div hljs hljs-source="command.body"></div>
+		        </div>
+		   	</md-list-item>
+	   </md-list>
+	</div>
 </div>

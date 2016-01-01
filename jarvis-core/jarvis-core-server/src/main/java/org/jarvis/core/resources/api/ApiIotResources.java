@@ -107,7 +107,7 @@ public class ApiIotResources extends ApiResources<IotRest,IotBean> {
 		    		IotRest iot = doGetById(request.params(ID));
 			    	try {
 				    	IotRest child = doGetById(request.params(IOT));
-				    	GenericEntity instance = apiHrefResources.add(iot, child);
+				    	GenericEntity instance = apiHrefResources.add(iot, child, "iots");
 				    	return mapper.writeValueAsString(instance);
 			    	} catch(TechnicalNotFoundException e) {
 			    		response.status(404);

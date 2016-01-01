@@ -28,6 +28,7 @@ angular.module('JarvisApp', [
      'ui.router.router',
      'pascalprecht.translate',
      'ngCookies',
+     'hljs',
      'JarvisApp.config',
      'JarvisApp.routes',
      'JarvisApp.services',

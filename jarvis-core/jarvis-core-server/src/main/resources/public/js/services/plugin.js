@@ -25,7 +25,7 @@ var myAppServices = angular.module('JarvisApp.services.plugin', []);
 /**
  * iotResourceService
  */
-myAppServices.factory('pluginResourceService', function($log, Restangular, filterService) {
+myAppServices.factory('pluginResourceService', function($log, Restangular, filterService, commandResourceService) {
   var api = 'plugins';
   var base = {
 	        /**
@@ -102,7 +102,7 @@ myAppServices.factory('pluginResourceService', function($log, Restangular, filte
 				});
 				var params = [];
             	_.forEach(elements, function(element) {
-            		paramResourceService.get(element.id, function(param) {
+            		commandResourceService.base.get(element.id, function(param) {
             			param.instance = element.instance;
             			params.push(param);
             			done(params);

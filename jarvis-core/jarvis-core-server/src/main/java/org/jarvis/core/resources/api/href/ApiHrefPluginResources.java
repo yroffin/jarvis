@@ -18,8 +18,8 @@ package org.jarvis.core.resources.api.href;
 
 import javax.annotation.PostConstruct;
 
+import org.jarvis.core.model.bean.ScriptPluginBean;
 import org.jarvis.core.model.bean.plugin.CommandBean;
-import org.jarvis.core.model.bean.plugin.PluginBean;
 import org.jarvis.core.model.rest.plugin.CommandRest;
 import org.jarvis.core.model.rest.plugin.PluginRest;
 import org.jarvis.core.resources.api.mapper.ApiHrefMapper;
@@ -34,6 +34,6 @@ public class ApiHrefPluginResources extends ApiHrefMapper<PluginRest,CommandRest
 	@PostConstruct
 	protected
 	void init() {
-		super.init(PluginBean.class.getSimpleName(),CommandBean.class.getSimpleName());
+		super.init(ScriptPluginBean.class.getSimpleName(),CommandBean.class.getSimpleName(),"commands");
 	}
 }

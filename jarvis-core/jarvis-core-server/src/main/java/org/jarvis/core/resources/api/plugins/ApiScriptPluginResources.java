@@ -29,7 +29,6 @@ import org.jarvis.core.model.rest.plugin.CommandRest;
 import org.jarvis.core.resources.api.ApiCommandResources;
 import org.jarvis.core.resources.api.ApiResources;
 import org.jarvis.core.resources.api.href.ApiHrefPluginResources;
-import org.jarvis.core.resources.api.jobs.ApiParamResources;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -87,7 +86,7 @@ public class ApiScriptPluginResources extends ApiResources<ScriptPluginRest,Scri
 		    }
 		});
 		/**
-		 * params
+		 * commands
 		 */
 		get("/api/plugins/scripts/:id/commands", new Route() {
 		    @Override
@@ -105,10 +104,10 @@ public class ApiScriptPluginResources extends ApiResources<ScriptPluginRest,Scri
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
 		    	try {
-		    		ScriptPluginRest job = doGetById(request.params(":id"));
+		    		ScriptPluginRest script = doGetById(request.params(":id"));
 			    	try {
-			    		CommandRest param = apiCommandResources.doGetById(request.params(":param"));
-				    	GenericEntity instance = apiHrefResources.add(job, param);
+			    		CommandRest command = apiCommandResources.doGetById(request.params(":command"));
+				    	GenericEntity instance = apiHrefResources.add(script, command, "commands");
 				    	return mapper.writeValueAsString(instance);
 			    	} catch(TechnicalNotFoundException e) {
 			    		response.status(404);
@@ -124,10 +123,10 @@ public class ApiScriptPluginResources extends ApiResources<ScriptPluginRest,Scri
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
 		    	try {
-		    		ScriptPluginRest job = doGetById(request.params(":id"));
+		    		ScriptPluginRest plugin = doGetById(request.params(":id"));
 			    	try {
-			    		CommandRest param = apiCommandResources.doGetById(request.params(":param"));
-				    	apiHrefResources.remove(job, param, request.queryParams("instance"));
+			    		CommandRest command = apiCommandResources.doGetById(request.params(":command"));
+				    	apiHrefResources.remove(plugin, command, request.queryParams("instance"));
 			    	} catch(TechnicalNotFoundException e) {
 			    		response.status(404);
 			    		return "";

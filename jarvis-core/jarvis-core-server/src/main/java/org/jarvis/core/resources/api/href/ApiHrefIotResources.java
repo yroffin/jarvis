@@ -32,6 +32,6 @@ public class ApiHrefIotResources extends ApiHrefMapper<IotRest,IotRest> {
 	@PostConstruct
 	protected
 	void init() {
-		super.init(IotBean.class.getSimpleName(),IotBean.class.getSimpleName());
+		super.init(IotBean.class.getSimpleName(),IotBean.class.getSimpleName(),"iots");
 	}
 }

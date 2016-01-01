@@ -34,6 +34,6 @@ public class ApiHrefJobResources extends ApiHrefMapper<JobRest,ParamRest> {
 	@PostConstruct
 	protected
 	void init() {
-		super.init(JobBean.class.getSimpleName(),ParamBean.class.getSimpleName());
+		super.init(JobBean.class.getSimpleName(),ParamBean.class.getSimpleName(),"params");
 	}
 }

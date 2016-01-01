@@ -77,18 +77,11 @@ angular.module('JarvisApp.config',[])
         $scope.jarvis.configuration = {};
         $scope.jarvis.neo4jdb = {};
 
-        $scope.toastPosition = {
-            bottom: false,
-            top: true,
-            left: false,
-            right: true
-        };
-        $scope.getToastPosition = function() {
-            return Object.keys($scope.toastPosition)
-                .filter(function(pos) { return $scope.toastPosition[pos]; })
-                .join(' ');
-        };
-
+        /**
+         * highlight JS
+         */
+        hljs.initHighlightingOnLoad();
+        
         /**
          * toggle navbar
          * @param menuId
