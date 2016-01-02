@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package org.jarvis.runtime;
+package org.jarvis.core.services.shell;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,9 +23,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * local proc execute
- */
 public class ProcessExec {
 
 	/**
@@ -33,13 +30,13 @@ public class ProcessExec {
 	 * 
 	 * @param command
 	 * @param pwd
-	 * @param surcharge 
-	 * @return CaptureResult
+	 * @param ee
+	 * @return
 	 * @throws IOException
 	 * @throws InterruptedException
 	 */
 	public static CaptureResult exec(String command, String pwd,
-			Map<String, String> surcharge) throws IOException, InterruptedException {
+			Map<String, String> ee) throws IOException, InterruptedException {
 		List<String> commands = new ArrayList<String>();
 		for (String cmd : command.split(" ")) {
 			commands.add(cmd);
@@ -48,8 +45,8 @@ public class ProcessExec {
 		processus.redirectErrorStream(true);
 
 		Map<String, String> env = processus.environment();
-		for (String key : surcharge.keySet()) {
-			env.put(key, surcharge.get(key));
+		for (String key : ee.keySet()) {
+			env.put(key, ee.get(key));
 		}
 		processus.directory(new File(pwd));
 
@@ -60,7 +57,7 @@ public class ProcessExec {
 	 * simple exec
 	 * 
 	 * @param command
-	 * @return CaptureResult
+	 * @return
 	 * @throws IOException
 	 * @throws InterruptedException
 	 */
@@ -76,7 +73,7 @@ public class ProcessExec {
 	 * run command
 	 * 
 	 * @param command
-	 * @return String
+	 * @return
 	 * @throws IOException
 	 * @throws InterruptedException
 	 */

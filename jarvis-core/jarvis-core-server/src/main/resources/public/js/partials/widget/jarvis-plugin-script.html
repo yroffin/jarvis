@@ -10,7 +10,10 @@
 	   </md-input-container>
 	   <md-list>
 		   	<md-list-item ng-repeat="command in commands">
-		        <md-icon md-font-icon="material-icons md-16" ng-click="drop(command)">delete</md-icon></md-button>
+		   		<div layout="column">
+			        <md-icon md-font-icon="material-icons md-16" ng-click="drop(command)">delete</md-icon>
+			        <md-icon md-font-icon="material-icons md-16" ng-click="execute(command)">loop</md-icon>
+			    </div>
 		   		<div class="md-list-item-text" layout="column">
 		  		  <md-icon md-font-icon="material-icons md-16">{{command.icon}}</md-icon>
 		  		  <code>{{command.type}}#{{command.id}} : {{command.name}} (instance {{command.instance}})</code><br>

@@ -26,7 +26,6 @@ import org.jarvis.core.model.bean.ScriptPluginBean;
 import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.model.rest.ScriptPluginRest;
 import org.jarvis.core.model.rest.plugin.CommandRest;
-import org.jarvis.core.resources.api.ApiCommandResources;
 import org.jarvis.core.resources.api.ApiResources;
 import org.jarvis.core.resources.api.href.ApiHrefPluginResources;
 import org.springframework.beans.factory.annotation.Autowired;

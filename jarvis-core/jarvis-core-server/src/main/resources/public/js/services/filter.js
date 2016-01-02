@@ -67,6 +67,11 @@ myAppServices.factory('filterService', function(Restangular) {
 	        	'mode':element.mode,
 	        	'body':element.body
 			  }
+		  },
+		  plain: function(element) {
+			  var element = Restangular.stripRestangular(element);
+			  delete element.originalElement;
+			  return element;
 		  }
   }
   return base;

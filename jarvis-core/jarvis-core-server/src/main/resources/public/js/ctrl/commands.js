@@ -70,12 +70,27 @@ angular.module('JarvisApp.ctrl.commands', ['JarvisApp.services'])
         }, toastService.failure);
     }
 
-    $scope.save = function(command) {
+    $scope.save = function(command, callback) {
     	$log.debug('save', command);
     	commandResourceService.base.put(command, function(element) {
         	toastService.info('command ' + command.name + '#' + command.id + ' updated');
-        	$scope.go('commands');
+        	if(callback) callback(element);
         }, toastService.failure);
+    }
+
+    $scope.execute = function(command) {
+    	$log.debug('execute', command);
+    	commandResourceService.ext.task(command.id, command.type, $scope.input, function(data) {
+   	    	toastService.info('command ' + command.name + '#' + command.id + ' executed');
+   	    	$log.debug(data);
+   	    	$scope.output = angular.toJson(data, true);
+	    }, toastService.failure);
+    }
+
+    $scope.pretty = function() {
+    	$log.debug('pretty', $scope.rawinput);
+    	$scope.jsoninput = angular.toJson($scope.rawinput, true);
+    	$scope.input = angular.fromJson($scope.jsoninput, true);
     }
 
     $scope.duplicate = function(command) {
@@ -122,12 +137,27 @@ angular.module('JarvisApp.ctrl.commands', ['JarvisApp.services'])
 		              		   value:'command.shell'
 		              	   },
 		              	   {
+		              		   id: 'command',
+		              		   value:'command.single'
+		              	   },
+		              	   {
+		              		   id: 'groovy',
+		              		   value:'command.groovy'
+		              	   },
+		              	   {
 		              		   id: 'ssh',
 		              		   value:'command.ssh'
 		              	   }
 		      ]
 		}
-	
+		
+		/**
+		 * input test
+		 */
+		$scope.rawinput='{"default":"todo"}';
+		$scope.jsoninput = angular.toJson($scope.rawinput, true);
+		$scope.input = angular.fromJson($scope.jsoninput);
+		
 		/**
 		 * get current command
 		 */

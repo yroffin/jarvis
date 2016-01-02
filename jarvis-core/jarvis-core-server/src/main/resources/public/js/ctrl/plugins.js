@@ -125,7 +125,20 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
     			_.remove($scope.commands, function(element) {
     				return element.instance == toremove;
     			});
-       	    	toastService.info('script ' + command.name + '#' + command.id + ' dropped');
+       	    	toastService.info('command ' + command.name + '#' + command.id + ' dropped');
+    	    }, toastService.failure);
+    	}
+    }
+
+    /**
+     * execute this command on server side
+	 * @param command, the command to be executed
+     */
+    $scope.execute = function(command) {
+    	if(command != undefined && command.id != undefined && command.id != '') {
+        	$log.debug('execute ', command);
+        	commandResourceService.ext.task(command.type, command, function(data) {
+       	    	toastService.info('command ' + command.name + '#' + command.id + ' executed');
     	    }, toastService.failure);
     	}
     }

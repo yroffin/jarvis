@@ -14,18 +14,22 @@
  *   limitations under the License.
  */
 
-package org.jarvis.core.model.bean;
+package org.jarvis.core.type;
 
 /**
- * generic bean
+ * Task type
  */
-public class GenericBean {
+public enum TaskType {
 	/**
-	 * generic id
+	 * shell or windows script
 	 */
-	public String id;
+	SHELL, 
 	/**
-	 * generic href
+	 * direct local command
 	 */
-	public String href;
+	COMMAND,
+	/**
+	 * groovy script
+	 */
+	GROOVY
 }

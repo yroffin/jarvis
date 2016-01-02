@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package org.jarvis.core.resources.api;
+package org.jarvis.core.resources.api.plugins;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
@@ -23,6 +23,7 @@ import static spark.Spark.delete;
 
 import org.jarvis.core.model.bean.plugin.CommandBean;
 import org.jarvis.core.model.rest.plugin.CommandRest;
+import org.jarvis.core.resources.api.ApiResources;
 import org.springframework.stereotype.Component;
 
 import spark.Request;
@@ -64,6 +65,12 @@ public class ApiCommandResources extends ApiResources<CommandRest,CommandBean> {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
 		    	return doCreate(request, response, CommandRest.class);
+		    }
+		});
+		post("/api/commands/:id", new Route() {
+		    @Override
+			public Object handle(Request request, Response response) throws Exception {
+		    	return doTask(request, ":id", "task", response, CommandRest.class);
 		    }
 		});
 		put("/api/commands/:id", new Route() {

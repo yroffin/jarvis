@@ -57,8 +57,8 @@ myAppServices.factory('commandResourceService', function($log, Restangular, filt
 			});
 		},
 		put: function(element, callback, failure) {
-			Restangular.one(api, element.id).customPUT(element).then(function(jobs) {
-				callback(jobs);
+			Restangular.one(api, element.id).customPUT(element).then(function(command) {
+				callback(filterService.command(command));
 			},function(errors){
 				failure(errors);
 			});
@@ -72,6 +72,13 @@ myAppServices.factory('commandResourceService', function($log, Restangular, filt
 		}
   };
   var ext = {
+		  task: function(id, task, args, callback, failure) {
+				Restangular.all(api).one(id).customPOST(args,'', {'task':task}).then(function(element) {
+					callback(filterService.plain(element));
+				},function(errors){
+					failure(errors);
+				});
+			}
   }
   return {
 	    base: base,

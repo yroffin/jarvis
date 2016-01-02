@@ -38,6 +38,7 @@ import org.springframework.util.ReflectionUtils.FieldCallback;
 
 /**
  *  Neo4j wrapper
+ * @param <T> 
  */
 public class Neo4jService<T> {
 	protected Logger logger = LoggerFactory.getLogger(Neo4jService.class);
@@ -47,6 +48,9 @@ public class Neo4jService<T> {
 	 */
 	ApiNeo4Service apiNeo4Service;
 
+	/**
+	 * @param apiNeo4Service
+	 */
 	public void setApiNeo4Service(ApiNeo4Service apiNeo4Service) {
 		this.apiNeo4Service = apiNeo4Service;
 	}
@@ -127,7 +131,7 @@ public class Neo4jService<T> {
 	/**
 	 * find all node by label
 	 * @param klass
-	 * @return
+	 * @return List<T>
 	 */
 	public List<T> findAll(Class<T> klass) {
 		String classname = klass.getSimpleName();
@@ -154,7 +158,7 @@ public class Neo4jService<T> {
 	 * get by id
 	 * @param klass
 	 * @param id
-	 * @return
+	 * @return T
 	 * @throws TechnicalNotFoundException
 	 */
 	public T getById(Class<T> klass, String id) throws TechnicalNotFoundException {
@@ -185,7 +189,7 @@ public class Neo4jService<T> {
 	 * @param klass
 	 * @param instance
 	 * @param id
-	 * @return
+	 * @return T
 	 * @throws TechnicalNotFoundException
 	 */
 	public T update(Class<T> klass, T instance, String id) throws TechnicalNotFoundException {
@@ -218,7 +222,7 @@ public class Neo4jService<T> {
 	 * remove node
 	 * @param klass
 	 * @param id
-	 * @return
+	 * @return T
 	 * @throws TechnicalNotFoundException
 	 */
 	public T remove(Class<T> klass, String id) throws TechnicalNotFoundException {
