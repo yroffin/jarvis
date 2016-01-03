@@ -23,7 +23,7 @@
 				    <md-button ng-if="!job.started" ng-click="status(job, true)">Start</md-button>
 				    <md-button ng-if="job.started"  ng-click="status(job, false)">Stop</md-button>
 				    <md-button ng-click="execute(job)">Run</md-button>
-				    <md-button ng-click="go('jobs-id', {id:job.id})">+</md-button>
+				    <md-button ng-click="go('jobs-by-id', {id:job.id})">+</md-button>
 				  </md-card-actions>
 				</md-card>
             </md-list>

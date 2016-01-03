@@ -14,20 +14,21 @@
  *   limitations under the License.
  */
 
-package org.jarvis.core.resources.api.plugins;
+package org.jarvis.core.resources.api.views;
 
-import static spark.Spark.delete;
 import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.put;
+import static spark.Spark.delete;
 
 import org.jarvis.core.exception.TechnicalNotFoundException;
-import org.jarvis.core.model.bean.plugin.ScriptPluginBean;
+import org.jarvis.core.model.bean.view.ViewBean;
 import org.jarvis.core.model.rest.GenericEntity;
-import org.jarvis.core.model.rest.plugin.CommandRest;
-import org.jarvis.core.model.rest.plugin.ScriptPluginRest;
+import org.jarvis.core.model.rest.IotRest;
+import org.jarvis.core.model.rest.view.ViewRest;
+import org.jarvis.core.resources.api.ApiIotResources;
 import org.jarvis.core.resources.api.ApiResources;
-import org.jarvis.core.resources.api.href.ApiHrefPluginResources;
+import org.jarvis.core.resources.api.href.ApiHrefViewResources;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -36,77 +37,83 @@ import spark.Response;
 import spark.Route;
 
 /**
- * script plugin resource
+ * View resource
  */
 @Component
-public class ApiScriptPluginResources extends ApiResources<ScriptPluginRest,ScriptPluginBean> {
+public class ApiViewResources extends ApiResources<ViewRest,ViewBean> {
 
 	@Autowired
-	ApiCommandResources apiCommandResources;
+	ApiIotResources apiIotResources;
 
 	@Autowired
-	ApiHrefPluginResources apiHrefResources;
+	ApiHrefViewResources apiHrefResources;
 
 	/**
 	 * constructor
 	 */
-	public ApiScriptPluginResources() {
-		setRestClass(ScriptPluginRest.class);
-		setBeanClass(ScriptPluginBean.class);
+	public ApiViewResources() {
+		setRestClass(ViewRest.class);
+		setBeanClass(ViewBean.class);
 	}
-	
+
 	@Override
 	public void mount() {
 		/**
 		 * mount resources
 		 */
-		get("/api/plugins/scripts", new Route() {
+		get("/api/views", new Route() {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
 		    	return doFindAll(request, response);
 		    }
 		});
-		get("/api/plugins/scripts/:id", new Route() {
+		get("/api/views/:id", new Route() {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
-		    	return doGetById(request, ":id", response);
+		    	return doGetById(request, ID, response);
 		    }
 		});
-		post("/api/plugins/scripts", new Route() {
+		post("/api/views", new Route() {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
-		    	return doCreate(request, response, ScriptPluginRest.class);
+		    	return doCreate(request, response, ViewRest.class);
 		    }
 		});
-		put("/api/plugins/scripts/:id", new Route() {
+		put("/api/views/:id", new Route() {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
-		    	return doUpdate(request, ":id", response, ScriptPluginRest.class);
+		    	return doUpdate(request, ID, response, ViewRest.class);
+		    }
+		});
+		delete("/api/views/:id", new Route() {
+		    @Override
+			public Object handle(Request request, Response response) throws Exception {
+		    	return doDelete(request, ID, response, ViewRest.class);
 		    }
 		});
 		/**
-		 * commands
+		 * iots
 		 */
-		get("/api/plugins/scripts/:id/commands", new Route() {
+		get("/api/views/:id/iots", new Route() {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
 		    	try {
-		    		ScriptPluginRest master = doGetById(request.params(ID));
-			    	return mapper.writeValueAsString(apiHrefResources.findAll(master, CommandRest.class));
+		    		ViewRest view = doGetById(request.params(ID));
+			    	return mapper.writeValueAsString(apiHrefResources.findAll(view, IotRest.class));
 		    	} catch(TechnicalNotFoundException e) {
 		    		response.status(404);
 		    		return "";
 		    	}
 		    }
 		});
-		put("/api/plugins/scripts/:id/commands/:command", new Route() {
+		put("/api/views/:id/iots/:iot", new Route() {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
 		    	try {
-		    		ScriptPluginRest script = doGetById(request.params(":id"));
+		    		ViewRest view = doGetById(request.params(ID));
 			    	try {
-			    		CommandRest command = apiCommandResources.doGetById(request.params(":command"));
-				    	GenericEntity instance = apiHrefResources.add(script, command, "commands");
+			    		IotRest iot = apiIotResources.doGetById(request.params(":iot"));
+				    	GenericEntity instance = apiHrefResources.add(view, iot, "views");
 				    	return mapper.writeValueAsString(instance);
 			    	} catch(TechnicalNotFoundException e) {
 			    		response.status(404);
@@ -118,14 +125,14 @@ public class ApiScriptPluginResources extends ApiResources<ScriptPluginRest,Scri
 		    	}
 		    }
 		});
-		delete("/api/plugins/scripts/:id/commands/:command", new Route() {
+		delete("/api/views/:id/iots/:iot", new Route() {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
 		    	try {
-		    		ScriptPluginRest plugin = doGetById(request.params(":id"));
+		    		ViewRest view = doGetById(request.params(ID));
 			    	try {
-			    		CommandRest command = apiCommandResources.doGetById(request.params(":command"));
-				    	apiHrefResources.remove(plugin, command, request.queryParams("instance"));
+			    		IotRest iot = apiIotResources.doGetById(request.params(":iot"));
+				    	apiHrefResources.remove(view, iot, request.queryParams(INSTANCE));
 			    	} catch(TechnicalNotFoundException e) {
 			    		response.status(404);
 			    		return "";
@@ -134,7 +141,7 @@ public class ApiScriptPluginResources extends ApiResources<ScriptPluginRest,Scri
 		    		response.status(404);
 		    		return "";
 		    	}
-		    	return doGetById(request, ":id", response);
+		    	return doGetById(request, ID, response);
 		    }
 		});
 	}

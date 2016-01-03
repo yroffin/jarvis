@@ -1,6 +1,4 @@
-package org.jarvis.core.model.bean;
-
-import org.jarvis.core.model.bean.plugin.PluginBean;
+package org.jarvis.core.model.bean.plugin;
 
 /**
  * internal script plugin representation

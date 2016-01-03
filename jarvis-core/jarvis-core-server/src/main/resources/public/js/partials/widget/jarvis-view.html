@@ -1,0 +1,45 @@
+<div layout="row">
+	<md-input-container>
+	  <label translate="view.name"></label>
+	  <input ng-model="view.name">
+	</md-input-container>
+	<md-input-container>
+	  <label translate="view.icon"></label>
+	  <input ng-model="view.icon">
+	</md-input-container>
+	<md-switch ng-model="view.ishome" aria-label="{{'view.ishome' | translate}}">
+    	{{'view.ishome' | translate}}: {{ view.ishome }}
+	</md-switch>
+ </div>
+<div layout="row">
+	<div>
+		<md-input-container>
+		<md-icon md-font-icon="material-icons md-16" ng-click="add(iot)">add</md-icon></md-button>
+		   <label translate="view.iots"></label>
+		   <md-select ng-model="iot.id">
+		     <md-option ng-repeat="iot in combo.iots" value="{{iot.id}}" translate="{{iot.name}}">
+		     </md-option>
+		   </md-select>
+		</md-input-container>
+		<table class="table table-bordered table-hover">
+			<thead>
+				<tr>
+					<th></th>
+					<th></th>
+					<th>#</th>
+					<th translate="iot.icon">Icon</th>
+					<th translate="iot.name">Name</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="iot in iots">
+					<td><md-icon md-font-icon="material-icons md-16" ng-click="drop(iot)">delete</md-icon></td>
+					<td><md-icon md-font-icon="material-icons md-16" ng-click="execute(iot)">loop</md-icon></td>
+					<td>{{iot.id}}</th>
+					<td><md-icon md-font-icon="material-icons md-16" ng-click="drop(iot)">{{iot.icon}}</md-icon></th>
+					<td>{{iot.name}}</th>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

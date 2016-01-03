@@ -4,17 +4,17 @@
       md-gutter="4px" md-gutter-gt-sm="4px" >
   <md-grid-tile
       md-rowspan="1" md-colspan="2" md-colspan-sm="1">
-	<div ng-click="new(plugins)">
+	<div ng-click="new(views)">
 		<md-icon md-font-icon="material-icons md-64">control_point</md-icon>
 	</div>
   </md-grid-tile>
   <md-grid-tile
-      md-rowspan="1" md-colspan="2" md-colspan-sm="1" ng-repeat="plugin in plugins">
-	<div ng-click="go('plugins-by-id-'+plugin.type,{id:plugin.id})">
+      md-rowspan="1" md-colspan="2" md-colspan-sm="1" ng-repeat="view in views">
+	<div ng-click="go('views-by-id',{id:view.id})">
 		<md-grid-tile-header>
-			<h3><md-icon md-font-icon="material-icons md-16">delete</md-icon> {{plugin.name}} ({{plugin.type}}#{{plugin.id}})</h3>
+			<h3><md-icon md-font-icon="material-icons md-16">delete</md-icon> {{view.name}} (#{{view.id}})</h3>
 		</md-grid-tile-header>
-		<md-icon md-font-icon="material-icons md-64">{{plugin.icon}}</md-icon>
+		<md-icon md-font-icon="material-icons md-64">{{view.icon}}</md-icon>
 	</div>
   </md-grid-tile>
 </md-grid-list>

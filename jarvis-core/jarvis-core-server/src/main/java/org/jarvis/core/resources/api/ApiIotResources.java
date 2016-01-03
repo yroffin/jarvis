@@ -119,14 +119,14 @@ public class ApiIotResources extends ApiResources<IotRest,IotBean> {
 		    	}
 		    }
 		});
-		delete("/api/jobs/:id/params/:param", new Route() {
+		delete("/api/iots/:id/params/:param", new Route() {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
 		    	try {
-		    		IotRest job = doGetById(request.params(ID));
+		    		IotRest iot = doGetById(request.params(ID));
 			    	try {
 			    		IotRest param = doGetById(request.params(IOT));
-				    	apiHrefResources.remove(job, param, request.queryParams(INSTANCE));
+				    	apiHrefResources.remove(iot, param, request.queryParams(INSTANCE));
 			    	} catch(TechnicalNotFoundException e) {
 			    		response.status(404);
 			    		return "";

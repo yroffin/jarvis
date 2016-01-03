@@ -35,9 +35,11 @@ angular.module('JarvisApp', [
      'JarvisApp.services.filter',
      'JarvisApp.services.plugin',
      'JarvisApp.services.command',
+     'JarvisApp.services.view',
      'JarvisApp.directives.widgets',
      'JarvisApp.ctrl.plugins',
      'JarvisApp.ctrl.commands',
      'JarvisApp.ctrl.jobs',
      'JarvisApp.ctrl.iots',
+     'JarvisApp.ctrl.views'
 ]);

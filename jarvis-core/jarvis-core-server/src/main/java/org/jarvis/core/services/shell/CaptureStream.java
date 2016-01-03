@@ -19,6 +19,9 @@ package org.jarvis.core.services.shell;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * stream capture
+ */
 public class CaptureStream extends Thread implements Runnable {
 
 	private StringBuilder streamData = new StringBuilder();
@@ -53,7 +56,7 @@ public class CaptureStream extends Thread implements Runnable {
 	/**
 	 * raw getter
 	 * 
-	 * @return
+	 * @return StringBuilder
 	 */
 	public StringBuilder getStreamData() {
 		return streamData;
@@ -62,7 +65,7 @@ public class CaptureStream extends Thread implements Runnable {
 	/**
 	 * parse output as lines
 	 * 
-	 * @return
+	 * @return String[]
 	 */
 	public String[] getValues() {
 		return streamData.toString().split(System.lineSeparator());

@@ -18,10 +18,10 @@ package org.jarvis.core.resources.api.href;
 
 import javax.annotation.PostConstruct;
 
-import org.jarvis.core.model.bean.plugin.CommandBean;
-import org.jarvis.core.model.bean.plugin.ScriptPluginBean;
-import org.jarvis.core.model.rest.plugin.CommandRest;
-import org.jarvis.core.model.rest.plugin.PluginRest;
+import org.jarvis.core.model.bean.IotBean;
+import org.jarvis.core.model.bean.view.ViewBean;
+import org.jarvis.core.model.rest.IotRest;
+import org.jarvis.core.model.rest.view.ViewRest;
 import org.jarvis.core.resources.api.mapper.ApiHrefMapper;
 import org.springframework.stereotype.Component;
 
@@ -29,11 +29,11 @@ import org.springframework.stereotype.Component;
  * HREF handler
  */
 @Component
-public class ApiHrefPluginResources extends ApiHrefMapper<PluginRest,CommandRest> {
+public class ApiHrefViewResources extends ApiHrefMapper<ViewRest,IotRest> {
 
 	@PostConstruct
 	protected
 	void init() {
-		super.init(ScriptPluginBean.class.getSimpleName(),CommandBean.class.getSimpleName(),"commands");
+		super.init(ViewBean.class.getSimpleName(),IotBean.class.getSimpleName(),"views");
 	}
 }
