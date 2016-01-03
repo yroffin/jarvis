@@ -23,13 +23,18 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
         /**
          * default state
          */
-        $urlRouterProvider.otherwise('/iots');
+        $urlRouterProvider.otherwise('/home');
     })
     .config(function($stateProvider) {
         /**
          * now set up the state
          */
         $stateProvider
+        .state('home', {
+            url: '/home',
+            controller: 'homeCtrl',
+            templateUrl: '/ui/js/partials/home/page.html'
+        })
         .state('jobs', {
             url: '/jobs',
             controller: 'jobsCtrl',

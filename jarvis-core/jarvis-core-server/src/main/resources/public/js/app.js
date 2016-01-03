@@ -41,5 +41,6 @@ angular.module('JarvisApp', [
      'JarvisApp.ctrl.commands',
      'JarvisApp.ctrl.jobs',
      'JarvisApp.ctrl.iots',
-     'JarvisApp.ctrl.views'
+     'JarvisApp.ctrl.views',
+     'JarvisApp.ctrl.home'
 ]);

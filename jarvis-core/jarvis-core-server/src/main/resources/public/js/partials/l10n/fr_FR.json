@@ -36,6 +36,7 @@
     "command.body" 		: "Corps de la commande",
     "command.empty" 	: "Vide",
     "owner.empty" 		: "Vide",
+    "home.title" 		: "Mon système",
 	"action.close"   	: "Fermer",
     "action.duplicate"  : "Dupliquer",
     "action.delete"  	: "Supprimer",
