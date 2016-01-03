@@ -33,6 +33,7 @@ angular.module('JarvisApp.ctrl.views', ['JarvisApp.services'])
         /**
          * create or update this view
          */
+        $log.debug('viewsCtrl::new', view);
         viewResourceService.base.post(update, function(data) {
                 toastService.info('view ' + data.name + '#' + data.id +' created');
                 $scope.views.push(data);
@@ -94,7 +95,7 @@ angular.module('JarvisApp.ctrl.views', ['JarvisApp.services'])
      * duplicate this view
      */
     $scope.duplicate = function(view) {
-    	$log.debug('duplicate', view);
+    	$log.debug('viewCtrl::duplicate', view);
     	viewResourceService.base.post(view, function(element) {
         	toastService.info('view ' + view.name + '#' + view.id + ' duplicated');
         	$scope.go('views');
@@ -125,7 +126,7 @@ angular.module('JarvisApp.ctrl.views', ['JarvisApp.services'])
     	if(iot != undefined && iot.id != undefined && iot.id != '') {
         	$log.debug('add', iot);
     		viewResourceService.iots.put($stateParams.id, iot.id, function(data) {
-    			iotResourceService.base.get(data.id, function(iot) {
+    			iotResourceService.iot.get(data.id, function(iot) {
         	    	$scope.iots.push(iot);
         	    	toastService.info('iot ' + iot.name + '#' + iot.id + ' added');
     			});
@@ -177,7 +178,7 @@ angular.module('JarvisApp.ctrl.views', ['JarvisApp.services'])
 	    }, toastService.failure);
 	
 		/**
-		 * get all plugins
+		 * get all iots
 		 */
 		viewResourceService.iots.findAll($stateParams.id, function(data) {
 	    	$scope.iots = data;
@@ -186,9 +187,9 @@ angular.module('JarvisApp.ctrl.views', ['JarvisApp.services'])
 	    }, toastService.failure);
 
 		/**
-		 * find all plugins
+		 * find all iots
 		 */
-		iotResourceService.base.findAll(function(data) {
+		iotResourceService.iot.findAll(function(data) {
 	    	_.forEach(data, function(element) {
 	            /**
 	             * convert internal json params

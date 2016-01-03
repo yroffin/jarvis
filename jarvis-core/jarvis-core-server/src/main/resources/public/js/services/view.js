@@ -21,12 +21,12 @@
 var jarvisServicesUrl = '/services';
 var jarvisApiUrl = '/api';
 var myAppServices = angular.module('JarvisApp.services.view', []);
-var api = 'views';
 
 /**
  * viewResourceService
  */
 myAppServices.factory('viewResourceService', function($log, Restangular, iotResourceService, filterService) {
+  var api = 'views';
   var base = {
         /**
 		 * find all elements
@@ -105,7 +105,7 @@ myAppServices.factory('viewResourceService', function($log, Restangular, iotReso
 					});
 					var params = [];
 	            	_.forEach(elements, function(element) {
-	            		iotResourceService.base.get(element.id, function(param) {
+	            		iotResourceService.iot.get(element.id, function(param) {
 	            			param.instance = element.instance;
 	            			params.push(param);
 	            			done(params);

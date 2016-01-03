@@ -71,7 +71,7 @@ angular.module('JarvisApp.ctrl.commands', ['JarvisApp.services'])
     }
 
     $scope.save = function(command, callback) {
-    	$log.debug('save', command);
+    	$log.debug('commandCtrl::save', command);
     	commandResourceService.base.put(command, function(element) {
         	toastService.info('command ' + command.name + '#' + command.id + ' updated');
         	if(callback) callback(element);
@@ -79,7 +79,7 @@ angular.module('JarvisApp.ctrl.commands', ['JarvisApp.services'])
     }
 
     $scope.execute = function(command) {
-    	$log.debug('execute', command);
+    	$log.debug('commandCtrl::execute', command);
     	commandResourceService.ext.task(command.id, command.type, $scope.input, function(data) {
    	    	toastService.info('command ' + command.name + '#' + command.id + ' executed');
    	    	$log.debug(data);

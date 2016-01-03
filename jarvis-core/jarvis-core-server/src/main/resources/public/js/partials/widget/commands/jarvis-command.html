@@ -1,0 +1,20 @@
+<div layout="row">
+     <md-input-container>
+       <label translate="Name"></label>
+       <input ng-model="command.name"></input>
+     </md-input-container>
+</div>
+<div layout="row">
+     <md-input-container>
+       <label translate="command.type"></label>
+       <md-select ng-model="command.type">
+         <md-option ng-repeat="type in combo.types" value="{{type.id}}">
+           {{type.value | translate}}
+         </md-option>
+       </md-select>
+     </md-input-container>
+     <md-input-container>
+       <label translate="Icon"></label>
+       <input ng-model="command.icon"></input>
+     </md-input-container>
+</div>

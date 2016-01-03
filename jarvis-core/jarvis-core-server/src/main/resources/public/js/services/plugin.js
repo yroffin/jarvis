@@ -27,7 +27,7 @@ var myAppServices = angular.module('JarvisApp.services.plugin', []);
  */
 myAppServices.factory('pluginResourceService', function($log, Restangular, filterService, commandResourceService) {
   var api = 'plugins';
-  var base = {
+  var plugins = {
 	        /**
 			 * base services : findAll, delete, put and post
 			 */
@@ -136,7 +136,7 @@ myAppServices.factory('pluginResourceService', function($log, Restangular, filte
 		}
   }
   return {
-	    base: base,
+	    plugins: plugins,
 	    scripts: scripts,
 		commands : commands  
   }

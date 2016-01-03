@@ -16,7 +16,7 @@
 <div layout="row">
 	<div>
 		<md-input-container>
-		<md-icon md-font-icon="material-icons md-16" ng-click="add(iot)">add</md-icon></md-button>
+		<md-icon md-font-icon="material-icons md-16" ng-click="add(iot)">add</md-icon>
 		   <label translate="view.iots"></label>
 		   <md-select ng-model="iot.id">
 		     <md-option ng-repeat="iot in combo.iots" value="{{iot.id}}" translate="{{iot.name}}">
@@ -38,7 +38,7 @@
 					<td><md-icon md-font-icon="material-icons md-16" ng-click="drop(iot)">delete</md-icon></td>
 					<td><md-icon md-font-icon="material-icons md-16" ng-click="execute(iot)">loop</md-icon></td>
 					<td>{{iot.id}}</th>
-					<td><md-icon md-font-icon="material-icons md-16" ng-click="drop(iot)">{{iot.icon}}</md-icon></th>
+					<td><md-icon md-font-icon="material-icons md-16">{{iot.icon}}</md-icon></th>
 					<td>{{iot.name}}</th>
 				</tr>
 			</tbody>

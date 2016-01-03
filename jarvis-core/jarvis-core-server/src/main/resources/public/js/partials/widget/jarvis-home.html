@@ -1,11 +1,22 @@
 <md-content>
-  <md-list>
-  	<md-list-item ng-repeat="view in views">
-        <div class="md-list-item-text">
-          <md-icon md-font-icon="material-icons md-32">{{view.icon}}</md-icon>
-          <h3>{{view.name}}</h3>
-          <md-divider></md-divider>
+  	<div ng-repeat="view in views">
+        <div>
+	        <md-icon md-font-icon="material-icons md-32">{{view.icon}}</md-icon>
+	        <h3>{{view.name}}</h3>
         </div>
-    </md-list-item>
-  </md-list>
+        <div>
+			<md-grid-list
+		        md-cols-gt-md="8" md-cols-sm="4" md-cols-md="8"
+		        md-row-height-gt-md="1:1" md-row-height="1:1"
+		        md-gutter-gt-md="8px" md-gutter-gt-sm="8px" md-gutter="2px">
+		      <md-grid-tile
+		          ng-repeat="iot in view.iots"
+		          ng-style="{'background': iot.tagColor}"
+		          md-colspan-gt-sm="1"
+		          md-rowspan-gt-sm="1">
+		          {{iot.name}}
+		     </md-grid-tile>
+		    </md-grid-list>
+	    </div>
+    </div>
 </md-content>

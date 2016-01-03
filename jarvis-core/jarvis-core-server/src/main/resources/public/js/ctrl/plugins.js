@@ -34,7 +34,7 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
         /**
          * create or update this job
          */
-        pluginResourceService.base.post(update, function(data) {
+        pluginResourceService.scripts.post(update, function(data) {
                 toastService.info('plugin ' + data.name + '#' + data.id +' created');
                 $scope.plugins.push(data);
             }, toastService.failure);
@@ -44,7 +44,7 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
 	    /**
 	     * loading plugins
 	     */
-		pluginResourceService.base.findAll(function(data) {
+		pluginResourceService.plugins.findAll(function(data) {
 	        var arr = [];
 	    	_.forEach(data, function(element) {
 	            /**
@@ -184,7 +184,7 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
 		/**
 		 * find all owner
 		 */
-		iotResourceService.base.findAll(function(data) {
+		iotResourceService.iot.findAll(function(data) {
 	    	_.forEach(data, function(element) {
 	            /**
 	             * convert internal json params

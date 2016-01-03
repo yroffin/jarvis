@@ -41,6 +41,15 @@ angular.module('JarvisApp.ctrl.home', ['JarvisApp.services'])
 	            }
 	        });
 	    	toastService.info(arr.length + ' view(s)');
+	    	
+	    	_.forEach(arr, function(view) {
+	    		$log.info('loading view', view);
+	    		viewResourceService.iots.findAll(view.id, function(data) {
+	    			view.iots = data;
+	    	    	$log.debug('Linked iots to view', view.iots);
+	    	    }, toastService.failure);
+			});
+	    	
 	        $scope.views = arr;
 	    }, toastService.failure);
 	

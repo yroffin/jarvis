@@ -1,7 +1,7 @@
 <div layout="row">
 	<div>
 	   <md-input-container>
-		 <md-icon md-font-icon="material-icons md-16" ng-click="add(command)">add</md-icon></md-button>
+		 <md-icon md-font-icon="material-icons md-16" ng-click="add(command)">add</md-icon>
 	     <label translate="script.command"></label>
 	     <md-select ng-model="command.id">
 	       <md-option ng-repeat="command in combo.commands" value="{{command.id}}" translate="{{command.name}}">

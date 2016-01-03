@@ -36,6 +36,7 @@ angular.module('JarvisApp', [
      'JarvisApp.services.plugin',
      'JarvisApp.services.command',
      'JarvisApp.services.view',
+     'JarvisApp.services.iot',
      'JarvisApp.directives.widgets',
      'JarvisApp.ctrl.plugins',
      'JarvisApp.ctrl.commands',

@@ -21,12 +21,12 @@
 var jarvisServicesUrl = '/services';
 var jarvisApiUrl = '/api';
 var myAppServices = angular.module('JarvisApp.services.command', []);
-var api = 'commands';
 
 /**
  * iotResourceService
  */
 myAppServices.factory('commandResourceService', function($log, Restangular, filterService) {
+  var api = 'commands';
   var base = {
         /**
 		 * base services : findAll, delete, put and post

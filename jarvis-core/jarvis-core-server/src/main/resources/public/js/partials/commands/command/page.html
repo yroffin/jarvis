@@ -4,8 +4,26 @@
  		<md-icon md-font-icon="material-icons md-16">menu</md-icon></md-button>
   		<span>{{'command.one' | translate}} id#{{command.id}}</span>
 	</h2>
-	<md-content layout-padding>
-		<h3 translate="common.general"></h3><md-divider></md-divider>
-		<jarvis-command></jarvis-command>
-	</md-content>
+	<md-tabs md-dynamic-height md-border-bottom>
+		<md-tab label="{{'command.general' | translate}}">
+			<md-content layout-padding>
+				<jarvis-command></jarvis-command>
+			</md-content>
+		</md-tab>
+		<md-tab label="{{'command.input' | translate}}">
+			<md-content>
+				<jarvis-command-input></jarvis-command-input>
+			</md-content>
+		</md-tab>
+		<md-tab label="{{'command.script' | translate}}">
+			<md-content>
+				<jarvis-command-script></jarvis-command-script>
+			</md-content>
+		</md-tab>
+		<md-tab label="{{'command.output' | translate}}">
+			<md-content>
+				<jarvis-command-output></jarvis-command-output>
+			</md-content>
+		</md-tab>
+	</md-tabs>
 </div>
