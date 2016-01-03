@@ -179,9 +179,10 @@ angular.module('JarvisApp.ctrl.iots', ['JarvisApp.services'])
 		 */
 		iotResourceService.iot.get($stateParams.id, function(data) {
 	    	$scope.iot = data;
-	    	toastService.info('Iot ' + data.name + '#' + $stateParams.id);
+	    	toastService.info('Iot ' + data.name + '#' + data.id);
 	    }, toastService.failure);
 	
+		$log.debug('loading owners');
 		/**
 		 * find all owner
 		 */
@@ -197,6 +198,7 @@ angular.module('JarvisApp.ctrl.iots', ['JarvisApp.services'])
 	        });
 	    }, toastService.failure);
 		
+		$log.debug('loading linked plugins');
 		/**
 		 * get all plugins
 		 */
@@ -206,6 +208,7 @@ angular.module('JarvisApp.ctrl.iots', ['JarvisApp.services'])
 	    	toastService.info($scope.plugins.length + ' plugins (linked)');
 	    }, toastService.failure);
 
+		$log.debug('loading available plugins');
 		/**
 		 * find all plugins
 		 */

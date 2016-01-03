@@ -1,0 +1,32 @@
+<div layout="row">
+	<div>
+		<md-input-container>
+		<md-icon md-font-icon="material-icons md-16" ng-click="add(plugin)">add</md-icon>
+		   <label translate="iot.plugins"></label>
+		   <md-select ng-model="plugin.id">
+		     <md-option ng-repeat="plugin in combo.plugins" value="{{plugin.id}}" translate="{{plugin.name}}">
+		     </md-option>
+		   </md-select>
+		</md-input-container>
+		<table class="table table-bordered table-hover">
+			<thead>
+				<tr>
+					<th></th>
+					<th></th>
+					<th>#</th>
+					<th translate="plugin.icon">Icon</th>
+					<th translate="plugin.name">Name</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="plugin in plugins">
+					<td><md-icon md-font-icon="material-icons md-16" ng-click="drop(plugin)">delete</md-icon></td>
+					<td><md-icon md-font-icon="material-icons md-16" ng-click="execute(plugin)">loop</md-icon></td>
+					<td>{{iot.id}}</th>
+					<td><md-icon md-font-icon="material-icons md-16">{{iot.icon}}</md-icon></th>
+					<td>{{plugin.name}}</th>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
