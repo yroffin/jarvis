@@ -16,12 +16,16 @@
 
 package org.jarvis.core.resources.api.href;
 
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 
 import org.jarvis.core.model.bean.plugin.CommandBean;
 import org.jarvis.core.model.bean.plugin.ScriptPluginBean;
+import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.model.rest.plugin.CommandRest;
 import org.jarvis.core.model.rest.plugin.PluginRest;
+import org.jarvis.core.model.rest.plugin.ScriptPluginRest;
 import org.jarvis.core.resources.api.mapper.ApiHrefMapper;
 import org.springframework.stereotype.Component;
 
@@ -29,11 +33,20 @@ import org.springframework.stereotype.Component;
  * HREF handler
  */
 @Component
-public class ApiHrefPluginResources extends ApiHrefMapper<PluginRest,CommandRest> {
+public class ApiHrefPluginCommandResources extends ApiHrefMapper<PluginRest,CommandRest> {
 
 	@PostConstruct
 	protected
 	void init() {
 		super.init(ScriptPluginBean.class.getSimpleName(),CommandBean.class.getSimpleName(),"commands");
+	}
+
+	/**
+	 * find all by bean
+	 * @param script
+	 * @return List<GenericEntity>
+	 */
+	public List<GenericEntity> findAll(ScriptPluginBean script) {
+		return super.findAll(mapperFactory.getMapperFacade().map(script, ScriptPluginRest.class), CommandRest.class);
 	}
 }

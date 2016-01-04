@@ -16,13 +16,29 @@
 
 package org.jarvis.core.exception;
 
+/**
+ * technical errors
+ */
 public class TechnicalException extends RuntimeException {
 
+	/**
+	 * @param e
+	 */
 	public TechnicalException(InstantiationException e) {
 		super(e);
 	}
 
+	/**
+	 * @param e
+	 */
 	public TechnicalException(IllegalAccessException e) {
+		super(e);
+	}
+
+	/**
+	 * @param e
+	 */
+	public TechnicalException(Exception e) {
 		super(e);
 	}
 

@@ -22,6 +22,8 @@ import static spark.Spark.put;
 
 import org.jarvis.core.model.bean.ConnectorBean;
 import org.jarvis.core.model.rest.ConnectorRest;
+import org.jarvis.core.type.GenericMap;
+import org.jarvis.core.type.TaskType;
 import org.springframework.stereotype.Component;
 
 import spark.Request;
@@ -68,5 +70,11 @@ public class ApiConnectorResources extends ApiResources<ConnectorRest,ConnectorB
 		    	return doUpdate(request, ":id", response, ConnectorRest.class);
 		    }
 		});
+	}
+
+	@Override
+	public String doRealTask(ConnectorBean bean, GenericMap args, TaskType taskType) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

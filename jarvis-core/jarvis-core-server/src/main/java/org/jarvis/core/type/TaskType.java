@@ -21,15 +21,11 @@ package org.jarvis.core.type;
  */
 public enum TaskType {
 	/**
-	 * shell or windows script
+	 * execute
 	 */
-	SHELL, 
+	EXECUTE,
 	/**
-	 * direct local command
+	 * render
 	 */
-	COMMAND,
-	/**
-	 * groovy script
-	 */
-	GROOVY
+	RENDER
 }

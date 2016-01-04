@@ -24,6 +24,8 @@ import static spark.Spark.delete;
 import org.jarvis.core.model.bean.job.ParamBean;
 import org.jarvis.core.model.rest.job.ParamRest;
 import org.jarvis.core.resources.api.ApiResources;
+import org.jarvis.core.type.GenericMap;
+import org.jarvis.core.type.TaskType;
 import org.springframework.stereotype.Component;
 
 import spark.Request;
@@ -76,5 +78,11 @@ public class ApiParamResources extends ApiResources<ParamRest,ParamBean> {
 		    	return doDelete(request, ":id", response, ParamRest.class);
 		    }
 		});
+	}
+
+	@Override
+	public String doRealTask(ParamBean bean, GenericMap args, TaskType taskType) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

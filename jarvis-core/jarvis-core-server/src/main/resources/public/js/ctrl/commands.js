@@ -70,17 +70,26 @@ angular.module('JarvisApp.ctrl.commands', ['JarvisApp.services'])
         }, toastService.failure);
     }
 
-    $scope.save = function(command, callback) {
+    $scope.save = function(command, callback, params) {
     	$log.debug('commandCtrl::save', command);
     	commandResourceService.base.put(command, function(element) {
         	toastService.info('command ' + command.name + '#' + command.id + ' updated');
-        	if(callback) callback(element);
+        	if(callback) {
+        		if(params) {
+        			callback(params);
+        		} else {
+        			callback(element);
+        		}
+        	}
         }, toastService.failure);
     }
-
+    /**
+     * execute this command
+     * @param command, the command to execute
+     */
     $scope.execute = function(command) {
     	$log.debug('commandCtrl::execute', command);
-    	commandResourceService.ext.task(command.id, command.type, $scope.input, function(data) {
+    	commandResourceService.ext.task(command.id, 'execute', $scope.input, function(data) {
    	    	toastService.info('command ' + command.name + '#' + command.id + ' executed');
    	    	$log.debug(data);
    	    	$scope.output = angular.toJson(data, true);
@@ -133,19 +142,19 @@ angular.module('JarvisApp.ctrl.commands', ['JarvisApp.services'])
 		       ],
 		       types: [
 		              	   {
-		              		   id: 'shell',
+		              		   id: 'SHELL',
 		              		   value:'command.shell'
 		              	   },
 		              	   {
-		              		   id: 'command',
+		              		   id: 'COMMAND',
 		              		   value:'command.single'
 		              	   },
 		              	   {
-		              		   id: 'groovy',
+		              		   id: 'GROOVY',
 		              		   value:'command.groovy'
 		              	   },
 		              	   {
-		              		   id: 'ssh',
+		              		   id: 'SSH',
 		              		   value:'command.ssh'
 		              	   }
 		      ]

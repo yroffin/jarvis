@@ -22,12 +22,15 @@ import static spark.Spark.post;
 import static spark.Spark.put;
 
 import org.jarvis.core.exception.TechnicalNotFoundException;
+import org.jarvis.core.model.bean.plugin.CommandBean;
 import org.jarvis.core.model.bean.plugin.ScriptPluginBean;
 import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.model.rest.plugin.CommandRest;
 import org.jarvis.core.model.rest.plugin.ScriptPluginRest;
 import org.jarvis.core.resources.api.ApiResources;
-import org.jarvis.core.resources.api.href.ApiHrefPluginResources;
+import org.jarvis.core.resources.api.href.ApiHrefPluginCommandResources;
+import org.jarvis.core.type.GenericMap;
+import org.jarvis.core.type.TaskType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -45,7 +48,7 @@ public class ApiScriptPluginResources extends ApiResources<ScriptPluginRest,Scri
 	ApiCommandResources apiCommandResources;
 
 	@Autowired
-	ApiHrefPluginResources apiHrefResources;
+	ApiHrefPluginCommandResources apiHrefPluginCommandResources;
 
 	/**
 	 * constructor
@@ -92,7 +95,7 @@ public class ApiScriptPluginResources extends ApiResources<ScriptPluginRest,Scri
 			public Object handle(Request request, Response response) throws Exception {
 		    	try {
 		    		ScriptPluginRest master = doGetById(request.params(ID));
-			    	return mapper.writeValueAsString(apiHrefResources.findAll(master, CommandRest.class));
+			    	return mapper.writeValueAsString(apiHrefPluginCommandResources.findAll(master, CommandRest.class));
 		    	} catch(TechnicalNotFoundException e) {
 		    		response.status(404);
 		    		return "";
@@ -106,7 +109,7 @@ public class ApiScriptPluginResources extends ApiResources<ScriptPluginRest,Scri
 		    		ScriptPluginRest script = doGetById(request.params(":id"));
 			    	try {
 			    		CommandRest command = apiCommandResources.doGetById(request.params(":command"));
-				    	GenericEntity instance = apiHrefResources.add(script, command, "commands");
+				    	GenericEntity instance = apiHrefPluginCommandResources.add(script, command, "commands");
 				    	return mapper.writeValueAsString(instance);
 			    	} catch(TechnicalNotFoundException e) {
 			    		response.status(404);
@@ -125,7 +128,7 @@ public class ApiScriptPluginResources extends ApiResources<ScriptPluginRest,Scri
 		    		ScriptPluginRest plugin = doGetById(request.params(":id"));
 			    	try {
 			    		CommandRest command = apiCommandResources.doGetById(request.params(":command"));
-				    	apiHrefResources.remove(plugin, command, request.queryParams("instance"));
+			    		apiHrefPluginCommandResources.remove(plugin, command, request.queryParams("instance"));
 			    	} catch(TechnicalNotFoundException e) {
 			    		response.status(404);
 			    		return "";
@@ -137,5 +140,45 @@ public class ApiScriptPluginResources extends ApiResources<ScriptPluginRest,Scri
 		    	return doGetById(request, ":id", response);
 		    }
 		});
+	}
+
+	@Override
+	public String doRealTask(ScriptPluginBean bean, GenericMap args, TaskType taskType) throws Exception {
+		GenericMap result;
+		switch(taskType) {
+			case EXECUTE:
+				result = execute(bean, args);
+				break;
+			default:
+				result = new GenericMap();
+		}
+		return mapper.writeValueAsString(result);
+	}
+
+	/**
+	 * execute all command of this script as a pipeline
+	 * @param script
+	 * @param args 
+	 * @return GenericMap
+	 * @throws TechnicalNotFoundException 
+	 */
+	public GenericMap execute(ScriptPluginRest script, GenericMap args) throws TechnicalNotFoundException {
+		return execute(mapperFactory.getMapperFacade().map(script, ScriptPluginBean.class), args);
+	}
+
+	/**
+	 * execute all command of this script as a pipeline
+	 * @param script
+	 * @param args 
+	 * @return GenericMap
+	 * @throws TechnicalNotFoundException 
+	 */
+	public GenericMap execute(ScriptPluginBean script, GenericMap args) throws TechnicalNotFoundException {
+		GenericMap result = args;
+		for(GenericEntity entity : apiHrefPluginCommandResources.findAll(script)) {
+			CommandRest command = apiCommandResources.doGetById(entity.id);
+			result = apiCommandResources.execute(mapperFactory.getMapperFacade().map(command, CommandBean.class), result);
+		}
+		return result;
 	}
 }

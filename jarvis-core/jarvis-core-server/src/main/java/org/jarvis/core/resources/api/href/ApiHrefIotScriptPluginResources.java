@@ -34,6 +34,6 @@ public class ApiHrefIotScriptPluginResources extends ApiHrefMapper<IotRest,Scrip
 	@PostConstruct
 	protected
 	void init() {
-		super.init(IotBean.class.getSimpleName(),ScriptPluginBean.class.getSimpleName(),"iots");
+		super.init(IotBean.class.getSimpleName(),ScriptPluginBean.class.getSimpleName(),"plugins");
 	}
 }

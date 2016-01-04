@@ -100,15 +100,25 @@ myAppServices.factory('viewResourceService', function($log, Restangular, iotReso
   var iots = {
 			findAll: function(id, callback, failure) {
 				Restangular.all(api).one(id).all('iots').getList().then(function(elements) {
-					var done = _.after(elements.length, function(params) {
-						callback(params);
+					var iotStatusLoaded = _.after(elements.length, function(iots) {
+						callback(iots);
 					});
-					var params = [];
+					var iotLoaded = _.after(elements.length, function(iots) {
+						var iotsLoaded = [];
+		            	_.forEach(iots, function(iot) {
+		            		iotResourceService.ext.task(iot.id, 'render', {}, function(iotLoaded) {
+		            			iot.render = iotLoaded;
+			            		iotsLoaded.push(iot);
+			            		iotStatusLoaded(iotsLoaded);
+		            		});
+		            	});
+					});
+					var iots = [];
 	            	_.forEach(elements, function(element) {
-	            		iotResourceService.iot.get(element.id, function(param) {
-	            			param.instance = element.instance;
-	            			params.push(param);
-	            			done(params);
+	            		iotResourceService.iot.get(element.id, function(iot) {
+	            			iot.instance = element.instance;
+	            			iots.push(iot);
+	            			iotLoaded(iots);
 	            		},function(errors){
 	        				failure(errors);
 	        			})

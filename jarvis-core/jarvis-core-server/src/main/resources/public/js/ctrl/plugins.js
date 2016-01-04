@@ -129,22 +129,33 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
     	    }, toastService.failure);
     	}
     }
-
     /**
      * execute this command on server side
 	 * @param command, the command to be executed
      */
     $scope.execute = function(command) {
     	if(command != undefined && command.id != undefined && command.id != '') {
-        	$log.debug('execute ', command);
-        	commandResourceService.ext.task(command.type, command, function(data) {
-       	    	toastService.info('command ' + command.name + '#' + command.id + ' executed');
+        	commandResourceService.ext.task(command.id, 'execute', $scope.rawoutput, function(data) {
+       	    	$log.debug('pluginScriptCtrl::execute', command, data);
+       	    	$scope.rawoutput = data;
+       	    	$scope.output = angular.toJson(data, true);
     	    }, toastService.failure);
     	}
     }
-
+    /**
+     * clear params
+     */
+    $scope.clear = function() {
+    	$scope.rawoutput = {};
+    	$scope.output = angular.toJson({}, true);
+    }
+    /**
+     * load controller
+     */
     $scope.load = function() {
-    	$scope.commands = {};
+    	$scope.commands = [];
+    	$scope.rawoutput = {};
+    	$scope.output = angular.toJson({}, true);
     	
 	    /**
 	     * init part

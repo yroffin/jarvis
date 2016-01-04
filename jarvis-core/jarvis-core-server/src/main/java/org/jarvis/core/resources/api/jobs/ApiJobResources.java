@@ -28,6 +28,8 @@ import org.jarvis.core.model.rest.JobRest;
 import org.jarvis.core.model.rest.job.ParamRest;
 import org.jarvis.core.resources.api.ApiResources;
 import org.jarvis.core.resources.api.href.ApiHrefJobResources;
+import org.jarvis.core.type.GenericMap;
+import org.jarvis.core.type.TaskType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -143,5 +145,11 @@ public class ApiJobResources extends ApiResources<JobRest,JobBean> {
 		    	return doGetById(request, ":id", response);
 		    }
 		});
+	}
+
+	@Override
+	public String doRealTask(JobBean bean, GenericMap args, TaskType taskType) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

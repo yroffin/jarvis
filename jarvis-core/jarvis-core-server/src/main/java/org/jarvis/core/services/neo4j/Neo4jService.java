@@ -25,6 +25,7 @@ import java.util.Map.Entry;
 import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.GenericBean;
+import org.jarvis.core.type.CommandType;
 import org.jarvis.core.type.ParamType;
 import org.neo4j.graphdb.DynamicLabel;
 import org.neo4j.graphdb.Label;
@@ -65,7 +66,10 @@ public class Neo4jService<T> {
 			return ParamType.STRING;
 		}
 		if(field.getType() == org.jarvis.core.type.ParamType.class) {
-			return ParamType.TYPE;
+			return ParamType.PARAM;
+		}
+		if(field.getType() == org.jarvis.core.type.CommandType.class) {
+			return ParamType.COMMAND;
 		}
 		return ParamType.STRING;
 	}
@@ -88,8 +92,11 @@ public class Neo4jService<T> {
 						case FLOAT:
 							node.setProperty(field.getName(), value);
 							break;
-						case TYPE:
+						case PARAM:
 							node.setProperty(field.getName(), ((ParamType) value).name());
+							break;
+						case COMMAND:
+							node.setProperty(field.getName(), ((CommandType) value).name());
 							break;
 					default:
 						break;
@@ -286,8 +293,11 @@ public class Neo4jService<T> {
 						case FLOAT:
 							field.set(target, node.getProperty(field.getName()));
 							break;
-						case TYPE:
+						case PARAM:
 							field.set(target, ParamType.valueOf(node.getProperty(field.getName()).toString()));
+							break;
+						case COMMAND:
+							field.set(target, CommandType.valueOf(node.getProperty(field.getName()).toString().toUpperCase()));
 							break;
 						default:
 							break;

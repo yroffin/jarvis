@@ -26,9 +26,11 @@ import org.jarvis.core.model.bean.view.ViewBean;
 import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.model.rest.IotRest;
 import org.jarvis.core.model.rest.view.ViewRest;
-import org.jarvis.core.resources.api.ApiIotResources;
 import org.jarvis.core.resources.api.ApiResources;
 import org.jarvis.core.resources.api.href.ApiHrefViewResources;
+import org.jarvis.core.resources.api.iot.ApiIotResources;
+import org.jarvis.core.type.GenericMap;
+import org.jarvis.core.type.TaskType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -144,5 +146,11 @@ public class ApiViewResources extends ApiResources<ViewRest,ViewBean> {
 		    	return doGetById(request, ID, response);
 		    }
 		});
+	}
+
+	@Override
+	public String doRealTask(ViewBean bean, GenericMap args, TaskType taskType) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -19,12 +19,24 @@ package org.jarvis.core.resources.api.plugins;
 import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.put;
+
+import java.io.IOException;
+import java.lang.reflect.Field;
+
 import static spark.Spark.delete;
 
+import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.model.bean.plugin.CommandBean;
 import org.jarvis.core.model.rest.plugin.CommandRest;
 import org.jarvis.core.resources.api.ApiResources;
+import org.jarvis.core.services.groovy.PluginGroovyService;
+import org.jarvis.core.services.shell.PluginShellService;
+import org.jarvis.core.type.GenericMap;
+import org.jarvis.core.type.TaskType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import spark.Request;
 import spark.Response;
@@ -44,6 +56,75 @@ public class ApiCommandResources extends ApiResources<CommandRest,CommandBean> {
 		setBeanClass(CommandBean.class);
 	}
 
+	@Autowired
+	PluginShellService pluginShellService;
+
+	@Autowired
+	PluginGroovyService pluginGroovyService;
+
+	/**
+	 * execute task on command
+	 * @param command
+	 * @param args
+	 * @param taskType
+	 * @return String
+	 * @throws Exception
+	 */
+	public String doRealTask(CommandBean command, GenericMap args, TaskType taskType) throws Exception {
+		GenericMap result = args;
+		switch(taskType) {
+			case EXECUTE:
+				result = execute(command, result);
+				break;
+			default:
+				result = new GenericMap();
+		}
+    	return mapper.writeValueAsString(result);
+	}
+
+	/**
+	 * execute this command
+	 * @param command
+	 * @param args
+	 * @return GenericMap
+	 */
+	public GenericMap execute(CommandBean command, GenericMap args) {
+		/**
+		 * convert command to lazy map
+		 */
+		GenericMap converted = new GenericMap();
+		for(Field field : command.getClass().getDeclaredFields()) {
+			try {
+				converted.put(field.getName(), field.get(command));
+			} catch (IllegalArgumentException | IllegalAccessException e) {
+				throw new TechnicalException(e);
+			}
+		}
+		GenericMap result = null;
+		try {
+			switch(command.type) {
+				case COMMAND:
+					result = pluginShellService.command(converted, args);
+					break;
+				case SHELL:
+					result = pluginShellService.shell(converted, args);
+					break;
+				case GROOVY:
+					result = pluginGroovyService.groovy(converted, args);
+					break;
+				default:
+			}
+		} catch (IOException | InterruptedException e) {
+			throw new TechnicalException(e);
+		}
+		try {
+			logger.info("SCRIPT - OUTPUT  {}", mapper.writerWithDefaultPrettyPrinter().writeValueAsString(result));
+		} catch (JsonProcessingException e) {
+			throw new TechnicalException(e);
+		}
+    	return result;
+	}
+	
 	@Override
 	public void mount() {
 		/**

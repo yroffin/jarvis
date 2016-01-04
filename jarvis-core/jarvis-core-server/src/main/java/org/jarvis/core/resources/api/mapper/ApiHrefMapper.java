@@ -70,7 +70,7 @@ public abstract class ApiHrefMapper<Owner extends GenericEntity,Child extends Ge
 			Map<String, Object> fields = result.next();
 			genericEntity.id = ((Node) fields.get("node")).getId()+"";
 			genericEntity.instance = ((Relationship) fields.get("r")).getId()+"";
-			genericEntity.href = "/api/params/" + genericEntity.id;
+			genericEntity.href = "/api/"+type+"/" + genericEntity.id;
 			resultset.add(genericEntity);
 		}
 		return resultset;

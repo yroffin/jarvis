@@ -14,26 +14,22 @@
  *   limitations under the License.
  */
 
-package org.jarvis.core.resources.api.href;
-
-import javax.annotation.PostConstruct;
-
-import org.jarvis.core.model.bean.IotBean;
-import org.jarvis.core.model.bean.view.ViewBean;
-import org.jarvis.core.model.rest.IotRest;
-import org.jarvis.core.model.rest.view.ViewRest;
-import org.jarvis.core.resources.api.mapper.ApiHrefMapper;
-import org.springframework.stereotype.Component;
+package org.jarvis.core.type;
 
 /**
- * HREF handler
+ * command type
  */
-@Component
-public class ApiHrefViewResources extends ApiHrefMapper<ViewRest,IotRest> {
-
-	@PostConstruct
-	protected
-	void init() {
-		super.init(ViewBean.class.getSimpleName(),IotBean.class.getSimpleName(),"iots");
-	}
+public enum CommandType {
+	/**
+	 * shell or windows script
+	 */
+	SHELL, 
+	/**
+	 * direct local command
+	 */
+	COMMAND,
+	/**
+	 * groovy script
+	 */
+	GROOVY,
 }

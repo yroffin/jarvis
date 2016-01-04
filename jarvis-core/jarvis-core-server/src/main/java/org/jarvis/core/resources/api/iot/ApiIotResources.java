@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package org.jarvis.core.resources.api;
+package org.jarvis.core.resources.api.iot;
 
 import static spark.Spark.delete;
 import static spark.Spark.get;
@@ -25,11 +25,13 @@ import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.IotBean;
 import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.model.rest.IotRest;
-import org.jarvis.core.model.rest.plugin.PluginRest;
 import org.jarvis.core.model.rest.plugin.ScriptPluginRest;
-import org.jarvis.core.resources.api.href.ApiHrefIotScriptPluginResources;
+import org.jarvis.core.resources.api.ApiResources;
 import org.jarvis.core.resources.api.href.ApiHrefIotResources;
+import org.jarvis.core.resources.api.href.ApiHrefIotScriptPluginResources;
 import org.jarvis.core.resources.api.plugins.ApiScriptPluginResources;
+import org.jarvis.core.type.GenericMap;
+import org.jarvis.core.type.TaskType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -47,7 +49,7 @@ public class ApiIotResources extends ApiResources<IotRest,IotBean> {
 	ApiHrefIotScriptPluginResources apiHrefIotScriptPluginResources;
 
 	@Autowired
-	ApiHrefIotResources apiHrefResources;
+	ApiHrefIotResources apiHrefIotResources;
 
 	@Autowired
 	ApiScriptPluginResources apiScriptPluginResources;
@@ -58,6 +60,39 @@ public class ApiIotResources extends ApiResources<IotRest,IotBean> {
 	public ApiIotResources() {
 		setRestClass(IotRest.class);
 		setBeanClass(IotBean.class);
+	}
+
+	@Override
+	public String doRealTask(IotBean iot, GenericMap args, TaskType taskType) throws Exception {
+		GenericMap result;
+		switch(taskType) {
+			case RENDER:
+				result = render(iot, args);
+				break;
+			default:
+				result = new GenericMap();
+		}
+		return mapper.writeValueAsString(result);
+	}
+
+	/**
+	 * render this connected object
+	 * @param iot
+	 * @param args
+	 * @return GenericMap
+	 * @throws Exception
+	 */
+	public GenericMap render(IotBean iot, GenericMap args) throws Exception {
+		GenericMap result = args;
+		IotRest iotRest = mapperFactory.getMapperFacade().map(iot, IotRest.class);
+		/**
+		 * iterate on each entity and execute them as a pipeline
+		 */
+		for(GenericEntity entity : apiHrefIotScriptPluginResources.findAll(iotRest, ScriptPluginRest.class)) {
+			ScriptPluginRest script = apiScriptPluginResources.doGetById(entity.id);
+			result = apiScriptPluginResources.execute(script, result);
+		}
+		return result;
 	}
 
 	@Override
@@ -83,6 +118,12 @@ public class ApiIotResources extends ApiResources<IotRest,IotBean> {
 		    	return doCreate(request, response, IotRest.class);
 		    }
 		});
+		post("/api/iots/:id", new Route() {
+		    @Override
+			public Object handle(Request request, Response response) throws Exception {
+		    	return doTask(request, ":id", "task", response, IotRest.class);
+		    }
+		});
 		put("/api/iots/:id", new Route() {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
@@ -103,7 +144,7 @@ public class ApiIotResources extends ApiResources<IotRest,IotBean> {
 			public Object handle(Request request, Response response) throws Exception {
 		    	try {
 		    		IotRest iot = doGetById(request.params(ID));
-			    	return mapper.writeValueAsString(apiHrefResources.findAll(iot, IotRest.class));
+			    	return mapper.writeValueAsString(apiHrefIotResources.findAll(iot, IotRest.class));
 		    	} catch(TechnicalNotFoundException e) {
 		    		response.status(404);
 		    		return "";
@@ -117,7 +158,7 @@ public class ApiIotResources extends ApiResources<IotRest,IotBean> {
 		    		IotRest iot = doGetById(request.params(ID));
 			    	try {
 				    	IotRest child = doGetById(request.params(IOT));
-				    	GenericEntity instance = apiHrefResources.add(iot, child, "iots");
+				    	GenericEntity instance = apiHrefIotResources.add(iot, child, "iots");
 				    	return mapper.writeValueAsString(instance);
 			    	} catch(TechnicalNotFoundException e) {
 			    		response.status(404);
@@ -136,7 +177,7 @@ public class ApiIotResources extends ApiResources<IotRest,IotBean> {
 		    		IotRest iot = doGetById(request.params(ID));
 			    	try {
 			    		IotRest param = doGetById(request.params(IOT));
-				    	apiHrefResources.remove(iot, param, request.queryParams(INSTANCE));
+			    		apiHrefIotResources.remove(iot, param, request.queryParams(INSTANCE));
 			    	} catch(TechnicalNotFoundException e) {
 			    		response.status(404);
 			    		return "";

@@ -17,9 +17,10 @@
 package org.jarvis.core.model.bean.plugin;
 
 import org.jarvis.core.model.bean.GenericBean;
+import org.jarvis.core.type.CommandType;
 
 /**
- * commande
+ * command
  */
 public class CommandBean extends GenericBean {
 	/**
@@ -29,7 +30,7 @@ public class CommandBean extends GenericBean {
 	/**
 	 * type
 	 */
-	public String type;
+	public CommandType type;
 	/**
 	 * icon
 	 */

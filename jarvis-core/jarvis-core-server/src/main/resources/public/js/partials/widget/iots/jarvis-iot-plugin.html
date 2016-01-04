@@ -12,7 +12,6 @@
 			<thead>
 				<tr>
 					<th></th>
-					<th></th>
 					<th>#</th>
 					<th translate="plugin.icon">Icon</th>
 					<th translate="plugin.name">Name</th>
@@ -21,7 +20,6 @@
 			<tbody>
 				<tr ng-repeat="plugin in plugins">
 					<td><md-icon md-font-icon="material-icons md-16" ng-click="drop(plugin)">delete</md-icon></td>
-					<td><md-icon md-font-icon="material-icons md-16" ng-click="execute(plugin)">loop</md-icon></td>
 					<td>{{iot.id}}</th>
 					<td><md-icon md-font-icon="material-icons md-16">{{iot.icon}}</md-icon></th>
 					<td>{{plugin.name}}</th>

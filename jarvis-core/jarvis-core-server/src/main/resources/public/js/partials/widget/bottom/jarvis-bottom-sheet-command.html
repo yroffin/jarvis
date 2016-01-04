@@ -8,7 +8,7 @@
 		</md-button>
     </md-list-item>
 	<md-list-item>
-		<md-button aria-label="Todo" ng-click="save(command, function(element){$scope.go('commands');})" md-autofocus="true">
+		<md-button aria-label="Todo" ng-click="save(command, go, 'commands')" md-autofocus="true">
 			<md-icon md-font-icon="material-icons md-24">done</md-icon>
 			<span translate="Save"></span>
 		</md-button>
@@ -20,7 +20,7 @@
 		</md-button>
     </md-list-item>
 	<md-list-item>
-		<md-button aria-label="Todo" ng-click="go('plugins')">
+		<md-button aria-label="Todo" ng-click="go('commands')">
 			<md-icon md-font-icon="material-icons md-24">clear</md-icon>
 			<span translate="Close"></span>
 		</md-button>

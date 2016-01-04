@@ -24,6 +24,7 @@ import org.springframework.stereotype.Component;
 import org.jarvis.core.resources.api.ApiClientResources;
 import org.jarvis.core.resources.api.ApiLabelResources;
 import org.jarvis.core.resources.api.ApiScenarioResources;
+import org.jarvis.core.resources.api.iot.ApiIotResources;
 import org.jarvis.core.resources.api.jobs.ApiJobResources;
 import org.jarvis.core.resources.api.jobs.ApiParamResources;
 import org.jarvis.core.resources.api.plugins.ApiCommandResources;
@@ -31,7 +32,6 @@ import org.jarvis.core.resources.api.plugins.ApiScriptPluginResources;
 import org.jarvis.core.resources.api.views.ApiViewResources;
 import org.jarvis.core.resources.api.ApiConnectorResources;
 import org.jarvis.core.resources.api.ApiCrontabResources;
-import org.jarvis.core.resources.api.ApiIotResources;
 
 /**
  * main daemon

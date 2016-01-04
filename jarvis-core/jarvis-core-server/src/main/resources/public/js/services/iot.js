@@ -145,10 +145,20 @@ angular.module('JarvisApp.services.iot', ['JarvisApp.services.plugin']).factory(
 					failure(errors);
 				});
 			}
-	  }
+  }
+  var ext = {
+		  task: function(id, task, args, callback, failure) {
+				Restangular.all(api).one(id).customPOST(args,'', {'task':task}).then(function(element) {
+					callback(filterService.plain(element));
+				},function(errors){
+					failure(errors);
+				});
+			}
+  }
   return {
 	  	iot: iot,
 	  	plugins : plugins,
-	  	iots : iots  
+	  	iots : iots,
+	  	ext : ext  
   }
 });

@@ -16,7 +16,6 @@
 
 package org.jarvis.core.resources.api;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,9 +24,7 @@ import javax.annotation.PostConstruct;
 import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.resources.api.mapper.ApiMapper;
 import org.jarvis.core.services.ApiService;
-import org.jarvis.core.services.groovy.PluginGroovyService;
 import org.jarvis.core.services.neo4j.ApiNeo4Service;
-import org.jarvis.core.services.shell.PluginShellService;
 import org.jarvis.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
 import org.slf4j.Logger;
@@ -208,11 +205,17 @@ public abstract class ApiResources<Rest,Bean> extends ApiMapper {
     	return mapper.writeValueAsString(doCreate(k));
     }
 
-	@Autowired
-	PluginShellService pluginShellService;
-
-	@Autowired
-	PluginGroovyService pluginGroovyService;
+	/**
+	 * execute real task on this resource, all task must be overridden in each
+	 * resources
+	 * 
+	 * @param bean
+	 * @param args
+	 * @param taskType
+	 * @return String
+	 * @throws Exception
+	 */
+	public abstract String doRealTask(Bean bean, GenericMap args, TaskType taskType) throws Exception;
 
 	/**
 	 * create entity
@@ -231,37 +234,16 @@ public abstract class ApiResources<Rest,Bean> extends ApiMapper {
     	}
     	try {
     		/**
-    		 * decode body
-    		 */
-    		GenericMap args = (GenericMap) mapper.readValue(request.body(), GenericMap.class);
-    		logger.info("SCRIPT - INPUT   {}", mapper.writerWithDefaultPrettyPrinter().writeValueAsString(args));
-    		/**
     		 * read object by id
     		 */
     		Bean bean = apiService.getById(request.params(id));
     		logger.info("SCRIPT - CONTEXT {}", mapper.writerWithDefaultPrettyPrinter().writeValueAsString(bean));
     		/**
-    		 * convert command to lazy map
+    		 * decode body
     		 */
-    		GenericMap converted = new GenericMap();
-    		for(Field field : bean.getClass().getDeclaredFields()) {
-    			converted.put(field.getName(), field.get(bean));
-    		}
-    		GenericMap result = null;
-    		switch(TaskType.valueOf(request.queryParams(task).toUpperCase())) {
-    			case COMMAND:
-    				result = pluginShellService.command(converted, args);
-    				break;
-    			case SHELL:
-    				result = pluginShellService.shell(converted, args);
-    				break;
-    			case GROOVY:
-    				result = pluginGroovyService.groovy(converted, args);
-    				break;
-    			default:
-    		}
-    		logger.info("SCRIPT - OUTPUT  {}", mapper.writerWithDefaultPrettyPrinter().writeValueAsString(result));
-        	return mapper.writeValueAsString(result);
+    		GenericMap args = (GenericMap) mapper.readValue(request.body(), GenericMap.class);
+    		logger.info("SCRIPT - INPUT   {}", mapper.writerWithDefaultPrettyPrinter().writeValueAsString(args));
+    		return doRealTask(bean, args, TaskType.valueOf(request.queryParams(task).toUpperCase()));
     	} catch(TechnicalNotFoundException e) {
     		response.status(404);
     		return "";

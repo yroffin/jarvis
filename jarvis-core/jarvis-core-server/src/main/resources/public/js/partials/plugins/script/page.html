@@ -4,10 +4,21 @@
  		<md-icon md-font-icon="material-icons md-16">menu</md-icon></md-button>
 		<span>Script {{script.type}}#{{script.id}}</span>
 	</h2>
-	<md-content layout-padding>
-		<h3 translate="plugin.general"></h3><md-divider></md-divider>
-		<jarvis-plugin-common></jarvis-plugin-common>
-		<h3 translate="plugin.script"></h3><md-divider></md-divider>
-		<jarvis-plugin-script></jarvis-plugin-script>
-	</md-content>
+	<md-tabs md-dynamic-height md-border-bottom>
+		<md-tab label="{{'plugin.general' | translate}}">
+			<md-content layout-padding>
+				<jarvis-plugin-common></jarvis-plugin-common>
+			</md-content>
+		</md-tab>
+		<md-tab label="{{'plugin.script' | translate}}">
+			<md-content>
+				<jarvis-plugin-script></jarvis-plugin-script>
+			</md-content>
+		</md-tab>
+		<md-tab label="{{'plugin.render' | translate}}">
+			<md-content>
+				<jarvis-plugin-render></jarvis-plugin-render>
+			</md-content>
+		</md-tab>
+	</md-tabs>
 </div>

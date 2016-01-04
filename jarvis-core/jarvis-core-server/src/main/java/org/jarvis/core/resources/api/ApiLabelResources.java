@@ -23,6 +23,8 @@ import static spark.Spark.put;
 
 import org.jarvis.core.model.bean.LabelBean;
 import org.jarvis.core.model.rest.LabelRest;
+import org.jarvis.core.type.GenericMap;
+import org.jarvis.core.type.TaskType;
 import org.springframework.stereotype.Component;
 
 import spark.Request;
@@ -69,5 +71,11 @@ public class ApiLabelResources extends ApiResources<LabelRest,LabelBean> {
 		    	return doUpdate(request, ":id", response, LabelRest.class);
 		    }
 		});
+	}
+
+	@Override
+	public String doRealTask(LabelBean bean, GenericMap args, TaskType taskType) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

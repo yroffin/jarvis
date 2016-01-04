@@ -1,6 +1,7 @@
 package org.jarvis.core.model.rest.plugin;
 
 import org.jarvis.core.model.rest.GenericEntity;
+import org.jarvis.core.type.CommandType;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -19,7 +20,7 @@ public class CommandRest extends GenericEntity {
 	 * type
 	 */
 	@JsonProperty("type")
-	public String type;
+	public CommandType type;
 	/**
 	 * icon
 	 */
