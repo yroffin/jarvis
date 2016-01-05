@@ -102,7 +102,10 @@ public class ApiScriptPluginResources extends ApiResources<ScriptPluginRest,Scri
 		    	}
 		    }
 		});
-		put("/api/plugins/scripts/:id/commands/:command", new Route() {
+		/**
+		 * create new link
+		 */
+		post("/api/plugins/scripts/:id/commands/:command", new Route() {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
 		    	try {
@@ -121,6 +124,31 @@ public class ApiScriptPluginResources extends ApiResources<ScriptPluginRest,Scri
 		    	}
 		    }
 		});
+		/**
+		 * update link
+		 */
+		put("/api/plugins/scripts/:id/commands/:command/:instance", new Route() {
+		    @Override
+			public Object handle(Request request, Response response) throws Exception {
+		    	try {
+		    		ScriptPluginRest script = doGetById(request.params(":id"));
+			    	try {
+			    		CommandRest command = apiCommandResources.doGetById(request.params(":command"));
+			    		GenericMap properties = apiHrefPluginCommandResources.update(request.params(":instance"), new GenericMap(request.body()));
+				    	return mapper.writeValueAsString(properties);
+			    	} catch(TechnicalNotFoundException e) {
+			    		response.status(404);
+			    		return "";
+			    	}
+		    	} catch(TechnicalNotFoundException e) {
+		    		response.status(404);
+		    		return "";
+		    	}
+		    }
+		});
+		/**
+		 * delete one link
+		 */
 		delete("/api/plugins/scripts/:id/commands/:command", new Route() {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {

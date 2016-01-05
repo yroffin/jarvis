@@ -108,19 +108,33 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
      * add this command
      * @param command, the command to add
      */
-    $scope.add = function(command, properties) {
+    $scope.add = function(command) {
     	if(command != undefined && command.id != undefined && command.id != '') {
         	var properties = {
-        			'name':'xxx',
+        			'name':'noname',
            			'nature':'info',
            			'type':'json'
         	};
-        	$log.debug('pluginScriptCtrl::add', command, properties);
-    		pluginResourceService.commands.put($stateParams.id, command.id, properties, function(data) {
+    		pluginResourceService.commands.post($stateParams.id, command.id, properties, function(data) {
     			commandResourceService.base.get(data.id, function(command) {
+    				command.instance = data.instance;
+    				command.extended = data.extended;
         	    	$scope.commands.push(command);
-        	    	toastService.info('script ' + command.name + '#' + command.id + ' added');
+                	$log.debug('pluginScriptCtrl::add', command);
     			});
+    	    }, toastService.failure);
+    	}
+    }
+    /**
+     * add this command
+     * @param command, the command to add
+     */
+    $scope.update = function(command) {
+    	if(command != undefined && command.id != undefined && command.id != '') {
+           	$log.debug('pluginScriptCtrl::update', command);
+    		pluginResourceService.commands.put($stateParams.id, command.id, command.instance, command.extended, function(data) {
+               	$log.debug('pluginScriptCtrl::update', command);
+               	$log.debug('pluginScriptCtrl::update', data);
     	    }, toastService.failure);
     	}
     }

@@ -1,7 +1,7 @@
 <div layout="row">
 	<div>
 	   <md-input-container>
-		 <md-icon md-font-icon="material-icons md-16" ng-click="add(command)">add</md-icon>
+		 <md-icon md-font-icon="material-icons md-16" ng-click="add(command)">playlist_add</md-icon>
 	     <label translate="script.command"></label>
 	     <md-select ng-model="command.id">
 	       <md-option ng-repeat="command in combo.commands" value="{{command.id}}" translate="{{command.name}}">
@@ -27,8 +27,9 @@
 					  <label translate="script.cmd.type"></label>
 					  <input ng-model="command.extended.type">
 					</md-input-container>
+			        <md-icon md-font-icon="material-icons md-16" ng-click="update(command)">save</md-icon>
 			        <md-icon md-font-icon="material-icons md-16" ng-click="drop(command)">delete</md-icon>
-			        <md-icon md-font-icon="material-icons md-16" ng-click="execute(command)">loop</md-icon>
+			        <md-icon md-font-icon="material-icons md-16" ng-click="execute(command)">send</md-icon>
 			    </div>
 		   		<div style="width: 100%;">
 		  		  <div hljs hljs-source="command.body"></div>

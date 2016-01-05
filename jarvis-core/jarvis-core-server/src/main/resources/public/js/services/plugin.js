@@ -116,17 +116,33 @@ myAppServices.factory('pluginResourceService', function($log, Restangular, filte
 			});
 		},
         /**
-		 * put link
+		 * post link
 		 */
-        put: function(id, param, properties, callback, failure) {
+        post: function(id, param, properties, callback, failure) {
         	var p = {};
         	if(properties === undefined) {
         		p = {};
         	} else {
         		p = properties;
         	}
-        	Restangular.all(api).one('scripts', id).one('commands',param).customPUT(p).then(function(href) {
-        		callback(href);
+        	Restangular.all(api).one('scripts', id).one('commands',param).customPOST(p).then(function(href) {
+        		callback(filterService.plain(href));
+        	},function(errors){
+        		failure(errors);
+        	});
+        },
+        /**
+		 * put link
+		 */
+        put: function(id, param, instance, properties, callback, failure) {
+        	var p = {};
+        	if(properties === undefined) {
+        		p = {};
+        	} else {
+        		p = properties;
+        	}
+        	Restangular.all(api).one('scripts', id).one('commands',param).one(instance).customPUT(p).then(function(href) {
+        		callback(filterService.plain(href));
         	},function(errors){
         		failure(errors);
         	});

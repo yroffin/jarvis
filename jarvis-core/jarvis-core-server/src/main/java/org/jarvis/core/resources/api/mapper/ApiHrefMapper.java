@@ -54,22 +54,52 @@ public abstract class ApiHrefMapper<Owner extends GenericEntity,Child extends Ge
 			if(result.hasNext()) {
 				Map<String, Object> rows = result.next();
 				/**
-				 * set relationship properties
-				 */
-				Relationship r = (Relationship) rows.get("r");
-				for(Entry<String, Object> property : properties.entrySet()) {
-					if(String.class == property.getValue().getClass()) {
-						r.setProperty(property.getKey(), (String) property.getValue());					
-					}
-				}
-				/**
 				 * set node properties
 				 */
 				GenericEntity genericEntity = new GenericEntity();
 				genericEntity.id = child.id;
 				genericEntity.instance = rows.get("id(r)")+"";
 				genericEntity.href = "/api/"+type+"/" + genericEntity.id;
+				/**
+				 * set relationship properties
+				 */
+				Relationship r = (Relationship) rows.get("r");
+				for(Entry<String, Object> property : properties.entrySet()) {
+					if(String.class == property.getValue().getClass()) {
+						r.setProperty(property.getKey(), (String) property.getValue());
+						genericEntity.put(property.getKey(), (String) property.getValue());
+					}
+				}
 				return genericEntity;
+			}
+		}
+		throw new TechnicalNotFoundException();
+	}
+
+	/**
+	 * add a new link between Owner and Child
+	 * 
+	 * @param relId 
+	 * @param properties 
+	 * @return String
+	 * @throws TechnicalNotFoundException 
+	 */
+	public GenericMap update(String relId, GenericMap properties) throws TechnicalNotFoundException {
+		try (Transaction update = apiNeo4Service.beginTx()) {
+			Result result = apiNeo4Service.cypherFindLink(ownerLabel, childLabel, relId);
+			if(result.hasNext()) {
+				Map<String, Object> rows = result.next();
+				/**
+				 * set relationship properties
+				 */
+				Relationship r = (Relationship) rows.get("r");
+				for(Entry<String, Object> property : properties.entrySet()) {
+					if(String.class == property.getValue().getClass()) {
+						r.setProperty(property.getKey(), (String) property.getValue());
+					}
+				}
+				update.success();
+				return properties;
 			}
 		}
 		throw new TechnicalNotFoundException();

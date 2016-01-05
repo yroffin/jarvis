@@ -139,7 +139,7 @@ public class ApiNeo4Service  {
 	}
 
 	/**
-	 * find all relationship
+	 * add new relationship
 	 * @param leftLabel
 	 * @param leftId
 	 * @param rightLabel
@@ -149,6 +149,18 @@ public class ApiNeo4Service  {
 	 */
 	public Result cypherAddLink(String leftLabel, String leftId, String rightLabel, String rightId, String relType) {
 		Result result = execute("MATCH (left:"+leftLabel+"),(right:"+rightLabel+") WHERE id(left) = "+leftId+" AND id(right) = "+rightId+" CREATE (left)-[r:"+relType+"]->(right) RETURN id(r),r");
+		return result;
+	}
+
+	/**
+	 * find a relationship
+	 * @param leftLabel
+	 * @param rightLabel
+	 * @param relId 
+	 * @return Result
+	 */
+	public Result cypherFindLink(String leftLabel, String rightLabel, String relId) {
+		Result result = execute("MATCH (left:"+leftLabel+")-[r]->(right:"+rightLabel+") WHERE id(r) = "+relId+" RETURN id(r),r");
 		return result;
 	}
 
