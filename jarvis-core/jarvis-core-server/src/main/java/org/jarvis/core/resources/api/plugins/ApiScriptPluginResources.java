@@ -109,12 +109,7 @@ public class ApiScriptPluginResources extends ApiResources<ScriptPluginRest,Scri
 		    		ScriptPluginRest master = doGetById(request.params(ID));
 		    		List<CommandRest> result = new ArrayList<CommandRest>();
 		    		for(GenericEntity link : apiHrefPluginCommandResources.findAll(master)) {
-		    			CommandRest commandRest = apiCommandResources.doGetById(link.id);
-		    			commandRest.instance = link.instance;
-		    			for(Entry<String, Object> property : link.get()) {
-		    				commandRest.put(property.getKey(), property.getValue());
-		    			}
-		    			result.add(commandRest);
+		    			result.add(commandRest(link));
 		    		}
 		    		
 		    		/**
@@ -151,7 +146,7 @@ public class ApiScriptPluginResources extends ApiResources<ScriptPluginRest,Scri
 			    	try {
 			    		CommandRest command = apiCommandResources.doGetById(request.params(":command"));
 				    	GenericEntity instance = apiHrefPluginCommandResources.add(script, command, new GenericMap(request.body()), "commands");
-				    	return mapper.writeValueAsString(instance);
+				    	return mapper.writeValueAsString(commandRest(instance));
 			    	} catch(TechnicalNotFoundException e) {
 			    		response.status(404);
 			    		return "";
@@ -206,6 +201,21 @@ public class ApiScriptPluginResources extends ApiResources<ScriptPluginRest,Scri
 		    	return doGetById(request, ":id", response);
 		    }
 		});
+	}
+
+	/**
+	 * build command with relationship
+	 * @param link
+	 * @return CommandRest
+	 * @throws Exception
+	 */
+	public CommandRest commandRest(GenericEntity link) throws Exception {
+		CommandRest commandRest = apiCommandResources.doGetById(link.id);
+		commandRest.instance = link.instance;
+		for(Entry<String, Object> property : link.get()) {
+			commandRest.put(property.getKey(), property.getValue());
+		}
+		return commandRest;
 	}
 
 	@Override

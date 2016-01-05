@@ -118,13 +118,9 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
            			'nature':'info',
            			'type':'json'
         	};
-    		pluginResourceService.commands.post($stateParams.id, command.id, properties, function(data) {
-    			commandResourceService.base.get(data.id, function(command) {
-    				command.instance = data.instance;
-    				command.extended = data.extended;
-        	    	$scope.commands.push(command);
-                	$log.debug('pluginScriptCtrl::add', command);
-    			});
+    		pluginResourceService.commands.post($stateParams.id, command.id, properties, function(command) {
+            	$log.debug('pluginScriptCtrl::add', command);
+    	    	$scope.commands.push(command);
     	    }, toastService.failure);
     	}
     }
