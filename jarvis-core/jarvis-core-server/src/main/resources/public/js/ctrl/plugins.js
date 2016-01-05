@@ -39,7 +39,9 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
                 $scope.plugins.push(data);
             }, toastService.failure);
     }
-
+    /**
+     * load
+     */
     $scope.load = function() {
 	    /**
 	     * loading plugins
@@ -111,6 +113,7 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
     $scope.add = function(command) {
     	if(command != undefined && command.id != undefined && command.id != '') {
         	var properties = {
+        			'order':'1',
         			'name':'noname',
            			'nature':'info',
            			'type':'json'
@@ -160,7 +163,7 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
      */
     $scope.execute = function(command) {
     	if(command != undefined && command.id != undefined && command.id != '') {
-        	commandResourceService.ext.task(command.id, 'execute', $scope.rawoutput, function(data) {
+    		pluginResourceService.ext.task(command.id, 'execute', $scope.rawoutput, function(data) {
        	    	$log.debug('pluginScriptCtrl::execute', command, data);
        	    	$scope.rawoutput = data;
        	    	$scope.output = angular.toJson(data, true);

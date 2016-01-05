@@ -101,7 +101,7 @@ public class ApiViewResources extends ApiResources<ViewRest,ViewBean> {
 			public Object handle(Request request, Response response) throws Exception {
 		    	try {
 		    		ViewRest view = doGetById(request.params(ID));
-			    	return mapper.writeValueAsString(apiHrefResources.findAll(view, IotRest.class));
+			    	return mapper.writeValueAsString(apiHrefResources.findAll(view));
 		    	} catch(TechnicalNotFoundException e) {
 		    		response.status(404);
 		    		return "";

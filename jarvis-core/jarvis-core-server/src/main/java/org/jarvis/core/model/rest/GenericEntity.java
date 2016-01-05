@@ -16,6 +16,9 @@
 
 package org.jarvis.core.model.rest;
 
+import java.util.Map.Entry;
+import java.util.Set;
+
 import org.jarvis.core.type.GenericMap;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -58,7 +61,31 @@ public class GenericEntity {
 	 * @param key
 	 * @param value
 	 */
-	public void put(String key, String value) {
+	public void put(String key, Object value) {
 		extended.put(key, value);		
+	}
+
+	/**
+	 * get extended field
+	 * @param key
+	 * @return Object
+	 */
+	public Object get(String key) {
+		return extended.get(key);		
+	}
+
+	@Override
+	public String toString() {
+		return "GenericEntity [id=" + id + ", href=" + href + ", instance=" + instance + ", extended=" + extended + "]";
+	}
+
+	/**
+	 * @return GenericMap
+	 */
+	public Set<Entry<String, Object>> get() {
+		if(extended == null) {
+			return new GenericMap().entrySet();
+		}
+		return extended.entrySet();
 	}
 }

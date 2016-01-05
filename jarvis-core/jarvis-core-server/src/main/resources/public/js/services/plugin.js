@@ -97,20 +97,11 @@ myAppServices.factory('pluginResourceService', function($log, Restangular, filte
   var commands = {
 		findAll: function(id, callback, failure) {
 			Restangular.all(api).one('scripts', id).all('commands').getList().then(function(elements) {
-				var done = _.after(elements.length, function(params) {
-					callback(params);
-				});
 				var commands = [];
             	_.forEach(elements, function(element) {
-            		commandResourceService.base.get(element.id, function(param) {
-            			param.instance = element.instance;
-            			param.extended = element.extended;
-            			commands.push(param);
-            			done(commands);
-            		},function(errors){
-        				failure(errors);
-        			})
+        			commands.push(filterService.plain(element));
             	});
+            	callback(commands);
 			},function(errors){
 				failure(errors);
 			});
@@ -158,9 +149,19 @@ myAppServices.factory('pluginResourceService', function($log, Restangular, filte
 			});
 		}
   }
+  var ext = {
+		  task: function(id, task, args, callback, failure) {
+				Restangular.all(api).one(id).customPOST(args,'', {'task':task}).then(function(element) {
+					callback(filterService.plain(element));
+				},function(errors){
+					failure(errors);
+				});
+			}
+  }
   return {
 	    plugins: plugins,
 	    scripts: scripts,
+	    ext : ext,
 		commands : commands  
   }
 });

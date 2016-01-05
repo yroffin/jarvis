@@ -21,6 +21,12 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.put;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map.Entry;
+
 import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.plugin.CommandBean;
 import org.jarvis.core.model.bean.plugin.ScriptPluginBean;
@@ -81,6 +87,12 @@ public class ApiScriptPluginResources extends ApiResources<ScriptPluginRest,Scri
 		    	return doCreate(request, response, ScriptPluginRest.class);
 		    }
 		});
+		post("/api/plugins/:id", new Route() {
+		    @Override
+			public Object handle(Request request, Response response) throws Exception {
+		    	return doTask(request, ":id", "task", response, ScriptPluginRest.class);
+		    }
+		});
 		put("/api/plugins/scripts/:id", new Route() {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
@@ -95,7 +107,33 @@ public class ApiScriptPluginResources extends ApiResources<ScriptPluginRest,Scri
 			public Object handle(Request request, Response response) throws Exception {
 		    	try {
 		    		ScriptPluginRest master = doGetById(request.params(ID));
-			    	return mapper.writeValueAsString(apiHrefPluginCommandResources.findAll(master, CommandRest.class));
+		    		List<CommandRest> result = new ArrayList<CommandRest>();
+		    		for(GenericEntity link : apiHrefPluginCommandResources.findAll(master)) {
+		    			CommandRest commandRest = apiCommandResources.doGetById(link.id);
+		    			commandRest.instance = link.instance;
+		    			for(Entry<String, Object> property : link.get()) {
+		    				commandRest.put(property.getKey(), property.getValue());
+		    			}
+		    			result.add(commandRest);
+		    		}
+		    		
+		    		/**
+		    		 * sort by order
+		    		 */
+		    		Collections.sort(result, new Comparator<CommandRest>() {
+
+						@Override
+						public int compare(CommandRest l, CommandRest r) {
+							String left = (String) l.get("order");
+							if(left == null) {
+								return -1;
+							}
+							String right = (String) r.get("order");
+							return left.compareTo(right);
+						}
+		    			
+		    		});
+			    	return mapper.writeValueAsString(result);
 		    	} catch(TechnicalNotFoundException e) {
 		    		response.status(404);
 		    		return "";
@@ -131,9 +169,9 @@ public class ApiScriptPluginResources extends ApiResources<ScriptPluginRest,Scri
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
 		    	try {
-		    		ScriptPluginRest script = doGetById(request.params(":id"));
+		    		doGetById(request.params(":id"));
 			    	try {
-			    		CommandRest command = apiCommandResources.doGetById(request.params(":command"));
+			    		apiCommandResources.doGetById(request.params(":command"));
 			    		GenericMap properties = apiHrefPluginCommandResources.update(request.params(":instance"), new GenericMap(request.body()));
 				    	return mapper.writeValueAsString(properties);
 			    	} catch(TechnicalNotFoundException e) {
@@ -175,7 +213,7 @@ public class ApiScriptPluginResources extends ApiResources<ScriptPluginRest,Scri
 		GenericMap result;
 		switch(taskType) {
 			case EXECUTE:
-				result = execute(bean, args);
+				result = execute(bean, args, new GenericMap());
 				break;
 			default:
 				result = new GenericMap();
@@ -191,22 +229,29 @@ public class ApiScriptPluginResources extends ApiResources<ScriptPluginRest,Scri
 	 * @throws TechnicalNotFoundException 
 	 */
 	public GenericMap execute(ScriptPluginRest script, GenericMap args) throws TechnicalNotFoundException {
-		return execute(mapperFactory.getMapperFacade().map(script, ScriptPluginBean.class), args);
+		return execute(mapperFactory.getMapperFacade().map(script, ScriptPluginBean.class), args, new GenericMap());
 	}
 
 	/**
 	 * execute all command of this script as a pipeline
 	 * @param script
 	 * @param args 
+	 * @param output 
 	 * @return GenericMap
 	 * @throws TechnicalNotFoundException 
 	 */
-	public GenericMap execute(ScriptPluginBean script, GenericMap args) throws TechnicalNotFoundException {
+	public GenericMap execute(ScriptPluginBean script, GenericMap args, GenericMap output) throws TechnicalNotFoundException {
 		GenericMap result = args;
+		int index = 0;
 		for(GenericEntity entity : apiHrefPluginCommandResources.findAll(script)) {
 			CommandRest command = apiCommandResources.doGetById(entity.id);
 			result = apiCommandResources.execute(mapperFactory.getMapperFacade().map(command, CommandBean.class), result);
+			if(entity.get("name") != null) {
+				output.put((String) entity.get("name"), result);
+			} else {
+				output.put("field"+(index++), result);
+			}
 		}
-		return result;
+		return output;
 	}
 }

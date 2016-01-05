@@ -107,10 +107,9 @@ public abstract class ApiHrefMapper<Owner extends GenericEntity,Child extends Ge
 
 	/**
 	 * @param owner 
-	 * @param child 
 	 * @return List<GenericEntity>
 	 */
-	public List<GenericEntity> findAll(Owner owner, Class<Child> child) {
+	public List<GenericEntity> findAll(Owner owner) {
 		Result result = apiNeo4Service.cypherAllLink(ownerLabel, owner.id, childLabel, HREF, "node");
 		List<GenericEntity> resultset = new ArrayList<GenericEntity>();
 		while (result.hasNext()) {

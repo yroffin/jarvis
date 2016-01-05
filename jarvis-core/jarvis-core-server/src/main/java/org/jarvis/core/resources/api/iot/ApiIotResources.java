@@ -88,7 +88,7 @@ public class ApiIotResources extends ApiResources<IotRest,IotBean> {
 		/**
 		 * iterate on each entity and execute them as a pipeline
 		 */
-		for(GenericEntity entity : apiHrefIotScriptPluginResources.findAll(iotRest, ScriptPluginRest.class)) {
+		for(GenericEntity entity : apiHrefIotScriptPluginResources.findAll(iotRest)) {
 			ScriptPluginRest script = apiScriptPluginResources.doGetById(entity.id);
 			result = apiScriptPluginResources.execute(script, result);
 		}
@@ -144,7 +144,7 @@ public class ApiIotResources extends ApiResources<IotRest,IotBean> {
 			public Object handle(Request request, Response response) throws Exception {
 		    	try {
 		    		IotRest iot = doGetById(request.params(ID));
-			    	return mapper.writeValueAsString(apiHrefIotResources.findAll(iot, IotRest.class));
+			    	return mapper.writeValueAsString(apiHrefIotResources.findAll(iot));
 		    	} catch(TechnicalNotFoundException e) {
 		    		response.status(404);
 		    		return "";
@@ -197,7 +197,7 @@ public class ApiIotResources extends ApiResources<IotRest,IotBean> {
 			public Object handle(Request request, Response response) throws Exception {
 		    	try {
 		    		IotRest iot = doGetById(request.params(ID));
-			    	return mapper.writeValueAsString(apiHrefIotScriptPluginResources.findAll(iot, ScriptPluginRest.class));
+			    	return mapper.writeValueAsString(apiHrefIotScriptPluginResources.findAll(iot));
 		    	} catch(TechnicalNotFoundException e) {
 		    		response.status(404);
 		    		return "";

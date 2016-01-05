@@ -100,7 +100,7 @@ public class ApiJobResources extends ApiResources<JobRest,JobBean> {
 			public Object handle(Request request, Response response) throws Exception {
 		    	try {
 			    	JobRest job = doGetById(request.params(":id"));
-			    	return mapper.writeValueAsString(apiHrefResources.findAll(job, ParamRest.class));
+			    	return mapper.writeValueAsString(apiHrefResources.findAll(job));
 		    	} catch(TechnicalNotFoundException e) {
 		    		response.status(404);
 		    		return "";

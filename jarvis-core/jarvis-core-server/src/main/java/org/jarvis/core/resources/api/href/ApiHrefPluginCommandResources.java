@@ -47,6 +47,6 @@ public class ApiHrefPluginCommandResources extends ApiHrefMapper<PluginRest,Comm
 	 * @return List<GenericEntity>
 	 */
 	public List<GenericEntity> findAll(ScriptPluginBean script) {
-		return super.findAll(mapperFactory.getMapperFacade().map(script, ScriptPluginRest.class), CommandRest.class);
+		return super.findAll(mapperFactory.getMapperFacade().map(script, ScriptPluginRest.class));
 	}
 }
