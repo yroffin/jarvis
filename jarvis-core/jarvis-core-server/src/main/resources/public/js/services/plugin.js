@@ -100,12 +100,13 @@ myAppServices.factory('pluginResourceService', function($log, Restangular, filte
 				var done = _.after(elements.length, function(params) {
 					callback(params);
 				});
-				var params = [];
+				var commands = [];
             	_.forEach(elements, function(element) {
             		commandResourceService.base.get(element.id, function(param) {
             			param.instance = element.instance;
-            			params.push(param);
-            			done(params);
+            			param.extended = element.extended;
+            			commands.push(param);
+            			done(commands);
             		},function(errors){
         				failure(errors);
         			})
@@ -117,8 +118,14 @@ myAppServices.factory('pluginResourceService', function($log, Restangular, filte
         /**
 		 * put link
 		 */
-        put: function(id, param, callback, failure) {
-        	Restangular.all(api).one('scripts', id).one('commands',param).customPUT({}).then(function(href) {
+        put: function(id, param, properties, callback, failure) {
+        	var p = {};
+        	if(properties === undefined) {
+        		p = {};
+        	} else {
+        		p = properties;
+        	}
+        	Restangular.all(api).one('scripts', id).one('commands',param).customPUT(p).then(function(href) {
         		callback(href);
         	},function(errors){
         		failure(errors);

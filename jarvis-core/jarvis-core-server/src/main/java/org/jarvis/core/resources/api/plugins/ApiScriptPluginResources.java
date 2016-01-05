@@ -109,7 +109,7 @@ public class ApiScriptPluginResources extends ApiResources<ScriptPluginRest,Scri
 		    		ScriptPluginRest script = doGetById(request.params(":id"));
 			    	try {
 			    		CommandRest command = apiCommandResources.doGetById(request.params(":command"));
-				    	GenericEntity instance = apiHrefPluginCommandResources.add(script, command, "commands");
+				    	GenericEntity instance = apiHrefPluginCommandResources.add(script, command, new GenericMap(request.body()), "commands");
 				    	return mapper.writeValueAsString(instance);
 			    	} catch(TechnicalNotFoundException e) {
 			    		response.status(404);

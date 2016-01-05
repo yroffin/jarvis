@@ -16,6 +16,8 @@
 
 package org.jarvis.core.model.rest;
 
+import org.jarvis.core.type.GenericMap;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -37,4 +39,26 @@ public class GenericEntity {
 	 */
 	@JsonProperty("instance")
 	public String instance;
+	/**
+	 * extended fields
+	 */
+	@JsonProperty("extended")
+	private GenericMap extended = new GenericMap();
+	
+	/**
+	 * has custom field
+	 * @return boolean
+	 */
+	boolean hasExtendedProperties() {
+		return extended.size() > 0;
+	}
+
+	/**
+	 * put new extended field
+	 * @param key
+	 * @param value
+	 */
+	public void put(String key, String value) {
+		extended.put(key, value);		
+	}
 }

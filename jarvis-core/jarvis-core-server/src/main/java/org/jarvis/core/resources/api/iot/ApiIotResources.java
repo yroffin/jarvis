@@ -158,7 +158,7 @@ public class ApiIotResources extends ApiResources<IotRest,IotBean> {
 		    		IotRest iot = doGetById(request.params(ID));
 			    	try {
 				    	IotRest child = doGetById(request.params(IOT));
-				    	GenericEntity instance = apiHrefIotResources.add(iot, child, "iots");
+				    	GenericEntity instance = apiHrefIotResources.add(iot, child, new GenericMap(), "iots");
 				    	return mapper.writeValueAsString(instance);
 			    	} catch(TechnicalNotFoundException e) {
 			    		response.status(404);
@@ -211,7 +211,7 @@ public class ApiIotResources extends ApiResources<IotRest,IotBean> {
 		    		IotRest iot = doGetById(request.params(ID));
 			    	try {
 			    		ScriptPluginRest plugin = apiScriptPluginResources.doGetById(request.params(":plugin"));
-				    	GenericEntity instance = apiHrefIotScriptPluginResources.add(iot, plugin, "plugins");
+				    	GenericEntity instance = apiHrefIotScriptPluginResources.add(iot, plugin, new GenericMap(), "plugins");
 				    	return mapper.writeValueAsString(instance);
 			    	} catch(TechnicalNotFoundException e) {
 			    		response.status(404);

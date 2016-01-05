@@ -3,10 +3,12 @@ package org.jarvis.core.resources.api.mapper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.services.neo4j.ApiNeo4Service;
+import org.jarvis.core.type.GenericMap;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.Result;
@@ -36,20 +38,36 @@ public abstract class ApiHrefMapper<Owner extends GenericEntity,Child extends Ge
 	ApiNeo4Service apiNeo4Service;
 
 	/**
+	 * add a new link between Owner and Child
+	 * 
 	 * @param owner 
 	 * @param child 
+	 * @param properties 
 	 * @param type 
 	 * @return String
 	 * @throws TechnicalNotFoundException 
 	 */
-	public GenericEntity add(Owner owner, Child child, String type) throws TechnicalNotFoundException {
+	public GenericEntity add(Owner owner, Child child, GenericMap properties, String type) throws TechnicalNotFoundException {
 		try (Transaction create = apiNeo4Service.beginTx()) {
-			Result result = apiNeo4Service.cypherAddLink(ownerLabel, owner.id, childLabel, child.id, "HREF");
+			Result result = apiNeo4Service.cypherAddLink(ownerLabel, owner.id, childLabel, child.id, HREF);
 			create.success();
 			if(result.hasNext()) {
+				Map<String, Object> rows = result.next();
+				/**
+				 * set relationship properties
+				 */
+				Relationship r = (Relationship) rows.get("r");
+				for(Entry<String, Object> property : properties.entrySet()) {
+					if(String.class == property.getValue().getClass()) {
+						r.setProperty(property.getKey(), (String) property.getValue());					
+					}
+				}
+				/**
+				 * set node properties
+				 */
 				GenericEntity genericEntity = new GenericEntity();
 				genericEntity.id = child.id;
-				genericEntity.instance = result.next().get("id(r)")+"";
+				genericEntity.instance = rows.get("id(r)")+"";
 				genericEntity.href = "/api/"+type+"/" + genericEntity.id;
 				return genericEntity;
 			}
@@ -63,11 +81,26 @@ public abstract class ApiHrefMapper<Owner extends GenericEntity,Child extends Ge
 	 * @return List<GenericEntity>
 	 */
 	public List<GenericEntity> findAll(Owner owner, Class<Child> child) {
-		Result result = apiNeo4Service.cypherAllLink(ownerLabel, owner.id, childLabel, "HREF", "node");
+		Result result = apiNeo4Service.cypherAllLink(ownerLabel, owner.id, childLabel, HREF, "node");
 		List<GenericEntity> resultset = new ArrayList<GenericEntity>();
 		while (result.hasNext()) {
 			GenericEntity genericEntity = new GenericEntity();
 			Map<String, Object> fields = result.next();
+			/**
+			 * get optional properties on relationship
+			 */
+			Relationship r = (Relationship) fields.get("r");
+			try (Transaction find = apiNeo4Service.beginTx()) {
+				for(Entry<String, Object> property : r.getAllProperties().entrySet()) {
+					if(String.class == property.getValue().getClass()) {
+						genericEntity.put(property.getKey(), (String) property.getValue());					
+					}
+				}
+				find.success();
+			}
+			/**
+			 * read id
+			 */
 			genericEntity.id = ((Node) fields.get("node")).getId()+"";
 			genericEntity.instance = ((Relationship) fields.get("r")).getId()+"";
 			genericEntity.href = "/api/"+type+"/" + genericEntity.id;
@@ -86,7 +119,7 @@ public abstract class ApiHrefMapper<Owner extends GenericEntity,Child extends Ge
 	 */
 	public GenericEntity remove(Owner owner, Child child, String instance) throws TechnicalNotFoundException {
 		try (Transaction create = apiNeo4Service.beginTx()) {
-			Result result = apiNeo4Service.cypherDeleteLink(ownerLabel, owner.id, childLabel, child.id, "HREF", instance);
+			Result result = apiNeo4Service.cypherDeleteLink(ownerLabel, owner.id, childLabel, child.id, HREF, instance);
 			create.success();
 			if(result.hasNext()) {
 				GenericEntity genericEntity = new GenericEntity();

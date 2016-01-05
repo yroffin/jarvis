@@ -114,7 +114,7 @@ public class ApiJobResources extends ApiResources<JobRest,JobBean> {
 			    	JobRest job = doGetById(request.params(":id"));
 			    	try {
 				    	ParamRest param = apiParamResources.doGetById(request.params(":param"));
-				    	GenericEntity instance = apiHrefResources.add(job, param, "params");
+				    	GenericEntity instance = apiHrefResources.add(job, param, new GenericMap(), "params");
 				    	return mapper.writeValueAsString(instance);
 			    	} catch(TechnicalNotFoundException e) {
 			    		response.status(404);

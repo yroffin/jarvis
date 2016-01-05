@@ -148,7 +148,7 @@ public class ApiNeo4Service  {
 	 * @return Result
 	 */
 	public Result cypherAddLink(String leftLabel, String leftId, String rightLabel, String rightId, String relType) {
-		Result result = execute("MATCH (left:"+leftLabel+"),(right:"+rightLabel+") WHERE id(left) = "+leftId+" AND id(right) = "+rightId+" CREATE (left)-[r:"+relType+"]->(right) RETURN id(r)");
+		Result result = execute("MATCH (left:"+leftLabel+"),(right:"+rightLabel+") WHERE id(left) = "+leftId+" AND id(right) = "+rightId+" CREATE (left)-[r:"+relType+"]->(right) RETURN id(r),r");
 		return result;
 	}
 

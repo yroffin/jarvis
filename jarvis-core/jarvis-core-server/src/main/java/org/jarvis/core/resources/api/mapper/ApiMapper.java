@@ -9,6 +9,13 @@ import ma.glasnost.orika.impl.DefaultMapperFactory;
  * api mapper
  */
 public abstract class ApiMapper {
+
+	protected static final String IOT = ":iot";
+	protected static final String ID = ":id";
+	protected static final String PARAM = ":param";
+	protected static final String INSTANCE = "instance";
+	protected static final String HREF = "HREF";
+
 	protected ObjectMapper mapper = new ObjectMapper();
 	protected MapperFactory mapperFactory = null;
 

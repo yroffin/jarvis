@@ -9,14 +9,28 @@
 	     </md-select>
 	   </md-input-container>
 	   <md-list>
-		   	<md-list-item ng-repeat="command in commands">
-		   		<div layout="column">
+		   	<md-list-item ng-repeat="command in commands" layout="column">
+		   		<div style="width: 100%;">
+		  		  <h4><md-icon md-font-icon="material-icons md-16">{{command.icon}}</md-icon>
+		  		  {{command.type}}#{{command.id}} : {{command.name}} (instance {{command.instance}})</h4>
+		        </div>
+		   		<div layout="row">
+					<md-input-container>
+					  <label translate="script.cmd.name"></label>
+					  <input ng-model="command.extended.name">
+					</md-input-container>
+					<md-input-container>
+					  <label translate="script.cmd.nature"></label>
+					  <input ng-model="command.extended.nature">
+					</md-input-container>
+					<md-input-container>
+					  <label translate="script.cmd.type"></label>
+					  <input ng-model="command.extended.type">
+					</md-input-container>
 			        <md-icon md-font-icon="material-icons md-16" ng-click="drop(command)">delete</md-icon>
 			        <md-icon md-font-icon="material-icons md-16" ng-click="execute(command)">loop</md-icon>
 			    </div>
-		   		<div class="md-list-item-text" layout="column">
-		  		  <md-icon md-font-icon="material-icons md-16">{{command.icon}}</md-icon>
-		  		  <code>{{command.type}}#{{command.id}} : {{command.name}} (instance {{command.instance}})</code><br>
+		   		<div style="width: 100%;">
 		  		  <div hljs hljs-source="command.body"></div>
 		        </div>
 		   	</md-list-item>

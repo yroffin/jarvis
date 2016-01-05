@@ -103,12 +103,20 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
         },function(clickedItem) {
         	$mdBottomSheet.hide();
         });
-      };
-      
-    $scope.add = function(command) {
+    };
+    /**
+     * add this command
+     * @param command, the command to add
+     */
+    $scope.add = function(command, properties) {
     	if(command != undefined && command.id != undefined && command.id != '') {
-        	$log.debug(command);
-    		pluginResourceService.commands.put($stateParams.id, command.id, function(data) {
+        	var properties = {
+        			'name':'xxx',
+           			'nature':'info',
+           			'type':'json'
+        	};
+        	$log.debug('pluginScriptCtrl::add', command, properties);
+    		pluginResourceService.commands.put($stateParams.id, command.id, properties, function(data) {
     			commandResourceService.base.get(data.id, function(command) {
         	    	$scope.commands.push(command);
         	    	toastService.info('script ' + command.name + '#' + command.id + ' added');
@@ -116,10 +124,13 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
     	    }, toastService.failure);
     	}
     }
-    
+    /**
+     * drop this command
+     * @param command, the command to drop
+     */
     $scope.drop = function(command) {
     	if(command != undefined && command.id != undefined && command.id != '') {
-        	$log.debug('drop ', command);
+        	$log.debug('pluginScriptCtrl::drop', command);
     		pluginResourceService.commands.delete($stateParams.id, command.id, command.instance, function(data) {
     			var toremove = command.instance;
     			_.remove($scope.commands, function(element) {

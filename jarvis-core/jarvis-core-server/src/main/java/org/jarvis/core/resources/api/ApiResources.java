@@ -44,11 +44,6 @@ import spark.Response;
 public abstract class ApiResources<Rest,Bean> extends ApiMapper {
 	protected Logger logger = LoggerFactory.getLogger(ApiResources.class);
 
-	protected static final String IOT = ":iot";
-	protected static final String ID = ":id";
-	protected static final String PARAM = ":param";
-	protected static final String INSTANCE = "instance";
-
 	@Autowired
 	Environment env;
 	

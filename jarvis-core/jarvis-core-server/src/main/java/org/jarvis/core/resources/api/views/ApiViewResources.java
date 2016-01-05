@@ -115,7 +115,7 @@ public class ApiViewResources extends ApiResources<ViewRest,ViewBean> {
 		    		ViewRest view = doGetById(request.params(ID));
 			    	try {
 			    		IotRest iot = apiIotResources.doGetById(request.params(":iot"));
-				    	GenericEntity instance = apiHrefResources.add(view, iot, "views");
+				    	GenericEntity instance = apiHrefResources.add(view, iot, new GenericMap(), "views");
 				    	return mapper.writeValueAsString(instance);
 			    	} catch(TechnicalNotFoundException e) {
 			    		response.status(404);
