@@ -88,7 +88,6 @@ angular.module('JarvisApp.ctrl.iots', ['JarvisApp.services'])
     	}
     	iotResourceService.iot.put(iot, function(element) {
         	toastService.info('Iot ' + iot.name + '#' + iot.id + ' updated');
-        	$scope.go('iots');
         }, toastService.failure);
     }
 	/**

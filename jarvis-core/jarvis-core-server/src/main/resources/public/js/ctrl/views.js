@@ -88,7 +88,6 @@ angular.module('JarvisApp.ctrl.views', ['JarvisApp.services'])
     	}
     	viewResourceService.base.put(view, function(element) {
         	toastService.info('view ' + view.name + '#' + view.id + ' updated');
-        	$scope.go('views');
         }, toastService.failure);
     }
     /**

@@ -31,6 +31,7 @@ import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.plugin.CommandBean;
 import org.jarvis.core.model.bean.plugin.ScriptPluginBean;
 import org.jarvis.core.model.rest.GenericEntity;
+import org.jarvis.core.model.rest.IotRest;
 import org.jarvis.core.model.rest.plugin.CommandRest;
 import org.jarvis.core.model.rest.plugin.ScriptPluginRest;
 import org.jarvis.core.resources.api.ApiResources;
@@ -99,6 +100,12 @@ public class ApiScriptPluginResources extends ApiResources<ScriptPluginRest,Scri
 		    	return doUpdate(request, ":id", response, ScriptPluginRest.class);
 		    }
 		});
+		delete("/api/plugins/scripts/:id", new Route() {
+		    @Override
+			public Object handle(Request request, Response response) throws Exception {
+		    	return doDelete(request, ID, response, ScriptPluginRest.class);
+		    }
+		});
 		/**
 		 * commands
 		 */
@@ -108,26 +115,9 @@ public class ApiScriptPluginResources extends ApiResources<ScriptPluginRest,Scri
 		    	try {
 		    		ScriptPluginRest master = doGetById(request.params(ID));
 		    		List<CommandRest> result = new ArrayList<CommandRest>();
-		    		for(GenericEntity link : apiHrefPluginCommandResources.findAll(master)) {
+		    		for(GenericEntity link : sort(apiHrefPluginCommandResources.findAll(master))) {
 		    			result.add(commandRest(link));
 		    		}
-		    		
-		    		/**
-		    		 * sort by order
-		    		 */
-		    		Collections.sort(result, new Comparator<CommandRest>() {
-
-						@Override
-						public int compare(CommandRest l, CommandRest r) {
-							String left = (String) l.get("order");
-							if(left == null) {
-								return -1;
-							}
-							String right = (String) r.get("order");
-							return left.compareTo(right);
-						}
-		    			
-		    		});
 			    	return mapper.writeValueAsString(result);
 		    	} catch(TechnicalNotFoundException e) {
 		    		response.status(404);
@@ -204,6 +194,30 @@ public class ApiScriptPluginResources extends ApiResources<ScriptPluginRest,Scri
 	}
 
 	/**
+	 * @param list
+	 * @return List<CommandRest>
+	 */
+	public List<GenericEntity> sort(List<GenericEntity> list) {
+		/**
+		 * sort by order
+		 */
+		Collections.sort(list, new Comparator<GenericEntity>() {
+	
+			@Override
+			public int compare(GenericEntity l, GenericEntity r) {
+				String left = (String) l.get("order");
+				if(left == null) {
+					return -1;
+				}
+				String right = (String) r.get("order");
+				return left.compareTo(right);
+			}
+			
+		});
+		return list;
+	}
+	
+	/**
 	 * build command with relationship
 	 * @param link
 	 * @return CommandRest
@@ -253,7 +267,7 @@ public class ApiScriptPluginResources extends ApiResources<ScriptPluginRest,Scri
 	public GenericMap execute(ScriptPluginBean script, GenericMap args, GenericMap output) throws TechnicalNotFoundException {
 		GenericMap result = args;
 		int index = 0;
-		for(GenericEntity entity : apiHrefPluginCommandResources.findAll(script)) {
+		for(GenericEntity entity : sort(apiHrefPluginCommandResources.findAll(script))) {
 			CommandRest command = apiCommandResources.doGetById(entity.id);
 			result = apiCommandResources.execute(mapperFactory.getMapperFacade().map(command, CommandBean.class), result);
 			if(entity.get("name") != null) {

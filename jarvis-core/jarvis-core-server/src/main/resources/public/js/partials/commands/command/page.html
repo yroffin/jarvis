@@ -1,9 +1,21 @@
+<md-fab-toolbar>
+	<md-tooltip md-direction="left">{{'cmd.tp.cmds' | translate}}</md-tooltip>
+    <md-fab-trigger class="align-with-text">
+      <md-button aria-label="menu" class="md-fab md-primary"><md-icon md-font-icon="material-icons md-16">menu</md-icon></md-button>
+    </md-fab-trigger>
+    <md-toolbar>
+      <md-fab-actions class="md-toolbar-tools">
+		<md-button aria-label="menu" class="md-icon-button" ng-click="go('commands')"><md-icon md-font-icon="material-icons md-16">clear</md-icon></md-button>
+		<md-button aria-label="menu" class="md-icon-button" ng-click="duplicate(command)"><md-icon md-font-icon="material-icons md-16">content_copy</md-icon></md-button>
+		<md-button aria-label="menu" class="md-icon-button" ng-click="remove(command)"><md-icon md-font-icon="material-icons md-16">delete</md-icon></md-button>
+		<md-button aria-label="menu" class="md-icon-button" ng-click="save(command)"><md-icon md-font-icon="material-icons md-16">save</md-icon></md-button>
+		<md-button aria-label="menu" class="md-icon-button" ng-click="execute(command)"><md-icon md-font-icon="material-icons md-16">play_arrow</md-icon></md-button>
+		<md-button aria-label="menu" class="md-icon-button" ng-click="pretty()"><md-icon md-font-icon="material-icons md-16">loop</md-icon></md-button>
+      </md-fab-actions>
+    </md-toolbar>
+</md-fab-toolbar>
 <div layout="column" ng-init="load()" ng-cloak>
-	<h2>
-		<md-button aria-label="menu" class="md-fab md-primary" ng-click="showBottomSheet($event)">
- 		<md-icon md-font-icon="material-icons md-16">menu</md-icon></md-button>
-  		<span>{{'command.one' | translate}} id#{{command.id}}</span>
-	</h2>
+	<h2>{{'command.one' | translate}} id#{{command.id}}</h2>
 	<md-tabs md-dynamic-height md-border-bottom>
 		<md-tab label="{{'command.general' | translate}}">
 			<md-content layout-padding>

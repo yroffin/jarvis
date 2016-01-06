@@ -63,7 +63,10 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
 })
 .controller('pluginScriptCtrl',
 	function($scope, $log, $stateParams, $mdBottomSheet, pluginResourceService, iotResourceService, commandResourceService, toastService){
-	
+    /**
+     * remove this script
+     * @param script, the element to remove
+     */
     $scope.remove = function(script) {
     	$log.debug('delete', script);
     	pluginResourceService.scripts.delete(script.id, function(element) {
@@ -71,7 +74,10 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
         	$scope.go('plugins');
         }, toastService.failure);
     }
-
+    /**
+     * save current modification
+     * @param script, the element to save
+     */
     $scope.save = function(script) {
     	$log.debug('save', script);
     	if(script.owner === '') {
@@ -80,10 +86,12 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
     	}
     	pluginResourceService.scripts.put(script, function(element) {
         	toastService.info('script ' + script.name + '#' + script.id + ' updated');
-        	$scope.go('plugins');
         }, toastService.failure);
     }
-
+    /**
+     * duplicate this script
+     * @param script, the element to duplicate
+     */
     $scope.duplicate = function(script) {
     	$log.debug('duplicate', script);
     	pluginResourceService.scripts.post(script, function(element) {

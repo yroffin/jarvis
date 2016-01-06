@@ -1,5 +1,2 @@
-<div>
-    <md-icon md-font-icon="material-icons md-16" ng-click="render(iot)">loop<md-tooltip md-direction="left">{{'iot.tp.render' | translate}}</md-tooltip></md-icon>
-	<div hljs hljs-source="output"></div>
-	<p ng-repeat="indicator in rawoutput.indicators">{{indicator.value}}</p>
-</div>
+<div hljs hljs-source="output"></div>
+<p ng-repeat="indicator in rawoutput.indicators">{{indicator.value}}</p>

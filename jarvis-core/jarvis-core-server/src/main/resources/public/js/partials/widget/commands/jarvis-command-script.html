@@ -1,9 +1,7 @@
 <div>
-    <md-icon md-font-icon="material-icons md-16" ng-click="save(command, execute)">backup<md-tooltip md-direction="left">{{'command.tp.exec' | translate}}</md-tooltip></md-icon>
     <md-input-container style="width: 100%;">
 	    <label translate="command.body"></label>
 	    <textarea style="width: 100%;" ng-model="command.body"></textarea>
     </md-input-container>
-    <label translate="command.source"></label>
 	<div hljs hljs-source="command.body"></div>
 </div>

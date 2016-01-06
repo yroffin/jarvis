@@ -94,7 +94,7 @@ public class ApiIotResources extends ApiResources<IotRest,IotBean> {
 		/**
 		 * iterate on each entity and execute them as a pipeline
 		 */
-		for(GenericEntity entity : apiHrefIotScriptPluginResources.findAll(iotRest)) {
+		for(GenericEntity entity : sort(apiHrefIotScriptPluginResources.findAll(iotRest))) {
 			ScriptPluginRest script = apiScriptPluginResources.doGetById(entity.id);
 			result = apiScriptPluginResources.execute(script, result);
 		}
@@ -204,26 +204,9 @@ public class ApiIotResources extends ApiResources<IotRest,IotBean> {
 		    	try {
 		    		IotRest master = doGetById(request.params(ID));
 		    		List<ScriptPluginRest> result = new ArrayList<ScriptPluginRest>();
-		    		for(GenericEntity link : apiHrefIotScriptPluginResources.findAll(master)) {
+		    		for(GenericEntity link : sort(apiHrefIotScriptPluginResources.findAll(master))) {
 		    			result.add(scriptRest(link));
 		    		}
-		    		
-		    		/**
-		    		 * sort by order
-		    		 */
-		    		Collections.sort(result, new Comparator<ScriptPluginRest>() {
-
-						@Override
-						public int compare(ScriptPluginRest l, ScriptPluginRest r) {
-							String left = (String) l.get("order");
-							if(left == null) {
-								return -1;
-							}
-							String right = (String) r.get("order");
-							return left.compareTo(right);
-						}
-		    			
-		    		});
 			    	return mapper.writeValueAsString(result);
 		    	} catch(TechnicalNotFoundException e) {
 		    		response.status(404);
@@ -288,6 +271,30 @@ public class ApiIotResources extends ApiResources<IotRest,IotBean> {
 		    	return doGetById(request, ID, response);
 		    }
 		});
+	}
+
+	/**
+	 * @param list
+	 * @return List<CommandRest>
+	 */
+	public List<GenericEntity> sort(List<GenericEntity> list) {
+		/**
+		 * sort by order
+		 */
+		Collections.sort(list, new Comparator<GenericEntity>() {
+	
+			@Override
+			public int compare(GenericEntity l, GenericEntity r) {
+				String left = (String) l.get("order");
+				if(left == null) {
+					return -1;
+				}
+				String right = (String) r.get("order");
+				return left.compareTo(right);
+			}
+			
+		});
+		return list;
 	}
 
 	/**
