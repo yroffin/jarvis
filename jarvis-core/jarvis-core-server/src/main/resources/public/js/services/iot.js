@@ -108,19 +108,11 @@ angular.module('JarvisApp.services.iot', ['JarvisApp.services.plugin']).factory(
   var plugins = {
 			findAll: function(owner, callback, failure) {
 				Restangular.one(api, owner).all('plugins').getList().then(function(elements) {
-					var done = _.after(elements.length, function(params) {
-						callback(params);
-					});
 					var plugins = [];
 	            	_.forEach(elements, function(element) {
-	            		pluginResourceService.scripts.get(element.id, function(script) {
-	            			script.instance = element.instance;
-	            			plugins.push(script);
-	            			done(plugins);
-	            		},function(errors){
-	        				failure(errors);
-	        			})
+            			plugins.push(element);
 	            	});
+	            	callback(plugins);
 				},function(errors){
 					failure(errors);
 				});
@@ -128,9 +120,25 @@ angular.module('JarvisApp.services.iot', ['JarvisApp.services.plugin']).factory(
 	        /**
 			 * put link
 			 */
-	        put: function(owner, child, callback, failure) {
-	        	Restangular.one(api, owner).one('plugins',child).customPUT({}).then(function(href) {
-	        		callback(href);
+	        post: function(owner, child, properties, callback, failure) {
+	        	Restangular.one(api, owner).one('plugins',child).customPOST(properties).then(function(href) {
+	        		callback(filterService.plain(href));
+	        	},function(errors){
+	        		failure(errors);
+	        	});
+	        },
+	        /**
+			 * put link
+			 */
+	        put: function(owner, child, instance, properties, callback, failure) {
+	        	var p = {};
+	        	if(properties === undefined) {
+	        		p = {};
+	        	} else {
+	        		p = properties;
+	        	}
+	        	Restangular.one(api, owner).one('plugins',child).one(instance).customPUT(p).then(function(href) {
+	        		callback(filterService.plain(href));
 	        	},function(errors){
 	        		failure(errors);
 	        	});

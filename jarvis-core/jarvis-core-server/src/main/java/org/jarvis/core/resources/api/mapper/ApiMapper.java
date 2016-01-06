@@ -11,6 +11,8 @@ import ma.glasnost.orika.impl.DefaultMapperFactory;
 public abstract class ApiMapper {
 
 	protected static final String IOT = ":iot";
+	protected static final String COMMAND = ":command";
+	protected static final String PLUGIN = ":plugin";
 	protected static final String ID = ":id";
 	protected static final String PARAM = ":param";
 	protected static final String INSTANCE = "instance";

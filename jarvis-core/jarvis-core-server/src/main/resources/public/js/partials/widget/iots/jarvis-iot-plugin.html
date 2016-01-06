@@ -1,7 +1,7 @@
 <div layout="row">
 	<div>
 		<md-input-container>
-		<md-icon md-font-icon="material-icons md-16" ng-click="add(plugin)">add</md-icon>
+		<md-icon md-font-icon="material-icons md-16" ng-click="add(plugin)">playlist_add</md-icon>
 		   <label translate="iot.plugins"></label>
 		   <md-select ng-model="plugin.id">
 		     <md-option ng-repeat="plugin in combo.plugins" value="{{plugin.id}}" translate="{{plugin.name}}">
@@ -13,6 +13,7 @@
 				<tr>
 					<th></th>
 					<th>#</th>
+					<th translate="plugin.order">Order</th>
 					<th translate="plugin.icon">Icon</th>
 					<th translate="plugin.name">Name</th>
 				</tr>
@@ -20,7 +21,11 @@
 			<tbody>
 				<tr ng-repeat="plugin in plugins">
 					<td><md-icon md-font-icon="material-icons md-16" ng-click="drop(plugin)">delete</md-icon></td>
-					<td>{{iot.id}}</th>
+					<td>{{plugin.id}}</th>
+					<td>
+					<input ng-model="plugin.extended.order">
+					<md-icon md-font-icon="material-icons md-16" ng-click="update(plugin)">save</md-icon>
+					</td>
 					<td><md-icon md-font-icon="material-icons md-16">{{iot.icon}}</md-icon></th>
 					<td>{{plugin.name}}</th>
 				</tr>

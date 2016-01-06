@@ -142,9 +142,9 @@ public class ApiScriptPluginResources extends ApiResources<ScriptPluginRest,Scri
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
 		    	try {
-		    		ScriptPluginRest script = doGetById(request.params(":id"));
+		    		ScriptPluginRest script = doGetById(request.params(ID));
 			    	try {
-			    		CommandRest command = apiCommandResources.doGetById(request.params(":command"));
+			    		CommandRest command = apiCommandResources.doGetById(request.params(COMMAND));
 				    	GenericEntity instance = apiHrefPluginCommandResources.add(script, command, new GenericMap(request.body()), "commands");
 				    	return mapper.writeValueAsString(commandRest(instance));
 			    	} catch(TechnicalNotFoundException e) {
@@ -166,8 +166,8 @@ public class ApiScriptPluginResources extends ApiResources<ScriptPluginRest,Scri
 		    	try {
 		    		doGetById(request.params(":id"));
 			    	try {
-			    		apiCommandResources.doGetById(request.params(":command"));
-			    		GenericMap properties = apiHrefPluginCommandResources.update(request.params(":instance"), new GenericMap(request.body()));
+			    		apiCommandResources.doGetById(request.params(COMMAND));
+			    		GenericMap properties = apiHrefPluginCommandResources.update(request.params(INSTANCE), new GenericMap(request.body()));
 				    	return mapper.writeValueAsString(properties);
 			    	} catch(TechnicalNotFoundException e) {
 			    		response.status(404);
@@ -207,9 +207,9 @@ public class ApiScriptPluginResources extends ApiResources<ScriptPluginRest,Scri
 	 * build command with relationship
 	 * @param link
 	 * @return CommandRest
-	 * @throws Exception
+	 * @throws TechnicalNotFoundException 
 	 */
-	public CommandRest commandRest(GenericEntity link) throws Exception {
+	public CommandRest commandRest(GenericEntity link) throws TechnicalNotFoundException {
 		CommandRest commandRest = apiCommandResources.doGetById(link.id);
 		commandRest.instance = link.instance;
 		for(Entry<String, Object> property : link.get()) {

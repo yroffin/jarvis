@@ -21,6 +21,12 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.put;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map.Entry;
+
 import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.IotBean;
 import org.jarvis.core.model.rest.GenericEntity;
@@ -196,23 +202,63 @@ public class ApiIotResources extends ApiResources<IotRest,IotBean> {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
 		    	try {
-		    		IotRest iot = doGetById(request.params(ID));
-			    	return mapper.writeValueAsString(apiHrefIotScriptPluginResources.findAll(iot));
+		    		IotRest master = doGetById(request.params(ID));
+		    		List<ScriptPluginRest> result = new ArrayList<ScriptPluginRest>();
+		    		for(GenericEntity link : apiHrefIotScriptPluginResources.findAll(master)) {
+		    			result.add(scriptRest(link));
+		    		}
+		    		
+		    		/**
+		    		 * sort by order
+		    		 */
+		    		Collections.sort(result, new Comparator<ScriptPluginRest>() {
+
+						@Override
+						public int compare(ScriptPluginRest l, ScriptPluginRest r) {
+							String left = (String) l.get("order");
+							if(left == null) {
+								return -1;
+							}
+							String right = (String) r.get("order");
+							return left.compareTo(right);
+						}
+		    			
+		    		});
+			    	return mapper.writeValueAsString(result);
 		    	} catch(TechnicalNotFoundException e) {
 		    		response.status(404);
 		    		return "";
 		    	}
 		    }
 		});
-		put("/api/iots/:id/plugins/:plugin", new Route() {
+		post("/api/iots/:id/plugins/:plugin", new Route() {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
 		    	try {
 		    		IotRest iot = doGetById(request.params(ID));
 			    	try {
-			    		ScriptPluginRest plugin = apiScriptPluginResources.doGetById(request.params(":plugin"));
-				    	GenericEntity instance = apiHrefIotScriptPluginResources.add(iot, plugin, new GenericMap(), "plugins");
-				    	return mapper.writeValueAsString(instance);
+			    		ScriptPluginRest plugin = apiScriptPluginResources.doGetById(request.params(PLUGIN));
+				    	GenericEntity instance = apiHrefIotScriptPluginResources.add(iot, plugin, new GenericMap(request.body()), "plugins");
+				    	return mapper.writeValueAsString(scriptRest(instance));
+			    	} catch(TechnicalNotFoundException e) {
+			    		response.status(404);
+			    		return "";
+			    	}
+		    	} catch(TechnicalNotFoundException e) {
+		    		response.status(404);
+		    		return "";
+		    	}
+		    }
+		});
+		put("/api/iots/:id/plugins/:plugin/:instance", new Route() {
+		    @Override
+			public Object handle(Request request, Response response) throws Exception {
+		    	try {
+		    		doGetById(request.params(ID));
+			    	try {
+				    	apiScriptPluginResources.doGetById(request.params(PLUGIN));
+				    	GenericMap properties = apiHrefIotScriptPluginResources.update(request.params(INSTANCE), new GenericMap(request.body()));
+				    	return mapper.writeValueAsString(properties);
 			    	} catch(TechnicalNotFoundException e) {
 			    		response.status(404);
 			    		return "";
@@ -242,5 +288,20 @@ public class ApiIotResources extends ApiResources<IotRest,IotBean> {
 		    	return doGetById(request, ID, response);
 		    }
 		});
+	}
+
+	/**
+	 * build script with relationship
+	 * @param link
+	 * @return ScriptPluginRest
+	 * @throws TechnicalNotFoundException 
+	 */
+	private ScriptPluginRest scriptRest(GenericEntity link) throws TechnicalNotFoundException {
+		ScriptPluginRest scriptRest = apiScriptPluginResources.doGetById(link.id);
+		scriptRest.instance = link.instance;
+		for(Entry<String, Object> property : link.get()) {
+			scriptRest.put(property.getKey(), property.getValue());
+		}
+		return scriptRest;
 	}
 }

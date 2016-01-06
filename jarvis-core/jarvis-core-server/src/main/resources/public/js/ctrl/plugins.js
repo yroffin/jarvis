@@ -125,7 +125,7 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
     	}
     }
     /**
-     * add this command
+     * update this command
      * @param command, the command to add
      */
     $scope.update = function(command) {

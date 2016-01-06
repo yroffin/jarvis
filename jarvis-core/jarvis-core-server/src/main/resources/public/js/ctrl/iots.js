@@ -125,12 +125,24 @@ angular.module('JarvisApp.ctrl.iots', ['JarvisApp.services'])
        */
       $scope.add = function(plugin) {
       	if(plugin != undefined && plugin.id != undefined && plugin.id != '') {
-          	$log.debug('add', plugin);
-      		iotResourceService.plugins.put($stateParams.id, plugin.id, function(data) {
-      			pluginResourceService.scripts.get(data.id, function(plugin) {
-          	    	$scope.plugins.push(plugin);
-          	    	toastService.info('plugin ' + plugin.name + '#' + plugin.id + ' added');
-      			});
+        	var properties = {
+        			'order':'1'
+        	};
+      		iotResourceService.plugins.post($stateParams.id, plugin.id, properties, function(plugin) {
+            	$log.debug('iotCtrl::add', plugin);
+      	    	$scope.plugins.push(plugin);
+      	    }, toastService.failure);
+      	}
+      }
+      /**
+       * update this command
+       * @param command, the command to add
+       */
+      $scope.update = function(plugin) {
+      	if(plugin != undefined && plugin.id != undefined && plugin.id != '') {
+             	iotResourceService.plugins.put($stateParams.id, plugin.id, plugin.instance, plugin.extended, function(data) {
+                 	$log.debug('iotCtrl::update', plugin);
+                 	$log.debug('iotCtrl::update', data);
       	    }, toastService.failure);
       	}
       }
