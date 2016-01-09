@@ -64,7 +64,7 @@ angular.module('JarvisApp.ctrl.iots', ['JarvisApp.services'])
 	$log.info('iots-ctrl');
 })
 .controller('iotCtrl',
-	function($scope, $log, $state, $stateParams, $mdBottomSheet, iotResourceService, pluginResourceService, toastService){
+	function($scope, $log, $state, $stateParams, iotResourceService, pluginResourceService, toastService){
 	/**
 	 * remove
 	 * @param iot, the iot to remove
@@ -101,23 +101,6 @@ angular.module('JarvisApp.ctrl.iots', ['JarvisApp.services'])
         	$scope.go('iots');
         }, toastService.failure);
     }
-	/**
-	 * bottom sheet handler
-	 */
-    $scope.showBottomSheet = function($event) {
-        $mdBottomSheet.show({
-          template: '<jarvis-bottom-sheet-iot></jarvis-bottom-sheet-iot>',
-          controller: 'iotCtrl',
-          preserveScope: true,
-          scope: $scope,
-          targetEvent: $event,
-          clickOutsideToClose: true
-        }).then(function(clickedItem) {
-        	$mdBottomSheet.hide();
-        },function(clickedItem) {
-        	$mdBottomSheet.hide();
-        });
-      };
       /**
        * add this plugin to this view
        * @param plugin, the plugin to add

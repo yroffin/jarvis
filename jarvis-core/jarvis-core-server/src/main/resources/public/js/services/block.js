@@ -19,11 +19,11 @@
 /* Services */
 
 /**
- * scenarioResourceService
+ * blockResourceService
  */
-myAppServices.factory('scenarioResourceService', function($log, Restangular, iotResourceService, filterService) {
-  var api = 'scenarios';
-  var scenario = {
+myAppServices.factory('blockResourceService', function($log, Restangular, iotResourceService, filterService) {
+  var api = 'blocks';
+  var block = {
         /**
 		 * find all elements
 		 * @param callback, callback function in success case
@@ -73,8 +73,8 @@ myAppServices.factory('scenarioResourceService', function($log, Restangular, iot
 		 * @param failure, callback function in failure case
 		 */
 		put: function(element, callback, failure) {
-			Restangular.one(api, element.id).customPUT(element).then(function(scenario) {
-				callback(filterService.plain(scenario));
+			Restangular.one(api, element.id).customPUT(element).then(function(block) {
+				callback(filterService.plain(block));
 			},function(errors){
 				failure(errors);
 			});
@@ -94,65 +94,9 @@ myAppServices.factory('scenarioResourceService', function($log, Restangular, iot
 		}
   };
   var blocks = {
-			findAll: function(owner, callback, failure) {
-				Restangular.one(api, owner).all('blocks').getList().then(function(elements) {
-					var done = _.after(elements.length, function(element) {
-						callback(element);
-					});
-					var params = [];
-	            	_.forEach(elements, function(element) {
-	            		params.push(filterService.plain(element));
-            			done(params);
-	            	});
-				},function(errors){
-					failure(errors);
-				});
-			},
-	        /**
-			 * post link
-			 */
-	        post: function(id, param, properties, callback, failure) {
-	        	var p = {};
-	        	if(properties === undefined) {
-	        		p = {};
-	        	} else {
-	        		p = properties;
-	        	}
-	        	Restangular.one(api, id).one('blocks',param).customPOST(p).then(function(href) {
-	        		callback(filterService.plain(href));
-	        	},function(errors){
-	        		failure(errors);
-	        	});
-	        },
-	        /**
-			 * put link
-			 */
-	        put: function(id, param, instance, properties, callback, failure) {
-	        	var p = {};
-	        	if(properties === undefined) {
-	        		p = {};
-	        	} else {
-	        		p = properties;
-	        	}
-	        	Restangular.one(api, id).one('blocks',param).one(instance).customPUT(p).then(function(href) {
-	        		callback(filterService.plain(href));
-	        	},function(errors){
-	        		failure(errors);
-	        	});
-	        },
-	        /**
-			 * delete link
-			 */
-			delete: function(owner, child, instance, callback, failure) {
-				Restangular.one(api, owner).one('blocks', child).remove({'instance':instance}).then(function(href) {
-					callback(filterService.plain(href));
-				},function(errors){
-					failure(errors);
-				});
-			}
   }
   return {
-	    scenario: scenario,
+	    block: block,
 	    blocks: blocks
   }
 });

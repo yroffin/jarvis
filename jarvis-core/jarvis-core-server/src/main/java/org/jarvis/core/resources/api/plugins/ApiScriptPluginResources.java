@@ -22,8 +22,6 @@ import static spark.Spark.post;
 import static spark.Spark.put;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -114,7 +112,7 @@ public class ApiScriptPluginResources extends ApiResources<ScriptPluginRest,Scri
 		    	try {
 		    		ScriptPluginRest master = doGetById(request.params(ID));
 		    		List<CommandRest> result = new ArrayList<CommandRest>();
-		    		for(GenericEntity link : sort(apiHrefPluginCommandResources.findAll(master))) {
+		    		for(GenericEntity link : sort(apiHrefPluginCommandResources.findAll(master), "order")) {
 		    			result.add(commandRest(link));
 		    		}
 			    	return mapper.writeValueAsString(result);
@@ -193,30 +191,6 @@ public class ApiScriptPluginResources extends ApiResources<ScriptPluginRest,Scri
 	}
 
 	/**
-	 * @param list
-	 * @return List<CommandRest>
-	 */
-	public List<GenericEntity> sort(List<GenericEntity> list) {
-		/**
-		 * sort by order
-		 */
-		Collections.sort(list, new Comparator<GenericEntity>() {
-	
-			@Override
-			public int compare(GenericEntity l, GenericEntity r) {
-				String left = (String) l.get("order");
-				if(left == null) {
-					return -1;
-				}
-				String right = (String) r.get("order");
-				return left.compareTo(right);
-			}
-			
-		});
-		return list;
-	}
-	
-	/**
 	 * build command with relationship
 	 * @param link
 	 * @return CommandRest
@@ -266,7 +240,7 @@ public class ApiScriptPluginResources extends ApiResources<ScriptPluginRest,Scri
 	public GenericMap execute(ScriptPluginBean script, GenericMap args, GenericMap output) throws TechnicalNotFoundException {
 		GenericMap result = args;
 		int index = 0;
-		for(GenericEntity entity : sort(apiHrefPluginCommandResources.findAll(script))) {
+		for(GenericEntity entity : sort(apiHrefPluginCommandResources.findAll(script), "order")) {
 			CommandRest command = apiCommandResources.doGetById(entity.id);
 			result = apiCommandResources.execute(mapperFactory.getMapperFacade().map(command, CommandBean.class), result);
 			if(entity.get("name") != null) {

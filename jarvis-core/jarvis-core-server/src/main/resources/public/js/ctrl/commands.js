@@ -60,7 +60,7 @@ angular.module('JarvisApp.ctrl.commands', ['JarvisApp.services'])
     }
 })
 .controller('commandCtrl',
-	function($scope, $log, $stateParams, $mdBottomSheet, commandResourceService, iotResourceService, toastService){
+	function($scope, $log, $stateParams, commandResourceService, iotResourceService, toastService){
 	
     $scope.remove = function(command) {
     	$log.debug('delete', command);
@@ -109,21 +109,6 @@ angular.module('JarvisApp.ctrl.commands', ['JarvisApp.services'])
         	$scope.go('commands');
         }, toastService.failure);
     }
-
-    $scope.showBottomSheet = function($event) {
-        $mdBottomSheet.show({
-          template: '<jarvis-bottom-sheet-command></jarvis-bottom-sheet-command>',
-          controller: 'commandCtrl',
-          preserveScope: true,
-          scope: $scope,
-          targetEvent: $event,
-          clickOutsideToClose: true
-        }).then(function(clickedItem) {
-        	$mdBottomSheet.hide();
-        },function(clickedItem) {
-        	$mdBottomSheet.hide();
-        });
-      };
       
     $scope.load = function() {
 	    /**

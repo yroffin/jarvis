@@ -190,6 +190,24 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     }
   }
 })
+.directive('jarvisBlocks', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/partials/widget/scenarios/jarvis-blocks.html',
+    link: function(scope, element, attrs) {
+    	$log.info('jarvis-blocks');
+    }
+  }
+})
+.directive('jarvisBlock', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/partials/widget/scenarios/jarvis-block.html',
+    link: function(scope, element, attrs) {
+    	$log.info('jarvis-block');
+    }
+  }
+})
 .directive('jarvisHome', function ($log, $stateParams) {
   return {
     restrict: 'E',
@@ -232,42 +250,6 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     templateUrl: '/ui/js/partials/widget/tile/jarvis-tile-percent.html',
     link: function(scope, element, attrs) {
     	$log.info('jarvis-tile-percent');
-    }
-  }
-})
-.directive('jarvisBottomSheetIot', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/widget/bottom/jarvis-bottom-sheet-iot.html',
-    link: function(scope, element, attrs) {
-    	$log.info('jarvis-bottom-sheet-iot');
-    }
-  }
-})
-.directive('jarvisBottomSheetPlugin', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/widget/bottom/jarvis-bottom-sheet-plugin.html',
-    link: function(scope, element, attrs) {
-    	$log.info('jarvis-bottom-sheet-plugin');
-    }
-  }
-})
-.directive('jarvisBottomSheetCommand', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/widget/bottom/jarvis-bottom-sheet-command.html',
-    link: function(scope, element, attrs) {
-    	$log.info('jarvis-bottom-sheet-command');
-    }
-  }
-})
-.directive('jarvisBottomSheetView', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/widget/bottom/jarvis-bottom-sheet-view.html',
-    link: function(scope, element, attrs) {
-    	$log.info('jarvis-bottom-sheet-view');
     }
   }
 })

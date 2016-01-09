@@ -101,7 +101,7 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
             templateUrl: '/ui/js/partials/scenarios/page.html'
         })
         .state('scenarios-by-id', {
-            url: '/scenarios/:id',
+            url: '/scenarios/:id?tab',
             controller: 'scenarioCtrl',
             templateUrl: '/ui/js/partials/scenarios/scenario/page.html'
         })

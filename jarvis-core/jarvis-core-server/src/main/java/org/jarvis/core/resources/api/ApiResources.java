@@ -17,11 +17,14 @@
 package org.jarvis.core.resources.api;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 
 import org.jarvis.core.exception.TechnicalNotFoundException;
+import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.resources.api.mapper.ApiMapper;
 import org.jarvis.core.services.ApiService;
 import org.jarvis.core.services.neo4j.ApiNeo4Service;
@@ -289,4 +292,29 @@ public abstract class ApiResources<Rest,Bean> extends ApiMapper {
     		return "";
     	}
     }
+
+	/**
+	 * @param list
+	 * @param field 
+	 * @return List<CommandRest>
+	 */
+	public List<GenericEntity> sort(List<GenericEntity> list, String field) {
+		/**
+		 * sort by order
+		 */
+		Collections.sort(list, new Comparator<GenericEntity>() {
+	
+			@Override
+			public int compare(GenericEntity l, GenericEntity r) {
+				String left = (String) l.get(field);
+				if(left == null) {
+					return -1;
+				}
+				String right = (String) r.get(field);
+				return left.compareTo(right);
+			}
+			
+		});
+		return list;
+	}
 }

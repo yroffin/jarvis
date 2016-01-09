@@ -1,19 +1,13 @@
-<md-fab-toolbar>
-	<md-tooltip md-direction="left">{{'plugin.tp.cmds' | translate}}</md-tooltip>
-    <md-fab-trigger class="align-with-text">
-      <md-button aria-label="menu" class="md-fab md-primary"><md-icon md-font-icon="material-icons md-16">menu</md-icon></md-button>
-    </md-fab-trigger>
-    <md-toolbar>
-      <md-fab-actions class="md-toolbar-tools">
-		<md-button aria-label="menu" class="md-icon-button" ng-click="go('plugins')"><md-icon md-font-icon="material-icons md-16">clear</md-icon></md-button>
-		<md-button aria-label="menu" class="md-icon-button" ng-click="duplicate(script)"><md-icon md-font-icon="material-icons md-16">content_copy</md-icon></md-button>
-		<md-button aria-label="menu" class="md-icon-button" ng-click="remove(script)"><md-icon md-font-icon="material-icons md-16">delete</md-icon></md-button>
-		<md-button aria-label="menu" class="md-icon-button" ng-click="save(script)"><md-icon md-font-icon="material-icons md-16">save</md-icon></md-button>
-		<md-button aria-label="menu" class="md-icon-button" ng-click="execute(script)"><md-icon md-font-icon="material-icons md-16">play_arrow</md-icon></md-button>
-		<md-button aria-label="menu" class="md-icon-button" ng-click="clear()"><md-icon md-font-icon="material-icons md-16">loop</md-icon></md-button>
-      </md-fab-actions>
-    </md-toolbar>
-</md-fab-toolbar>
+<md-toolbar>
+  <md-fab-actions class="md-toolbar-tools">
+	<md-button aria-label="menu" class="md-icon-button" ng-click="go('plugins')"><md-icon md-font-icon="material-icons md-16">clear</md-icon></md-button>
+	<md-button aria-label="menu" class="md-icon-button" ng-click="duplicate(script)"><md-icon md-font-icon="material-icons md-16">content_copy</md-icon></md-button>
+	<md-button aria-label="menu" class="md-icon-button" ng-click="remove(script)"><md-icon md-font-icon="material-icons md-16">delete</md-icon></md-button>
+	<md-button aria-label="menu" class="md-icon-button" ng-click="save(script)"><md-icon md-font-icon="material-icons md-16">save</md-icon></md-button>
+	<md-button aria-label="menu" class="md-icon-button" ng-click="execute(script)"><md-icon md-font-icon="material-icons md-16">play_arrow</md-icon></md-button>
+	<md-button aria-label="menu" class="md-icon-button" ng-click="clear()"><md-icon md-font-icon="material-icons md-16">loop</md-icon></md-button>
+  </md-fab-actions>
+</md-toolbar>
 <div layout="column" ng-init="load()" ng-cloak>
 	<h2>Script {{script.type}}#{{script.id}}</h2>
 	<md-tabs md-dynamic-height md-border-bottom>

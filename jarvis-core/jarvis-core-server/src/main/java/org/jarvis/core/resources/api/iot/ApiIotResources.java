@@ -22,8 +22,6 @@ import static spark.Spark.post;
 import static spark.Spark.put;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -94,7 +92,7 @@ public class ApiIotResources extends ApiResources<IotRest,IotBean> {
 		/**
 		 * iterate on each entity and execute them as a pipeline
 		 */
-		for(GenericEntity entity : sort(apiHrefIotScriptPluginResources.findAll(iotRest))) {
+		for(GenericEntity entity : sort(apiHrefIotScriptPluginResources.findAll(iotRest), "order")) {
 			ScriptPluginRest script = apiScriptPluginResources.doGetById(entity.id);
 			result = apiScriptPluginResources.execute(script, result);
 		}
@@ -204,7 +202,7 @@ public class ApiIotResources extends ApiResources<IotRest,IotBean> {
 		    	try {
 		    		IotRest master = doGetById(request.params(ID));
 		    		List<ScriptPluginRest> result = new ArrayList<ScriptPluginRest>();
-		    		for(GenericEntity link : sort(apiHrefIotScriptPluginResources.findAll(master))) {
+		    		for(GenericEntity link : sort(apiHrefIotScriptPluginResources.findAll(master), "order")) {
 		    			result.add(scriptRest(link));
 		    		}
 			    	return mapper.writeValueAsString(result);
@@ -281,30 +279,6 @@ public class ApiIotResources extends ApiResources<IotRest,IotBean> {
 		    	return iot.template;
 		    }
 		});
-	}
-
-	/**
-	 * @param list
-	 * @return List<CommandRest>
-	 */
-	public List<GenericEntity> sort(List<GenericEntity> list) {
-		/**
-		 * sort by order
-		 */
-		Collections.sort(list, new Comparator<GenericEntity>() {
-	
-			@Override
-			public int compare(GenericEntity l, GenericEntity r) {
-				String left = (String) l.get("order");
-				if(left == null) {
-					return -1;
-				}
-				String right = (String) r.get("order");
-				return left.compareTo(right);
-			}
-			
-		});
-		return list;
 	}
 
 	/**

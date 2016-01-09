@@ -64,7 +64,7 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
     }
 })
 .controller('scenarioCtrl',
-	function($scope, $log, $stateParams, $mdBottomSheet, scenarioResourceService, iotResourceService, toastService){
+	function($scope, $log, $stateParams, scenarioResourceService, blockResourceService, toastService){
 	/**
 	 * remove this scenario
 	 * @param scenario, the scenario to remove
@@ -101,9 +101,54 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
         }, toastService.failure);
     }
     /**
+     * add this plugin to this view
+     * @param plugin, the plugin to add
+     */
+    $scope.add = function() {
+      	var properties = {
+      			'order':'1'
+      	};
+      	blockResourceService.block.post({}, function(block) {
+          	scenarioResourceService.blocks.post($stateParams.id, block.id, {}, function(block) {
+          		$log.debug('scenarioCtrl::add', block);
+    	    	$scope.blocks.push(block);
+    	    }, toastService.failure);
+      	}, toastService.failure);
+    }
+    /**
+     * update this command
+     * @param command, the command to add
+     */
+    $scope.update = function(block) {
+    	if(block != undefined && block.id != undefined && block.id != '') {
+    		scenarioResourceService.blocks.put($stateParams.id, block.id, block.instance, block.extended, function(data) {
+               	$log.debug('iotCtrl::update', plugin);
+               	$log.debug('iotCtrl::update', data);
+    	    }, toastService.failure);
+    	}
+    }
+    /**
+     * drop this plugin from view
+     * @param plugin, the plugin to drop
+     */
+    $scope.drop = function(block) {
+    	if(block != undefined && block.id != undefined && block.id != '') {
+        	scenarioResourceService.blocks.delete($stateParams.id, block.id, block.instance, function(removed) {
+    			var toremove = block.instance;
+    			_.remove($scope.blocks, function(element) {
+    				return element.instance == toremove;
+    			});
+               	$log.debug('iotCtrl::drop', removed);
+    	    }, toastService.failure);
+    	}
+    }
+  /**
      * load this controller
      */
     $scope.load = function() {
+    	$scope.blocks = [];
+  		$scope.activeTab = $stateParams.tab;
+
 	    /**
 	     * init part
 	     */
@@ -122,6 +167,14 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
 	    	$log.debug('scenario ' + data.name + '#' + $stateParams.id);
 	    }, toastService.failure);
 	
+		/**
+		 * find all iots
+		 */
+		scenarioResourceService.blocks.findAll($stateParams.id, function(data) {
+			$scope.blocks = data;
+			$log.debug('scenario-ctrl', $scope.blocks);
+	    }, toastService.failure);
+
 		$log.debug('scenario-ctrl');
     }
 })

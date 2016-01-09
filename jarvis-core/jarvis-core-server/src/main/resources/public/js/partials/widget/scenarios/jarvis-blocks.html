@@ -1,0 +1,15 @@
+<md-toolbar>
+  <md-fab-actions class="md-toolbar-tools">
+	<md-button aria-label="menu" class="md-icon-button" ng-click="add()"><md-icon md-font-icon="material-icons md-16">add_circle_outline</md-icon></md-button>
+  </md-fab-actions>
+</md-toolbar>
+<div>
+	<ul>
+		<div ng-repeat="block in blocks">
+			<div layout="column">
+				<md-button aria-label="menu" class="md-icon-button" ng-click="drop(block)"><md-icon md-font-icon="material-icons md-16">cancel</md-icon></md-button>
+				<jarvis-block></jarvis-block>
+			</div>
+		</div>
+	</ul>
+</div>

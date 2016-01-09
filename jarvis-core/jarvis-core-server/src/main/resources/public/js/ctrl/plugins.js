@@ -62,7 +62,7 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
     }
 })
 .controller('pluginScriptCtrl',
-	function($scope, $log, $stateParams, $mdBottomSheet, pluginResourceService, iotResourceService, commandResourceService, toastService){
+	function($scope, $log, $stateParams, pluginResourceService, iotResourceService, commandResourceService, toastService){
     /**
      * remove this script
      * @param script, the element to remove
@@ -99,21 +99,6 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
         	$scope.go('plugins');
         }, toastService.failure);
     }
-
-    $scope.showBottomSheet = function($event) {
-        $mdBottomSheet.show({
-          template: '<jarvis-bottom-sheet-plugin></jarvis-bottom-sheet-plugin>',
-          controller: 'pluginScriptCtrl',
-          preserveScope: true,
-          scope: $scope,
-          targetEvent: $event,
-          clickOutsideToClose: true
-        }).then(function(clickedItem) {
-        	$mdBottomSheet.hide();
-        },function(clickedItem) {
-        	$mdBottomSheet.hide();
-        });
-    };
     /**
      * add this command
      * @param command, the command to add

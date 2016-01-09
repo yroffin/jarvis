@@ -64,7 +64,7 @@ angular.module('JarvisApp.ctrl.views', ['JarvisApp.services'])
     }
 })
 .controller('viewCtrl',
-	function($scope, $log, $stateParams, $mdBottomSheet, viewResourceService, iotResourceService, toastService){
+	function($scope, $log, $stateParams, viewResourceService, iotResourceService, toastService){
 	/**
 	 * remove this view
 	 * @param view, the view to remove
@@ -100,23 +100,6 @@ angular.module('JarvisApp.ctrl.views', ['JarvisApp.services'])
         	$scope.go('views');
         }, toastService.failure);
     }
-    /**
-     * bottom sheet handler
-     */
-    $scope.showBottomSheet = function($event) {
-        $mdBottomSheet.show({
-          template: '<jarvis-bottom-sheet-view></jarvis-bottom-sheet-view>',
-          controller: 'viewCtrl',
-          preserveScope: true,
-          scope: $scope,
-          targetEvent: $event,
-          clickOutsideToClose: true
-        }).then(function(clickedItem) {
-        	$mdBottomSheet.hide();
-        },function(clickedItem) {
-        	$mdBottomSheet.hide();
-        });
-    };
     /**
      * add this plugin to this view
      * @param plugin, the plugin to add

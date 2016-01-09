@@ -28,6 +28,7 @@ import org.jarvis.core.resources.api.jobs.ApiJobResources;
 import org.jarvis.core.resources.api.jobs.ApiParamResources;
 import org.jarvis.core.resources.api.plugins.ApiCommandResources;
 import org.jarvis.core.resources.api.plugins.ApiScriptPluginResources;
+import org.jarvis.core.resources.api.scenario.ApiBlockResources;
 import org.jarvis.core.resources.api.scenario.ApiScenarioResources;
 import org.jarvis.core.resources.api.views.ApiViewResources;
 import org.jarvis.core.resources.api.ApiConnectorResources;
@@ -63,6 +64,9 @@ public class CoreServerDaemon {
 
 	@Autowired
 	ApiScenarioResources apiScenarioResources;
+
+	@Autowired
+	ApiBlockResources apiBlockResources;
 
 	@Autowired
 	ApiParamResources apiParamResources;
@@ -101,7 +105,11 @@ public class CoreServerDaemon {
 		apiConnectorResources.mount();
 		apiCrontabResources.mount();
 		apiLabelResources.mount();
+		/**
+		 * mount plugin resources
+		 */
 		apiScenarioResources.mount();
+		apiBlockResources.mount();
 		apiParamResources.mount();
 		apiIotResources.mount();
 		apiViewResources.mount();
