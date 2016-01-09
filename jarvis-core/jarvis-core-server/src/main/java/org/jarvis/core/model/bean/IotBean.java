@@ -47,4 +47,8 @@ public class IotBean extends GenericBean {
 	 * tag text color
 	 */
 	public String tagTextColor;
+	/**
+	 * template
+	 */
+	public String template;
 }

@@ -64,7 +64,7 @@ angular.module('JarvisApp.ctrl.iots', ['JarvisApp.services'])
 	$log.info('iots-ctrl');
 })
 .controller('iotCtrl',
-	function($scope, $log, $stateParams, $mdBottomSheet, iotResourceService, pluginResourceService, toastService){
+	function($scope, $log, $state, $stateParams, $mdBottomSheet, iotResourceService, pluginResourceService, toastService){
 	/**
 	 * remove
 	 * @param iot, the iot to remove
@@ -169,7 +169,7 @@ angular.module('JarvisApp.ctrl.iots', ['JarvisApp.services'])
       	iotResourceService.ext.task(iot.id, 'render', {}, function(data) {
      	    	toastService.info('iot ' + iot.name + '#' + iot.id + ' rendered');
      	    	$log.debug('iotCtrl::render', data);
-     	    	$scope.rawoutput = data;
+     	    	$scope.template = data;
      	    	$scope.output = angular.toJson(data, true);
   	    }, toastService.failure);
       }
@@ -178,7 +178,8 @@ angular.module('JarvisApp.ctrl.iots', ['JarvisApp.services'])
        */
       $scope.load = function() {
   		$scope.plugins = [];
-
+  		$scope.activeTab = $stateParams.tab;
+ 
   		/**
 	     * init part
 	     */

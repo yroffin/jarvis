@@ -18,6 +18,7 @@
     "iot.general"  		: "Général",
     "iot.plugins"  		: "Plugins",
     "iot.render"  		: "Rendu",
+    "iot.template" 		: "Template",
     "iot.tp.cmds"		: "Action sur l'objet",
     "view.title"    	: "Mes vues",
     "view.general"    	: "Général",

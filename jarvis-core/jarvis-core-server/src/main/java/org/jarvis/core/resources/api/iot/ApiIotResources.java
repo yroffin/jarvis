@@ -271,6 +271,16 @@ public class ApiIotResources extends ApiResources<IotRest,IotBean> {
 		    	return doGetById(request, ID, response);
 		    }
 		});
+		/**
+		 * iot html generator
+		 */
+		get("/api/directives/html/iots/:id", new Route() {
+		    @Override
+			public Object handle(Request request, Response response) throws Exception {
+		    	IotRest iot = doGetById(request.params(ID));
+		    	return iot.template;
+		    }
+		});
 	}
 
 	/**

@@ -66,7 +66,7 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
             templateUrl: '/ui/js/partials/iots/page.html'
         })
         .state('iots-by-id', {
-            url: '/iots/:id',
+            url: '/iots/:id?tab',
             controller: 'iotCtrl',
             templateUrl: '/ui/js/partials/iots/iot/page.html'
         })

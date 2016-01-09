@@ -20,7 +20,7 @@
 
 angular.module('JarvisApp.ctrl.home', ['JarvisApp.services'])
 .controller('homeCtrl', 
-	function($scope, $log, viewResourceService, toastService){
+	function($scope, $log, viewResourceService, iotResourceService, toastService){
     /**
      * load this controller
      */
@@ -46,7 +46,18 @@ angular.module('JarvisApp.ctrl.home', ['JarvisApp.services'])
 	    		$log.info('loading view', view);
 	    		viewResourceService.iots.findAll(view.id, function(data) {
 	    			view.iots = data;
-	    	    	$log.debug('Linked iots to view', view.iots);
+	    			var done = _.after(view.iots.length, function() {
+	    				$log.debug('Linked iots to view', view.iots);
+	    			});
+	    			_.forEach(view.iots, function(iot){
+	    				/**
+	    				 * render each view
+	    				 */
+	    		      	iotResourceService.ext.task(iot.id, 'render', {}, function(data) {
+	    		      		iot.render = data;
+	    		      		done(iot);
+	    		      	}, toastService.failure);
+	    			});
 	    	    }, toastService.failure);
 			});
 	    	
