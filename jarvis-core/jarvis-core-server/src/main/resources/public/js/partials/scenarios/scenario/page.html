@@ -1,0 +1,24 @@
+<md-fab-toolbar>
+	<md-tooltip md-direction="left">{{'plugin.tp.cmds' | translate}}</md-tooltip>
+    <md-fab-trigger class="align-with-text">
+      <md-button aria-label="menu" class="md-fab md-primary"><md-icon md-font-icon="material-icons md-16">menu</md-icon></md-button>
+    </md-fab-trigger>
+    <md-toolbar>
+      <md-fab-actions class="md-toolbar-tools">
+		<md-button aria-label="menu" class="md-icon-button" ng-click="go('scenarios')"><md-icon md-font-icon="material-icons md-16">clear</md-icon></md-button>
+		<md-button aria-label="menu" class="md-icon-button" ng-click="duplicate(scenario)"><md-icon md-font-icon="material-icons md-16">content_copy</md-icon></md-button>
+		<md-button aria-label="menu" class="md-icon-button" ng-click="remove(scenario)"><md-icon md-font-icon="material-icons md-16">delete</md-icon></md-button>
+		<md-button aria-label="menu" class="md-icon-button" ng-click="save(scenario)"><md-icon md-font-icon="material-icons md-16">save</md-icon></md-button>
+      </md-fab-actions>
+    </md-toolbar>
+</md-fab-toolbar>
+<div layout="column" ng-init="load()" ng-cloak>
+	<h2>scenario #{{scenario.id}}</h2>
+	<md-tabs md-dynamic-height md-border-bottom>
+		<md-tab label="{{'scenario.general' | translate}}">
+			<md-content layout-padding>
+				<jarvis-scenario></jarvis-scenario>
+			</md-content>
+		</md-tab>
+	</md-tabs>
+</div>

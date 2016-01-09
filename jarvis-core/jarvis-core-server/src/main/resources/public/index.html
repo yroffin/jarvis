@@ -55,7 +55,7 @@ limitations under the License.
     <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
         <md-button ng-click="location('left', '/jobs');">Jobs</md-button>
         <md-button ng-click="location('left', '/configuration');">Configuration</md-button>
-        <md-button ng-click="location('left', '/scenario');">Scenario</md-button>
+        <md-button ng-click="location('left', '/scenarios');">Scenario</md-button>
         <md-button ng-click="location('left', '/connectors');">Connector</md-button>
         <md-button ng-click="location('left', '/iots');">Connected object(s)</md-button>
         <md-button ng-click="location('left', '/plugins');">Plugin(s)</md-button>
@@ -102,25 +102,29 @@ limitations under the License.
 
 <!-- Application -->
 <script src="js/app.js"></script>
-<!-- Widgets -->
+<!-- Services -->
 <script src="js/services.js"></script>
 <script src="js/services/filter.js"></script>
 <script src="js/services/plugin.js"></script>
 <script src="js/services/command.js"></script>
 <script src="js/services/view.js"></script>
 <script src="js/services/iot.js"></script>
+<script src="js/services/scenario.js"></script>
+<!-- Main -->
 <script src="js/controllers.js"></script>
 <script src="js/routes.js"></script>
 <script src="js/directives.js"></script>
 <script src="js/filters.js"></script>
 <!-- Widgets -->
 <script src="js/directives/widgets.js"></script>
+<!-- Controllers -->
 <script src="js/ctrl/jobs.js"></script>
 <script src="js/ctrl/iots.js"></script>
 <script src="js/ctrl/plugins.js"></script>
 <script src="js/ctrl/commands.js"></script>
 <script src="js/ctrl/views.js"></script>
 <script src="js/ctrl/home.js"></script>
+<script src="js/ctrl/scenarios.js"></script>
 
 </body>
 </html>

@@ -14,7 +14,9 @@
  *   limitations under the License.
  */
 
-package org.jarvis.core.model.rest;
+package org.jarvis.core.model.rest.scenario;
+
+import org.jarvis.core.model.rest.GenericEntity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -23,10 +25,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * scenario
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ScenarioRest {
+public class ScenarioRest extends GenericEntity {
 	/**
 	 * name
 	 */
 	@JsonProperty("name")
 	public String name;
+	/**
+	 * icon
+	 */
+	@JsonProperty("icon")
+	public String icon;
 }

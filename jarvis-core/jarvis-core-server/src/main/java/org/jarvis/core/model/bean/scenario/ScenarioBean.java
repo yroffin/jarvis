@@ -14,7 +14,9 @@
  *   limitations under the License.
  */
 
-package org.jarvis.core.model.bean;
+package org.jarvis.core.model.bean.scenario;
+
+import org.jarvis.core.model.bean.GenericBean;
 
 /**
  * scenario
@@ -24,4 +26,8 @@ public class ScenarioBean extends GenericBean {
 	 * scenario name
 	 */
 	public String name;
+	/**
+	 * scenario icon
+	 */
+	public String icon;
 }

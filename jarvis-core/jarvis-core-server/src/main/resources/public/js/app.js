@@ -38,10 +38,14 @@ angular.module('JarvisApp', [
      'JarvisApp.services.view',
      'JarvisApp.services.iot',
      'JarvisApp.directives.widgets',
+     /**
+      * controllers
+      */
      'JarvisApp.ctrl.plugins',
      'JarvisApp.ctrl.commands',
      'JarvisApp.ctrl.jobs',
      'JarvisApp.ctrl.iots',
      'JarvisApp.ctrl.views',
+     'JarvisApp.ctrl.scenarios',
      'JarvisApp.ctrl.home'
 ]);

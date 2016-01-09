@@ -50,11 +50,6 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
             controller: 'JarvisAppCtrl',
             templateUrl: '/ui/js/partials/configuration.html'
         })
-        .state('scenario', {
-            url: '/scenario',
-            controller: 'JarvisAppCtrl',
-            templateUrl: '/ui/js/partials/scenario.html'
-        })
         .state('connectors', {
             url: '/connectors',
             controller: 'JarvisAppCtrl',
@@ -99,6 +94,16 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
             url: '/views/:id',
             controller: 'viewCtrl',
             templateUrl: '/ui/js/partials/views/view/page.html'
+        })
+        .state('scenarios', {
+            url: '/scenarios',
+            controller: 'scenariosCtrl',
+            templateUrl: '/ui/js/partials/scenarios/page.html'
+        })
+        .state('scenarios-by-id', {
+            url: '/scenarios/:id',
+            controller: 'scenarioCtrl',
+            templateUrl: '/ui/js/partials/scenarios/scenario/page.html'
         })
         ;
     })

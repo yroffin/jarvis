@@ -14,15 +14,16 @@
  *   limitations under the License.
  */
 
-package org.jarvis.core.resources.api;
+package org.jarvis.core.resources.api.scenario;
 
 
 import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.put;
 
-import org.jarvis.core.model.bean.ScenarioBean;
-import org.jarvis.core.model.rest.ScenarioRest;
+import org.jarvis.core.model.bean.scenario.ScenarioBean;
+import org.jarvis.core.model.rest.scenario.ScenarioRest;
+import org.jarvis.core.resources.api.ApiResources;
 import org.jarvis.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
 import org.springframework.stereotype.Component;
@@ -54,28 +55,28 @@ public class ApiScenarioResources extends ApiResources<ScenarioRest,ScenarioBean
 		/**
 		 * mount resources
 		 */
-		get("/api/Scenarios", new Route() {
+		get("/api/scenarios", new Route() {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
 		    	return doFindAll(request, response);
 		    }
 		});
-		get("/api/Scenarios/:id", new Route() {
+		get("/api/scenarios/:id", new Route() {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
-		    	return doGetById(request, ":id", response);
+		    	return doGetById(request, ID, response);
 		    }
 		});
-		post("/api/Scenarios", new Route() {
+		post("/api/scenarios", new Route() {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
 		    	return doCreate(request, response, ScenarioRest.class);
 		    }
 		});
-		put("/api/Scenarios/:id", new Route() {
+		put("/api/scenarios/:id", new Route() {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
-		    	return doUpdate(request, ":id", response, ScenarioRest.class);
+		    	return doUpdate(request, ID, response, ScenarioRest.class);
 		    }
 		});
 	}
