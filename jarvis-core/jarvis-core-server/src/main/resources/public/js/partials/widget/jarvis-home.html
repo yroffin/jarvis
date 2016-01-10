@@ -13,9 +13,8 @@
 		          ng-repeat="iot in view.iots"
 		          ng-style="{'background': iot.tagColor}"
 		          md-colspan="2"
-		          md-rowspan="1"
-		          ng-init="template=iot.render">
-		          <jarvis-inline-template id="iot.id"></jarvis-inline-template>
+		          md-rowspan="1">
+		          <jarvis-inline-template data="iot.render" id="iot.id"></jarvis-inline-template>
 		     </md-grid-tile>
 		    </md-grid-list>
 	    </div>

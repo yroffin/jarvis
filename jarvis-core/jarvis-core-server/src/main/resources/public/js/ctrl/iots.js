@@ -149,10 +149,9 @@ angular.module('JarvisApp.ctrl.iots', ['JarvisApp.services'])
        * @param iot, the iot to render
        */
       $scope.render = function(iot) {
-      	iotResourceService.ext.task(iot.id, 'render', {}, function(data) {
-     	    	toastService.info('iot ' + iot.name + '#' + iot.id + ' rendered');
+      	iotResourceService.iot.task(iot.id, 'render', {}, function(data) {
      	    	$log.debug('iotCtrl::render', data);
-     	    	$scope.template = data;
+     	    	$scope.renderdata = data;
      	    	$scope.output = angular.toJson(data, true);
   	    }, toastService.failure);
       }

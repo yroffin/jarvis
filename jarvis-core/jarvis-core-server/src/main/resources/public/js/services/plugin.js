@@ -18,15 +18,10 @@
 
 /* Services */
 
-var jarvisServicesUrl = '/services';
-var jarvisApiUrl = '/api';
-var myAppServices = angular.module('JarvisApp.services.plugin', []);
-
 /**
- * iotResourceService
+ * pluginResourceService
  */
-myAppServices.factory('pluginResourceService', function($log, Restangular, filterService, commandResourceService) {
-  var api = 'plugins';
+angular.module('JarvisApp.services.plugin', []).factory('pluginResourceService', function($log, Restangular, filterService, commandResourceService, genericResourceService) {
   var plugins = {
 	        /**
 			 * base services : findAll, delete, put and post
@@ -38,10 +33,9 @@ myAppServices.factory('pluginResourceService', function($log, Restangular, filte
 					callback(loaded);
 				});
 				_.forEach(plugins, function(plugin) {
-					Restangular.all(api).all(plugin).getList().then(function(elements) {
+					Restangular.all('plugins').all(plugin).getList().then(function(elements) {
 		            	_.forEach(elements, function(element) {
-		            		$log.debug(filterService.plugin(element));
-		                    arr.push(filterService.plugin(element));
+		                    arr.push(filterService.plain(element));
 		                });
 		            	done(arr);
 					},function(errors){
@@ -50,118 +44,9 @@ myAppServices.factory('pluginResourceService', function($log, Restangular, filte
 				});
 			}
   };
-  var scripts = {
-        /**
-		 * base services : findAll, delete, put and post
-		 */
-		findAll: function(callback, failure) {
-			Restangular.all(api).all('scripts').getList().then(function(elements) {
-                var arr = [];
-            	_.forEach(elements, function(element) {
-                    arr.push(filterService.script(element));
-                });
-				callback(arr);
-			},function(errors){
-				failure(errors);
-			});
-		},
-		get: function(id, callback, failure) {
-			Restangular.all(api).one('scripts', id).get().then(function(element) {
-				callback(filterService.script(element));
-			},function(errors){
-				failure(errors);
-			});
-		},
-		delete: function(id, callback, failure) {
-			Restangular.all(api).one('scripts', id).remove().then(function(elements) {
-				callback(elements);
-			},function(errors){
-				failure(errors);
-			});
-		},
-		put: function(element, callback, failure) {
-			Restangular.all(api).one('scripts', element.id).customPUT(element).then(function(jobs) {
-				callback(jobs);
-			},function(errors){
-				failure(errors);
-			});
-		},
-		post: function(element, callback, failure) {
-			Restangular.all(api).all('scripts').post(element).then(function(elements) {
-				callback(elements);
-			},function(errors){
-				failure(errors);
-			});
-		}
-  };
-  var commands = {
-		findAll: function(id, callback, failure) {
-			Restangular.all(api).one('scripts', id).all('commands').getList().then(function(elements) {
-				var commands = [];
-            	_.forEach(elements, function(element) {
-        			commands.push(filterService.plain(element));
-            	});
-            	callback(commands);
-			},function(errors){
-				failure(errors);
-			});
-		},
-        /**
-		 * post link
-		 */
-        post: function(id, param, properties, callback, failure) {
-        	var p = {};
-        	if(properties === undefined) {
-        		p = {};
-        	} else {
-        		p = properties;
-        	}
-        	Restangular.all(api).one('scripts', id).one('commands',param).customPOST(p).then(function(href) {
-        		callback(filterService.plain(href));
-        	},function(errors){
-        		failure(errors);
-        	});
-        },
-        /**
-		 * put link
-		 */
-        put: function(id, param, instance, properties, callback, failure) {
-        	var p = {};
-        	if(properties === undefined) {
-        		p = {};
-        	} else {
-        		p = properties;
-        	}
-        	Restangular.all(api).one('scripts', id).one('commands',param).one(instance).customPUT(p).then(function(href) {
-        		callback(filterService.plain(href));
-        	},function(errors){
-        		failure(errors);
-        	});
-        },
-        /**
-		 * delete link
-		 */
-		delete: function(id, param, instance, callback, failure) {
-			Restangular.all(api).one('scripts', id).one('commands', param).remove({'instance':instance}).then(function(href) {
-				callback(href);
-			},function(errors){
-				failure(errors);
-			});
-		}
-  }
-  var ext = {
-		  task: function(id, task, args, callback, failure) {
-				Restangular.all(api).all('scripts').one(id).customPOST(args,'', {'task':task}).then(function(element) {
-					callback(filterService.plain(element));
-				},function(errors){
-					failure(errors);
-				});
-			}
-  }
   return {
 	    plugins: plugins,
-	    scripts: scripts,
-	    ext : ext,
-		commands : commands  
+	    scripts: genericResourceService.crud(['plugins','scripts']),
+	    commands : genericResourceService.links(['plugins','scripts'], ['commands'])
   }
 });

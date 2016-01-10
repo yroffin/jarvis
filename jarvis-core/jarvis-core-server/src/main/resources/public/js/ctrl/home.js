@@ -30,7 +30,7 @@ angular.module('JarvisApp.ctrl.home', ['JarvisApp.services'])
 	    /**
 	     * loading views
 	     */
-		viewResourceService.base.findAll(function(data) {
+		viewResourceService.view.findAll(function(data) {
 	        var arr = [];
 	    	_.forEach(data, function(element) {
 	            /**
@@ -53,7 +53,7 @@ angular.module('JarvisApp.ctrl.home', ['JarvisApp.services'])
 	    				/**
 	    				 * render each view
 	    				 */
-	    		      	iotResourceService.ext.task(iot.id, 'render', {}, function(data) {
+	    		      	iotResourceService.iot.task(iot.id, 'render', {}, function(data) {
 	    		      		iot.render = data;
 	    		      		done(iot);
 	    		      	}, toastService.failure);

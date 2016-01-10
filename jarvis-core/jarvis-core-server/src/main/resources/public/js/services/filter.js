@@ -25,54 +25,14 @@ var myAppServices = angular.module('JarvisApp.services.filter', []);
  */
 myAppServices.factory('filterService', function(Restangular) {
   var base = {
-		  iot: function(element) {
-			  return {
-	          	'id':element.id,
-	        	'name':element.name,
-	        	'owner':element.owner,
-	        	'visible':element.visible,
-	        	'icon':element.icon,
-	        	'tagColor':element.tagColor,
-	        	'tagTextColor':element.tagTextColor
-			  }
-		  },
-		  plugin: function(element) {
-			  return {
-	          	'id':element.id,
-	        	'name':element.name,
-	        	'owner':element.owner,
-	        	'type':element.type,
-	        	'icon':element.icon,
-	        	'active':element.active,
-	        	'visible':element.visible
-			  }
-		  },
-		  script: function(element) {
-			  return {
-	          	'id':element.id,
-	        	'name':element.name,
-	        	'owner':element.owner,
-	        	'type':element.type,
-	        	'icon':element.icon,
-	        	'active':element.active,
-	        	'visible':element.visible
-			  }
-		  },
-		  command: function(element) {
-			  return {
-	          	'id':element.id,
-	        	'name':element.name,
-	        	'type':element.type,
-	        	'icon':element.icon,
-	        	'mode':element.mode,
-	        	'body':element.body
-			  }
-		  },
-		  plain: function(element) {
-			  var element = Restangular.stripRestangular(element);
-			  delete element.originalElement;
-			  return element;
-		  }
+	  /**
+	   * strip restangular object from context
+	   */
+	  plain: function(element) {
+		  var element = Restangular.stripRestangular(element);
+		  delete element.originalElement;
+		  return element;
+	  }
   }
   return base;
 });

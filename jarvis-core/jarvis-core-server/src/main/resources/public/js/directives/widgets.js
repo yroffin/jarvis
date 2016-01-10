@@ -267,8 +267,12 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     restrict: 'E',
     template: '<div ng-include="getJarvisInlineTemplateUrl()"></div>',
     link: function(scope, element, attrs) {
-    	$log.info('jarvis-inline-template iot.id', $parse(attrs.id)(scope));
+    	$log.info('jarvis-inline-template id', $parse(attrs.id)(scope));
     	scope.getJarvisInlineTemplateUrl = function() {
+    		/**
+    		 * update scope
+    		 */
+        	scope.data = $parse(attrs.data)(scope);
             return '/api/directives/html/iots/'+$parse(attrs.id)(scope);
         }
     }

@@ -34,7 +34,7 @@ angular.module('JarvisApp.ctrl.commands', ['JarvisApp.services'])
         /**
          * create or update this job
          */
-        commandResourceService.base.post(update, function(data) {
+        commandResourceService.command.post(update, function(data) {
                 toastService.info('command ' + data.name + '#' + data.id +' created');
                 $scope.commands.push(data);
             }, toastService.failure);
@@ -44,7 +44,7 @@ angular.module('JarvisApp.ctrl.commands', ['JarvisApp.services'])
 	    /**
 	     * loading commands
 	     */
-		commandResourceService.base.findAll(function(data) {
+		commandResourceService.command.findAll(function(data) {
 	        var arr = [];
 	    	_.forEach(data, function(element) {
 	            /**
@@ -64,7 +64,7 @@ angular.module('JarvisApp.ctrl.commands', ['JarvisApp.services'])
 	
     $scope.remove = function(command) {
     	$log.debug('delete', command);
-    	commandResourceService.base.delete(command.id, function(element) {
+    	commandResourceService.command.delete(command.id, function(element) {
         	toastService.info('command ' + command.name + '#' + command.id + ' removed');
         	$scope.go('commands');
         }, toastService.failure);
@@ -72,7 +72,7 @@ angular.module('JarvisApp.ctrl.commands', ['JarvisApp.services'])
 
     $scope.save = function(command, callback, params) {
     	$log.debug('commandCtrl::save', command);
-    	commandResourceService.base.put(command, function(element) {
+    	commandResourceService.command.put(command, function(element) {
         	toastService.info('command ' + command.name + '#' + command.id + ' updated');
         	if(callback) {
         		if(params) {
@@ -89,7 +89,7 @@ angular.module('JarvisApp.ctrl.commands', ['JarvisApp.services'])
      */
     $scope.execute = function(command) {
     	$log.debug('commandCtrl::execute', command);
-    	commandResourceService.ext.task(command.id, 'execute', $scope.input, function(data) {
+    	commandResourceService.command.task(command.id, 'execute', $scope.input, function(data) {
    	    	toastService.info('command ' + command.name + '#' + command.id + ' executed');
    	    	$log.debug(data);
    	    	$scope.output = angular.toJson(data, true);
@@ -104,7 +104,7 @@ angular.module('JarvisApp.ctrl.commands', ['JarvisApp.services'])
 
     $scope.duplicate = function(command) {
     	$log.debug('duplicate', command);
-    	commandResourceService.base.post(command, function(element) {
+    	commandResourceService.command.post(command, function(element) {
         	toastService.info('command ' + command.name + '#' + command.id + ' duplicated');
         	$scope.go('commands');
         }, toastService.failure);
@@ -155,7 +155,7 @@ angular.module('JarvisApp.ctrl.commands', ['JarvisApp.services'])
 		/**
 		 * get current command
 		 */
-		commandResourceService.base.get($stateParams.id, function(data) {
+		commandResourceService.command.get($stateParams.id, function(data) {
 	    	$scope.command = data;
 	    	toastService.info('command ' + data.name + '#' + $stateParams.id);
 	    }, toastService.failure);

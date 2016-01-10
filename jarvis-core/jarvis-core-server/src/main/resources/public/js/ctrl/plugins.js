@@ -152,7 +152,7 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
      */
     $scope.execute = function(command) {
     	if(command != undefined && command.id != undefined && command.id != '') {
-    		pluginResourceService.ext.task(command.id, 'execute', $scope.rawoutput, function(data) {
+    		pluginResourceService.scripts.task(command.id, 'execute', $scope.rawoutput, function(data) {
        	    	$log.debug('pluginScriptCtrl::execute', command, data);
        	    	$scope.rawoutput = data;
        	    	$scope.output = angular.toJson(data, true);
@@ -227,7 +227,7 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
 		/**
 		 * find all owner
 		 */
-		commandResourceService.base.findAll(function(data) {
+		commandResourceService.command.findAll(function(data) {
 	    	_.forEach(data, function(element) {
 	            /**
 	             * convert internal json params

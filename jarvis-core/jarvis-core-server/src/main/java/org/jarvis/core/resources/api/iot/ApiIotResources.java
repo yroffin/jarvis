@@ -16,16 +16,8 @@
 
 package org.jarvis.core.resources.api.iot;
 
-import static spark.Spark.delete;
 import static spark.Spark.get;
-import static spark.Spark.post;
-import static spark.Spark.put;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map.Entry;
-
-import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.IotBean;
 import org.jarvis.core.model.bean.plugin.ScriptPluginBean;
 import org.jarvis.core.model.rest.GenericEntity;

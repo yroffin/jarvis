@@ -34,7 +34,7 @@ angular.module('JarvisApp.ctrl.views', ['JarvisApp.services'])
          * create or update this view
          */
         $log.debug('viewsCtrl::new', view);
-        viewResourceService.base.post(update, function(data) {
+        viewResourceService.view.post(update, function(data) {
                 toastService.info('view ' + data.name + '#' + data.id +' created');
                 $scope.views.push(data);
             }, toastService.failure);
@@ -48,7 +48,7 @@ angular.module('JarvisApp.ctrl.views', ['JarvisApp.services'])
 	    /**
 	     * loading views
 	     */
-		viewResourceService.base.findAll(function(data) {
+		viewResourceService.view.findAll(function(data) {
 	        var arr = [];
 	    	_.forEach(data, function(element) {
 	            /**
@@ -71,7 +71,7 @@ angular.module('JarvisApp.ctrl.views', ['JarvisApp.services'])
 	 */
     $scope.remove = function(view) {
     	$log.debug('delete', view);
-    	viewResourceService.base.delete(view.id, function(element) {
+    	viewResourceService.view.delete(view.id, function(element) {
         	toastService.info('view ' + view.name + '#' + view.id + ' removed');
         	$scope.go('views');
         }, toastService.failure);
@@ -86,7 +86,7 @@ angular.module('JarvisApp.ctrl.views', ['JarvisApp.services'])
     		view.owner = undefined;
         	$log.debug('save/owner', view);
     	}
-    	viewResourceService.base.put(view, function(element) {
+    	viewResourceService.view.put(view, function(element) {
         	toastService.info('view ' + view.name + '#' + view.id + ' updated');
         }, toastService.failure);
     }
@@ -95,7 +95,7 @@ angular.module('JarvisApp.ctrl.views', ['JarvisApp.services'])
      */
     $scope.duplicate = function(view) {
     	$log.debug('viewCtrl::duplicate', view);
-    	viewResourceService.base.post(view, function(element) {
+    	viewResourceService.view.post(view, function(element) {
         	toastService.info('view ' + view.name + '#' + view.id + ' duplicated');
         	$scope.go('views');
         }, toastService.failure);
@@ -154,13 +154,13 @@ angular.module('JarvisApp.ctrl.views', ['JarvisApp.services'])
 		/**
 		 * get current view
 		 */
-		viewResourceService.base.get($stateParams.id, function(data) {
+		viewResourceService.view.get($stateParams.id, function(data) {
 	    	$scope.view = data;
 	    	toastService.info('view ' + data.name + '#' + $stateParams.id);
 	    }, toastService.failure);
 	
 		/**
-		 * get all iots
+		 * get all views
 		 */
 		viewResourceService.iots.findAll($stateParams.id, function(data) {
 	    	$scope.iots = data;

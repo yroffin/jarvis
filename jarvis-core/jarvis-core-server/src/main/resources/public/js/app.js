@@ -33,10 +33,13 @@ angular.module('JarvisApp', [
      'JarvisApp.routes',
      'JarvisApp.services',
      'JarvisApp.services.filter',
+     'JarvisApp.services.generic',
      'JarvisApp.services.plugin',
      'JarvisApp.services.command',
+     'JarvisApp.services.scenario',
      'JarvisApp.services.view',
      'JarvisApp.services.iot',
+     'JarvisApp.services.block',
      'JarvisApp.directives.widgets',
      /**
       * controllers
