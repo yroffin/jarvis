@@ -64,7 +64,7 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
     }
 })
 .controller('scenarioCtrl',
-	function($scope, $log, $stateParams, scenarioResourceService, blockResourceService, toastService){
+	function($scope, $log, $stateParams, scenarioResourceService, blockResourceService, pluginResourceService, toastService){
 	/**
 	 * remove this scenario
 	 * @param scenario, the scenario to remove
@@ -121,10 +121,12 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
      */
     $scope.update = function(block) {
     	if(block != undefined && block.id != undefined && block.id != '') {
-    		scenarioResourceService.blocks.put($stateParams.id, block.id, block.instance, block.extended, function(data) {
-               	$log.debug('iotCtrl::update', plugin);
-               	$log.debug('iotCtrl::update', data);
-    	    }, toastService.failure);
+    		blockResourceService.block.put(block, function(updated) {
+               	$log.debug('iotCtrl::update', updated);
+        		scenarioResourceService.blocks.put($stateParams.id, block.id, block.instance, block.extended, function(data) {
+                   	$log.debug('iotCtrl::update', data);
+        	    }, toastService.failure);
+    		}, toastService.failure);
     	}
     }
     /**
@@ -142,12 +144,41 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
     	    }, toastService.failure);
     	}
     }
-  /**
+    /**
+     * add then block
+     * @param block, block to modify
+     */
+    $scope.addThenBlock = function(block) {
+    	$log.debug('iotCtrl::addThenBlock', block);
+    }
+    /**
+     * add then block
+     * @param block, block to modify
+     */
+    $scope.addElseBlock = function(block) {
+    	$log.debug('iotCtrl::addElseBlock', block);
+    }
+    /**
+     * add then block
+     * @param block, block to modify
+     */
+    $scope.addThenAction = function(block, plugin) {
+    	$log.debug('iotCtrl::addThenAction', block, plugin);
+    }
+    /**
+     * add then block
+     * @param block, block to modify
+     */
+    $scope.addElseAction = function(block, plugin) {
+    	$log.debug('iotCtrl::addElseAction', block, plugin);
+    }
+    /**
      * load this controller
      */
     $scope.load = function() {
     	$scope.blocks = [];
   		$scope.activeTab = $stateParams.tab;
+  		$scope.plugin = {};
 
 	    /**
 	     * init part
@@ -156,7 +187,8 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
 				booleans: [
 		               	   {id: true,value:'True'},
 		               	   {id: false,value:'False'}
-		        ]
+		        ],
+		        plugins: []
 		};
 	
 		/**
@@ -167,11 +199,32 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
 	    	$log.debug('scenario ' + data.name + '#' + $stateParams.id);
 	    }, toastService.failure);
 	
+		$log.debug('loading available plugins');
+		/**
+		 * find all plugins
+		 */
+		pluginResourceService.plugins.findAll(function(plugins) {
+	    	_.forEach(plugins, function(plugin) {
+	            /**
+	             * convert internal json params
+	             */
+	    		$scope.combo.plugins.push({
+	            	'id':plugin.id,
+	            	'name':plugin.name
+	            });
+	        });
+	    }, toastService.failure);
+
 		/**
 		 * find all iots
 		 */
 		scenarioResourceService.blocks.findAll($stateParams.id, function(data) {
 			$scope.blocks = data;
+	    	_.forEach($scope.blocks, function(element) {
+	    		element.children = [];
+	    		element.children.push({'expression':'x'});
+	    		element.children.push({'expression':'y'});
+	        });
 			$log.debug('scenario-ctrl', $scope.blocks);
 	    }, toastService.failure);
 

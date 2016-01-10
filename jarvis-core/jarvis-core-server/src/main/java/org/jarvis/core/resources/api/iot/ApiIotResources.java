@@ -27,10 +27,11 @@ import java.util.Map.Entry;
 
 import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.IotBean;
+import org.jarvis.core.model.bean.plugin.ScriptPluginBean;
 import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.model.rest.IotRest;
 import org.jarvis.core.model.rest.plugin.ScriptPluginRest;
-import org.jarvis.core.resources.api.ApiResources;
+import org.jarvis.core.resources.api.ApiLinkedTwiceResources;
 import org.jarvis.core.resources.api.href.ApiHrefIotResources;
 import org.jarvis.core.resources.api.href.ApiHrefIotScriptPluginResources;
 import org.jarvis.core.resources.api.plugins.ApiScriptPluginResources;
@@ -47,7 +48,7 @@ import spark.Route;
  * IOT resource
  */
 @Component
-public class ApiIotResources extends ApiResources<IotRest,IotBean> {
+public class ApiIotResources extends ApiLinkedTwiceResources<IotRest,IotBean,IotRest,IotBean,ScriptPluginRest,ScriptPluginBean> {
 
 	@Autowired
 	ApiHrefIotScriptPluginResources apiHrefIotScriptPluginResources;
@@ -64,6 +65,29 @@ public class ApiIotResources extends ApiResources<IotRest,IotBean> {
 	public ApiIotResources() {
 		setRestClass(IotRest.class);
 		setBeanClass(IotBean.class);
+	}
+
+	@Override
+	public void mount() {
+		/**
+		 * scripts
+		 */
+		declare(IOT_RESOURCE);
+		/**
+		 * scripts -> commands
+		 */
+		declare(IOT_RESOURCE, IOT_RESOURCE, this, apiHrefIotResources, IOT, SORTKEY);
+		declareSecond(IOT_RESOURCE, SCRIPT_RESOURCE, apiScriptPluginResources, apiHrefIotScriptPluginResources, PLUGIN, SORTKEY);
+		/**
+		 * iot html generator
+		 */
+		get("/api/directives/html/iots/:id", new Route() {
+		    @Override
+			public Object handle(Request request, Response response) throws Exception {
+		    	IotRest iot = doGetById(request.params(ID));
+		    	return iot.template;
+		    }
+		});
 	}
 
 	@Override
@@ -97,202 +121,5 @@ public class ApiIotResources extends ApiResources<IotRest,IotBean> {
 			result = apiScriptPluginResources.execute(script, result);
 		}
 		return result;
-	}
-
-	@Override
-	public void mount() {
-		/**
-		 * mount resources
-		 */
-		get("/api/iots", new Route() {
-		    @Override
-			public Object handle(Request request, Response response) throws Exception {
-		    	return doFindAll(request, response);
-		    }
-		});
-		get("/api/iots/:id", new Route() {
-		    @Override
-			public Object handle(Request request, Response response) throws Exception {
-		    	return doGetById(request, ID, response);
-		    }
-		});
-		post("/api/iots", new Route() {
-		    @Override
-			public Object handle(Request request, Response response) throws Exception {
-		    	return doCreate(request, response, IotRest.class);
-		    }
-		});
-		post("/api/iots/:id", new Route() {
-		    @Override
-			public Object handle(Request request, Response response) throws Exception {
-		    	return doTask(request, ":id", "task", response, IotRest.class);
-		    }
-		});
-		put("/api/iots/:id", new Route() {
-		    @Override
-			public Object handle(Request request, Response response) throws Exception {
-		    	return doUpdate(request, ID, response, IotRest.class);
-		    }
-		});
-		delete("/api/iots/:id", new Route() {
-		    @Override
-			public Object handle(Request request, Response response) throws Exception {
-		    	return doDelete(request, ID, response, IotRest.class);
-		    }
-		});
-		/**
-		 * iots
-		 */
-		get("/api/iots/:id/iots", new Route() {
-		    @Override
-			public Object handle(Request request, Response response) throws Exception {
-		    	try {
-		    		IotRest iot = doGetById(request.params(ID));
-			    	return mapper.writeValueAsString(apiHrefIotResources.findAll(iot));
-		    	} catch(TechnicalNotFoundException e) {
-		    		response.status(404);
-		    		return "";
-		    	}
-		    }
-		});
-		put("/api/iots/:id/iots/:iot", new Route() {
-		    @Override
-			public Object handle(Request request, Response response) throws Exception {
-		    	try {
-		    		IotRest iot = doGetById(request.params(ID));
-			    	try {
-				    	IotRest child = doGetById(request.params(IOT));
-				    	GenericEntity instance = apiHrefIotResources.add(iot, child, new GenericMap(), "iots");
-				    	return mapper.writeValueAsString(instance);
-			    	} catch(TechnicalNotFoundException e) {
-			    		response.status(404);
-			    		return "";
-			    	}
-		    	} catch(TechnicalNotFoundException e) {
-		    		response.status(404);
-		    		return "";
-		    	}
-		    }
-		});
-		delete("/api/iots/:id/iots/:iot", new Route() {
-		    @Override
-			public Object handle(Request request, Response response) throws Exception {
-		    	try {
-		    		IotRest iot = doGetById(request.params(ID));
-			    	try {
-			    		IotRest param = doGetById(request.params(IOT));
-			    		apiHrefIotResources.remove(iot, param, request.queryParams(INSTANCE));
-			    	} catch(TechnicalNotFoundException e) {
-			    		response.status(404);
-			    		return "";
-			    	}
-		    	} catch(TechnicalNotFoundException e) {
-		    		response.status(404);
-		    		return "";
-		    	}
-		    	return doGetById(request, ID, response);
-		    }
-		});
-		/**
-		 * plugins
-		 */
-		get("/api/iots/:id/plugins", new Route() {
-		    @Override
-			public Object handle(Request request, Response response) throws Exception {
-		    	try {
-		    		IotRest master = doGetById(request.params(ID));
-		    		List<ScriptPluginRest> result = new ArrayList<ScriptPluginRest>();
-		    		for(GenericEntity link : sort(apiHrefIotScriptPluginResources.findAll(master), "order")) {
-		    			result.add(scriptRest(link));
-		    		}
-			    	return mapper.writeValueAsString(result);
-		    	} catch(TechnicalNotFoundException e) {
-		    		response.status(404);
-		    		return "";
-		    	}
-		    }
-		});
-		post("/api/iots/:id/plugins/:plugin", new Route() {
-		    @Override
-			public Object handle(Request request, Response response) throws Exception {
-		    	try {
-		    		IotRest iot = doGetById(request.params(ID));
-			    	try {
-			    		ScriptPluginRest plugin = apiScriptPluginResources.doGetById(request.params(PLUGIN));
-				    	GenericEntity instance = apiHrefIotScriptPluginResources.add(iot, plugin, new GenericMap(request.body()), "plugins");
-				    	return mapper.writeValueAsString(scriptRest(instance));
-			    	} catch(TechnicalNotFoundException e) {
-			    		response.status(404);
-			    		return "";
-			    	}
-		    	} catch(TechnicalNotFoundException e) {
-		    		response.status(404);
-		    		return "";
-		    	}
-		    }
-		});
-		put("/api/iots/:id/plugins/:plugin/:instance", new Route() {
-		    @Override
-			public Object handle(Request request, Response response) throws Exception {
-		    	try {
-		    		doGetById(request.params(ID));
-			    	try {
-				    	apiScriptPluginResources.doGetById(request.params(PLUGIN));
-				    	GenericMap properties = apiHrefIotScriptPluginResources.update(request.params(INSTANCE), new GenericMap(request.body()));
-				    	return mapper.writeValueAsString(properties);
-			    	} catch(TechnicalNotFoundException e) {
-			    		response.status(404);
-			    		return "";
-			    	}
-		    	} catch(TechnicalNotFoundException e) {
-		    		response.status(404);
-		    		return "";
-		    	}
-		    }
-		});
-		delete("/api/iots/:id/plugins/:plugin", new Route() {
-		    @Override
-			public Object handle(Request request, Response response) throws Exception {
-		    	try {
-		    		IotRest iot = doGetById(request.params(ID));
-			    	try {
-			    		ScriptPluginRest plugin = apiScriptPluginResources.doGetById(request.params(":plugin"));
-			    		apiHrefIotScriptPluginResources.remove(iot, plugin, request.queryParams(INSTANCE));
-			    	} catch(TechnicalNotFoundException e) {
-			    		response.status(404);
-			    		return "";
-			    	}
-		    	} catch(TechnicalNotFoundException e) {
-		    		response.status(404);
-		    		return "";
-		    	}
-		    	return doGetById(request, ID, response);
-		    }
-		});
-		/**
-		 * iot html generator
-		 */
-		get("/api/directives/html/iots/:id", new Route() {
-		    @Override
-			public Object handle(Request request, Response response) throws Exception {
-		    	IotRest iot = doGetById(request.params(ID));
-		    	return iot.template;
-		    }
-		});
-	}
-
-	/**
-	 * build script with relationship
-	 * @param link
-	 * @return ScriptPluginRest
-	 * @throws TechnicalNotFoundException 
-	 */
-	private ScriptPluginRest scriptRest(GenericEntity link) throws TechnicalNotFoundException {
-		ScriptPluginRest scriptRest = apiScriptPluginResources.doGetById(link.id);
-		scriptRest.instance = link.instance;
-		for(Entry<String, Object> property : link.get()) {
-			scriptRest.put(property.getKey(), property.getValue());
-		}
-		return scriptRest;
 	}
 }

@@ -208,6 +208,15 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     }
   }
 })
+.directive('jarvisBlockB', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/partials/widget/scenarios/jarvis-block-b.html',
+    link: function(scope, element, attrs) {
+    	$log.info('jarvis-block-b');
+    }
+  }
+})
 .directive('jarvisHome', function ($log, $stateParams) {
   return {
     restrict: 'E',

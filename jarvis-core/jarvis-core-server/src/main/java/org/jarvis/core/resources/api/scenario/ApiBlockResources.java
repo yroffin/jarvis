@@ -17,15 +17,29 @@
 package org.jarvis.core.resources.api.scenario;
 
 
+import static spark.Spark.delete;
 import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.put;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.jarvis.core.exception.TechnicalNotFoundException;
+import org.jarvis.core.model.bean.plugin.ScriptPluginBean;
 import org.jarvis.core.model.bean.scenario.BlockBean;
+import org.jarvis.core.model.rest.GenericEntity;
+import org.jarvis.core.model.rest.IotRest;
+import org.jarvis.core.model.rest.plugin.ScriptPluginRest;
 import org.jarvis.core.model.rest.scenario.BlockRest;
+import org.jarvis.core.resources.api.ApiLinkedResources;
 import org.jarvis.core.resources.api.ApiResources;
+import org.jarvis.core.resources.api.href.ApiHrefBlockBlockResources;
+import org.jarvis.core.resources.api.href.ApiHrefBlockScriptPluginResources;
+import org.jarvis.core.resources.api.plugins.ApiScriptPluginResources;
 import org.jarvis.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import spark.Request;
@@ -37,7 +51,16 @@ import spark.Route;
  *
  */
 @Component
-public class ApiBlockResources extends ApiResources<BlockRest,BlockBean> {
+public class ApiBlockResources extends ApiLinkedResources<BlockRest,BlockBean,ScriptPluginRest,ScriptPluginBean> {
+
+	@Autowired
+	ApiHrefBlockScriptPluginResources apiHrefBlockScriptPluginResources;
+	
+	@Autowired
+	ApiHrefBlockBlockResources ApiHrefBlockBlockResources;
+
+	@Autowired
+	ApiScriptPluginResources apiScriptPluginResources;
 
 	/**
 	 * constructor
@@ -79,6 +102,13 @@ public class ApiBlockResources extends ApiResources<BlockRest,BlockBean> {
 		    	return doUpdate(request, ID, response, BlockRest.class);
 		    }
 		});
+		/**
+		 * plugins
+		 */
+		get("/api/blocks/:id/plugins", getLinks(apiScriptPluginResources, apiHrefBlockScriptPluginResources, "order"));
+		post("/api/blocks/:id/plugins/:plugin", postLink(apiScriptPluginResources, apiHrefBlockScriptPluginResources, PLUGIN, "plugins"));
+		put("/api/blocks/:id/plugins/:plugin/:instance", putLink(apiScriptPluginResources, apiHrefBlockScriptPluginResources, PLUGIN));
+		delete("/api/blocks/:id/plugins/:plugin", deleteLink(apiScriptPluginResources, apiHrefBlockScriptPluginResources, PLUGIN));
 	}
 
 	@Override

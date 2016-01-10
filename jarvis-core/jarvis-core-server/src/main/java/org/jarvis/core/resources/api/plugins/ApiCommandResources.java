@@ -16,14 +16,8 @@
 
 package org.jarvis.core.resources.api.plugins;
 
-import static spark.Spark.get;
-import static spark.Spark.post;
-import static spark.Spark.put;
-
 import java.io.IOException;
 import java.lang.reflect.Field;
-
-import static spark.Spark.delete;
 
 import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.model.bean.plugin.CommandBean;
@@ -37,10 +31,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-
-import spark.Request;
-import spark.Response;
-import spark.Route;
 
 /**
  * Commande resources
@@ -128,43 +118,8 @@ public class ApiCommandResources extends ApiResources<CommandRest,CommandBean> {
 	@Override
 	public void mount() {
 		/**
-		 * mount resources
+		 * commands
 		 */
-		get("/api/commands", new Route() {
-		    @Override
-			public Object handle(Request request, Response response) throws Exception {
-		    	return doFindAll(request, response);
-		    }
-		});
-		get("/api/commands/:id", new Route() {
-		    @Override
-			public Object handle(Request request, Response response) throws Exception {
-		    	return doGetById(request, ":id", response);
-		    }
-		});
-		post("/api/commands", new Route() {
-		    @Override
-			public Object handle(Request request, Response response) throws Exception {
-		    	return doCreate(request, response, CommandRest.class);
-		    }
-		});
-		post("/api/commands/:id", new Route() {
-		    @Override
-			public Object handle(Request request, Response response) throws Exception {
-		    	return doTask(request, ":id", "task", response, CommandRest.class);
-		    }
-		});
-		put("/api/commands/:id", new Route() {
-		    @Override
-			public Object handle(Request request, Response response) throws Exception {
-		    	return doUpdate(request, ":id", response, CommandRest.class);
-		    }
-		});
-		delete("/api/commands/:id", new Route() {
-		    @Override
-			public Object handle(Request request, Response response) throws Exception {
-		    	return doDelete(request, ":id", response, CommandRest.class);
-		    }
-		});
+		declare(COMMAND_RESOURCE);
 	}
 }

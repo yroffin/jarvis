@@ -107,7 +107,7 @@ angular.module('JarvisApp.services.iot', ['JarvisApp.services.plugin']).factory(
   }
   var plugins = {
 			findAll: function(owner, callback, failure) {
-				Restangular.one(api, owner).all('plugins').getList().then(function(elements) {
+				Restangular.one(api, owner).all('plugins').all('scripts').getList().then(function(elements) {
 					var plugins = [];
 	            	_.forEach(elements, function(element) {
             			plugins.push(element);
@@ -121,7 +121,7 @@ angular.module('JarvisApp.services.iot', ['JarvisApp.services.plugin']).factory(
 			 * put link
 			 */
 	        post: function(owner, child, properties, callback, failure) {
-	        	Restangular.one(api, owner).one('plugins',child).customPOST(properties).then(function(href) {
+	        	Restangular.one(api, owner).all('plugins').one('scripts',child).customPOST(properties).then(function(href) {
 	        		callback(filterService.plain(href));
 	        	},function(errors){
 	        		failure(errors);
@@ -137,7 +137,7 @@ angular.module('JarvisApp.services.iot', ['JarvisApp.services.plugin']).factory(
 	        	} else {
 	        		p = properties;
 	        	}
-	        	Restangular.one(api, owner).one('plugins',child).one(instance).customPUT(p).then(function(href) {
+	        	Restangular.one(api, owner).all('plugins').one('scripts',child).one(instance).customPUT(p).then(function(href) {
 	        		callback(filterService.plain(href));
 	        	},function(errors){
 	        		failure(errors);
@@ -147,7 +147,7 @@ angular.module('JarvisApp.services.iot', ['JarvisApp.services.plugin']).factory(
 			 * delete link
 			 */
 			delete: function(owner, child, instance, callback, failure) {
-				Restangular.one(api, owner).one('plugins', child).remove({'instance':instance}).then(function(href) {
+				Restangular.one(api, owner).all('plugins').one('scripts', child).remove({'instance':instance}).then(function(href) {
 					callback(href);
 				},function(errors){
 					failure(errors);

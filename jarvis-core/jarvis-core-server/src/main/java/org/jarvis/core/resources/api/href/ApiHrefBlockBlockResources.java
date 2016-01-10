@@ -14,13 +14,24 @@
  *   limitations under the License.
  */
 
-package org.jarvis.core.model.rest;
+package org.jarvis.core.resources.api.href;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import javax.annotation.PostConstruct;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class CrontabRest extends GenericEntity {
-	@JsonProperty("name")
-	public String name;
+import org.jarvis.core.model.bean.scenario.BlockBean;
+import org.jarvis.core.model.rest.scenario.BlockRest;
+import org.jarvis.core.resources.api.mapper.ApiHrefMapper;
+import org.springframework.stereotype.Component;
+
+/**
+ * HREF handler
+ */
+@Component
+public class ApiHrefBlockBlockResources extends ApiHrefMapper<BlockRest,BlockRest> {
+
+	@PostConstruct
+	protected
+	void init() {
+		super.init(BlockBean.class.getSimpleName(),BlockBean.class.getSimpleName(),"plugins");
+	}
 }

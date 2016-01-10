@@ -16,14 +16,21 @@
 
 package org.jarvis.core.resources.api;
 
+import static spark.Spark.delete;
+import static spark.Spark.get;
+import static spark.Spark.post;
+import static spark.Spark.put;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map.Entry;
 
 import javax.annotation.PostConstruct;
 
 import org.jarvis.core.exception.TechnicalNotFoundException;
+import org.jarvis.core.model.bean.GenericBean;
 import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.resources.api.mapper.ApiMapper;
 import org.jarvis.core.services.ApiService;
@@ -37,14 +44,15 @@ import org.springframework.core.env.Environment;
 
 import spark.Request;
 import spark.Response;
+import spark.Route;
 
 /**
  * RESOURCE api
  *
- * @param <Rest>
- * @param <Bean>
+ * @param <T>
+ * @param <S>
  */
-public abstract class ApiResources<Rest,Bean> extends ApiMapper {
+public abstract class ApiResources<T extends GenericEntity,S extends GenericBean> extends ApiMapper {
 	protected Logger logger = LoggerFactory.getLogger(ApiResources.class);
 
 	@Autowired
@@ -56,17 +64,17 @@ public abstract class ApiResources<Rest,Bean> extends ApiMapper {
 	/**
 	 * internal api service
 	 */
-	ApiService<Bean> apiService = new ApiService<Bean>();
+	ApiService<S> apiService = new ApiService<S>();
 
 	/**
 	 * bean class
 	 */
-	private Class<Bean> beanClass;
+	private Class<S> beanClass;
 
 	/**
 	 * rest class
 	 */
-	private Class<Rest> restClass;
+	private Class<T> restClass;
 
 	/**
 	 * spring init
@@ -83,7 +91,7 @@ public abstract class ApiResources<Rest,Bean> extends ApiMapper {
 	 * set bean class
 	 * @param klass
 	 */
-	protected void setBeanClass(Class<Bean> klass) {
+	protected void setBeanClass(Class<S> klass) {
 		beanClass = klass;
 	}
 
@@ -91,7 +99,7 @@ public abstract class ApiResources<Rest,Bean> extends ApiMapper {
 	 * set rest class
 	 * @param klass
 	 */
-	protected void setRestClass(Class<Rest> klass) {
+	protected void setRestClass(Class<T> klass) {
 		restClass = klass;		
 	}
 
@@ -100,13 +108,76 @@ public abstract class ApiResources<Rest,Bean> extends ApiMapper {
 	 */
 	public abstract void mount();
 	
+	protected void declare(String resource) {
+		get("/api/"+resource+"", getResources());
+		get("/api/"+resource+"/:id", getResource());
+		post("/api/"+resource+"", postResource());
+		post("/api/"+resource+"/:id", taskResource());
+		put("/api/"+resource+"/:id", putResource());
+		delete("/api/"+resource+"/:id", deleteResource());
+	}
+
+	protected Route getResources() {
+		return new Route() {
+		    @Override
+			public Object handle(Request request, Response response) throws Exception {
+		    	return doFindAll(request, response);
+		    }
+		};
+	}
+		
+	protected Route getResource() {
+		return new Route() {
+		    @Override
+			public Object handle(Request request, Response response) throws Exception {
+		    	return doGetById(request, ID, response);
+		    }
+		};
+	}
+
+	protected Route postResource() {
+		return new Route() {
+		    @Override
+			public Object handle(Request request, Response response) throws Exception {
+		    	return doCreate(request, response, restClass);
+		    }
+		};
+	}
+
+	protected Route taskResource() {
+		return new Route() {
+		    @Override
+			public Object handle(Request request, Response response) throws Exception {
+		    	return doTask(request, ID, TASK, response, restClass);
+		    }
+		};
+	}
+
+	protected Route putResource() {
+		return new Route() {
+		    @Override
+			public Object handle(Request request, Response response) throws Exception {
+		    	return doUpdate(request, ID, response, restClass);
+		    }
+		};
+	}
+
+	protected Route deleteResource() {
+		return new Route() {
+		    @Override
+			public Object handle(Request request, Response response) throws Exception {
+		    	return doDelete(request, ID, response, restClass);
+		    }
+		};
+	}
+
 	/**
 	 * find all elements
 	 * @return List<Rest>
 	 */
-	public List<Rest> doFindAll() {
-		List<Rest> result = new ArrayList<Rest>();
-		for(Bean item : apiService.findAll()) {
+	public List<T> doFindAll() {
+		List<T> result = new ArrayList<T>();
+		for(S item : apiService.findAll()) {
 			result.add(mapperFactory.getMapperFacade().map(item, restClass));
 		}
 		return result;
@@ -118,7 +189,7 @@ public abstract class ApiResources<Rest,Bean> extends ApiMapper {
 	 * @return Rest
 	 * @throws TechnicalNotFoundException 
 	 */
-	public Rest doGetById(String id) throws TechnicalNotFoundException {
+	public T doGetById(String id) throws TechnicalNotFoundException {
 		return mapperFactory.getMapperFacade().map(apiService.getById(id), restClass);
 	}
 	
@@ -127,7 +198,7 @@ public abstract class ApiResources<Rest,Bean> extends ApiMapper {
 	 * @param r 
 	 * @return Rest
 	 */
-	public Rest doCreate(Rest r) {
+	public T doCreate(T r) {
 		return mapperFactory.getMapperFacade().map(
 				apiService.create(mapperFactory.getMapperFacade().map(r, beanClass)),
 				restClass);
@@ -139,7 +210,7 @@ public abstract class ApiResources<Rest,Bean> extends ApiMapper {
 	 * @return Rest
 	 * @throws TechnicalNotFoundException
 	 */
-	public Rest doDelete(String id) throws TechnicalNotFoundException {
+	public T doDelete(String id) throws TechnicalNotFoundException {
 		return mapperFactory.getMapperFacade().map(
 				apiService.remove(id),
 				restClass);
@@ -152,7 +223,7 @@ public abstract class ApiResources<Rest,Bean> extends ApiMapper {
 	 * @return Rest
 	 * @throws TechnicalNotFoundException 
 	 */
-	public Rest doUpdate(String id, Rest r) throws TechnicalNotFoundException {
+	public T doUpdate(String id, T r) throws TechnicalNotFoundException {
 		return mapperFactory.getMapperFacade().map(
 				apiService.update(id, mapperFactory.getMapperFacade().map(r, beanClass)), 
 				restClass);
@@ -194,12 +265,12 @@ public abstract class ApiResources<Rest,Bean> extends ApiMapper {
 	 * @return String
 	 * @throws Exception
 	 */
-	public String doCreate(Request request, Response response, Class<Rest> klass) throws Exception {
+	public String doCreate(Request request, Response response, Class<T> klass) throws Exception {
     	if(request.contentType() == null || !request.contentType().equals("application/json")) {
     		response.status(403);
     		return "";
     	}
-		Rest k = mapper.readValue(request.body(), klass);
+		T k = mapper.readValue(request.body(), klass);
     	return mapper.writeValueAsString(doCreate(k));
     }
 
@@ -213,7 +284,7 @@ public abstract class ApiResources<Rest,Bean> extends ApiMapper {
 	 * @return String
 	 * @throws Exception
 	 */
-	public abstract String doRealTask(Bean bean, GenericMap args, TaskType taskType) throws Exception;
+	public abstract String doRealTask(S bean, GenericMap args, TaskType taskType) throws Exception;
 
 	/**
 	 * create entity
@@ -225,7 +296,7 @@ public abstract class ApiResources<Rest,Bean> extends ApiMapper {
 	 * @return String
 	 * @throws Exception
 	 */
-	public String doTask(Request request, String id, String task, Response response, Class<Rest> klass) throws Exception {
+	public String doTask(Request request, String id, String task, Response response, Class<T> klass) throws Exception {
     	if(request.contentType() == null || !request.contentType().equals("application/json")) {
     		response.status(403);
     		return "";
@@ -234,7 +305,7 @@ public abstract class ApiResources<Rest,Bean> extends ApiMapper {
     		/**
     		 * read object by id
     		 */
-    		Bean bean = apiService.getById(request.params(id));
+    		S bean = apiService.getById(request.params(id));
     		logger.info("SCRIPT - CONTEXT {}", mapper.writerWithDefaultPrettyPrinter().writeValueAsString(bean));
     		/**
     		 * decode body
@@ -257,7 +328,7 @@ public abstract class ApiResources<Rest,Bean> extends ApiMapper {
 	 * @return String
 	 * @throws Exception
 	 */
-	public String doDelete(Request request, String id, Response response, Class<Rest> klass) throws Exception {
+	public String doDelete(Request request, String id, Response response, Class<T> klass) throws Exception {
     	if(request.contentType() == null || !request.contentType().equals("application/json")) {
     		response.status(403);
     		return "";
@@ -279,13 +350,13 @@ public abstract class ApiResources<Rest,Bean> extends ApiMapper {
 	 * @return String
 	 * @throws Exception
 	 */
-	public String doUpdate(Request request, String id, Response response, Class<Rest> klass) throws Exception {
+	public String doUpdate(Request request, String id, Response response, Class<T> klass) throws Exception {
     	if(request.contentType() == null || !request.contentType().equals("application/json")) {
     		response.status(403);
     		return "";
     	}
     	try {
-			Rest k = mapper.readValue(request.body(), klass);
+			T k = mapper.readValue(request.body(), klass);
 	    	return mapper.writeValueAsString(doUpdate(request.params(id), k));
     	} catch(TechnicalNotFoundException e) {
     		response.status(404);
@@ -316,5 +387,18 @@ public abstract class ApiResources<Rest,Bean> extends ApiMapper {
 			
 		});
 		return list;
+	}
+	/**
+	 * build script with relationship
+	 * @param link
+	 * @return ScriptPluginRest
+	 * @throws TechnicalNotFoundException 
+	 */
+	protected GenericEntity fromLink(GenericEntity link, GenericEntity rest) throws TechnicalNotFoundException {
+		rest.instance = link.instance;
+		for(Entry<String, Object> property : link.get()) {
+			rest.put(property.getKey(), property.getValue());
+		}
+		return rest;
 	}
 }

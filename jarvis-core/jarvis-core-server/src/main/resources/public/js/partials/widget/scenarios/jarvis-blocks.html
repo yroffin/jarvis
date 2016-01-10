@@ -7,8 +7,7 @@
 	<ul>
 		<div ng-repeat="block in blocks">
 			<div layout="column">
-				<md-button aria-label="menu" class="md-icon-button" ng-click="drop(block)"><md-icon md-font-icon="material-icons md-16">cancel</md-icon></md-button>
-				<jarvis-block></jarvis-block>
+				<jarvis-block ng-model="block"></jarvis-block>
 			</div>
 		</div>
 	</ul>

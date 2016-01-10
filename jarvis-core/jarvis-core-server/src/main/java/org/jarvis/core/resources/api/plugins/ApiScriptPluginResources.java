@@ -16,37 +16,24 @@
 
 package org.jarvis.core.resources.api.plugins;
 
-import static spark.Spark.delete;
-import static spark.Spark.get;
-import static spark.Spark.post;
-import static spark.Spark.put;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map.Entry;
-
 import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.plugin.CommandBean;
 import org.jarvis.core.model.bean.plugin.ScriptPluginBean;
 import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.model.rest.plugin.CommandRest;
 import org.jarvis.core.model.rest.plugin.ScriptPluginRest;
-import org.jarvis.core.resources.api.ApiResources;
+import org.jarvis.core.resources.api.ApiLinkedResources;
 import org.jarvis.core.resources.api.href.ApiHrefPluginCommandResources;
 import org.jarvis.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import spark.Request;
-import spark.Response;
-import spark.Route;
-
 /**
  * script plugin resource
  */
 @Component
-public class ApiScriptPluginResources extends ApiResources<ScriptPluginRest,ScriptPluginBean> {
+public class ApiScriptPluginResources extends ApiLinkedResources<ScriptPluginRest,ScriptPluginBean,CommandRest,CommandBean> {
 
 	@Autowired
 	ApiCommandResources apiCommandResources;
@@ -65,144 +52,13 @@ public class ApiScriptPluginResources extends ApiResources<ScriptPluginRest,Scri
 	@Override
 	public void mount() {
 		/**
-		 * mount resources
+		 * scripts
 		 */
-		get("/api/plugins/scripts", new Route() {
-		    @Override
-			public Object handle(Request request, Response response) throws Exception {
-		    	return doFindAll(request, response);
-		    }
-		});
-		get("/api/plugins/scripts/:id", new Route() {
-		    @Override
-			public Object handle(Request request, Response response) throws Exception {
-		    	return doGetById(request, ":id", response);
-		    }
-		});
-		post("/api/plugins/scripts", new Route() {
-		    @Override
-			public Object handle(Request request, Response response) throws Exception {
-		    	return doCreate(request, response, ScriptPluginRest.class);
-		    }
-		});
-		post("/api/plugins/:id", new Route() {
-		    @Override
-			public Object handle(Request request, Response response) throws Exception {
-		    	return doTask(request, ":id", "task", response, ScriptPluginRest.class);
-		    }
-		});
-		put("/api/plugins/scripts/:id", new Route() {
-		    @Override
-			public Object handle(Request request, Response response) throws Exception {
-		    	return doUpdate(request, ":id", response, ScriptPluginRest.class);
-		    }
-		});
-		delete("/api/plugins/scripts/:id", new Route() {
-		    @Override
-			public Object handle(Request request, Response response) throws Exception {
-		    	return doDelete(request, ID, response, ScriptPluginRest.class);
-		    }
-		});
+		declare(SCRIPT_RESOURCE);
 		/**
-		 * commands
+		 * scripts -> commands
 		 */
-		get("/api/plugins/scripts/:id/commands", new Route() {
-		    @Override
-			public Object handle(Request request, Response response) throws Exception {
-		    	try {
-		    		ScriptPluginRest master = doGetById(request.params(ID));
-		    		List<CommandRest> result = new ArrayList<CommandRest>();
-		    		for(GenericEntity link : sort(apiHrefPluginCommandResources.findAll(master), "order")) {
-		    			result.add(commandRest(link));
-		    		}
-			    	return mapper.writeValueAsString(result);
-		    	} catch(TechnicalNotFoundException e) {
-		    		response.status(404);
-		    		return "";
-		    	}
-		    }
-		});
-		/**
-		 * create new link
-		 */
-		post("/api/plugins/scripts/:id/commands/:command", new Route() {
-		    @Override
-			public Object handle(Request request, Response response) throws Exception {
-		    	try {
-		    		ScriptPluginRest script = doGetById(request.params(ID));
-			    	try {
-			    		CommandRest command = apiCommandResources.doGetById(request.params(COMMAND));
-				    	GenericEntity instance = apiHrefPluginCommandResources.add(script, command, new GenericMap(request.body()), "commands");
-				    	return mapper.writeValueAsString(commandRest(instance));
-			    	} catch(TechnicalNotFoundException e) {
-			    		response.status(404);
-			    		return "";
-			    	}
-		    	} catch(TechnicalNotFoundException e) {
-		    		response.status(404);
-		    		return "";
-		    	}
-		    }
-		});
-		/**
-		 * update link
-		 */
-		put("/api/plugins/scripts/:id/commands/:command/:instance", new Route() {
-		    @Override
-			public Object handle(Request request, Response response) throws Exception {
-		    	try {
-		    		doGetById(request.params(":id"));
-			    	try {
-			    		apiCommandResources.doGetById(request.params(COMMAND));
-			    		GenericMap properties = apiHrefPluginCommandResources.update(request.params(INSTANCE), new GenericMap(request.body()));
-				    	return mapper.writeValueAsString(properties);
-			    	} catch(TechnicalNotFoundException e) {
-			    		response.status(404);
-			    		return "";
-			    	}
-		    	} catch(TechnicalNotFoundException e) {
-		    		response.status(404);
-		    		return "";
-		    	}
-		    }
-		});
-		/**
-		 * delete one link
-		 */
-		delete("/api/plugins/scripts/:id/commands/:command", new Route() {
-		    @Override
-			public Object handle(Request request, Response response) throws Exception {
-		    	try {
-		    		ScriptPluginRest plugin = doGetById(request.params(":id"));
-			    	try {
-			    		CommandRest command = apiCommandResources.doGetById(request.params(":command"));
-			    		apiHrefPluginCommandResources.remove(plugin, command, request.queryParams("instance"));
-			    	} catch(TechnicalNotFoundException e) {
-			    		response.status(404);
-			    		return "";
-			    	}
-		    	} catch(TechnicalNotFoundException e) {
-		    		response.status(404);
-		    		return "";
-		    	}
-		    	return doGetById(request, ":id", response);
-		    }
-		});
-	}
-
-	/**
-	 * build command with relationship
-	 * @param link
-	 * @return CommandRest
-	 * @throws TechnicalNotFoundException 
-	 */
-	public CommandRest commandRest(GenericEntity link) throws TechnicalNotFoundException {
-		CommandRest commandRest = apiCommandResources.doGetById(link.id);
-		commandRest.instance = link.instance;
-		for(Entry<String, Object> property : link.get()) {
-			commandRest.put(property.getKey(), property.getValue());
-		}
-		return commandRest;
+		declare(SCRIPT_RESOURCE, COMMAND_RESOURCE, apiCommandResources, apiHrefPluginCommandResources, COMMAND, SORTKEY);
 	}
 
 	@Override
