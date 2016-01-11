@@ -21,7 +21,7 @@
 /**
  * blockResourceService
  */
-angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter']).factory('genericResourceService', function($log, Restangular, filterService) {
+angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter']).factory('genericResourceService', function($log, Restangular, filterService, toastService) {
   var resources = {
         /**
 		 * find all elements
@@ -309,7 +309,7 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter']).fact
 			}
   };
   /**
-   * crud operation
+   * crud operation on links
    */
   var crudLinks = function(api, path) {
 	return {
@@ -347,8 +347,118 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter']).fact
 		}
 	 }
   }
+  /**
+   * crud operation on links
+   */
+  var scopeCrud = {
+	   	new : function(name, elements, update, service) {
+	        /**
+	         * create this elements
+	         */
+	   		service.post(update, function(data) {
+	                $log.debug(name + ' ' + data.name + '#' + data.id +' created');
+	                elements.push(data);
+	        }, toastService.failure);
+	    },
+	    remove : function(go, name, todelete, service) {
+	    	service.delete(todelete.id, function(element) {
+	        	toastService.info(name + ' ' + todelete.name + '#' + todelete.id + ' removed');
+	        	go();
+	        }, toastService.failure);
+	    },
+	    save : function(name, toput, service) {
+	    	service.put(toput, function(element) {
+	        	toastService.info(name + ' ' + toput.name + '#' + toput.id + ' updated');
+	        }, toastService.failure);
+	    },
+	    duplicate : function(go, name, toduplicate, service) {
+	    	service.post(toduplicate, function(element) {
+	        	toastService.info(name + ' ' + toduplicate.name + '#' + toduplicate.id + ' duplicated');
+	        	go();
+	        }, toastService.failure);
+	    },
+	    addLink : function(id, link, properties, service, links) {
+		  	if(link != undefined && link.id != undefined && link.id != '') {
+		  		service.post(id, link.id, properties, function(found) {
+		        	$log.debug('addLink', found);
+		        	links.push(found);
+		  	    }, toastService.failure);
+		  	}
+	    },
+	    updateLink : function(id, link, service) {
+		  	if(link != undefined && link.id != undefined && link.id != '') {
+		  		service.put(id, link.id, link.instance, link.extended, function(found) {
+		        	$log.debug('updateLink - before', link);
+		        	$log.debug('updateLink - after', found);
+		  	    }, toastService.failure);
+		  	}
+	    },
+	    removeLink : function(id, link, service, links) {
+		  	if(link != undefined && link.id != undefined && link.id != '') {
+		  		service.delete(id, link.id, link.instance, function(found) {
+		  			var toremove = link.instance;
+		  			_.remove(links, function(element) {
+		  				return element.instance == toremove;
+		  			});
+		        	$log.debug('removeLink - before', link);
+		  	    }, toastService.failure);
+		  	}
+	    },
+	    findAllIdName : function(name, list, service) {
+			$log.debug('loading for select ', name, list);
+	    	service.findAll(function(data) {
+		    	_.forEach(data, function(element) {
+		            /**
+		             * add this element
+		             */
+		    		list.push({
+		            	'id':element.id,
+		            	'name':element.name
+		            });
+		        });
+		    }, toastService.failure);
+	    },
+	    findAll : function(name, id, list, service) {
+			$log.debug('loading ', name, list, service);
+			list.splice(0,list.length)
+	    	service.findAll(id, function(data) {
+		    	_.forEach(data, function(element) {
+		            /**
+		             * add this element
+		             */
+		    		list.push(element);
+		        });
+		    }, toastService.failure);
+	    },
+	    get : function(id, callback, service) {
+	    	service.get(id, function(data) {
+	    		callback(data);
+		    	$log.debug('[GET/scope] ' + data.name + '#' + data.id);
+		    }, toastService.failure);
+	    }
+  }
   return {
 	  crud:crud,
-	  links:crudLinks
+	  links:crudLinks,
+	  scope: {
+		  collections: {
+			  new: scopeCrud.new,
+			  findAll: scopeCrud.findAll
+		  },
+		  entity: {
+			  get: scopeCrud.get,
+			  remove: scopeCrud.remove,
+			  save: scopeCrud.save,
+			  duplicate: scopeCrud.duplicate
+		  },
+		  link: {
+			  add: scopeCrud.addLink,
+			  save: scopeCrud.updateLink,
+			  remove: scopeCrud.removeLink
+		  },
+		  combo: {
+			  findAll: scopeCrud.findAllIdName
+		  }
+	  }
   }
 });
