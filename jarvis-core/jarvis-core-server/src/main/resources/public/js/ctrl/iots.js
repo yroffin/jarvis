@@ -40,48 +40,26 @@ angular.module('JarvisApp.ctrl.iots', ['JarvisApp.services'])
      */
 	iotResourceService.iot.findAll(function(data) {
         $scope.iots = data;
+    	$log.debug('iots-ctrl');
     }, toastService.failure);
-
-	$log.info('iots-ctrl');
 })
 .controller('iotCtrl',
-	function($scope, $log, $state, $stateParams, iotResourceService, pluginResourceService, genericResourceService, toastService){
-    /**
-     * Cf. genericResourceService
-     */
-    $scope.remove = function(iot) {
-    	genericResourceService.scope.entity.remove(function() {$scope.go('iots')}, 'iot', iot, iotResourceService.iot);
-    }
-    /**
-     * Cf. genericResourceService
-     */
-    $scope.save = function(iot) {
-    	genericResourceService.scope.entity.save('iot', iot, iotResourceService.iot);
-    }
-    /**
-     * Cf. genericResourceService
-     */
-    $scope.duplicate = function(iot) {
-    	genericResourceService.scope.entity.duplicate(function() {$scope.go('iots')}, 'iot', iot, iotResourceService.iot);
-    }
-    /**
-     * Cf. genericResourceService
-     */
-    $scope.add = function(plugin) {
-    	genericResourceService.scope.link.add($stateParams.id,plugin,{'order':'1'},iotResourceService.plugins,$scope.plugins);
+	function($scope, $log, $state, $stateParams, iotResourceService, pluginResourceService, genericScopeService, genericResourceService, toastService){
+	$scope.getLink = function() {
+		return $scope.plugins;
 	}
-    /**
-     * Cf. genericResourceService
-     */
-    $scope.update = function(plugin) {
-    	genericResourceService.scope.link.save($stateParams.id,plugin,iotResourceService.plugins);
-	}
-    /**
-     * Cf. genericResourceService
-     */
-    $scope.drop = function(plugin) {
-    	genericResourceService.scope.link.remove($stateParams.id,plugin,iotResourceService.plugins, $scope.plugins);
-	}
+	/**
+	 * declare generic scope resource (and inject it in scope)
+	 */
+	genericScopeService.scope.resource(
+			$scope, 
+			'iot', 
+			'iots', 
+			iotResourceService.iot, 
+			iotResourceService.plugins, 
+			{'order':'1'},
+			$stateParams.id
+	);
     /**
 	 * render this iot, assume no args by default
 	 * @param iot, the iot to render

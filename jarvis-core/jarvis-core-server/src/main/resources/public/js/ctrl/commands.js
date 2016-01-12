@@ -20,69 +20,42 @@
 
 angular.module('JarvisApp.ctrl.commands', ['JarvisApp.services'])
 .controller('commandsCtrl', 
-	function($scope, $log, commandResourceService, toastService){
-	
+	function($scope, $log, commandResourceService, genericResourceService, toastService){
     /**
-     * create a new job
-     * @param job
+     * Cf. genericResourceService
      */
     $scope.new = function(commands) {
-        var update = {
-            name: "...",
-            icon: "star_border"
-        };
-        /**
-         * create or update this job
-         */
-        commandResourceService.command.post(update, function(data) {
-                toastService.info('command ' + data.name + '#' + data.id +' created');
-                $scope.commands.push(data);
-            }, toastService.failure);
+    	genericResourceService.scope.collections.new(
+        		'commands',
+        		$scope.commands,
+        		{
+        			name: "...",
+        			icon: "star_border"
+        		},
+        		commandResourceService.command
+        );
     }
-
+    /**
+     * loading
+     */
     $scope.load = function() {
-	    /**
-	     * loading commands
-	     */
 		commandResourceService.command.findAll(function(data) {
-	        var arr = [];
-	    	_.forEach(data, function(element) {
-	            /**
-	             * convert internal json params
-	             */
-	            arr.push(element);
-	        });
-	    	toastService.info(arr.length + ' command(s)');
-	        $scope.commands = arr;
-	    }, toastService.failure);
-	
-		$log.info('commands-ctrl');
+	        $scope.commands = data;
+	    }, toastService.failure);	
+		$log.debug('commands-ctrl');
     }
 })
 .controller('commandCtrl',
-	function($scope, $log, $stateParams, commandResourceService, iotResourceService, toastService){
-	
-    $scope.remove = function(command) {
-    	$log.debug('delete', command);
-    	commandResourceService.command.delete(command.id, function(element) {
-        	toastService.info('command ' + command.name + '#' + command.id + ' removed');
-        	$scope.go('commands');
-        }, toastService.failure);
-    }
-
-    $scope.save = function(command, callback, params) {
-    	$log.debug('commandCtrl::save', command);
-    	commandResourceService.command.put(command, function(element) {
-        	toastService.info('command ' + command.name + '#' + command.id + ' updated');
-        	if(callback) {
-        		if(params) {
-        			callback(params);
-        		} else {
-        			callback(element);
-        		}
-        	}
-        }, toastService.failure);
-    }
+	function($scope, $log, $stateParams, genericResourceService, genericScopeService, commandResourceService, toastService){
+	/**
+	 * declare generic scope resource (and inject it in scope)
+	 */
+	genericScopeService.scope.resource(
+			$scope, 
+			'command', 
+			'commands', 
+			commandResourceService.command
+	);
     /**
      * execute this command
      * @param command, the command to execute
@@ -95,21 +68,17 @@ angular.module('JarvisApp.ctrl.commands', ['JarvisApp.services'])
    	    	$scope.output = angular.toJson(data, true);
 	    }, toastService.failure);
     }
-
+    /**
+     * transform command
+     */
     $scope.pretty = function() {
     	$log.debug('pretty', $scope.rawinput);
     	$scope.jsoninput = angular.toJson($scope.rawinput, true);
     	$scope.input = angular.fromJson($scope.jsoninput, true);
     }
-
-    $scope.duplicate = function(command) {
-    	$log.debug('duplicate', command);
-    	commandResourceService.command.post(command, function(element) {
-        	toastService.info('command ' + command.name + '#' + command.id + ' duplicated');
-        	$scope.go('commands');
-        }, toastService.failure);
-    }
-      
+    /**
+     * loading
+     */
     $scope.load = function() {
 	    /**
 	     * init part
@@ -144,21 +113,16 @@ angular.module('JarvisApp.ctrl.commands', ['JarvisApp.services'])
 		              	   }
 		      ]
 		}
-		
 		/**
 		 * input test
 		 */
 		$scope.rawinput='{"default":"todo"}';
 		$scope.jsoninput = angular.toJson($scope.rawinput, true);
 		$scope.input = angular.fromJson($scope.jsoninput);
-		
 		/**
 		 * get current command
 		 */
-		commandResourceService.command.get($stateParams.id, function(data) {
-	    	$scope.command = data;
-	    	toastService.info('command ' + data.name + '#' + $stateParams.id);
-	    }, toastService.failure);
+    	genericResourceService.scope.entity.get($stateParams.id, function(update) {$scope.command=update}, commandResourceService.command);
 	
 		$log.info('command-ctrl');
     }

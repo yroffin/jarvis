@@ -34,6 +34,7 @@ angular.module('JarvisApp', [
      'JarvisApp.services',
      'JarvisApp.services.filter',
      'JarvisApp.services.generic',
+     'JarvisApp.services.scope',
      'JarvisApp.services.plugin',
      'JarvisApp.services.command',
      'JarvisApp.services.scenario',

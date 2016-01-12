@@ -20,130 +20,52 @@
 
 angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
 .controller('scenariosCtrl', 
-	function($scope, $log, scenarioResourceService, toastService){
+	function($scope, $log, genericResourceService, scenarioResourceService, toastService){
     /**
      * create a new scenario
      * @param scenarios, scenarios list in $scope
      */
     $scope.new = function(scenarios) {
-        var update = {
-            name: "Todo",
-            icon: "list"
-        };
-        /**
-         * create or update this scenario
-         */
-        $log.debug('scenariosCtrl::new', update);
-        scenarioResourceService.scenario.post(update, function(data) {
-                $log.debug('scenario ' + data.name + '#' + data.id +' created');
-                $scope.scenarios.push(data);
-            }, toastService.failure);
+    	genericResourceService.scope.collections.new(
+        		'scenarios',
+        		$scope.scenarios,
+        		{
+        			name: "scenario name",
+        			icon: "list"
+        		},
+        		scenarioResourceService.scenario
+        );
     }
     /**
-     * load this controller
+     * loading
      */
     $scope.load = function() {
     	$scope.scenarios = [];
-    	
-	    /**
-	     * loading scenarios
-	     */
 		scenarioResourceService.scenario.findAll(function(data) {
-	        var arr = [];
-	    	_.forEach(data, function(element) {
-	            /**
-	             * convert internal json params
-	             */
-	            arr.push(element);
-	        });
-	    	$log.debug(arr.length + ' scenario(s)');
-	        $scope.scenarios = arr;
+	    	$scope.scenarios = data;
+			$log.debug('scenarios-ctrl', data);
 	    }, toastService.failure);
-	
-		$log.debug('scenarios-ctrl');
     }
 })
 .controller('scenarioCtrl',
-	function($scope, $log, $stateParams, scenarioResourceService, blockResourceService, pluginResourceService, toastService){
+	function($scope, $log, $stateParams, genericScopeService, genericResourceService, scenarioResourceService, blockResourceService, pluginResourceService, toastService){
+	$scope.getLink = function() {
+		return $scope.commands;
+	}
 	/**
-	 * remove this scenario
-	 * @param scenario, the scenario to remove
+	 * declare generic scope resource (and inject it in scope)
 	 */
-    $scope.remove = function(scenario) {
-    	$log.debug('delete', scenario);
-    	scenarioResourceService.scenario.delete(scenario.id, function(element) {
-        	toastService.info('scenario ' + scenario.name + '#' + scenario.id + ' removed');
-        	$scope.go('scenarios');
-        }, toastService.failure);
-    }
-	/**
-	 * save this scenario
-	 * @param scenario, the scenario to save
-	 */
-    $scope.save = function(scenario) {
-    	$log.debug('save', scenario);
-    	if(scenario.owner === '') {
-    		scenario.owner = undefined;
-        	$log.debug('save/owner', scenario);
-    	}
-    	scenarioResourceService.scenario.put(scenario, function(element) {
-        	toastService.info('scenario ' + scenario.name + '#' + scenario.id + ' updated');
-        }, toastService.failure);
-    }
-    /**
-     * duplicate this scenario
-     */
-    $scope.duplicate = function(scenario) {
-    	$log.debug('scenarioCtrl::duplicate', scenario);
-    	scenarioResourceService.scenario.post(scenario, function(element) {
-        	toastService.info('scenario ' + scenario.name + '#' + scenario.id + ' duplicated');
-        	$scope.go('scenarios');
-        }, toastService.failure);
-    }
-    /**
-     * add this plugin to this view
-     * @param plugin, the plugin to add
-     */
-    $scope.add = function() {
-      	var properties = {
-      			'order':'1'
-      	};
-      	blockResourceService.block.post({}, function(block) {
-          	scenarioResourceService.blocks.post($stateParams.id, block.id, {}, function(block) {
-          		$log.debug('scenarioCtrl::add', block);
-    	    	$scope.blocks.push(block);
-    	    }, toastService.failure);
-      	}, toastService.failure);
-    }
-    /**
-     * update this command
-     * @param command, the command to add
-     */
-    $scope.update = function(block) {
-    	if(block != undefined && block.id != undefined && block.id != '') {
-    		blockResourceService.block.put(block, function(updated) {
-               	$log.debug('iotCtrl::update', updated);
-        		scenarioResourceService.blocks.put($stateParams.id, block.id, block.instance, block.extended, function(data) {
-                   	$log.debug('iotCtrl::update', data);
-        	    }, toastService.failure);
-    		}, toastService.failure);
-    	}
-    }
-    /**
-     * drop this plugin from view
-     * @param plugin, the plugin to drop
-     */
-    $scope.drop = function(block) {
-    	if(block != undefined && block.id != undefined && block.id != '') {
-        	scenarioResourceService.blocks.delete($stateParams.id, block.id, block.instance, function(removed) {
-    			var toremove = block.instance;
-    			_.remove($scope.blocks, function(element) {
-    				return element.instance == toremove;
-    			});
-               	$log.debug('iotCtrl::drop', removed);
-    	    }, toastService.failure);
-    	}
-    }
+	genericScopeService.scope.resource(
+			$scope, 
+			'scenario', 
+			'scenarios', 
+			scenarioResourceService.scenario, 
+			scenarioResourceService.blocks, 
+			{
+				'order':'1'
+			},
+			$stateParams.id
+	);
     /**
      * add then block
      * @param block, block to modify
@@ -176,7 +98,6 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
      * load this controller
      */
     $scope.load = function() {
-    	$scope.blocks = [];
   		$scope.activeTab = $stateParams.tab;
   		$scope.plugin = {};
 
@@ -194,40 +115,20 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
 		/**
 		 * get current scenario
 		 */
-		scenarioResourceService.scenario.get($stateParams.id, function(data) {
-	    	$scope.scenario = data;
-	    	$log.debug('scenario ' + data.name + '#' + $stateParams.id);
-	    }, toastService.failure);
-	
-		$log.debug('loading available plugins');
+    	genericResourceService.scope.entity.get($stateParams.id, function(update) {$scope.scenario=update}, scenarioResourceService.scenario);
+
 		/**
 		 * find all plugins
 		 */
-		pluginResourceService.plugins.findAll(function(plugins) {
-	    	_.forEach(plugins, function(plugin) {
-	            /**
-	             * convert internal json params
-	             */
-	    		$scope.combo.plugins.push({
-	            	'id':plugin.id,
-	            	'name':plugin.name
-	            });
-	        });
-	    }, toastService.failure);
+    	$scope.combo.plugins = [];
+    	genericResourceService.scope.combo.findAll('plugins', $scope.combo.plugins, pluginResourceService.plugins);
 
 		/**
 		 * find all iots
 		 */
-		scenarioResourceService.blocks.findAll($stateParams.id, function(data) {
-			$scope.blocks = data;
-	    	_.forEach($scope.blocks, function(element) {
-	    		element.children = [];
-	    		element.children.push({'expression':'x'});
-	    		element.children.push({'expression':'y'});
-	        });
-			$log.debug('scenario-ctrl', $scope.blocks);
-	    }, toastService.failure);
+    	$scope.blocks = [];
+    	genericResourceService.scope.collections.findAll('blocks', $stateParams.id, $scope.blocks, scenarioResourceService.blocks);
 
-		$log.debug('scenario-ctrl');
+		$log.debug('scenario-ctrl', $scope.scenario);
     }
 })

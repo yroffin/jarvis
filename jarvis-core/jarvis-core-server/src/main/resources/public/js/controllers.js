@@ -59,7 +59,20 @@ angular.module('JarvisApp.config',[])
     .config(function($mdThemingProvider){
         // Configure a dark theme with primary foreground yellow
         $mdThemingProvider.theme('default')
-            .primaryPalette('blue');
+            .primaryPalette('blue', {
+                'default': '600',
+                'hue-1': '50',
+                'hue-2': '600',
+                'hue-3': 'A700'
+              })
+        	.accentPalette('indigo')
+        	.warnPalette('red')
+        	.backgroundPalette('grey', {
+                'default': '50',
+                'hue-1': '50',
+                'hue-2': '600',
+                'hue-3': 'A700'
+              });
     })
     /**
      * main controller
