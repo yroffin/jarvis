@@ -50,7 +50,7 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
 .controller('scenarioCtrl',
 	function($scope, $log, $stateParams, genericScopeService, genericResourceService, scenarioResourceService, blockResourceService, pluginResourceService, toastService){
 	$scope.getLink = function() {
-		return $scope.commands;
+		return $scope.blocks;
 	}
 	/**
 	 * declare generic scope resource (and inject it in scope)
@@ -66,33 +66,70 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
 			},
 			$stateParams.id
 	);
+	/**
+	 * inject in scope
+	 */
+	$scope.crudBlock = genericResourceService.crud(['blocks']);
+    /**
+     * add then block
+     * @param block, block to modify
+     */
+    $scope.addNewBlock = function() {
+    	$scope.crudBlock.post(
+        		{
+        		},
+        		function(element) {
+        	    	$log.debug('scenario::addNewBlock', element);
+        	    	$scope.add(element);
+        		},
+        		toastService.failure
+        );
+    }
+    $scope.updateBlock = function(data) {
+    	genericResourceService.scope.entity.save(['blocks'], data, service);
+    }
+    /**
+     * add then block
+     * @param block, block to modify
+     */
+    $scope.updateAll = function(block) {
+    	$log.debug('scenario::updateAll', block);
+    	$scope.crudBlock.put(
+    			block,
+        		function(element) {
+        	    	$log.debug('scenario::updateAll', element);
+        	    	$scope.update(block);
+        		},
+        		toastService.failure
+        );
+    }
     /**
      * add then block
      * @param block, block to modify
      */
     $scope.addThenBlock = function(block) {
-    	$log.debug('iotCtrl::addThenBlock', block);
+    	$log.debug('scenario::addThenBlock', block);
     }
     /**
      * add then block
      * @param block, block to modify
      */
     $scope.addElseBlock = function(block) {
-    	$log.debug('iotCtrl::addElseBlock', block);
+    	$log.debug('scenario::addElseBlock', block);
     }
     /**
      * add then block
      * @param block, block to modify
      */
     $scope.addThenAction = function(block, plugin) {
-    	$log.debug('iotCtrl::addThenAction', block, plugin);
+    	$log.debug('scenario::addThenAction', block, plugin);
     }
     /**
      * add then block
      * @param block, block to modify
      */
     $scope.addElseAction = function(block, plugin) {
-    	$log.debug('iotCtrl::addElseAction', block, plugin);
+    	$log.debug('scenario::addElseAction', block, plugin);
     }
     /**
      * load this controller
@@ -106,10 +143,9 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
 	     */
 		$scope.combo = {
 				booleans: [
-		               	   {id: true,value:'True'},
+		               	   {id: true, value:'True'},
 		               	   {id: false,value:'False'}
-		        ],
-		        plugins: []
+		        ]
 		};
 	
 		/**
@@ -118,16 +154,16 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
     	genericResourceService.scope.entity.get($stateParams.id, function(update) {$scope.scenario=update}, scenarioResourceService.scenario);
 
 		/**
+		 * find all blocks
+		 */
+    	$scope.blocks = [];
+    	genericResourceService.scope.collections.findAll('blocks', $stateParams.id, $scope.blocks, scenarioResourceService.blocks);
+
+		/**
 		 * find all plugins
 		 */
     	$scope.combo.plugins = [];
     	genericResourceService.scope.combo.findAll('plugins', $scope.combo.plugins, pluginResourceService.plugins);
-
-		/**
-		 * find all iots
-		 */
-    	$scope.blocks = [];
-    	genericResourceService.scope.collections.findAll('blocks', $stateParams.id, $scope.blocks, scenarioResourceService.blocks);
 
 		$log.debug('scenario-ctrl', $scope.scenario);
     }

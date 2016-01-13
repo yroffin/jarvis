@@ -43,22 +43,26 @@ angular.module('JarvisApp.services.scope', ['JarvisApp.services.generic']).facto
 		    	genericResourceService.scope.entity.duplicate(function() {scope.go(back)}, resource, data, service);
 		    }
 		    if(link) {
+		    	$log.debug('inject link',link);
 			    /**
 			     * Cf. genericResourceService
 			     */
 			    scope.add = function(data) {
+			    	$log.debug('link::add',data);
 			    	genericResourceService.scope.link.add(stateParamsId,data,dataLink,link,scope.getLink());
 				}
 			    /**
 			     * Cf. genericResourceService
 			     */
 			    scope.update = function(data) {
+			    	$log.debug('link::update',data);
 			    	genericResourceService.scope.link.save(stateParamsId,data,link);
 				}
 			    /**
 			     * Cf. genericResourceService
 			     */
 			    scope.drop = function(data) {
+			    	$log.debug('link::drop',data);
 			    	genericResourceService.scope.link.remove(stateParamsId,data,link,scope.getLink());
 				}
 		    }
