@@ -22,8 +22,7 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
 .controller('scenariosCtrl', 
 	function($scope, $log, genericResourceService, scenarioResourceService, toastService){
     /**
-     * create a new scenario
-     * @param scenarios, scenarios list in $scope
+     * Cf. genericResourceService
      */
     $scope.new = function(scenarios) {
     	genericResourceService.scope.collections.new(
@@ -48,7 +47,18 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
     }
 })
 .controller('scenarioCtrl',
-	function($scope, $log, $stateParams, genericScopeService, genericResourceService, scenarioResourceService, blockResourceService, pluginResourceService, toastService){
+	function(
+			$scope,
+			$log,
+			$stateParams,
+			$mdDialog,
+			genericScopeService,
+			genericResourceService,
+			genericPickerService,
+			scenarioResourceService,
+			blockResourceService,
+			pluginResourceService,
+			toastService){
 	$scope.getLink = function() {
 		return $scope.blocks;
 	}
@@ -132,6 +142,20 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
     	$log.debug('scenario::addElseAction', block, plugin);
     }
     /**
+     * pick an element
+     * @param ev
+     * @param block
+     */
+    $scope.pickIotDialog = function(ev, block) {
+    	return genericPickerService.pickers.iots(ev, function(node) {
+        	block.context = node;
+        	block.plugin = node.id;
+    	}, function() {
+    		$log.debug('Abort');
+    	},
+    	'pickIotDialogCtrl');
+    }
+    /**
      * load this controller
      */
     $scope.load = function() {
@@ -166,5 +190,89 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
     	genericResourceService.scope.combo.findAll('plugins', $scope.combo.plugins, pluginResourceService.plugins);
 
 		$log.debug('scenario-ctrl', $scope.scenario);
+    }
+})
+.controller('blocksCtrl', 
+	function($scope, $log, genericScopeService, genericPickerService, blockResourceService, toastService){
+	$scope.setEntities = function(entities) {
+		$scope.blocks = entities;
+	}
+	$scope.getEntities = function() {
+		return $scope.blocks;
+	}
+	/**
+	 * declare generic scope resource (and inject it in scope)
+	 */
+	genericScopeService.scope.resources(
+			$scope, 
+			'blocks', 
+			blockResourceService.block,
+			{
+    			name: "block name",
+    			icon: "list"
+    		}
+	);
+})
+.controller('blockCtrl',
+	function(
+			$scope,
+			$log,
+			$stateParams,
+			genericScopeService,
+			genericResourceService,
+			genericPickerService,
+			blockResourceService,
+			toastService){
+	$scope.getLink = function() {
+		return $scope.blocks;
+	}
+	/**
+	 * declare generic scope resource (and inject it in scope)
+	 */
+	genericScopeService.scope.resource(
+			$scope, 
+			'block', 
+			'blocks', 
+			blockResourceService.block
+	);
+    /**
+     * pick an element
+     * @param ev
+     * @param block
+     */
+    $scope.pickIotDialog = function(ev, block) {
+    	return genericPickerService.pickers.iots(ev, function(node) {
+        	block.context = node;
+        	block.pluginId = node.id;
+        	block.pluginName = node.name;
+    	}, function() {
+    		$log.debug('Abort');
+    	},
+    	'pickIotDialogCtrl');
+    }
+    /**
+     * execute this command on server side
+	 * @param command, the command to be executed
+     */
+    $scope.execute = function(block) {
+    	if(block != undefined && block.id != undefined && block.id != '') {
+    		blockResourceService.block.task(block.id, 'test', {}, function(data) {
+       	    	$log.debug('[BLOCK/test]', block, data);
+       	    	$scope.testExpression = data;
+    	    }, toastService.failure);
+    	}
+    }
+    /**
+     * load this controller
+     */
+    $scope.load = function() {
+  		$scope.activeTab = $stateParams.tab;
+
+		/**
+		 * get current scenario
+		 */
+    	genericResourceService.scope.entity.get($stateParams.id, function(update) {$scope.block=update}, blockResourceService.block);
+
+		$log.debug('block-ctrl', $scope.scenario);
     }
 })

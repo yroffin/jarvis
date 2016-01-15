@@ -105,5 +105,15 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
             controller: 'scenarioCtrl',
             templateUrl: '/ui/js/partials/scenarios/scenario/page.html'
         })
+        .state('blocks', {
+            url: '/blocks',
+            controller: 'blocksCtrl',
+            templateUrl: '/ui/js/partials/blocks/page.html'
+        })
+        .state('blocks-by-id', {
+            url: '/blocks/:id?tab',
+            controller: 'blockCtrl',
+            templateUrl: '/ui/js/partials/blocks/block/page.html'
+        })
         ;
     })

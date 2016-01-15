@@ -31,4 +31,14 @@ public class BlockRest extends GenericEntity {
 	 */
 	@JsonProperty("expression")
 	public String expression;
+	/**
+	 * pluginId
+	 */
+	@JsonProperty("pluginId")
+	public String pluginId;
+	/**
+	 * pluginName
+	 */
+	@JsonProperty("pluginName")
+	public String pluginName;
 }

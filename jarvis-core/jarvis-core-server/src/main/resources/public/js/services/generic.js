@@ -21,7 +21,8 @@
 /**
  * blockResourceService
  */
-angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter']).factory('genericResourceService', function($log, Restangular, filterService, toastService) {
+angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter'])
+  .factory('genericResourceService', function($log, Restangular, filterService, toastService) {
   var resources = {
         /**
 		 * find all elements
@@ -61,7 +62,7 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter']).fact
 			var handler = function(toget) {
 				var filtered = filterService.plain(toget);
 				$log.debug("[GET]",path,filtered);
-				callback(filtered);
+				if(callback != undefined) callback(filtered);
 			}
 			if(path.length == 1) {
 				Restangular.one(path[0], id).get().then(handler,function(errors){failure(errors);});
@@ -79,7 +80,7 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter']).fact
 			var handler = function(todelete) {
 				var filtered = filterService.plain(todelete);
 				$log.debug("[DELETE]",path,filtered);
-				callback(filtered);
+				if(callback != undefined) callback(filtered);
 			}
 			if(path.length == 1) {
 				Restangular.one(path[0], id).remove().then(handler,function(errors){failure(errors);});
@@ -97,7 +98,7 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter']).fact
 			var handler = function(tosave) {
 				var filtered = filterService.plain(tosave);
 				$log.debug("[PUT]",path,filtered);
-				callback(filtered);
+				if(callback != undefined) callback(filtered);
 			}
 			if(path.length == 1) {
 				Restangular.one(path[0], element.id).customPUT(element).then(handler,function(errors){failure(errors);});
@@ -115,7 +116,7 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter']).fact
 			var handler = function(topost) {
 				var filtered = filterService.plain(topost);
 				$log.debug("[POST]",path,filtered);
-				callback(filtered);
+				if(callback != undefined) callback(filtered);
 			}
 			if(path.length == 1) {
 				Restangular.all(path[0]).post(element).then(handler,function(errors){failure(errors);});
@@ -131,8 +132,8 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter']).fact
 		task: function(path, id, task, args, callback, failure) {
 			var handler = function(totask) {
 				var filtered = filterService.plain(totask);
-				$log.debug("[POST]",path,filtered);
-				callback(filtered);
+				$log.debug("[POST]",totask,path,filtered);
+				if(callback != undefined) callback(filtered);
 			}
 			if(path.length == 1) {
 				Restangular.all(path[0]).one(id).customPOST(args,'', {'task':task}).then(handler,function(errors){failure(errors);});
@@ -239,7 +240,7 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter']).fact
 				var handler = function(href) {
 					var filtered = filterService.plain(href);
 					$log.debug("[POST/L]",api,filtered);
-					callback(filtered);
+					if(callback != undefined) callback(filtered);
 				};
 				if(path.length == 1) {
 					if(api.length == 1) {
@@ -262,7 +263,7 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter']).fact
 				var handler = function(href) {
 					var filtered = filterService.plain(href);
 					$log.debug("[PUT/L]",api,filtered);
-					callback(filtered);
+					if(callback != undefined) callback(filtered);
 				};
 	        	var p = {};
 	        	if(properties === undefined) {
@@ -291,7 +292,7 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter']).fact
 				var handler = function(href) {
 					var filtered = filterService.plain(href);
 					$log.debug("[DELETE/L]",api,filtered);
-					callback(filtered);
+					if(callback != undefined) callback(filtered);
 				};
 				if(path.length == 1) {
 					if(api.length == 1) {
@@ -350,6 +351,23 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter']).fact
   /**
    * crud operation on links
    */
+  var scopeCrud = {
+		   	new : function(name, elements, update, service) {
+		        /**
+		         * create this elements
+		         */
+		   		service.post(update, function(data) {
+		                $log.debug(name + ' ' + data.name + '#' + data.id +' created');
+		                elements.push(data);
+		        }, toastService.failure);
+		    },
+		    remove : function(go, name, todelete, service) {
+		    	service.delete(todelete.id, function(element) {
+		        	toastService.info(name + ' ' + todelete.name + '#' + todelete.id + ' removed');
+		        	go();
+		        }, toastService.failure);
+		    }
+  };
   var scopeCrud = {
 	   	new : function(name, elements, update, service) {
 	        /**
@@ -437,7 +455,7 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter']).fact
 		    }, toastService.failure);
 	    }
   }
-  return {
+return {
 	  crud:crud,
 	  links:crudLinks,
 	  scope: {
@@ -461,4 +479,37 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter']).fact
 		  }
 	  }
   }
-});
+  })
+  .factory('genericPickerService', function($log, $mdDialog, toastService) {
+	  /**
+	   * pickers
+	   */
+	  var pickers = {
+			  confirm : function(title, content, ok, cancel) {
+					var confirm = $mdDialog.confirm()
+						.title(title)
+						.textContent(content)
+						.ariaLabel('Confirm')
+						.ok(ok)
+						.cancel(cancel);
+					return $mdDialog.show(confirm);
+			  },
+			  iots : function(ev, callback, abort, ctrl) {
+			        $mdDialog.show({
+			          controller: ctrl,
+			          templateUrl: 'js/partials/dialog/iotDialog.tmpl.html',
+			          parent: angular.element(document.body),
+			          targetEvent: ev,
+			          clickOutsideToClose:true
+			        })
+			        .then(function(node) {
+			        	callback(node);
+			        }, function() {
+			            abort();
+			        });
+			  }
+	  }
+	  return {
+		  pickers : pickers
+	  }
+  });

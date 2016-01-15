@@ -1,0 +1,17 @@
+<div layout="column">
+	<md-icon md-font-icon="material-icons md-16" ng-click="pickIotDialog($event, block)">playlist_add</md-icon>
+	<md-input-container>
+	  <label translate="block.pluginId"></label>
+	  <input ng-model="block.pluginId" disabled>
+	</md-input-container>
+	<md-input-container>
+	  <label translate="block.pluginName"></label>
+	  <input ng-model="block.pluginName" disabled>
+	</md-input-container>
+	<md-input-container>
+	  <label translate="block.expression"></label>
+	  <input ng-model="block.expression">
+	</md-input-container>
+	<md-icon ng-show="testExpression" md-font-icon="material-icons md-16">cloud</md-icon>
+	<md-icon ng-show="!testExpression" md-font-icon="material-icons md-16">cloud_off</md-icon>
+</div>

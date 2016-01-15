@@ -1,0 +1,32 @@
+<md-dialog aria-label="">
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Pick a connected object</h2>
+                <span flex></span>
+                <md-button class="md-icon-button">
+                    <md-icon md-font-icon="material-icons md-16" ng-click="answer()">close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+			<script type="text/ng-template" id="nodes_renderer.html">
+<div data-nodrag ui-tree-handle>
+	<md-icon ng-show="!node.selectable" md-font-icon="material-icons md-16">block</md-icon>
+	<md-icon ng-show="node.selectable" md-font-icon="material-icons md-16" ng-click="answer(node)">check</md-icon>
+	<md-icon md-font-icon="material-icons md-16">{{node.icon}}</md-icon>
+  	{{node.name}}
+</div>
+<ol ui-tree-nodes="" ng-model="node.nodes">
+  <li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer.html'">
+  </li>
+</ol>
+			</script>
+			<div data-nodrop-enabled ui-tree>
+			  <ol ui-tree-nodes="" ng-model="elementsPicker" id="tree-root">
+			    <li ng-repeat="node in elementsPicker" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+			  </ol>
+			</div>
+        </md-dialog-content>
+    </form>
+</md-dialog>

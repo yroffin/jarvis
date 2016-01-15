@@ -21,14 +21,69 @@
 /**
  * genericScopeService
  */
-angular.module('JarvisApp.services.scope', ['JarvisApp.services.generic']).factory('genericScopeService', function($log, genericResourceService) {
+angular.module('JarvisApp.services.scope', ['JarvisApp.services.generic']).factory('genericScopeService', function($log, genericResourceService, genericPickerService, toastService) {
   var scope = {
+	  resources : function(scope, resource, service, init) {
+		    /**
+		     * Cf. genericResourceService
+		     */
+		    scope.new = function() {
+		    	genericResourceService.scope.collections.new(
+		    			resource,
+		        		scope.getEntities(),
+		        		init,
+		        		service
+		        );
+		    }
+			scope.crud = genericResourceService.crud([resource]);
+		    /**
+		     * Cf. genericResourceService
+		     */
+		    scope.remove = function(entity) {
+		    	genericPickerService.pickers.confirm(
+		    			'Remove ' + entity.id + ' ?',
+		    			'',
+		    			'ok',
+		    			'cancel'
+		    		)
+		    		.then(function() {
+			    	$log.debug('remove', entity);
+					var toremove = entity.id;
+					_.remove(scope.getEntities(), function(element) {
+						return element.id == toremove;
+					});
+			    	scope.crud.delete(entity.id);
+		    	}, function() {
+			    	$log.debug('abort');
+		    	});
+		    }
+		    /**
+		     * loading
+		     */
+		    scope.load = function() {
+		    	scope.setEntities([]);
+		    	service.findAll(function(data) {
+		    		scope.setEntities(data);
+					$log.debug(resource+'-ctrl', data);
+			    }, toastService.failure);
+		    }
+	  },
 	  resource : function(scope, resource, back, service, link, dataLink, stateParamsId) {
 		    /**
 		     * Cf. genericResourceService
 		     */
 		    scope.remove = function(data) {
-		    	genericResourceService.scope.entity.remove(function() {scope.go(back)}, resource, data, service);
+		    	genericPickerService.pickers.confirm(
+		    			'Remove ' + data.id + ' ?',
+		    			'',
+		    			'ok',
+		    			'cancel'
+		    		)
+		    		.then(function() {
+		    			genericResourceService.scope.entity.remove(function() {scope.go(back)}, resource, data, service);
+			    	}, function() {
+				    	$log.debug('abort');
+			    	});
 		    }
 		    /**
 		     * Cf. genericResourceService

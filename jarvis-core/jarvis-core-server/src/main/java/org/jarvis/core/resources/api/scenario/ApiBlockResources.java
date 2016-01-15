@@ -17,6 +17,7 @@
 package org.jarvis.core.resources.api.scenario;
 
 
+import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.plugin.ScriptPluginBean;
 import org.jarvis.core.model.bean.scenario.BlockBean;
 import org.jarvis.core.model.rest.plugin.ScriptPluginRest;
@@ -25,6 +26,7 @@ import org.jarvis.core.resources.api.ApiLinkedResources;
 import org.jarvis.core.resources.api.href.ApiHrefBlockBlockResources;
 import org.jarvis.core.resources.api.href.ApiHrefBlockScriptPluginResources;
 import org.jarvis.core.resources.api.plugins.ApiScriptPluginResources;
+import org.jarvis.core.services.groovy.PluginGroovyService;
 import org.jarvis.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,7 +73,25 @@ public class ApiBlockResources extends ApiLinkedResources<BlockRest,BlockBean,Sc
 
 	@Override
 	public String doRealTask(BlockBean bean, GenericMap args, TaskType taskType) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		GenericMap result;
+		switch(taskType) {
+			case TEST:
+				return test(bean, args, new GenericMap())+"";
+			default:
+				result = new GenericMap();
+				return mapper.writeValueAsString(result);
+		}
+	}
+
+	@Autowired
+	PluginGroovyService pluginGroovyService;
+
+	private boolean test(BlockBean bean, GenericMap args, GenericMap genericMap) throws TechnicalNotFoundException {
+		boolean result = false;
+		if(bean.pluginId != null) {
+			GenericMap exec = (GenericMap) apiScriptPluginResources.doExecute(bean.pluginId, args, TaskType.EXECUTE);
+			return pluginGroovyService.groovyAsBoolean(bean.expression, exec);
+		}
+		return result;
 	}
 }

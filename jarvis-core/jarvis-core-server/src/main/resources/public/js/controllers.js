@@ -19,8 +19,7 @@
 /* Controllers */
 
 angular.module('JarvisApp.config',[])
-     .config(function($mdIconProvider) {
-	  // Configure URLs for icons specified by [set:]id.
+    .config(function($mdIconProvider) {
 	})
 	.config(['$translateProvider', 
 	    function($translateProvider){
@@ -51,9 +50,13 @@ angular.module('JarvisApp.config',[])
     	      };
     	    });
     	    RestangularProvider.setResponseExtractor(function(response) {
+    	    	if(angular.isObject(response)) {
     	    	  var newResponse = response;
     	    	  newResponse.originalElement = response;
     	    	  return newResponse
+    	    	} else {
+    	    		return response;
+    	    	}
     	    });
     }])
     .config(function($mdThemingProvider){
@@ -118,3 +121,47 @@ angular.module('JarvisApp.config',[])
             $state.go(target,params);
         };
     })
+	.controller('pickIotDialogCtrl',
+		function($scope, $log, $mdDialog, genericResourceService, toastService) {
+		$scope.hide = function() {
+		   $mdDialog.hide();
+		 };
+		$scope.cancel = function() {
+		  $mdDialog.cancel();
+		};
+		$scope.answer = function(answer) {
+		  $mdDialog.hide(answer);
+		};
+		$scope.elementsPicker = [
+		     {
+		    	 name:"Connected Objects",
+		    	 selectable : false,
+		    	 nodes:[]
+		     },
+		     {
+		    	 name:"Plugin Scripts",
+		    	 selectable : false,
+		    	 nodes:[]
+		     }
+	    ];
+		$scope.crudIot = genericResourceService.crud(['iots']);
+		$scope.crudIot.findAll(
+				function(elements) {
+					_.each(elements, function(element) {
+						element.selectable = false;
+				    	$scope.elementsPicker[0].nodes.push(element);
+					});
+				},
+				toastService.failure
+		);
+		$scope.crudScript = genericResourceService.crud(['plugins','scripts']);
+		$scope.crudScript.findAll(
+				function(elements) {
+					_.each(elements, function(element) {
+						element.selectable = true;
+				    	$scope.elementsPicker[1].nodes.push(element);
+					});
+				},
+				toastService.failure
+		);
+	})

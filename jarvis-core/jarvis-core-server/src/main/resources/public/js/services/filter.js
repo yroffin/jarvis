@@ -29,9 +29,13 @@ myAppServices.factory('filterService', function(Restangular) {
 	   * strip restangular object from context
 	   */
 	  plain: function(element) {
-		  var element = Restangular.stripRestangular(element);
-		  delete element.originalElement;
-		  return element;
+		  if(angular.isArray(element) || angular.isObject(element)) {
+			  var element = Restangular.stripRestangular(element);
+			  delete element.originalElement;
+			  return element;
+		  } else {
+			  return element;
+		  }
 	  }
   }
   return base;

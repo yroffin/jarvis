@@ -1,0 +1,19 @@
+<md-toolbar>
+  <md-fab-actions class="md-toolbar-tools">
+	<md-button aria-label="menu" class="md-icon-button" ng-click="go('blocks')"><md-icon md-font-icon="material-icons md-16">clear</md-icon></md-button>
+	<md-button aria-label="menu" class="md-icon-button" ng-click="duplicate(block)"><md-icon md-font-icon="material-icons md-16">content_copy</md-icon></md-button>
+	<md-button aria-label="menu" class="md-icon-button" ng-click="remove(block)"><md-icon md-font-icon="material-icons md-16">delete</md-icon></md-button>
+	<md-button aria-label="menu" class="md-icon-button" ng-click="save(block)"><md-icon md-font-icon="material-icons md-16">save</md-icon></md-button>
+	<md-button aria-label="menu" class="md-icon-button" ng-click="execute(block)"><md-icon md-font-icon="material-icons md-16">play_arrow</md-icon></md-button>
+  </md-fab-actions>
+</md-toolbar>
+<div layout="column" ng-init="load()" ng-cloak>
+	<h2>block #{{block.id}}</h2>
+	<md-tabs md-dynamic-height md-border-bottom>
+		<md-tab label="{{'block.general' | translate}}" md-active="activeTab==1">
+			<md-content layout-padding>
+				<jarvis-block></jarvis-block>
+			</md-content>
+		</md-tab>
+	</md-tabs>
+</div>

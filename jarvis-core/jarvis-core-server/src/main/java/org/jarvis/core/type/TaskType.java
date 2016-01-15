@@ -21,6 +21,10 @@ package org.jarvis.core.type;
  */
 public enum TaskType {
 	/**
+	 * test
+	 */
+	TEST,
+	/**
 	 * execute
 	 */
 	EXECUTE,

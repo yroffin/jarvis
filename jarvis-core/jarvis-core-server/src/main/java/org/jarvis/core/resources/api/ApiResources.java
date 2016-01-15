@@ -21,6 +21,7 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.put;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -29,6 +30,7 @@ import java.util.Map.Entry;
 
 import javax.annotation.PostConstruct;
 
+import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.GenericBean;
 import org.jarvis.core.model.rest.GenericEntity;
@@ -41,6 +43,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 import spark.Request;
 import spark.Response;
@@ -294,30 +300,79 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * @param response
 	 * @param klass
 	 * @return String
-	 * @throws Exception
+	 * @throws TechnicalNotFoundException 
 	 */
-	public String doTask(Request request, String id, String task, Response response, Class<T> klass) throws Exception {
+	public String doTask(Request request, String id, String task, Response response, Class<T> klass) throws TechnicalNotFoundException {
     	if(request.contentType() == null || !request.contentType().equals("application/json")) {
     		response.status(403);
     		return "";
     	}
     	try {
+    		Object result = doExecute(
+    				request.params(id),
+    				(GenericMap) mapper.readValue(request.body(),GenericMap.class),
+    				TaskType.valueOf(request.queryParams(task).toUpperCase()));
     		/**
-    		 * read object by id
+    		 * task can return String or Object
+    		 * TODO
+    		 * return List
     		 */
-    		S bean = apiService.getById(request.params(id));
-    		logger.info("SCRIPT - CONTEXT {}", mapper.writerWithDefaultPrettyPrinter().writeValueAsString(bean));
-    		/**
-    		 * decode body
-    		 */
-    		GenericMap args = (GenericMap) mapper.readValue(request.body(), GenericMap.class);
-    		logger.info("SCRIPT - INPUT   {}", mapper.writerWithDefaultPrettyPrinter().writeValueAsString(args));
-    		return doRealTask(bean, args, TaskType.valueOf(request.queryParams(task).toUpperCase()));
+    		if(GenericMap.class == result.getClass()) {
+    			return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(result);
+    		} else {
+    			return (String) result;
+    		}
     	} catch(TechnicalNotFoundException e) {
     		response.status(404);
     		return "";
-    	}
+    	} catch (JsonParseException e) {
+			throw new TechnicalException(e);
+		} catch (JsonMappingException e) {
+			throw new TechnicalException(e);
+		} catch (IOException e) {
+			throw new TechnicalException(e);
+		}
     }
+
+	/**
+	 * @param id
+	 * @param body 
+	 * @param taskType
+	 * @return GenericMap
+	 * @throws TechnicalNotFoundException
+	 */
+	public Object doExecute(String id, GenericMap body, TaskType taskType) throws TechnicalNotFoundException {
+		/**
+		 * read object by id
+		 */
+		S bean = apiService.getById(id);
+		try {
+			logger.info("SCRIPT - CONTEXT {}", mapper.writerWithDefaultPrettyPrinter().writeValueAsString(bean));
+		} catch (JsonProcessingException e) {
+			throw new TechnicalException(e);
+		}
+		try {
+			logger.info("SCRIPT - INPUT   {}", mapper.writerWithDefaultPrettyPrinter().writeValueAsString(body));
+		} catch (JsonProcessingException e) {
+			throw new TechnicalException(e);
+		}
+		String result = "";
+		try {
+			result = doRealTask(bean, body, taskType);
+		} catch (Exception e) {
+			throw new TechnicalException(e);
+		}
+		logger.info("SCRIPT - OUTPUT  {}", result);
+		try {
+			if(result.startsWith("{")) {
+				return (GenericMap) mapper.readValue(result, GenericMap.class);
+			} else {
+				return result;
+			}
+		} catch (IOException e) {
+			throw new TechnicalException(e);
+		}
+	}
 
 	/**
 	 * delete node

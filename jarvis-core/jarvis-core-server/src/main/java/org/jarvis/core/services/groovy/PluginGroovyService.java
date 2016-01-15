@@ -16,9 +16,14 @@
 
 package org.jarvis.core.services.groovy;
 
-import java.io.IOException;
+import java.util.Map;
 import java.util.Map.Entry;
+
+import org.jarvis.core.exception.TechnicalException;
+import org.jarvis.core.resources.api.ApiResources;
 import org.jarvis.core.type.GenericMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -34,6 +39,7 @@ import groovy.lang.GroovyShell;
 @Component
 @PropertySource("classpath:server.properties")
 public class PluginGroovyService {
+	protected Logger logger = LoggerFactory.getLogger(PluginGroovyService.class);
 
 	@Autowired
 	Environment env;
@@ -42,18 +48,45 @@ public class PluginGroovyService {
 	 * @param command
 	 * @param args 
 	 * @return GenericBean
-	 * @throws InterruptedException
-	 * @throws IOException
+	 * @throws TechnicalException 
 	 */
-	public GenericMap groovy(GenericMap command, GenericMap args) throws IOException, InterruptedException {
+	public GenericMap groovy(GenericMap command, GenericMap args) throws TechnicalException {
+		return groovyAsObject((String) command.get("body"), args);
+	}
+
+	/**
+	 * @param command
+	 * @param args 
+	 * @return GenericBean
+	 * @throws TechnicalException 
+	 */
+	public GenericMap groovyAsObject(String command, GenericMap args) throws TechnicalException {
 		Binding binding = new Binding();
 		binding.setVariable("input", args);
 		GroovyShell script = new GroovyShell(binding);
-		LazyMap exec = (LazyMap) script.evaluate((String) command.get("body"));
+		@SuppressWarnings("rawtypes")
+		Map exec = (Map) script.evaluate(command);
 		GenericMap result = new GenericMap();
-		for(Entry<String, Object> set : exec.entrySet()) {
-			result.put(set.getKey(), set.getValue());
+		if(exec != null) {
+			for(Object key : exec.keySet()) {
+				result.put((String) key, exec.get(key));
+			}
+		} else {
+			logger.warn("SCRIPT - output is null");
 		}
 		return result;
+	}
+
+	/**
+	 * @param command
+	 * @param args 
+	 * @return GenericBean
+	 * @throws TechnicalException 
+	 */
+	public boolean groovyAsBoolean(String command, GenericMap args) throws TechnicalException {
+		Binding binding = new Binding();
+		binding.setVariable("input", args);
+		GroovyShell script = new GroovyShell(binding);
+		return (boolean) script.evaluate(command);
 	}
 }

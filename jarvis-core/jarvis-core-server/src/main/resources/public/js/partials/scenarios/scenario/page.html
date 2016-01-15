@@ -1,3 +1,6 @@
+<md-button class="md-primary md-raised" ng-click="pickIotDialog($event)" flex="100"  flex-gt-md="auto">
+      Tab Dialog
+</md-button>
 <md-toolbar>
   <md-fab-actions class="md-toolbar-tools">
 	<md-button aria-label="menu" class="md-icon-button" ng-click="go('scenarios')"><md-icon md-font-icon="material-icons md-16">clear</md-icon></md-button>
@@ -16,7 +19,7 @@
 		</md-tab>
 		<md-tab label="{{'scenario.block' | translate}}"  md-active="activeTab==2">
 			<md-content layout-padding>
-				<jarvis-blocks></jarvis-blocks>
+				<jarvis-scenario-blocks></jarvis-scenario-blocks>
 			</md-content>
 		</md-tab>
 	</md-tabs>

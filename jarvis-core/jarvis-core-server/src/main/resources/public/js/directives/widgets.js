@@ -190,7 +190,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     }
   }
 })
-.directive('jarvisBlocks', function ($log, $stateParams) {
+.directive('jarvisScenarioBlocks', function ($log, $stateParams) {
   return {
     restrict: 'E',
     templateUrl: '/ui/js/partials/widget/scenarios/jarvis-blocks.html',
@@ -199,7 +199,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     }
   }
 })
-.directive('jarvisBlock', function ($log, $stateParams) {
+.directive('jarvisScenarioBlock', function ($log, $stateParams) {
   return {
     restrict: 'E',
     templateUrl: '/ui/js/partials/widget/scenarios/jarvis-block.html',
@@ -208,12 +208,30 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     }
   }
 })
-.directive('jarvisBlockB', function ($log, $stateParams) {
+.directive('jarvisScenarioBlockB', function ($log, $stateParams) {
   return {
     restrict: 'E',
     templateUrl: '/ui/js/partials/widget/scenarios/jarvis-block-b.html',
     link: function(scope, element, attrs) {
     	$log.info('jarvis-block-b');
+    }
+  }
+})
+.directive('jarvisBlocks', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/partials/widget/blocks/jarvis-blocks.html',
+    link: function(scope, element, attrs) {
+    	$log.info('jarvis-blocks');
+    }
+  }
+})
+.directive('jarvisBlock', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/partials/widget/blocks/jarvis-block.html',
+    link: function(scope, element, attrs) {
+    	$log.info('jarvis-block');
     }
   }
 })

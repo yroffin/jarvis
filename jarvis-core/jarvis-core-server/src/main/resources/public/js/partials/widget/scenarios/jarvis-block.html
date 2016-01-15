@@ -17,7 +17,13 @@
 					<input ng-model="block.extended.order">
 				</md-input-container>
 			</td>
-			<td>Si</td>
+			<td>
+				<div layout="column">
+				Si
+				<md-icon md-font-icon="material-icons md-16" ng-click="pickIotDialog($event, block)">playlist_add</md-icon>
+				<label>{{block.pluginName}}#{{block.pluginId}}</label>
+				</div>
+			</td>
 			<td>
 				<md-input-container>
 					<label translate="block.expression"></label>
