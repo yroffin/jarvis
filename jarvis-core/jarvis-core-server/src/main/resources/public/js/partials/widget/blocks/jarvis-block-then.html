@@ -1,0 +1,29 @@
+<md-toolbar>
+  <md-fab-actions class="md-toolbar-tools">
+	<md-button aria-label="menu" class="md-icon-button" ng-click="pickThenIotDialog($event, block)"><md-icon md-font-icon="material-icons md-16">playlist_add</md-icon></md-button>
+	<md-button aria-label="menu" class="md-icon-button" ng-click="clearPluginThen()"><md-icon md-font-icon="material-icons md-16">clear</md-icon></md-button>
+	<md-button aria-label="menu" class="md-icon-button" ng-click="pickThenBlockDialog($event, block)"><md-icon md-font-icon="material-icons md-16">add_box</md-icon></md-button>
+	<md-button aria-label="menu" class="md-icon-button" ng-click="clearBlockThen()"><md-icon md-font-icon="material-icons md-16">clear</md-icon></md-button>
+  </md-fab-actions>
+</md-toolbar>
+<br>
+<div layout="column" ng-show="block.pluginThenId">
+	<md-input-container>
+	  <label translate="block.pluginId"></label>
+	  <input ng-model="block.pluginThenId" disabled>
+	</md-input-container>
+	<md-input-container ng-show="block.pluginThenId">
+	  <label translate="block.pluginName"></label>
+	  <input ng-model="block.pluginThenName" disabled>
+	</md-input-container>
+</div>
+<div layout="column" ng-show="block.blockThenId">
+	<md-input-container>
+	  <label translate="block.blockId"></label>
+	  <input ng-model="block.blockThenId" disabled>
+	</md-input-container>
+	<md-input-container ng-show="block.blockThenId">
+	  <label translate="block.blockName"></label>
+	  <input ng-model="block.blockThenName" disabled>
+	</md-input-container>
+</div>

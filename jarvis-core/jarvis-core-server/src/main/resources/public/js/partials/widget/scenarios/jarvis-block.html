@@ -1,71 +1,16 @@
-<table class="table table-bordered table-hover">
-	<thead>
-		<tr>
-			<th>
-				<md-button aria-label="menu" class="md-icon-button" ng-click="drop(block)"><md-icon md-font-icon="material-icons md-16">cancel</md-icon></md-button>
-				<md-button aria-label="menu" class="md-icon-button" ng-click="updateAll(block)"><md-icon md-font-icon="material-icons md-16">save</md-icon></md-button>
-			</th>
-			<th translate="block.action">Order</th>
-			<th translate="block.expression">Icon</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td>
-				<md-input-container>
-					<label translate="block.order"></label>
-					<input ng-model="block.extended.order">
-				</md-input-container>
-			</td>
-			<td>
-				<div layout="column">
-				Si
-				<md-icon md-font-icon="material-icons md-16" ng-click="pickIotDialog($event, block)">playlist_add</md-icon>
-				<label>{{block.pluginName}}#{{block.pluginId}}</label>
-				</div>
-			</td>
-			<td>
-				<md-input-container>
-					<label translate="block.expression"></label>
-					<input ng-model="block.expression">
-				</md-input-container>
-			</td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>
-				<div layout="column">
-					Alors
-					<md-icon md-font-icon="material-icons md-16" ng-click="addThenBlock(block)">playlist_add</md-icon>
-					<md-icon md-font-icon="material-icons md-16" ng-click="addThenAction(block, plugin)">add_circle_outline</md-icon>
-					<md-select ng-model="plugin.id">
-					  <md-option ng-repeat="plugin in combo.plugins" value="{{plugin.id}}" translate="{{plugin.name}}">
-					  </md-option>
-					</md-select>
-				</div>
-			</td>
-			<td>
-				<div layout="row" ng-repeat="subblock in block.children">
-					<jarvis-block-b ng-model="subblock"></jarvis-block-b>
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>
-				<div layout="column">
-					Sinon
-					<md-icon md-font-icon="material-icons md-16" ng-click="addElseBlock(block)">playlist_add</md-icon>
-					<md-icon md-font-icon="material-icons md-16" ng-click="addElseAction(block, plugin)">add_circle_outline</md-icon>
-					<md-select ng-model="plugin.id">
-					  <md-option ng-repeat="plugin in combo.plugins" value="{{plugin.id}}" translate="{{plugin.name}}">
-					  </md-option>
-					</md-select>
-				</div>
-			</td>
-			<td><div layout="row" ng-repeat="subblock in block.children">
-					<jarvis-block-b ng-model="subblock"></jarvis-block-b>
-				</div></td>
-		</tr>
-	</tbody>
-</table>
+<md-input-container>
+	<label translate="block.order"></label>
+	<input ng-model="block.extended.order">
+</md-input-container>
+<md-button aria-label="menu" class="md-icon-button" ng-click="drop(block)"><md-icon md-font-icon="material-icons md-16">delete</md-icon></md-button>
+<div layout="column">
+<code>
+Si {{block.name}}
+</code>
+<code>
+Alors [{{block.pluginThenName}}#{{block.pluginThenId}}] [{{block.blockThenName}}#{{block.blockThenId}}]
+</code>
+<code>
+Else [{{block.pluginElseName}}#{{block.pluginElseId}}] [{{block.blockElseName}}#{{block.blockElseId}}]
+</code>
+</div>

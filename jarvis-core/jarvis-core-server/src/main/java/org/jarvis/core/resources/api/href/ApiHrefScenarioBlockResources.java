@@ -16,10 +16,13 @@
 
 package org.jarvis.core.resources.api.href;
 
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 
 import org.jarvis.core.model.bean.scenario.BlockBean;
 import org.jarvis.core.model.bean.scenario.ScenarioBean;
+import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.model.rest.scenario.BlockRest;
 import org.jarvis.core.model.rest.scenario.ScenarioRest;
 import org.jarvis.core.resources.api.mapper.ApiHrefMapper;
@@ -35,5 +38,14 @@ public class ApiHrefScenarioBlockResources extends ApiHrefMapper<ScenarioRest,Bl
 	protected
 	void init() {
 		super.init(ScenarioBean.class.getSimpleName(),BlockBean.class.getSimpleName(),"blocks");
+	}
+
+	/**
+	 * find all by bean
+	 * @param scenario 
+	 * @return List<GenericEntity>
+	 */
+	public List<GenericEntity> findAll(ScenarioBean scenario) {
+		return super.findAll(mapperFactory.getMapperFacade().map(scenario, ScenarioRest.class));
 	}
 }

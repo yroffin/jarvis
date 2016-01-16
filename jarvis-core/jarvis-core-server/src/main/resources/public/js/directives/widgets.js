@@ -195,7 +195,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     restrict: 'E',
     templateUrl: '/ui/js/partials/widget/scenarios/jarvis-blocks.html',
     link: function(scope, element, attrs) {
-    	$log.info('jarvis-blocks');
+    	$log.info('jarvis-scenario-blocks');
     }
   }
 })
@@ -204,7 +204,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     restrict: 'E',
     templateUrl: '/ui/js/partials/widget/scenarios/jarvis-block.html',
     link: function(scope, element, attrs) {
-    	$log.info('jarvis-block');
+    	$log.info('jarvis-scenario-block');
     }
   }
 })
@@ -232,6 +232,24 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     templateUrl: '/ui/js/partials/widget/blocks/jarvis-block.html',
     link: function(scope, element, attrs) {
     	$log.info('jarvis-block');
+    }
+  }
+})
+.directive('jarvisBlockThen', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/partials/widget/blocks/jarvis-block-then.html',
+    link: function(scope, element, attrs) {
+    	$log.info('jarvis-block-then');
+    }
+  }
+})
+.directive('jarvisBlockElse', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/partials/widget/blocks/jarvis-block-else.html',
+    link: function(scope, element, attrs) {
+    	$log.info('jarvis-block-else');
     }
   }
 })

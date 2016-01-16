@@ -76,70 +76,18 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
 			},
 			$stateParams.id
 	);
-	/**
-	 * inject in scope
-	 */
-	$scope.crudBlock = genericResourceService.crud(['blocks']);
     /**
-     * add then block
-     * @param block, block to modify
+     * pick an element
+     * @param ev
+     * @param block
      */
-    $scope.addNewBlock = function() {
-    	$scope.crudBlock.post(
-        		{
-        		},
-        		function(element) {
-        	    	$log.debug('scenario::addNewBlock', element);
-        	    	$scope.add(element);
-        		},
-        		toastService.failure
-        );
-    }
-    $scope.updateBlock = function(data) {
-    	genericResourceService.scope.entity.save(['blocks'], data, service);
-    }
-    /**
-     * add then block
-     * @param block, block to modify
-     */
-    $scope.updateAll = function(block) {
-    	$log.debug('scenario::updateAll', block);
-    	$scope.crudBlock.put(
-    			block,
-        		function(element) {
-        	    	$log.debug('scenario::updateAll', element);
-        	    	$scope.update(block);
-        		},
-        		toastService.failure
-        );
-    }
-    /**
-     * add then block
-     * @param block, block to modify
-     */
-    $scope.addThenBlock = function(block) {
-    	$log.debug('scenario::addThenBlock', block);
-    }
-    /**
-     * add then block
-     * @param block, block to modify
-     */
-    $scope.addElseBlock = function(block) {
-    	$log.debug('scenario::addElseBlock', block);
-    }
-    /**
-     * add then block
-     * @param block, block to modify
-     */
-    $scope.addThenAction = function(block, plugin) {
-    	$log.debug('scenario::addThenAction', block, plugin);
-    }
-    /**
-     * add then block
-     * @param block, block to modify
-     */
-    $scope.addElseAction = function(block, plugin) {
-    	$log.debug('scenario::addElseAction', block, plugin);
+    $scope.pickBlockDialog = function(ev, block) {
+    	return genericPickerService.pickers.nodes(ev, function(node) {
+    		$scope.add(node);
+    	}, function() {
+    		$log.debug('Abort');
+    	},
+    	'pickBlockDialogCtrl');
     }
     /**
      * pick an element
@@ -154,6 +102,17 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
     		$log.debug('Abort');
     	},
     	'pickIotDialogCtrl');
+    }
+    /**
+     * execute this scenario
+	 * @param scenario, the scenario to be executed
+     */
+    $scope.execute = function(scenario) {
+    	if(scenario != undefined && scenario.id != undefined && scenario.id != '') {
+    		scenarioResourceService.scenario.task(scenario.id, 'execute', {}, function(data) {
+       	    	$log.debug('[SCENARIO/execute]', scenario, data);
+    	    }, toastService.failure);
+    	}
     }
     /**
      * load this controller
@@ -241,14 +200,101 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
      * @param block
      */
     $scope.pickIotDialog = function(ev, block) {
-    	return genericPickerService.pickers.iots(ev, function(node) {
-        	block.context = node;
+    	return genericPickerService.pickers.nodes(ev, function(node) {
         	block.pluginId = node.id;
         	block.pluginName = node.name;
     	}, function() {
     		$log.debug('Abort');
     	},
     	'pickIotDialogCtrl');
+    }
+    /**
+     * pick an element
+     * @param ev
+     * @param block
+     */
+    $scope.pickThenIotDialog = function(ev, block) {
+    	return genericPickerService.pickers.nodes(ev, function(node) {
+        	block.pluginThenId = node.id;
+        	block.pluginThenName = node.name;
+    	}, function() {
+    		$log.debug('Abort');
+    	},
+    	'pickIotDialogCtrl');
+    }
+    /**
+     * pick an element
+     * @param ev
+     * @param block
+     */
+    $scope.pickElseIotDialog = function(ev, block) {
+    	return genericPickerService.pickers.nodes(ev, function(node) {
+        	block.pluginElseId = node.id;
+        	block.pluginElseName = node.name;
+    	}, function() {
+    		$log.debug('Abort');
+    	},
+    	'pickIotDialogCtrl');
+    }
+    /**
+     * pick an element
+     * @param ev
+     * @param block
+     */
+    $scope.pickThenBlockDialog = function(ev, block) {
+    	return genericPickerService.pickers.nodes(ev, function(node) {
+        	block.blockThenId = node.id;
+        	block.blockThenName = node.name;
+    	}, function() {
+    		$log.debug('Abort');
+    	},
+    	'pickBlockDialogCtrl');
+    }
+    /**
+     * pick an element
+     * @param ev
+     * @param block
+     */
+    $scope.pickElseBlockDialog = function(ev, block) {
+    	return genericPickerService.pickers.nodes(ev, function(node) {
+        	block.blockElseId = node.id;
+        	block.blockElseName = node.name;
+    	}, function() {
+    		$log.debug('Abort');
+    	},
+    	'pickBlockDialogCtrl');
+    }
+    /**
+     * clear
+     */
+    $scope.clearPluginThen = function() {
+    	$log.debug('Clear then plugin');
+    	$scope.block.pluginThenId = undefined;
+    	$scope.block.pluginThenName = undefined;
+    }
+    /**
+     * clear
+     */
+    $scope.clearBlockThen = function() {
+    	$log.debug('Clear then block');
+    	$scope.block.blockThenId = undefined;
+    	$scope.block.blockThenName = undefined;
+    }
+    /**
+     * clear
+     */
+    $scope.clearPluginElse = function() {
+    	$log.debug('Clear else plugin');
+    	$scope.block.pluginElseId = undefined;
+    	$scope.block.pluginElseName = undefined;
+    }
+    /**
+     * clear
+     */
+    $scope.clearBlockElse = function() {
+    	$log.debug('Clear else block');
+    	$scope.block.blockElseId = undefined;
+    	$scope.block.blockElseName = undefined;
     }
     /**
      * execute this command on server side

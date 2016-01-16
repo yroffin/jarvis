@@ -27,6 +27,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class BlockRest extends GenericEntity {
 	/**
+	 * name
+	 */
+	@JsonProperty("name")
+	public String name;
+	/**
 	 * expression
 	 */
 	@JsonProperty("expression")
@@ -41,4 +46,44 @@ public class BlockRest extends GenericEntity {
 	 */
 	@JsonProperty("pluginName")
 	public String pluginName;
+	/**
+	 * pluginThenId
+	 */
+	@JsonProperty("pluginThenId")
+	public String pluginThenId;
+	/**
+	 * pluginThenName
+	 */
+	@JsonProperty("pluginThenName")
+	public String pluginThenName;
+	/**
+	 * pluginElseId
+	 */
+	@JsonProperty("pluginElseId")
+	public String pluginElseId;
+	/**
+	 * pluginElseName
+	 */
+	@JsonProperty("pluginElseName")
+	public String pluginElseName;
+	/**
+	 * blockThenId
+	 */
+	@JsonProperty("blockThenId")
+	public String blockThenId;
+	/**
+	 * blockThenName
+	 */
+	@JsonProperty("blockThenName")
+	public String blockThenName;
+	/**
+	 * blockElseId
+	 */
+	@JsonProperty("blockElseId")
+	public String blockElseId;
+	/**
+	 * blockElseName
+	 */
+	@JsonProperty("blockElseName")
+	public String blockElseName;
 }

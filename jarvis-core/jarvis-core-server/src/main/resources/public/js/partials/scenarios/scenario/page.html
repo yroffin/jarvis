@@ -1,16 +1,14 @@
-<md-button class="md-primary md-raised" ng-click="pickIotDialog($event)" flex="100"  flex-gt-md="auto">
-      Tab Dialog
-</md-button>
+<h2>{{scenario.name}}<md-tooltip>#{{scenario.id}}</md-tooltip></h2>
 <md-toolbar>
   <md-fab-actions class="md-toolbar-tools">
 	<md-button aria-label="menu" class="md-icon-button" ng-click="go('scenarios')"><md-icon md-font-icon="material-icons md-16">clear</md-icon></md-button>
 	<md-button aria-label="menu" class="md-icon-button" ng-click="duplicate(scenario)"><md-icon md-font-icon="material-icons md-16">content_copy</md-icon></md-button>
 	<md-button aria-label="menu" class="md-icon-button" ng-click="remove(scenario)"><md-icon md-font-icon="material-icons md-16">delete</md-icon></md-button>
 	<md-button aria-label="menu" class="md-icon-button" ng-click="save(scenario)"><md-icon md-font-icon="material-icons md-16">save</md-icon></md-button>
+	<md-button aria-label="menu" class="md-icon-button" ng-click="execute(scenario)"><md-icon md-font-icon="material-icons md-16">play_arrow</md-icon></md-button>
   </md-fab-actions>
 </md-toolbar>
 <div layout="column" ng-init="load()" ng-cloak>
-	<h2>scenario #{{scenario.id}}</h2>
 	<md-tabs md-dynamic-height md-border-bottom>
 		<md-tab label="{{'scenario.general' | translate}}" md-active="activeTab==1">
 			<md-content layout-padding>

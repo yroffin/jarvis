@@ -16,8 +16,10 @@
 
 package org.jarvis.core.resources.api.scenario;
 
+import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.scenario.BlockBean;
 import org.jarvis.core.model.bean.scenario.ScenarioBean;
+import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.model.rest.scenario.BlockRest;
 import org.jarvis.core.model.rest.scenario.ScenarioRest;
 import org.jarvis.core.resources.api.ApiLinkedResources;
@@ -65,6 +67,22 @@ public class ApiScenarioResources extends ApiLinkedResources<ScenarioRest,Scenar
 
 	@Override
 	public String doRealTask(ScenarioBean bean, GenericMap args, TaskType taskType) throws Exception {
+		GenericMap result;
+		switch(taskType) {
+			case EXECUTE:
+				return execute(bean, args, new GenericMap());
+			default:
+				result = new GenericMap();
+				return mapper.writeValueAsString(result);
+		}
+	}
+
+	private String execute(ScenarioBean bean, GenericMap args, GenericMap genericMap) throws TechnicalNotFoundException {
+		GenericMap result = args;
+		for(GenericEntity entity : sort(apiHrefScenarioBlockResources.findAll(bean), "order")) {
+			BlockRest block = apiBlockResources.doGetById(entity.id);
+			result = apiBlockResources.execute(mapperFactory.getMapperFacade().map(block, BlockBean.class), result);
+		}
 		return "";
 	}
 }

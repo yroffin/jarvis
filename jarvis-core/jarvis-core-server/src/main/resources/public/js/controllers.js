@@ -163,5 +163,34 @@ angular.module('JarvisApp.config',[])
 					});
 				},
 				toastService.failure
-		);
+		)
+	})
+	.controller('pickBlockDialogCtrl',
+			function($scope, $log, $mdDialog, genericResourceService, toastService) {
+			$scope.hide = function() {
+			   $mdDialog.hide();
+			 };
+			$scope.cancel = function() {
+			  $mdDialog.cancel();
+			};
+			$scope.answer = function(answer) {
+			  $mdDialog.hide(answer);
+			};
+			$scope.elementsPicker = [
+			     {
+			    	 name:"Blocks",
+			    	 selectable : false,
+			    	 nodes:[]
+			     }
+		    ];
+			$scope.crudBlock = genericResourceService.crud(['blocks']);
+			$scope.crudBlock.findAll(
+					function(elements) {
+						_.each(elements, function(element) {
+							element.selectable = true;
+					    	$scope.elementsPicker[0].nodes.push(element);
+						});
+					},
+					toastService.failure
+			);
 	})

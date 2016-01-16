@@ -94,4 +94,23 @@ public class ApiBlockResources extends ApiLinkedResources<BlockRest,BlockBean,Sc
 		}
 		return result;
 	}
+
+	/**
+	 * @param bean
+	 * @param args
+	 * @return GenericMap
+	 * @throws TechnicalNotFoundException 
+	 */
+	public GenericMap execute(BlockBean bean, GenericMap args) throws TechnicalNotFoundException {
+		GenericMap result = new GenericMap();
+		if(bean.pluginId != null) {
+			GenericMap exec = (GenericMap) apiScriptPluginResources.doExecute(bean.pluginId, args, TaskType.EXECUTE);
+			if(pluginGroovyService.groovyAsBoolean(bean.expression, exec)) {
+				
+			} else {
+				
+			}
+		}
+		return result;
+	}
 }

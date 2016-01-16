@@ -494,10 +494,10 @@ return {
 						.cancel(cancel);
 					return $mdDialog.show(confirm);
 			  },
-			  iots : function(ev, callback, abort, ctrl) {
+			  nodes : function(ev, callback, abort, ctrl) {
 			        $mdDialog.show({
 			          controller: ctrl,
-			          templateUrl: 'js/partials/dialog/iotDialog.tmpl.html',
+			          templateUrl: 'js/partials/dialog/nodesDialog.tmpl.html',
 			          parent: angular.element(document.body),
 			          targetEvent: ev,
 			          clickOutsideToClose:true

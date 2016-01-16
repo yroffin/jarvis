@@ -1,10 +1,20 @@
+<md-toolbar>
+  <md-fab-actions class="md-toolbar-tools">
+	<md-button aria-label="menu" class="md-icon-button" ng-click="pickIotDialog($event, block)"><md-icon md-font-icon="material-icons md-16">playlist_add</md-icon></md-button>
+	<md-button aria-label="menu" class="md-icon-button" ng-click="block.pluginId = undefined"><md-icon md-font-icon="material-icons md-16">clear</md-icon></md-button>
+  </md-fab-actions>
+</md-toolbar>
+<br>
 <div layout="column">
-	<md-icon md-font-icon="material-icons md-16" ng-click="pickIotDialog($event, block)">playlist_add</md-icon>
 	<md-input-container>
+	  <label translate="block.name"></label>
+	  <input ng-model="block.name">
+	</md-input-container>
+	<md-input-container ng-show="block.pluginId">
 	  <label translate="block.pluginId"></label>
 	  <input ng-model="block.pluginId" disabled>
 	</md-input-container>
-	<md-input-container>
+	<md-input-container ng-show="block.pluginId">
 	  <label translate="block.pluginName"></label>
 	  <input ng-model="block.pluginName" disabled>
 	</md-input-container>
