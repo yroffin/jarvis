@@ -291,12 +291,22 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
     	$scope.block.blockElseName = undefined;
     }
     /**
-     * execute this command on server side
-	 * @param command, the command to be executed
+     * task
+     */
+    $scope.test = function(block) {
+    	if(block != undefined && block.id != undefined && block.id != '') {
+    		blockResourceService.block.task(block.id, 'test', {}, function(data) {
+       	    	$log.debug('[BLOCK/test]', block, data);
+       	    	$scope.testExpression = data;
+    	    }, toastService.failure);
+    	}
+    }
+    /**
+     * task
      */
     $scope.execute = function(block) {
     	if(block != undefined && block.id != undefined && block.id != '') {
-    		blockResourceService.block.task(block.id, 'test', {}, function(data) {
+    		blockResourceService.block.task(block.id, 'execute', {}, function(data) {
        	    	$log.debug('[BLOCK/test]', block, data);
        	    	$scope.testExpression = data;
     	    }, toastService.failure);

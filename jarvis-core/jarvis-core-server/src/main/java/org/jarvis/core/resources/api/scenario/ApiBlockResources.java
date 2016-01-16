@@ -77,6 +77,8 @@ public class ApiBlockResources extends ApiLinkedResources<BlockRest,BlockBean,Sc
 		switch(taskType) {
 			case TEST:
 				return test(bean, args, new GenericMap())+"";
+			case EXECUTE:
+				return execute(bean, args)+"";
 			default:
 				result = new GenericMap();
 				return mapper.writeValueAsString(result);
@@ -106,9 +108,13 @@ public class ApiBlockResources extends ApiLinkedResources<BlockRest,BlockBean,Sc
 		if(bean.pluginId != null) {
 			GenericMap exec = (GenericMap) apiScriptPluginResources.doExecute(bean.pluginId, args, TaskType.EXECUTE);
 			if(pluginGroovyService.groovyAsBoolean(bean.expression, exec)) {
-				
+				if(bean.pluginThenId != null) {
+					GenericMap thn = (GenericMap) apiScriptPluginResources.doExecute(bean.pluginThenId, args, TaskType.EXECUTE);
+				}
 			} else {
-				
+				if(bean.pluginElseId != null) {
+					GenericMap els = (GenericMap) apiScriptPluginResources.doExecute(bean.pluginElseId, args, TaskType.EXECUTE);
+				}
 			}
 		}
 		return result;
