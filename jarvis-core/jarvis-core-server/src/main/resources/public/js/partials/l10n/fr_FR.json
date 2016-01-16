@@ -25,6 +25,7 @@
     "plugin.script"		: "Script",
     "plugin.general"	: "Général",
     "plugin.render"		: "Résultat",
+    "plugin.title"    	: "Mes plugins",
     "plugin.order"		: "Ordre",
     "plugin.tp.cmds"	: "Action sur le script",
     "iot.title"    		: "Mes objets connectés",

@@ -3,12 +3,6 @@
        md-row-height-gt-md="128px" md-row-height="128px"
        md-gutter="4px" md-gutter-gt-sm="4px" >
    <md-grid-tile
-       md-rowspan="1" md-colspan="2" md-colspan-sm="1">
-	<div ng-click="new(jarvis.iots)">
-		<md-icon md-font-icon="material-icons md-64">control_point</md-icon>
-	</div>
-</md-grid-tile>
-   <md-grid-tile
        md-rowspan="1" md-colspan="2" md-colspan-sm="1" ng-repeat="iot in iots">
       <jarvis-card element="iot" state="'iots-by-id'"></jarvis-card>
    </md-grid-tile>
