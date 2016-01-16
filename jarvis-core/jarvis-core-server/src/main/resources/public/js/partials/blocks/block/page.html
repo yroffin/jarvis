@@ -1,5 +1,7 @@
-<h2>{{block.name}}<md-tooltip>#{{block.id}}</md-tooltip></h2>
 <md-toolbar>
+  <div class="md-toolbar-tools" layout-align="center">
+    <h1><br>{{block.name}}<md-tooltip>block#{{block.id}}</md-tooltip></h1>
+  </div>
   <md-fab-actions class="md-toolbar-tools">
 	<md-button aria-label="menu" class="md-icon-button" ng-click="go('blocks')"><md-icon md-font-icon="material-icons md-16">clear</md-icon></md-button>
 	<md-button aria-label="menu" class="md-icon-button" ng-click="duplicate(block)"><md-icon md-font-icon="material-icons md-16">content_copy</md-icon></md-button>

@@ -24,7 +24,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     restrict: 'E',
     templateUrl: '/ui/js/partials/widget/plugins/jarvis-plugins.html',
     link: function(scope, element, attrs) {
-    	$log.info('jarvis-plugins');
+    	$log.debug('jarvis-plugins');
     }
   }
 })
@@ -33,7 +33,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
 	    restrict: 'E',
 	    templateUrl: '/ui/js/partials/widget/plugins/jarvis-plugin-common.html',
 	    link: function(scope, element, attrs) {
-	    	$log.info('jarvis-plugin-common');
+	    	$log.debug('jarvis-plugin-common');
 	    }
 	  }
 })
@@ -42,7 +42,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
 	    restrict: 'E',
 	    templateUrl: '/ui/js/partials/widget/plugins/jarvis-plugin-script.html',
 	    link: function(scope, element, attrs) {
-	    	$log.info('jarvis-plugin-script');
+	    	$log.debug('jarvis-plugin-script');
 	    }
 	  }
 })
@@ -51,7 +51,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
 	    restrict: 'E',
 	    templateUrl: '/ui/js/partials/widget/plugins/jarvis-plugin-render.html',
 	    link: function(scope, element, attrs) {
-	    	$log.info('jarvis-plugin-output');
+	    	$log.debug('jarvis-plugin-output');
 	    }
 	  }
 })
@@ -60,7 +60,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     restrict: 'E',
     templateUrl: '/ui/js/partials/widget/iots/jarvis-iots.html',
     link: function(scope, element, attrs) {
-    	$log.info('jarvis-iots');
+    	$log.debug('jarvis-iots');
     }
   }
 })
@@ -69,7 +69,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     restrict: 'E',
     templateUrl: '/ui/js/partials/widget/iots/jarvis-iot.html',
     link: function(scope, element, attrs) {
-    	$log.info('jarvis-iot');
+    	$log.debug('jarvis-iot');
     }
   }
 })
@@ -78,7 +78,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     restrict: 'E',
     templateUrl: '/ui/js/partials/widget/iots/jarvis-iot-plugin.html',
     link: function(scope, element, attrs) {
-    	$log.info('jarvis-iot-plugin');
+    	$log.debug('jarvis-iot-plugin');
     }
   }
 })
@@ -87,7 +87,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     restrict: 'E',
     templateUrl: '/ui/js/partials/widget/iots/jarvis-iot-render.html',
     link: function(scope, element, attrs) {
-    	$log.info('jarvis-iot-render');
+    	$log.debug('jarvis-iot-render');
     }
   }
 })
@@ -96,7 +96,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     restrict: 'E',
     templateUrl: '/ui/js/partials/widget/jarvis-jobs.html',
     link: function(scope, element, attrs) {
-    	$log.info('jarvis-jobs');
+    	$log.debug('jarvis-jobs');
     }
   }
 })
@@ -105,7 +105,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     restrict: 'E',
     templateUrl: '/ui/js/partials/widget/jarvis-job.html',
     link: function(scope, element, attrs) {
-    	$log.info('jarvis-job');
+    	$log.debug('jarvis-job');
     }
   }
 })
@@ -114,7 +114,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     restrict: 'E',
     templateUrl: '/ui/js/partials/widget/commands/jarvis-commands.html',
     link: function(scope, element, attrs) {
-    	$log.info('jarvis-commands');
+    	$log.debug('jarvis-commands');
     }
   }
 })
@@ -123,7 +123,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     restrict: 'E',
     templateUrl: '/ui/js/partials/widget/commands/jarvis-command.html',
     link: function(scope, element, attrs) {
-    	$log.info('jarvis-command');
+    	$log.debug('jarvis-command');
     }
   }
 })
@@ -132,7 +132,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     restrict: 'E',
     templateUrl: '/ui/js/partials/widget/commands/jarvis-command-input.html',
     link: function(scope, element, attrs) {
-    	$log.info('jarvis-command-input');
+    	$log.debug('jarvis-command-input');
     }
   }
 })
@@ -141,7 +141,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     restrict: 'E',
     templateUrl: '/ui/js/partials/widget/commands/jarvis-command-script.html',
     link: function(scope, element, attrs) {
-    	$log.info('jarvis-command-script');
+    	$log.debug('jarvis-command-script');
     }
   }
 })
@@ -150,25 +150,25 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     restrict: 'E',
     templateUrl: '/ui/js/partials/widget/commands/jarvis-command-output.html',
     link: function(scope, element, attrs) {
-    	$log.info('jarvis-command-output');
+    	$log.debug('jarvis-command-output');
     }
   }
 })
 .directive('jarvisViews', function ($log, $stateParams) {
   return {
     restrict: 'E',
-    templateUrl: '/ui/js/partials/widget/jarvis-views.html',
+    templateUrl: '/ui/js/partials/widget/views/jarvis-views.html',
     link: function(scope, element, attrs) {
-    	$log.info('jarvis-views');
+    	$log.debug('jarvis-views');
     }
   }
 })
 .directive('jarvisView', function ($log, $stateParams) {
   return {
     restrict: 'E',
-    templateUrl: '/ui/js/partials/widget/jarvis-view.html',
+    templateUrl: '/ui/js/partials/widget/views/jarvis-view.html',
     link: function(scope, element, attrs) {
-    	$log.info('jarvis-view');
+    	$log.debug('jarvis-view');
     }
   }
 })
@@ -177,7 +177,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     restrict: 'E',
     templateUrl: '/ui/js/partials/widget/scenarios/jarvis-scenarios.html',
     link: function(scope, element, attrs) {
-    	$log.info('jarvis-scenarios');
+    	$log.debug('jarvis-scenarios');
     }
   }
 })
@@ -186,7 +186,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     restrict: 'E',
     templateUrl: '/ui/js/partials/widget/scenarios/jarvis-scenario.html',
     link: function(scope, element, attrs) {
-    	$log.info('jarvis-scenario');
+    	$log.debug('jarvis-scenario');
     }
   }
 })
@@ -195,7 +195,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     restrict: 'E',
     templateUrl: '/ui/js/partials/widget/scenarios/jarvis-blocks.html',
     link: function(scope, element, attrs) {
-    	$log.info('jarvis-scenario-blocks');
+    	$log.debug('jarvis-scenario-blocks');
     }
   }
 })
@@ -204,7 +204,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     restrict: 'E',
     templateUrl: '/ui/js/partials/widget/scenarios/jarvis-block.html',
     link: function(scope, element, attrs) {
-    	$log.info('jarvis-scenario-block');
+    	$log.debug('jarvis-scenario-block');
     }
   }
 })
@@ -213,7 +213,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     restrict: 'E',
     templateUrl: '/ui/js/partials/widget/scenarios/jarvis-block-b.html',
     link: function(scope, element, attrs) {
-    	$log.info('jarvis-block-b');
+    	$log.debug('jarvis-block-b');
     }
   }
 })
@@ -222,7 +222,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     restrict: 'E',
     templateUrl: '/ui/js/partials/widget/blocks/jarvis-blocks.html',
     link: function(scope, element, attrs) {
-    	$log.info('jarvis-blocks');
+    	$log.debug('jarvis-blocks');
     }
   }
 })
@@ -231,7 +231,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     restrict: 'E',
     templateUrl: '/ui/js/partials/widget/blocks/jarvis-block.html',
     link: function(scope, element, attrs) {
-    	$log.info('jarvis-block');
+    	$log.debug('jarvis-block');
     }
   }
 })
@@ -240,7 +240,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     restrict: 'E',
     templateUrl: '/ui/js/partials/widget/blocks/jarvis-block-then.html',
     link: function(scope, element, attrs) {
-    	$log.info('jarvis-block-then');
+    	$log.debug('jarvis-block-then');
     }
   }
 })
@@ -249,7 +249,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     restrict: 'E',
     templateUrl: '/ui/js/partials/widget/blocks/jarvis-block-else.html',
     link: function(scope, element, attrs) {
-    	$log.info('jarvis-block-else');
+    	$log.debug('jarvis-block-else');
     }
   }
 })
@@ -258,7 +258,20 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     restrict: 'E',
     templateUrl: '/ui/js/partials/widget/jarvis-home.html',
     link: function(scope, element, attrs) {
-    	$log.info('jarvis-home');
+    	$log.debug('jarvis-home');
+    }
+  }
+})
+.directive('jarvisCard', function ($log, $parse) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/partials/widget/tile/jarvis-card.html',
+    scope: false,
+    link: function(scope, element, attrs) {
+    	$log.debug('jarvis-card element', $parse(attrs.element)(scope));
+    	$log.debug('jarvis-card state', $parse(attrs.state)(scope));
+    	scope.element = $parse(attrs.element)(scope);
+    	scope.state = $parse(attrs.state)(scope);
     }
   }
 })
@@ -267,7 +280,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     restrict: 'E',
     templateUrl: '/ui/js/partials/widget/tile/jarvis-tile.html',
     link: function(scope, element, attrs) {
-    	$log.info('jarvis-tile');
+    	$log.debug('jarvis-tile');
     }
   }
 })
@@ -276,7 +289,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     restrict: 'E',
     templateUrl: '/ui/js/partials/widget/tile/jarvis-tile-boolean.html',
     link: function(scope, element, attrs) {
-    	$log.info('jarvis-tile-boolean');
+    	$log.debug('jarvis-tile-boolean');
     }
   }
 })
@@ -285,7 +298,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     restrict: 'E',
     templateUrl: '/ui/js/partials/widget/tile/jarvis-tile-int.html',
     link: function(scope, element, attrs) {
-    	$log.info('jarvis-tile-int');
+    	$log.debug('jarvis-tile-int');
     }
   }
 })
@@ -294,7 +307,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     restrict: 'E',
     templateUrl: '/ui/js/partials/widget/tile/jarvis-tile-percent.html',
     link: function(scope, element, attrs) {
-    	$log.info('jarvis-tile-percent');
+    	$log.debug('jarvis-tile-percent');
     }
   }
 })
@@ -303,7 +316,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     restrict: 'E',
     template: '<div ng-include="getJarvisInlineTemplateUrl()"></div>',
     link: function(scope, element, attrs) {
-    	$log.info('jarvis-inline-template id', $parse(attrs.id)(scope));
+    	$log.debug('jarvis-inline-template id', $parse(attrs.id)(scope));
     	scope.getJarvisInlineTemplateUrl = function() {
     		/**
     		 * update scope

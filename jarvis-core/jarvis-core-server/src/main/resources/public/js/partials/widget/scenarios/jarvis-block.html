@@ -3,14 +3,16 @@
 	<input ng-model="block.extended.order">
 </md-input-container>
 <md-button aria-label="menu" class="md-icon-button" ng-click="drop(block)"><md-icon md-font-icon="material-icons md-16">delete</md-icon></md-button>
+<md-button aria-label="menu" class="md-icon-button" ng-click="update(block)"><md-icon md-font-icon="material-icons md-16">save</md-icon></md-button>
 <div layout="column">
-<code>
-Si {{block.name}}
-</code>
-<code>
-Alors [{{block.pluginThenName}}#{{block.pluginThenId}}] [{{block.blockThenName}}#{{block.blockThenId}}]
-</code>
-<code>
-Else [{{block.pluginElseName}}#{{block.pluginElseId}}] [{{block.blockElseName}}#{{block.blockElseId}}]
-</code>
+<pre>
+<code ng-if="block.id">si [<a href="#/blocks/{{block.id}}">{{block.name}}</a>]</code>
+{
+<code ng-if="block.pluginThenId">    executer le plugin [<a href="#/plugins/scripts/{{block.pluginThenId}}">{{block.pluginThenName}}#{{block.pluginThenId}}</a>]</code>
+<code ng-if="block.blockThenId">    executer le block [<a href="#/blocks/{{block.blockThenId}}">{{block.blockThenName}}#{{block.blockThenId}}</a>]</code>
+} sinon {
+<code ng-if="block.pluginElseId">    executer le plugin [<a href="#/plugins/scripts/{{block.pluginElseId}}">{{block.pluginElseName}}#{{block.pluginElseId}}</a>]</code>
+<code ng-if="block.blockElseId">    executer le block [<a href="#/blocks/{{block.blockElseId}}">{{block.blockElseName}}#{{block.blockElseId}}</a>]</code>
+}
+</pre>
 </div>

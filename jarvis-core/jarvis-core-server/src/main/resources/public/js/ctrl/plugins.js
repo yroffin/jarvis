@@ -20,31 +20,26 @@
 
 angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
 .controller('pluginsCtrl', 
-	function($scope, $log, pluginResourceService, genericResourceService, toastService){
-    /**
-     * Cf. genericResourceService
-     */
-    $scope.new = function() {
-    	genericResourceService.scope.collections.new(
-        		'plugins',
-        		$scope.plugins,
-        		{
-        			name: "...",
-        			icon: "star_border",
-           			type: "script"
-        		},
-        		pluginResourceService.scripts
-        );
-    }
-    /**
-     * loading
-     */
-    $scope.load = function() {
-		pluginResourceService.plugins.findAll(function(data) {
-			$scope.plugins = data;
-			$log.debug('plugins-ctrl', data);
-	    }, toastService.failure);
-    }
+	function($scope, $log, genericScopeService, pluginResourceService){
+	$scope.setEntities = function(entities) {
+		$scope.plugins = entities;
+	}
+	$scope.getEntities = function() {
+		return $scope.plugins;
+	}
+	/**
+	 * declare generic scope resource (and inject it in scope)
+	 */
+	genericScopeService.scope.resources(
+			$scope, 
+			'plugins', 
+			pluginResourceService.scripts,
+			{
+    			name: "script name",
+    			icon: "list",
+       			type: "script"
+    		}
+	);
 })
 .controller('pluginScriptCtrl',
 	function($scope, $log, $stateParams, genericResourceService, genericScopeService, pluginResourceService, iotResourceService, commandResourceService, toastService){

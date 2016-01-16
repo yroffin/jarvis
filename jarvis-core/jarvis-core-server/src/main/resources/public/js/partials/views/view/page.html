@@ -1,4 +1,7 @@
 <md-toolbar>
+  <div class="md-toolbar-tools" layout-align="center">
+    <h1><br>{{view.name}}<md-tooltip>view#{{view.id}}</md-tooltip></h1>
+  </div>
   <md-fab-actions class="md-toolbar-tools">
 	<md-button aria-label="menu" class="md-icon-button" ng-click="go('views')"><md-icon md-font-icon="material-icons md-16">clear</md-icon></md-button>
 	<md-button aria-label="menu" class="md-icon-button" ng-click="duplicate(view)"><md-icon md-font-icon="material-icons md-16">content_copy</md-icon></md-button>
@@ -7,7 +10,6 @@
   </md-fab-actions>
 </md-toolbar>
 <div layout="column" ng-init="load()" ng-cloak>
-	<h2>View #{{view.id}}</h2>
 	<md-tabs md-dynamic-height md-border-bottom>
 		<md-tab label="{{'view.general' | translate}}">
 			<md-content layout-padding>

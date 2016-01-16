@@ -1,4 +1,7 @@
 <md-toolbar>
+  <div class="md-toolbar-tools" layout-align="center">
+    <h1><br>{{script.name}}<md-tooltip>{{script.type}}#{{script.id}}</md-tooltip></h1>
+  </div>
   <md-fab-actions class="md-toolbar-tools">
 	<md-button aria-label="menu" class="md-icon-button" ng-click="go('plugins')"><md-icon md-font-icon="material-icons md-16">clear</md-icon></md-button>
 	<md-button aria-label="menu" class="md-icon-button" ng-click="duplicate(script)"><md-icon md-font-icon="material-icons md-16">content_copy</md-icon></md-button>
@@ -9,7 +12,6 @@
   </md-fab-actions>
 </md-toolbar>
 <div layout="column" ng-init="load()" ng-cloak>
-	<h2>Script {{script.type}}#{{script.id}}</h2>
 	<md-tabs md-dynamic-height md-border-bottom>
 		<md-tab label="{{'plugin.general' | translate}}">
 			<md-content layout-padding>

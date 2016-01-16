@@ -20,32 +20,25 @@
 
 angular.module('JarvisApp.ctrl.views', ['JarvisApp.services'])
 .controller('viewsCtrl', 
-	function($scope, $log, genericResourceService, viewResourceService, toastService){
-    /**
-     * create a new view
-     * @param views, views list in $scope
-     */
-    $scope.new = function() {
-    	genericResourceService.scope.collections.new(
-        		'views',
-        		$scope.views,
-        		{
-        			name: "view name",
-        			icon: "star_border"
-        		},
-        		viewResourceService.view
-        );
-    }
-    /**
-     * load this controller
-     */
-    $scope.load = function() {
-    	$scope.views = [];
-		viewResourceService.view.findAll(function(data) {
-	        $scope.views = data;
-			$log.info('views-ctrl', data);
-	    }, toastService.failure);
-    }
+	function($scope, $log, genericScopeService, viewResourceService){
+	$scope.setEntities = function(entities) {
+		$scope.views = entities;
+	}
+	$scope.getEntities = function() {
+		return $scope.views;
+	}
+	/**
+	 * declare generic scope resource (and inject it in scope)
+	 */
+	genericScopeService.scope.resources(
+			$scope, 
+			'commands', 
+			viewResourceService.view,
+			{
+    			name: "view name",
+    			icon: "list"
+    		}
+	);
 })
 .controller('viewCtrl',
 	function($scope, $log, $stateParams, genericResourceService, genericScopeService, viewResourceService, iotResourceService, toastService){

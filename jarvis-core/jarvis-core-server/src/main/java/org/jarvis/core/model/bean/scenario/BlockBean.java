@@ -11,6 +11,10 @@ public class BlockBean extends GenericBean {
 	 */
 	public String name;
 	/**
+	 * icon
+	 */
+	public String icon;
+	/**
 	 * expression
 	 */
 	public String expression;

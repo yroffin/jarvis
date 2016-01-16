@@ -10,11 +10,6 @@
 </md-grid-tile>
    <md-grid-tile
        md-rowspan="1" md-colspan="2" md-colspan-sm="1" ng-repeat="iot in iots">
-	<div ng-click="go('iots-by-id',{id:iot.id})">
-		<md-grid-tile-header>
-			<h3><md-icon md-font-icon="material-icons md-16">delete</md-icon> {{iot.name}} (#{{iot.id}})</h3>
-		</md-grid-tile-header>
-		<md-icon md-font-icon="material-icons md-64">{{iot.icon}}</md-icon>
-	</div>
+      <jarvis-card element="iot" state="'iots-by-id'"></jarvis-card>
    </md-grid-tile>
  </md-grid-list>

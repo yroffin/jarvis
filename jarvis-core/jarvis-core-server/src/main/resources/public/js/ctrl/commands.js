@@ -20,30 +20,25 @@
 
 angular.module('JarvisApp.ctrl.commands', ['JarvisApp.services'])
 .controller('commandsCtrl', 
-	function($scope, $log, commandResourceService, genericResourceService, toastService){
-    /**
-     * Cf. genericResourceService
-     */
-    $scope.new = function(commands) {
-    	genericResourceService.scope.collections.new(
-        		'commands',
-        		$scope.commands,
-        		{
-        			name: "...",
-        			icon: "star_border"
-        		},
-        		commandResourceService.command
-        );
-    }
-    /**
-     * loading
-     */
-    $scope.load = function() {
-		commandResourceService.command.findAll(function(data) {
-	        $scope.commands = data;
-	    }, toastService.failure);	
-		$log.debug('commands-ctrl');
-    }
+	function($scope, $log, genericScopeService, commandResourceService){
+	$scope.setEntities = function(entities) {
+		$scope.commands = entities;
+	}
+	$scope.getEntities = function() {
+		return $scope.commands;
+	}
+	/**
+	 * declare generic scope resource (and inject it in scope)
+	 */
+	genericScopeService.scope.resources(
+			$scope, 
+			'commands', 
+			commandResourceService.command,
+			{
+    			name: "command name",
+    			icon: "list"
+    		}
+	);
 })
 .controller('commandCtrl',
 	function($scope, $log, $stateParams, genericResourceService, genericScopeService, commandResourceService, toastService){

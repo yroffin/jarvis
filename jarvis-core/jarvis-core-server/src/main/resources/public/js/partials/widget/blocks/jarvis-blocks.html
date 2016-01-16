@@ -10,14 +10,6 @@
   </md-grid-tile>
   <md-grid-tile
       md-rowspan="1" md-colspan="2" md-colspan-sm="1" ng-repeat="block in blocks">
-    <div ng-click="remove(block)">
-		<md-icon md-font-icon="material-icons md-16">delete</md-icon>
-    </div>
-	<div ng-click="go('blocks-by-id',{id:block.id})">
-		<md-grid-tile-header>
-			<h3>{{block.name}} (#{{block.id}})</h3>
-		</md-grid-tile-header>
-		<md-icon md-font-icon="material-icons md-64">{{block.icon}}</md-icon>
-	</div>
+      <jarvis-card element="block" state="'blocks-by-id'"></jarvis-card>
   </md-grid-tile>
 </md-grid-list>

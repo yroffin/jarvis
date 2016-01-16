@@ -20,31 +20,25 @@
 
 angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
 .controller('scenariosCtrl', 
-	function($scope, $log, genericResourceService, scenarioResourceService, toastService){
-    /**
-     * Cf. genericResourceService
-     */
-    $scope.new = function(scenarios) {
-    	genericResourceService.scope.collections.new(
-        		'scenarios',
-        		$scope.scenarios,
-        		{
-        			name: "scenario name",
-        			icon: "list"
-        		},
-        		scenarioResourceService.scenario
-        );
-    }
-    /**
-     * loading
-     */
-    $scope.load = function() {
-    	$scope.scenarios = [];
-		scenarioResourceService.scenario.findAll(function(data) {
-	    	$scope.scenarios = data;
-			$log.debug('scenarios-ctrl', data);
-	    }, toastService.failure);
-    }
+	function($scope, $log, genericScopeService, scenarioResourceService, toastService){
+	$scope.setEntities = function(entities) {
+		$scope.scenarios = entities;
+	}
+	$scope.getEntities = function() {
+		return $scope.scenarios;
+	}
+	/**
+	 * declare generic scope resource (and inject it in scope)
+	 */
+	genericScopeService.scope.resources(
+			$scope, 
+			'scenarios', 
+			scenarioResourceService.scenario,
+			{
+    			name: "scenario name",
+    			icon: "list"
+    		}
+	);
 })
 .controller('scenarioCtrl',
 	function(

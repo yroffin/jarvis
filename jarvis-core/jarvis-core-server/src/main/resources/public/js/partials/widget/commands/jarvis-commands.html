@@ -10,11 +10,6 @@
   </md-grid-tile>
   <md-grid-tile
       md-rowspan="1" md-colspan="2" md-colspan-sm="1" ng-repeat="command in commands">
-<div ng-click="go('commands-by-id',{id:command.id})">
-	<md-grid-tile-header>
-		<h3><md-icon md-font-icon="material-icons md-16">delete</md-icon> {{command.name}} ({{command.type}}#{{command.id}})</h3>
-	</md-grid-tile-header>
-	<md-icon md-font-icon="material-icons md-64">{{command.icon}}</md-icon>
-</div>
+      <jarvis-card element="command" state="'commands-by-id'"></jarvis-card>
   </md-grid-tile>
 </md-grid-list>

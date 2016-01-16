@@ -1,0 +1,16 @@
+<md-card>
+  <md-card-title>
+    <md-card-title-media>
+      <div class="md-media-sm card-media"><md-icon md-font-icon="material-icons md-64">{{element.icon}}</md-icon></div>
+      <md-tooltip>{{element.name}}</md-tooltip>
+    </md-card-title-media>
+    <md-card-title-text>
+      <span class="md-subhead">{{element.name | limitTo : 10 : 0}}...</span>
+      <span class="md-subhead">#{{element.id}}</span>
+    </md-card-title-text>
+  </md-card-title>
+  <md-card-actions layout="row" layout-align="end center">
+    <md-button><md-icon md-font-icon="material-icons md-16" ng-click="go(state,{id:element.id})">mode_edit</md-icon><md-tooltip>{{'action.edit' | translate}}</md-tooltip></md-button>
+    <md-button><md-icon md-font-icon="material-icons md-16" ng-click="remove(element)">delete</md-icon><md-tooltip>{{'action.remove' | translate}}</md-tooltip></md-button>
+  </md-card-actions>
+</md-card>

@@ -1,4 +1,4 @@
-<div layout="row">
+<div layout="column">
 	<md-input-container>
 	  <label translate="view.name"></label>
 	  <input ng-model="view.name">
@@ -7,13 +7,9 @@
 	  <label translate="view.icon"></label>
 	  <input ng-model="view.icon">
 	</md-input-container>
-</div>
-<div layout="row">
 	<md-switch ng-model="view.ishome" aria-label="{{'view.ishome' | translate}}">
     	{{'view.ishome' | translate}}
 	</md-switch>
-</div>
-<div layout="row">
 	<div>
 		<md-input-container>
 		<md-icon md-font-icon="material-icons md-16" ng-click="add(iot)">add</md-icon>

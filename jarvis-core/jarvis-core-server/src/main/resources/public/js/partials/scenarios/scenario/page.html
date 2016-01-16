@@ -1,5 +1,7 @@
-<h2>{{scenario.name}}<md-tooltip>#{{scenario.id}}</md-tooltip></h2>
 <md-toolbar>
+  <div class="md-toolbar-tools" layout-align="center">
+    <h1><br>{{scenario.name}}<md-tooltip>scenario#{{scenario.id}}</md-tooltip></h1>
+  </div>
   <md-fab-actions class="md-toolbar-tools">
 	<md-button aria-label="menu" class="md-icon-button" ng-click="go('scenarios')"><md-icon md-font-icon="material-icons md-16">clear</md-icon></md-button>
 	<md-button aria-label="menu" class="md-icon-button" ng-click="duplicate(scenario)"><md-icon md-font-icon="material-icons md-16">content_copy</md-icon></md-button>

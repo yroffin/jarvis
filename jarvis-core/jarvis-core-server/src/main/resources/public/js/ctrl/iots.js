@@ -20,28 +20,25 @@
 
 angular.module('JarvisApp.ctrl.iots', ['JarvisApp.services'])
 .controller('iotsCtrl', 
-	function($scope, $log, iotResourceService, genericResourceService, toastService){
-    /**
-     * Cf. genericResourceService
-     */
-    $scope.new = function(iots) {
-    	genericResourceService.scope.collections.new(
-        		'iots',
-        		$scope.iots,
-        		{
-        			name: "...",
-        			icon: "star_border"
-        		},
-        		iotResourceService.iot
-        );
-    }
-    /**
-     * loading
-     */
-	iotResourceService.iot.findAll(function(data) {
-        $scope.iots = data;
-    	$log.debug('iots-ctrl');
-    }, toastService.failure);
+	function($scope, $log, genericScopeService, iotResourceService){
+	$scope.setEntities = function(entities) {
+		$scope.iots = entities;
+	}
+	$scope.getEntities = function() {
+		return $scope.iots;
+	}
+	/**
+	 * declare generic scope resource (and inject it in scope)
+	 */
+	genericScopeService.scope.resources(
+			$scope, 
+			'iots', 
+			iotResourceService.iot,
+			{
+    			name: "object name",
+    			icon: "list"
+    		}
+	);
 })
 .controller('iotCtrl',
 	function($scope, $log, $state, $stateParams, iotResourceService, pluginResourceService, genericScopeService, genericResourceService, toastService){

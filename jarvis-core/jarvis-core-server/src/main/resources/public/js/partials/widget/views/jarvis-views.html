@@ -10,11 +10,6 @@
   </md-grid-tile>
   <md-grid-tile
       md-rowspan="1" md-colspan="2" md-colspan-sm="1" ng-repeat="view in views">
-	<div ng-click="go('views-by-id',{id:view.id})">
-		<md-grid-tile-header>
-			<h3><md-icon md-font-icon="material-icons md-16">delete</md-icon> {{view.name}} (#{{view.id}})</h3>
-		</md-grid-tile-header>
-		<md-icon md-font-icon="material-icons md-64">{{view.icon}}</md-icon>
-	</div>
+      <jarvis-card element="view" state="'views-by-id'"></jarvis-card>
   </md-grid-tile>
 </md-grid-list>

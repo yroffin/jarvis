@@ -1,4 +1,7 @@
 <md-toolbar>
+  <div class="md-toolbar-tools" layout-align="center">
+    <h1><br>{{iot.name}}<md-tooltip>iot#{{iot.id}}</md-tooltip></h1>
+  </div>
   <md-fab-actions class="md-toolbar-tools">
 	<md-button aria-label="menu" class="md-icon-button" ng-click="go('iots')"><md-icon md-font-icon="material-icons md-16">clear</md-icon></md-button>
 	<md-button aria-label="menu" class="md-icon-button" ng-click="duplicate(iot)"><md-icon md-font-icon="material-icons md-16">content_copy</md-icon></md-button>
@@ -8,7 +11,6 @@
   </md-fab-actions>
 </md-toolbar>
 <div layout="column" ng-init="load()" ng-cloak>
-	<h2>Iot #{{iot.id}}</h2>
 	<md-tabs md-dynamic-height md-border-bottom>
 		<md-tab label="{{'iot.general' | translate}}" md-active="activeTab==1">
 			<md-content layout-padding>
