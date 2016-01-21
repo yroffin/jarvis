@@ -98,6 +98,102 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
     	'pickIotDialogCtrl');
     }
     /**
+     * render scenario
+     */
+    $scope.build = function(resource) {
+    	var codes = [];
+    	_.each(resource, function(graph) {
+        	var code = "";
+	    	_.each(graph.nodes, function(node) {
+	    		if(node.start) {
+	    			code += '#' + node.id + '=>start: ' + node.name + ':>'+node.description+'\n';
+	    		}
+	    		if(node.end) {
+	    			code += '#' + node.id + '=>end: ' + node.name + ':>'+node.description+'\n';
+	    		}
+	    		if(node.activity) {
+	    			code += '#' + node.id + '=>operation: ' + node.name + ':>'+node.description+'\n';
+	    		}
+	    		if(node.gateway) {
+	    			code += '#' + node.id + '=>condition: ' + node.name + ':>'+node.description+'\n';
+	    		}
+	    		if(node.call) {
+	    			code += '#' + node.id + '=>subroutine: ' + node.name + ':>'+node.description+'\n';
+	    		}
+	    	});
+	    	_.each(graph.edges, function(edge) {
+	    		if(graph.nodes[edge.sourceId].gateway) {
+	        		if(edge.bool) {
+	        			code += '#' + edge.sourceId + '(yes, right)->#' + edge.targetId + '\n';
+	        		} else {
+	        			code += '#' + edge.sourceId + '(no)->#' + edge.targetId + '\n';
+	        		}
+	    		} else {
+	    			code += '#' + edge.sourceId + '->#' + edge.targetId + '\n';
+	    		}
+	    	});
+        	codes.push(code);
+    	});
+    	return codes;
+    }
+    $scope.render = function(resources) {
+		$log.debug(resources);
+    	$('#canvas').html('');
+    	_.each(resources, function(resource) {
+	    	var chart = flowchart.parse(resource);
+	        chart.drawSVG('canvas', {
+	          // 'x': 30,
+	          // 'y': 50,
+	          'line-width': 3,
+	          'line-length': 50,
+	          'text-margin': 10,
+	          'font-size': 14,
+	          'font': 'normal',
+	          'font-family': 'Helvetica',
+	          'font-weight': 'normal',
+	          'font-color': 'black',
+	          'line-color': 'black',
+	          'element-color': 'black',
+	          'fill': 'white',
+	          'yes-text': 'yes',
+	          'no-text': 'no',
+	          'arrow-end': 'block',
+	          'scale': 1,
+	          'symbols': {
+	            'start': {
+	              'font-color': 'red',
+	              'element-color': 'green',
+	              'fill': 'yellow'
+	            },
+	            'end':{
+	              'class': 'end-element'
+	            }
+	          },
+	          'flowstate' : {
+	            'past' : { 'fill' : '#CCCCCC', 'font-size' : 12},
+	            'current' : {'fill' : 'yellow', 'font-color' : 'red', 'font-weight' : 'bold'},
+	            'future' : { 'fill' : '#FFFF99'},
+	            'request' : { 'fill' : 'blue'},
+	            'invalid': {'fill' : '#444444'},
+	            'approved' : { 'fill' : '#58C4A3', 'font-size' : 12, 'yes-text' : 'APPROVED', 'no-text' : 'n/a' },
+	            'rejected' : { 'fill' : '#C45879', 'font-size' : 12, 'yes-text' : 'n/a', 'no-text' : 'REJECTED' }
+	          }
+	        });
+    	});
+    }
+    /**
+     * load this controller
+     */
+    $scope.chart = function(scenario) {
+    	if(scenario != undefined && scenario.id != undefined && scenario.id != '') {
+    		scenarioResourceService.scenario.task(scenario.id, 'render', {}, function(data) {
+       	    	$log.debug('[SCENARIO/render]', scenario, data);
+       	    	$scope.code = $scope.build(data);
+       	    	$scope.render($scope.code);
+    	    }, toastService.failure);
+    	}
+    }
+    /**
      * execute this scenario
 	 * @param scenario, the scenario to be executed
      */
@@ -128,7 +224,10 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
 		/**
 		 * get current scenario
 		 */
-    	genericResourceService.scope.entity.get($stateParams.id, function(update) {$scope.scenario=update}, scenarioResourceService.scenario);
+    	genericResourceService.scope.entity.get($stateParams.id, function(update) {
+    		$scope.scenario=update;
+    		$scope.chart(update);
+    	}, scenarioResourceService.scenario);
 
 		/**
 		 * find all blocks

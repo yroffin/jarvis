@@ -22,12 +22,18 @@ import org.jarvis.core.model.bean.scenario.ScenarioBean;
 import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.model.rest.scenario.BlockRest;
 import org.jarvis.core.model.rest.scenario.ScenarioRest;
+import org.jarvis.core.profiler.TaskProfiler;
+import org.jarvis.core.profiler.model.GenericNode;
 import org.jarvis.core.resources.api.ApiLinkedResources;
 import org.jarvis.core.resources.api.href.ApiHrefScenarioBlockResources;
 import org.jarvis.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import spark.Request;
+import spark.Response;
+import spark.Route;
 
 /**
  * Scenario resource
@@ -59,6 +65,15 @@ public class ApiScenarioResources extends ApiLinkedResources<ScenarioRest,Scenar
 		 * scenarios
 		 */
 		declare(SCENARIO_RESOURCE);
+		spark.Spark.get("/api/scenarios/:id/graph", new Route() {
+		    @Override
+			public Object handle(Request request, Response response) throws Exception {
+		    	return doExecute(
+	    				request.params(ID),
+	    				(GenericMap) mapper.readValue("{}",GenericMap.class),
+	    				TaskType.RENDER);
+		    }
+		});
 		/**
 		 * scenarios -> blocks
 		 */
@@ -71,6 +86,8 @@ public class ApiScenarioResources extends ApiLinkedResources<ScenarioRest,Scenar
 		switch(taskType) {
 			case EXECUTE:
 				return execute(bean, args, new GenericMap());
+			case RENDER:
+				return render(bean, args, new GenericMap());
 			default:
 				result = new GenericMap();
 				return mapper.writeValueAsString(result);
@@ -81,8 +98,28 @@ public class ApiScenarioResources extends ApiLinkedResources<ScenarioRest,Scenar
 		GenericMap result = args;
 		for(GenericEntity entity : sort(apiHrefScenarioBlockResources.findAll(bean), "order")) {
 			BlockRest block = apiBlockResources.doGetById(entity.id);
-			result = apiBlockResources.execute(mapperFactory.getMapperFacade().map(block, BlockBean.class), result);
+			result = apiBlockResources.execute(new GenericMap(), mapperFactory.getMapperFacade().map(block, BlockBean.class), result);
 		}
 		return "";
+	}
+
+	private String render(ScenarioBean bean, GenericMap args, GenericMap genericMap) throws TechnicalNotFoundException {
+		StringBuilder sb = new StringBuilder();
+		sb.append("[");
+		/**
+		 * start and end node
+		 */
+		int index = 0;
+		for(GenericEntity entity : sort(apiHrefScenarioBlockResources.findAll(bean), "order")) {
+			TaskProfiler taskProfiler = new TaskProfiler();
+			BlockRest block = apiBlockResources.doGetById(entity.id);
+			GenericNode startNode = taskProfiler.addStartNode("start", block.name + "#1");
+			GenericNode endNode = apiBlockResources.render(taskProfiler, 1, startNode, mapperFactory.getMapperFacade().map(block, BlockBean.class));
+			if(index>0) sb.append(",");
+			sb.append(taskProfiler.toJson());
+			index++;
+		}
+		sb.append("]");
+		return sb.toString();
 	}
 }

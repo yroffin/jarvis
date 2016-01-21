@@ -81,17 +81,11 @@ angular.module('JarvisApp.config',[])
      * main controller
      */
     .controller('JarvisAppCtrl',
-    	function($scope, $mdSidenav, $location, $state){
+    	function($scope, $log, $mdSidenav, $location, $state, genericPickerService){
         /**
          * initialize jarvis configuration
          */
-        $scope.inventoryItem = {
-            href : ''
-        };
         $scope.jarvis = {};
-        $scope.jarvis.newjob = {};
-        $scope.jarvis.configuration = {};
-        $scope.jarvis.neo4jdb = {};
 
         /**
          * highlight JS
@@ -120,7 +114,35 @@ angular.module('JarvisApp.config',[])
         $scope.go = function(target,params) {
             $state.go(target,params);
         };
+
+        /**
+         * go to state
+         */
+        $scope.graph = function(event, anchor) {
+	    	return genericPickerService.pickers.graph(
+	    			event,
+	    			anchor,
+	    			function(node) {
+	    				$log.debug('Go');
+	    			}, function() {
+	    				$log.debug('Abort');
+	    			},
+	    			'graphDialogCtrl'
+	    	);
+        }
     })
+	.controller('graphDialogCtrl',
+		function($scope, $log, $mdDialog, genericResourceService, toastService, anchor) {
+		$scope.hide = function() {
+		   $mdDialog.hide();
+		 };
+		$scope.cancel = function() {
+		  $mdDialog.cancel();
+		};
+		$scope.answer = function(answer) {
+		  $mdDialog.hide(answer);
+		};
+	})
 	.controller('pickIotDialogCtrl',
 		function($scope, $log, $mdDialog, genericResourceService, toastService) {
 		$scope.hide = function() {

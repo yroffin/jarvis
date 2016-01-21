@@ -22,6 +22,8 @@ import org.jarvis.core.model.bean.plugin.ScriptPluginBean;
 import org.jarvis.core.model.bean.scenario.BlockBean;
 import org.jarvis.core.model.rest.plugin.ScriptPluginRest;
 import org.jarvis.core.model.rest.scenario.BlockRest;
+import org.jarvis.core.profiler.TaskProfiler;
+import org.jarvis.core.profiler.model.GenericNode;
 import org.jarvis.core.resources.api.ApiLinkedResources;
 import org.jarvis.core.resources.api.href.ApiHrefBlockBlockResources;
 import org.jarvis.core.resources.api.href.ApiHrefBlockScriptPluginResources;
@@ -78,7 +80,7 @@ public class ApiBlockResources extends ApiLinkedResources<BlockRest,BlockBean,Sc
 			case TEST:
 				return test(bean, args, new GenericMap())+"";
 			case EXECUTE:
-				return execute(bean, args)+"";
+				return execute(new GenericMap(), bean, args)+"";
 			default:
 				result = new GenericMap();
 				return mapper.writeValueAsString(result);
@@ -98,12 +100,19 @@ public class ApiBlockResources extends ApiLinkedResources<BlockRest,BlockBean,Sc
 	}
 
 	/**
+	 * @param stack 
 	 * @param bean
 	 * @param args
 	 * @return GenericMap
 	 * @throws TechnicalNotFoundException 
 	 */
-	public GenericMap execute(BlockBean bean, GenericMap args) throws TechnicalNotFoundException {
+	public GenericMap execute(GenericMap stack, BlockBean bean, GenericMap args) throws TechnicalNotFoundException {
+		/**
+		 * stop recursion
+		 */
+		if(stack.size() >= 8) {
+			return stack;
+		}
 		GenericMap result = new GenericMap();
 		if(bean.pluginId != null) {
 			GenericMap exec = (GenericMap) apiScriptPluginResources.doExecute(bean.pluginId, args, TaskType.EXECUTE);
@@ -111,12 +120,109 @@ public class ApiBlockResources extends ApiLinkedResources<BlockRest,BlockBean,Sc
 				if(bean.pluginThenId != null) {
 					GenericMap thn = (GenericMap) apiScriptPluginResources.doExecute(bean.pluginThenId, args, TaskType.EXECUTE);
 				}
+				if(bean.blockThenId != null) {
+					stack.put("run#"+stack.size(), args);
+					GenericMap thn = (GenericMap) this.execute(stack, doGetByIdBean(bean.blockThenId), args);
+				}
 			} else {
-				if(bean.pluginElseId != null) {
+				if(bean.blockElseId != null) {
 					GenericMap els = (GenericMap) apiScriptPluginResources.doExecute(bean.pluginElseId, args, TaskType.EXECUTE);
+				}
+				if(bean.blockElseId != null) {
+					stack.put("run#"+stack.size(), args);
+					GenericMap els = (GenericMap) this.execute(stack, doGetByIdBean(bean.blockElseId), args);
 				}
 			}
 		}
 		return result;
+	}
+
+	/**
+	 * @param taskProfiler 
+	 * @param level 
+	 * @param startNode 
+	 * @param bean
+	 * @return GenericMap
+	 * @throws TechnicalNotFoundException 
+	 */
+	public GenericNode render(TaskProfiler taskProfiler, int level, GenericNode startNode, BlockBean bean) throws TechnicalNotFoundException {
+		/**
+		 * stop recursion
+		 */
+		if(bean.pluginId != null && level < 5) {
+			/**
+			 * gateway node
+			 */
+			GenericNode gatewayNode = taskProfiler.addBooleanGateway("test", bean.pluginName + "#" + bean.pluginId + "#" + level);
+			taskProfiler.addSequenceFlowSimple("start->gateway", startNode, gatewayNode);
+			GenericNode end = taskProfiler.addEndNode("end", startNode.getDescription() + "#" + level);
+			/**
+			 * then
+			 */
+			if(bean.pluginThenId != null) {
+				/**
+				 * then plugin
+				 */
+				GenericNode pluginThenNode = taskProfiler.addActivty(bean.pluginThenName, bean.pluginThenName + "#" + bean.pluginThenId);
+				taskProfiler.addSequenceFlowDecision("gateway-then->plugin", gatewayNode, pluginThenNode, true);
+				/**
+				 * then block
+				 */
+				if(bean.blockThenId != null) {
+					GenericNode subStartNode = taskProfiler.addStartNode("start", bean.blockThenName + "#" + (level+1));
+					GenericNode subEnd = render(taskProfiler, level+1, subStartNode, doGetByIdBean(bean.blockThenId));
+					taskProfiler.addSequenceFlowSimple("plugin->start", pluginThenNode, subStartNode);
+					taskProfiler.addSequenceFlowSimple("subEnd->end", subEnd, end);
+				} else {
+					taskProfiler.addSequenceFlowSimple("plugin->end", pluginThenNode, end);
+				}
+			} else {
+				/**
+				 * then block
+				 */
+				if(bean.blockThenId != null) {
+					GenericNode subStartNode = taskProfiler.addStartNode("start", bean.blockThenName + "#" + (level+1));
+					GenericNode subEnd = render(taskProfiler, level+1, subStartNode, doGetByIdBean(bean.blockThenId));
+					taskProfiler.addSequenceFlowDecision("gateway->block", gatewayNode, subStartNode, true);
+					taskProfiler.addSequenceFlowSimple("subEnd->end", subEnd, end);
+				}
+			}
+			/**
+			 * else
+			 */
+			if(bean.pluginElseId != null) {
+				/**
+				 * else plugin
+				 */
+				GenericNode pluginElseNode = taskProfiler.addActivty(bean.pluginElseName, bean.pluginElseName + "#" + bean.pluginElseId);
+				taskProfiler.addSequenceFlowDecision("gateway-else->plugin", gatewayNode, pluginElseNode, false);
+				/**
+				 * else block
+				 */
+				if(bean.blockElseId != null) {
+					GenericNode subStartNode = taskProfiler.addStartNode("start", bean.blockElseName + "#" + (level+1));
+					GenericNode subEnd = render(taskProfiler, level+1, subStartNode, doGetByIdBean(bean.blockElseId));
+					taskProfiler.addSequenceFlowSimple("plugin->start", pluginElseNode, subStartNode);
+					taskProfiler.addSequenceFlowSimple("subEnd->end", subEnd, end);
+				} else {
+					taskProfiler.addSequenceFlowSimple("plugin->end", pluginElseNode, end);
+				}
+			} else {
+				/**
+				 * then block
+				 */
+				if(bean.blockElseId != null) {
+					GenericNode subStartNode = taskProfiler.addStartNode("start", bean.blockElseName + "#" + (level+1));
+					GenericNode subEnd = render(taskProfiler, level+1, subStartNode, doGetByIdBean(bean.blockElseId));
+					taskProfiler.addSequenceFlowDecision("gateway->block", gatewayNode, subStartNode, false);
+					taskProfiler.addSequenceFlowSimple("subEnd->end", subEnd, end);
+				}
+			}
+			return end;
+		} else {
+			GenericNode end = taskProfiler.addEndNode("end", startNode.getDescription() + "#" + level);
+			taskProfiler.addSequenceFlowSimple("subEnd->end", startNode, end);
+			return end;
+		}
 	}
 }

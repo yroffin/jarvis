@@ -195,10 +195,20 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * @return Rest
 	 * @throws TechnicalNotFoundException 
 	 */
+	public S doGetByIdBean(String id) throws TechnicalNotFoundException {
+		return mapperFactory.getMapperFacade().map(apiService.getById(id), beanClass);
+	}
+	
+	/**
+	 * find element by id
+	 * @param id
+	 * @return Rest
+	 * @throws TechnicalNotFoundException 
+	 */
 	public T doGetById(String id) throws TechnicalNotFoundException {
 		return mapperFactory.getMapperFacade().map(apiService.getById(id), restClass);
 	}
-	
+
 	/**
 	 * create new entity
 	 * @param r 

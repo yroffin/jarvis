@@ -132,7 +132,7 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter'])
 		task: function(path, id, task, args, callback, failure) {
 			var handler = function(totask) {
 				var filtered = filterService.plain(totask);
-				$log.debug("[POST]",totask,path,filtered);
+				$log.debug("[TASK]",totask,path,filtered);
 				if(callback != undefined) callback(filtered);
 			}
 			if(path.length == 1) {
@@ -500,6 +500,23 @@ return {
 			          templateUrl: 'js/partials/dialog/nodesDialog.tmpl.html',
 			          parent: angular.element(document.body),
 			          targetEvent: ev,
+			          clickOutsideToClose:true
+			        })
+			        .then(function(node) {
+			        	callback(node);
+			        }, function() {
+			            abort();
+			        });
+			  },
+			  graph : function(event, anchor, callback, abort, ctrl) {
+			        $mdDialog.show({
+			          locals: {
+			            anchor: anchor
+					  },
+					  bindToController : true,
+			          controller: ctrl,
+			          templateUrl: 'js/partials/dialog/graphDialog.tmpl.html',
+			          targetEvent: event,
 			          clickOutsideToClose:true
 			        })
 			        .then(function(node) {

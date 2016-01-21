@@ -17,10 +17,10 @@
 package org.jarvis.core.services.groovy;
 
 import java.util.Map;
-import java.util.Map.Entry;
+
+import javax.annotation.PostConstruct;
 
 import org.jarvis.core.exception.TechnicalException;
-import org.jarvis.core.resources.api.ApiResources;
 import org.jarvis.core.type.GenericMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +29,6 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
-import groovy.json.internal.LazyMap;
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
 
@@ -43,6 +42,19 @@ public class PluginGroovyService {
 
 	@Autowired
 	Environment env;
+
+	private Binding binding;
+
+	private GroovyShell script;
+
+	/**
+	 * init
+	 */
+	@PostConstruct
+	public void init() {
+		binding = new Binding();
+		script = new GroovyShell(binding);
+	}
 
 	/**
 	 * @param command
@@ -61,9 +73,7 @@ public class PluginGroovyService {
 	 * @throws TechnicalException 
 	 */
 	public GenericMap groovyAsObject(String command, GenericMap args) throws TechnicalException {
-		Binding binding = new Binding();
 		binding.setVariable("input", args);
-		GroovyShell script = new GroovyShell(binding);
 		@SuppressWarnings("rawtypes")
 		Map exec = (Map) script.evaluate(command);
 		GenericMap result = new GenericMap();
