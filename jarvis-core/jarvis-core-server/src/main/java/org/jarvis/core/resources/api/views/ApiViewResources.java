@@ -16,9 +16,9 @@
 
 package org.jarvis.core.resources.api.views;
 
-import org.jarvis.core.model.bean.IotBean;
+import org.jarvis.core.model.bean.iot.IotBean;
 import org.jarvis.core.model.bean.view.ViewBean;
-import org.jarvis.core.model.rest.IotRest;
+import org.jarvis.core.model.rest.iot.IotRest;
 import org.jarvis.core.model.rest.view.ViewRest;
 import org.jarvis.core.resources.api.ApiLinkedResources;
 import org.jarvis.core.resources.api.href.ApiHrefViewResources;

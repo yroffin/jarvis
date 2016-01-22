@@ -18,9 +18,9 @@ package org.jarvis.core.resources.api.href;
 
 import javax.annotation.PostConstruct;
 
-import org.jarvis.core.model.bean.IotBean;
+import org.jarvis.core.model.bean.iot.IotBean;
 import org.jarvis.core.model.bean.plugin.ScriptPluginBean;
-import org.jarvis.core.model.rest.IotRest;
+import org.jarvis.core.model.rest.iot.IotRest;
 import org.jarvis.core.model.rest.plugin.ScriptPluginRest;
 import org.jarvis.core.resources.api.mapper.ApiHrefMapper;
 import org.springframework.stereotype.Component;

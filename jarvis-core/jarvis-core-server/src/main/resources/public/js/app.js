@@ -41,6 +41,7 @@ angular.module('JarvisApp', [
      'JarvisApp.services.scenario',
      'JarvisApp.services.view',
      'JarvisApp.services.iot',
+     'JarvisApp.services.event',
      'JarvisApp.services.block',
      'JarvisApp.directives.widgets',
      /**
@@ -50,6 +51,7 @@ angular.module('JarvisApp', [
      'JarvisApp.ctrl.commands',
      'JarvisApp.ctrl.jobs',
      'JarvisApp.ctrl.iots',
+     'JarvisApp.ctrl.events',
      'JarvisApp.ctrl.views',
      'JarvisApp.ctrl.scenarios',
      'JarvisApp.ctrl.home'

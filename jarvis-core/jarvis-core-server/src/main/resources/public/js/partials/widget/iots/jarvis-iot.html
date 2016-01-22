@@ -1,10 +1,14 @@
 <div layout="column">
      <md-input-container>
-       <label translate="Name"></label>
+       <label translate="iot.address"></label>
+       <input ng-model="iot.address">
+     </md-input-container>
+     <md-input-container>
+       <label translate="iot.name"></label>
        <input ng-model="iot.name">
      </md-input-container>
      <md-input-container>
-       <label translate="Owner"></label>
+       <label translate="iot.owner"></label>
        <md-select ng-model="iot.owner">
          <md-option ng-repeat="owner in combo.owners" value="{{owner.id}}" translate="{{owner.name}}">
          </md-option>

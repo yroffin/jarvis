@@ -14,22 +14,42 @@
  *   limitations under the License.
  */
 
-package org.jarvis.core.model.bean;
+package org.jarvis.core.model.rest.iot;
+
+import org.jarvis.core.model.rest.GenericEntity;
+import org.joda.time.DateTime;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * generic bean
+ * IOT object
  */
-public class GenericBean {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class EventRest extends GenericEntity {
 	/**
-	 * generic id
+	 * iot adress
 	 */
-	public String id;
-	/**
-	 * resource address
-	 */
+	@JsonProperty("address")
 	public String address;
 	/**
-	 * generic href
+	 * timestamp
 	 */
-	public String href;
+	@JsonProperty("timestamp")
+	public DateTime timestamp;
+	/**
+	 * text
+	 */
+	@JsonProperty("text")
+	public String text;
+	/**
+	 * bool
+	 */
+	@JsonProperty("bool")
+	public boolean bool;
+	/**
+	 * number
+	 */
+	@JsonProperty("number")
+	public int number;
 }

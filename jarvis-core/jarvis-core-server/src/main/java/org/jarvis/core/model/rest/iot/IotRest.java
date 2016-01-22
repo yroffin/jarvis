@@ -14,7 +14,9 @@
  *   limitations under the License.
  */
 
-package org.jarvis.core.model.rest;
+package org.jarvis.core.model.rest.iot;
+
+import org.jarvis.core.model.rest.GenericEntity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;

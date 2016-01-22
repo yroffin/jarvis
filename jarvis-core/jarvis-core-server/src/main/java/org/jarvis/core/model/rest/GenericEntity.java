@@ -33,6 +33,11 @@ public class GenericEntity {
 	@JsonProperty("id")
 	public String id;
 	/**
+	 * resource address
+	 */
+	@JsonProperty("address")
+	public String address;
+	/**
 	 * href of this resource
 	 */
 	@JsonProperty("href")

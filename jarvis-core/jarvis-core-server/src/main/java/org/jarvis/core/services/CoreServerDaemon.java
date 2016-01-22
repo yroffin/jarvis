@@ -23,6 +23,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.jarvis.core.resources.api.ApiClientResources;
 import org.jarvis.core.resources.api.ApiLabelResources;
+import org.jarvis.core.resources.api.iot.ApiEventResources;
 import org.jarvis.core.resources.api.iot.ApiIotResources;
 import org.jarvis.core.resources.api.jobs.ApiJobResources;
 import org.jarvis.core.resources.api.jobs.ApiParamResources;
@@ -78,6 +79,9 @@ public class CoreServerDaemon {
 	ApiViewResources apiViewResources;
 
 	@Autowired
+	ApiEventResources apiEventResources;
+
+	@Autowired
 	ApiScriptPluginResources apiScriptPluginResources;
 
 	@Autowired
@@ -118,5 +122,6 @@ public class CoreServerDaemon {
 		 */
 		apiScriptPluginResources.mount();
 		apiCommandResources.mount();
+		apiEventResources.mount();
 	}
 }

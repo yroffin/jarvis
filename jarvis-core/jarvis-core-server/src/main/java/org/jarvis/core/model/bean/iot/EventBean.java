@@ -14,24 +14,36 @@
  *   limitations under the License.
  */
 
-package org.jarvis.core.resources.api.href;
+package org.jarvis.core.model.bean.iot;
 
-import javax.annotation.PostConstruct;
+import org.jarvis.core.model.bean.GenericBean;
+import org.joda.time.DateTime;
 
-import org.jarvis.core.model.bean.iot.IotBean;
-import org.jarvis.core.model.rest.iot.IotRest;
-import org.jarvis.core.resources.api.mapper.ApiHrefMapper;
-import org.springframework.stereotype.Component;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
- * HREF handler
+ * Event object
  */
-@Component
-public class ApiHrefIotResources extends ApiHrefMapper<IotRest,IotRest> {
-
-	@PostConstruct
-	protected
-	void init() {
-		super.init(IotBean.class.getSimpleName(),IotBean.class.getSimpleName(),"iots");
-	}
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class EventBean extends GenericBean {
+	/**
+	 * iot adress
+	 */
+	public String address;
+	/**
+	 * timestamp
+	 */
+	public DateTime timestamp;
+	/**
+	 * text
+	 */
+	public String text;
+	/**
+	 * bool
+	 */
+	public boolean bool;
+	/**
+	 * number
+	 */
+	public int number;
 }

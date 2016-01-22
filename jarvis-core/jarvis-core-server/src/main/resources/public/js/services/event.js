@@ -18,12 +18,10 @@
 
 /* Services */
 
-angular.module('JarvisApp.services.iot', [])
-	.factory('iotResourceService', function(genericResourceService) {
+angular.module('JarvisApp.services.event', [])
+	.factory('eventResourceService', function(genericResourceService) {
 		return {
-			iot: genericResourceService.crud(['iots']),
-			plugins : genericResourceService.links(['iots'], ['plugins','scripts']),
-			iots : genericResourceService.links(['iots'], ['iots'])
+			event: genericResourceService.crud(['events']),
 		}
 	})
 ;

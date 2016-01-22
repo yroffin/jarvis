@@ -18,10 +18,10 @@ package org.jarvis.core.resources.api.iot;
 
 import static spark.Spark.get;
 
-import org.jarvis.core.model.bean.IotBean;
+import org.jarvis.core.model.bean.iot.IotBean;
 import org.jarvis.core.model.bean.plugin.ScriptPluginBean;
 import org.jarvis.core.model.rest.GenericEntity;
-import org.jarvis.core.model.rest.IotRest;
+import org.jarvis.core.model.rest.iot.IotRest;
 import org.jarvis.core.model.rest.plugin.ScriptPluginRest;
 import org.jarvis.core.resources.api.ApiLinkedTwiceResources;
 import org.jarvis.core.resources.api.href.ApiHrefIotResources;

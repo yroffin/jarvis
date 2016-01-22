@@ -81,7 +81,7 @@ angular.module('JarvisApp.config',[])
      * main controller
      */
     .controller('JarvisAppCtrl',
-    	function($scope, $log, $mdSidenav, $location, $state, genericPickerService){
+    	function($scope, $log, $mdSidenav, $location, $state, genericPickerService, toastService, eventResourceService){
         /**
          * initialize jarvis configuration
          */
@@ -113,6 +113,23 @@ angular.module('JarvisApp.config',[])
          */
         $scope.go = function(target,params) {
             $state.go(target,params);
+        };
+
+        /**
+         * send an event
+         * @param iot
+         * @param value
+         */
+        $scope.emit = function(iot, value) {
+        	$log.debug('JarvisAppCtrl::emit', iot, value);
+        	eventResourceService.event.post( 
+        			{
+		        		address:iot.address,
+		        		number:value
+	        		}, function(data) {
+		            	$log.debug('JarvisAppCtrl::emit', data);
+		       	    	toastService.info('event ' + data.address + '#' + data.id + ' emitted');
+	        		}, toastService.failure);
         };
 
         /**

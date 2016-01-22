@@ -55,6 +55,11 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
             controller: 'JarvisAppCtrl',
             templateUrl: '/ui/js/partials/connectors.html'
         })
+        .state('events', {
+            url: '/events',
+            controller: 'eventsCtrl',
+            templateUrl: '/ui/js/partials/events/page.html'
+        })
         .state('iots', {
             url: '/iots',
             controller: 'iotsCtrl',

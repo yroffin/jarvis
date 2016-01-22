@@ -1,0 +1,53 @@
+/**
+ *  Copyright 2015 Yannick Roffin
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
+package org.jarvis.core.resources.api.iot;
+
+import org.jarvis.core.model.bean.iot.EventBean;
+import org.jarvis.core.model.rest.iot.EventRest;
+import org.jarvis.core.resources.api.ApiResources;
+import org.jarvis.core.type.GenericMap;
+import org.jarvis.core.type.TaskType;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+/**
+ * Event resource
+ */
+@Component
+public class ApiEventResources extends ApiResources<EventRest,EventBean> {
+
+	/**
+	 * constructor
+	 */
+	public ApiEventResources() {
+		setRestClass(EventRest.class);
+		setBeanClass(EventBean.class);
+	}
+
+	@Override
+	public void mount() {
+		/**
+		 * scripts
+		 */
+		declare(EVENT_RESOURCE);
+	}
+
+	@Override
+	public String doRealTask(EventBean Event, GenericMap args, TaskType taskType) throws Exception {
+		return "";
+	}
+}

@@ -73,6 +73,15 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     }
   }
 })
+.directive('jarvisEvents', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/partials/widget/events/jarvis-events.html',
+    link: function(scope, element, attrs) {
+    	$log.debug('jarvis-iots');
+    }
+  }
+})
 .directive('jarvisIotPlugin', function ($log, $stateParams) {
   return {
     restrict: 'E',

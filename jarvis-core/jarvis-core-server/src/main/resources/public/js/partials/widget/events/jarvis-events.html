@@ -1,0 +1,20 @@
+<table class="table table-bordered table-hover">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th translate="event.address"></th>
+			<th translate="event.number"></th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="event in events">
+			<th>{{$index+1}}</th>
+			<td>{{event.address}}</td>
+			<td>{{event.number}}</td>
+			<td>
+				<md-icon md-font-icon="material-icons md-24" ng-click="remove(event)">delete</md-icon>
+			</td>
+		</tr>
+	</tbody>
+</table>
