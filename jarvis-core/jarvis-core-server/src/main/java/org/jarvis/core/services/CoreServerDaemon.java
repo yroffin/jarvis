@@ -25,6 +25,7 @@ import org.jarvis.core.resources.api.ApiClientResources;
 import org.jarvis.core.resources.api.ApiLabelResources;
 import org.jarvis.core.resources.api.iot.ApiEventResources;
 import org.jarvis.core.resources.api.iot.ApiIotResources;
+import org.jarvis.core.resources.api.iot.ApiTriggerResources;
 import org.jarvis.core.resources.api.jobs.ApiJobResources;
 import org.jarvis.core.resources.api.jobs.ApiParamResources;
 import org.jarvis.core.resources.api.plugins.ApiCommandResources;
@@ -87,6 +88,9 @@ public class CoreServerDaemon {
 	@Autowired
 	ApiCommandResources apiCommandResources;
 
+	@Autowired
+	ApiTriggerResources apiTriggerResources;
+
 	/**
 	 * start component
 	 */
@@ -123,5 +127,6 @@ public class CoreServerDaemon {
 		apiScriptPluginResources.mount();
 		apiCommandResources.mount();
 		apiEventResources.mount();
+		apiTriggerResources.mount();
 	}
 }

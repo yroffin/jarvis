@@ -24,22 +24,33 @@
 angular.module('JarvisApp.services.scope', ['JarvisApp.services.generic']).factory('genericScopeService', function($log, $filter, genericResourceService, genericPickerService, toastService) {
   var scope = {
 	  resources : function(scope, resource, service, init) {
+	    	$log.debug("inject default resources scope", resource);
 		    /**
 		     * Cf. genericResourceService
 		     */
-		    scope.new = function() {
+		    scope.create = function(create, callback) {
+		    	genericResourceService.scope.collections.new(
+		    			resource,
+		        		scope.getEntities(),
+		        		create,
+		        		service,
+		        		callback
+		        );
+		    }
+		    scope.new = function(callback) {
 		    	genericResourceService.scope.collections.new(
 		    			resource,
 		        		scope.getEntities(),
 		        		init,
-		        		service
+		        		service,
+		        		callback
 		        );
 		    }
 			scope.crud = genericResourceService.crud([resource]);
 		    /**
 		     * Cf. genericResourceService
 		     */
-		    scope.remove = function(entity) {
+		    scope.remove = function(entity,callback) {
 		    	genericPickerService.pickers.confirm(
 		    			$filter('translate')('action.drop', {name:entity.name, id:entity.id}),
 		    			'',
@@ -53,6 +64,9 @@ angular.module('JarvisApp.services.scope', ['JarvisApp.services.generic']).facto
 						return element.id == toremove;
 					});
 			    	scope.crud.delete(entity.id);
+			    	if(callback) {
+			    		callback(entity);
+			    	}
 		    	}, function() {
 			    	$log.debug('abort');
 		    	});
@@ -60,15 +74,19 @@ angular.module('JarvisApp.services.scope', ['JarvisApp.services.generic']).facto
 		    /**
 		     * loading
 		     */
-		    scope.load = function() {
+		    scope.load = function(callback) {
 		    	scope.setEntities([]);
 		    	service.findAll(function(data) {
 		    		scope.setEntities(data);
 					$log.debug(resource+'-ctrl', data);
+					if(callback) {
+						callback();
+					}
 			    }, toastService.failure);
 		    }
 	  },
 	  resource : function(scope, resource, back, service, link, dataLink, stateParamsId) {
+	    	$log.debug("inject default resource scope", resource);
 		    /**
 		     * Cf. genericResourceService
 		     */

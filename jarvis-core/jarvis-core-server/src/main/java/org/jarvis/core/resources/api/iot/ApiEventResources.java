@@ -21,7 +21,6 @@ import org.jarvis.core.model.rest.iot.EventRest;
 import org.jarvis.core.resources.api.ApiResources;
 import org.jarvis.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**

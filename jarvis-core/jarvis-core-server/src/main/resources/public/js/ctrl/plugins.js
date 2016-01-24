@@ -84,9 +84,17 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
     	$scope.output = angular.toJson({}, true);
     }
     /**
+     * class selector
+     */
+    $scope.classSelector = function(valid) {
+    	return valid ? '': 'md-warn';
+    }
+    /**
      * load controller
      */
     $scope.load = function() {
+    	$scope.activeTab = $stateParams.tab;
+    	
     	$scope.rawoutput = {};
     	$scope.output = angular.toJson({}, true);
     	

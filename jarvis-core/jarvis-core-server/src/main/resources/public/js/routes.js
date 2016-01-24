@@ -60,6 +60,11 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
             controller: 'eventsCtrl',
             templateUrl: '/ui/js/partials/events/page.html'
         })
+        .state('triggers', {
+            url: '/triggers',
+            controller: 'triggersCtrl',
+            templateUrl: '/ui/js/partials/triggers/page.html'
+        })
         .state('iots', {
             url: '/iots',
             controller: 'iotsCtrl',
@@ -76,7 +81,7 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
             templateUrl: '/ui/js/partials/plugins/page.html'
         })
         .state('plugins-by-id-script', {
-            url: '/plugins/scripts/:id',
+            url: '/plugins/scripts/:id?tab',
             controller: 'pluginScriptCtrl',
             templateUrl: '/ui/js/partials/plugins/script/page.html'
         })

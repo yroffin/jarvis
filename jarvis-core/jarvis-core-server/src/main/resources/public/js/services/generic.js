@@ -352,30 +352,16 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter'])
    * crud operation on links
    */
   var scopeCrud = {
-		   	new : function(name, elements, update, service) {
-		        /**
-		         * create this elements
-		         */
-		   		service.post(update, function(data) {
-		                $log.debug(name + ' ' + data.name + '#' + data.id +' created');
-		                elements.push(data);
-		        }, toastService.failure);
-		    },
-		    remove : function(go, name, todelete, service) {
-		    	service.delete(todelete.id, function(element) {
-		        	toastService.info(name + ' ' + todelete.name + '#' + todelete.id + ' removed');
-		        	go();
-		        }, toastService.failure);
-		    }
-  };
-  var scopeCrud = {
-	   	new : function(name, elements, update, service) {
+	   	new : function(name, elements, update, service, callback) {
 	        /**
 	         * create this elements
 	         */
 	   		service.post(update, function(data) {
 	                $log.debug(name + ' ' + data.name + '#' + data.id +' created');
 	                elements.push(data);
+	                if(callback) {
+	                	callback(data);
+	                }
 	        }, toastService.failure);
 	    },
 	    remove : function(go, name, todelete, service) {

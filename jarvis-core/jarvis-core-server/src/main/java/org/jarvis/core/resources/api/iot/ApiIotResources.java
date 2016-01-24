@@ -43,10 +43,10 @@ import spark.Route;
 public class ApiIotResources extends ApiLinkedTwiceResources<IotRest,IotBean,IotRest,IotBean,ScriptPluginRest,ScriptPluginBean> {
 
 	@Autowired
-	ApiHrefIotScriptPluginResources apiHrefIotScriptPluginResources;
+	ApiHrefIotResources apiHrefIotResources;
 
 	@Autowired
-	ApiHrefIotResources apiHrefIotResources;
+	ApiHrefIotScriptPluginResources apiHrefIotScriptPluginResources;
 
 	@Autowired
 	ApiScriptPluginResources apiScriptPluginResources;

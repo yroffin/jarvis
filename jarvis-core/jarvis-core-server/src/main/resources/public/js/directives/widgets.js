@@ -22,7 +22,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
 .directive('jarvisPlugins', function ($log, $stateParams) {
   return {
     restrict: 'E',
-    templateUrl: '/ui/js/partials/widget/plugins/jarvis-plugins.html',
+    templateUrl: '/ui/js/partials/plugins/jarvis-plugins.html',
     link: function(scope, element, attrs) {
     	$log.debug('jarvis-plugins');
     }
@@ -31,7 +31,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
 .directive('jarvisPluginCommon', function ($log, $stateParams) {
 	  return {
 	    restrict: 'E',
-	    templateUrl: '/ui/js/partials/widget/plugins/jarvis-plugin-common.html',
+	    templateUrl: '/ui/js/partials/plugins/script/jarvis-plugin-general.html',
 	    link: function(scope, element, attrs) {
 	    	$log.debug('jarvis-plugin-common');
 	    }
@@ -40,16 +40,52 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
 .directive('jarvisPluginScript', function ($log, $stateParams) {
 	  return {
 	    restrict: 'E',
-	    templateUrl: '/ui/js/partials/widget/plugins/jarvis-plugin-script.html',
+	    templateUrl: '/ui/js/partials/plugins/script/jarvis-plugin-script.html',
 	    link: function(scope, element, attrs) {
 	    	$log.debug('jarvis-plugin-script');
 	    }
 	  }
 })
+.directive('typecommand', function ($log) {
+	return {
+	    require: 'ngModel',
+	    link: function(scope, elm, attrs, ctrl) {
+			ctrl.$validators.typecommand = function(modelValue, viewValue) {
+				if (ctrl.$isEmpty(modelValue)) {
+					// consider empty models to be valid
+					return false;
+				}
+				if(modelValue == 'data' || modelValue == 'action') {
+					return true;
+				}
+				// it is invalid
+			    return false;
+			};
+	    }
+	}
+})
+.directive('naturecommand', function ($log) {
+	return {
+	    require: 'ngModel',
+	    link: function(scope, elm, attrs, ctrl) {
+			ctrl.$validators.naturecommand = function(modelValue, viewValue) {
+				if (ctrl.$isEmpty(modelValue)) {
+					// consider empty models to be valid
+					return false;
+				}
+				if(modelValue == 'text' || modelValue == 'json' || modelValue == 'xml') {
+					return true;
+				}
+				// it is invalid
+			    return false;
+			};
+	    }
+	}
+})
 .directive('jarvisPluginRender', function ($log, $stateParams) {
 	  return {
 	    restrict: 'E',
-	    templateUrl: '/ui/js/partials/widget/plugins/jarvis-plugin-render.html',
+	    templateUrl: '/ui/js/partials/plugins/script/jarvis-plugin-result.html',
 	    link: function(scope, element, attrs) {
 	    	$log.debug('jarvis-plugin-output');
 	    }
@@ -97,6 +133,15 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     templateUrl: '/ui/js/partials/widget/iots/jarvis-iot-render.html',
     link: function(scope, element, attrs) {
     	$log.debug('jarvis-iot-render');
+    }
+  }
+})
+.directive('jarvisTriggers', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/partials/triggers/jarvis-triggers.html',
+    link: function(scope, element, attrs) {
+    	$log.debug('jarvis-triggers');
     }
   }
 })

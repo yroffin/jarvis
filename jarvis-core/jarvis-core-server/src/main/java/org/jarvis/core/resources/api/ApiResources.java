@@ -355,11 +355,16 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 		/**
 		 * read object by id
 		 */
-		S bean = apiService.getById(id);
-		try {
-			logger.info("SCRIPT - CONTEXT {}", mapper.writerWithDefaultPrettyPrinter().writeValueAsString(bean));
-		} catch (JsonProcessingException e) {
-			throw new TechnicalException(e);
+		S bean = null;
+		if(!id.equals("*")) {
+			bean = apiService.getById(id);
+			try {
+				logger.info("SCRIPT - CONTEXT {}", mapper.writerWithDefaultPrettyPrinter().writeValueAsString(bean));
+			} catch (JsonProcessingException e) {
+				throw new TechnicalException(e);
+			}
+		} else {
+			logger.info("SCRIPT - CONTEXT {}", "*");
 		}
 		try {
 			logger.info("SCRIPT - INPUT   {}", mapper.writerWithDefaultPrettyPrinter().writeValueAsString(body));
