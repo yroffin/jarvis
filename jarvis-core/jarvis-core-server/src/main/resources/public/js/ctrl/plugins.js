@@ -42,7 +42,7 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
 	);
 })
 .controller('pluginScriptCtrl',
-	function($scope, $log, $stateParams, genericResourceService, genericScopeService, pluginResourceService, iotResourceService, commandResourceService, toastService){
+	function($scope, $log, $stateParams, genericResourceService, genericScopeService, genericPickerService, pluginResourceService, iotResourceService, commandResourceService, toastService){
 	$scope.getLink = function() {
 		return $scope.commands;
 	}
@@ -84,12 +84,6 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
     	$scope.output = angular.toJson({}, true);
     }
     /**
-     * class selector
-     */
-    $scope.classSelector = function(valid) {
-    	return valid ? '': 'md-warn';
-    }
-    /**
      * load controller
      */
     $scope.load = function() {
@@ -124,8 +118,6 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
 		 */
     	$scope.combo.owners = [{id: undefined, name: "iot.empty"}];
     	genericResourceService.scope.combo.findAll('owner', $scope.combo.owners, iotResourceService.iot);
-    	$scope.combo.commands = [{id: undefined, name: "command.empty"}];
-    	genericResourceService.scope.combo.findAll('commands', $scope.combo.commands, commandResourceService.command);
 
 		$log.info('script-ctrl');
     }

@@ -1,53 +1,54 @@
 <div layout="column">
 	<div>
 		<form name="script.form" novalidate>
-		   <md-input-container>
-			 <md-icon md-font-icon="material-icons md-16" ng-click="add(command)">playlist_add</md-icon>
-		     <label translate="script.command"></label>
-		     <md-select ng-model="command.id">
-		       <md-option ng-repeat="command in combo.commands" value="{{command.id}}" translate="{{command.name}}">
-		       </md-option>
-		     </md-select>
-		   </md-input-container>
-		   <md-list>
-			   	<md-list-item ng-repeat="command in commands" layout="column">
-			   		<div style="width: 100%;">
-			  		  <h4>
-			  		  <md-icon md-font-icon="material-icons md-16" ng-click="update(command)">save</md-icon>
-				      <md-icon md-font-icon="material-icons md-16" ng-click="drop(command)">delete</md-icon>
-			  		  {{command.type}}#{{command.id}} : {{command.name}} (instance {{command.instance}})
-			  		  <md-icon md-font-icon="material-icons md-16">{{command.icon}}</md-icon>
-			  		  </h4>
-			        </div>
-			   		<div layout="row">
-						<md-input-container>
-						  <label translate="script.cmd.order"></label>
-						  <input name="order" ng-model="command.extended.order" required>
-						  <span class="error" ng-show="script.form.order.$error.required">{{ 'script.cmd.order.r' | translate}}</span>
-						</md-input-container>
-						<md-input-container>
-						  <label translate="script.cmd.name"></label>
-						  <input name="name" ng-model="command.extended.name" required>
-						  <span class="error" ng-show="script.form.name.$error.required">{{ 'script.cmd.name.r' | translate}}</span>
-						</md-input-container>
-						<md-input-container>
-						  <label translate="script.cmd.nature"></label>
-						  <input name="nature" ng-model="command.extended.nature" required naturecommand>
-						  <span class="error" ng-show="script.form.nature.$error.required">{{ 'script.cmd.nat.r' | translate}}</span>
-						  <span class="error" ng-show="script.form.nature.$error.naturecommand">{{ 'script.cmd.nat.v' | translate}}</span>
-						</md-input-container>
-						<md-input-container>
-						  <label translate="script.cmd.type"></label>
-						  <input name="type" ng-model="command.extended.type" required typecommand>
-						  <span class="error" ng-show="script.form.type.$error.required">{{ 'script.cmd.type.r' | translate}}</span>
-						  <span class="error" ng-show="script.form.type.$error.typecommand">{{ 'script.cmd.type.v' | translate}}</span>
-						</md-input-container>
-				    </div>
-			   		<div style="width: 100%;">
+		   	<div ng-repeat="command in commands" layout="column">
+					<md-toolbar>
+					  <md-icon md-font-icon="material-icons md-32">{{command.icon}}</md-icon>
+					  <div class="md-toolbar-tools" layout-align="center">
+					    <h1><br>
+					    	{{command.name}} ({{command.type}} id. {{command.id}} inst. {{command.instance}})
+					    </h1>
+					  </div>
+					  <md-fab-actions class="md-toolbar-tools">
+						<md-button aria-label="menu" class="md-icon-button" ng-click="update(command)"><md-icon md-font-icon="material-icons md-16">save</md-icon></md-button>
+						<md-button aria-label="menu" class="md-icon-button" ng-click="drop(command)"><md-icon md-font-icon="material-icons md-16">delete</md-icon></md-button>
+					  </md-fab-actions>
+					</md-toolbar>
+					<br>
+					<md-input-container>
+					  <label translate="script.cmd.id"></label>
+					  <input ng-model="command.id" disabled>
+					</md-input-container>
+					<md-input-container>
+					  <label translate="script.cmd.inst"></label>
+					  <input ng-model="command.instance" disabled>
+					</md-input-container>
+					<md-input-container>
+					  <label translate="script.cmd.order"></label>
+					  <input name="order" ng-model="command.extended.order" required>
+					  <span class="error" ng-show="script.form.order.$error.required">{{ 'script.cmd.order.r' | translate}}</span>
+					</md-input-container>
+					<md-input-container>
+					  <label translate="script.cmd.name"></label>
+					  <input name="name" ng-model="command.extended.name" required>
+					  <span class="error" ng-show="script.form.name.$error.required">{{ 'script.cmd.name.r' | translate}}</span>
+					</md-input-container>
+					<md-input-container>
+					  <label translate="script.cmd.nature"></label>
+					  <input name="nature" ng-model="command.extended.nature" required naturecommand>
+					  <span class="error" ng-show="script.form.nature.$error.required">{{ 'script.cmd.nat.r' | translate}}</span>
+					  <span class="error" ng-show="script.form.nature.$error.naturecommand">{{ 'script.cmd.nat.v' | translate}}</span>
+					</md-input-container>
+					<md-input-container>
+					  <label translate="script.cmd.type"></label>
+					  <input name="type" ng-model="command.extended.type" required typecommand>
+					  <span class="error" ng-show="script.form.type.$error.required">{{ 'script.cmd.type.r' | translate}}</span>
+					  <span class="error" ng-show="script.form.type.$error.typecommand">{{ 'script.cmd.type.v' | translate}}</span>
+					</md-input-container>
+			   		<div>
 			  		  <div hljs hljs-source="command.body"></div>
 			        </div>
-			   	</md-list-item>
-		   </md-list>
+		   </div>
 		 </form>
 	</div>
 </div>

@@ -28,6 +28,25 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     }
   }
 })
+.directive('jarvisPickElement', function ($log, $parse, genericPickerService) {
+	return {
+	    restrict: 'E',
+	    template: '<md-button aria-label="menu" class="md-icon-button" ng-click="pickItemDialog($event)"><md-icon md-font-icon="material-icons md-16">{{pick.icon}}</md-icon></md-button>',
+	    link: function(scope, elm, attrs, ctrl) {
+	    	scope.pick = {};
+	    	scope.pick.icon = attrs.icon;
+	    	scope.pick.ctrl = attrs.ctrl;
+	        scope.pickItemDialog = function(ev, node) {
+	        	return genericPickerService.pickers.nodes(ev, function(node) {
+	        		$parse(attrs.callback)(scope)(node);
+	        	}, function() {
+	        		$log.debug('no picked element');
+	        	},
+	        	scope.pick.ctrl);
+	        }
+	    }
+	}
+})
 .directive('jarvisPluginCommon', function ($log, $stateParams) {
 	  return {
 	    restrict: 'E',

@@ -61,6 +61,8 @@
     "iot.name" 			: "Nom de l'objet connecté",
     "plugin.name"   	: "Nom du plugin",
     "plugin.icon"   	: "Icône",
+    "script.cmd.id"		: "Identifiant",
+    "script.cmd.inst"	: "Instance",
     "script.cmd.order"	: "Ordre",
     "script.cmd.name"	: "Nom",
     "script.cmd.nature"	: "Nature",
