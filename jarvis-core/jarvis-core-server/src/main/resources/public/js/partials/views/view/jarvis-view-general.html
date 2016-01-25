@@ -11,14 +11,6 @@
     	{{'view.ishome' | translate}}
 	</md-switch>
 	<div>
-		<md-input-container>
-		<md-icon md-font-icon="material-icons md-16" ng-click="add(iot)">add</md-icon>
-		   <label translate="view.iots"></label>
-		   <md-select ng-model="iot.id">
-		     <md-option ng-repeat="iot in combo.iots" value="{{iot.id}}" translate="{{iot.name}}">
-		     </md-option>
-		   </md-select>
-		</md-input-container>
 		<table class="table table-bordered table-hover">
 			<thead>
 				<tr>

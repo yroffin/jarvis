@@ -1,37 +1,24 @@
 <div layout="column">
    <md-input-container>
-     <label translate="Name"></label>
+     <label translate="plugin.name"></label>
      <input ng-model="script.name">
    </md-input-container>
    <md-input-container>
-   <label translate="Category"></label>
+   <label translate="plugin.category"></label>
    <input ng-model="script.type">
    </md-input-container>
    <md-input-container>
-     <label translate="Owner"></label>
-     <md-select ng-model="script.owner">
-       <md-option ng-repeat="owner in combo.owners" value="{{owner.id}}" translate="{{owner.name}}">
-       </md-option>
-     </md-select>
+   <label translate="plugin.owner"></label>
+   <input ng-model="script.owner" disabled>
    </md-input-container>
   <md-input-container>
-    <label translate="Icon"></label>
+    <label translate="plugin.icon"></label>
     <input ng-model="script.icon">
   </md-input-container>
-  <md-input-container>
-    <label translate="Active"></label>
-    <md-select ng-model="script.active">
-      <md-option ng-repeat="active in combo.booleans" value="{{active.id}}">
-        {{active.value | translate}}
-      </md-option>
-    </md-select>
-  </md-input-container>
-  <md-input-container>
-    <label translate="Visible"></label>
-    <md-select ng-model="script.visible">
-      <md-option ng-repeat="visible in combo.booleans" value="{{visible.id}}">
-        {{visible.value | translate}}
-      </md-option>
-    </md-select>
-  </md-input-container>
+  <md-switch ng-model="script.active" aria-label="{{'plugin.active' | translate}}">
+	{{'plugin.active' | translate}}
+  </md-switch>
+  <md-switch ng-model="script.visible" aria-label="{{'plugin.visible' | translate}}">
+	{{'plugin.visible' | translate}}
+  </md-switch>
 </div>

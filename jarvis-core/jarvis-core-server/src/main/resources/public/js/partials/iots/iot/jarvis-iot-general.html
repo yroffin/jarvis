@@ -9,29 +9,21 @@
      </md-input-container>
      <md-input-container>
        <label translate="iot.owner"></label>
-       <md-select ng-model="iot.owner">
-         <md-option ng-repeat="owner in combo.owners" value="{{owner.id}}" translate="{{owner.name}}">
-         </md-option>
-       </md-select>
+       <input ng-model="iot.owner" disabled>
      </md-input-container>
+	 <md-switch ng-model="iot.visible" aria-label="{{'iot.visible' | translate}}">
+		{{'iot.active' | translate}}
+	 </md-switch>
      <md-input-container>
-       <label translate="Visible"></label>
-       <md-select ng-model="iot.visible">
-         <md-option ng-repeat="visible in combo.booleans" value="{{visible.id}}">
-           {{visible.value | translate}}
-         </md-option>
-       </md-select>
-     </md-input-container>
-     <md-input-container>
-       <label translate="Icon"></label>
+       <label translate="iot.icon"></label>
        <input ng-model="iot.icon">
      </md-input-container>
      <md-input-container>
-       <label translate="TagColor"></label>
+       <label translate="iot.tagColor"></label>
        <input ng-model="iot.tagColor">
      </md-input-container>
      <md-input-container>
-       <label translate="TagTextColor"></label>
+       <label translate="iot.tagTextColor"></label>
        <input ng-model="iot.tagTextColor">
      </md-input-container>
 </div>

@@ -289,73 +289,53 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
 	);
     /**
      * pick an element
-     * @param ev
-     * @param block
+     * @param node
      */
-    $scope.pickIotDialog = function(ev, block) {
-    	return genericPickerService.pickers.nodes(ev, function(node) {
-        	block.pluginId = node.id;
-        	block.pluginName = node.name;
-    	}, function() {
-    		$log.debug('Abort');
-    	},
-    	'pickIotDialogCtrl');
+    $scope.pickIot = function(node) {
+    	$scope.block.pluginId = node.id;
+    	$scope.block.pluginName = node.name;
+    }
+    /**
+     * clear plugin
+     */
+    $scope.clearPlugin = function() {
+    	$scope.block.pluginId = undefined;
     }
     /**
      * pick an element
      * @param ev
      * @param block
      */
-    $scope.pickThenIotDialog = function(ev, block) {
-    	return genericPickerService.pickers.nodes(ev, function(node) {
-        	block.pluginThenId = node.id;
-        	block.pluginThenName = node.name;
-    	}, function() {
-    		$log.debug('Abort');
-    	},
-    	'pickIotDialogCtrl');
+    $scope.pickThenIot = function(node) {
+    	$scope.block.pluginThenId = node.id;
+    	$scope.block.pluginThenName = node.name;
     }
     /**
      * pick an element
      * @param ev
      * @param block
      */
-    $scope.pickElseIotDialog = function(ev, block) {
-    	return genericPickerService.pickers.nodes(ev, function(node) {
-        	block.pluginElseId = node.id;
-        	block.pluginElseName = node.name;
-    	}, function() {
-    		$log.debug('Abort');
-    	},
-    	'pickIotDialogCtrl');
+    $scope.pickElseIot = function(node) {
+    	$scope.block.pluginElseId = node.id;
+    	$scope.block.pluginElseName = node.name;
     }
     /**
      * pick an element
      * @param ev
      * @param block
      */
-    $scope.pickThenBlockDialog = function(ev, block) {
-    	return genericPickerService.pickers.nodes(ev, function(node) {
-        	block.blockThenId = node.id;
-        	block.blockThenName = node.name;
-    	}, function() {
-    		$log.debug('Abort');
-    	},
-    	'pickBlockDialogCtrl');
+    $scope.pickThenBlock = function(node) {
+    	$scope.block.blockThenId = node.id;
+    	$scope.block.blockThenName = node.name;
     }
     /**
      * pick an element
      * @param ev
      * @param block
      */
-    $scope.pickElseBlockDialog = function(ev, block) {
-    	return genericPickerService.pickers.nodes(ev, function(node) {
-        	block.blockElseId = node.id;
-        	block.blockElseName = node.name;
-    	}, function() {
-    		$log.debug('Abort');
-    	},
-    	'pickBlockDialogCtrl');
+    $scope.pickElseBlock = function(node) {
+    	$scope.block.blockElseId = node.id;
+    	$scope.block.blockElseName = node.name;
     }
     /**
      * clear

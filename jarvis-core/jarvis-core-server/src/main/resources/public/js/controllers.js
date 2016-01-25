@@ -160,7 +160,7 @@ angular.module('JarvisApp.config',[])
 		  $mdDialog.hide(answer);
 		};
 	})
-	.controller('pickIotDialogCtrl',
+	.controller('pickPluginDialogCtrl',
 		function($scope, $log, $mdDialog, genericResourceService, toastService) {
 		$scope.hide = function() {
 		   $mdDialog.hide();
@@ -198,6 +198,50 @@ angular.module('JarvisApp.config',[])
 				function(elements) {
 					_.each(elements, function(element) {
 						element.selectable = true;
+				    	$scope.elementsPicker[1].nodes.push(element);
+					});
+				},
+				toastService.failure
+		)
+	})
+	.controller('pickIotDialogCtrl',
+		function($scope, $log, $mdDialog, genericResourceService, toastService) {
+		$scope.hide = function() {
+		   $mdDialog.hide();
+		 };
+		$scope.cancel = function() {
+		  $mdDialog.cancel();
+		};
+		$scope.answer = function(answer) {
+		  $mdDialog.hide(answer);
+		};
+		$scope.elementsPicker = [
+		     {
+		    	 name:"Connected Objects",
+		    	 selectable : false,
+		    	 nodes:[]
+		     },
+		     {
+		    	 name:"Plugin Scripts",
+		    	 selectable : false,
+		    	 nodes:[]
+		     }
+	    ];
+		$scope.crudIot = genericResourceService.crud(['iots']);
+		$scope.crudIot.findAll(
+				function(elements) {
+					_.each(elements, function(element) {
+						element.selectable = true;
+				    	$scope.elementsPicker[0].nodes.push(element);
+					});
+				},
+				toastService.failure
+		);
+		$scope.crudScript = genericResourceService.crud(['plugins','scripts']);
+		$scope.crudScript.findAll(
+				function(elements) {
+					_.each(elements, function(element) {
+						element.selectable = false;
 				    	$scope.elementsPicker[1].nodes.push(element);
 					});
 				},

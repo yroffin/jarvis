@@ -84,6 +84,13 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
     	$scope.output = angular.toJson({}, true);
     }
     /**
+     * set owner
+     */
+    $scope.setOwner = function(owner) {
+    	$log.debug('setOwner', owner);
+    	$scope.script.owner = owner.id;
+    }
+    /**
      * load controller
      */
     $scope.load = function() {

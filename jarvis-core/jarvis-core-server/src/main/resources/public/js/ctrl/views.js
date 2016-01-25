@@ -43,7 +43,7 @@ angular.module('JarvisApp.ctrl.views', ['JarvisApp.services'])
 .controller('viewCtrl',
 	function($scope, $log, $stateParams, genericResourceService, genericScopeService, viewResourceService, iotResourceService, toastService){
 	$scope.getLink = function() {
-		return $scope.commands;
+		return $scope.iots;
 	}
 	/**
 	 * declare generic scope resource (and inject it in scope)
@@ -85,12 +85,6 @@ angular.module('JarvisApp.ctrl.views', ['JarvisApp.services'])
 		 */
 		$scope.iots = [];
     	genericResourceService.scope.collections.findAll('iots', $stateParams.id, $scope.iots, viewResourceService.iots);
-
-		/**
-		 * find all iots
-		 */
-    	$scope.combo.iots = [{id: undefined, name: "iot.empty"}];
-    	genericResourceService.scope.combo.findAll('owner', $scope.combo.iots, iotResourceService.iot);
 
 		$log.info('view-ctrl', $scope.view);
     }

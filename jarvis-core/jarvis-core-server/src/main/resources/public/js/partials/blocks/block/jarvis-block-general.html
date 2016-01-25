@@ -1,7 +1,7 @@
 <md-toolbar>
   <md-fab-actions class="md-toolbar-tools">
-	<md-button aria-label="menu" class="md-icon-button" ng-click="pickIotDialog($event, block)"><md-icon md-font-icon="material-icons md-16">playlist_add</md-icon></md-button>
-	<md-button aria-label="menu" class="md-icon-button" ng-click="block.pluginId = undefined"><md-icon md-font-icon="material-icons md-16">clear</md-icon></md-button>
+	<jarvis-pick-element ctrl="pickPluginDialogCtrl" icon="playlist_add" callback="pickIot"></jarvis-pick-element>
+	<md-button aria-label="menu" class="md-icon-button" ng-click="clearPlugin()"><md-icon md-font-icon="material-icons md-16">clear</md-icon></md-button>
   </md-fab-actions>
 </md-toolbar>
 <br>

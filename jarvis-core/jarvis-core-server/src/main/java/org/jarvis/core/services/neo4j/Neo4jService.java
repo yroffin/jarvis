@@ -101,6 +101,8 @@ public class Neo4jService<T> {
 					default:
 						break;
 					}
+				} else {
+					node.removeProperty(field.getName());
 				}
 			}
 		});
