@@ -58,4 +58,13 @@ public class BlockBean extends GenericBean {
 	 * blockElseName
 	 */
 	public String blockElseName;
+
+	@Override
+	public String toString() {
+		return "BlockBean [name=" + name + ", icon=" + icon + ", expression=" + expression + ", pluginId=" + pluginId
+				+ ", pluginName=" + pluginName + ", pluginThenId=" + pluginThenId + ", pluginThenName=" + pluginThenName
+				+ ", pluginElseId=" + pluginElseId + ", pluginElseName=" + pluginElseName + ", blockThenId="
+				+ blockThenId + ", blockThenName=" + blockThenName + ", blockElseId=" + blockElseId + ", blockElseName="
+				+ blockElseName + "]";
+	}
 }

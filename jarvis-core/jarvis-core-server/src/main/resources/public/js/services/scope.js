@@ -37,6 +37,9 @@ angular.module('JarvisApp.services.scope', ['JarvisApp.services.generic']).facto
 		        		callback
 		        );
 		    }
+		    /**
+		     * Cf. genericResourceService
+		     */
 		    scope.new = function(callback) {
 		    	genericResourceService.scope.collections.new(
 		    			resource,
@@ -46,7 +49,7 @@ angular.module('JarvisApp.services.scope', ['JarvisApp.services.generic']).facto
 		        		callback
 		        );
 		    }
-			scope.crud = genericResourceService.crud([resource]);
+			scope.crud = genericResourceService.crud(resource.split('/'));
 		    /**
 		     * Cf. genericResourceService
 		     */

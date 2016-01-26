@@ -125,7 +125,7 @@ public class ApiBlockResources extends ApiLinkedResources<BlockRest,BlockBean,Sc
 					GenericMap thn = (GenericMap) this.execute(stack, doGetByIdBean(bean.blockThenId), args);
 				}
 			} else {
-				if(bean.blockElseId != null) {
+				if(bean.pluginElseId != null) {
 					GenericMap els = (GenericMap) apiScriptPluginResources.doExecute(bean.pluginElseId, args, TaskType.EXECUTE);
 				}
 				if(bean.blockElseId != null) {

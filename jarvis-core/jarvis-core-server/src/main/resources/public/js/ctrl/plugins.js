@@ -32,7 +32,7 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
 	 */
 	genericScopeService.scope.resources(
 			$scope, 
-			'plugins', 
+			'plugins/scripts', 
 			pluginResourceService.scripts,
 			{
     			name: "script name",
