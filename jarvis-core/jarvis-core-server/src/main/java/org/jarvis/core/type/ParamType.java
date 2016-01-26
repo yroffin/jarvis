@@ -17,5 +17,5 @@
 package org.jarvis.core.type;
 
 public enum ParamType {
-	STRING, INT, FLOAT, PARAM, COMMAND
+	STRING, INT, DATETIME, FLOAT, PARAM, COMMAND
 }

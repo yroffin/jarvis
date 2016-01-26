@@ -16,6 +16,8 @@
 
 package org.jarvis.core.model.bean;
 
+import org.joda.time.DateTime;
+
 /**
  * generic bean
  */
@@ -25,9 +27,13 @@ public class GenericBean {
 	 */
 	public String id;
 	/**
-	 * resource address
+	 * resource trigger
 	 */
-	public String address;
+	public String trigger;
+	/**
+	 * timestamp
+	 */
+	public DateTime timestamp;
 	/**
 	 * generic href
 	 */

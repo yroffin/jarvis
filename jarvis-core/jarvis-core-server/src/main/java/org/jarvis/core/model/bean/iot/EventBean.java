@@ -17,8 +17,6 @@
 package org.jarvis.core.model.bean.iot;
 
 import org.jarvis.core.model.bean.GenericBean;
-import org.joda.time.DateTime;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
@@ -27,13 +25,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class EventBean extends GenericBean {
 	/**
-	 * iot adress
+	 * fired
 	 */
-	public String address;
-	/**
-	 * timestamp
-	 */
-	public DateTime timestamp;
+	public boolean fired;
 	/**
 	 * text
 	 */

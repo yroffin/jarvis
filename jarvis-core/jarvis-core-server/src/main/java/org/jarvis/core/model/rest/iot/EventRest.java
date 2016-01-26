@@ -17,8 +17,6 @@
 package org.jarvis.core.model.rest.iot;
 
 import org.jarvis.core.model.rest.GenericEntity;
-import org.joda.time.DateTime;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -28,15 +26,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class EventRest extends GenericEntity {
 	/**
-	 * iot adress
+	 * fired
 	 */
-	@JsonProperty("address")
-	public String address;
-	/**
-	 * timestamp
-	 */
-	@JsonProperty("timestamp")
-	public DateTime timestamp;
+	@JsonProperty("fired")
+	public boolean fired;
 	/**
 	 * text
 	 */

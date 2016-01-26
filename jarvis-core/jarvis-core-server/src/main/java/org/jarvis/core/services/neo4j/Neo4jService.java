@@ -27,6 +27,8 @@ import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.GenericBean;
 import org.jarvis.core.type.CommandType;
 import org.jarvis.core.type.ParamType;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.ISODateTimeFormat;
 import org.neo4j.graphdb.DynamicLabel;
 import org.neo4j.graphdb.Label;
 import org.neo4j.graphdb.Node;
@@ -62,6 +64,9 @@ public class Neo4jService<T> {
 	 * @return
 	 */
 	private ParamType getType(Field field) {
+		if(field.getType() == org.joda.time.DateTime.class) {
+			return ParamType.DATETIME;
+		}
 		if(field.getType() == java.lang.String.class) {
 			return ParamType.STRING;
 		}
@@ -87,6 +92,11 @@ public class Neo4jService<T> {
 				Object value = field.get(source);
 				if (value != null) {
 					switch(getType(field)) {
+						case DATETIME:
+							DateTimeFormatter fmt = ISODateTimeFormat.dateTime();
+							String str = fmt.print(((org.joda.time.DateTime) value));
+							node.setProperty(field.getName(), str);
+							break;
 						case STRING:
 						case INT:
 						case FLOAT:
@@ -290,6 +300,9 @@ public class Neo4jService<T> {
 					field.setAccessible(true);
 					if(maps.containsKey(field.getName())) {
 						switch(getType(field)) {
+						case DATETIME:
+							field.set(target, new org.joda.time.DateTime(node.getProperty(field.getName())));
+							break;
 						case STRING:
 						case INT:
 						case FLOAT:

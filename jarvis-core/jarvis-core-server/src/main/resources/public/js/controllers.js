@@ -121,14 +121,16 @@ angular.module('JarvisApp.config',[])
          * @param value
          */
         $scope.emit = function(iot, value) {
-        	$log.debug('JarvisAppCtrl::emit', iot, value);
+        	$log.debug('JarvisAppCtrl::emit', iot, value, iot.trigger);
         	eventResourceService.event.post( 
         			{
-		        		address:iot.address,
+        				trigger:iot.trigger,
+		        		timestamp: (new Date()).toISOString(),
+		        		fired: true,
 		        		number:value
 	        		}, function(data) {
 		            	$log.debug('JarvisAppCtrl::emit', data);
-		       	    	toastService.info('event ' + data.address + '#' + data.id + ' emitted');
+		       	    	toastService.info('event ' + data.trigger + '#' + data.id + ' emitted');
 	        		}, toastService.failure);
         };
 

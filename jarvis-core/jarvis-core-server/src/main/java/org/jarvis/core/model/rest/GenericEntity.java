@@ -20,6 +20,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.jarvis.core.type.GenericMap;
+import org.joda.time.DateTime;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -33,10 +34,15 @@ public class GenericEntity {
 	@JsonProperty("id")
 	public String id;
 	/**
-	 * resource address
+	 * timestamp
 	 */
-	@JsonProperty("address")
-	public String address;
+	@JsonProperty("timestamp")
+	public DateTime timestamp;
+	/**
+	 * resource trigger
+	 */
+	@JsonProperty("trigger")
+	public String trigger;
 	/**
 	 * href of this resource
 	 */
