@@ -21,16 +21,16 @@
 angular.module('JarvisApp.ctrl.views', ['JarvisApp.services'])
 .controller('viewsCtrl', 
 	function($scope, $log, genericScopeService, viewResourceService){
-	$scope.setEntities = function(entities) {
-		$scope.views = entities;
-	}
-	$scope.getEntities = function() {
-		return $scope.views;
-	}
 	/**
 	 * declare generic scope resource (and inject it in scope)
 	 */
 	genericScopeService.scope.resources(
+			function(entities) {
+				$scope.views = entities;
+			},
+			function() {
+				return $scope.views;
+			},
 			$scope, 
 			'commands', 
 			viewResourceService.view,
@@ -42,14 +42,28 @@ angular.module('JarvisApp.ctrl.views', ['JarvisApp.services'])
 })
 .controller('viewCtrl',
 	function($scope, $log, $stateParams, genericResourceService, genericScopeService, viewResourceService, iotResourceService, toastService){
-	$scope.getLink = function() {
-		return $scope.iots;
-	}
 	/**
 	 * declare generic scope resource (and inject it in scope)
 	 */
 	genericScopeService.scope.resource(
 			$scope, 
+			'view', 
+			'views', 
+			viewResourceService.view);
+	/**
+	 * declare links
+	 */
+	$scope.links = {
+			iots: {}
+	};
+	/**
+	 * declare generic scope resource link (and inject it in scope)
+	 */
+	genericScopeService.scope.resourceLink(
+			function() {
+				return $scope.iots;
+			},
+			$scope.links.iots, 
 			'view', 
 			'views', 
 			viewResourceService.view, 

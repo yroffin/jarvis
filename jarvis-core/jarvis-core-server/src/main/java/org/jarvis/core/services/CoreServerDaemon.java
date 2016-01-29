@@ -17,24 +17,22 @@
 package org.jarvis.core.services;
 
 import org.jarvis.core.resources.CoreResources;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Component;
 import org.jarvis.core.resources.api.ApiClientResources;
+import org.jarvis.core.resources.api.ApiConnectorResources;
+import org.jarvis.core.resources.api.ApiCrontabResources;
 import org.jarvis.core.resources.api.ApiLabelResources;
 import org.jarvis.core.resources.api.iot.ApiEventResources;
 import org.jarvis.core.resources.api.iot.ApiIotResources;
 import org.jarvis.core.resources.api.iot.ApiTriggerResources;
-import org.jarvis.core.resources.api.jobs.ApiJobResources;
-import org.jarvis.core.resources.api.jobs.ApiParamResources;
 import org.jarvis.core.resources.api.plugins.ApiCommandResources;
 import org.jarvis.core.resources.api.plugins.ApiScriptPluginResources;
 import org.jarvis.core.resources.api.scenario.ApiBlockResources;
 import org.jarvis.core.resources.api.scenario.ApiScenarioResources;
 import org.jarvis.core.resources.api.views.ApiViewResources;
-import org.jarvis.core.resources.api.ApiConnectorResources;
-import org.jarvis.core.resources.api.ApiCrontabResources;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Component;
 
 /**
  * main daemon
@@ -48,9 +46,6 @@ public class CoreServerDaemon {
 
 	@Autowired
 	CoreResources coreResources;
-
-	@Autowired
-	ApiJobResources apiJobResources;
 
 	@Autowired
 	ApiClientResources apiClientResources;
@@ -69,9 +64,6 @@ public class CoreServerDaemon {
 
 	@Autowired
 	ApiBlockResources apiBlockResources;
-
-	@Autowired
-	ApiParamResources apiParamResources;
 
 	@Autowired
 	ApiIotResources apiIotResources;
@@ -108,7 +100,6 @@ public class CoreServerDaemon {
 		 * mount resources
 		 */
 		coreResources.mount();
-		apiJobResources.mount();
 		apiClientResources.mount();
 		apiConnectorResources.mount();
 		apiCrontabResources.mount();
@@ -118,7 +109,6 @@ public class CoreServerDaemon {
 		 */
 		apiScenarioResources.mount();
 		apiBlockResources.mount();
-		apiParamResources.mount();
 		apiIotResources.mount();
 		apiViewResources.mount();
 		/**

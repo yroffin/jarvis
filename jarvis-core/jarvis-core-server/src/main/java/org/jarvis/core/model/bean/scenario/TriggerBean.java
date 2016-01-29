@@ -7,15 +7,11 @@ import org.jarvis.core.model.bean.GenericBean;
  */
 public class TriggerBean extends GenericBean {
 	/**
-	 * device
+	 * name
 	 */
-	public String device;
+	public String name;
 	/**
-	 * plugin
+	 * icon
 	 */
-	public String plugin;
-	/**
-	 * field
-	 */
-	public String field;
+	public String icon;
 }

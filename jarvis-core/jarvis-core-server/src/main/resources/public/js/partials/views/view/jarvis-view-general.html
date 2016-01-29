@@ -11,7 +11,7 @@
     	{{'view.ishome' | translate}}
 	</md-switch>
 	<div>
-		<table class="table table-bordered table-hover">
+		<table class="table table-bordered">
 			<thead>
 				<tr>
 					<th></th>
@@ -23,8 +23,8 @@
 			</thead>
 			<tbody>
 				<tr ng-repeat="iot in iots">
-					<td><md-icon md-font-icon="material-icons md-16" ng-click="drop(iot)">delete</md-icon></td>
-					<td><md-icon md-font-icon="material-icons md-16" ng-click="execute(iot)">loop</md-icon></td>
+					<td><md-icon md-font-icon="material-icons md-16" ng-click="links.iots.drop(iot)">delete</md-icon></td>
+					<td><md-icon md-font-icon="material-icons md-16" ng-click="links.iots.execute(iot)">loop</md-icon></td>
 					<td>{{iot.id}}</th>
 					<td><md-icon md-font-icon="material-icons md-16">{{iot.icon}}</md-icon></th>
 					<td>{{iot.name}}</th>

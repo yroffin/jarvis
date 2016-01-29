@@ -61,6 +61,26 @@ import spark.Route;
 public abstract class ApiResources<T extends GenericEntity,S extends GenericBean> extends ApiMapper {
 	protected Logger logger = LoggerFactory.getLogger(ApiResources.class);
 
+	private List<ResourceListener<S>> listeners = new ArrayList<ResourceListener<S>>();
+	
+	/**
+	 * add new listener
+	 * @param listener
+	 */
+	public void addListener(ResourceListener<S> listener) {
+        listeners.add(listener);
+    }
+
+	 void notifyPost(S bean){
+        for(ResourceListener<S> listener : listeners){
+            try {
+				listener.post(bean);
+			} catch (InterruptedException e) {
+				throw new TechnicalException(e);
+			}
+        }
+	 }
+	 
 	@Autowired
 	Environment env;
 	
@@ -215,9 +235,9 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * @return Rest
 	 */
 	public T doCreate(T r) {
-		return mapperFactory.getMapperFacade().map(
-				apiService.create(mapperFactory.getMapperFacade().map(r, beanClass)),
-				restClass);
+		S bean = mapperFactory.getMapperFacade().map(r, beanClass);
+		notifyPost(bean);
+		return mapperFactory.getMapperFacade().map(apiService.create(bean), restClass);
 	}
 	
 	/**

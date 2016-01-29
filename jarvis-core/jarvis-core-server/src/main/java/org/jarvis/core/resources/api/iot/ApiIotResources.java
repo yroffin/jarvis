@@ -20,12 +20,15 @@ import static spark.Spark.get;
 
 import org.jarvis.core.model.bean.iot.IotBean;
 import org.jarvis.core.model.bean.plugin.ScriptPluginBean;
+import org.jarvis.core.model.bean.scenario.TriggerBean;
 import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.model.rest.iot.IotRest;
 import org.jarvis.core.model.rest.plugin.ScriptPluginRest;
-import org.jarvis.core.resources.api.ApiLinkedTwiceResources;
+import org.jarvis.core.model.rest.scenario.TriggerRest;
+import org.jarvis.core.resources.api.ApiLinkedThirdResources;
 import org.jarvis.core.resources.api.href.ApiHrefIotResources;
 import org.jarvis.core.resources.api.href.ApiHrefIotScriptPluginResources;
+import org.jarvis.core.resources.api.href.ApiHrefIotTriggerResources;
 import org.jarvis.core.resources.api.plugins.ApiScriptPluginResources;
 import org.jarvis.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
@@ -40,7 +43,7 @@ import spark.Route;
  * IOT resource
  */
 @Component
-public class ApiIotResources extends ApiLinkedTwiceResources<IotRest,IotBean,IotRest,IotBean,ScriptPluginRest,ScriptPluginBean> {
+public class ApiIotResources extends ApiLinkedThirdResources<IotRest,IotBean,IotRest,IotBean,ScriptPluginRest,ScriptPluginBean,TriggerRest,TriggerBean> {
 
 	@Autowired
 	ApiHrefIotResources apiHrefIotResources;
@@ -50,6 +53,12 @@ public class ApiIotResources extends ApiLinkedTwiceResources<IotRest,IotBean,Iot
 
 	@Autowired
 	ApiScriptPluginResources apiScriptPluginResources;
+
+	@Autowired
+	ApiHrefIotTriggerResources apiHrefIotTriggerResources;
+
+	@Autowired
+	ApiTriggerResources apiTriggerResources;
 
 	/**
 	 * constructor
@@ -70,6 +79,7 @@ public class ApiIotResources extends ApiLinkedTwiceResources<IotRest,IotBean,Iot
 		 */
 		declare(IOT_RESOURCE, IOT_RESOURCE, this, apiHrefIotResources, IOT, SORTKEY);
 		declareSecond(IOT_RESOURCE, SCRIPT_RESOURCE, apiScriptPluginResources, apiHrefIotScriptPluginResources, PLUGIN, SORTKEY);
+		declareThird(IOT_RESOURCE, TRIGGER_RESOURCE, apiTriggerResources, apiHrefIotTriggerResources, TRIGGER, SORTKEY);
 		/**
 		 * iot html generator
 		 */

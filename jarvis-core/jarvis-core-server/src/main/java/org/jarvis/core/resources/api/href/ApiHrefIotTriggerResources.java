@@ -18,10 +18,10 @@ package org.jarvis.core.resources.api.href;
 
 import javax.annotation.PostConstruct;
 
-import org.jarvis.core.model.bean.JobBean;
-import org.jarvis.core.model.bean.job.ParamBean;
-import org.jarvis.core.model.rest.JobRest;
-import org.jarvis.core.model.rest.job.ParamRest;
+import org.jarvis.core.model.bean.iot.IotBean;
+import org.jarvis.core.model.bean.scenario.TriggerBean;
+import org.jarvis.core.model.rest.iot.IotRest;
+import org.jarvis.core.model.rest.scenario.TriggerRest;
 import org.jarvis.core.resources.api.mapper.ApiHrefMapper;
 import org.springframework.stereotype.Component;
 
@@ -29,11 +29,11 @@ import org.springframework.stereotype.Component;
  * HREF handler
  */
 @Component
-public class ApiHrefJobResources extends ApiHrefMapper<JobRest,ParamRest> {
+public class ApiHrefIotTriggerResources extends ApiHrefMapper<IotRest,TriggerRest> {
 
 	@PostConstruct
 	protected
 	void init() {
-		super.init(JobBean.class.getSimpleName(),ParamBean.class.getSimpleName(),"params");
+		super.init(IotBean.class.getSimpleName(),TriggerBean.class.getSimpleName(),"triggers");
 	}
 }

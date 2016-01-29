@@ -23,7 +23,8 @@ angular.module('JarvisApp.services.iot', [])
 		return {
 			iot: genericResourceService.crud(['iots']),
 			plugins : genericResourceService.links(['iots'], ['plugins','scripts']),
-			iots : genericResourceService.links(['iots'], ['iots'])
+			iots : genericResourceService.links(['iots'], ['iots']),
+			triggers : genericResourceService.links(['iots'], ['triggers'])
 		}
 	})
 ;

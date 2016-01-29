@@ -43,7 +43,7 @@ limitations under the License.
     <!-- Just for external configuration -->
     <script src="config.js"></script>
 </head>
-<body ng-controller="JarvisAppCtrl as ctrl" ng-init="ctrl.load()" ng-cloak>
+<body md-theme="docs-dark" ng-controller="JarvisAppCtrl as ctrl" ng-init="ctrl.load()" ng-cloak>
 
 <md-toolbar layout="row">
     <div class="md-toolbar-tools">
@@ -56,11 +56,8 @@ limitations under the License.
 
 <div layout="row">
     <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
-        <md-button ng-click="location('left', '/jobs');">Jobs</md-button>
-        <md-button ng-click="location('left', '/configuration');">Configuration</md-button>
         <md-button ng-click="location('left', '/scenarios');">Scenario</md-button>
         <md-button ng-click="location('left', '/blocks');">Block</md-button>
-        <md-button ng-click="location('left', '/connectors');">Connector</md-button>
         <md-button ng-click="location('left', '/iots');">Connected object(s)</md-button>
         <md-button ng-click="location('left', '/events');">Events</md-button>
         <md-button ng-click="location('left', '/triggers');">Triggers</md-button>
@@ -133,7 +130,6 @@ limitations under the License.
 <!-- Widgets -->
 <script src="js/directives/widgets.js"></script>
 <!-- Controllers -->
-<script src="js/ctrl/jobs.js"></script>
 <script src="js/ctrl/iots.js"></script>
 <script src="js/ctrl/events.js"></script>
 <script src="js/ctrl/triggers.js"></script>
@@ -142,6 +138,7 @@ limitations under the License.
 <script src="js/ctrl/views.js"></script>
 <script src="js/ctrl/home.js"></script>
 <script src="js/ctrl/scenarios.js"></script>
+<script src="js/ctrl/blocks.js"></script>
 
 </body>
 </html>

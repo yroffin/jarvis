@@ -16,14 +16,7 @@
 
 package org.jarvis.core.resources.api.iot;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.scenario.TriggerBean;
-import org.jarvis.core.model.rest.GenericEntity;
-import org.jarvis.core.model.rest.iot.IotRest;
-import org.jarvis.core.model.rest.plugin.ScriptPluginRest;
 import org.jarvis.core.model.rest.scenario.TriggerRest;
 import org.jarvis.core.resources.api.ApiResources;
 import org.jarvis.core.resources.api.href.ApiHrefIotResources;
@@ -78,37 +71,9 @@ public class ApiTriggerResources extends ApiResources<TriggerRest,TriggerBean> {
 
 	@Override
 	public String doRealTask(TriggerBean trigger, GenericMap args, TaskType taskType) throws Exception {
-		GenericMap result;
-		switch(taskType) {
-			case TEST:
-				result = test(trigger, args);
-				break;
-			default:
-				result = new GenericMap();
-		}
-		return mapper.writeValueAsString(result);
-	}
-
-	private GenericMap test(TriggerBean trigger, GenericMap args) throws TechnicalNotFoundException {
-		List<TriggerRest> triggers = new ArrayList<TriggerRest>();
-		for(IotRest owner : apiIotResources.doFindAll()) {
-			for(GenericEntity link : apiHrefIotScriptPluginResources.findAll(owner)) {
-				ScriptPluginRest script = apiScriptPluginResources.doGetById(link.id);
-				for(GenericEntity cmd : sort(apiHrefPluginCommandResources.findAll(script), "order")) {
-					TriggerRest t = new TriggerRest();
-					t.device = owner.name + "#" + owner.id;
-					t.plugin = script.name + "#" + script.id;
-					t.field = (String) cmd.get("name");
-					triggers.add(t);
-				}
-			}
-		}
-		int index = 0;
-		GenericMap genericMap = new GenericMap();
-		for(TriggerRest t : triggers) {
-			genericMap.put(index+"", t);
-			index++;
-		}
-		return genericMap;
+		/**
+		 * TODO
+		 */
+		return "";
 	}
 }

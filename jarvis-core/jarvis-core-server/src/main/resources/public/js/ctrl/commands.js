@@ -21,16 +21,16 @@
 angular.module('JarvisApp.ctrl.commands', ['JarvisApp.services'])
 .controller('commandsCtrl', 
 	function($scope, $log, genericScopeService, commandResourceService){
-	$scope.setEntities = function(entities) {
-		$scope.commands = entities;
-	}
-	$scope.getEntities = function() {
-		return $scope.commands;
-	}
 	/**
 	 * declare generic scope resource (and inject it in scope)
 	 */
 	genericScopeService.scope.resources(
+			function(entities) {
+				$scope.commands = entities;
+			},
+			function() {
+				return $scope.commands;
+			},
 			$scope, 
 			'commands', 
 			commandResourceService.command,

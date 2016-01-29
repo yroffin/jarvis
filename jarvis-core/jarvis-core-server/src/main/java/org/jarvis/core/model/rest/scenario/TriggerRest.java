@@ -27,18 +27,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TriggerRest extends GenericEntity {
 	/**
-	 * device
+	 * name
 	 */
-	@JsonProperty("device")
-	public String device;
+	@JsonProperty("name")
+	public String name;
 	/**
-	 * plugin
+	 * icon
 	 */
-	@JsonProperty("plugin")
-	public String plugin;
-	/**
-	 * field
-	 */
-	@JsonProperty("field")
-	public String field;
+	@JsonProperty("icon")
+	public String icon;
 }

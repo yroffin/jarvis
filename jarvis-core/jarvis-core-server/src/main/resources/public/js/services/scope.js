@@ -23,7 +23,7 @@
  */
 angular.module('JarvisApp.services.scope', ['JarvisApp.services.generic']).factory('genericScopeService', function($log, $filter, genericResourceService, genericPickerService, toastService) {
   var scope = {
-	  resources : function(scope, resource, service, init) {
+	  resources : function(setEntities, getEntities, scope, resource, service, init) {
 	    	$log.debug("inject default resources scope", resource);
 		    /**
 		     * Cf. genericResourceService
@@ -31,7 +31,7 @@ angular.module('JarvisApp.services.scope', ['JarvisApp.services.generic']).facto
 		    scope.create = function(create, callback) {
 		    	genericResourceService.scope.collections.new(
 		    			resource,
-		        		scope.getEntities(),
+		        		getEntities(),
 		        		create,
 		        		service,
 		        		callback
@@ -43,7 +43,7 @@ angular.module('JarvisApp.services.scope', ['JarvisApp.services.generic']).facto
 		    scope.new = function(callback) {
 		    	genericResourceService.scope.collections.new(
 		    			resource,
-		        		scope.getEntities(),
+		        		getEntities(),
 		        		init,
 		        		service,
 		        		callback
@@ -63,7 +63,7 @@ angular.module('JarvisApp.services.scope', ['JarvisApp.services.generic']).facto
 		    		.then(function() {
 			    	$log.debug('remove', entity);
 					var toremove = entity.id;
-					_.remove(scope.getEntities(), function(element) {
+					_.remove(getEntities(), function(element) {
 						return element.id == toremove;
 					});
 			    	scope.crud.delete(entity.id);
@@ -78,9 +78,9 @@ angular.module('JarvisApp.services.scope', ['JarvisApp.services.generic']).facto
 		     * loading
 		     */
 		    scope.load = function(callback) {
-		    	scope.setEntities([]);
+		    	setEntities([]);
 		    	service.findAll(function(data) {
-		    		scope.setEntities(data);
+		    		setEntities(data);
 					$log.debug(resource+'-ctrl', data);
 					if(callback) {
 						callback();
@@ -118,40 +118,40 @@ angular.module('JarvisApp.services.scope', ['JarvisApp.services.generic']).facto
 		    scope.duplicate = function(data) {
 		    	genericResourceService.scope.entity.duplicate(function() {scope.go(back)}, resource, data, service);
 		    }
-		    if(link) {
-		    	$log.debug('inject link',link);
-			    /**
-			     * Cf. genericResourceService
-			     */
-			    scope.add = function(data) {
-			    	$log.debug('link::add',data);
-			    	genericResourceService.scope.link.add(stateParamsId,data,dataLink,link,scope.getLink());
-				}
-			    /**
-			     * Cf. genericResourceService
-			     */
-			    scope.update = function(data) {
-			    	$log.debug('link::update',data);
-			    	genericResourceService.scope.link.save(stateParamsId,data,link);
-				}
-			    /**
-			     * Cf. genericResourceService
-			     */
-			    scope.drop = function(data) {
-			    	genericPickerService.pickers.confirm(
-			    			$filter('translate')('action.remove.link', {name:data.name, id:data.id}),
-			    			'',
-			    			$filter('translate')('yes'),
-			    			$filter('translate')('no')
-			    		)
-			    		.then(function() {
-					    	$log.debug('link::drop',data);
-					    	genericResourceService.scope.link.remove(stateParamsId,data,link,scope.getLink());
-				    	}, function() {
-					    	$log.debug('abort');
-				   	});
-				}
-		    }
+	  },
+	  resourceLink : function(getLink, scope, resource, back, service, link, dataLink, stateParamsId) {
+	    	$log.debug('inject link',link);
+		    /**
+		     * Cf. genericResourceService
+		     */
+		    scope.add = function(data) {
+		    	$log.debug('link::add',data);
+		    	genericResourceService.scope.link.add(stateParamsId,data,dataLink,link,getLink());
+			}
+		    /**
+		     * Cf. genericResourceService
+		     */
+		    scope.update = function(data) {
+		    	$log.debug('link::update',data);
+		    	genericResourceService.scope.link.save(stateParamsId,data,link);
+			}
+		    /**
+		     * Cf. genericResourceService
+		     */
+		    scope.drop = function(data) {
+		    	genericPickerService.pickers.confirm(
+		    			$filter('translate')('action.remove.link', {name:data.name, id:data.id}),
+		    			'',
+		    			$filter('translate')('yes'),
+		    			$filter('translate')('no')
+		    		)
+		    		.then(function() {
+				    	$log.debug('link::drop',data);
+				    	genericResourceService.scope.link.remove(stateParamsId,data,link,getLink());
+			    	}, function() {
+				    	$log.debug('abort');
+			   	});
+			}
 	  }
   };
   return {

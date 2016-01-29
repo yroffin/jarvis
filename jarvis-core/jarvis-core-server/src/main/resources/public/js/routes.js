@@ -35,26 +35,6 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
             controller: 'homeCtrl',
             templateUrl: '/ui/js/partials/home/page.html'
         })
-        .state('jobs', {
-            url: '/jobs',
-            controller: 'jobsCtrl',
-            templateUrl: '/ui/js/partials/jobs/page.html'
-        })
-        .state('jobs-by-id', {
-            url: '/jobs/:id',
-            controller: 'jobCtrl',
-            templateUrl: '/ui/js/partials/jobs/job/page.html'
-        })
-        .state('configuration', {
-            url: '/configuration',
-            controller: 'JarvisAppCtrl',
-            templateUrl: '/ui/js/partials/configuration.html'
-        })
-        .state('connectors', {
-            url: '/connectors',
-            controller: 'JarvisAppCtrl',
-            templateUrl: '/ui/js/partials/connectors.html'
-        })
         .state('events', {
             url: '/events',
             controller: 'eventsCtrl',
@@ -64,6 +44,11 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
             url: '/triggers',
             controller: 'triggersCtrl',
             templateUrl: '/ui/js/partials/triggers/page.html'
+        })
+        .state('triggers-by-id', {
+            url: '/triggers/:id?tab',
+            controller: 'triggerCtrl',
+            templateUrl: '/ui/js/partials/triggers/trigger/page.html'
         })
         .state('iots', {
             url: '/iots',

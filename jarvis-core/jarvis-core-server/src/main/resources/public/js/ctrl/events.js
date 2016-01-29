@@ -21,16 +21,16 @@
 angular.module('JarvisApp.ctrl.events', ['JarvisApp.services'])
 .controller('eventsCtrl', 
 	function($scope, $log, genericScopeService, genericResourceService, eventResourceService){
-	$scope.setEntities = function(entities) {
-		$scope.events = entities;
-	}
-	$scope.getEntities = function() {
-		return $scope.events;
-	}
 	/**
 	 * declare generic scope resource (and inject it in scope)
 	 */
 	genericScopeService.scope.resources(
+			function(entities) {
+				$scope.events = entities;
+			},
+			function() {
+				return $scope.events;
+			},
 			$scope, 
 			'events',
 			eventResourceService.event

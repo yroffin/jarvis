@@ -21,16 +21,16 @@
 angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
 .controller('pluginsCtrl', 
 	function($scope, $log, genericScopeService, pluginResourceService){
-	$scope.setEntities = function(entities) {
-		$scope.plugins = entities;
-	}
-	$scope.getEntities = function() {
-		return $scope.plugins;
-	}
 	/**
 	 * declare generic scope resource (and inject it in scope)
 	 */
 	genericScopeService.scope.resources(
+			function(entities) {
+				$scope.plugins = entities;
+			},
+			function() {
+				return $scope.plugins;
+			},
 			$scope, 
 			'plugins/scripts', 
 			pluginResourceService.scripts,
@@ -43,14 +43,29 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
 })
 .controller('pluginScriptCtrl',
 	function($scope, $log, $stateParams, genericResourceService, genericScopeService, genericPickerService, pluginResourceService, iotResourceService, commandResourceService, toastService){
-	$scope.getLink = function() {
-		return $scope.commands;
-	}
 	/**
 	 * declare generic scope resource (and inject it in scope)
 	 */
 	genericScopeService.scope.resource(
 			$scope, 
+			'script', 
+			'plugins', 
+			pluginResourceService.scripts
+	);
+	/**
+	 * declare links
+	 */
+	$scope.links = {
+			commands: {}
+	};
+	/**
+	 * declare generic scope resource link (and inject it in scope)
+	 */
+	genericScopeService.scope.resourceLink(
+			function() {
+				return $scope.commands;
+			},
+			$scope.links.commands, 
 			'script', 
 			'plugins', 
 			pluginResourceService.scripts, 

@@ -19,8 +19,11 @@ package org.jarvis.core.resources.api.iot;
 import org.jarvis.core.model.bean.iot.EventBean;
 import org.jarvis.core.model.rest.iot.EventRest;
 import org.jarvis.core.resources.api.ApiResources;
+import org.jarvis.core.resources.api.ResourceListener;
+import org.jarvis.core.services.CoreEventDaemon;
 import org.jarvis.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -29,6 +32,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class ApiEventResources extends ApiResources<EventRest,EventBean> {
 
+	@Autowired
+	CoreEventDaemon coreEventDaemon;
+	
 	/**
 	 * constructor
 	 */
@@ -37,12 +43,25 @@ public class ApiEventResources extends ApiResources<EventRest,EventBean> {
 		setBeanClass(EventBean.class);
 	}
 
+	class ResourceListenerImpl implements ResourceListener<EventBean> {
+
+		@Override
+		public void post(EventBean event) {
+			coreEventDaemon.post(event);
+		}
+		
+	}
+
 	@Override
 	public void mount() {
 		/**
-		 * scripts
+		 * events
 		 */
 		declare(EVENT_RESOURCE);
+		/**
+		 * declare listener
+		 */
+		addListener(new ResourceListenerImpl());
 	}
 
 	@Override

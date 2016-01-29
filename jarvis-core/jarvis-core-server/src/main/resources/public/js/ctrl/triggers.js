@@ -20,77 +20,46 @@
 
 angular.module('JarvisApp.ctrl.triggers', ['JarvisApp.services'])
 .controller('triggersCtrl', 
-	function($scope, $log, genericScopeService, genericResourceService, triggerResourceService, toastService){
-	$scope.setEntities = function(entities) {
-		$scope.triggers = entities;
-	}
-	$scope.getEntities = function() {
-		return $scope.triggers;
-	}
+		function($scope, $log, genericScopeService, triggerResourceService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
 	 */
 	genericScopeService.scope.resources(
+			function(entities) {
+				$scope.triggers = entities;
+			},
+			function() {
+				return $scope.triggers;
+			},
 			$scope, 
-			'triggers',
+			'triggers', 
+			triggerResourceService.trigger,
+			{
+    			name: "trigger name",
+    			icon: "settings_remote"
+    		}
+	);
+})
+.controller('triggerCtrl',
+	function($scope, $log, $stateParams, genericResourceService, genericScopeService, triggerResourceService, toastService){
+	/**
+	 * declare generic scope resource (and inject it in scope)
+	 */
+	genericScopeService.scope.resource(
+			$scope, 
+			'trigger', 
+			'triggers', 
 			triggerResourceService.trigger
 	);
-	/**
-	 * pre create
-	 */
-	$scope.preCreate = function(entity) {
-		$scope.create(entity, function(data){
-    		var removed = _.remove($scope.triggers, function(trigger) {
-    			return	trigger.device == data.device &&
-    					trigger.plugin == data.plugin &&
-    					trigger.field == data.field &&
-    					trigger.id == undefined
-    		});
-    		data.status = 'current';
-			$log.debug('postCreate', data, removed);
-		});
-	}
-	$scope.preRemove = function(entity) {
-		$scope.remove(entity, function(data){
-			$log.debug('preRemove', data);
-			var real = _.clone(data);
-			real.status = 'added';
-			$scope.triggers.push(real);
-		});
-	}
     /**
-     * check actual triggers
-     * @param triggers
+     * loading
      */
-    $scope.preLoad = function() {
-    	$scope.load(function() {
-	    	$log.debug('triggersCtrl::check', $scope.triggers);
-	    	_.each($scope.triggers, function(real) {
-	    		real.status = 'current';
-	    	});
-	    	triggerResourceService.trigger.task('*', 'test', {}, function(data) {
-	        	$log.debug('triggersCtrl::check', data);
-	        	$scope.crossref =  data;
-	        	_.find($scope.crossref, function(real) {
-	        		var index = _.findIndex($scope.triggers, function(trigger) {
-	        			return	trigger.device == real.device &&
-	        					trigger.plugin == real.plugin &&
-	        					trigger.field == real.field
-	        		});
-	        		if(index < 0) {
-	        			real.status = 'added';
-	        			$scope.triggers.push(real);
-	        		}
-	        	});
-		    }, toastService.failure);
-    	});
-    }
-    /**
-     * rebuild all triggers
-     * @param triggers
-     */
-    $scope.rebuild = function() {
-    	$log.debug('triggersCtrl::check', $scope.triggers);
+    $scope.load = function() {
+		/**
+		 * get current trigger
+		 */
+    	genericResourceService.scope.entity.get($stateParams.id, function(update) {$scope.trigger=update}, triggerResourceService.trigger);
+	
+		$log.info('trigger-ctrl');
     }
 })
-;

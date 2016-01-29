@@ -61,21 +61,12 @@ angular.module('JarvisApp.config',[])
     }])
     .config(function($mdThemingProvider){
         // Configure a dark theme with primary foreground yellow
-        $mdThemingProvider.theme('default')
-            .primaryPalette('blue', {
-                'default': '600',
-                'hue-1': '50',
-                'hue-2': '600',
-                'hue-3': 'A700'
-              })
-        	.accentPalette('indigo')
-        	.warnPalette('red')
-        	.backgroundPalette('grey', {
-                'default': '50',
-                'hue-1': '50',
-                'hue-2': '600',
-                'hue-3': 'A700'
-              });
+        $mdThemingProvider.theme('docs-dark','default')
+            .primaryPalette('deep-orange')
+            .warnPalette('red')
+            .accentPalette('brown')
+            .backgroundPalette('grey')
+            .dark();
     })
     /**
      * main controller
@@ -269,6 +260,35 @@ angular.module('JarvisApp.config',[])
 		     }
 	    ];
 		$scope.crud = genericResourceService.crud(['commands']);
+		$scope.crud.findAll(
+				function(elements) {
+					_.each(elements, function(element) {
+						element.selectable = true;
+				    	$scope.elementsPicker[0].nodes.push(element);
+					});
+				},
+				toastService.failure
+		);
+	})
+	.controller('pickTriggerDialogCtrl',
+		function($scope, $log, $mdDialog, genericResourceService, toastService) {
+		$scope.hide = function() {
+		   $mdDialog.hide();
+		 };
+		$scope.cancel = function() {
+		  $mdDialog.cancel();
+		};
+		$scope.answer = function(answer) {
+		  $mdDialog.hide(answer);
+		};
+		$scope.elementsPicker = [
+		     {
+		    	 name:"Triggers",
+		    	 selectable : false,
+		    	 nodes:[]
+		     }
+	    ];
+		$scope.crud = genericResourceService.crud(['triggers']);
 		$scope.crud.findAll(
 				function(elements) {
 					_.each(elements, function(element) {

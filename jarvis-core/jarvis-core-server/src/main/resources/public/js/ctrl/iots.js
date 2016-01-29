@@ -21,16 +21,16 @@
 angular.module('JarvisApp.ctrl.iots', ['JarvisApp.services'])
 .controller('iotsCtrl', 
 	function($scope, $log, genericScopeService, iotResourceService){
-	$scope.setEntities = function(entities) {
-		$scope.iots = entities;
-	}
-	$scope.getEntities = function() {
-		return $scope.iots;
-	}
 	/**
 	 * declare generic scope resource (and inject it in scope)
 	 */
 	genericScopeService.scope.resources(
+			function(entities) {
+				$scope.iots = entities;
+			},
+			function() {
+				return $scope.iots;
+			},
 			$scope, 
 			'iots', 
 			iotResourceService.iot,
@@ -52,8 +52,46 @@ angular.module('JarvisApp.ctrl.iots', ['JarvisApp.services'])
 			$scope, 
 			'iot', 
 			'iots', 
+			iotResourceService.iot
+	);
+	$scope.links = {
+			plugins: {},
+			triggers: {},
+			iots: {}
+	}
+	genericScopeService.scope.resourceLink(
+			function() {
+				return $scope.plugins;
+			},
+			$scope.links.plugins,
+			'iot',
+			'iots',
 			iotResourceService.iot, 
 			iotResourceService.plugins, 
+			{'order':'1'},
+			$stateParams.id
+	);
+	genericScopeService.scope.resourceLink(
+			function() {
+				return $scope.triggers;
+			},
+			$scope.links.triggers,
+			'iot',
+			'iots',
+			iotResourceService.iot, 
+			iotResourceService.triggers, 
+			{'order':'1'},
+			$stateParams.id
+	);
+	genericScopeService.scope.resourceLink(
+			function() {
+				return $scope.iots;
+			},
+			$scope.links.iots,
+			'iot',
+			'iots',
+			iotResourceService.iot, 
+			iotResourceService.iots, 
 			{'order':'1'},
 			$stateParams.id
 	);
@@ -69,9 +107,17 @@ angular.module('JarvisApp.ctrl.iots', ['JarvisApp.services'])
 	    }, toastService.failure);
 	}
     /**
+     * set trigger
+     */
+    $scope.setTrigger = function(trigger) {
+    	$scope.trigger = trigger;
+    	$scope.iot.trigger = trigger.id;
+    }
+    /**
      * set owner
      */
     $scope.setOwner = function(owner) {
+    	$scope.owner = owner;
     	$scope.iot.owner = owner.id;
     }
 	/**
@@ -80,16 +126,6 @@ angular.module('JarvisApp.ctrl.iots', ['JarvisApp.services'])
 	$scope.load = function() {
   		$scope.activeTab = $stateParams.tab;
 	 
-	  	/**
-	     * init part
-	     */
-		$scope.combo = {
-				booleans: [
-		               	   {id: true,value:'True'},
-		               	   {id: false,value:'False'}
-		        ]
-		};
-	
 		/**
 		 * get current iot
 		 */
@@ -100,14 +136,10 @@ angular.module('JarvisApp.ctrl.iots', ['JarvisApp.services'])
 		 */
     	$scope.plugins = [];
     	genericResourceService.scope.collections.findAll('plugins', $stateParams.id, $scope.plugins, iotResourceService.plugins);
-	
-		/**
-		 * get all combos
-		 */
-    	$scope.combo.owners = [{id: undefined, name: "iot.empty"}];
-    	genericResourceService.scope.combo.findAll('owner', $scope.combo.owners, iotResourceService.iot);
-    	$scope.combo.plugins = [{id: undefined, name: "plugin.empty"}];
-    	genericResourceService.scope.combo.findAll('plugins', $scope.combo.plugins, pluginResourceService.plugins);
+    	$scope.iots = [];
+    	genericResourceService.scope.collections.findAll('iots', $stateParams.id, $scope.iots, iotResourceService.iots);
+    	$scope.triggers = [];
+    	genericResourceService.scope.collections.findAll('triggers', $stateParams.id, $scope.triggers, iotResourceService.triggers);
 	
 		$log.info('iot-ctrl');
 	}

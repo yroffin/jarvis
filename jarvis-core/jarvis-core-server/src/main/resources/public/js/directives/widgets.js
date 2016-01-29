@@ -166,21 +166,12 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     }
   }
 })
-.directive('jarvisJobs', function ($log, $stateParams) {
+.directive('jarvisTrigger', function ($log, $stateParams) {
   return {
     restrict: 'E',
-    templateUrl: '/ui/js/partials/widget/jarvis-jobs.html',
+    templateUrl: '/ui/js/partials/triggers/trigger/jarvis-trigger-general.html',
     link: function(scope, element, attrs) {
-    	$log.debug('jarvis-jobs');
-    }
-  }
-})
-.directive('jarvisJob', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/widget/jarvis-job.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-job');
+    	$log.debug('jarvis-trigger');
     }
   }
 })

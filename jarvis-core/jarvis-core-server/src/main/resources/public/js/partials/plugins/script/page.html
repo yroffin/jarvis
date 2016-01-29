@@ -11,7 +11,7 @@
 	<md-button aria-label="menu" class="md-icon-button" ng-click="save(script)"><md-icon md-font-icon="material-icons md-16">save</md-icon></md-button>
 	<md-button aria-label="menu" class="md-icon-button" ng-click="execute(script)"><md-icon md-font-icon="material-icons md-16">play_arrow</md-icon></md-button>
 	<md-button aria-label="menu" class="md-icon-button" ng-click="clear()"><md-icon md-font-icon="material-icons md-16">loop</md-icon></md-button>
-	<jarvis-pick-element ctrl="pickCommandDialogCtrl" icon="playlist_add" callback="add"></jarvis-pick-element>
+	<jarvis-pick-element ctrl="pickCommandDialogCtrl" icon="playlist_add" callback="links.commands.add"></jarvis-pick-element>
 	<jarvis-pick-element ctrl="pickIotDialogCtrl" icon="local_offer" callback="setOwner"></jarvis-pick-element>
   </md-fab-actions>
 </md-toolbar>

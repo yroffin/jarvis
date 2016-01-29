@@ -1,24 +1,9 @@
-<table class="table table-bordered table-hover">
-	<thead>
-		<tr>
-			<th>#</th>
-			<th translate="trigger.device"></th>
-			<th translate="trigger.plugin"></th>
-			<th translate="trigger.field"></th>
-			<th translate="trigger.status"></th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr ng-repeat="trigger in triggers | orderBy:['device','plugin','field']">
-			<td>{{$index+1}}</td>
-			<td>{{trigger.device}}</td>
-			<td>{{trigger.plugin}}</td>
-			<td>{{trigger.field}}</td>
-			<td>
-				<md-icon ng-show="trigger.status == 'current'" md-font-icon="material-icons md-24" ng-click="preRemove(trigger)">delete</md-icon>
-				<md-icon ng-show="trigger.status == 'added'" md-font-icon="material-icons md-24" ng-click="preCreate(trigger)">playlist_add</md-icon>
-			</td>
-		</tr>
-	</tbody>
-</table>
-	
+<md-grid-list
+      md-cols="3" md-cols-sm="3" md-cols-md="6" md-cols-gt-md="12"
+      md-row-height-gt-md="128px" md-row-height="128px"
+      md-gutter="4px" md-gutter-gt-sm="4px" >
+  <md-grid-tile
+      md-rowspan="1" md-colspan="2" md-colspan-sm="1" ng-repeat="trigger in triggers">
+      <jarvis-card element="trigger" state="'triggers-by-id'"></jarvis-card>
+  </md-grid-tile>
+</md-grid-list>

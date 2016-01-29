@@ -1,16 +1,26 @@
 <div layout="column">
      <md-input-container>
-       <label translate="iot.trigger"></label>
-       <input ng-model="iot.trigger">
-     </md-input-container>
-     <md-input-container>
        <label translate="iot.name"></label>
        <input ng-model="iot.name">
      </md-input-container>
-     <md-input-container>
-       <label translate="iot.owner"></label>
-       <input ng-model="iot.owner" disabled>
-     </md-input-container>
+     <div ng-repeat="trigger in triggers">
+     	 <div layout="row">
+			<md-input-container flex>
+			  <label translate="iot.triggers"></label>
+			  <input ng-model="trigger.name" disabled>
+			</md-input-container>
+			<md-button aria-label="menu" class="md-icon-button" ng-click="links.triggers.drop(trigger)"><md-icon md-font-icon="material-icons md-16">delete</md-icon></md-button>
+	     </div>
+     </div>
+     <div ng-repeat="iot in iots">
+     	 <div layout="row">
+			<md-input-container flex>
+			  <label translate="iot.owners"></label>
+			  <input ng-model="iot.name" disabled>
+			</md-input-container>
+			<md-button aria-label="menu" class="md-icon-button" ng-click="links.iots.drop(iot)"><md-icon md-font-icon="material-icons md-16">delete</md-icon></md-button>
+	     </div>
+     </div>
 	 <md-switch ng-model="iot.visible" aria-label="{{'iot.visible' | translate}}">
 		{{'iot.active' | translate}}
 	 </md-switch>

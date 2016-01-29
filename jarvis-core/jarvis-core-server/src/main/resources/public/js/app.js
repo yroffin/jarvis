@@ -50,11 +50,11 @@ angular.module('JarvisApp', [
       */
      'JarvisApp.ctrl.plugins',
      'JarvisApp.ctrl.commands',
-     'JarvisApp.ctrl.jobs',
      'JarvisApp.ctrl.iots',
      'JarvisApp.ctrl.events',
      'JarvisApp.ctrl.triggers',
      'JarvisApp.ctrl.views',
      'JarvisApp.ctrl.scenarios',
+     'JarvisApp.ctrl.blocks',
      'JarvisApp.ctrl.home'
 ]);

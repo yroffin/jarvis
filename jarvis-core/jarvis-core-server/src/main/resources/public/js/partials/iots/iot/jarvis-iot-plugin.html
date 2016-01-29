@@ -1,35 +1,22 @@
-<div layout="row">
-	<div>
-		<md-input-container>
-		<md-icon md-font-icon="material-icons md-16" ng-click="add(plugin)">playlist_add</md-icon>
-		   <label translate="iot.plugins"></label>
-		   <md-select ng-model="plugin.id">
-		     <md-option ng-repeat="plugin in combo.plugins" value="{{plugin.id}}" translate="{{plugin.name}}">
-		     </md-option>
-		   </md-select>
-		</md-input-container>
-		<table class="table table-bordered table-hover">
-			<thead>
-				<tr>
-					<th></th>
-					<th>#</th>
-					<th translate="plugin.order">Order</th>
-					<th translate="plugin.icon">Icon</th>
-					<th translate="plugin.name">Name</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="plugin in plugins">
-					<td><md-icon md-font-icon="material-icons md-16" ng-click="drop(plugin)">delete</md-icon></td>
-					<td>{{plugin.id}}</th>
-					<td>
-					<input ng-model="plugin.extended.order">
-					<md-icon md-font-icon="material-icons md-16" ng-click="update(plugin)">save</md-icon>
-					</td>
-					<td><md-icon md-font-icon="material-icons md-16">{{iot.icon}}</md-icon></th>
-					<td>{{plugin.name}}</th>
-				</tr>
-			</tbody>
-		</table>
-	</div>
+<br>
+<div layout="column">
+     <div ng-repeat="plugin in plugins">
+     	 <div layout="row">
+			<md-button aria-label="menu" class="md-icon-button"><md-icon md-font-icon="material-icons md-16">{{plugin.icon}}</md-icon></md-button>
+			<md-input-container>
+			  <label translate="plugin.id"></label>
+			  <input ng-model="plugin.id" disabled>
+			</md-input-container>
+			<md-input-container>
+			  <label translate="plugin.order"></label>
+			  <input ng-model="plugin.extended.order">
+			</md-input-container>
+			<md-button aria-label="menu" class="md-icon-button" ng-click="links.plugins.update(plugin)"><md-icon md-font-icon="material-icons md-16">save</md-icon></md-button>
+			<md-input-container flex>
+			  <label translate="plugin.name"></label>
+			  <input ng-model="plugin.name" disabled>
+			</md-input-container>
+			<md-button aria-label="menu" class="md-icon-button" ng-click="links.plugins.drop(plugin)"><md-icon md-font-icon="material-icons md-16">delete</md-icon></md-button>
+	     </div>
+     </div>
 </div>
