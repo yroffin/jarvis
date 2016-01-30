@@ -29,9 +29,13 @@ public abstract class ApiMapper {
 	protected static final String ID = ":id";
 	protected static final String BLOCK = ":block";
 	protected static final String PARAM = ":param";
+	protected static final String ASYNC = ":async";
 	
 	protected static final String INSTANCE = "instance";
 	protected static final String HREF = "HREF";
+	protected static final String HREF_IF = "HREF_IF";
+	protected static final String HREF_THEN = "HREF_THEN";
+	protected static final String HREF_ELSE = "HREF_ELSE";
 	protected static final String SORTKEY = "order";
 	protected static final String TASK = "task";
 

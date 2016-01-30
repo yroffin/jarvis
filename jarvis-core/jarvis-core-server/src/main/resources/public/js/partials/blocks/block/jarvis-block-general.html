@@ -1,7 +1,6 @@
 <md-toolbar>
   <md-fab-actions class="md-toolbar-tools">
-	<jarvis-pick-element ctrl="pickPluginDialogCtrl" icon="playlist_add" callback="pickIot"></jarvis-pick-element>
-	<md-button aria-label="menu" class="md-icon-button" ng-click="clearPlugin()"><md-icon md-font-icon="material-icons md-16">clear</md-icon></md-button>
+	<jarvis-pick-element ctrl="pickPluginDialogCtrl" icon="playlist_add" callback="links.plugins.if.add"></jarvis-pick-element>
   </md-fab-actions>
 </md-toolbar>
 <br>
@@ -14,14 +13,15 @@
 	  <label translate="block.icon"></label>
 	  <input ng-model="block.icon">
 	</md-input-container>
-	<md-input-container ng-show="block.pluginId">
-	  <label translate="block.pluginId"></label>
-	  <input ng-model="block.pluginId" disabled>
-	</md-input-container>
-	<md-input-container ng-show="block.pluginId">
-	  <label translate="block.pluginName"></label>
-	  <input ng-model="block.pluginName" disabled>
-	</md-input-container>
+    <div ng-repeat="plugin in plugins.if">
+    	 <div layout="row">
+		<md-input-container flex>
+		  <label translate="block.plugin.if"></label>
+		  <input ng-model="plugin.name" disabled>
+		</md-input-container>
+		<md-button aria-label="menu" class="md-icon-button" ng-click="links.plugins.if.drop(plugin)"><md-icon md-font-icon="material-icons md-16">delete</md-icon></md-button>
+     </div>
+    </div>
 	<md-input-container>
 	  <label translate="block.expression"></label>
 	  <input ng-model="block.expression">

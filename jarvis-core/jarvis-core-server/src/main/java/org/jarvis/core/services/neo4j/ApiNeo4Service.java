@@ -134,7 +134,7 @@ public class ApiNeo4Service  {
 	 * @return Result
 	 */
 	public Result cypherAllLink(String leftLabel, String leftId, String rightLabel, String relType, String label) {
-		Result result = execute("MATCH (left:"+leftLabel+")-[r:"+relType+"]->("+label+":"+rightLabel+") WHERE id(left) = "+leftId+" RETURN r,"+label);
+		Result result = execute("/* all links filtered by relation type */ MATCH (left:"+leftLabel+")-[r:"+relType+"]->("+label+":"+rightLabel+") WHERE id(left) = "+leftId+" RETURN r,"+label);
 		return result;
 	}
 
@@ -148,7 +148,7 @@ public class ApiNeo4Service  {
 	 * @return Result
 	 */
 	public Result cypherAddLink(String leftLabel, String leftId, String rightLabel, String rightId, String relType) {
-		Result result = execute("MATCH (left:"+leftLabel+"),(right:"+rightLabel+") WHERE id(left) = "+leftId+" AND id(right) = "+rightId+" CREATE (left)-[r:"+relType+"]->(right) RETURN id(r),r");
+		Result result = execute("/* add a new relation */ MATCH (left:"+leftLabel+"),(right:"+rightLabel+") WHERE id(left) = "+leftId+" AND id(right) = "+rightId+" CREATE (left)-[r:"+relType+"]->(right) RETURN id(r),r");
 		return result;
 	}
 

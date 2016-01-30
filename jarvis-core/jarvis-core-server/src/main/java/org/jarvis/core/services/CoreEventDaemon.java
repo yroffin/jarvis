@@ -16,22 +16,39 @@
 
 package org.jarvis.core.services;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import javax.annotation.PostConstruct;
 
 import org.jarvis.core.exception.TechnicalException;
+import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.iot.EventBean;
+import org.jarvis.core.model.bean.scenario.ScenarioBean;
+import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.model.rest.scenario.ScenarioRest;
+import org.jarvis.core.model.rest.scenario.TriggerRest;
 import org.jarvis.core.resources.api.href.ApiHrefScenarioBlockResources;
+import org.jarvis.core.resources.api.href.ApiHrefScenarioTriggerResources;
+import org.jarvis.core.resources.api.iot.ApiTriggerResources;
 import org.jarvis.core.resources.api.scenario.ApiBlockResources;
 import org.jarvis.core.resources.api.scenario.ApiScenarioResources;
+import org.jarvis.core.type.GenericMap;
+import org.jarvis.core.type.TaskType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.datatype.joda.JodaModule;
+
+import ma.glasnost.orika.MapperFactory;
+import ma.glasnost.orika.converter.builtin.PassThroughConverter;
+import ma.glasnost.orika.impl.DefaultMapperFactory;
 
 /**
  * main daemon
@@ -54,12 +71,25 @@ public class CoreEventDaemon {
 	@Autowired
 	ApiBlockResources apiBlockResources;
 
+	@Autowired
+	ApiHrefScenarioTriggerResources apiHrefScenarioTriggerResources;
+
+	@Autowired
+	ApiTriggerResources apiTriggerResources;
+
+	private InnerThread inner;
+	protected MapperFactory mapperFactory = null;
+
 	/**
 	 * start component
 	 */
 	@PostConstruct
 	public void init() {
-		new Thread(new InnerThread()).start();
+		mapperFactory = new DefaultMapperFactory.Builder().build();
+		mapperFactory.getConverterFactory().registerConverter(new PassThroughConverter(org.joda.time.DateTime.class));
+		
+		inner = new InnerThread();
+		new Thread(inner).start();
 	}
 	
 	/**
@@ -71,6 +101,13 @@ public class CoreEventDaemon {
 		} catch (InterruptedException e) {
 			throw new TechnicalException(e);
 		}
+	}
+
+	/**
+	 * @param event
+	 */
+	public void handle(EventBean event) {
+		inner.handle(event);
 	}
 
 	private LinkedBlockingQueue<EventBean> linked = new LinkedBlockingQueue<EventBean>();
@@ -91,10 +128,33 @@ public class CoreEventDaemon {
 		}
 
 		private void handle(EventBean event) {
+			List<ScenarioBean> toExecute = new ArrayList<ScenarioBean>();
 			/**
 			 * find any scenario with this trigger
 			 */
-			for(ScenarioRest sce : apiScenarioResources.doFindAll()) {
+			for(ScenarioRest scenario : apiScenarioResources.doFindAll()) {
+				ScenarioBean sce = mapperFactory.getMapperFacade().map(scenario, ScenarioBean.class);
+				for(GenericEntity link : apiHrefScenarioTriggerResources.findAll(sce)) {
+					try {
+						if(event.trigger.equals(link.id)) {
+							apiTriggerResources.doGetById(link.id);
+							toExecute.add(sce);
+						}
+					} catch (TechnicalNotFoundException e) {
+						logger.warn(e.getMessage());
+					}
+				}
+			}
+			/**
+			 * execute it
+			 */
+			GenericMap body = new GenericMap();
+			for(ScenarioBean scenario : toExecute) {
+				try {
+					apiScenarioResources.doExecute(scenario.id, body, TaskType.EXECUTE);
+				} catch (TechnicalNotFoundException e) {
+					logger.warn(e.getMessage());
+				}
 			}
 		}
 		

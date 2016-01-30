@@ -54,11 +54,17 @@ angular.module('JarvisApp.ctrl.iots', ['JarvisApp.services'])
 			'iots', 
 			iotResourceService.iot
 	);
+	/**
+	 * declare links
+	 */
 	$scope.links = {
 			plugins: {},
 			triggers: {},
 			iots: {}
 	}
+	/**
+	 * declare action links
+	 */
 	genericScopeService.scope.resourceLink(
 			function() {
 				return $scope.plugins;

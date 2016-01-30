@@ -28,14 +28,25 @@ import spark.Route;
  */
 public abstract class ApiLinkedResources<T extends GenericEntity, S extends GenericBean, T1 extends GenericEntity, S1 extends GenericBean> extends ApiResources<T, S> {
 
-	protected void declare(String resource, String target, ApiResources<T1,S1> api, ApiHrefMapper<T,T1> apiHref, String param, String sortKey) {
-		get("/api/"+resource+"/:id/"+target+"", getLinks(api, apiHref, sortKey));
-		post("/api/"+resource+"/:id/"+target+"/"+param, postLink(api, apiHref, param, target));
-		put("/api/"+resource+"/:id/"+target+"/"+param+"/:instance", putLink(api, apiHref, param));
-		delete("/api/"+resource+"/:id/"+target+"/"+param, deleteLink(api, apiHref, param));
+	protected void declare(String resource, String target, ApiResources<T1,S1> api, ApiHrefMapper<T,T1> apiHref, String param, String sortKey, String relation) {
+		get("/api/"+resource+"/:id/"+target+"", getLinks(api, apiHref, sortKey, relation));
+		post("/api/"+resource+"/:id/"+target+"/"+param, postLink(api, apiHref, param, target, relation));
+		put("/api/"+resource+"/:id/"+target+"/"+param+"/:instance", putLink(api, apiHref, param, relation));
+		delete("/api/"+resource+"/:id/"+target+"/"+param, deleteLink(api, apiHref, param, relation));
 	}
 
-	protected Route getLinks(ApiResources<T1,S1> api, ApiHrefMapper<T,T1> apiHref, String sortField) {
+	protected String findRelType(Request request, String relation) {
+		/**
+		 * href query params can filter real
+		 * relation type we want to get
+		 */
+		String defaultRelType = relation;
+		if(request.queryParams(HREF.toLowerCase()) != null) {
+			defaultRelType = request.queryParams(HREF.toLowerCase());
+		}
+		return defaultRelType;
+	}
+	protected Route getLinks(ApiResources<T1,S1> api, ApiHrefMapper<T,T1> apiHref, String sortField, String relation) {
 		return new Route() {
 		    @SuppressWarnings("unchecked")
 			@Override
@@ -43,7 +54,7 @@ public abstract class ApiLinkedResources<T extends GenericEntity, S extends Gene
 		    	try {
 		    		T master = doGetById(request.params(ID));
 		    		List<T1> result = new ArrayList<T1>();
-		    		for(GenericEntity link : sort(apiHref.findAll(master), sortField)) {
+		    		for(GenericEntity link : sort(apiHref.findAll(master, findRelType(request,relation)), sortField)) {
 		    			result.add((T1) fromLink(link, api.doGetById(link.id)));
 		    		}
 			    	return mapper.writeValueAsString(result);
@@ -55,7 +66,7 @@ public abstract class ApiLinkedResources<T extends GenericEntity, S extends Gene
 		};
 	}
 	
-	protected Route postLink(ApiResources<T1,S1> api, ApiHrefMapper<T,T1> apiHref, String param, String href) {
+	protected Route postLink(ApiResources<T1,S1> api, ApiHrefMapper<T,T1> apiHref, String param, String href, String relation) {
 		return new Route() {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
@@ -63,7 +74,7 @@ public abstract class ApiLinkedResources<T extends GenericEntity, S extends Gene
 		    		T master = doGetById(request.params(ID));
 			    	try {
 			    		T1 target = api.doGetById(request.params(param));
-				    	GenericEntity link = apiHref.add(master, target, new GenericMap(request.body()), href);
+				    	GenericEntity link = apiHref.add(master, target, new GenericMap(request.body()), href, relation);
 				    	return mapper.writeValueAsString(fromLink(link, api.doGetById(link.id)));
 			    	} catch(TechnicalNotFoundException e) {
 			    		response.status(404);
@@ -77,7 +88,7 @@ public abstract class ApiLinkedResources<T extends GenericEntity, S extends Gene
 		};
 	}
 	
-	protected Route putLink(ApiResources<T1,S1> api, ApiHrefMapper<T,T1> apiHref, String param) {
+	protected Route putLink(ApiResources<T1,S1> api, ApiHrefMapper<T,T1> apiHref, String param, String relation) {
 		return new Route() {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
@@ -99,7 +110,7 @@ public abstract class ApiLinkedResources<T extends GenericEntity, S extends Gene
 		};
 	}
 	
-	protected Route deleteLink(ApiResources<T1,S1> api, ApiHrefMapper<T,T1> apiHref, String param) {
+	protected Route deleteLink(ApiResources<T1,S1> api, ApiHrefMapper<T,T1> apiHref, String param, String relation) {
 		return new Route() {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
@@ -107,7 +118,7 @@ public abstract class ApiLinkedResources<T extends GenericEntity, S extends Gene
 		    		T master = doGetById(request.params(ID));
 			    	try {
 			    		T1 target = api.doGetById(request.params(param));
-			    		apiHref.remove(master, target, request.queryParams(INSTANCE));
+			    		apiHref.remove(master, target, request.queryParams(INSTANCE), findRelType(request,relation));
 			    	} catch(TechnicalNotFoundException e) {
 			    		response.status(404);
 			    		return "";

@@ -24,6 +24,14 @@
 angular.module('JarvisApp.services.block', []).factory('blockResourceService', function($log, Restangular, genericResourceService, iotResourceService, filterService) {
   return {
 	    block: genericResourceService.crud(['blocks']),
-	    blocks: genericResourceService.links(['blocks'], ['blocks'])
+	    plugins: {
+	    	if: genericResourceService.links(['blocks'], ['plugins','scripts'],'HREF_IF'),
+		    then: genericResourceService.links(['blocks'], ['plugins','scripts'],'HREF_THEN'),
+		    else: genericResourceService.links(['blocks'], ['plugins','scripts'],'HREF_ELSE')
+	    },
+		blocks: {
+			then: genericResourceService.links(['blocks'], ['blocks'],'HREF_THEN'),
+			else: genericResourceService.links(['blocks'], ['blocks'],'HREF_ELSE')
+		}
   }
 });

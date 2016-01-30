@@ -26,6 +26,9 @@ import org.jarvis.core.type.TaskType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import spark.Request;
+import spark.Response;
+
 /**
  * Event resource
  */
@@ -46,8 +49,12 @@ public class ApiEventResources extends ApiResources<EventRest,EventBean> {
 	class ResourceListenerImpl implements ResourceListener<EventBean> {
 
 		@Override
-		public void post(EventBean event) {
-			coreEventDaemon.post(event);
+		public void post(Request request, Response response, EventBean event) {
+			if(request.params(ASYNC) != null && request.params(ASYNC).equals("true")) {
+				coreEventDaemon.post(event);
+			} else {
+				coreEventDaemon.handle(event);
+			}
 		}
 		
 	}

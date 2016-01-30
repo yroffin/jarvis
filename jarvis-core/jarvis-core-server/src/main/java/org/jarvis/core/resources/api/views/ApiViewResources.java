@@ -57,7 +57,7 @@ public class ApiViewResources extends ApiLinkedResources<ViewRest,ViewBean,IotRe
 		/**
 		 * views -> iots
 		 */
-		declare(VIEW_RESOURCE, IOT_RESOURCE, apiIotResources, apiHrefViewResources, IOT, SORTKEY);
+		declare(VIEW_RESOURCE, IOT_RESOURCE, apiIotResources, apiHrefViewResources, IOT, SORTKEY, HREF);
 	}
 
 	@Override

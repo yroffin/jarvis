@@ -1,5 +1,8 @@
 package org.jarvis.core.resources.api;
 
+import spark.Request;
+import spark.Response;
+
 /**
  * listener pattern
  * @param <T> 
@@ -7,9 +10,10 @@ package org.jarvis.core.resources.api;
 public interface ResourceListener<T> {
 
 	/**
-	 * @param node
-	 * @throws InterruptedException 
+	 * @param request
+	 * @param response
+	 * @param result
 	 */
-	void post(T node) throws InterruptedException;
+	void post(Request request, Response response, T result);
 
 }

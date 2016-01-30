@@ -65,7 +65,8 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
 	 * declare links
 	 */
 	$scope.links = {
-			blocks: {}
+			blocks: {},
+			triggers: {}
 	};
 	/**
 	 * declare generic scope resource link (and inject it in scope)
@@ -79,6 +80,23 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
 			'scenarios', 
 			scenarioResourceService.scenario,
 			scenarioResourceService.blocks, 
+			{
+				'order':'1'
+			},
+			$stateParams.id
+	);
+	/**
+	 * declare generic scope resource link (and inject it in scope)
+	 */
+	genericScopeService.scope.resourceLink(
+			function() {
+				return $scope.triggers;
+			},
+			$scope.links.triggers,
+			'scenario', 
+			'scenarios', 
+			scenarioResourceService.scenario,
+			scenarioResourceService.triggers, 
 			{
 				'order':'1'
 			},
@@ -211,6 +229,8 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
 		 */
     	$scope.blocks = [];
     	genericResourceService.scope.collections.findAll('blocks', $stateParams.id, $scope.blocks, scenarioResourceService.blocks);
+    	$scope.triggers = [];
+    	genericResourceService.scope.collections.findAll('triggers', $stateParams.id, $scope.triggers, scenarioResourceService.triggers);
 
 		$log.debug('scenario-ctrl', $scope.scenario);
     }

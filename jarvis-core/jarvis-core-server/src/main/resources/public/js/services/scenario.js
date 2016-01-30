@@ -24,6 +24,7 @@
 angular.module('JarvisApp.services.scenario', []).factory('scenarioResourceService', function(genericResourceService) {
   return {
 	  scenario: genericResourceService.crud(['scenarios']),
-	  blocks  : genericResourceService.links(['scenarios'], ['blocks'])
+	  blocks  : genericResourceService.links(['scenarios'], ['blocks']),
+	  triggers: genericResourceService.links(['scenarios'], ['triggers'])
   }
 });

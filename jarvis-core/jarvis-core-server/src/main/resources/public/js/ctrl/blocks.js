@@ -59,88 +59,83 @@ angular.module('JarvisApp.ctrl.blocks', ['JarvisApp.services'])
 			'blocks', 
 			blockResourceService.block
 	);
-    /**
-     * pick an element
-     * @param node
-     */
-    $scope.pickIot = function(node) {
-    	$scope.block.pluginId = node.id;
-    	$scope.block.pluginName = node.name;
-    }
-    /**
-     * clear plugin
-     */
-    $scope.clearPlugin = function() {
-    	$scope.block.pluginId = undefined;
-    }
-    /**
-     * pick an element
-     * @param ev
-     * @param block
-     */
-    $scope.pickThenIot = function(node) {
-    	$scope.block.pluginThenId = node.id;
-    	$scope.block.pluginThenName = node.name;
-    }
-    /**
-     * pick an element
-     * @param ev
-     * @param block
-     */
-    $scope.pickElseIot = function(node) {
-    	$scope.block.pluginElseId = node.id;
-    	$scope.block.pluginElseName = node.name;
-    }
-    /**
-     * pick an element
-     * @param ev
-     * @param block
-     */
-    $scope.pickThenBlock = function(node) {
-    	$scope.block.blockThenId = node.id;
-    	$scope.block.blockThenName = node.name;
-    }
-    /**
-     * pick an element
-     * @param ev
-     * @param block
-     */
-    $scope.pickElseBlock = function(node) {
-    	$scope.block.blockElseId = node.id;
-    	$scope.block.blockElseName = node.name;
-    }
-    /**
-     * clear
-     */
-    $scope.clearPluginThen = function() {
-    	$log.debug('Clear then plugin');
-    	$scope.block.pluginThenId = undefined;
-    	$scope.block.pluginThenName = undefined;
-    }
-    /**
-     * clear
-     */
-    $scope.clearBlockThen = function() {
-    	$log.debug('Clear then block');
-    	$scope.block.blockThenId = undefined;
-    	$scope.block.blockThenName = undefined;
-    }
-    /**
-     * clear
-     */
-    $scope.clearPluginElse = function() {
-    	$log.debug('Clear else plugin');
-    	$scope.block.pluginElseId = undefined;
-    	$scope.block.pluginElseName = undefined;
-    }
-    /**
-     * clear
-     */
-    $scope.clearBlockElse = function() {
-    	$log.debug('Clear else block');
-    	$scope.block.blockElseId = undefined;
-    	$scope.block.blockElseName = undefined;
-    }
+	/**
+	 * declare links
+	 */
+	$scope.links = {
+			plugins:{
+				if: {},
+				then: {},
+				else: {}
+			},
+			blocks:{
+				then: {},
+				else: {}
+			}
+	}
+	/**
+	 * declare action links
+	 */
+	genericScopeService.scope.resourceLink(
+			function() {
+				return $scope.plugins.if;
+			},
+			$scope.links.plugins.if,
+			'block',
+			'blocks',
+			blockResourceService.block, 
+			blockResourceService.plugins.if, 
+			{'order':'1'},
+			$stateParams.id
+	);
+	genericScopeService.scope.resourceLink(
+			function() {
+				return $scope.plugins.then;
+			},
+			$scope.links.plugins.then,
+			'block',
+			'blocks',
+			blockResourceService.block, 
+			blockResourceService.plugins.then, 
+			{'order':'1'},
+			$stateParams.id
+	);
+	genericScopeService.scope.resourceLink(
+			function() {
+				return $scope.plugins.else;
+			},
+			$scope.links.plugins.else,
+			'block',
+			'blocks',
+			blockResourceService.block, 
+			blockResourceService.plugins.else, 
+			{'order':'1'},
+			$stateParams.id
+	);
+	genericScopeService.scope.resourceLink(
+			function() {
+				return $scope.blocks.then;
+			},
+			$scope.links.blocks.then,
+			'block',
+			'blocks',
+			blockResourceService.block, 
+			blockResourceService.blocks.then, 
+			{'order':'1'},
+			$stateParams.id
+	);
+	genericScopeService.scope.resourceLink(
+			function() {
+				return $scope.blocks.else;
+			},
+			$scope.links.blocks.else,
+			'block',
+			'blocks',
+			blockResourceService.block, 
+			blockResourceService.blocks.else, 
+			{'order':'1'},
+			$stateParams.id
+	);
     /**
      * task
      */
@@ -174,6 +169,33 @@ angular.module('JarvisApp.ctrl.blocks', ['JarvisApp.services'])
 		 */
     	genericResourceService.scope.entity.get($stateParams.id, function(update) {$scope.block=update}, blockResourceService.block);
 
-		$log.debug('block-ctrl', $scope.scenario);
+		/**
+		 * get all plugins
+		 */
+    	$scope.plugins = {
+    			if:{},
+    			then:{},
+    			else:{}
+    	};
+    	$scope.plugins.if = [];
+    	genericResourceService.scope.collections.findAll('plugins.if', $stateParams.id, $scope.plugins.if, blockResourceService.plugins.if);
+    	$scope.plugins.then = [];
+    	genericResourceService.scope.collections.findAll('plugins.then', $stateParams.id, $scope.plugins.then, blockResourceService.plugins.then);
+    	$scope.plugins.else = [];
+    	genericResourceService.scope.collections.findAll('plugins.else', $stateParams.id, $scope.plugins.else, blockResourceService.plugins.else);
+
+		/**
+		 * get all plugins
+		 */
+    	$scope.blocks = {
+    			then:{},
+    			else:{}
+    	};
+    	$scope.blocks.then = [];
+    	genericResourceService.scope.collections.findAll('blocks.then', $stateParams.id, $scope.blocks.then, blockResourceService.blocks.then);
+    	$scope.blocks.else = [];
+    	genericResourceService.scope.collections.findAll('blocks.else', $stateParams.id, $scope.blocks.else, blockResourceService.blocks.else);
+
+    	$log.debug('block-ctrl', $scope.scenario);
     }
 })

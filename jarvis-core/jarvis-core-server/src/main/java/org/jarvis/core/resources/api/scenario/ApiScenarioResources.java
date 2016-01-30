@@ -19,13 +19,17 @@ package org.jarvis.core.resources.api.scenario;
 import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.scenario.BlockBean;
 import org.jarvis.core.model.bean.scenario.ScenarioBean;
+import org.jarvis.core.model.bean.scenario.TriggerBean;
 import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.model.rest.scenario.BlockRest;
 import org.jarvis.core.model.rest.scenario.ScenarioRest;
+import org.jarvis.core.model.rest.scenario.TriggerRest;
 import org.jarvis.core.profiler.TaskProfiler;
 import org.jarvis.core.profiler.model.GenericNode;
-import org.jarvis.core.resources.api.ApiLinkedResources;
+import org.jarvis.core.resources.api.ApiLinkedTwiceResources;
 import org.jarvis.core.resources.api.href.ApiHrefScenarioBlockResources;
+import org.jarvis.core.resources.api.href.ApiHrefScenarioTriggerResources;
+import org.jarvis.core.resources.api.iot.ApiTriggerResources;
 import org.jarvis.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,13 +44,19 @@ import spark.Route;
  *
  */
 @Component
-public class ApiScenarioResources extends ApiLinkedResources<ScenarioRest,ScenarioBean,BlockRest,BlockBean> {
+public class ApiScenarioResources extends ApiLinkedTwiceResources<ScenarioRest,ScenarioBean,BlockRest,BlockBean,TriggerRest,TriggerBean> {
 
 	@Autowired
 	ApiBlockResources apiBlockResources;
 
 	@Autowired
 	ApiHrefScenarioBlockResources apiHrefScenarioBlockResources;
+
+	@Autowired
+	ApiTriggerResources apiTriggerResources;
+
+	@Autowired
+	ApiHrefScenarioTriggerResources apiHrefScenarioTriggerResources;
 
 	/**
 	 * constructor
@@ -65,6 +75,7 @@ public class ApiScenarioResources extends ApiLinkedResources<ScenarioRest,Scenar
 		 * scenarios
 		 */
 		declare(SCENARIO_RESOURCE);
+		declareSecond(SCENARIO_RESOURCE, TRIGGER_RESOURCE, apiTriggerResources, apiHrefScenarioTriggerResources, TRIGGER, SORTKEY, HREF);
 		spark.Spark.get("/api/scenarios/:id/graph", new Route() {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
@@ -77,7 +88,7 @@ public class ApiScenarioResources extends ApiLinkedResources<ScenarioRest,Scenar
 		/**
 		 * scenarios -> blocks
 		 */
-		declare(SCENARIO_RESOURCE, BLOCK_RESOURCE, apiBlockResources, apiHrefScenarioBlockResources, BLOCK, SORTKEY);
+		declare(SCENARIO_RESOURCE, BLOCK_RESOURCE, apiBlockResources, apiHrefScenarioBlockResources, BLOCK, SORTKEY, HREF);
 	}
 
 	@Override
@@ -114,7 +125,7 @@ public class ApiScenarioResources extends ApiLinkedResources<ScenarioRest,Scenar
 			TaskProfiler taskProfiler = new TaskProfiler();
 			BlockRest block = apiBlockResources.doGetById(entity.id);
 			GenericNode startNode = taskProfiler.addStartNode("start", block.name + "#1");
-			GenericNode endNode = apiBlockResources.render(taskProfiler, 1, startNode, mapperFactory.getMapperFacade().map(block, BlockBean.class));
+			apiBlockResources.render(taskProfiler, 1, startNode, mapperFactory.getMapperFacade().map(block, BlockBean.class));
 			if(index>0) sb.append(",");
 			sb.append(taskProfiler.toJson());
 			index++;

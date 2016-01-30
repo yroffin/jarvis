@@ -8,6 +8,7 @@
 	<md-button aria-label="menu" class="md-icon-button" ng-click="remove(scenario)"><md-icon md-font-icon="material-icons md-16">delete</md-icon></md-button>
 	<md-button aria-label="menu" class="md-icon-button" ng-click="save(scenario)"><md-icon md-font-icon="material-icons md-16">save</md-icon></md-button>
 	<md-button aria-label="menu" class="md-icon-button" ng-click="execute(scenario)"><md-icon md-font-icon="material-icons md-16">play_arrow</md-icon></md-button>
+	<jarvis-pick-element ctrl="pickTriggerDialogCtrl" icon="settings_remote" callback="links.triggers.add"></jarvis-pick-element>
   </md-fab-actions>
 </md-toolbar>
 <div layout="column" ng-init="load()" ng-cloak>

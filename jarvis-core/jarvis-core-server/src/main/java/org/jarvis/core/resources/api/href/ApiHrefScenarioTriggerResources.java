@@ -20,11 +20,11 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
-import org.jarvis.core.model.bean.plugin.CommandBean;
-import org.jarvis.core.model.bean.plugin.ScriptPluginBean;
+import org.jarvis.core.model.bean.scenario.TriggerBean;
+import org.jarvis.core.model.bean.scenario.ScenarioBean;
 import org.jarvis.core.model.rest.GenericEntity;
-import org.jarvis.core.model.rest.plugin.CommandRest;
-import org.jarvis.core.model.rest.plugin.ScriptPluginRest;
+import org.jarvis.core.model.rest.scenario.TriggerRest;
+import org.jarvis.core.model.rest.scenario.ScenarioRest;
 import org.jarvis.core.resources.api.mapper.ApiHrefMapper;
 import org.springframework.stereotype.Component;
 
@@ -32,20 +32,20 @@ import org.springframework.stereotype.Component;
  * HREF handler
  */
 @Component
-public class ApiHrefPluginCommandResources extends ApiHrefMapper<ScriptPluginRest,CommandRest> {
+public class ApiHrefScenarioTriggerResources extends ApiHrefMapper<ScenarioRest,TriggerRest> {
 
 	@PostConstruct
 	protected
 	void init() {
-		super.init(ScriptPluginBean.class.getSimpleName(),CommandBean.class.getSimpleName(),"commands");
+		super.init(ScenarioBean.class.getSimpleName(),TriggerBean.class.getSimpleName(),"triggers");
 	}
 
 	/**
 	 * find all by bean
-	 * @param script
+	 * @param scenario 
 	 * @return List<GenericEntity>
 	 */
-	public List<GenericEntity> findAll(ScriptPluginBean script) {
-		return super.findAll(mapperFactory.getMapperFacade().map(script, ScriptPluginRest.class), HREF);
+	public List<GenericEntity> findAll(ScenarioBean scenario) {
+		return super.findAll(mapperFactory.getMapperFacade().map(scenario, ScenarioRest.class), HREF);
 	}
 }

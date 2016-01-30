@@ -77,9 +77,9 @@ public class ApiIotResources extends ApiLinkedThirdResources<IotRest,IotBean,Iot
 		/**
 		 * scripts -> commands
 		 */
-		declare(IOT_RESOURCE, IOT_RESOURCE, this, apiHrefIotResources, IOT, SORTKEY);
-		declareSecond(IOT_RESOURCE, SCRIPT_RESOURCE, apiScriptPluginResources, apiHrefIotScriptPluginResources, PLUGIN, SORTKEY);
-		declareThird(IOT_RESOURCE, TRIGGER_RESOURCE, apiTriggerResources, apiHrefIotTriggerResources, TRIGGER, SORTKEY);
+		declare(IOT_RESOURCE, IOT_RESOURCE, this, apiHrefIotResources, IOT, SORTKEY, HREF);
+		declareSecond(IOT_RESOURCE, SCRIPT_RESOURCE, apiScriptPluginResources, apiHrefIotScriptPluginResources, PLUGIN, SORTKEY, HREF);
+		declareThird(IOT_RESOURCE, TRIGGER_RESOURCE, apiTriggerResources, apiHrefIotTriggerResources, TRIGGER, SORTKEY, HREF);
 		/**
 		 * iot html generator
 		 */
@@ -118,7 +118,7 @@ public class ApiIotResources extends ApiLinkedThirdResources<IotRest,IotBean,Iot
 		/**
 		 * iterate on each entity and execute them as a pipeline
 		 */
-		for(GenericEntity entity : sort(apiHrefIotScriptPluginResources.findAll(iotRest), "order")) {
+		for(GenericEntity entity : sort(apiHrefIotScriptPluginResources.findAll(iotRest, HREF), "order")) {
 			ScriptPluginRest script = apiScriptPluginResources.doGetById(entity.id);
 			result = apiScriptPluginResources.execute(script, result);
 		}

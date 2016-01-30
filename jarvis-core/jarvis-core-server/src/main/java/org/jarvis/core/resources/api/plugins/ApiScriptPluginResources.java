@@ -58,7 +58,7 @@ public class ApiScriptPluginResources extends ApiLinkedResources<ScriptPluginRes
 		/**
 		 * scripts -> commands
 		 */
-		declare(SCRIPT_RESOURCE, COMMAND_RESOURCE, apiCommandResources, apiHrefPluginCommandResources, COMMAND, SORTKEY);
+		declare(SCRIPT_RESOURCE, COMMAND_RESOURCE, apiCommandResources, apiHrefPluginCommandResources, COMMAND, SORTKEY, HREF);
 	}
 
 	@Override

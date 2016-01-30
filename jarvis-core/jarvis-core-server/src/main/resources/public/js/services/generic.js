@@ -210,38 +210,41 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter'])
 			 * @param callback
 			 * @param failure
 			 */
-			findAll: function(api, path, id, callback, failure) {
+			findAll: function(api, path, relation, id, callback, failure) {
 				var handler = function(hrefs) {
 					var results = [];
 	            	_.forEach(hrefs, function(href) {
 	            		results.push(filterService.plain(href));
 	            	});
-					$log.debug("[FIND/L]",api, path, id, results);
+					$log.debug("[FIND/L/"+relation+"]",api, path, id, results);
 	            	callback(results);
 				};
 				if(path.length == 1) {
 					if(api.length == 1) {
-						Restangular.one(api[0], id).all(path[0]).getList().then(handler,function(errors){failure(errors);});
+						Restangular.one(api[0], id).all(path[0]).getList({'href':relation}).then(handler,function(errors){failure(errors);});
 					} else {
-						Restangular.all(api[0]).one(api[1], id).all(path[0]).getList().then(handler,function(errors){failure(errors);});
+						Restangular.all(api[0]).one(api[1], id).all(path[0]).getList({'href':relation}).then(handler,function(errors){failure(errors);});
 					}
 				} else {
 					if(api.length == 1) {
-						Restangular.one(api[0], id).all(path[0]).all(path[1]).getList().then(handler,function(errors){failure(errors);});
+						Restangular.one(api[0], id).all(path[0]).all(path[1]).getList({'href':relation}).then(handler,function(errors){failure(errors);});
 					} else {
-						Restangular.all(api[0]).one(api[1], id).all(path[0]).all(path[1]).getList().then(handler,function(errors){failure(errors);});
+						Restangular.all(api[0]).one(api[1], id).all(path[0]).all(path[1]).getList({'href':relation}).then(handler,function(errors){failure(errors);});
 					}
 				}
 			},
 	        /**
 			 * put link
 			 */
-	        post: function(api, path, owner, child, properties, callback, failure) {
+	        post: function(api, path, relation, owner, child, properties, callback, failure) {
 				var handler = function(href) {
 					var filtered = filterService.plain(href);
 					$log.debug("[POST/L]",api,filtered);
 					if(callback != undefined) callback(filtered);
 				};
+				if(properties != undefined) {
+					properties.href = relation;
+				}
 				if(path.length == 1) {
 					if(api.length == 1) {
 						Restangular.one(api[0], owner).one(path[0],child).customPOST(properties).then(handler,function(errors){failure(errors);});
@@ -259,7 +262,7 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter'])
 	        /**
 			 * put link
 			 */
-	        put: function(api, path, owner, child, instance, properties, callback, failure) {
+	        put: function(api, path, relation, owner, child, instance, properties, callback, failure) {
 				var handler = function(href) {
 					var filtered = filterService.plain(href);
 					$log.debug("[PUT/L]",api,filtered);
@@ -271,6 +274,7 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter'])
 	        	} else {
 	        		p = properties;
 	        	}
+				p.href = relation;
 				if(path.length == 1) {
 					if(api.length == 1) {
 						Restangular.one(api[0], owner).one(path[0],child).one(instance).customPUT(p).then(handler,function(errors){failure(errors);});
@@ -288,7 +292,7 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter'])
 	        /**
 			 * delete link
 			 */
-			delete: function(api, path, owner, child, instance, callback, failure) {
+			delete: function(api, path, relation, owner, child, instance, callback, failure) {
 				var handler = function(href) {
 					var filtered = filterService.plain(href);
 					$log.debug("[DELETE/L]",api,filtered);
@@ -296,15 +300,15 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter'])
 				};
 				if(path.length == 1) {
 					if(api.length == 1) {
-						Restangular.one(api[0], owner).one(path[0], child).remove({'instance':instance}).then(handler,function(errors){failure(errors);});
+						Restangular.one(api[0], owner).one(path[0], child).remove({'instance':instance, 'href':relation}).then(handler,function(errors){failure(errors);});
 					} else {
-						Restangular.all(api[0]).one(api[1], owner).one(path[0], child).remove({'instance':instance}).then(handler,function(errors){failure(errors);});
+						Restangular.all(api[0]).one(api[1], owner).one(path[0], child).remove({'instance':instance, 'href':relation}).then(handler,function(errors){failure(errors);});
 					}
 				} else {
 					if(api.length == 1) {
-						Restangular.one(api[0], owner).all(path[0]).one(path[1], child).remove({'instance':instance}).then(handler,function(errors){failure(errors);});
+						Restangular.one(api[0], owner).all(path[0]).one(path[1], child).remove({'instance':instance, 'href':relation}).then(handler,function(errors){failure(errors);});
 					} else {
-						Restangular.all(api[0]).one(api[1], owner).all(path[0]).one(path[1], child).remove({'instance':instance}).then(handler,function(errors){failure(errors);});
+						Restangular.all(api[0]).one(api[1], owner).all(path[0]).one(path[1], child).remove({'instance':instance, 'href':relation}).then(handler,function(errors){failure(errors);});
 					}
 				}
 			}
@@ -312,7 +316,10 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter'])
   /**
    * crud operation on links
    */
-  var crudLinks = function(api, path) {
+  var crudLinks = function(api, path, relation) {
+	if(relation === undefined) {
+		relation = "HREF";
+	}
 	return {
 	  	/**
 		 * find all links
@@ -320,7 +327,7 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter'])
 		 * @param failure, callback function in failure case
 		 */
 		findAll: function(id, callback, failure) {
-			return links.findAll(api, path, id, callback, failure);
+			return links.findAll(api, path, relation, id, callback, failure);
 		},
 		/**
 		 * delete one link
@@ -328,7 +335,7 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter'])
 		 * @param failure, callback function in failure case
 		 */
 		delete: function(owner, child, instance, callback, failure) {
-			return links.delete(api, path, owner, child, instance, callback, failure);
+			return links.delete(api, path, relation, owner, child, instance, callback, failure);
 		},
 		/**
 		 * update one link
@@ -336,7 +343,7 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter'])
 		 * @param failure, callback function in failure case
 		 */
 		put: function(owner, child, instance, properties, callback, failure) {
-			return links.put(api, path, owner, child, instance, properties, callback, failure);
+			return links.put(api, path, relation, owner, child, instance, properties, callback, failure);
 		},
 		/**
 		 * create one link
@@ -344,7 +351,7 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter'])
 		 * @param failure, callback function in failure case
 		 */
 		post: function(owner, child, properties, callback, failure) {
-			return links.post(api, path, owner, child, properties, callback, failure);
+			return links.post(api, path, relation, owner, child, properties, callback, failure);
 		}
 	 }
   }
@@ -423,7 +430,7 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter'])
 		    }, toastService.failure);
 	    },
 	    findAll : function(name, id, list, service) {
-			$log.debug('loading ', name, list, service);
+			$log.debug('loading ', name, service);
 			list.splice(0,list.length)
 	    	service.findAll(id, function(data) {
 		    	_.forEach(data, function(element) {
@@ -432,6 +439,7 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter'])
 		             */
 		    		list.push(element);
 		        });
+				$log.debug('loaded ', name, list);
 		    }, toastService.failure);
 	    },
 	    get : function(id, callback, service) {

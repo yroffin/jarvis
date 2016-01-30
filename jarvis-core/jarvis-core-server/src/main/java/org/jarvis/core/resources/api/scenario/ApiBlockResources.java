@@ -24,7 +24,7 @@ import org.jarvis.core.model.rest.plugin.ScriptPluginRest;
 import org.jarvis.core.model.rest.scenario.BlockRest;
 import org.jarvis.core.profiler.TaskProfiler;
 import org.jarvis.core.profiler.model.GenericNode;
-import org.jarvis.core.resources.api.ApiLinkedResources;
+import org.jarvis.core.resources.api.ApiLinkedTwiceResources;
 import org.jarvis.core.resources.api.href.ApiHrefBlockBlockResources;
 import org.jarvis.core.resources.api.href.ApiHrefBlockScriptPluginResources;
 import org.jarvis.core.resources.api.plugins.ApiScriptPluginResources;
@@ -39,13 +39,13 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
-public class ApiBlockResources extends ApiLinkedResources<BlockRest,BlockBean,ScriptPluginRest,ScriptPluginBean> {
+public class ApiBlockResources extends ApiLinkedTwiceResources<BlockRest,BlockBean,ScriptPluginRest,ScriptPluginBean,BlockRest,BlockBean> {
 
 	@Autowired
 	ApiHrefBlockScriptPluginResources apiHrefBlockScriptPluginResources;
 	
 	@Autowired
-	ApiHrefBlockBlockResources ApiHrefBlockBlockResources;
+	ApiHrefBlockBlockResources apiHrefBlockBlockResources;
 
 	@Autowired
 	ApiScriptPluginResources apiScriptPluginResources;
@@ -64,13 +64,15 @@ public class ApiBlockResources extends ApiLinkedResources<BlockRest,BlockBean,Sc
 	@Override
 	public void mount() {
 		/**
-		 * scenarios
+		 * blocks
 		 */
 		declare(BLOCK_RESOURCE);
 		/**
 		 * blocks->plugins
+		 * blocks->blocks
 		 */
-		declare(BLOCK_RESOURCE, SCRIPT_RESOURCE, apiScriptPluginResources, apiHrefBlockScriptPluginResources, PLUGIN, SORTKEY);
+		declare(BLOCK_RESOURCE, SCRIPT_RESOURCE, apiScriptPluginResources, apiHrefBlockScriptPluginResources, PLUGIN, SORTKEY, HREF);
+		declareSecond(BLOCK_RESOURCE, BLOCK_RESOURCE, this, apiHrefBlockBlockResources, BLOCK, SORTKEY, HREF);
 	}
 
 	@Override

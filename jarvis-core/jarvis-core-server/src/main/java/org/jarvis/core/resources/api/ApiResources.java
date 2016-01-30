@@ -71,16 +71,12 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
         listeners.add(listener);
     }
 
-	 void notifyPost(S bean){
+	private void notifyPost(Request request, Response response, S result) {
         for(ResourceListener<S> listener : listeners){
-            try {
-				listener.post(bean);
-			} catch (InterruptedException e) {
-				throw new TechnicalException(e);
-			}
+            listener.post(request,response,result);
         }
-	 }
-	 
+	}
+
 	@Autowired
 	Environment env;
 	
@@ -236,7 +232,6 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 */
 	public T doCreate(T r) {
 		S bean = mapperFactory.getMapperFacade().map(r, beanClass);
-		notifyPost(bean);
 		return mapperFactory.getMapperFacade().map(apiService.create(bean), restClass);
 	}
 	
@@ -307,7 +302,9 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
     		return "";
     	}
 		T k = mapper.readValue(request.body(), klass);
-    	return mapper.writeValueAsString(doCreate(k));
+		T r = doCreate(k);
+		notifyPost(request,response,mapperFactory.getMapperFacade().map(r, beanClass));
+    	return mapper.writeValueAsString(r);
     }
 
 	/**

@@ -44,12 +44,13 @@ public abstract class ApiHrefMapper<Owner extends GenericEntity,Child extends Ge
 	 * @param child 
 	 * @param properties 
 	 * @param type 
+	 * @param relation 
 	 * @return String
 	 * @throws TechnicalNotFoundException 
 	 */
-	public GenericEntity add(Owner owner, Child child, GenericMap properties, String type) throws TechnicalNotFoundException {
+	public GenericEntity add(Owner owner, Child child, GenericMap properties, String type, String relation) throws TechnicalNotFoundException {
 		try (Transaction create = apiNeo4Service.beginTx()) {
-			Result result = apiNeo4Service.cypherAddLink(ownerLabel, owner.id, childLabel, child.id, HREF);
+			Result result = apiNeo4Service.cypherAddLink(ownerLabel, owner.id, childLabel, child.id, relation);
 			create.success();
 			if(result.hasNext()) {
 				Map<String, Object> rows = result.next();
@@ -107,10 +108,11 @@ public abstract class ApiHrefMapper<Owner extends GenericEntity,Child extends Ge
 
 	/**
 	 * @param owner 
+	 * @param relation 
 	 * @return List<GenericEntity>
 	 */
-	public List<GenericEntity> findAll(Owner owner) {
-		Result result = apiNeo4Service.cypherAllLink(ownerLabel, owner.id, childLabel, HREF, "node");
+	public List<GenericEntity> findAll(Owner owner, String relation) {
+		Result result = apiNeo4Service.cypherAllLink(ownerLabel, owner.id, childLabel, relation, "node");
 		List<GenericEntity> resultset = new ArrayList<GenericEntity>();
 		while (result.hasNext()) {
 			GenericEntity genericEntity = new GenericEntity();
@@ -146,9 +148,9 @@ public abstract class ApiHrefMapper<Owner extends GenericEntity,Child extends Ge
 	 * @return GenericEntity
 	 * @throws TechnicalNotFoundException 
 	 */
-	public GenericEntity remove(Owner owner, Child child, String instance) throws TechnicalNotFoundException {
+	public GenericEntity remove(Owner owner, Child child, String instance, String relation) throws TechnicalNotFoundException {
 		try (Transaction create = apiNeo4Service.beginTx()) {
-			Result result = apiNeo4Service.cypherDeleteLink(ownerLabel, owner.id, childLabel, child.id, HREF, instance);
+			Result result = apiNeo4Service.cypherDeleteLink(ownerLabel, owner.id, childLabel, child.id, relation, instance);
 			create.success();
 			if(result.hasNext()) {
 				GenericEntity genericEntity = new GenericEntity();

@@ -46,6 +46,6 @@ public class ApiHrefScenarioBlockResources extends ApiHrefMapper<ScenarioRest,Bl
 	 * @return List<GenericEntity>
 	 */
 	public List<GenericEntity> findAll(ScenarioBean scenario) {
-		return super.findAll(mapperFactory.getMapperFacade().map(scenario, ScenarioRest.class));
+		return super.findAll(mapperFactory.getMapperFacade().map(scenario, ScenarioRest.class), HREF);
 	}
 }
