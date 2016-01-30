@@ -41,54 +41,9 @@ public class BlockRest extends GenericEntity {
 	 */
 	@JsonProperty("expression")
 	public String expression;
-	/**
-	 * pluginId
-	 */
-	@JsonProperty("pluginId")
-	public String pluginId;
-	/**
-	 * pluginName
-	 */
-	@JsonProperty("pluginName")
-	public String pluginName;
-	/**
-	 * pluginThenId
-	 */
-	@JsonProperty("pluginThenId")
-	public String pluginThenId;
-	/**
-	 * pluginThenName
-	 */
-	@JsonProperty("pluginThenName")
-	public String pluginThenName;
-	/**
-	 * pluginElseId
-	 */
-	@JsonProperty("pluginElseId")
-	public String pluginElseId;
-	/**
-	 * pluginElseName
-	 */
-	@JsonProperty("pluginElseName")
-	public String pluginElseName;
-	/**
-	 * blockThenId
-	 */
-	@JsonProperty("blockThenId")
-	public String blockThenId;
-	/**
-	 * blockThenName
-	 */
-	@JsonProperty("blockThenName")
-	public String blockThenName;
-	/**
-	 * blockElseId
-	 */
-	@JsonProperty("blockElseId")
-	public String blockElseId;
-	/**
-	 * blockElseName
-	 */
-	@JsonProperty("blockElseName")
-	public String blockElseName;
+
+	@Override
+	public String toString() {
+		return "BlockRest [name=" + name + ", icon=" + icon + ", expression=" + expression + "]";
+	}
 }

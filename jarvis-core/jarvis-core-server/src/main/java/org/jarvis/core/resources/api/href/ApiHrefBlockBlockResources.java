@@ -16,9 +16,12 @@
 
 package org.jarvis.core.resources.api.href;
 
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 
 import org.jarvis.core.model.bean.scenario.BlockBean;
+import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.model.rest.scenario.BlockRest;
 import org.jarvis.core.resources.api.mapper.ApiHrefMapper;
 import org.springframework.stereotype.Component;
@@ -33,5 +36,23 @@ public class ApiHrefBlockBlockResources extends ApiHrefMapper<BlockRest,BlockRes
 	protected
 	void init() {
 		super.init(BlockBean.class.getSimpleName(),BlockBean.class.getSimpleName(),"plugins");
+	}
+
+	/**
+	 * find all (filtered by HREF_IF)
+	 * @param bean 
+	 * @return List<GenericEntity>
+	 */
+	public List<GenericEntity> findAllThen(BlockBean bean) {
+		return super.findAll(mapperFactory.getMapperFacade().map(bean, BlockRest.class), HREF_THEN);
+	}
+
+	/**
+	 * find all (filtered by HREF_IF)
+	 * @param bean 
+	 * @return List<GenericEntity>
+	 */
+	public List<GenericEntity> findAllElse(BlockBean bean) {
+		return super.findAll(mapperFactory.getMapperFacade().map(bean, BlockRest.class), HREF_THEN);
 	}
 }

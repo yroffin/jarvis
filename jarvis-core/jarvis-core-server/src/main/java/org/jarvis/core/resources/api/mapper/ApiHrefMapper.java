@@ -16,17 +16,23 @@ import org.neo4j.graphdb.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * api mapper
+ * api mapper based on href link
  *
- * @param <Owner>
- * @param <Child>
+ * @param <T>
+ * @param <S>
  */
-public abstract class ApiHrefMapper<Owner extends GenericEntity,Child extends GenericEntity> extends ApiMapper {
+public abstract class ApiHrefMapper<T extends GenericEntity,S extends GenericEntity> extends ApiMapper {
 
 	private String ownerLabel;
 	private String childLabel;
 	private String type;
 
+	/**
+	 * initialize this href mapper
+	 * @param ownerLabel
+	 * @param childLabel
+	 * @param type
+	 */
 	protected void init(String ownerLabel, String childLabel, String type) {
 		super.init();
 		this.ownerLabel = ownerLabel;
@@ -38,19 +44,31 @@ public abstract class ApiHrefMapper<Owner extends GenericEntity,Child extends Ge
 	ApiNeo4Service apiNeo4Service;
 
 	/**
-	 * add a new link between Owner and Child
-	 * 
-	 * @param owner 
-	 * @param child 
-	 * @param properties 
+	 * add a new link between T and S
+	 * @param owner
+	 * owner entity
+	 * @param child
+	 * target entity 
+	 * @param properties
+	 * properties on the relationship 
 	 * @param type 
-	 * @param relation 
-	 * @return String
-	 * @throws TechnicalNotFoundException 
+	 * href
+	 * @param relation
+	 * relationship type 
+	 * @return GenericEntity
+	 * @throws TechnicalNotFoundException
+	 * when no data found
 	 */
-	public GenericEntity add(Owner owner, Child child, GenericMap properties, String type, String relation) throws TechnicalNotFoundException {
+	public GenericEntity add(T owner, S child, GenericMap properties, String type, String relation) throws TechnicalNotFoundException {
 		try (Transaction create = apiNeo4Service.beginTx()) {
-			Result result = apiNeo4Service.cypherAddLink(ownerLabel, owner.id, childLabel, child.id, relation);
+			/**
+			 * relation can be override by post
+			 */
+    		String defaultRelType = relation;
+    		if(properties.get(HREF.toLowerCase()) != null) {
+    			defaultRelType = (String) properties.get(HREF.toLowerCase());
+    		}
+			Result result = apiNeo4Service.cypherAddLink(ownerLabel, owner.id, childLabel, child.id, defaultRelType);
 			create.success();
 			if(result.hasNext()) {
 				Map<String, Object> rows = result.next();
@@ -78,12 +96,14 @@ public abstract class ApiHrefMapper<Owner extends GenericEntity,Child extends Ge
 	}
 
 	/**
-	 * add a new link between Owner and Child
-	 * 
-	 * @param relId 
-	 * @param properties 
-	 * @return String
-	 * @throws TechnicalNotFoundException 
+	 * update a relationship between two entities
+	 * @param relId
+	 * the relation id
+	 * @param properties
+	 * properties on this relationship 
+	 * @return GenericMap
+	 * @throws TechnicalNotFoundException
+	 * when no data found
 	 */
 	public GenericMap update(String relId, GenericMap properties) throws TechnicalNotFoundException {
 		try (Transaction update = apiNeo4Service.beginTx()) {
@@ -107,11 +127,14 @@ public abstract class ApiHrefMapper<Owner extends GenericEntity,Child extends Ge
 	}
 
 	/**
-	 * @param owner 
-	 * @param relation 
+	 * find all element filtered by the relation type
+	 * @param owner
+	 * the owner entity
+	 * @param relation
+	 * the relation type (default HREF)
 	 * @return List<GenericEntity>
 	 */
-	public List<GenericEntity> findAll(Owner owner, String relation) {
+	public List<GenericEntity> findAll(T owner, String relation) {
 		Result result = apiNeo4Service.cypherAllLink(ownerLabel, owner.id, childLabel, relation, "node");
 		List<GenericEntity> resultset = new ArrayList<GenericEntity>();
 		while (result.hasNext()) {
@@ -141,14 +164,20 @@ public abstract class ApiHrefMapper<Owner extends GenericEntity,Child extends Ge
 	}
 
 	/**
-	 * remove relationship
-	 * @param owner 
-	 * @param child 
+	 * remove relationship in neo4j database<br>
+	 * @param owner
+	 * the owner of this relation 
+	 * @param child
+	 * the target entity 
 	 * @param instance
-	 * @return GenericEntity
-	 * @throws TechnicalNotFoundException 
+	 * the relationship instance in database
+	 * @param relation
+	 * the relation type (default HREF) : HREF, HREF_IF, HREF_THEN, HREF_ELSE ... 
+	 * @return GenericEntity, the old entity
+	 * @throws TechnicalNotFoundException
+	 * then no relation or entity exist
 	 */
-	public GenericEntity remove(Owner owner, Child child, String instance, String relation) throws TechnicalNotFoundException {
+	public GenericEntity remove(T owner, S child, String instance, String relation) throws TechnicalNotFoundException {
 		try (Transaction create = apiNeo4Service.beginTx()) {
 			Result result = apiNeo4Service.cypherDeleteLink(ownerLabel, owner.id, childLabel, child.id, relation, instance);
 			create.success();

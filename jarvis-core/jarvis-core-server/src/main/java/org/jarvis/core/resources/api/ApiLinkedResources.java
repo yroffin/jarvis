@@ -74,7 +74,7 @@ public abstract class ApiLinkedResources<T extends GenericEntity, S extends Gene
 		    		T master = doGetById(request.params(ID));
 			    	try {
 			    		T1 target = api.doGetById(request.params(param));
-				    	GenericEntity link = apiHref.add(master, target, new GenericMap(request.body()), href, relation);
+				    	GenericEntity link = apiHref.add(master, target, new GenericMap(request.body()), href, findRelType(request,relation));
 				    	return mapper.writeValueAsString(fromLink(link, api.doGetById(link.id)));
 			    	} catch(TechnicalNotFoundException e) {
 			    		response.status(404);
