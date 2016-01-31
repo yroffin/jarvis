@@ -14,7 +14,7 @@
 	  <input ng-model="block.icon">
 	</md-input-container>
     <div ng-repeat="plugin in plugins.if">
-    	 <div layout="row">
+      <div layout="row">
 		<md-input-container flex>
 		  <label translate="block.plugin.if"></label>
 		  <input ng-model="plugin.name" disabled>
@@ -22,10 +22,14 @@
 		<md-button aria-label="menu" class="md-icon-button" ng-click="links.plugins.if.drop(plugin)"><md-icon md-font-icon="material-icons md-16">delete</md-icon></md-button>
      </div>
     </div>
-	<md-input-container>
-	  <label translate="block.expression"></label>
-	  <input ng-model="block.expression">
-	</md-input-container>
-	<md-icon ng-show="testExpression" md-font-icon="material-icons md-16">cloud</md-icon>
-	<md-icon ng-show="!testExpression" md-font-icon="material-icons md-16">cloud_off</md-icon>
+   <div layout="row">
+		<md-input-container flex>
+		  <label translate="block.expression"></label>
+		  <input ng-model="block.expression">
+		</md-input-container>
+		<md-button aria-label="menu" class="md-icon-button">
+			<md-icon ng-if="testExpression"  md-font-icon="material-icons md-16">gps_fixed</md-icon>
+			<md-icon ng-if="!testExpression" md-font-icon="material-icons md-16">gps_not_fixed</md-icon>
+		</md-button>
+	</div>
 </div>

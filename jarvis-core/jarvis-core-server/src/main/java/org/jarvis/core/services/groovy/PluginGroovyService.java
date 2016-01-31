@@ -17,6 +17,7 @@
 package org.jarvis.core.services.groovy;
 
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.annotation.PostConstruct;
 
@@ -67,10 +68,15 @@ public class PluginGroovyService {
 	}
 
 	/**
+	 * execute this command and return an object
 	 * @param command
-	 * @param args 
+	 * the command to execute
+	 * @param args
+	 * arguments for this execution
 	 * @return GenericBean
-	 * @throws TechnicalException 
+	 * the result
+	 * @throws TechnicalException
+	 * when some internal error 
 	 */
 	public GenericMap groovyAsObject(String command, GenericMap args) throws TechnicalException {
 		binding.setVariable("input", args);
@@ -78,6 +84,9 @@ public class PluginGroovyService {
 		Map exec = (Map) script.evaluate(command);
 		GenericMap result = new GenericMap();
 		if(exec != null) {
+			/**
+			 * store all field in groovy context
+			 */
 			for(Object key : exec.keySet()) {
 				result.put((String) key, exec.get(key));
 			}
@@ -88,15 +97,24 @@ public class PluginGroovyService {
 	}
 
 	/**
+	 * execute this command and return a bollean result
 	 * @param command
-	 * @param args 
-	 * @return GenericBean
-	 * @throws TechnicalException 
+	 * the command to execute
+	 * @param args
+	 * arguments for this execution
+	 * @return boolean
+	 * the result
+	 * @throws TechnicalException
+	 * when some internal error
 	 */
 	public boolean groovyAsBoolean(String command, GenericMap args) throws TechnicalException {
 		Binding binding = new Binding();
-		binding.setVariable("input", args);
+		for(Entry<String, Object> entry : args.entrySet()) {
+			binding.setVariable(entry.getKey(), entry.getValue());
+		}
 		GroovyShell script = new GroovyShell(binding);
-		return (boolean) script.evaluate(command);
+		boolean result = (boolean) script.evaluate(command);
+		logger.warn("SCRIPT - BOOLEAN {}", result);
+		return result;
 	}
 }

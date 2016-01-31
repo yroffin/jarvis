@@ -142,8 +142,8 @@ angular.module('JarvisApp.ctrl.blocks', ['JarvisApp.services'])
     $scope.test = function(block) {
     	if(block != undefined && block.id != undefined && block.id != '') {
     		blockResourceService.block.task(block.id, 'test', {}, function(data) {
-       	    	$log.debug('[BLOCK/test]', block, data);
-       	    	$scope.testExpression = data;
+       	    	$log.debug('[BLOCK/test]', data);
+       	    	$scope.testExpression = data == "true";
     	    }, toastService.failure);
     	}
     }

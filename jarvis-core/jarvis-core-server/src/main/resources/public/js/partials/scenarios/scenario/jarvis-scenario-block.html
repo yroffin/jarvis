@@ -6,13 +6,14 @@
 <md-button aria-label="menu" class="md-icon-button" ng-click="links.blocks.update(block)"><md-icon md-font-icon="material-icons md-16">save</md-icon></md-button>
 <div layout="column">
 <pre>
-<code ng-if="block.id">si [<a href="#/blocks/{{block.id}}">{{block.name}}</a>]</code>
+<code ng-repeat="statement in block.plugins.if"><br ng-if="$index>0">EXEC [<a href="#/plugins/scripts/{{statement.id}}">{{statement.name}}</a>]</code>
+<code>si [<a href="#/blocks/{{block.id}}">{{block.expression}}</a>]</code>
 {
-<code ng-if="block.pluginThenId">    executer le plugin [<a href="#/plugins/scripts/{{block.pluginThenId}}">{{block.pluginThenName}}#{{block.pluginThenId}}</a>]</code>
-<code ng-if="block.blockThenId">    executer le block [<a href="#/blocks/{{block.blockThenId}}">{{block.blockThenName}}#{{block.blockThenId}}</a>]</code>
+<code ng-repeat="statement in block.plugins.then"><br ng-if="$index>0">EXEC [<a href="#/plugins/scripts/{{statement.id}}">{{statement.name}}</a>]</code>
+<code ng-repeat="statement in block.blocks.then"><br ng-if="$index>0">CALL [<a href="#/blocks/{{statement.id}}">{{statement.name}}</a>]</code>
 } sinon {
-<code ng-if="block.pluginElseId">    executer le plugin [<a href="#/plugins/scripts/{{block.pluginElseId}}">{{block.pluginElseName}}#{{block.pluginElseId}}</a>]</code>
-<code ng-if="block.blockElseId">    executer le block [<a href="#/blocks/{{block.blockElseId}}">{{block.blockElseName}}#{{block.blockElseId}}</a>]</code>
+<code ng-repeat="statement in block.plugins.else"><br ng-if="$index>0">EXEC [<a href="#/plugins/scripts/{{statement.id}}">{{statement.name}}</a>]</code>
+<code ng-repeat="statement in block.blocks.else"><br ng-if="$index>0">CALL [<a href="#/blocks/{{statement.id}}">{{statement.name}}</a>]</code>
 }
 </pre>
 </div>

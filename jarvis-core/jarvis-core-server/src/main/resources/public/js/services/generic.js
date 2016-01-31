@@ -429,7 +429,7 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter'])
 		        });
 		    }, toastService.failure);
 	    },
-	    findAll : function(name, id, list, service) {
+	    findAll : function(name, id, list, service, callback) {
 			$log.debug('loading ', name, service);
 			list.splice(0,list.length)
 	    	service.findAll(id, function(data) {
@@ -440,6 +440,9 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter'])
 		    		list.push(element);
 		        });
 				$log.debug('loaded ', name, list);
+				if(callback) {
+					callback(list);
+				}
 		    }, toastService.failure);
 	    },
 	    get : function(id, callback, service) {

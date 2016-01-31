@@ -394,7 +394,7 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 		} catch (Exception e) {
 			throw new TechnicalException(e);
 		}
-		logger.info("SCRIPT - OUTPUT  {}", result);
+		logger.info("SCRIPT - OUTPUT {}", result);
 		try {
 			if(result.startsWith("{")) {
 				return (GenericMap) mapper.readValue(result, GenericMap.class);

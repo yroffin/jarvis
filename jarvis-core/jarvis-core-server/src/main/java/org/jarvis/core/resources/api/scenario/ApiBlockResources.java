@@ -99,7 +99,7 @@ public class ApiBlockResources extends ApiLinkedTwiceResources<BlockRest,BlockBe
 		boolean result = true;
 		for(GenericEntity cond : apiHrefBlockScriptPluginResources.findAllConditions(bean)) {
 			GenericMap exec = (GenericMap) apiScriptPluginResources.doExecute(cond.id, args, TaskType.EXECUTE);
-			result = result || pluginGroovyService.groovyAsBoolean(bean.expression, exec);
+			result = result && pluginGroovyService.groovyAsBoolean(bean.expression, exec);
 		}
 		return result;
 	}

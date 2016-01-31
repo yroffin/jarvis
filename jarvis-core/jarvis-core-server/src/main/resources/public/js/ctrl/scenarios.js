@@ -228,7 +228,37 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
 		 * find all blocks
 		 */
     	$scope.blocks = [];
-    	genericResourceService.scope.collections.findAll('blocks', $stateParams.id, $scope.blocks, scenarioResourceService.blocks);
+    	genericResourceService.scope.collections.findAll(
+    			'blocks', $stateParams.id, $scope.blocks, scenarioResourceService.blocks,
+    			function(blocks) {
+    				_.forEach(blocks, function(block) {
+    					block.plugins = {};
+    					block.plugins.if   = [];
+    					block.plugins.then = [];
+    					block.plugins.else = [];
+    					blockResourceService.plugins.if.findAll(block.id, function(data){
+    						block.plugins.if = data;
+    					});
+    					blockResourceService.plugins.then.findAll(block.id, function(data){
+    						block.plugins.then = data;
+    					});
+    					blockResourceService.plugins.else.findAll(block.id, function(data){
+    						block.plugins.else = data;
+    					});
+    					block.blocks = {};
+    					block.blocks.then = [];
+    					block.blocks.else = [];
+    					blockResourceService.blocks.then.findAll(block.id, function(data){
+    						block.blocks.then = data;
+    					});
+    					blockResourceService.blocks.else.findAll(block.id, function(data){
+    						block.blocks.else = data;
+    					});
+    					$log.debug("blocks.plugins", block.plugins);
+    					$log.debug("blocks.blocks", block.blocks);
+    				});
+    			}
+    	);
     	$scope.triggers = [];
     	genericResourceService.scope.collections.findAll('triggers', $stateParams.id, $scope.triggers, scenarioResourceService.triggers);
 
