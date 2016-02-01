@@ -5,10 +5,7 @@
     <h1><br>{{script.name}}<md-tooltip>{{script.type}}#{{script.id}}</md-tooltip></h1>
   </div>
   <md-fab-actions class="md-toolbar-tools">
-	<md-button aria-label="menu" class="md-icon-button" ng-click="go('plugins')"><md-icon md-font-icon="material-icons md-16">clear</md-icon></md-button>
-	<md-button aria-label="menu" class="md-icon-button" ng-click="duplicate(script)"><md-icon md-font-icon="material-icons md-16">content_copy</md-icon></md-button>
-	<md-button aria-label="menu" class="md-icon-button" ng-click="remove(script)"><md-icon md-font-icon="material-icons md-16">delete</md-icon></md-button>
-	<md-button aria-label="menu" class="md-icon-button" ng-click="save(script)"><md-icon md-font-icon="material-icons md-16">save</md-icon></md-button>
+  	<jarvis-default-menu-bar close="plugins" ng-model="script"></jarvis-default-menu-bar>
 	<md-button aria-label="menu" class="md-icon-button" ng-click="execute(script)"><md-icon md-font-icon="material-icons md-16">play_arrow</md-icon></md-button>
 	<md-button aria-label="menu" class="md-icon-button" ng-click="clear()"><md-icon md-font-icon="material-icons md-16">loop</md-icon></md-button>
 	<jarvis-pick-element ctrl="pickCommandDialogCtrl" icon="playlist_add" callback="links.commands.add"></jarvis-pick-element>

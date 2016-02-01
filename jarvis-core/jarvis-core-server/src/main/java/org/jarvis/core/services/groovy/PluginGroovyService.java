@@ -16,6 +16,7 @@
 
 package org.jarvis.core.services.groovy;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -80,8 +81,20 @@ public class PluginGroovyService {
 	 */
 	public GenericMap groovyAsObject(String command, GenericMap args) throws TechnicalException {
 		binding.setVariable("input", args);
-		@SuppressWarnings("rawtypes")
-		Map exec = (Map) script.evaluate(command);
+		Object raw = script.evaluate(command);
+		Map<?,?> exec = null;
+		/**
+		 * handle map result
+		 */
+		if(raw instanceof Map) {
+			exec = (Map<?,?>) raw;
+		}
+		/**
+		 * handle list result
+		 */
+		if(raw instanceof List) {
+			exec = (Map<?,?>) ((List<?>) raw).get(0);
+		}
 		GenericMap result = new GenericMap();
 		if(exec != null) {
 			/**

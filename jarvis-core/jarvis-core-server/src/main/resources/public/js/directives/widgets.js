@@ -28,13 +28,27 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     }
   }
 })
+.directive('jarvisDefaultMenuBar', function ($log, $parse) {
+	return {
+	    restrict: 'E',
+	    templateUrl: '/ui/js/partials/widget/tools/jarvis-default-menu-bar.html',
+	    require:"ngModel",
+	    link: function($scope, elm, attrs, ngModel) {
+	    	$scope.closeMenu = attrs.close;
+	    	$scope.element = function () {
+                return ngModel.$viewValue;
+            }
+	    }
+	}
+})
 .directive('jarvisPickElement', function ($log, $parse, genericPickerService) {
 	return {
 	    restrict: 'E',
-	    template: '<md-button aria-label="menu" class="md-icon-button" ng-click="pickItemDialog($event)"><md-icon md-font-icon="material-icons md-16">{{pick.icon}}</md-icon></md-button>',
+	    template: '<md-button aria-label="menu" class="md-icon-button" ng-click="pickItemDialog($event)"><md-tooltip>{{pick.tooltips|translate}}</md-tooltip><md-icon md-font-icon="material-icons md-16">{{pick.icon}}</md-icon></md-button>',
 	    scope: {},
 	    link: function(scope, elm, attrs, ctrl) {
 	    	scope.pick = {};
+	    	scope.pick.tooltips = attrs.tooltips;
 	    	scope.pick.icon = attrs.icon;
 	    	scope.pick.ctrl = attrs.ctrl;
 	    	scope.pick.callback = attrs.callback;

@@ -72,7 +72,7 @@ angular.module('JarvisApp.config',[])
      * main controller
      */
     .controller('JarvisAppCtrl',
-    	function($scope, $log, $mdSidenav, $location, $state, genericPickerService, toastService, eventResourceService){
+    	function($scope, $log, $mdSidenav, $location, $state, genericPickerService, toastService, iotResourceService, eventResourceService){
         /**
          * initialize jarvis configuration
          */
@@ -126,6 +126,17 @@ angular.module('JarvisApp.config',[])
         };
 
         /**
+    	 * render this iot, assume no args by default
+    	 * @param iot, the iot to render
+    	 */
+    	$scope.render = function(iot) {
+    	 	iotResourceService.iot.task(iot.id, 'render', {}, function(data) {
+    	 		$log.debug('JarvisAppCtrl::render', data);
+    	 	    $scope.renderdata = data;
+    	    }, toastService.failure);
+    	}
+
+    	/**
          * go to state
          */
         $scope.graph = function(event, anchor) {

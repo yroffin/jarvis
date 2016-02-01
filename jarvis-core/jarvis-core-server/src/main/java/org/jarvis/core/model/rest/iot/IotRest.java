@@ -32,6 +32,11 @@ public class IotRest extends GenericEntity {
 	@JsonProperty("name")
 	public String name;
 	/**
+	 * parameters
+	 */
+	@JsonProperty("parameters")
+	public String parameters;
+	/**
 	 * owner of this iot
 	 */
 	@JsonProperty("owner")

@@ -112,20 +112,6 @@ angular.module('JarvisApp.ctrl.iots', ['JarvisApp.services'])
 	 	    $scope.output = angular.toJson(data, true);
 	    }, toastService.failure);
 	}
-    /**
-     * set trigger
-     */
-    $scope.setTrigger = function(trigger) {
-    	$scope.trigger = trigger;
-    	$scope.iot.trigger = trigger.id;
-    }
-    /**
-     * set owner
-     */
-    $scope.setOwner = function(owner) {
-    	$scope.owner = owner;
-    	$scope.iot.owner = owner.id;
-    }
 	/**
 	 * init this controller
 	 */

@@ -30,6 +30,10 @@ public class IotBean extends GenericBean {
 	 */
 	public String name;
 	/**
+	 * parameters
+	 */
+	public String parameters;
+	/**
 	 * owner of this iot
 	 */
 	public String owner;

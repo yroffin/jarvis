@@ -18,6 +18,9 @@ package org.jarvis.core.resources.api.iot;
 
 import static spark.Spark.get;
 
+import java.util.Map;
+import java.util.Map.Entry;
+
 import org.jarvis.core.model.bean.iot.IotBean;
 import org.jarvis.core.model.bean.plugin.ScriptPluginBean;
 import org.jarvis.core.model.bean.scenario.TriggerBean;
@@ -112,15 +115,34 @@ public class ApiIotResources extends ApiLinkedThirdResources<IotRest,IotBean,Iot
 	 * @return GenericMap
 	 * @throws Exception
 	 */
+	@SuppressWarnings("unchecked")
 	public GenericMap render(IotBean iot, GenericMap args) throws Exception {
 		GenericMap result = args;
+		/**
+		 * read parameters and fix a default value
+		 * if parameters is null
+		 */
+		GenericMap parameters = null;
+		if(iot.parameters != null) {
+			parameters = mapper.readValue(iot.parameters, GenericMap.class);
+		} else {
+			parameters = new GenericMap();
+			parameters.put("default", new GenericMap());
+		}
 		IotRest iotRest = mapperFactory.getMapperFacade().map(iot, IotRest.class);
 		/**
 		 * iterate on each entity and execute them as a pipeline
 		 */
-		for(GenericEntity entity : sort(apiHrefIotScriptPluginResources.findAll(iotRest, HREF), "order")) {
-			ScriptPluginRest script = apiScriptPluginResources.doGetById(entity.id);
-			result = apiScriptPluginResources.execute(script, result);
+		for(Entry<String, Object> entry : parameters.entrySet()) {
+			logger.info("Render {}", entry.getKey());
+			GenericMap params = new GenericMap();
+			for(Entry<String, Object> param : ((Map<String,Object>) entry.getValue()).entrySet()) {
+				params.put(param.getKey(), param.getValue());
+			}
+			for(GenericEntity entity : sort(apiHrefIotScriptPluginResources.findAll(iotRest, HREF), "order")) {
+				ScriptPluginRest script = apiScriptPluginResources.doGetById(entity.id);
+				result = apiScriptPluginResources.execute(script, params);
+			}
 		}
 		return result;
 	}
