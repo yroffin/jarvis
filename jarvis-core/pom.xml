@@ -27,6 +27,11 @@
 			<!-- internal/app -->
 			<dependency>
 				<groupId>org.yroffin.com.jarvis</groupId>
+				<artifactId>jarvis-ehcache</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>org.yroffin.com.jarvis</groupId>
 				<artifactId>jarvis-aiml</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
@@ -43,6 +48,11 @@
 			<dependency>
 				<groupId>org.yroffin.com.jarvis</groupId>
 				<artifactId>jarvis-java-client</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>org.yroffin.com.jarvis</groupId>
+				<artifactId>jarvis-core-model</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
 
@@ -110,21 +120,39 @@
 				<scope>test</scope>
 			</dependency>
 
-			<!-- logback feature -->
-			<dependency>
-				<groupId>ch.qos.logback</groupId>
-				<artifactId>logback-core</artifactId>
-				<version>1.0.7</version>
-			</dependency>
+			<!-- logging feature -->
 			<dependency>
 				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-ext</artifactId>
-				<version>1.7.2</version>
+				<artifactId>slf4j-api</artifactId>
+				<version>1.7.7</version>
 			</dependency>
 			<dependency>
-				<groupId>ch.qos.logback</groupId>
-				<artifactId>logback-classic</artifactId>
-				<version>1.0.7</version>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-api</artifactId>
+				<version>2.5</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-core</artifactId>
+				<version>2.5</version>
+			</dependency>
+			<!-- Log4j 1.x API Bridge -->
+			<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-1.2-api</artifactId>
+				<version>2.5</version>
+			</dependency>
+			<!-- Apache Commons Logging Bridge -->
+			<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-jcl</artifactId>
+				<version>2.5</version>
+			</dependency>
+			<!-- SLF4J Bridge -->
+			<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-slf4j-impl</artifactId>
+				<version>2.5</version>
 				<exclusions>
 					<exclusion>
 						<groupId>org.slf4j</groupId>
@@ -133,7 +161,53 @@
 				</exclusions>
 			</dependency>
 
+			<dependency>
+				<groupId>joda-time</groupId>
+				<artifactId>joda-time</artifactId>
+				<version>2.9.1</version>
+			</dependency>
+
+			<!-- groovy feature -->
+			<dependency>
+				<groupId>org.codehaus.groovy</groupId>
+				<artifactId>groovy-all</artifactId>
+				<version>2.4.5</version>
+			</dependency>
+			<dependency>
+				<groupId>org.codehaus.groovy.modules.http-builder</groupId>
+				<artifactId>http-builder</artifactId>
+				<version>0.7.1</version>
+			</dependency>
+			
+			<!-- neo4j feature -->
+			<dependency>
+				<groupId>org.neo4j</groupId>
+				<artifactId>neo4j</artifactId>
+				<version>2.3.1</version>
+			</dependency>
+			<dependency>
+				<groupId>org.neo4j</groupId>
+				<artifactId>neo4j-slf4j</artifactId>
+				<version>2.3.1</version>
+			</dependency>
+			<dependency>
+				<groupId>org.neo4j</groupId>
+				<artifactId>neo4j-cypher</artifactId>
+				<version>2.3.1</version>
+			</dependency>
+
+			<dependency>
+				<groupId>ma.glasnost.orika</groupId>
+				<artifactId>orika-core</artifactId>
+				<version>1.4.6</version>
+			</dependency>
+
 			<!-- json -->
+			<dependency>
+				<groupId>com.fasterxml.jackson.datatype</groupId>
+				<artifactId>jackson-datatype-joda</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>com.fasterxml.jackson.core</groupId>
 				<artifactId>jackson-core</artifactId>
@@ -143,6 +217,12 @@
 				<groupId>com.fasterxml.jackson.core</groupId>
 				<artifactId>jackson-databind</artifactId>
 				<version>${jackson.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.ehcache</groupId>
+				<artifactId>ehcache</artifactId>
+				<version>3.0.0.m4</version>
 			</dependency>
 
 			<!-- sphinx -->
@@ -183,6 +263,8 @@
 		<module>jarvis-dio</module>
 		<module>jarvis-rest-module</module>
 		<module>jarvis-core-server</module>
+		<module>jarvis-ehcache</module>
+		<module>jarvis-core-model</module>
 	</modules>
 
 	<repositories>

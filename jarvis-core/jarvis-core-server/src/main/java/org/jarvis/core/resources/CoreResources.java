@@ -18,9 +18,12 @@ package org.jarvis.core.resources;
 
 import static spark.Spark.get;
 
+import java.io.IOException;
 import java.io.InputStream;
-import java.io.Writer;
 
+import org.jarvis.core.services.cache.CoreEhcacheManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
@@ -35,9 +38,44 @@ import spark.utils.IOUtils;
  */
 @Component
 public class CoreResources {
+	protected Logger logger = LoggerFactory.getLogger(CoreResources.class);
 
 	@Autowired
 	Environment env;
+
+	@Autowired
+	CoreEhcacheManager coreEhcacheManager;
+
+	ResourceData getData(String key) throws IOException {
+	    if(coreEhcacheManager.contain(key)) {
+	    	logger.debug("Cached data {}", key);
+	    	return coreEhcacheManager.get(key);
+	    } else {
+	        InputStream inputStream = getClass().getResourceAsStream(key);
+	        if (inputStream != null) {
+		        ResourceData value = new ResourceData(IOUtils.toString(inputStream));
+	        	if(key.endsWith(".html")) {
+	        		value.setContentType("text/html; charset=utf-8");
+	        	}
+	        	if(key.endsWith(".css")) {
+	        		value.setContentType("text/css; charset=utf-8");
+	        	}
+	        	if(key.endsWith(".js")) {
+	        		value.setContentType("application/javascript; charset=utf-8");
+	        	}
+	        	if(key.endsWith(".json")) {
+	        		value.setContentType("text/html; charset=utf-8");
+	        	}
+	        	if(key.endsWith(".ico")) {
+	        		value.setContentType("image/x-icon");
+	        	}
+	            inputStream.close();
+		        return coreEhcacheManager.put(key, value);
+	        } else {
+	        	return null;
+	        }
+	    }
+	}
 
 	/**
 	 * mount local resource
@@ -50,35 +88,18 @@ public class CoreResources {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
 		        String path = request.pathInfo().replaceFirst("/ui/", "/public/");
-		        InputStream inputStream = getClass().getResourceAsStream(path);
-		        if (inputStream != null) {
-		        	if(path.endsWith(".html")) {
-		        		response.type("text/html; charset=utf-8");
-		        	}
-		        	if(path.endsWith(".css")) {
-		        		response.type("text/css; charset=utf-8");
-		        	}
-		        	if(path.endsWith(".js")) {
-		        		response.type("application/javascript; charset=utf-8");
-		        	}
-		        	if(path.endsWith(".json")) {
-		        		response.type("text/html; charset=utf-8");
-		        	}
-		        	if(path.endsWith(".ico")) {
-		        		response.type("image/x-icon");
-		        	}
+		        ResourceData value = getData(path);
+		        if(value != null) {
+	        		response.type(value.getContentType());
 		            response.status(200);
-		            Writer writer = response.raw().getWriter();
-		            IOUtils.copy(inputStream, writer);
-		            writer.close();
-		            inputStream.close();
+		        	return value.getValue();
 		        } else {
 		        	/**
 		        	 * resources is not found
 		        	 */
 		        	response.status(404);
+		        	return "";
 		        }
-	        	return "";
 		    }
 		});
 	}

@@ -17,12 +17,18 @@ import org.jarvis.main.model.parser.template.condition.IAimlCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * aiml condition implementation
+ */
 public class AimlConditionImpl extends AimlElementContainer implements
 		IAimlCondition {
 
 	protected Logger logger = LoggerFactory.getLogger(AimlConditionImpl.class);
 	private final IAimlTransform transformer = new AimlTranformImpl();
 
+	/**
+	 * constructor
+	 */
 	public AimlConditionImpl() {
 		super("condition");
 	}
@@ -30,18 +36,30 @@ public class AimlConditionImpl extends AimlElementContainer implements
 	private String name;
 	private String value;
 
+	/**
+	 * @return String
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * @param name 
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * @return String
+	 */
 	public String getValue() {
 		return value;
 	}
 
+	/**
+	 * @param value 
+	 */
 	public void setValue(String value) {
 		this.value = value;
 	}
