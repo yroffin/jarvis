@@ -16,7 +16,18 @@
 
 package org.jarvis.core.exception;
 
-public class TechnicalNotFoundException extends Exception {
+/**
+ * http exception
+ */
+public class TechnicalHttpException extends Exception {
+
+	/**
+	 * @param statusCode
+	 * @param message
+	 */
+	public TechnicalHttpException(int statusCode, String message) {
+		super(message + ":" + statusCode);
+	}
 
 	/**
 	 * default serialVersionUID

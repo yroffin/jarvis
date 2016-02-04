@@ -32,6 +32,11 @@
 			</dependency>
 			<dependency>
 				<groupId>org.yroffin.com.jarvis</groupId>
+				<artifactId>jarvis-core-neo4j-client</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>org.yroffin.com.jarvis</groupId>
 				<artifactId>jarvis-aiml</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
@@ -54,6 +59,13 @@
 				<groupId>org.yroffin.com.jarvis</groupId>
 				<artifactId>jarvis-core-model</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+
+			<!-- apache client -->
+			<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpclient</artifactId>
+				<version>4.5.1</version>
 			</dependency>
 
 			<!-- common gpio operation -->
@@ -265,6 +277,7 @@
 		<module>jarvis-core-server</module>
 		<module>jarvis-ehcache</module>
 		<module>jarvis-core-model</module>
+		<module>jarvis-core-neo4j-client</module>
 	</modules>
 
 	<repositories>

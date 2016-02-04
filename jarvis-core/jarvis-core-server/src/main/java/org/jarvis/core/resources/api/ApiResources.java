@@ -469,7 +469,11 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 					return -1;
 				}
 				String right = (String) r.get(field);
-				return left.compareTo(right);
+				if(right != null) {
+					return left.compareTo(right);
+				} else {
+					return 1;
+				}
 			}
 			
 		});

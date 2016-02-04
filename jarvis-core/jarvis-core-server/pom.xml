@@ -18,6 +18,10 @@
 		</dependency>
 		<dependency>
 			<groupId>org.yroffin.com.jarvis</groupId>
+			<artifactId>jarvis-core-neo4j-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.yroffin.com.jarvis</groupId>
 			<artifactId>jarvis-ehcache</artifactId>
 		</dependency>
 
@@ -70,18 +74,6 @@
 		<dependency>
 			<groupId>org.codehaus.groovy.modules.http-builder</groupId>
 			<artifactId>http-builder</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.neo4j</groupId>
-			<artifactId>neo4j</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.neo4j</groupId>
-			<artifactId>neo4j-slf4j</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.neo4j</groupId>
-			<artifactId>neo4j-cypher</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>ma.glasnost.orika</groupId>

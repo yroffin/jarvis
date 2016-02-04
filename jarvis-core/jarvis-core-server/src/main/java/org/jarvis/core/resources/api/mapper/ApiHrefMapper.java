@@ -5,14 +5,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.services.neo4j.ApiNeo4Service;
 import org.jarvis.core.type.GenericMap;
-import org.neo4j.graphdb.Node;
-import org.neo4j.graphdb.Relationship;
-import org.neo4j.graphdb.Result;
-import org.neo4j.graphdb.Transaction;
+import org.jarvis.neo4j.client.Entities;
+import org.jarvis.neo4j.client.Node;
+import org.jarvis.neo4j.client.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -68,7 +68,7 @@ public abstract class ApiHrefMapper<T extends GenericEntity,S extends GenericEnt
     		if(properties.get(HREF.toLowerCase()) != null) {
     			defaultRelType = (String) properties.get(HREF.toLowerCase());
     		}
-			Result result = apiNeo4Service.cypherAddLink(ownerLabel, owner.id, childLabel, child.id, defaultRelType);
+			Entities result = apiNeo4Service.cypherAddLink(ownerLabel, owner.id, childLabel, child.id, defaultRelType, "relation");
 			create.success();
 			if(result.hasNext()) {
 				Map<String, Object> rows = result.next();
@@ -77,12 +77,12 @@ public abstract class ApiHrefMapper<T extends GenericEntity,S extends GenericEnt
 				 */
 				GenericEntity genericEntity = new GenericEntity();
 				genericEntity.id = child.id;
-				genericEntity.instance = rows.get("id(r)")+"";
+				genericEntity.instance = rows.get("id(relation)")+"";
 				genericEntity.href = "/api/"+type+"/" + genericEntity.id;
 				/**
 				 * set relationship properties
 				 */
-				Relationship r = (Relationship) rows.get("r");
+				Node r = (Node) rows.get("relation");
 				for(Entry<String, Object> property : properties.entrySet()) {
 					if(String.class == property.getValue().getClass()) {
 						r.setProperty(property.getKey(), (String) property.getValue());
@@ -91,8 +91,10 @@ public abstract class ApiHrefMapper<T extends GenericEntity,S extends GenericEnt
 				}
 				return genericEntity;
 			}
+		} catch (Exception e) {
+			throw new TechnicalException(e);
 		}
-		throw new TechnicalNotFoundException();
+		throw new TechnicalNotFoundException(owner.id);
 	}
 
 	/**
@@ -107,23 +109,14 @@ public abstract class ApiHrefMapper<T extends GenericEntity,S extends GenericEnt
 	 */
 	public GenericMap update(String relId, GenericMap properties) throws TechnicalNotFoundException {
 		try (Transaction update = apiNeo4Service.beginTx()) {
-			Result result = apiNeo4Service.cypherFindLink(ownerLabel, childLabel, relId);
-			if(result.hasNext()) {
-				Map<String, Object> rows = result.next();
-				/**
-				 * set relationship properties
-				 */
-				Relationship r = (Relationship) rows.get("r");
-				for(Entry<String, Object> property : properties.entrySet()) {
-					if(String.class == property.getValue().getClass()) {
-						r.setProperty(property.getKey(), (String) property.getValue());
-					}
-				}
-				update.success();
-				return properties;
-			}
+			Node toUpdate = new Node(properties);
+			toUpdate.setId(relId);
+			apiNeo4Service.updateRelationship(toUpdate);
+			update.success();
+			return properties;
+		} catch (Exception e) {
+			throw new TechnicalNotFoundException(relId);
 		}
-		throw new TechnicalNotFoundException();
 	}
 
 	/**
@@ -135,7 +128,7 @@ public abstract class ApiHrefMapper<T extends GenericEntity,S extends GenericEnt
 	 * @return List<GenericEntity>
 	 */
 	public List<GenericEntity> findAll(T owner, String relation) {
-		Result result = apiNeo4Service.cypherAllLink(ownerLabel, owner.id, childLabel, relation, "node");
+		Entities result = apiNeo4Service.cypherAllLink(ownerLabel, owner.id, childLabel, relation, "relation", "entity");
 		List<GenericEntity> resultset = new ArrayList<GenericEntity>();
 		while (result.hasNext()) {
 			GenericEntity genericEntity = new GenericEntity();
@@ -143,7 +136,7 @@ public abstract class ApiHrefMapper<T extends GenericEntity,S extends GenericEnt
 			/**
 			 * get optional properties on relationship
 			 */
-			Relationship r = (Relationship) fields.get("r");
+			Node r = (Node) fields.get("relation");
 			try (Transaction find = apiNeo4Service.beginTx()) {
 				for(Entry<String, Object> property : r.getAllProperties().entrySet()) {
 					if(String.class == property.getValue().getClass()) {
@@ -151,12 +144,14 @@ public abstract class ApiHrefMapper<T extends GenericEntity,S extends GenericEnt
 					}
 				}
 				find.success();
+			} catch (Exception e) {
+				throw new TechnicalException(e);
 			}
 			/**
 			 * read id
 			 */
-			genericEntity.id = ((Node) fields.get("node")).getId()+"";
-			genericEntity.instance = ((Relationship) fields.get("r")).getId()+"";
+			genericEntity.id = ((Node) fields.get("entity")).getId()+"";
+			genericEntity.instance = ((Node) fields.get("relation")).getId()+"";
 			genericEntity.href = "/api/"+type+"/" + genericEntity.id;
 			resultset.add(genericEntity);
 		}
@@ -179,16 +174,15 @@ public abstract class ApiHrefMapper<T extends GenericEntity,S extends GenericEnt
 	 */
 	public GenericEntity remove(T owner, S child, String instance, String relation) throws TechnicalNotFoundException {
 		try (Transaction create = apiNeo4Service.beginTx()) {
-			Result result = apiNeo4Service.cypherDeleteLink(ownerLabel, owner.id, childLabel, child.id, relation, instance);
+			apiNeo4Service.cypherDeleteLink(ownerLabel, owner.id, childLabel, child.id, relation, instance, "relation");
 			create.success();
-			if(result.hasNext()) {
-				GenericEntity genericEntity = new GenericEntity();
-				genericEntity.id = child.id;
-				genericEntity.instance = instance;
-				genericEntity.href = "/api/"+type+"/" + genericEntity.id;
-				return genericEntity;
-			}
+			GenericEntity genericEntity = new GenericEntity();
+			genericEntity.id = child.id;
+			genericEntity.instance = instance;
+			genericEntity.href = "/api/"+type+"/" + genericEntity.id;
+			return genericEntity;
+		} catch (Exception e) {
+			throw new TechnicalNotFoundException(owner.id);
 		}
-		throw new TechnicalNotFoundException();
 	}
 }

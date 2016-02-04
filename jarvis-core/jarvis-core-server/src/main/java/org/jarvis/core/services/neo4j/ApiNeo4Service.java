@@ -16,18 +16,15 @@
 
 package org.jarvis.core.services.neo4j;
 
-import java.io.File;
 import java.net.MalformedURLException;
 
 import javax.annotation.PostConstruct;
 
-import org.neo4j.graphdb.GraphDatabaseService;
-import org.neo4j.graphdb.Label;
-import org.neo4j.graphdb.Node;
-import org.neo4j.graphdb.Result;
-import org.neo4j.graphdb.Transaction;
-import org.neo4j.graphdb.factory.GraphDatabaseFactory;
-import org.neo4j.logging.slf4j.Slf4jLogProvider;
+import org.jarvis.core.exception.TechnicalNotFoundException;
+import org.jarvis.neo4j.client.CypherRestClient;
+import org.jarvis.neo4j.client.Entities;
+import org.jarvis.neo4j.client.Node;
+import org.jarvis.neo4j.client.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +46,7 @@ public class ApiNeo4Service  {
 	/**
 	 * static graph db handle
 	 */
-	static GraphDatabaseService graphDb = null;
+	CypherRestClient graphDb = null;
 	
 	/**
 	 * spring init
@@ -58,24 +55,11 @@ public class ApiNeo4Service  {
 	 */
 	@PostConstruct
 	public void init() throws IllegalArgumentException, MalformedURLException {
-		File dbFile = new File(env.getProperty("jarvis.neo4j.dir"));
-		graphDb = new GraphDatabaseFactory()
-				.setUserLogProvider( new Slf4jLogProvider() )
-			    .newEmbeddedDatabaseBuilder( dbFile )
-			    .loadPropertiesFromFile( "neo4j.properties" )
-			    .newGraphDatabase();
-		
-		// Registers a shutdown hook for the Neo4j instance so that it
-	    // shuts down nicely when the VM exits (even if you "Ctrl-C" the
-	    // running application).
-	    Runtime.getRuntime().addShutdownHook( new Thread()
-	    {
-	        @Override
-	        public void run()
-	        {
-	            graphDb.shutdown();
-	        }
-	    } );
+		graphDb = new CypherRestClient(
+				env.getProperty("jarvis.neo4j.url"),
+				env.getProperty("jarvis.neo4j.user"),
+				env.getProperty("jarvis.neo4j.password")
+		);
 	}
 
 	/**
@@ -87,6 +71,24 @@ public class ApiNeo4Service  {
 	}
 
 	/**
+	 * @param update
+	 * @return Node
+	 * @throws TechnicalNotFoundException 
+	 */
+	public Node updateRelationship(Node update) throws TechnicalNotFoundException {
+		return graphDb.updateRelationship(update);
+	}
+
+	/**
+	 * @param update
+	 * @return Node
+	 * @throws TechnicalNotFoundException 
+	 */
+	public Node updateNode(Node update) throws TechnicalNotFoundException {
+		return graphDb.updateNode(update);
+	}
+
+	/**
 	 * begin a new transaction
 	 * @return Transaction
 	 */
@@ -95,13 +97,27 @@ public class ApiNeo4Service  {
 	}
 
 	/**
+	 * @param query
+	 */
+	public void execute(String query) {
+		graphDb.execute(query);
+	}
+	
+	/**
 	 * execute cypher query
 	 * @param query
+	 * @param first 
+	 * @param second 
 	 * @return Result
 	 */
-	public Result execute(String query) {
-		logger.error(query);
-		return graphDb.execute(query);
+	public Entities matchIdWithEntity(String query, String first, String second) {
+		Entities entities = null;
+		if(second == null) {
+			entities = graphDb.matchIdWithEntity(query, first);
+		} else {
+			entities = graphDb.matchIdWithEntity(query, first, second);
+		}
+		return entities;
 	}
 
 	/**
@@ -109,7 +125,7 @@ public class ApiNeo4Service  {
 	 * @param label
 	 * @return Node
 	 */
-	public Node createNode(Label label) {
+	public Node createNode(String label) {
 		return graphDb.createNode(label);
 	}
 
@@ -117,10 +133,11 @@ public class ApiNeo4Service  {
 	 * cypher query to find one element
 	 * @param label
 	 * @param id
+	 * @param entity 
 	 * @return Result
 	 */
-	public Result cypherOne(String label, String id) {
-		Result result = execute("MATCH (node:"+label+") WHERE id(node) = "+id+" RETURN node");
+	public Entities cypherOne(String label, String id, String entity) {
+		Entities result = matchIdWithEntity("/* find one node */ MATCH ("+entity+":"+label+") WHERE id("+entity+") = "+id+" RETURN id("+entity+"),"+entity, entity, null);
 		return result;
 	}
 
@@ -130,11 +147,12 @@ public class ApiNeo4Service  {
 	 * @param leftId
 	 * @param rightLabel
 	 * @param relType 
-	 * @param label 
+	 * @param relation 
+	 * @param entity 
 	 * @return Result
 	 */
-	public Result cypherAllLink(String leftLabel, String leftId, String rightLabel, String relType, String label) {
-		Result result = execute("/* all links filtered by relation type */ MATCH (left:"+leftLabel+")-[r:"+relType+"]->("+label+":"+rightLabel+") WHERE id(left) = "+leftId+" RETURN r,"+label);
+	public Entities cypherAllLink(String leftLabel, String leftId, String rightLabel, String relType, String relation, String entity) {
+		Entities result = matchIdWithEntity("/* all links filtered by relation type */ MATCH (left:"+leftLabel+")-["+relation+":"+relType+"]->("+entity+":"+rightLabel+") WHERE id(left) = "+leftId+" RETURN id("+relation+"),"+relation+",id("+entity+"),"+entity, relation, entity);
 		return result;
 	}
 
@@ -145,10 +163,11 @@ public class ApiNeo4Service  {
 	 * @param rightLabel
 	 * @param rightId
 	 * @param relType 
+	 * @param relation 
 	 * @return Result
 	 */
-	public Result cypherAddLink(String leftLabel, String leftId, String rightLabel, String rightId, String relType) {
-		Result result = execute("/* add a new relation */ MATCH (left:"+leftLabel+"),(right:"+rightLabel+") WHERE id(left) = "+leftId+" AND id(right) = "+rightId+" CREATE (left)-[r:"+relType+"]->(right) RETURN id(r),r");
+	public Entities cypherAddLink(String leftLabel, String leftId, String rightLabel, String rightId, String relType, String relation) {
+		Entities result = matchIdWithEntity("/* add a new relation */ MATCH (left:"+leftLabel+"),(right:"+rightLabel+") WHERE id(left) = "+leftId+" AND id(right) = "+rightId+" CREATE (left)-["+relation+":"+relType+"]->(right) RETURN id("+relation+"),"+relation, relation, null);
 		return result;
 	}
 
@@ -157,10 +176,11 @@ public class ApiNeo4Service  {
 	 * @param leftLabel
 	 * @param rightLabel
 	 * @param relId 
+	 * @param relation 
 	 * @return Result
 	 */
-	public Result cypherFindLink(String leftLabel, String rightLabel, String relId) {
-		Result result = execute("MATCH (left:"+leftLabel+")-[r]->(right:"+rightLabel+") WHERE id(r) = "+relId+" RETURN id(r),r");
+	public Entities cypherFindLink(String leftLabel, String rightLabel, String relId, String relation) {
+		Entities result = matchIdWithEntity("/* find links */ MATCH (left:"+leftLabel+")-["+relation+"]->(right:"+rightLabel+") WHERE id("+relation+") = "+relId+" RETURN id("+relation+"),"+relation, relation, null);
 		return result;
 	}
 
@@ -172,10 +192,9 @@ public class ApiNeo4Service  {
 	 * @param rightId
 	 * @param relType
 	 * @param instance
-	 * @return Result
+	 * @param relation 
 	 */
-	public Result cypherDeleteLink(String leftLabel, String leftId, String rightLabel, String rightId, String relType, String instance) {
-		Result result = execute("MATCH (left:"+leftLabel+")-[r:"+relType+"]->(right:"+rightLabel+") WHERE id(left) = "+leftId+" AND id(right) = "+rightId+" AND id(r) = "+instance+" DELETE r RETURN r");
-		return result;
+	public void cypherDeleteLink(String leftLabel, String leftId, String rightLabel, String rightId, String relType, String instance, String relation) {
+		execute("/* delete link */ MATCH (left:"+leftLabel+")-["+relation+":"+relType+"]->(right:"+rightLabel+") WHERE id(left) = "+leftId+" AND id(right) = "+rightId+" AND id("+relation+") = "+instance+" DELETE "+relation);
 	}
 }
