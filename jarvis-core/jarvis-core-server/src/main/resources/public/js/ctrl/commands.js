@@ -117,6 +117,7 @@ angular.module('JarvisApp.ctrl.commands', ['JarvisApp.services'])
 		/**
 		 * get current command
 		 */
+		$scope.commands = [];
     	genericResourceService.scope.entity.get($stateParams.id, function(update) {$scope.command=update}, commandResourceService.command);
 	
 		$log.info('command-ctrl');

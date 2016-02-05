@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.jarvis.core.exception.TechnicalException;
+import org.jarvis.core.exception.TechnicalHttpException;
 import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.GenericBean;
 import org.jarvis.core.type.CommandType;
@@ -30,8 +31,6 @@ import org.jarvis.core.type.ParamType;
 import org.jarvis.neo4j.client.Entities;
 import org.jarvis.neo4j.client.Node;
 import org.jarvis.neo4j.client.Transaction;
-import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.ISODateTimeFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.ReflectionUtils;
@@ -47,9 +46,9 @@ import ma.glasnost.orika.impl.DefaultMapperFactory;
 
 /**
  *  Neo4j wrapper
- * @param <T> 
+ * @param <S> 
  */
-public class Neo4jService<T> {
+public class Neo4jService<S extends GenericBean> {
 	protected Logger logger = LoggerFactory.getLogger(Neo4jService.class);
 
 	/**
@@ -99,54 +98,13 @@ public class Neo4jService<T> {
 	 * constructor
 	 * @param source
 	 * @return Node
+	 * @throws TechnicalHttpException 
+	 * @throws TechnicalNotFoundException 
 	 */
-	private Node toNode(Node node, T source) {
-		ReflectionUtils.doWithFields(source.getClass(), new FieldCallback() {
-			@Override
-			public void doWith(final Field field) throws IllegalArgumentException, IllegalAccessException {
-				field.setAccessible(true);
-				Object value = field.get(source);
-				if (value != null) {
-					switch(getType(field)) {
-						case DATETIME:
-							DateTimeFormatter fmt = ISODateTimeFormat.dateTime();
-							String str = fmt.print(((org.joda.time.DateTime) value));
-							node.setProperty(field.getName(), str);
-							break;
-						case STRING:
-						case INT:
-						case FLOAT:
-							node.setProperty(field.getName(), value);
-							break;
-						case PARAM:
-							node.setProperty(field.getName(), ((ParamType) value).name());
-							break;
-						case COMMAND:
-							node.setProperty(field.getName(), ((CommandType) value).name());
-							break;
-					default:
-						break;
-					}
-				} else {
-					node.removeProperty(field.getName());
-				}
-			}
-		});
-		/**
-		 * fix id
-		 */
-		((GenericBean) source).id = node.getId()+"";
-		return node;
-	}
-
-	/**
-	 * constructor
-	 * @param source
-	 * @return Node
-	 */
-	private Node toNode(T source) {
-		Node node = apiNeo4Service.createNode(source.getClass().getSimpleName());
-		return toNode(node, source);
+	private Node toNode(S source) throws TechnicalHttpException, TechnicalNotFoundException {
+		@SuppressWarnings("unchecked")
+		Node toCreate = new Node(mapperFactory.getMapperFacade().map(source, Map.class));
+		return apiNeo4Service.createNode(source.getClass().getSimpleName(), toCreate);
 	}
 
 	/**
@@ -154,9 +112,10 @@ public class Neo4jService<T> {
 	 * @param source
 	 * @return
 	 */
-	protected T create(T source) {
+	protected S create(S source) {
 		try (Transaction tx = apiNeo4Service.beginTx()) {
-			toNode(source);
+			Node node = toNode(source);
+			source.id = node.getId(); 
 			tx.success();
 		} catch (Exception e) {
 			throw new TechnicalException(e);
@@ -169,9 +128,9 @@ public class Neo4jService<T> {
 	 * @param klass
 	 * @return List<T>
 	 */
-	public List<T> findAll(Class<T> klass) {
+	public List<S> findAll(Class<S> klass) {
 		String classname = klass.getSimpleName();
-		List<T> resultset = new ArrayList<T>();
+		List<S> resultset = new ArrayList<S>();
 		/**
 		 * cypher query
 		 */
@@ -200,7 +159,7 @@ public class Neo4jService<T> {
 	 * @return T
 	 * @throws TechnicalNotFoundException
 	 */
-	public T getById(Class<T> klass, String id) throws TechnicalNotFoundException {
+	public S getById(Class<S> klass, String id) throws TechnicalNotFoundException {
 		/**
 		 * cypher query
 		 */
@@ -235,7 +194,7 @@ public class Neo4jService<T> {
 	 * @throws TechnicalNotFoundException
 	 */
 	@SuppressWarnings("unchecked")
-	public T update(Class<T> klass, T instance, String id) throws TechnicalNotFoundException {
+	public S update(Class<S> klass, S instance, String id) throws TechnicalNotFoundException {
 		/**
 		 * cypher query
 		 */
@@ -264,7 +223,7 @@ public class Neo4jService<T> {
 	 * @return T
 	 * @throws TechnicalNotFoundException
 	 */
-	public T remove(Class<T> klass, String id) throws TechnicalNotFoundException {
+	public S remove(Class<S> klass, String id) throws TechnicalNotFoundException {
 		String classname = klass.getSimpleName();
 		/**
 		 * cypher query
@@ -275,7 +234,7 @@ public class Neo4jService<T> {
 				/**
 				 * delete node
 				 */
-				T deleted = instance(klass, result.next(), "node");
+				S deleted = instance(klass, result.next(), "node");
 				apiNeo4Service.execute("MATCH (node:"+classname+") WHERE id(node) = "+id+" DETACH DELETE node");
 				delete.success();
 				return deleted;
@@ -303,11 +262,11 @@ public class Neo4jService<T> {
 	 * @throws InstantiationException
 	 * @throws IllegalAccessException
 	 */
-	private T instance(Class<T> klass, Map<String, Object> row, String label) throws InstantiationException, IllegalAccessException {
+	private S instance(Class<S> klass, Map<String, Object> row, String label) throws InstantiationException, IllegalAccessException {
 		/**
 		 * create new instance
 		 */
-		T target = klass.newInstance();
+		S target = klass.newInstance();
 
 		for (Entry<String, Object> column : row.entrySet()) {
 			if(!column.getKey().equals(label)) continue;

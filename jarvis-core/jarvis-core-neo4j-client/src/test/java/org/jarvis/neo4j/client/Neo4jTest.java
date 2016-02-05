@@ -14,10 +14,6 @@ public class Neo4jTest {
 		CypherRestClient cypherRestClient = new CypherRestClient("http://localhost:7474","neo4j","123456");
 		Result res = cypherRestClient.execute("MATCH (n) RETURN n LIMIT 100");
 		System.err.println("Result:"+res);
-		Node create = cypherRestClient.createNode();
-		System.err.println("Node:"+create);
-		Node createLabel = cypherRestClient.createNode("TEST");
-		System.err.println("Node:"+createLabel);
 		int i = 0;
 	}
 

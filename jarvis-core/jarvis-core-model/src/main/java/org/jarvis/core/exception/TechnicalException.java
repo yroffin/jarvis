@@ -43,6 +43,13 @@ public class TechnicalException extends RuntimeException {
 	}
 
 	/**
+	 * @param message
+	 */
+	public TechnicalException(String message) {
+		super(message);
+	}
+
+	/**
 	 * default serialVersionUID
 	 */
 	private static final long serialVersionUID = 8605302097434223980L;

@@ -23,7 +23,7 @@ public class Node {
 	 * @param id
 	 */
 	public void setId(String id) {
-		this.id = id;		
+		this.id = id;
 	}
 
 	/**
@@ -66,7 +66,7 @@ public class Node {
 	}
 
 	/**
-	 * @param value
+	 * @param key 
 	 * @return DateTime
 	 */
 	public Object getProperty(String key) {

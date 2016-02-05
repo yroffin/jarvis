@@ -19,23 +19,24 @@ package org.jarvis.core.services;
 import java.util.List;
 
 import org.jarvis.core.exception.TechnicalNotFoundException;
+import org.jarvis.core.model.bean.GenericBean;
 import org.jarvis.core.services.neo4j.Neo4jService;
 
 /**
  * SERVICE resource
- * @param <Bean>
+ * @param <S>
  */
-public class ApiService<Bean> extends Neo4jService<Bean> {
+public class ApiService<S extends GenericBean> extends Neo4jService<S> {
 
 	/**
 	 * base class
 	 */
-	Class<Bean> beanClass = null;
+	Class<S> beanClass = null;
 
 	/**
 	 * @param beanClass
 	 */
-	public void setBeanClass(Class<Bean> beanClass) {
+	public void setBeanClass(Class<S> beanClass) {
 		this.beanClass = beanClass;
 	}
 
@@ -49,7 +50,7 @@ public class ApiService<Bean> extends Neo4jService<Bean> {
 	 * find all
 	 * @return List<Bean>
 	 */
-	public List<Bean> findAll() {
+	public List<S> findAll() {
 		return super.findAll(beanClass);
 	}
 
@@ -59,14 +60,14 @@ public class ApiService<Bean> extends Neo4jService<Bean> {
 	 * @return Bean
 	 * @throws TechnicalNotFoundException
 	 */
-	public Bean getById(String id) throws TechnicalNotFoundException {
+	public S getById(String id) throws TechnicalNotFoundException {
 		return super.getById(beanClass, id);
 	}
 
 	/**
 	 * create this bean
 	 */
-	public Bean create(Bean bean) {
+	public S create(S bean) {
 		return super.create(bean);
 	}
 
@@ -76,7 +77,7 @@ public class ApiService<Bean> extends Neo4jService<Bean> {
 	 * @return Bean
 	 * @throws TechnicalNotFoundException 
 	 */
-	public Bean remove(String id) throws TechnicalNotFoundException {
+	public S remove(String id) throws TechnicalNotFoundException {
 		return super.remove(beanClass, id);
 	}
 
@@ -87,7 +88,7 @@ public class ApiService<Bean> extends Neo4jService<Bean> {
 	 * @return Bean
 	 * @throws TechnicalNotFoundException
 	 */
-	public Bean update(String id, Bean bean) throws TechnicalNotFoundException {
+	public S update(String id, S bean) throws TechnicalNotFoundException {
 		return super.update(beanClass, bean, id);
 	}
 }

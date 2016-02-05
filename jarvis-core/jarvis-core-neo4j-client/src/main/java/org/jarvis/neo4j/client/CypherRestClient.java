@@ -1,3 +1,19 @@
+/**
+ *  Copyright 2015 Yannick Roffin
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package org.jarvis.neo4j.client;
 
 import java.io.IOException;
@@ -11,6 +27,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.jarvis.core.exception.TechnicalException;
+import org.jarvis.core.exception.TechnicalHttpException;
 import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -103,6 +120,13 @@ public class CypherRestClient extends AbstractJerseyClient {
 		List<Map<String,Object>> list= new ArrayList<Map<String,Object>>();
 		
 		List<?> result = (List<?>) body.get("results");
+		if(result.size() == 0) {
+			List<Map<?,?>> errors = (List<Map<?,?>>) body.get("errors");
+			for(Map<?, ?> codes : errors) {
+				logger.error("Cypher error {}", codes.get("code"), codes.get("message"));
+			}
+			throw new TechnicalException("Cypher error");
+		}
 		List<String> columns = (List<String>) ((Map<?,?>) result.get(0)).get("columns");
 		List<Map<String, Object>> data = (List<Map<String, Object>>) ((Map<?,?>) result.get(0)).get("data");
 		for(Map<String,Object> element : data) {
@@ -123,22 +147,34 @@ public class CypherRestClient extends AbstractJerseyClient {
 	}
 
 	/**
+	 * @param toCreate 
 	 * @return new node
+	 * @throws TechnicalHttpException 
 	 */
-	public Node createNode() {
-		String entity = client.target(baseurl)
-	            .path("db/data/node")
-	            .request(MediaType.APPLICATION_JSON)
-	            .accept(MediaType.APPLICATION_JSON)
-	            .acceptEncoding("charset=UTF-8")
-	            .post(Entity.entity("{}",MediaType.APPLICATION_JSON),String.class);
+	@SuppressWarnings("unchecked")
+	public Node createNode(Node toCreate) throws TechnicalHttpException {
+		Response entity;
+		try {
+			entity = client.target(baseurl)
+			        .path("db/data/node")
+			        .request(MediaType.APPLICATION_JSON)
+			        .accept(MediaType.APPLICATION_JSON)
+			        .acceptEncoding("charset=UTF-8")
+			        .post(Entity.entity(mapper.writeValueAsString(toCreate.getAllProperties()),MediaType.APPLICATION_JSON));
+		} catch (JsonProcessingException e) {
+			throw new TechnicalException(e);
+		}
 		
-		Map<?,?> body = getEntity(entity);
-
-		@SuppressWarnings("unchecked")
-		Node node = new Node((String) (((Map<String, Object>) body.get("metadata")).get("id")+""));
-
-		return node;
+		if(entity.getStatus() == 201) {
+			Map<?, ?> body = getEntity(entity.readEntity(String.class));
+	
+			Node node = new Node(toCreate.getAllProperties());
+			node.setId((String) (((Map<String, Object>) body.get("metadata")).get("id")+""));
+	
+			return node;
+		} else {
+			throw new TechnicalHttpException(entity.getStatus(), "db/data/node");
+		}
 	}
 
 	/**
@@ -193,22 +229,30 @@ public class CypherRestClient extends AbstractJerseyClient {
 
 	/**
 	 * @param label
+	 * @param toCreate 
 	 * @return Node
+	 * @throws TechnicalHttpException 
+	 * @throws TechnicalNotFoundException 
 	 */
-	public Node createNode(String label) {
+	public Node createNode(String label, Node toCreate) throws TechnicalHttpException, TechnicalNotFoundException {
 		/**
 		 * create node
 		 */
-		Node node = createNode();
+		Node node = createNode(toCreate);
 
-		client.target(baseurl)
+		Response entity;
+		entity = client.target(baseurl)
 	            .path("db/data/node/"+node.id+"/labels")
 	            .request(MediaType.APPLICATION_JSON)
 	            .accept(MediaType.APPLICATION_JSON)
 	            .acceptEncoding("charset=UTF-8")
-	            .post(Entity.entity("\""+label+"\"",MediaType.APPLICATION_JSON),String.class);
+	            .post(Entity.entity("\""+label+"\"",MediaType.APPLICATION_JSON));
 
-		return node;
+		if(entity.getStatus() == 204) {
+			return node;
+		} else {
+			throw new TechnicalNotFoundException(node.getId());
+		}
 	}
 
 	/**

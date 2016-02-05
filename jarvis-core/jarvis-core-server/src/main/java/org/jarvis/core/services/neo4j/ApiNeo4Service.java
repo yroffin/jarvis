@@ -20,6 +20,7 @@ import java.net.MalformedURLException;
 
 import javax.annotation.PostConstruct;
 
+import org.jarvis.core.exception.TechnicalHttpException;
 import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.neo4j.client.CypherRestClient;
 import org.jarvis.neo4j.client.Entities;
@@ -64,10 +65,12 @@ public class ApiNeo4Service  {
 
 	/**
 	 * create node
+	 * @param toCreate 
 	 * @return Node
+	 * @throws TechnicalHttpException 
 	 */
-	public Node createNode() {
-		return graphDb.createNode();
+	public Node createNode(Node toCreate) throws TechnicalHttpException {
+		return graphDb.createNode(toCreate);
 	}
 
 	/**
@@ -123,10 +126,13 @@ public class ApiNeo4Service  {
 	/**
 	 * create node with label
 	 * @param label
+	 * @param toCreate 
 	 * @return Node
+	 * @throws TechnicalHttpException 
+	 * @throws TechnicalNotFoundException 
 	 */
-	public Node createNode(String label) {
-		return graphDb.createNode(label);
+	public Node createNode(String label, Node toCreate) throws TechnicalHttpException, TechnicalNotFoundException {
+		return graphDb.createNode(label, toCreate);
 	}
 
 	/**
