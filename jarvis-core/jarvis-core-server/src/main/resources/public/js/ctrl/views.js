@@ -32,7 +32,7 @@ angular.module('JarvisApp.ctrl.views', ['JarvisApp.services'])
 				return $scope.views;
 			},
 			$scope, 
-			'commands', 
+			'views', 
 			viewResourceService.view,
 			{
     			name: "view name",
@@ -77,8 +77,6 @@ angular.module('JarvisApp.ctrl.views', ['JarvisApp.services'])
      * load this controller
      */
     $scope.load = function() {
-    	$scope.iots = {};
-    	
 	    /**
 	     * init part
 	     */
@@ -92,6 +90,7 @@ angular.module('JarvisApp.ctrl.views', ['JarvisApp.services'])
 		/**
 		 * get current view
 		 */
+    	$scope.views = [];
     	genericResourceService.scope.entity.get($stateParams.id, function(update) {$scope.view=update}, viewResourceService.view);
 	
 		/**

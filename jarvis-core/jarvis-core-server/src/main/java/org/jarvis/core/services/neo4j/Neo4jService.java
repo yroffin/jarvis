@@ -276,10 +276,7 @@ public class Neo4jService<T> {
 				 * delete node
 				 */
 				T deleted = instance(klass, result.next(), "node");
-				Entities deleteNode = apiNeo4Service.matchIdWithEntity("MATCH (node:"+classname+") WHERE id(node) = "+id+" DETACH DELETE node RETURN id(node), node", "node", null);
-				if(deleteNode.hasNext()) {
-					throw new TechnicalNotFoundException(id);
-				}
+				apiNeo4Service.execute("MATCH (node:"+classname+") WHERE id(node) = "+id+" DETACH DELETE node");
 				delete.success();
 				return deleted;
 			} else {
