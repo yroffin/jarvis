@@ -13,6 +13,7 @@
 		<spark.version>2.2</spark.version>
 		<spring.version>4.2.0.RELEASE</spring.version>
 		<sphinx.version>5prealpha-SNAPSHOT</sphinx.version>
+		<mockito.version>1.10.19</mockito.version>
 	</properties>
 
 	<distributionManagement>
@@ -129,6 +130,14 @@
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
 				<version>4.11</version>
+				<scope>test</scope>
+			</dependency>
+
+			<!-- mockito -->
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-all</artifactId>
+				<version>${mockito.version}</version>
 				<scope>test</scope>
 			</dependency>
 
