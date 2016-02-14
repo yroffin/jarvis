@@ -17,11 +17,13 @@
 package org.jarvis.core.services.neo4j;
 
 import java.net.MalformedURLException;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
 import org.jarvis.core.exception.TechnicalHttpException;
 import org.jarvis.core.exception.TechnicalNotFoundException;
+import org.jarvis.core.type.GenericMap;
 import org.jarvis.neo4j.client.CypherRestClient;
 import org.jarvis.neo4j.client.Entities;
 import org.jarvis.neo4j.client.Node;
@@ -202,5 +204,13 @@ public class ApiNeo4Service  {
 	 */
 	public void cypherDeleteLink(String leftLabel, String leftId, String rightLabel, String rightId, String relType, String instance, String relation) {
 		execute("/* delete link */ MATCH (left:"+leftLabel+")-["+relation+":"+relType+"]->(right:"+rightLabel+") WHERE id(left) = "+leftId+" AND id(right) = "+rightId+" AND id("+relation+") = "+instance+" DELETE "+relation);
+	}
+
+	/**
+	 * @return List<Node>
+	 * @throws TechnicalHttpException
+	 */
+	public Map<String, Map<String, GenericMap>> findAllNodes() throws TechnicalHttpException {
+		return graphDb.findAllNodes();		
 	}
 }

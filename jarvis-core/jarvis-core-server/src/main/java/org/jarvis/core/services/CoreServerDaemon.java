@@ -28,6 +28,7 @@ import org.jarvis.core.resources.api.plugins.ApiCommandResources;
 import org.jarvis.core.resources.api.plugins.ApiScriptPluginResources;
 import org.jarvis.core.resources.api.scenario.ApiBlockResources;
 import org.jarvis.core.resources.api.scenario.ApiScenarioResources;
+import org.jarvis.core.resources.api.tools.ApiToolResources;
 import org.jarvis.core.resources.api.views.ApiViewResources;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
@@ -83,6 +84,9 @@ public class CoreServerDaemon {
 	@Autowired
 	ApiTriggerResources apiTriggerResources;
 
+	@Autowired
+	ApiToolResources apiToolResources;
+
 	/**
 	 * start component
 	 */
@@ -118,5 +122,9 @@ public class CoreServerDaemon {
 		apiCommandResources.mount();
 		apiEventResources.mount();
 		apiTriggerResources.mount();
+		/**
+		 * tools
+		 */
+		apiToolResources.mount();
 	}
 }

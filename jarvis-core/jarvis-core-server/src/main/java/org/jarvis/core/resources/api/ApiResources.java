@@ -61,19 +61,46 @@ import spark.Route;
 public abstract class ApiResources<T extends GenericEntity,S extends GenericBean> extends ApiMapper {
 	protected Logger logger = LoggerFactory.getLogger(ApiResources.class);
 
-	private List<ResourceListener<S>> listeners = new ArrayList<ResourceListener<S>>();
+	private List<ResourcePreListener<T>> preListeners = new ArrayList<ResourcePreListener<T>>();
+	private List<ResourcePostListener<S>> postListeners = new ArrayList<ResourcePostListener<S>>();
 	
 	/**
 	 * add new listener
 	 * @param listener
 	 */
-	public void addListener(ResourceListener<S> listener) {
-        listeners.add(listener);
+	public void addListener(ResourcePreListener<T> listener) {
+		preListeners.add(listener);
     }
 
-	private void notifyPost(Request request, Response response, S result) {
-        for(ResourceListener<S> listener : listeners){
-            listener.post(request,response,result);
+	/**
+	 * add new listener
+	 * @param listener
+	 */
+	public void addListener(ResourcePostListener<S> listener) {
+		postListeners.add(listener);
+    }
+
+	private void notifyPost(Request request, Response response, S s) {
+        for(ResourcePostListener<S> listener : postListeners){
+            listener.post(request,response,s);
+        }
+	}
+
+	private void notifyPrePost(Request request, Response response, T t) {
+        for(ResourcePreListener<T> listener : preListeners){
+            listener.post(request,response,t);
+        }
+	}
+
+	private void notifyPut(Request request, Response response, S s) {
+        for(ResourcePostListener<S> listener : postListeners){
+            listener.put(request,response,s);
+        }
+	}
+
+	private void notifyPrePut(Request request, Response response, T t) {
+        for(ResourcePreListener<T> listener : preListeners){
+            listener.put(request,response,t);
         }
 	}
 
@@ -81,7 +108,7 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	Environment env;
 	
 	@Autowired
-	ApiNeo4Service apiNeo4Service;
+	protected ApiNeo4Service apiNeo4Service;
 
 	/**
 	 * internal api service
@@ -125,11 +152,6 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 		restClass = klass;		
 	}
 
-	/**
-	 * mount resource
-	 */
-	public abstract void mount();
-	
 	protected void declare(String resource) {
 		get("/api/"+resource+"", getResources());
 		get("/api/"+resource+"/:id", getResource());
@@ -302,9 +324,58 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
     		return "";
     	}
 		T k = mapper.readValue(request.body(), klass);
+		notifyPrePost(request,response,k);
 		T r = doCreate(k);
 		notifyPost(request,response,mapperFactory.getMapperFacade().map(r, beanClass));
     	return mapper.writeValueAsString(r);
+    }
+
+	/**
+	 * update entity
+	 * @param request
+	 * @param id
+	 * @param response
+	 * @param klass
+	 * @return String
+	 * @throws Exception
+	 */
+	public String doUpdate(Request request, String id, Response response, Class<T> klass) throws Exception {
+    	if(request.contentType() == null || !request.contentType().equals("application/json")) {
+    		response.status(403);
+    		return "";
+    	}
+    	try {
+			T k = mapper.readValue(request.body(), klass);
+			notifyPrePut(request,response,k);
+			T r = doUpdate(request.params(id), k);
+			notifyPut(request,response,mapperFactory.getMapperFacade().map(r, beanClass));
+	    	return mapper.writeValueAsString(r);
+    	} catch(TechnicalNotFoundException e) {
+    		response.status(404);
+    		return "";
+    	}
+    }
+
+	/**
+	 * delete node
+	 * @param request
+	 * @param id 
+	 * @param response
+	 * @param klass
+	 * @return String
+	 * @throws Exception
+	 */
+	public String doDelete(Request request, String id, Response response, Class<T> klass) throws Exception {
+    	if(request.contentType() == null || !request.contentType().equals("application/json")) {
+    		response.status(403);
+    		return "";
+    	}
+    	try {
+        	return mapper.writeValueAsString(doDelete(request.params(id)));
+    	} catch(TechnicalNotFoundException e) {
+    		response.status(404);
+    		return "";
+    	}
     }
 
 	/**
@@ -405,51 +476,6 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 			throw new TechnicalException(e);
 		}
 	}
-
-	/**
-	 * delete node
-	 * @param request
-	 * @param id 
-	 * @param response
-	 * @param klass
-	 * @return String
-	 * @throws Exception
-	 */
-	public String doDelete(Request request, String id, Response response, Class<T> klass) throws Exception {
-    	if(request.contentType() == null || !request.contentType().equals("application/json")) {
-    		response.status(403);
-    		return "";
-    	}
-    	try {
-        	return mapper.writeValueAsString(doDelete(request.params(id)));
-    	} catch(TechnicalNotFoundException e) {
-    		response.status(404);
-    		return "";
-    	}
-    }
-
-	/**
-	 * update entity
-	 * @param request
-	 * @param id
-	 * @param response
-	 * @param klass
-	 * @return String
-	 * @throws Exception
-	 */
-	public String doUpdate(Request request, String id, Response response, Class<T> klass) throws Exception {
-    	if(request.contentType() == null || !request.contentType().equals("application/json")) {
-    		response.status(403);
-    		return "";
-    	}
-    	try {
-			T k = mapper.readValue(request.body(), klass);
-	    	return mapper.writeValueAsString(doUpdate(request.params(id), k));
-    	} catch(TechnicalNotFoundException e) {
-    		response.status(404);
-    		return "";
-    	}
-    }
 
 	/**
 	 * @param list

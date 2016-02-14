@@ -21,6 +21,8 @@ import org.ehcache.Cache;
 import org.ehcache.CacheManager;
 import org.ehcache.CacheManagerBuilder;
 import org.ehcache.config.CacheConfigurationBuilder;
+import org.ehcache.expiry.Duration;
+import org.ehcache.expiry.Expiry;
 import org.jarvis.core.resources.ResourceData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,8 +54,29 @@ public class CoreEhcacheManager {
 
 		preConfigured = cacheManager.getCache("preConfigured", String.class, Object.class);
 
+		Expiry<String,Object> expiry = new Expiry<String,Object>() {
+
+			@Override
+			public Duration getExpiryForAccess(String arg0, Object arg1) {
+				return org.ehcache.expiry.Duration.ZERO;
+			}
+
+			@Override
+			public Duration getExpiryForCreation(String arg0, Object arg1) {
+				return org.ehcache.expiry.Duration.ZERO;
+			}
+
+			@Override
+			public Duration getExpiryForUpdate(String arg0, Object arg1, Object arg2) {
+				return org.ehcache.expiry.Duration.ZERO;
+			}
+			
+		};
+		
 		cache = cacheManager.createCache("myCache",
-				CacheConfigurationBuilder.newCacheConfigurationBuilder().buildConfig(String.class, Object.class));
+				CacheConfigurationBuilder.newCacheConfigurationBuilder()
+				.withExpiry(expiry)
+				.buildConfig(String.class, Object.class));
 	}
 
 	/**

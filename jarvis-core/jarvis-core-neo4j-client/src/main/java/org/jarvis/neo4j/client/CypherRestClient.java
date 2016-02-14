@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TreeMap;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
@@ -29,6 +31,7 @@ import javax.ws.rs.core.Response;
 import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.exception.TechnicalHttpException;
 import org.jarvis.core.exception.TechnicalNotFoundException;
+import org.jarvis.core.type.GenericMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -80,6 +83,16 @@ public class CypherRestClient extends AbstractJerseyClient {
 		List<Map<String,Object>> list= new ArrayList<Map<String,Object>>();
 		
 		List<?> result = (List<?>) body.get("results");
+		/**
+		 * check for empty result
+		 */
+		if(result.size() == 0) {
+			List<Map<?,?>> errors = (List<Map<?,?>>) body.get("errors");
+			for(Map<?, ?> codes : errors) {
+				logger.error("Cypher error {}", codes.get("code"), codes.get("message"));
+			}
+			throw new TechnicalException("Cypher error");
+		}
 		List<String> columns = (List<String>) ((Map<?,?>) result.get(0)).get("columns");
 		List<Map<String, Object>> data = (List<Map<String, Object>>) ((Map<?,?>) result.get(0)).get("data");
 		for(Map<String,Object> element : data) {
@@ -144,6 +157,43 @@ public class CypherRestClient extends AbstractJerseyClient {
 		}
 		
 		return list;
+	}
+
+	/**
+	 * @return List<Node>
+	 * @throws TechnicalHttpException
+	 */
+	public Map<String, Map<String, GenericMap>> findAllNodes() throws TechnicalHttpException {
+		
+		Map<String, Map<String, GenericMap>> snapshots = new TreeMap<String, Map<String, GenericMap>>();
+		
+		List<String> resources = new ArrayList<String>();
+		resources.add("BlockBean");
+		resources.add("CommandBean");
+		resources.add("IotBean");
+		resources.add("ScenarioBean");
+		resources.add("ScriptPluginBean");
+		resources.add("TriggerBean");
+		resources.add("ViewBean");
+		
+		/**
+		 * iterate on all resources
+		 */
+		for(String resource : resources) {
+			Map<String, GenericMap> beans = new TreeMap<String, GenericMap>();
+			snapshots.put(resource, beans);
+			Entities result = matchIdWithEntity("/* find entities */ MATCH (node:" + resource + ") return id(node),node", "node");
+			for(Map<String, Object> item : result.elements) {
+				Node node = (Node) item.get("node");
+				GenericMap genericMap = new GenericMap();
+				for(Entry<String, Object> field : node.fields.entrySet()) {
+					genericMap.put(field.getKey(), field.getValue());
+				}
+				beans.put(node.getId(), genericMap);
+			}
+		}
+
+		return snapshots;
 	}
 
 	/**

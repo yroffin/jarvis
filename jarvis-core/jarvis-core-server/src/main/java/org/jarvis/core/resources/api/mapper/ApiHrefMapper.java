@@ -40,6 +40,10 @@ public abstract class ApiHrefMapper<T extends GenericEntity,S extends GenericEnt
 		this.type = type;
 	}
 
+	public void mount() {
+		throw new TechnicalException("Not implemented");
+	}
+
 	@Autowired
 	ApiNeo4Service apiNeo4Service;
 

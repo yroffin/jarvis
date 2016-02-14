@@ -16,6 +16,32 @@
 
 package org.jarvis.core.type;
 
+/**
+ * types markers
+ */
 public enum ParamType {
-	STRING, INT, DATETIME, FLOAT, PARAM, COMMAND
+	/**
+	 * 
+	 */
+	STRING, 
+	/**
+	 * 
+	 */
+	INT, 
+	/**
+	 * 
+	 */
+	DATETIME, 
+	/**
+	 * 
+	 */
+	FLOAT, 
+	/**
+	 * 
+	 */
+	PARAM, 
+	/**
+	 * 
+	 */
+	COMMAND
 }

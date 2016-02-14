@@ -21,6 +21,7 @@ public abstract class ApiMapper {
 	protected static final String IOT_RESOURCE = "iots";
 	protected static final String EVENT_RESOURCE = "events";
 	protected static final String TRIGGER_RESOURCE = "triggers";
+	protected static final String SNAPSHOT_RESOURCE = "snapshots";
 
 	protected static final String IOT = ":iot";
 	protected static final String COMMAND = ":command";
@@ -48,4 +49,9 @@ public abstract class ApiMapper {
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		mapper.registerModule(new JodaModule());
 	}
+
+	/**
+	 * mount resource
+	 */
+	public abstract void mount();
 }

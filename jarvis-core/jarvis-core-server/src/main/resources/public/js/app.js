@@ -32,6 +32,9 @@ angular.module('JarvisApp', [
      'ui.tree',
      'JarvisApp.config',
      'JarvisApp.routes',
+     /**
+      * services
+      */
      'JarvisApp.services',
      'JarvisApp.services.filter',
      'JarvisApp.services.generic',
@@ -39,6 +42,7 @@ angular.module('JarvisApp', [
      'JarvisApp.services.plugin',
      'JarvisApp.services.command',
      'JarvisApp.services.scenario',
+     'JarvisApp.services.snapshot',
      'JarvisApp.services.view',
      'JarvisApp.services.iot',
      'JarvisApp.services.event',
@@ -53,6 +57,7 @@ angular.module('JarvisApp', [
      'JarvisApp.ctrl.iots',
      'JarvisApp.ctrl.events',
      'JarvisApp.ctrl.triggers',
+     'JarvisApp.ctrl.snapshots',
      'JarvisApp.ctrl.views',
      'JarvisApp.ctrl.scenarios',
      'JarvisApp.ctrl.blocks',

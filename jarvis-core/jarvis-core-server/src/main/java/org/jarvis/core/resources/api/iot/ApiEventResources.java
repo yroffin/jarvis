@@ -19,7 +19,7 @@ package org.jarvis.core.resources.api.iot;
 import org.jarvis.core.model.bean.iot.EventBean;
 import org.jarvis.core.model.rest.iot.EventRest;
 import org.jarvis.core.resources.api.ApiResources;
-import org.jarvis.core.resources.api.ResourceListener;
+import org.jarvis.core.resources.api.ResourcePostListener;
 import org.jarvis.core.services.CoreEventDaemon;
 import org.jarvis.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
@@ -46,7 +46,7 @@ public class ApiEventResources extends ApiResources<EventRest,EventBean> {
 		setBeanClass(EventBean.class);
 	}
 
-	class ResourceListenerImpl implements ResourceListener<EventBean> {
+	class ResourceListenerImpl implements ResourcePostListener<EventBean> {
 
 		@Override
 		public void post(Request request, Response response, EventBean event) {
@@ -55,6 +55,10 @@ public class ApiEventResources extends ApiResources<EventRest,EventBean> {
 			} else {
 				coreEventDaemon.handle(event);
 			}
+		}
+
+		@Override
+		public void put(Request request, Response response, EventBean t) {
 		}
 		
 	}

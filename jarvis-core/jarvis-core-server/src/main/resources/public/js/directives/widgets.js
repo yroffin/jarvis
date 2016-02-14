@@ -252,6 +252,24 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     }
   }
 })
+.directive('jarvisSnapshots', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/partials/snapshots/jarvis-snapshots.html',
+    link: function(scope, element, attrs) {
+    	$log.debug('jarvis-snapshots');
+    }
+  }
+})
+.directive('jarvisSnapshot', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/partials/snapshots/snapshot/jarvis-snapshot-general.html',
+    link: function(scope, element, attrs) {
+    	$log.debug('jarvis-snapshot');
+    }
+  }
+})
 .directive('jarvisScenarios', function ($log, $stateParams) {
   return {
     restrict: 'E',
