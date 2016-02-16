@@ -32,6 +32,10 @@ import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.exception.TechnicalHttpException;
 import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.type.GenericMap;
+import org.jarvis.neo4j.client.model.CypherError;
+import org.jarvis.neo4j.client.model.CypherResults;
+import org.jarvis.neo4j.client.model.CypherRow;
+import org.jarvis.neo4j.client.model.CypherRows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,10 +68,10 @@ public class CypherRestClient extends AbstractJerseyClient {
 
 	/**
 	 * @param statement
+	 * @param isNode 
 	 * @return List<Map<String, Object>>
 	 */
-	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> query(String statement) {
+	public List<Map<String, Object>> query(String statement, boolean isNode) {
 		StringBuilder query = new StringBuilder();
 		query.append("{\"statements\":[{\"statement\":\""+statement+"\"}]})");
 
@@ -78,46 +82,16 @@ public class CypherRestClient extends AbstractJerseyClient {
 	            .acceptEncoding("charset=UTF-8")
 	            .post(Entity.entity(query.toString(),MediaType.APPLICATION_JSON),String.class);
 		
-		Map<?,?> body = getEntity(entity);
-		
-		List<Map<String,Object>> list= new ArrayList<Map<String,Object>>();
-		
-		List<?> result = (List<?>) body.get("results");
-		/**
-		 * check for empty result
-		 */
-		if(result.size() == 0) {
-			List<Map<?,?>> errors = (List<Map<?,?>>) body.get("errors");
-			for(Map<?, ?> codes : errors) {
-				logger.error("Cypher error {}", codes.get("code"), codes.get("message"));
-			}
-			throw new TechnicalException("Cypher error");
-		}
-		List<String> columns = (List<String>) ((Map<?,?>) result.get(0)).get("columns");
-		List<Map<String, Object>> data = (List<Map<String, Object>>) ((Map<?,?>) result.get(0)).get("data");
-		for(Map<String,Object> element : data) {
-			Map<String,Object> rows = new HashMap<String,Object>();
-			for(int index = 0;index < columns.size();index++) {
-				Object el = ((List<Object>) element.get("row")).get(index);
-				if(el instanceof Map<?,?>) {
-					rows.put(columns.get(index), new Node((Map<String,Object>) el));
-				}
-				if(el instanceof Integer) {
-					rows.put(columns.get(index), (Integer) el);
-				}
-			}
-			list.add(rows);
-		}
-		
-		return list;
+		return decodeResult(entity, isNode);
 	}
 
 	/**
 	 * @param statement
+	 * @param isNode 
 	 * @return List<Map<String, Object>>
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> queryIdWithEntity(String statement) {
+	public List<Map<String, Object>> queryIdWithEntity(String statement, boolean isNode) {
 		StringBuilder query = new StringBuilder();
 		query.append("{\"statements\":[{\"statement\":\""+statement+"\"}]})");
 
@@ -127,30 +101,47 @@ public class CypherRestClient extends AbstractJerseyClient {
 	            .accept(MediaType.APPLICATION_JSON)
 	            .acceptEncoding("charset=UTF-8")
 	            .post(Entity.entity(query.toString(),MediaType.APPLICATION_JSON),String.class);
-		
-		Map<?,?> body = getEntity(entity);
-		
+
+		return decodeResult(entity, isNode);
+	}
+
+	/**
+	 * @param entity
+	 * @return List<Map<String, Object>>
+	 */
+	public List<Map<String, Object>> decodeResult(String entity, boolean isNode) {
+		CypherResults cypherResults = null;
+		try {
+			cypherResults = mapper.readValue(entity,CypherResults.class);
+		} catch (IOException e) {
+			throw new TechnicalException(e);
+		}
+	
 		List<Map<String,Object>> list= new ArrayList<Map<String,Object>>();
 		
-		List<?> result = (List<?>) body.get("results");
-		if(result.size() == 0) {
-			List<Map<?,?>> errors = (List<Map<?,?>>) body.get("errors");
-			for(Map<?, ?> codes : errors) {
-				logger.error("Cypher error {}", codes.get("code"), codes.get("message"));
+		if(cypherResults.getResults().size() == 0) {
+			for(CypherError error : cypherResults.getErrors()) {
+				logger.error("Cypher error {}", error.getCode(), error.getMessage());
 			}
 			throw new TechnicalException("Cypher error");
 		}
-		List<String> columns = (List<String>) ((Map<?,?>) result.get(0)).get("columns");
-		List<Map<String, Object>> data = (List<Map<String, Object>>) ((Map<?,?>) result.get(0)).get("data");
-		for(Map<String,Object> element : data) {
+
+		/**
+		 * iterate on data
+		 */
+		for(CypherRows element : cypherResults.getResults().get(0).getData()) {
 			Map<String,Object> rows = new HashMap<String,Object>();
-			for(int index = 0;index < columns.size();index++) {
-				Object el = ((List<Object>) element.get("row")).get(index);
-				if(el instanceof Map<?,?>) {
-					rows.put(columns.get(index), new Node((Map<String,Object>) el));
+			int index = 0;
+			for(CypherRow el : element.getRow()) {
+				if(el.isInteger()) {
+					rows.put(cypherResults.getResults().get(0).getColumns().get(index++), el.getInteger());
 				}
-				if(el instanceof Integer) {
-					rows.put(columns.get(index), (Integer) el);
+				if(el.isObject()) {
+					if(isNode) {
+						rows.put(cypherResults.getResults().get(0).getColumns().get(index++), new Node((el.getObject())));
+					} else {
+						rows.put(cypherResults.getResults().get(0).getColumns().get(index++), new Relation((el.getObject())));
+					}
 				}
 			}
 			list.add(rows);
@@ -167,6 +158,27 @@ public class CypherRestClient extends AbstractJerseyClient {
 		
 		Map<String, Map<String, GenericMap>> snapshots = new TreeMap<String, Map<String, GenericMap>>();
 		
+		List<String> relations = new ArrayList<String>();
+		relations.add("HREF");
+		relations.add("HREF_IF");
+		relations.add("HREF_THEN");
+		relations.add("HREF_ELSE");
+		for(String relation : relations) {
+			Map<String, GenericMap> beans = new TreeMap<String, GenericMap>();
+			snapshots.put(relation, beans);
+			Entities links = matchRelationEntity(relation, false);
+			for(Map<String, Object> item : links.elements) {
+				Relation rel = (Relation) item.get("r");
+				GenericMap genericMap = new GenericMap();
+				for(Entry<String, Object> field : rel.fields.entrySet()) {
+					genericMap.put(field.getKey(), field.getValue());
+				}
+				genericMap.put("__from", item.get("id(n)"));
+				genericMap.put("__to", item.get("id(m)"));
+				beans.put(rel.getId(), genericMap);
+			}
+		}
+
 		List<String> resources = new ArrayList<String>();
 		resources.add("BlockBean");
 		resources.add("CommandBean");
@@ -182,7 +194,7 @@ public class CypherRestClient extends AbstractJerseyClient {
 		for(String resource : resources) {
 			Map<String, GenericMap> beans = new TreeMap<String, GenericMap>();
 			snapshots.put(resource, beans);
-			Entities result = matchIdWithEntity("/* find entities */ MATCH (node:" + resource + ") return id(node),node", "node");
+			Entities result = matchIdWithEntity("/* find entities */ MATCH (node:" + resource + ") return id(node),node", "node", true);
 			for(Map<String, Object> item : result.elements) {
 				Node node = (Node) item.get("node");
 				GenericMap genericMap = new GenericMap();
@@ -314,12 +326,13 @@ public class CypherRestClient extends AbstractJerseyClient {
 
 	/**
 	 * @param query
+	 * @param isNode 
 	 * @return Result
 	 */
-	public Result execute(String query) {
+	public Result execute(String query, boolean isNode) {
 		logger.error(query);
 		Result result = new Result();
-		for(Map<String, Object> map : query(query)) {
+		for(Map<String, Object> map : query(query, isNode)) {
 			result.add(map);
 		}
 		return result;
@@ -327,13 +340,14 @@ public class CypherRestClient extends AbstractJerseyClient {
 
 	/**
 	 * @param query
-	 * @param entity 
+	 * @param entity
+	 * @param isNode 
 	 * @return Result
 	 */
-	public Entities matchIdWithEntity(String query, String entity) {
+	public Entities matchIdWithEntity(String query, String entity, boolean isNode) {
 		logger.error(query);
 		Entities result = new Entities();
-		for(Map<String, Object> map : queryIdWithEntity(query)) {
+		for(Map<String, Object> map : queryIdWithEntity(query, isNode)) {
 			Node n = (Node) map.get(entity);
 			n.setId((String) (map.get("id("+entity+")")+""));
 			result.add(map);
@@ -345,12 +359,13 @@ public class CypherRestClient extends AbstractJerseyClient {
 	 * @param query
 	 * @param first 
 	 * @param second 
+	 * @param isNode 
 	 * @return Result
 	 */
-	public Entities matchIdWithEntity(String query, String first, String second) {
+	public Entities matchIdWithEntity(String query, String first, String second, boolean isNode) {
 		logger.error(query);
 		Entities result = new Entities();
-		for(Map<String, Object> map : queryIdWithEntity(query)) {
+		for(Map<String, Object> map : queryIdWithEntity(query, isNode)) {
 			Node n = (Node) map.get(first);
 			n.setId((String) (map.get("id("+first+")")+""));
 			Node m = (Node) map.get(second);
@@ -359,4 +374,22 @@ public class CypherRestClient extends AbstractJerseyClient {
 		}
 		return result;
 	}
+
+	/**
+	 * @param label 
+	 * @param isNode 
+	 * @return Result
+	 */
+	public Entities matchRelationEntity(String label, boolean isNode) {
+		Entities result = new Entities();
+		for(Map<String, Object> map : queryIdWithEntity("MATCH (n)-[r:"+label+"]->(m) RETURN id(r),id(n),id(m),r", isNode)) {
+			Relation r = (Relation) map.get("r");
+			r.setId((String) (map.get("id(r)")+""));
+			r.setFrom((String) (map.get("id(n)")+""));
+			r.setTo((String) (map.get("id(m)")+""));
+			result.add(map);
+		}
+		return result;
+	}
+
 }

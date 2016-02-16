@@ -103,9 +103,10 @@ public class ApiNeo4Service  {
 
 	/**
 	 * @param query
+	 * @param isNode 
 	 */
-	public void execute(String query) {
-		graphDb.execute(query);
+	public void execute(String query, boolean isNode) {
+		graphDb.execute(query, isNode);
 	}
 	
 	/**
@@ -113,14 +114,15 @@ public class ApiNeo4Service  {
 	 * @param query
 	 * @param first 
 	 * @param second 
+	 * @param isNode 
 	 * @return Result
 	 */
-	public Entities matchIdWithEntity(String query, String first, String second) {
+	public Entities matchIdWithEntity(String query, String first, String second, boolean isNode) {
 		Entities entities = null;
 		if(second == null) {
-			entities = graphDb.matchIdWithEntity(query, first);
+			entities = graphDb.matchIdWithEntity(query, first, isNode);
 		} else {
-			entities = graphDb.matchIdWithEntity(query, first, second);
+			entities = graphDb.matchIdWithEntity(query, first, second, isNode);
 		}
 		return entities;
 	}
@@ -145,7 +147,7 @@ public class ApiNeo4Service  {
 	 * @return Result
 	 */
 	public Entities cypherOne(String label, String id, String entity) {
-		Entities result = matchIdWithEntity("/* find one node */ MATCH ("+entity+":"+label+") WHERE id("+entity+") = "+id+" RETURN id("+entity+"),"+entity, entity, null);
+		Entities result = matchIdWithEntity("/* find one node */ MATCH ("+entity+":"+label+") WHERE id("+entity+") = "+id+" RETURN id("+entity+"),"+entity, entity, null, true);
 		return result;
 	}
 
@@ -160,7 +162,7 @@ public class ApiNeo4Service  {
 	 * @return Result
 	 */
 	public Entities cypherAllLink(String leftLabel, String leftId, String rightLabel, String relType, String relation, String entity) {
-		Entities result = matchIdWithEntity("/* all links filtered by relation type */ MATCH (left:"+leftLabel+")-["+relation+":"+relType+"]->("+entity+":"+rightLabel+") WHERE id(left) = "+leftId+" RETURN id("+relation+"),"+relation+",id("+entity+"),"+entity, relation, entity);
+		Entities result = matchIdWithEntity("/* all links filtered by relation type */ MATCH (left:"+leftLabel+")-["+relation+":"+relType+"]->("+entity+":"+rightLabel+") WHERE id(left) = "+leftId+" RETURN id("+relation+"),"+relation+",id("+entity+"),"+entity, relation, entity, true);
 		return result;
 	}
 
@@ -175,7 +177,7 @@ public class ApiNeo4Service  {
 	 * @return Result
 	 */
 	public Entities cypherAddLink(String leftLabel, String leftId, String rightLabel, String rightId, String relType, String relation) {
-		Entities result = matchIdWithEntity("/* add a new relation */ MATCH (left:"+leftLabel+"),(right:"+rightLabel+") WHERE id(left) = "+leftId+" AND id(right) = "+rightId+" CREATE (left)-["+relation+":"+relType+"]->(right) RETURN id("+relation+"),"+relation, relation, null);
+		Entities result = matchIdWithEntity("/* add a new relation */ MATCH (left:"+leftLabel+"),(right:"+rightLabel+") WHERE id(left) = "+leftId+" AND id(right) = "+rightId+" CREATE (left)-["+relation+":"+relType+"]->(right) RETURN id("+relation+"),"+relation, relation, null, true);
 		return result;
 	}
 
@@ -188,7 +190,7 @@ public class ApiNeo4Service  {
 	 * @return Result
 	 */
 	public Entities cypherFindLink(String leftLabel, String rightLabel, String relId, String relation) {
-		Entities result = matchIdWithEntity("/* find links */ MATCH (left:"+leftLabel+")-["+relation+"]->(right:"+rightLabel+") WHERE id("+relation+") = "+relId+" RETURN id("+relation+"),"+relation, relation, null);
+		Entities result = matchIdWithEntity("/* find links */ MATCH (left:"+leftLabel+")-["+relation+"]->(right:"+rightLabel+") WHERE id("+relation+") = "+relId+" RETURN id("+relation+"),"+relation, relation, null, true);
 		return result;
 	}
 
@@ -203,7 +205,7 @@ public class ApiNeo4Service  {
 	 * @param relation 
 	 */
 	public void cypherDeleteLink(String leftLabel, String leftId, String rightLabel, String rightId, String relType, String instance, String relation) {
-		execute("/* delete link */ MATCH (left:"+leftLabel+")-["+relation+":"+relType+"]->(right:"+rightLabel+") WHERE id(left) = "+leftId+" AND id(right) = "+rightId+" AND id("+relation+") = "+instance+" DELETE "+relation);
+		execute("/* delete link */ MATCH (left:"+leftLabel+")-["+relation+":"+relType+"]->(right:"+rightLabel+") WHERE id(left) = "+leftId+" AND id(right) = "+rightId+" AND id("+relation+") = "+instance+" DELETE "+relation, false);
 	}
 
 	/**

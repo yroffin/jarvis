@@ -135,7 +135,7 @@ public class Neo4jService<S extends GenericBean> {
 		 * cypher query
 		 */
 		try (Transaction ignored = apiNeo4Service.beginTx();
-				Entities result = apiNeo4Service.matchIdWithEntity("MATCH (node:"+classname+") RETURN id(node), node", "node", null)) {
+				Entities result = apiNeo4Service.matchIdWithEntity("MATCH (node:"+classname+") RETURN id(node), node", "node", null, true)) {
 			while (result.hasNext()) {
 				resultset.add(instance(klass, result.next(), "node"));
 			}
@@ -229,13 +229,13 @@ public class Neo4jService<S extends GenericBean> {
 		 * cypher query
 		 */
 		try (Transaction delete = apiNeo4Service.beginTx();
-				Entities result = apiNeo4Service.matchIdWithEntity("MATCH (node:"+classname+") WHERE id(node) = "+id+" RETURN id(node),node", "node", null)) {
+				Entities result = apiNeo4Service.matchIdWithEntity("MATCH (node:"+classname+") WHERE id(node) = "+id+" RETURN id(node),node", "node", null, true)) {
 			if (result.hasNext()) {
 				/**
 				 * delete node
 				 */
 				S deleted = instance(klass, result.next(), "node");
-				apiNeo4Service.execute("MATCH (node:"+classname+") WHERE id(node) = "+id+" DETACH DELETE node");
+				apiNeo4Service.execute("MATCH (node:"+classname+") WHERE id(node) = "+id+" DETACH DELETE node", true);
 				delete.success();
 				return deleted;
 			} else {
