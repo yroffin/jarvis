@@ -22,13 +22,22 @@ import static spark.Spark.post;
 import static spark.Spark.put;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map.Entry;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletException;
+import javax.servlet.http.Part;
 
 import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.exception.TechnicalNotFoundException;
@@ -51,6 +60,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import spark.Request;
 import spark.Response;
 import spark.Route;
+import spark.utils.IOUtils;
 
 /**
  * RESOURCE api
@@ -388,7 +398,7 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * @return String
 	 * @throws Exception
 	 */
-	public abstract String doRealTask(S bean, GenericMap args, TaskType taskType) throws Exception;
+	public abstract ResourcePair doRealTask(S bean, GenericMap args, TaskType taskType) throws Exception;
 
 	/**
 	 * create entity
@@ -401,14 +411,26 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * @throws TechnicalNotFoundException 
 	 */
 	public String doTask(Request request, String id, String task, Response response, Class<T> klass) throws TechnicalNotFoundException {
-    	if(request.contentType() == null || !request.contentType().equals("application/json")) {
-    		response.status(403);
-    		return "";
+		GenericMap body = null;
+    	if(request.contentType() != null && request.contentType().startsWith("multipart/form-data")) {
+    		body = new GenericMap();
+    		body.put("multipart/form-data", extractMultipart(request,response));
+    	} else {
+	    	if(request.contentType() == null || !request.contentType().equals("application/json")) {
+	    		response.status(403);
+	    		return "";
+	    	}
+	    	try {
+				body = (GenericMap) mapper.readValue(request.body(),GenericMap.class);
+			} catch (IOException e) {
+				throw new TechnicalException(e);
+			}
     	}
     	try {
     		Object result = doExecute(
+    				response,
     				request.params(id),
-    				(GenericMap) mapper.readValue(request.body(),GenericMap.class),
+    				body,
     				TaskType.valueOf(request.queryParams(task).toUpperCase()));
     		/**
     		 * task can return String or Object
@@ -432,14 +454,36 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 		}
     }
 
+	private String extractMultipart(Request request, Response response) {
+		String location = "/tmp";  // the directory location where files will be stored
+		long maxFileSize = 100000000;  // the maximum size allowed for uploaded files
+		long maxRequestSize = 100000000;  // the maximum size allowed for multipart/form-data requests
+		int fileSizeThreshold = 1024;  // the size threshold after which files will be written to disk
+		MultipartConfigElement multipartConfigElement = new MultipartConfigElement(location, maxFileSize, maxRequestSize, fileSizeThreshold);
+		request.raw().setAttribute("org.eclipse.multipartConfig", multipartConfigElement);
+		try {
+			 // file is name of the upload form
+			Part file = request.raw().getPart("file");
+			try (final InputStream in = file.getInputStream()) {
+				StringWriter writer = new StringWriter();
+				IOUtils.copy(in, writer);
+				file.delete();
+				return writer.toString();
+			}
+		} catch (IOException | ServletException e) {
+			throw new TechnicalException(e);
+		}
+	}
+
 	/**
+	 * @param response 
 	 * @param id
 	 * @param body 
 	 * @param taskType
 	 * @return GenericMap
 	 * @throws TechnicalNotFoundException
 	 */
-	public Object doExecute(String id, GenericMap body, TaskType taskType) throws TechnicalNotFoundException {
+	public Object doExecute(Response response, String id, GenericMap body, TaskType taskType) throws TechnicalNotFoundException {
 		/**
 		 * read object by id
 		 */
@@ -459,7 +503,7 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 		} catch (JsonProcessingException e) {
 			throw new TechnicalException(e);
 		}
-		String result = "";
+		ResourcePair result = null;
 		try {
 			result = doRealTask(bean, body, taskType);
 		} catch (Exception e) {
@@ -467,10 +511,14 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 		}
 		logger.info("SCRIPT - OUTPUT {}", result);
 		try {
-			if(result.startsWith("{")) {
-				return (GenericMap) mapper.readValue(result, GenericMap.class);
-			} else {
-				return result;
+			switch(result.getKey()) {
+				case OBJECT:
+					return (GenericMap) mapper.readValue(result.getValue(), GenericMap.class);
+				case FILE_STREAM:
+					response.type("application/octet-stream");
+					return result.getValue();
+				default:
+					return result.getValue();
 			}
 		} catch (IOException e) {
 			throw new TechnicalException(e);

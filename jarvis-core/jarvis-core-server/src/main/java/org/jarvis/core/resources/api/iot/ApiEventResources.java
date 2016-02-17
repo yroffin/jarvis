@@ -19,6 +19,7 @@ package org.jarvis.core.resources.api.iot;
 import org.jarvis.core.model.bean.iot.EventBean;
 import org.jarvis.core.model.rest.iot.EventRest;
 import org.jarvis.core.resources.api.ApiResources;
+import org.jarvis.core.resources.api.ResourcePair;
 import org.jarvis.core.resources.api.ResourcePostListener;
 import org.jarvis.core.services.CoreEventDaemon;
 import org.jarvis.core.type.GenericMap;
@@ -76,7 +77,7 @@ public class ApiEventResources extends ApiResources<EventRest,EventBean> {
 	}
 
 	@Override
-	public String doRealTask(EventBean Event, GenericMap args, TaskType taskType) throws Exception {
-		return "";
+	public ResourcePair doRealTask(EventBean Event, GenericMap args, TaskType taskType) throws Exception {
+		return null;
 	}
 }

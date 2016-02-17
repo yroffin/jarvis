@@ -18,9 +18,65 @@
 
 /* Directives */
 
-angular.module('JarvisApp.directives', []).
-    directive('appVersion', ['version', function(version) {
+angular.module('JarvisApp.directives', [])
+    .directive('appVersion', function(version) {
       return function(scope, elm, attrs) {
         elm.text(version);
       };
-    }]);
+    })
+	.directive('fileModel', function ($parse, $log) {
+	    return {
+	        restrict: 'A',
+	        link: function(scope, element, attrs) {
+	            var model = $parse(attrs.fileModel);
+	            var modelSetter = model.assign;
+	            
+	            element.bind('change', function(){
+	                scope.$apply(function(){
+	                    modelSetter(scope, element[0].files[0]);
+	                });
+	            });
+	        }
+	    };
+	})
+	.directive('fileSelect', function ($window) {
+	    return {
+	        restrict: 'A',
+	        require: 'ngModel',
+	        link: function (scope, el, attr, ctrl) {
+	            var fileReader = new $window.FileReader();
+	
+	            fileReader.onload = function () {
+	                ctrl.$setViewValue(fileReader.result);
+	
+	                if ('fileLoaded' in attr) {
+	                    scope.$eval(attr['fileLoaded']);
+	                }
+	            };
+	
+	            fileReader.onprogress = function (event) {
+	                if ('fileProgress' in attr) {
+	                    scope.$eval(attr['fileProgress'], {'$total': event.total, '$loaded': event.loaded});
+	                }
+	            };
+	
+	            fileReader.onerror = function () {
+	                if ('fileError' in attr) {
+	                    scope.$eval(attr['fileError'], {'$error': fileReader.error});
+	                }
+	            };
+	
+	            var fileType = attr['fileSelect'];
+	
+	            el.bind('change', function (e) {
+	                var fileName = e.target.files[0];
+	
+	                if (fileType === '' || fileType === 'text') {
+	                    fileReader.readAsText(fileName);
+	                } else if (fileType === 'data') {
+	                    fileReader.readAsDataURL(fileName);
+	                }
+	            });
+	        }
+	    };
+	});

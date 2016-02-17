@@ -90,7 +90,6 @@ public class CypherRestClient extends AbstractJerseyClient {
 	 * @param isNode 
 	 * @return List<Map<String, Object>>
 	 */
-	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> queryIdWithEntity(String statement, boolean isNode) {
 		StringBuilder query = new StringBuilder();
 		query.append("{\"statements\":[{\"statement\":\""+statement+"\"}]})");
@@ -107,6 +106,7 @@ public class CypherRestClient extends AbstractJerseyClient {
 
 	/**
 	 * @param entity
+	 * @param isNode 
 	 * @return List<Map<String, Object>>
 	 */
 	public List<Map<String, Object>> decodeResult(String entity, boolean isNode) {

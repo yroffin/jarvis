@@ -28,7 +28,6 @@ import org.jarvis.core.model.bean.iot.EventBean;
 import org.jarvis.core.model.bean.scenario.ScenarioBean;
 import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.model.rest.scenario.ScenarioRest;
-import org.jarvis.core.model.rest.scenario.TriggerRest;
 import org.jarvis.core.resources.api.href.ApiHrefScenarioBlockResources;
 import org.jarvis.core.resources.api.href.ApiHrefScenarioTriggerResources;
 import org.jarvis.core.resources.api.iot.ApiTriggerResources;
@@ -42,9 +41,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
-
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.datatype.joda.JodaModule;
 
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.converter.builtin.PassThroughConverter;
@@ -151,7 +147,7 @@ public class CoreEventDaemon {
 			GenericMap body = new GenericMap();
 			for(ScenarioBean scenario : toExecute) {
 				try {
-					apiScenarioResources.doExecute(scenario.id, body, TaskType.EXECUTE);
+					apiScenarioResources.doExecute(null,scenario.id, body, TaskType.EXECUTE);
 				} catch (TechnicalNotFoundException e) {
 					logger.warn(e.getMessage());
 				}

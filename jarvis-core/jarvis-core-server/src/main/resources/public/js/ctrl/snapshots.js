@@ -41,7 +41,7 @@ angular.module('JarvisApp.ctrl.snapshots', ['JarvisApp.services'])
 	);
 })
 .controller('snapshotCtrl',
-	function($scope, $log, $stateParams, genericResourceService, genericScopeService, snapshotResourceService, iotResourceService, toastService){
+	function($scope, $log, $stateParams, $filter, $http, genericResourceService, genericScopeService, snapshotResourceService, iotResourceService, toastService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
 	 */
@@ -50,6 +50,41 @@ angular.module('JarvisApp.ctrl.snapshots', ['JarvisApp.services'])
 			'snapshot', 
 			'snapshots', 
 			snapshotResourceService.snapshot);
+    /**
+     * download current snapshot
+	 * @param snapshot, the snapshot to be downloaded
+     */
+    $scope.download = function(snapshot) {
+    	if(snapshot != undefined && snapshot.id != undefined && snapshot.id != '') {
+    		snapshotResourceService.snapshot.task(snapshot.id, 'download', {}, function(data) {
+    			var fileName = 'export-'+$filter('date')(new Date(), 'yyyyMMdd-HHmmss') + '.json';
+                var a = document.createElement("a");
+                document.body.appendChild(a);
+                a.style = "display: none";
+       	    	$log.debug('snapshot', snapshot, data);
+       	    	var file = new Blob([angular.toJson(data, true)], {type: 'application/text'});
+                var fileURL = window.URL.createObjectURL(file);
+                a.href = fileURL;
+                a.download = fileName;
+                a.click();
+    	    }, toastService.failure);
+    	}
+    }
+    /**
+     * uploaded current snapshot
+	 * @param snapshot, the snapshot to be uploaded
+     */
+    $scope.loaded = function(snapshot, file) {
+    	snapshot.json = atob(file.data.substr(13));
+    	$log.debug('loaded', snapshot, file);
+    }
+    /**
+     * uploaded current snapshot
+	 * @param snapshot, the snapshot to be uploaded
+     */
+    $scope.upload = function(id) {
+    	$('#'+id).trigger('click');
+    }
     /**
      * load this controller
      */

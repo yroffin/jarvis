@@ -48,6 +48,7 @@ angular.module('JarvisApp', [
      'JarvisApp.services.event',
      'JarvisApp.services.trigger',
      'JarvisApp.services.block',
+     'JarvisApp.directives',
      'JarvisApp.directives.widgets',
      /**
       * controllers

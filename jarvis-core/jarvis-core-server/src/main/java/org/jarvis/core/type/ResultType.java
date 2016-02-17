@@ -19,25 +19,17 @@ package org.jarvis.core.type;
 /**
  * Task type
  */
-public enum TaskType {
+public enum ResultType {
 	/**
-	 * test
+	 * string
 	 */
-	TEST,
+	STRING,
 	/**
-	 * execute
+	 * object
 	 */
-	EXECUTE,
+	OBJECT,
 	/**
-	 * render
+	 * file stream
 	 */
-	RENDER,
-	/**
-	 * download
-	 */
-	DOWNLOAD,
-	/**
-	 * upload
-	 */
-	UPLOAD
+	FILE_STREAM
 }

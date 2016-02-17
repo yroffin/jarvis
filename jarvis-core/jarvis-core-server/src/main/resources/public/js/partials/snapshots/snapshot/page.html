@@ -7,6 +7,9 @@
 	<md-button aria-label="menu" class="md-icon-button" ng-click="duplicate(snapshot)"><md-icon md-font-icon="material-icons md-16">content_copy</md-icon></md-button>
 	<md-button aria-label="menu" class="md-icon-button" ng-click="remove(snapshot)"><md-icon md-font-icon="material-icons md-16">delete</md-icon></md-button>
 	<md-button aria-label="menu" class="md-icon-button" ng-click="save(snapshot)"><md-icon md-font-icon="material-icons md-16">save</md-icon></md-button>
+	<md-button aria-label="menu" class="md-icon-button" ng-click="download(snapshot)"><md-icon md-font-icon="material-icons md-16">backup</md-icon></md-button>
+	<md-button aria-label="menu" class="md-icon-button" ng-click="upload('file1')"><md-icon md-font-icon="material-icons md-16">cloud_download</md-icon></md-button>
+    <input id="file1" type="file" data-input="false" style="display:none" ng-model="file.data" file-select="data" file-loaded="loaded(snapshot, file)" file-error="error($error)" file-progress="progress($total,$loaded)">
   </md-fab-actions>
 </md-toolbar>
 <div layout="column" ng-init="load()" ng-cloak>

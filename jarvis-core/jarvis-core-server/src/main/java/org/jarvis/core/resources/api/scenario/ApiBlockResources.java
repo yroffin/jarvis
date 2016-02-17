@@ -28,11 +28,14 @@ import org.jarvis.core.model.rest.scenario.BlockRest;
 import org.jarvis.core.profiler.TaskProfiler;
 import org.jarvis.core.profiler.model.GenericNode;
 import org.jarvis.core.resources.api.ApiLinkedTwiceResources;
+import org.jarvis.core.resources.api.ApiResources;
+import org.jarvis.core.resources.api.ResourcePair;
 import org.jarvis.core.resources.api.href.ApiHrefBlockBlockResources;
 import org.jarvis.core.resources.api.href.ApiHrefBlockScriptPluginResources;
 import org.jarvis.core.resources.api.plugins.ApiScriptPluginResources;
 import org.jarvis.core.services.groovy.PluginGroovyService;
 import org.jarvis.core.type.GenericMap;
+import org.jarvis.core.type.ResultType;
 import org.jarvis.core.type.TaskType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -79,16 +82,16 @@ public class ApiBlockResources extends ApiLinkedTwiceResources<BlockRest,BlockBe
 	}
 
 	@Override
-	public String doRealTask(BlockBean bean, GenericMap args, TaskType taskType) throws Exception {
+	public ResourcePair doRealTask(BlockBean bean, GenericMap args, TaskType taskType) throws Exception {
 		GenericMap result;
 		switch(taskType) {
 			case TEST:
-				return test(bean, args, new GenericMap())+"";
+				return new ResourcePair(ResultType.OBJECT, test(bean, args, new GenericMap())+"");
 			case EXECUTE:
-				return execute(new GenericMap(), bean, args)+"";
+				return new ResourcePair(ResultType.OBJECT, execute(new GenericMap(), bean, args)+"");
 			default:
 				result = new GenericMap();
-				return mapper.writeValueAsString(result);
+				return new ResourcePair(ResultType.OBJECT, mapper.writeValueAsString(result));
 		}
 	}
 
@@ -98,7 +101,7 @@ public class ApiBlockResources extends ApiLinkedTwiceResources<BlockRest,BlockBe
 	private boolean test(BlockBean bean, GenericMap args, GenericMap genericMap) throws TechnicalNotFoundException {
 		boolean result = true;
 		for(GenericEntity cond : apiHrefBlockScriptPluginResources.findAllConditions(bean)) {
-			GenericMap exec = (GenericMap) apiScriptPluginResources.doExecute(cond.id, args, TaskType.EXECUTE);
+			GenericMap exec = (GenericMap) apiScriptPluginResources.doExecute(null,cond.id, args, TaskType.EXECUTE);
 			result = result && pluginGroovyService.groovyAsBoolean(bean.expression, exec);
 		}
 		return result;
@@ -120,10 +123,10 @@ public class ApiBlockResources extends ApiLinkedTwiceResources<BlockRest,BlockBe
 		}
 		GenericMap result = new GenericMap();
 		for(GenericEntity cond : apiHrefBlockScriptPluginResources.findAllConditions(bean)) {
-			GenericMap exec = (GenericMap) apiScriptPluginResources.doExecute(cond.id, args, TaskType.EXECUTE);
+			GenericMap exec = (GenericMap) apiScriptPluginResources.doExecute(null,cond.id, args, TaskType.EXECUTE);
 			if(pluginGroovyService.groovyAsBoolean(bean.expression, exec)) {
 				for(GenericEntity plugin : apiHrefBlockScriptPluginResources.findAllThen(bean)) {
-					GenericMap thn = (GenericMap) apiScriptPluginResources.doExecute(plugin.id, args, TaskType.EXECUTE);
+					GenericMap thn = (GenericMap) apiScriptPluginResources.doExecute(null,plugin.id, args, TaskType.EXECUTE);
 				}
 				for(GenericEntity subblock : apiHrefBlockBlockResources.findAllThen(bean)) {
 					stack.put("run#"+stack.size(), args);
@@ -131,7 +134,7 @@ public class ApiBlockResources extends ApiLinkedTwiceResources<BlockRest,BlockBe
 				}
 			} else {
 				for(GenericEntity plugin : apiHrefBlockScriptPluginResources.findAllElse(bean)) {
-					GenericMap els = (GenericMap) apiScriptPluginResources.doExecute(plugin.id, args, TaskType.EXECUTE);
+					GenericMap els = (GenericMap) apiScriptPluginResources.doExecute(null,plugin.id, args, TaskType.EXECUTE);
 				}
 				for(GenericEntity subblock : apiHrefBlockBlockResources.findAllElse(bean)) {
 					stack.put("run#"+stack.size(), args);

@@ -19,6 +19,7 @@ package org.jarvis.core.resources.api.iot;
 import org.jarvis.core.model.bean.scenario.TriggerBean;
 import org.jarvis.core.model.rest.scenario.TriggerRest;
 import org.jarvis.core.resources.api.ApiResources;
+import org.jarvis.core.resources.api.ResourcePair;
 import org.jarvis.core.resources.api.href.ApiHrefIotResources;
 import org.jarvis.core.resources.api.href.ApiHrefIotScriptPluginResources;
 import org.jarvis.core.resources.api.href.ApiHrefPluginCommandResources;
@@ -70,10 +71,7 @@ public class ApiTriggerResources extends ApiResources<TriggerRest,TriggerBean> {
 	}
 
 	@Override
-	public String doRealTask(TriggerBean trigger, GenericMap args, TaskType taskType) throws Exception {
-		/**
-		 * TODO
-		 */
-		return "";
+	public ResourcePair doRealTask(TriggerBean trigger, GenericMap args, TaskType taskType) throws Exception {
+		return null;
 	}
 }

@@ -7,15 +7,13 @@ import org.jarvis.core.exception.TechnicalHttpException;
 import org.jarvis.core.model.bean.tools.SnapshotBean;
 import org.jarvis.core.model.rest.tools.SnapshotRest;
 import org.jarvis.core.resources.api.ApiResources;
-import org.jarvis.core.resources.api.ResourcePreListener;
+import org.jarvis.core.resources.api.ResourcePair;
 import org.jarvis.core.type.GenericMap;
+import org.jarvis.core.type.ResultType;
 import org.jarvis.core.type.TaskType;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-
-import spark.Request;
-import spark.Response;
 
 /**
  * tools resources
@@ -31,27 +29,18 @@ public class ApiToolResources extends ApiResources<SnapshotRest,SnapshotBean> {
 		setBeanClass(SnapshotBean.class);
 	}
 
-	class ResourceListenerImpl implements ResourcePreListener<SnapshotRest> {
-
-		@Override
-		public void post(Request request, Response response, SnapshotRest snapshot) {
-			inject(snapshot);
-		}
-		
-		@Override
-		public void put(Request request, Response response, SnapshotRest snapshot) {
-			inject(snapshot);
-		}
-
-		public void inject(SnapshotRest snapshot) {
-			try {
-				Map<String, Map<String, GenericMap>> nodes = apiNeo4Service.findAllNodes();
-				snapshot.json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(nodes);
-			} catch (TechnicalHttpException e) {
-				throw new TechnicalException(e);
-			} catch (JsonProcessingException e) {
-				throw new TechnicalException(e);
-			}
+	/**
+	 * inject current configuration in this snapshot
+	 * @param snapshot
+	 */
+	public void inject(SnapshotRest snapshot) {
+		try {
+			Map<String, Map<String, GenericMap>> nodes = apiNeo4Service.findAllNodes();
+			snapshot.json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(nodes);
+		} catch (TechnicalHttpException e) {
+			throw new TechnicalException(e);
+		} catch (JsonProcessingException e) {
+			throw new TechnicalException(e);
 		}
 	}
 
@@ -61,17 +50,39 @@ public class ApiToolResources extends ApiResources<SnapshotRest,SnapshotBean> {
 		 * snapshot
 		 */
 		declare(SNAPSHOT_RESOURCE);
-		/**
-		 * declare listener
-		 */
-		addListener(new ResourceListenerImpl());
 	}
 
 	@Override
-	public String doRealTask(SnapshotBean bean, GenericMap args, TaskType taskType) throws Exception {
-		/**
-		 * TODO
-		 */
-		return "";
+	public ResourcePair doRealTask(SnapshotBean bean, GenericMap args, TaskType taskType) throws Exception {
+		GenericMap result;
+		switch(taskType) {
+			case DOWNLOAD:
+				return new ResourcePair(ResultType.FILE_STREAM, download(bean, args, new GenericMap()));
+			case UPLOAD:
+				return new ResourcePair(ResultType.OBJECT, upload(bean, args, new GenericMap()));
+			default:
+				result = new GenericMap();
+		}
+		return new ResourcePair(ResultType.OBJECT, mapper.writeValueAsString(result));
+	}
+
+	private String upload(SnapshotBean bean, GenericMap args, GenericMap genericMap) {
+		bean.json = (String) args.get("multipart/form-data");
+		try {
+			return  mapper.writerWithDefaultPrettyPrinter().writeValueAsString(bean);
+		} catch (JsonProcessingException e) {
+			throw new TechnicalException(e);
+		}
+	}
+
+	private String download(SnapshotBean bean, GenericMap args, GenericMap genericMap) {
+		try {
+			Map<String, Map<String, GenericMap>> nodes = apiNeo4Service.findAllNodes();
+			return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(nodes);
+		} catch (TechnicalHttpException e) {
+			throw new TechnicalException(e);
+		} catch (JsonProcessingException e) {
+			throw new TechnicalException(e);
+		}
 	}	
 }

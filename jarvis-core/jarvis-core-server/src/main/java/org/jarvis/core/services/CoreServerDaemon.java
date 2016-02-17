@@ -17,10 +17,6 @@
 package org.jarvis.core.services;
 
 import org.jarvis.core.resources.CoreResources;
-import org.jarvis.core.resources.api.ApiClientResources;
-import org.jarvis.core.resources.api.ApiConnectorResources;
-import org.jarvis.core.resources.api.ApiCrontabResources;
-import org.jarvis.core.resources.api.ApiLabelResources;
 import org.jarvis.core.resources.api.iot.ApiEventResources;
 import org.jarvis.core.resources.api.iot.ApiIotResources;
 import org.jarvis.core.resources.api.iot.ApiTriggerResources;
@@ -47,18 +43,6 @@ public class CoreServerDaemon {
 
 	@Autowired
 	CoreResources coreResources;
-
-	@Autowired
-	ApiClientResources apiClientResources;
-
-	@Autowired
-	ApiConnectorResources apiConnectorResources;
-
-	@Autowired
-	ApiLabelResources apiLabelResources;
-
-	@Autowired
-	ApiCrontabResources apiCrontabResources;
 
 	@Autowired
 	ApiScenarioResources apiScenarioResources;
@@ -104,10 +88,6 @@ public class CoreServerDaemon {
 		 * mount resources
 		 */
 		coreResources.mount();
-		apiClientResources.mount();
-		apiConnectorResources.mount();
-		apiCrontabResources.mount();
-		apiLabelResources.mount();
 		/**
 		 * mount plugin resources
 		 */

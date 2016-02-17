@@ -23,8 +23,10 @@ import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.model.rest.plugin.CommandRest;
 import org.jarvis.core.model.rest.plugin.ScriptPluginRest;
 import org.jarvis.core.resources.api.ApiLinkedResources;
+import org.jarvis.core.resources.api.ResourcePair;
 import org.jarvis.core.resources.api.href.ApiHrefPluginCommandResources;
 import org.jarvis.core.type.GenericMap;
+import org.jarvis.core.type.ResultType;
 import org.jarvis.core.type.TaskType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -62,7 +64,7 @@ public class ApiScriptPluginResources extends ApiLinkedResources<ScriptPluginRes
 	}
 
 	@Override
-	public String doRealTask(ScriptPluginBean bean, GenericMap args, TaskType taskType) throws Exception {
+	public ResourcePair doRealTask(ScriptPluginBean bean, GenericMap args, TaskType taskType) throws Exception {
 		GenericMap result;
 		switch(taskType) {
 			case EXECUTE:
@@ -71,7 +73,7 @@ public class ApiScriptPluginResources extends ApiLinkedResources<ScriptPluginRes
 			default:
 				result = new GenericMap();
 		}
-		return mapper.writeValueAsString(result);
+		return new ResourcePair(ResultType.OBJECT, mapper.writeValueAsString(result));
 	}
 
 	/**
