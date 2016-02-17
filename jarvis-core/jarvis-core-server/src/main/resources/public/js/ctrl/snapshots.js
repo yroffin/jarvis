@@ -71,19 +71,19 @@ angular.module('JarvisApp.ctrl.snapshots', ['JarvisApp.services'])
     	}
     }
     /**
-     * uploaded current snapshot
-	 * @param snapshot, the snapshot to be uploaded
+     * load local file
+	 * @param id of input file
      */
-    $scope.loaded = function(snapshot, file) {
-    	snapshot.json = atob(file.data.substr(13));
-    	$log.debug('loaded', snapshot, file);
+    $scope.upload = function(id) {
+    	$('#'+id).trigger('click');
     }
     /**
      * uploaded current snapshot
 	 * @param snapshot, the snapshot to be uploaded
      */
-    $scope.upload = function(id) {
-    	$('#'+id).trigger('click');
+    $scope.loaded = function(snapshot, file) {
+    	snapshot.json = file.data;
+    	$log.debug('loaded', snapshot, file);
     }
     /**
      * load this controller

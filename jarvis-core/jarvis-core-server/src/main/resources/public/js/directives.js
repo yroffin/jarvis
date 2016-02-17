@@ -39,7 +39,7 @@ angular.module('JarvisApp.directives', [])
 	        }
 	    };
 	})
-	.directive('fileSelect', function ($window) {
+	.directive('fileSelect', function ($window, $log) {
 	    return {
 	        restrict: 'A',
 	        require: 'ngModel',
@@ -47,7 +47,8 @@ angular.module('JarvisApp.directives', [])
 	            var fileReader = new $window.FileReader();
 	
 	            fileReader.onload = function () {
-	                ctrl.$setViewValue(fileReader.result);
+	            	$log.debug("result:",atob(fileReader.result.substr(13)))
+	                ctrl.$setViewValue(atob(fileReader.result.substr(13)));
 	
 	                if ('fileLoaded' in attr) {
 	                    scope.$eval(attr['fileLoaded']);
@@ -72,7 +73,7 @@ angular.module('JarvisApp.directives', [])
 	                var fileName = e.target.files[0];
 	
 	                if (fileType === '' || fileType === 'text') {
-	                    fileReader.readAsText(fileName);
+	                    fileReader.readAsText(fileName, 'UTF-8');
 	                } else if (fileType === 'data') {
 	                    fileReader.readAsDataURL(fileName);
 	                }
