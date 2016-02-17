@@ -39,5 +39,9 @@ public enum TaskType {
 	/**
 	 * upload
 	 */
-	UPLOAD
+	UPLOAD,
+	/**
+	 * restore
+	 */
+	RESTORE
 }

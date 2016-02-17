@@ -36,6 +36,12 @@ public class Node {
 	}
 
 	/**
+	 * default
+	 */
+	public Node() {
+	}
+
+	/**
 	 * @param name
 	 * @param str
 	 */

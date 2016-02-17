@@ -51,6 +51,17 @@ angular.module('JarvisApp.ctrl.snapshots', ['JarvisApp.services'])
 			'snapshots', 
 			snapshotResourceService.snapshot);
     /**
+     * restore configuration with this snapshot
+	 * @param snapshot, the snapshot
+     */
+    $scope.restore = function(snapshot) {
+    	if(snapshot != undefined && snapshot.id != undefined && snapshot.id != '') {
+    		snapshotResourceService.snapshot.task(snapshot.id, 'restore', {}, function(data) {
+       	    	$log.debug('snapshotCtrl::restore', snapshot, data);
+    	    }, toastService.failure);
+    	}
+    }
+    /**
      * download current snapshot
 	 * @param snapshot, the snapshot to be downloaded
      */
@@ -78,8 +89,9 @@ angular.module('JarvisApp.ctrl.snapshots', ['JarvisApp.services'])
     	$('#'+id).trigger('click');
     }
     /**
-     * uploaded current snapshot
-	 * @param snapshot, the snapshot to be uploaded
+     * upload callback
+	 * @param snapshot, the snapshot
+	 * @param file, data to store in snapshot (on client side)
      */
     $scope.loaded = function(snapshot, file) {
     	snapshot.json = file.data;

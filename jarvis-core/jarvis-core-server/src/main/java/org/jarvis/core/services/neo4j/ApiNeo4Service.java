@@ -215,4 +215,12 @@ public class ApiNeo4Service  {
 	public Map<String, Map<String, GenericMap>> findAllNodes() throws TechnicalHttpException {
 		return graphDb.findAllNodes();		
 	}
+
+	/**
+	 * restore db with rom this repository
+	 * @param repository
+	 */
+	public void restore(GenericMap repository) {
+		graphDb.restore(repository);	
+	}
 }

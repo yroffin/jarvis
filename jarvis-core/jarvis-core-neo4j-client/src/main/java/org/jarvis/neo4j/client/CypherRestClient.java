@@ -19,6 +19,7 @@ package org.jarvis.neo4j.client;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -42,12 +43,13 @@ import org.slf4j.LoggerFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 /**
- * cypher query
+ * cypher query and rest API neo4j
  */
 public class CypherRestClient extends AbstractJerseyClient {
 	protected Logger logger = LoggerFactory.getLogger(CypherRestClient.class);
 
 	/**
+	 * constructor
 	 * @param baseurl
 	 * @param user 
 	 * @param password 
@@ -56,57 +58,38 @@ public class CypherRestClient extends AbstractJerseyClient {
 		super(baseurl, user, password);
 	}
 
-	private Map<?, ?> getEntity(String entity) {
-		Map<?,?> body = null;
-		try {
-			body = mapper.readValue(entity, Map.class);
-		} catch (IOException e) {
-			throw new TechnicalException(e);
-		}
-		return body;
-	}
-
 	/**
+	 * default cypher low level call
+	 * 
 	 * @param statement
-	 * @param isNode 
+	 * 		the cypher statement
+	 * @param isNode
+	 * 		if we want to retrieve a node (else a relationship) 
 	 * @return List<Map<String, Object>>
 	 */
 	public List<Map<String, Object>> query(String statement, boolean isNode) {
-		StringBuilder query = new StringBuilder();
-		query.append("{\"statements\":[{\"statement\":\""+statement+"\"}]})");
-
+		/**
+		 * build call
+		 */
 		String entity = client.target(baseurl)
 	            .path("db/data/transaction/commit")
 	            .request(MediaType.APPLICATION_JSON)
 	            .accept(MediaType.APPLICATION_JSON)
 	            .acceptEncoding("charset=UTF-8")
-	            .post(Entity.entity(query.toString(),MediaType.APPLICATION_JSON),String.class);
+	            .post(Entity.entity("{\"statements\":[{\"statement\":\""+statement+"\"}]})",MediaType.APPLICATION_JSON),String.class);
 		
+		/**
+		 * decode result
+		 */
 		return decodeResult(entity, isNode);
 	}
 
 	/**
-	 * @param statement
-	 * @param isNode 
-	 * @return List<Map<String, Object>>
-	 */
-	public List<Map<String, Object>> queryIdWithEntity(String statement, boolean isNode) {
-		StringBuilder query = new StringBuilder();
-		query.append("{\"statements\":[{\"statement\":\""+statement+"\"}]})");
-
-		String entity = client.target(baseurl)
-	            .path("db/data/transaction/commit")
-	            .request(MediaType.APPLICATION_JSON)
-	            .accept(MediaType.APPLICATION_JSON)
-	            .acceptEncoding("charset=UTF-8")
-	            .post(Entity.entity(query.toString(),MediaType.APPLICATION_JSON),String.class);
-
-		return decodeResult(entity, isNode);
-	}
-
-	/**
+	 * decode cypher result
 	 * @param entity
-	 * @param isNode 
+	 * 		the cypher result
+	 * @param isNode
+	 * 		if we want to decode a node (or a relationship)
 	 * @return List<Map<String, Object>>
 	 */
 	public List<Map<String, Object>> decodeResult(String entity, boolean isNode) {
@@ -150,19 +133,44 @@ public class CypherRestClient extends AbstractJerseyClient {
 		return list;
 	}
 
+	private static List<String> relations = new ArrayList<String>();
+	private static List<String> resources = new ArrayList<String>();
+	
+	
+	{
+		/**
+		 * relationship types
+		 */
+		relations.add("HREF");
+		relations.add("HREF_IF");
+		relations.add("HREF_THEN");
+		relations.add("HREF_ELSE");
+
+		/**
+		 * resources
+		 */
+		resources.add("BlockBean");
+		resources.add("CommandBean");
+		resources.add("IotBean");
+		resources.add("ScenarioBean");
+		resources.add("ScriptPluginBean");
+		resources.add("TriggerBean");
+		resources.add("ViewBean");
+	}
+
 	/**
+	 * find all node
 	 * @return List<Node>
+	 * 		all node and relation in database (exception snapshot nodes)
 	 * @throws TechnicalHttpException
 	 */
 	public Map<String, Map<String, GenericMap>> findAllNodes() throws TechnicalHttpException {
 		
 		Map<String, Map<String, GenericMap>> snapshots = new TreeMap<String, Map<String, GenericMap>>();
 		
-		List<String> relations = new ArrayList<String>();
-		relations.add("HREF");
-		relations.add("HREF_IF");
-		relations.add("HREF_THEN");
-		relations.add("HREF_ELSE");
+		/**
+		 * dump all relation
+		 */
 		for(String relation : relations) {
 			Map<String, GenericMap> beans = new TreeMap<String, GenericMap>();
 			snapshots.put(relation, beans);
@@ -179,15 +187,6 @@ public class CypherRestClient extends AbstractJerseyClient {
 			}
 		}
 
-		List<String> resources = new ArrayList<String>();
-		resources.add("BlockBean");
-		resources.add("CommandBean");
-		resources.add("IotBean");
-		resources.add("ScenarioBean");
-		resources.add("ScriptPluginBean");
-		resources.add("TriggerBean");
-		resources.add("ViewBean");
-		
 		/**
 		 * iterate on all resources
 		 */
@@ -204,13 +203,77 @@ public class CypherRestClient extends AbstractJerseyClient {
 				beans.put(node.getId(), genericMap);
 			}
 		}
-
 		return snapshots;
 	}
 
 	/**
+	 * restore from a json dump (stored as a GenericMap)
+	 * @param repository
+	 * 		a GenericMap storing all resources
+	 */
+	public void restore(GenericMap repository) {
+		/**
+		 * internal index for old id and new id
+		 */
+		Map<String, String> index = new HashMap<String,String>();
+		
+		/**
+		 * recreate resources
+		 */
+		for(String resource : resources) {
+			/**
+			 * remove all resources (before replacement)
+			 */
+			execute("MATCH (node:"+resource+") DETACH DELETE node", true);
+			@SuppressWarnings("unchecked")
+			Map<String,LinkedHashMap<String,Object>> elements = (Map<String, LinkedHashMap<String,Object>>) repository.get(resource);
+			for(Entry<String, LinkedHashMap<String,Object>> raw : elements.entrySet()) {
+				LinkedHashMap<String,Object> node = raw.getValue();
+				Node toCreate = new Node(node);
+				try {
+					Node created = createNode(resource, toCreate );
+					index.put((String) node.get("id"), created.getId());
+					logger.info("Index {} => {}", (String) node.get("id"), created.getId());
+				} catch (TechnicalHttpException | TechnicalNotFoundException e) {
+					throw new TechnicalException(e);
+				}
+			}
+		}
+
+		/**
+		 * recreate relations
+		 */
+		for(String relation : relations) {
+			@SuppressWarnings("unchecked")
+			Map<String,LinkedHashMap<String,Object>> elements = (Map<String, LinkedHashMap<String,Object>>) repository.get(relation);
+			for(Entry<String, LinkedHashMap<String, Object>> element : elements.entrySet()) {
+				String from = index.get((String) (element.getValue().get("__from")+""));
+				String to = index.get((String) (element.getValue().get("__to")+""));
+				if(from != null && to != null) {
+					Node properties = new Node();
+					for(Entry<String, Object> field : element.getValue().entrySet()) {
+						/**
+						 * ignore fields starting with __
+						 */
+						if(field.getKey().startsWith("__")) continue;
+						properties.setProperty(field.getKey(), field.getValue());
+					}
+					logger.error("Restore {} => {} with {}", from, to, properties.toString());
+					try {
+						createRelationship(from, to, relation, properties);
+					} catch (TechnicalHttpException e) {
+						throw new TechnicalException(e);
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * create a new node
 	 * @param toCreate 
-	 * @return new node
+	 * 		the node to create
+	 * @return Node
 	 * @throws TechnicalHttpException 
 	 */
 	@SuppressWarnings("unchecked")
@@ -228,8 +291,13 @@ public class CypherRestClient extends AbstractJerseyClient {
 		}
 		
 		if(entity.getStatus() == 201) {
-			Map<?, ?> body = getEntity(entity.readEntity(String.class));
-	
+			Map<?, ?> body = null;
+			try {
+				body = mapper.readValue(entity.readEntity(String.class), Map.class);
+			} catch (IOException e) {
+				throw new TechnicalException(e);
+			}
+
 			Node node = new Node(toCreate.getAllProperties());
 			node.setId((String) (((Map<String, Object>) body.get("metadata")).get("id")+""));
 	
@@ -240,33 +308,10 @@ public class CypherRestClient extends AbstractJerseyClient {
 	}
 
 	/**
+	 * update an existing node
+	 * 
 	 * @param update 
-	 * @return new node
-	 * @throws TechnicalNotFoundException 
-	 */
-	public Node updateRelationship(Node update) throws TechnicalNotFoundException {
-		Response entity;
-		try {
-			entity = client.target(baseurl)
-			        .path("db/data/relationship/"+update.getId()+"/properties")
-			        .request(MediaType.APPLICATION_JSON)
-			        .accept(MediaType.APPLICATION_JSON)
-			        .acceptEncoding("charset=UTF-8")
-			        .put(Entity.entity(mapper.writeValueAsString(update.getAllProperties()),MediaType.APPLICATION_JSON));
-		} catch (JsonProcessingException e) {
-			throw new TechnicalException(e);
-		}
-		
-		if(entity.getStatus() == 204) {
-			return update;
-		} else {
-			throw new TechnicalNotFoundException(update.getId());
-		}
-	}
-
-	/**
-	 * @param update 
-	 * @return new node
+	 * @return Node
 	 * @throws TechnicalNotFoundException 
 	 */
 	public Node updateNode(Node update) throws TechnicalNotFoundException {
@@ -290,8 +335,12 @@ public class CypherRestClient extends AbstractJerseyClient {
 	}
 
 	/**
+	 * create a new node with its label
+	 * 
 	 * @param label
-	 * @param toCreate 
+	 * 		label for this node
+	 * @param toCreate
+	 * 		node to create
 	 * @return Node
 	 * @throws TechnicalHttpException 
 	 * @throws TechnicalNotFoundException 
@@ -318,6 +367,80 @@ public class CypherRestClient extends AbstractJerseyClient {
 	}
 
 	/**
+	 * create a relationship
+	 * @param from 
+	 * @param to 
+	 * @param label 
+	 * @param properties 
+	 * @throws TechnicalHttpException 
+	 */
+	public void createRelationship(String from, String to, String label, Node properties) throws TechnicalHttpException {
+		/**
+		 * payload
+		 */
+		StringBuilder sb = new StringBuilder();
+		sb.append("{\n");
+		sb.append("    \"to\":\""+baseurl+"/db/data/node/"+to+"\",\n");
+		sb.append("    \"type\":\""+label+"\",\n");
+		sb.append("    \"data\":\n");
+		try {
+			sb.append(mapper.writeValueAsString(properties.getAllProperties())+"\n");
+		} catch (JsonProcessingException e) {
+			throw new TechnicalException(e);
+		}
+		sb.append("\n");
+		sb.append("}\n");
+
+		/**
+		 * call entity
+		 */
+		Response entity;
+		entity = client.target(baseurl)
+		        .path("db/data/node/"+from+"/relationships")
+		        .request(MediaType.APPLICATION_JSON)
+		        .accept(MediaType.APPLICATION_JSON)
+		        .acceptEncoding("charset=UTF-8")
+		        .post(Entity.entity(sb.toString(),MediaType.APPLICATION_JSON));
+		
+		/**
+		 * check status
+		 */
+		if(entity.getStatus() == 201) {
+			return;
+		} else {
+			throw new TechnicalHttpException(entity.getStatus(), "db/data/node/"+from+"/relationships");
+		}
+	}
+
+	/**
+	 * update a relatioship
+	 * 
+	 * @param update
+	 * 		the relationship to update
+	 * @return new node
+	 * @throws TechnicalNotFoundException 
+	 */
+	public Node updateRelationship(Node update) throws TechnicalNotFoundException {
+		Response entity;
+		try {
+			entity = client.target(baseurl)
+			        .path("db/data/relationship/"+update.getId()+"/properties")
+			        .request(MediaType.APPLICATION_JSON)
+			        .accept(MediaType.APPLICATION_JSON)
+			        .acceptEncoding("charset=UTF-8")
+			        .put(Entity.entity(mapper.writeValueAsString(update.getAllProperties()),MediaType.APPLICATION_JSON));
+		} catch (JsonProcessingException e) {
+			throw new TechnicalException(e);
+		}
+		
+		if(entity.getStatus() == 204) {
+			return update;
+		} else {
+			throw new TechnicalNotFoundException(update.getId());
+		}
+	}
+
+	/**
 	 * @return Transaction
 	 */
 	public Transaction beginTx() {
@@ -325,9 +448,13 @@ public class CypherRestClient extends AbstractJerseyClient {
 	}
 
 	/**
+	 * execute a cypher query and result a result
 	 * @param query
+	 * 		the cypher wuery
 	 * @param isNode 
+	 *		node result or relationship
 	 * @return Result
+	 * 		the result
 	 */
 	public Result execute(String query, boolean isNode) {
 		logger.error(query);
@@ -339,6 +466,7 @@ public class CypherRestClient extends AbstractJerseyClient {
 	}
 
 	/**
+	 * result entities with id updated
 	 * @param query
 	 * @param entity
 	 * @param isNode 
@@ -347,7 +475,7 @@ public class CypherRestClient extends AbstractJerseyClient {
 	public Entities matchIdWithEntity(String query, String entity, boolean isNode) {
 		logger.error(query);
 		Entities result = new Entities();
-		for(Map<String, Object> map : queryIdWithEntity(query, isNode)) {
+		for(Map<String, Object> map : query(query, isNode)) {
 			Node n = (Node) map.get(entity);
 			n.setId((String) (map.get("id("+entity+")")+""));
 			result.add(map);
@@ -365,7 +493,7 @@ public class CypherRestClient extends AbstractJerseyClient {
 	public Entities matchIdWithEntity(String query, String first, String second, boolean isNode) {
 		logger.error(query);
 		Entities result = new Entities();
-		for(Map<String, Object> map : queryIdWithEntity(query, isNode)) {
+		for(Map<String, Object> map : query(query, isNode)) {
 			Node n = (Node) map.get(first);
 			n.setId((String) (map.get("id("+first+")")+""));
 			Node m = (Node) map.get(second);
@@ -376,13 +504,17 @@ public class CypherRestClient extends AbstractJerseyClient {
 	}
 
 	/**
-	 * @param label 
+	 * find all relation ship on entity
+	 * 
+	 * @param label
+	 * 		entity label
 	 * @param isNode 
-	 * @return Result
+	 * 		node or relation
+	 * @return Entities
 	 */
 	public Entities matchRelationEntity(String label, boolean isNode) {
 		Entities result = new Entities();
-		for(Map<String, Object> map : queryIdWithEntity("MATCH (n)-[r:"+label+"]->(m) RETURN id(r),id(n),id(m),r", isNode)) {
+		for(Map<String, Object> map : query("MATCH (n)-[r:"+label+"]->(m) RETURN id(r),id(n),id(m),r", isNode)) {
 			Relation r = (Relation) map.get("r");
 			r.setId((String) (map.get("id(r)")+""));
 			r.setFrom((String) (map.get("id(n)")+""));
@@ -391,5 +523,4 @@ public class CypherRestClient extends AbstractJerseyClient {
 		}
 		return result;
 	}
-
 }

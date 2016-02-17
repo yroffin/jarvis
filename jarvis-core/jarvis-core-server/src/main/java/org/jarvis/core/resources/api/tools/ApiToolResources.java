@@ -1,5 +1,6 @@
 package org.jarvis.core.resources.api.tools;
 
+import java.io.IOException;
 import java.util.Map;
 
 import org.jarvis.core.exception.TechnicalException;
@@ -29,21 +30,6 @@ public class ApiToolResources extends ApiResources<SnapshotRest,SnapshotBean> {
 		setBeanClass(SnapshotBean.class);
 	}
 
-	/**
-	 * inject current configuration in this snapshot
-	 * @param snapshot
-	 */
-	public void inject(SnapshotRest snapshot) {
-		try {
-			Map<String, Map<String, GenericMap>> nodes = apiNeo4Service.findAllNodes();
-			snapshot.json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(nodes);
-		} catch (TechnicalHttpException e) {
-			throw new TechnicalException(e);
-		} catch (JsonProcessingException e) {
-			throw new TechnicalException(e);
-		}
-	}
-
 	@Override
 	public void mount() {
 		/**
@@ -60,12 +46,39 @@ public class ApiToolResources extends ApiResources<SnapshotRest,SnapshotBean> {
 				return new ResourcePair(ResultType.FILE_STREAM, download(bean, args, new GenericMap()));
 			case UPLOAD:
 				return new ResourcePair(ResultType.OBJECT, upload(bean, args, new GenericMap()));
+			case RESTORE:
+				return new ResourcePair(ResultType.STRING, restore(bean, args, new GenericMap()));
 			default:
 				result = new GenericMap();
 		}
 		return new ResourcePair(ResultType.OBJECT, mapper.writeValueAsString(result));
 	}
 
+	/**
+	 * restore task
+	 * 
+	 * @param bean
+	 * @param args
+	 * @param genericMap
+	 * @return
+	 */
+	private String restore(SnapshotBean bean, GenericMap args, GenericMap genericMap) {
+		 try {
+			GenericMap repository = mapper.readValue(bean.json, GenericMap.class);
+			apiNeo4Service.restore(repository);
+		} catch (IOException e) {
+			throw new TechnicalException(e);
+		}
+		 return "";
+	}
+
+	/**
+	 * upload task
+	 * @param bean
+	 * @param args
+	 * @param genericMap
+	 * @return
+	 */
 	private String upload(SnapshotBean bean, GenericMap args, GenericMap genericMap) {
 		bean.json = (String) args.get("multipart/form-data");
 		try {
@@ -75,6 +88,14 @@ public class ApiToolResources extends ApiResources<SnapshotRest,SnapshotBean> {
 		}
 	}
 
+	/**
+	 * download task
+	 * 
+	 * @param bean
+	 * @param args
+	 * @param genericMap
+	 * @return
+	 */
 	private String download(SnapshotBean bean, GenericMap args, GenericMap genericMap) {
 		try {
 			Map<String, Map<String, GenericMap>> nodes = apiNeo4Service.findAllNodes();
