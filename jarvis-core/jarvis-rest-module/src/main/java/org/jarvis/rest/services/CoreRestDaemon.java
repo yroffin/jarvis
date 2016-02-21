@@ -23,6 +23,9 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
+/**
+ * code daemon
+ */
 @Component
 @PropertySource("classpath:connector.properties")
 public class CoreRestDaemon {
@@ -36,6 +39,9 @@ public class CoreRestDaemon {
 	@Autowired
 	Environment env;
 
+	/**
+	 * server part
+	 */
 	public void server() {
 		String url = env.getProperty("jarvis.server.url");
 		String iface = env.getProperty("jarvis.connector.interface");

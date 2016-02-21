@@ -43,7 +43,7 @@ import us.monoid.web.Resty;
  */
 @Component
 public class CoreRestClient {
-	protected Logger logger = LoggerFactory.getLogger(CoreRestClient.class);
+	protected static Logger logger = LoggerFactory.getLogger(CoreRestClient.class);
 
 	static private ObjectMapper mapper = new ObjectMapper();
 
@@ -137,10 +137,11 @@ public class CoreRestClient {
 					 * periodicaly register this connector to server
 					 */
 					for (JarvisDatagram msg : clients) {
-						URI uri = new URI(url + "/task?method=register");
+						URI uri = new URI(url + "?task=register");
 						CoreRestClient.send(new Resty(), uri, msg);
 					}
 				} catch (IOException e) {
+					logger.warn("Register {}", e.getMessage());
 				} catch (URISyntaxException e) {
 				}
 				try {

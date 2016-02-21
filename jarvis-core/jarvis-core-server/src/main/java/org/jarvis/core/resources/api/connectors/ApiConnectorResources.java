@@ -41,7 +41,7 @@ public class ApiConnectorResources extends ApiResources<ConnectorRest,ConnectorB
 	@Override
 	public void mount() {
 		/**
-		 * views
+		 * connectors
 		 */
 		declare(CONNECTOR_RESOURCE);
 	}

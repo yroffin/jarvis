@@ -26,6 +26,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * rest core
+ */
 @Component
 public class CoreRestDefault {
 	protected Logger logger = LoggerFactory.getLogger(CoreRestDefault.class);
@@ -46,7 +49,7 @@ public class CoreRestDefault {
 	 * remote service
 	 * 
 	 * @param message
-	 * @return
+	 * @return JarvisDatagram
 	 * @throws JarvisModuleException
 	 */
 	public JarvisDatagram remote(JarvisDatagram message) throws JarvisModuleException {
@@ -55,9 +58,9 @@ public class CoreRestDefault {
 
 	/**
 	 * aiml service
+	 * @param message 
 	 * 
-	 * @param readValue
-	 * @return
+	 * @return JarvisDatagram
 	 * @throws JarvisModuleException
 	 */
 	public JarvisDatagram aiml(JarvisDatagram message) throws JarvisModuleException {
@@ -68,7 +71,7 @@ public class CoreRestDefault {
 	 * voice service
 	 * 
 	 * @param message
-	 * @return
+	 * @return JarvisDatagram
 	 * @throws JarvisModuleException
 	 */
 	public JarvisDatagram voice(JarvisDatagram message) throws JarvisModuleException {
