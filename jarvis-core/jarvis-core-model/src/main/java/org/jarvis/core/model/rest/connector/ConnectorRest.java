@@ -14,13 +14,26 @@
  *   limitations under the License.
  */
 
-package org.jarvis.core.model.rest;
+package org.jarvis.core.model.rest.connector;
+
+import org.jarvis.core.model.rest.GenericEntity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * rest connector
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ConnectorRest extends GenericEntity {
+	/**
+	 * name
+	 */
 	@JsonProperty("name")
 	public String name;
+	/**
+	 * icon
+	 */
+	@JsonProperty("icon")
+	public String icon;
 }

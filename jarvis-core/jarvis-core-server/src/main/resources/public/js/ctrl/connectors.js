@@ -18,58 +18,57 @@
 
 /* Ctrls */
 
-angular.module('JarvisApp.ctrl.views', ['JarvisApp.services'])
-.controller('viewsCtrl', 
-	function($scope, $log, genericScopeService, viewResourceService){
+angular.module('JarvisApp.ctrl.connectors', ['JarvisApp.services'])
+.controller('connectorsCtrl', 
+	function($scope, $log, genericScopeService, connectorResourceService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
 	 */
 	genericScopeService.scope.resources(
 			function(entities) {
-				$scope.views = entities;
+				$scope.connectors = entities;
 			},
 			function() {
-				return $scope.views;
+				return $scope.connectors;
 			},
 			$scope, 
-			'views', 
-			viewResourceService.view,
+			'connectors', 
+			connectorResourceService.connector,
 			{
-    			name: "view name",
-    			icon: "list"
+    			name: "connector name",
+    			icon: "settings_input_antenna"
     		}
 	);
 })
-.controller('viewCtrl',
-	function($scope, $log, $stateParams, genericResourceService, genericScopeService, viewResourceService, iotResourceService, toastService){
+.controller('connectorCtrl',
+	function($scope, $log, $stateParams, genericResourceService, genericScopeService, connectorResourceService, iotResourceService, toastService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
 	 */
 	genericScopeService.scope.resource(
 			$scope, 
-			'view', 
-			'views', 
-			viewResourceService.view);
+			'connector', 
+			'connectors', 
+			connectorResourceService.connector);
 	/**
 	 * declare links
 	 */
 	$scope.links = {
-			iots: {}
+			remotes: {}
 	};
 	/**
 	 * declare generic scope resource link (and inject it in scope)
 	 */
 	genericScopeService.scope.resourceLink(
 			function() {
-				return $scope.iots;
+				return $scope.remotes;
 			},
-			$scope.links.iots, 
-			'view', 
-			'views', 
-			viewResourceService.view, 
-			viewResourceService.iots, 
+			$scope.links.remotes, 
+			'connector', 
+			'connectors', 
+			connectorResourceService.connector, 
+			connectorResourceService.remotes, 
 			{
-    			'order':'1'
 			},
 			$stateParams.id
 	);
@@ -78,17 +77,11 @@ angular.module('JarvisApp.ctrl.views', ['JarvisApp.services'])
      */
     $scope.load = function() {
 		/**
-		 * get current view
+		 * get current connector
 		 */
-    	$scope.views = [];
-    	genericResourceService.scope.entity.get($stateParams.id, function(update) {$scope.view=update}, viewResourceService.view);
-	
-		/**
-		 * get all views
-		 */
-		$scope.iots = [];
-    	genericResourceService.scope.collections.findAll('iots', $stateParams.id, $scope.iots, viewResourceService.iots);
+    	$scope.connectors = [];
+    	genericResourceService.scope.entity.get($stateParams.id, function(update) {$scope.connector=update}, connectorResourceService.connector);
 
-		$log.info('view-ctrl', $scope.view);
+    	$log.info('connector-ctrl', $scope.connector);
     }
 })

@@ -1,0 +1,28 @@
+<div layout="column">
+	<md-input-container>
+	  <label translate="connector.name"></label>
+	  <input ng-model="connector.name">
+	</md-input-container>
+	<md-input-container>
+	  <label translate="connector.icon"></label>
+	  <input ng-model="connector.icon">
+	</md-input-container>
+	<div>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th translate="remote.icon">Icon</th>
+					<th translate="remote.name">Name</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="remote in remotes">
+					<td>{{remote.id}}</th>
+					<td><md-icon md-font-icon="material-icons md-16">{{remote.icon}}</md-icon></th>
+					<td>{{remote.name}}</th>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

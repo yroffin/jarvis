@@ -19,6 +19,9 @@ package org.jarvis.rest.services;
 import org.jarvis.client.model.JarvisDatagram;
 import org.jarvis.rest.services.impl.JarvisModuleException;
 
+/**
+ * jarvis connector
+ */
 public interface JarvisConnector {
 
 	JarvisDatagram onNewMessage(JarvisDatagram message) throws JarvisModuleException;

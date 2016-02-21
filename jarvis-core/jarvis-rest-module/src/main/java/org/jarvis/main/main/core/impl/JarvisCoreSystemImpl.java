@@ -29,6 +29,9 @@ import org.jarvis.main.model.parser.history.IAimlHistory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * jarvis connector implementation
+ */
 public class JarvisCoreSystemImpl implements IJarvisCoreSystem {
 	protected Logger logger = LoggerFactory
 			.getLogger(JarvisCoreSystemImpl.class);

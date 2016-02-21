@@ -38,6 +38,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import us.monoid.web.Resty;
 
+/**
+ * core client
+ */
 @Component
 public class CoreRestClient {
 	protected Logger logger = LoggerFactory.getLogger(CoreRestClient.class);
@@ -55,6 +58,7 @@ public class CoreRestClient {
 
 	/**
 	 * send message to target
+	 * @param client 
 	 * 
 	 * @param url
 	 * @param message
@@ -69,6 +73,7 @@ public class CoreRestClient {
 	 * start main thread
 	 * 
 	 * @param url
+	 * @param href 
 	 */
 	public void start(String url, String href) {
 		InternalThread internal = new InternalThread(url,

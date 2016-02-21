@@ -14,8 +14,20 @@
  *   limitations under the License.
  */
 
-package org.jarvis.core.model.bean;
+package org.jarvis.core.model.bean.connector;
 
+import org.jarvis.core.model.bean.GenericBean;
+
+/**
+ * bean connector
+ */
 public class ConnectorBean extends GenericBean {
+	/**
+	 * name
+	 */
 	public String name;
+	/**
+	 * icon
+	 */
+	public String icon;
 }
