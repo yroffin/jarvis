@@ -28,7 +28,6 @@ import org.jarvis.core.model.rest.scenario.BlockRest;
 import org.jarvis.core.profiler.TaskProfiler;
 import org.jarvis.core.profiler.model.GenericNode;
 import org.jarvis.core.resources.api.ApiLinkedTwiceResources;
-import org.jarvis.core.resources.api.ApiResources;
 import org.jarvis.core.resources.api.ResourcePair;
 import org.jarvis.core.resources.api.href.ApiHrefBlockBlockResources;
 import org.jarvis.core.resources.api.href.ApiHrefBlockScriptPluginResources;

@@ -17,19 +17,11 @@
 package org.jarvis.core.resources.api.connectors;
 
 import org.jarvis.core.model.bean.connector.ConnectorBean;
-import org.jarvis.core.model.bean.iot.IotBean;
-import org.jarvis.core.model.bean.view.ViewBean;
 import org.jarvis.core.model.rest.connector.ConnectorRest;
-import org.jarvis.core.model.rest.iot.IotRest;
-import org.jarvis.core.model.rest.view.ViewRest;
-import org.jarvis.core.resources.api.ApiLinkedResources;
 import org.jarvis.core.resources.api.ApiResources;
 import org.jarvis.core.resources.api.ResourcePair;
-import org.jarvis.core.resources.api.href.ApiHrefViewResources;
-import org.jarvis.core.resources.api.iot.ApiIotResources;
 import org.jarvis.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
