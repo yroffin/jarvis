@@ -21,11 +21,11 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import org.jarvis.client.model.JarvisDatagram;
-import org.jarvis.client.model.JarvisDatagramClient;
-import org.jarvis.client.model.JarvisDatagramSession;
+import org.jarvis.core.type.GenericMap;
 import org.jarvis.rest.services.impl.JarvisAimlEngine;
 import org.jarvis.rest.services.impl.JarvisRemoteExec;
 import org.jarvis.rest.services.impl.JarvisVoiceEngine;
@@ -36,6 +36,9 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import us.monoid.json.JSONException;
+import us.monoid.json.JSONObject;
+import us.monoid.web.JSONResource;
 import us.monoid.web.Resty;
 
 /**
@@ -57,16 +60,32 @@ public class CoreRestClient {
 	JarvisVoiceEngine jarvisVoiceEngine;
 
 	/**
-	 * send message to target
+	 * send message to target with POST method
 	 * @param client 
 	 * 
 	 * @param url
 	 * @param message
+	 * @return JSONResource
 	 * @throws IOException
 	 */
-	static public void send(Resty client, URI url, JarvisDatagram message) throws IOException {
+	static public JSONResource send(Resty client, URI url, GenericMap message) throws IOException {
 		client.withHeader("Content-Type", "application/json");
-		client.json(url, Resty.content(mapper.writeValueAsBytes(message)));
+		logger.info("send {}", url);
+		return client.json(url, Resty.content(mapper.writeValueAsBytes(message)));
+	}
+
+	/**
+	 * send message to target with POST method
+	 * @param client 
+	 * 
+	 * @param url
+	 * @return JSONResource
+	 * @throws IOException
+	 */
+	static public JSONResource get(Resty client, URI url) throws IOException {
+		client.withHeader("Content-Type", "application/json");
+		logger.info("get {}", url);
+		return client.json(url);
 	}
 
 	/**
@@ -77,7 +96,7 @@ public class CoreRestClient {
 	 */
 	public void start(String url, String href) {
 		InternalThread internal = new InternalThread(url,
-				Collections.synchronizedList(new ArrayList<JarvisDatagram>()));
+				Collections.synchronizedList(new ArrayList<GenericMap>()));
 
 		/**
 		 * add internal rest id and its href
@@ -96,7 +115,8 @@ public class CoreRestClient {
 	protected class InternalThread implements Runnable {
 
 		private String url;
-		private List<JarvisDatagram> clients;
+		private List<GenericMap> clients;
+		private Map<String, String> allConnectors = new HashMap<String,String>();
 
 		/**
 		 * constructor
@@ -104,7 +124,7 @@ public class CoreRestClient {
 		 * @param url
 		 * @param clients
 		 */
-		public InternalThread(String url, List<JarvisDatagram> clients) {
+		public InternalThread(String url, List<GenericMap> clients) {
 			this.url = url;
 			this.clients = clients;
 		}
@@ -115,16 +135,14 @@ public class CoreRestClient {
 		 * @param id
 		 * @return
 		 */
-		JarvisDatagram add(JarvisConnector connector, String href) {
-			JarvisDatagram message = new JarvisDatagram();
-			message.session = new JarvisDatagramSession();
-			message.session.client = new JarvisDatagramClient();
-			message.session.client.id = connector.getId();
-			message.session.client.href = href + "/" + connector.getId();
-			message.session.client.name = connector.getName();
-			message.session.client.isRenderer = connector.isRenderer();
-			message.session.client.isSensor = connector.isSensor();
-			message.session.client.canAnswer = connector.canAnswer();
+		GenericMap add(JarvisConnector connector, String href) {
+			GenericMap message = new GenericMap();
+			message.put("id", connector.getId());
+			message.put("href", href + "/" + connector.getId());
+			message.put("id", connector.getName());
+			message.put("isRenderer", connector.isRenderer());
+			message.put("isSensor", connector.isSensor());
+			message.put("canAnswer", connector.canAnswer());
 			clients.add(message);
 			return message;
 		}
@@ -133,12 +151,30 @@ public class CoreRestClient {
 		public void run() {
 			while (true) {
 				try {
+					allConnectors.clear();
+					/**
+					 * load all connectors map
+					 */
+					try {
+						JSONResource remotes = CoreRestClient.get(new Resty(), new URI(url));
+						for(int index=0;index < remotes.array().length();index++) {
+							JSONObject map = (JSONObject) remotes.array().get(index);
+							allConnectors.put((String) map.get("name"),(String) map.get("id"));
+						}
+					} catch (IOException | URISyntaxException | JSONException e) {
+						logger.error("Internal thread {}", e.getMessage());
+					}
+
 					/**
 					 * periodicaly register this connector to server
 					 */
-					for (JarvisDatagram msg : clients) {
-						URI uri = new URI(url + "?task=register");
-						CoreRestClient.send(new Resty(), uri, msg);
+					for (GenericMap msg : clients) {
+						String key = allConnectors.get(msg.get("id"));
+						if(key != null) {
+							CoreRestClient.send(new Resty(), new URI(url + "/"+key+"?task=register"), msg);
+						} else {
+							logger.warn("No connectors named {}", msg.get("id"));
+						}
 					}
 				} catch (IOException e) {
 					logger.warn("Register {}", e.getMessage());

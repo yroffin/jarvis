@@ -30,11 +30,17 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * remote exec module
+ */
 @Component
 public class JarvisRemoteExec extends JarvisRestClientImpl implements JarvisConnector {
 
 	protected Logger logger = LoggerFactory.getLogger(JarvisRemoteExec.class);
 
+	/**
+	 * init this module
+	 */
 	@PostConstruct
 	public void init() {
 		super.init(CoreRestServices.Handler.remote.name(), "jarvis-remote-engine-v1.0b");

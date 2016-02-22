@@ -89,6 +89,6 @@ angular.module('JarvisApp.ctrl.views', ['JarvisApp.services'])
 		$scope.iots = [];
     	genericResourceService.scope.collections.findAll('iots', $stateParams.id, $scope.iots, viewResourceService.iots);
 
-		$log.info('view-ctrl', $scope.view);
+		$log.info('view-ctrl', $scope.views);
     }
 })

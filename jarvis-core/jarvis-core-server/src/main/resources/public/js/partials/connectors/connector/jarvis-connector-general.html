@@ -11,16 +11,22 @@
 		<table class="table table-bordered">
 			<thead>
 				<tr>
+					<th></th>
 					<th>#</th>
-					<th translate="remote.icon">Icon</th>
-					<th translate="remote.name">Name</th>
+					<th translate="cnx.href"></th>
+					<th translate="cnx.isRenderer"></th>
+					<th translate="cnx.isSensor"></th>
+					<th translate="cnx.canAnswer"></th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="remote in remotes">
+				<tr ng-repeat="remote in connexions">
+					<td><md-icon md-font-icon="material-icons md-16" ng-click="links.connexions.drop(remote)">delete</md-icon></td>
 					<td>{{remote.id}}</th>
-					<td><md-icon md-font-icon="material-icons md-16">{{remote.icon}}</md-icon></th>
-					<td>{{remote.name}}</th>
+					<td>{{remote.adress}}</th>
+					<td>{{remote.isRenderer}}</th>
+					<td>{{remote.isSensor}}</th>
+					<td>{{remote.canAnswer}}</th>
 				</tr>
 			</tbody>
 		</table>

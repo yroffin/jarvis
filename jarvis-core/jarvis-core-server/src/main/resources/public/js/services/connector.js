@@ -24,6 +24,6 @@
 angular.module('JarvisApp.services.connector', []).factory('connectorResourceService', function(genericResourceService) {
   return {
 	  connector : genericResourceService.crud(['connectors']),
-	  remotes : genericResourceService.links(['connectors'], ['remotes'])
+	  connexions : genericResourceService.links(['connectors'], ['connexions'])
   }
 });

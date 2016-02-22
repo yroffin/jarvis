@@ -54,20 +54,20 @@ angular.module('JarvisApp.ctrl.connectors', ['JarvisApp.services'])
 	 * declare links
 	 */
 	$scope.links = {
-			remotes: {}
+			connexions: {}
 	};
 	/**
 	 * declare generic scope resource link (and inject it in scope)
 	 */
 	genericScopeService.scope.resourceLink(
 			function() {
-				return $scope.remotes;
+				return $scope.connexions;
 			},
-			$scope.links.remotes, 
+			$scope.links.connexions, 
 			'connector', 
 			'connectors', 
 			connectorResourceService.connector, 
-			connectorResourceService.remotes, 
+			connectorResourceService.connexions, 
 			{
 			},
 			$stateParams.id
@@ -82,6 +82,12 @@ angular.module('JarvisApp.ctrl.connectors', ['JarvisApp.services'])
     	$scope.connectors = [];
     	genericResourceService.scope.entity.get($stateParams.id, function(update) {$scope.connector=update}, connectorResourceService.connector);
 
-    	$log.info('connector-ctrl', $scope.connector);
+		/**
+		 * get all views
+		 */
+		$scope.connexions = [];
+    	genericResourceService.scope.collections.findAll('connexions', $stateParams.id, $scope.connexions, connectorResourceService.connexions);
+
+    	$log.info('connector-ctrl', $scope.connectors);
     }
 })

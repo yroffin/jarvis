@@ -14,38 +14,32 @@
  *   limitations under the License.
  */
 
-package org.jarvis.core.type;
+package org.jarvis.core.model.bean.connector;
+
+import org.jarvis.core.model.bean.GenericBean;
 
 /**
- * Task type
+ * rest connexion
  */
-public enum TaskType {
+public class ConnexionBean extends GenericBean {
 	/**
-	 * test
+	 * name
 	 */
-	TEST,
+	public String name;
 	/**
-	 * execute
+	 * adress
 	 */
-	EXECUTE,
+	public String adress;
 	/**
-	 * render
+	 * isRenderer
 	 */
-	RENDER,
+	public boolean isRenderer;
 	/**
-	 * download
+	 * isSensor
 	 */
-	DOWNLOAD,
+	public boolean isSensor;
 	/**
-	 * upload
+	 * canAnswer
 	 */
-	UPLOAD,
-	/**
-	 * restore
-	 */
-	RESTORE,
-	/**
-	 * register
-	 */
-	REGISTER
+	public boolean canAnswer;
 }

@@ -23,20 +23,54 @@ import org.jarvis.main.engine.IAimlCoreEngine;
 import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.model.parser.history.IAimlHistory;
 
+/**
+ * interface of each module
+ */
 public interface IJarvisCoreSystem {
 
+	/**
+	 * release a module
+	 */
 	public void release();
 
+	/**
+	 * @param botname
+	 * @param aiml
+	 * @throws AimlParsingError
+	 * @throws IOException
+	 */
 	public void initialize(String botname, String aiml)
 			throws AimlParsingError, IOException;
 
+	/**
+	 * @param string
+	 * @return List<IAimlHistory>
+	 * @throws AimlParsingError
+	 */
 	public List<IAimlHistory> ask(String string) throws AimlParsingError;
 
+	/**
+	 * @param sentence
+	 * @return List<IAimlHistory>
+	 * @throws AimlParsingError
+	 */
 	public List<IAimlHistory> chat(String sentence) throws AimlParsingError;
 
+	/**
+	 * @param value
+	 * @throws IOException
+	 */
 	public void speak(String value) throws IOException;
 
+	/**
+	 * @return IAimlCoreEngine
+	 */
 	IAimlCoreEngine getEngine();
 
+	/**
+	 * @param sentence
+	 * @return List<IAimlHistory>
+	 * @throws AimlParsingError
+	 */
 	List<IAimlHistory> askSilent(String sentence) throws AimlParsingError;
 }

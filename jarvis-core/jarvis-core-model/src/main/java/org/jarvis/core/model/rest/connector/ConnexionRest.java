@@ -14,38 +14,41 @@
  *   limitations under the License.
  */
 
-package org.jarvis.core.type;
+package org.jarvis.core.model.rest.connector;
+
+import org.jarvis.core.model.rest.GenericEntity;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Task type
+ * rest connector
  */
-public enum TaskType {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class ConnexionRest extends GenericEntity {
 	/**
-	 * test
+	 * name
 	 */
-	TEST,
+	@JsonProperty("name")
+	public String name;
 	/**
-	 * execute
+	 * href
 	 */
-	EXECUTE,
+	@JsonProperty("adress")
+	public String adress;
 	/**
-	 * render
+	 * isRenderer
 	 */
-	RENDER,
+	@JsonProperty("isRenderer")
+	public boolean isRenderer;
 	/**
-	 * download
+	 * isSensor
 	 */
-	DOWNLOAD,
+	@JsonProperty("isSensor")
+	public boolean isSensor;
 	/**
-	 * upload
+	 * canAnswer
 	 */
-	UPLOAD,
-	/**
-	 * restore
-	 */
-	RESTORE,
-	/**
-	 * register
-	 */
-	REGISTER
+	@JsonProperty("canAnswer")
+	public boolean canAnswer;
 }

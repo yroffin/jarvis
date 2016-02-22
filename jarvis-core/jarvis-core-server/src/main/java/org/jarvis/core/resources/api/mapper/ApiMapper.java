@@ -19,12 +19,14 @@ public abstract class ApiMapper {
 	protected static final String BLOCK_RESOURCE = "blocks";
 	protected static final String VIEW_RESOURCE = "views";
 	protected static final String CONNECTOR_RESOURCE = "connectors";
+	protected static final String CONNEXION_RESOURCE = "connexions";
 	protected static final String IOT_RESOURCE = "iots";
 	protected static final String EVENT_RESOURCE = "events";
 	protected static final String TRIGGER_RESOURCE = "triggers";
 	protected static final String SNAPSHOT_RESOURCE = "snapshots";
 
 	protected static final String IOT = ":iot";
+	protected static final String CONNEXION = ":connexion";
 	protected static final String COMMAND = ":command";
 	protected static final String PLUGIN = ":plugin";
 	protected static final String TRIGGER = ":trigger";
