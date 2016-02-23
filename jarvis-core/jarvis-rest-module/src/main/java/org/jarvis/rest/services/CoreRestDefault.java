@@ -16,7 +16,8 @@
 
 package org.jarvis.rest.services;
 
-import org.jarvis.client.model.JarvisDatagram;
+import java.util.Map;
+
 import org.jarvis.rest.services.impl.JarvisAimlEngine;
 import org.jarvis.rest.services.impl.JarvisModuleException;
 import org.jarvis.rest.services.impl.JarvisRemoteExec;
@@ -52,7 +53,7 @@ public class CoreRestDefault {
 	 * @return JarvisDatagram
 	 * @throws JarvisModuleException
 	 */
-	public JarvisDatagram remote(JarvisDatagram message) throws JarvisModuleException {
+	public Map<String, Object> remote(Map<String, Object> message) throws JarvisModuleException {
 		return jarvisRemoteExec.onNewMessage(message);
 	}
 
@@ -63,7 +64,7 @@ public class CoreRestDefault {
 	 * @return JarvisDatagram
 	 * @throws JarvisModuleException
 	 */
-	public JarvisDatagram aiml(JarvisDatagram message) throws JarvisModuleException {
+	public Map<String, Object> aiml(Map<String, Object> message) throws JarvisModuleException {
 		return jarvisAimlEngine.onNewMessage(message);
 	}
 
@@ -74,7 +75,7 @@ public class CoreRestDefault {
 	 * @return JarvisDatagram
 	 * @throws JarvisModuleException
 	 */
-	public JarvisDatagram voice(JarvisDatagram message) throws JarvisModuleException {
+	public Map<String, Object> voice(Map<String, Object> message) throws JarvisModuleException {
 		return jarvisVoiceEngine.onNewMessage(message);
 	}
 }

@@ -16,19 +16,17 @@
 
 package org.jarvis.rest.services.impl;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import javax.annotation.PostConstruct;
 
-import org.jarvis.client.model.JarvisDatagram;
-import org.jarvis.client.model.JarvisDatagramEvent;
-import org.jarvis.client.model.JarvisDatagramExec;
 import org.jarvis.rest.services.CoreRestServices;
 import org.jarvis.rest.services.JarvisConnector;
 import org.jarvis.runtime.ProcessExec;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * remote exec module
@@ -48,25 +46,18 @@ public class JarvisRemoteExec extends JarvisRestClientImpl implements JarvisConn
 		setRenderer(true);
 		setSensor(true);
 		setCanAnswer(true);
-
-		mapper = new ObjectMapper();
 	}
 
-	private ObjectMapper mapper;
-
 	@Override
-	public JarvisDatagram onNewMessage(JarvisDatagram message) throws JarvisModuleException {
+	public Map<String, Object> onNewMessage(Map<String, Object> message) throws JarvisModuleException {
 		try {
-			String result = ProcessExec.execute(message.request.getData());
-			JarvisDatagramExec resultConsole = mapper.readValue(result, JarvisDatagramExec.class);
-			JarvisDatagram nextMessage = new JarvisDatagram();
-			nextMessage.setCode("event");
-			nextMessage.event = new JarvisDatagramEvent();
-			nextMessage.event.setData("Result:" + resultConsole.result);
-			nextMessage.event.setScript(result);
+			String result = ProcessExec.execute((String) message.get("data"));
+			Map<String, Object> nextMessage = new LinkedHashMap<String, Object>();
+			nextMessage.put("data",result);
+			nextMessage.put("script",result);
 			return nextMessage;
 		} catch (Exception e) {
-			logger.error("Error, while accessing to jarvis with {} exception {}", message.request.getData(),
+			logger.error("Error, while accessing to jarvis with {} exception {}", message,
 					e.getMessage());
 			throw new JarvisModuleException(e);
 		}

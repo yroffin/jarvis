@@ -16,7 +16,8 @@
 
 package org.jarvis.rest.services;
 
-import org.jarvis.client.model.JarvisDatagram;
+import java.util.Map;
+
 import org.jarvis.rest.services.impl.JarvisModuleException;
 
 /**
@@ -24,15 +25,36 @@ import org.jarvis.rest.services.impl.JarvisModuleException;
  */
 public interface JarvisConnector {
 
-	JarvisDatagram onNewMessage(JarvisDatagram message) throws JarvisModuleException;
+	/**
+	 * message handler
+	 * @param message
+	 * @return Map
+	 * @throws JarvisModuleException
+	 */
+	Map<String, Object> onNewMessage(Map<String, Object> message) throws JarvisModuleException;
 
+	/**
+	 * @return id
+	 */
 	public String getId();
 
+	/**
+	 * @return name
+	 */
 	public String getName();
 
+	/**
+	 * @return if can render
+	 */
 	public boolean isRenderer();
 
+	/**
+	 * @return if is sensor
+	 */
 	public boolean isSensor();
 
+	/**
+	 * @return if can answer to query
+	 */
 	public boolean canAnswer();
 }

@@ -17,9 +17,11 @@
 package org.jarvis.rest.services;
 
 import java.io.IOException;
+import java.util.Map;
 
-import org.jarvis.client.model.JarvisDatagram;
 import org.jarvis.rest.services.impl.JarvisModuleException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -29,8 +31,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import spark.Request;
 import spark.Response;
 
+/**
+ * core services
+ */
 @Component
 public class CoreRestServices {
+	protected Logger logger = LoggerFactory.getLogger(CoreRestServices.class);
 
 	@Autowired
 	CoreRestDefault coreRestDefault;
@@ -40,38 +46,55 @@ public class CoreRestServices {
 
 	private ObjectMapper mapper = new ObjectMapper();
 
+	/**
+	 * modules
+	 */
 	public enum Handler {
-		remote, aiml, voice
+		/**
+		 * remote ssh module
+		 */
+		remote, 
+		/**
+		 * aiml module
+		 */
+		aiml, 
+		/**
+		 * voice module
+		 */
+		voice
 	}
 
 	/**
 	 * remote handler
+	 * @param h 
 	 * 
 	 * @param request
 	 * @param response
-	 * @return
+	 * @return Object
 	 * @throws JsonProcessingException
-	 * @throws JarvisModuleException
 	 */
+	@SuppressWarnings("unchecked")
 	public Object handler(Handler h, Request request, Response response) throws JsonProcessingException {
 		try {
-			JarvisDatagram result = null;
+			Map<String, Object> result = null;
 			switch (h) {
 			case remote:
-				result = coreRestDefault.remote(mapper.readValue(request.body(), JarvisDatagram.class));
+				result = coreRestDefault.remote(mapper.readValue(request.body(), Map.class));
 				break;
 			case aiml:
-				result = coreRestDefault.aiml(mapper.readValue(request.body(), JarvisDatagram.class));
+				result = coreRestDefault.aiml(mapper.readValue(request.body(), Map.class));
 				break;
 			case voice:
-				result = coreRestDefault.voice(mapper.readValue(request.body(), JarvisDatagram.class));
+				result = coreRestDefault.voice(mapper.readValue(request.body(), Map.class));
 				break;
 			}
 			return mapper.writeValueAsString(result);
 		} catch (IOException e) {
+			logger.error("Exception", e);
 			response.status(500);
 			return mapper.writeValueAsString(e);
 		} catch (JarvisModuleException e) {
+			logger.error("Exception", e);
 			response.status(500);
 			return mapper.writeValueAsString(e);
 		}

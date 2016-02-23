@@ -18,12 +18,12 @@ package org.jarvis.rest.services.impl;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
-import org.jarvis.client.model.JarvisDatagram;
-import org.jarvis.client.model.JarvisDatagramEvent;
 import org.jarvis.main.core.IJarvisCoreSystem;
 import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.main.core.impl.JarvisCoreSystemImpl;
@@ -34,6 +34,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+/**
+ * aiml module
+ */
 @Component
 public class JarvisAimlEngine extends JarvisRestClientImpl implements JarvisConnector {
 
@@ -45,9 +48,6 @@ public class JarvisAimlEngine extends JarvisRestClientImpl implements JarvisConn
 
 	/**
 	 * constructor
-	 * 
-	 * @param hostName
-	 * @param portNumber
 	 */
 	@PostConstruct
 	public void init() {
@@ -89,24 +89,20 @@ public class JarvisAimlEngine extends JarvisRestClientImpl implements JarvisConn
 	}
 
 	@Override
-	public JarvisDatagram onNewMessage(JarvisDatagram message) throws JarvisModuleException {
-		JarvisDatagram nextMessage = new JarvisDatagram();
+	public Map<String, Object> onNewMessage(Map<String, Object> message) throws JarvisModuleException {
+		Map<String, Object> nextMessage = new LinkedHashMap<String, Object>();
 
 		try {
 			/**
 			 * aiml render
 			 */
-			List<IAimlHistory> result = jarvis.askSilent(message.request.getData());
+			List<IAimlHistory> result = jarvis.askSilent((String) message.get("data"));
 			for (IAimlHistory value : result) {
 				/**
 				 * on event per answer, for plugin mecanism
 				 */
-				nextMessage.setCode("event");
-				nextMessage.event = new JarvisDatagramEvent();
-				nextMessage.event.setData(value.getAnswer());
-				nextMessage.event.setScript(value.getJavascript());
-				nextMessage.event.setFrom(message.request.getTo());
-				nextMessage.event.setTo(message.request.getFrom());
+				nextMessage.put("answer",value.getAnswer());
+				nextMessage.put("javascript",value.getJavascript());
 			}
 			/**
 			 * render to local default output
@@ -120,10 +116,10 @@ public class JarvisAimlEngine extends JarvisRestClientImpl implements JarvisConn
 
 			return nextMessage;
 		} catch (AimlParsingError e) {
-			logger.error("Error, while accessing to jarvis with {}", message.request.getData());
+			logger.error("Error, while accessing to jarvis with {}", message);
 			throw new JarvisModuleException(e);
 		} catch (IOException e) {
-			logger.error("Error, while accessing to jarvis with {}", message.request.getData());
+			logger.error("Error, while accessing to jarvis with {}", message);
 			throw new JarvisModuleException(e);
 		}
 	}

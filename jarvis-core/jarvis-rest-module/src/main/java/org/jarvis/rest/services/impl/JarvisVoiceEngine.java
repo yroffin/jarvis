@@ -17,16 +17,19 @@
 package org.jarvis.rest.services.impl;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
-import org.jarvis.client.model.JarvisDatagram;
 import org.jarvis.rest.services.CoreRestServices;
 import org.jarvis.rest.services.JarvisConnector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+/**
+ * voide module
+ */
 @Component
 public class JarvisVoiceEngine extends JarvisRestClientImpl implements JarvisConnector {
 
@@ -34,9 +37,6 @@ public class JarvisVoiceEngine extends JarvisRestClientImpl implements JarvisCon
 
 	/**
 	 * constructor
-	 * 
-	 * @param hostName
-	 * @param portNumber
 	 */
 	@PostConstruct
 	public void init() {
@@ -52,15 +52,19 @@ public class JarvisVoiceEngine extends JarvisRestClientImpl implements JarvisCon
 		 */
 	}
 
+	/**
+	 * @param value
+	 * @throws IOException
+	 */
 	public void speak(String value) throws IOException {
 	}
 
 	@Override
-	public JarvisDatagram onNewMessage(JarvisDatagram message) throws JarvisModuleException {
+	public Map<String, Object> onNewMessage(Map<String, Object> message) throws JarvisModuleException {
 		try {
-			speak(message.request.getData());
+			speak((String) message.get("data"));
 		} catch (IOException e) {
-			logger.error("Error, while accessing to jarvis with {} exception {}", message.request.getData(),
+			logger.error("Error, while accessing to jarvis with {} exception {}", message,
 					e.getMessage());
 			throw new JarvisModuleException(e);
 		}

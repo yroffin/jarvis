@@ -21,6 +21,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 
+/**
+ * simple rest client
+ */
 @PropertySource("classpath:connector.properties")
 public abstract class JarvisRestClientImpl implements JarvisConnector {
 
@@ -33,6 +36,11 @@ public abstract class JarvisRestClientImpl implements JarvisConnector {
 	@Autowired
 	protected Environment env;
 
+	/**
+	 * init this client
+	 * @param id
+	 * @param name
+	 */
 	public void init(String id, String name) {
 		this.setId(id);
 		this.setName(name);
@@ -43,6 +51,9 @@ public abstract class JarvisRestClientImpl implements JarvisConnector {
 		return name;
 	}
 
+	/**
+	 * @param name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -52,6 +63,9 @@ public abstract class JarvisRestClientImpl implements JarvisConnector {
 		return isRenderer;
 	}
 
+	/**
+	 * @param isRenderer
+	 */
 	public void setRenderer(boolean isRenderer) {
 		this.isRenderer = isRenderer;
 	}
@@ -61,6 +75,9 @@ public abstract class JarvisRestClientImpl implements JarvisConnector {
 		return isSensor;
 	}
 
+	/**
+	 * @param isSensor
+	 */
 	public void setSensor(boolean isSensor) {
 		this.isSensor = isSensor;
 	}
@@ -70,6 +87,9 @@ public abstract class JarvisRestClientImpl implements JarvisConnector {
 		return canAnswer;
 	}
 
+	/**
+	 * @param canAnswer
+	 */
 	public void setCanAnswer(boolean canAnswer) {
 		this.canAnswer = canAnswer;
 	}
@@ -79,6 +99,9 @@ public abstract class JarvisRestClientImpl implements JarvisConnector {
 		return id;
 	}
 
+	/**
+	 * @param id
+	 */
 	public void setId(String id) {
 		this.id = id;
 	}
