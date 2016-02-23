@@ -41,7 +41,7 @@ angular.module('JarvisApp.ctrl.connectors', ['JarvisApp.services'])
 	);
 })
 .controller('connectorCtrl',
-	function($scope, $log, $stateParams, genericResourceService, genericScopeService, connectorResourceService, iotResourceService, toastService){
+	function($scope, $log, $stateParams, genericResourceService, genericScopeService, connectorResourceService, connexionResourceService, toastService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
 	 */
@@ -70,7 +70,25 @@ angular.module('JarvisApp.ctrl.connectors', ['JarvisApp.services'])
 			connectorResourceService.connexions, 
 			{
 			},
-			$stateParams.id
+			$stateParams.id,
+			{
+				/**
+				 * drop callback, to delete target connexion (orignal remove is cancelled)
+				 * @param data
+				 * @returns
+				 */
+				remove: function(data) {
+					connexionResourceService.connexion.delete(data.id, function() {
+						$log.info("Drop any ", data);
+			  			var toremove = data.instance;
+			  			_.remove($scope.connexions, function(element) {
+			  				return element.instance == toremove;
+			  			});
+					}, function() {
+						$log.warn("While dropping any ", data);
+					});
+				}
+			}
 	);
     /**
      * load this controller

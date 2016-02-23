@@ -119,7 +119,7 @@ angular.module('JarvisApp.services.scope', ['JarvisApp.services.generic']).facto
 		    	genericResourceService.scope.entity.duplicate(function() {scope.go(back)}, resource, data, service);
 		    }
 	  },
-	  resourceLink : function(getLink, scope, resource, back, service, link, dataLink, stateParamsId) {
+	  resourceLink : function(getLink, scope, resource, back, service, link, dataLink, stateParamsId, callbacks) {
 	    	$log.debug('inject link',link);
 		    /**
 		     * Cf. genericResourceService
@@ -147,10 +147,27 @@ angular.module('JarvisApp.services.scope', ['JarvisApp.services.generic']).facto
 		    		)
 		    		.then(function() {
 				    	$log.debug('link::drop',data);
-				    	genericResourceService.scope.link.remove(stateParamsId,data,link,getLink());
+				    	if(callbacks && callbacks.remove) {
+				    		/**
+				    		 * alternate remove function
+				    		 */
+				    		callbacks.remove(data);
+				    	} else {
+				    		/**
+				    		 * default remove function
+				    		 */
+					    	genericResourceService.scope.link.remove(stateParamsId,data,link,getLink());
+				    	}
+				    	/**
+				    	 * post drop callback
+				    	 */
+				    	if(callbacks && callbacks.afterRemove) {
+				    		callbacks.afterRemove(data);
+				    	}
 			    	}, function() {
 				    	$log.debug('abort');
-			   	});
+			    	}
+			    );
 			}
 	  }
   };

@@ -16,13 +16,20 @@
 
 package org.jarvis.core.resources.api.href;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 
+import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.connector.ConnectorBean;
 import org.jarvis.core.model.bean.connector.ConnexionBean;
+import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.model.rest.connector.ConnectorRest;
 import org.jarvis.core.model.rest.connector.ConnexionRest;
+import org.jarvis.core.resources.api.connectors.ApiConnexionResources;
 import org.jarvis.core.resources.api.mapper.ApiHrefMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -30,6 +37,9 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class ApiHrefConnectorResources extends ApiHrefMapper<ConnectorRest,ConnexionRest> {
+
+	@Autowired
+	ApiConnexionResources apiConnexionResources;
 
 	@PostConstruct
 	protected
@@ -71,5 +81,24 @@ public class ApiHrefConnectorResources extends ApiHrefMapper<ConnectorRest,Conne
 	 */
 	public ConnexionRest toConnexionRest(ConnexionBean bean) {
 		return mapperFactory.getMapperFacade().map(bean, ConnexionRest.class);
+	}
+
+	/**
+	 * find any connexion by href
+	 * @param owner
+	 * @param href
+	 * @param relation
+	 * @return List<GenericEntity>
+	 * @throws TechnicalNotFoundException 
+	 */
+	public List<GenericEntity> findAllByHref(ConnectorRest owner, String href, String relation) throws TechnicalNotFoundException {
+		List<GenericEntity> result = new ArrayList<GenericEntity>();
+		for(GenericEntity link : findAll(owner, relation)) {
+			ConnexionRest cnx = apiConnexionResources.doGetById(link.id);
+			if(cnx.adress.equals(href)) {
+				result.add(link);
+			}
+		}
+		return result;
 	}
 }

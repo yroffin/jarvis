@@ -84,16 +84,17 @@ public class ApiConnectorResources extends ApiLinkedResources<ConnectorRest,Conn
 			 * retrieve lin if exist
 			 */
 			ConnectorRest owner = apiHrefConnectorResources.toConnectorRest(bean);
-			List<GenericEntity> links = apiHrefConnectorResources.findAll(owner, HREF.toString());
+			List<GenericEntity> links = apiHrefConnectorResources.findAllByHref(owner, (String) args.get("href"), HREF.toString());
 			if(links.size() == 0) {
 				/**
-				 * no links
+				 * no links with such href
 				 */
 				ConnexionRest r = new ConnexionRest();
 				r.adress = (String) args.get("href");
 				r.isRenderer = (boolean) args.get("isRenderer");
 				r.isSensor = (boolean) args.get("isSensor");
 				r.canAnswer = (boolean) args.get("canAnswer");
+				logger.info("Add connexion {}", r.adress);
 				/*
 				 * build it
 				 */
