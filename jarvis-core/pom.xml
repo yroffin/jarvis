@@ -287,6 +287,7 @@
 		<module>jarvis-ehcache</module>
 		<module>jarvis-core-model</module>
 		<module>jarvis-core-neo4j-client</module>
+		<module>jarvis-marytts</module>
 	</modules>
 
 	<repositories>
