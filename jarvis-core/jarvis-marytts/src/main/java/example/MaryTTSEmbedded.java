@@ -6,6 +6,8 @@ import javax.sound.sampled.AudioInputStream;
 
 import marytts.LocalMaryInterface;
 import marytts.MaryInterface;
+import marytts.htsengine.HMMVoice;
+import marytts.modules.synthesis.Voice;
 import marytts.util.data.audio.AudioPlayer;
 
 
@@ -18,9 +20,10 @@ public class MaryTTSEmbedded {
 
 		MaryInterface marytts = new LocalMaryInterface();
 		marytts.setLocale(Locale.FRENCH);
+		
 		Set<String> voices = marytts.getAvailableVoices();
-		marytts.setVoice(voices.iterator().next());
-		AudioInputStream audio = marytts.generateAudio("Bonjour yannick");
+		marytts.setVoice("enst-catherine-hsmm");
+		AudioInputStream audio = marytts.generateAudio("Bonjour yannick, tu va bien");
 		AudioPlayer player = new AudioPlayer(audio);
 		player.start();
 		player.join();

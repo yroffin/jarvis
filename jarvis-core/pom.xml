@@ -14,6 +14,7 @@
 		<spring.version>4.2.0.RELEASE</spring.version>
 		<sphinx.version>5prealpha-SNAPSHOT</sphinx.version>
 		<mockito.version>1.10.19</mockito.version>
+		<marytts.version>5.1.2</marytts.version>
 	</properties>
 
 	<distributionManagement>
@@ -257,6 +258,11 @@
 				<artifactId>sphinx4-data</artifactId>
 				<version>${sphinx.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>de.dfki.mary</groupId>
+				<artifactId>voice-enst-catherine-hsmm</artifactId>
+				<version>${marytts.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -301,6 +307,33 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
+		<repository>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<id>bintray-marytts-marytts</id>
+			<name>bintray</name>
+			<url>http://dl.bintray.com/marytts/marytts</url>
+		</repository>
+		<repository>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<id>spring.io</id>
+			<name>spring.io</name>
+			<url>http://repo.spring.io/libs-release-remote</url>
+		</repository>
 	</repositories>
+	
+	<pluginRepositories>
+		<pluginRepository>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<id>bintray-marytts-marytts</id>
+			<name>bintray-plugins</name>
+			<url>http://dl.bintray.com/marytts/marytts</url>
+		</pluginRepository>
+	</pluginRepositories>
 
 </project>

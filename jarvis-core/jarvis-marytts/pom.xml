@@ -5,6 +5,7 @@
 		<groupId>org.yroffin.com.jarvis</groupId>
 		<artifactId>jarvis</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<artifactId>jarvis-marytts</artifactId>
 
@@ -12,53 +13,34 @@
 		<dependency>
 			<groupId>de.dfki.mary</groupId>
 			<artifactId>marytts</artifactId>
-			<version>5.1.2</version>
+			<version>${marytts.version}</version>
 			<type>pom</type>
 		</dependency>
 		<dependency>
 			<groupId>de.dfki.mary</groupId>
 			<artifactId>marytts-runtime</artifactId>
-			<version>5.1.2</version>
+			<version>${marytts.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>de.dfki.mary</groupId>
 			<artifactId>marytts-lang-fr</artifactId>
-			<version>5.1.2</version>
+			<version>${marytts.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>de.dfki.mary</groupId>
 			<artifactId>voice-cmu-slt-hsmm</artifactId>
-			<version>5.1.2</version>
+			<version>${marytts.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>de.dfki.mary</groupId>
+			<artifactId>voice-enst-florent-hsmm</artifactId>
+			<version>${marytts.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>de.dfki.mary</groupId>
+			<artifactId>voice-enst-catherine-hsmm</artifactId>
+			<version>${marytts.version}</version>
 		</dependency>
 	</dependencies>
-
-	<repositories>
-		<repository>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<id>bintray-marytts-marytts</id>
-			<name>bintray</name>
-			<url>http://dl.bintray.com/marytts/marytts</url>
-		</repository>
-		<repository>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<id>spring.io</id>
-			<name>spring.io</name>
-			<url>http://repo.spring.io/libs-release-remote</url>
-		</repository>
-	</repositories>
-	<pluginRepositories>
-		<pluginRepository>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<id>bintray-marytts-marytts</id>
-			<name>bintray-plugins</name>
-			<url>http://dl.bintray.com/marytts/marytts</url>
-		</pluginRepository>
-	</pluginRepositories>
 
 </project>

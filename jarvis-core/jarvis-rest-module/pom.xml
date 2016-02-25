@@ -47,6 +47,10 @@
 			<artifactId>spark-core</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>de.dfki.mary</groupId>
+			<artifactId>voice-enst-catherine-hsmm</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 		</dependency>
