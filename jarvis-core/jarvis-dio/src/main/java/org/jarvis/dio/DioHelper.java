@@ -44,16 +44,16 @@ public class DioHelper {
 	 */
 	protected static Logger logger = LoggerFactory.getLogger(DioHelper.class);
 	
-	private int pin = -1;
-	private GpioPinDigitalOutput pinGpio;
+	private static int pin = -1;
+	private static GpioPinDigitalOutput pinGpio;
 	
 	/**
 	 * setter
 	 * @param pin
 	 */
-	public void setPin(int pin) {
-		if(this.pin == pin) return;
-		this.pin = pin;
+	public static void setPin(int pin) {
+		if(DioHelper.pin == pin) return;
+		DioHelper.pin = pin;
 		switch(pin) {
 			case 0:
 				pinGpio = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_00);
@@ -119,10 +119,10 @@ public class DioHelper {
 	}
 
 
-	private int sender;
-	private int interruptor;
-	private int bit2sender[] = new int[26];     // 26 bit sender identifier
-	private int bit2Interruptor[] = new int[4]; // 4 bit interuptor
+	private static int sender;
+	private static int interruptor;
+	private static int bit2sender[] = new int[26];     // 26 bit sender identifier
+	private static int bit2Interruptor[] = new int[4]; // 4 bit interuptor
 
 	protected static GpioController gpio;
 	
@@ -168,7 +168,7 @@ public class DioHelper {
 	 * activate switch
 	 * @throws InterruptedException
 	 */
-	public void switchOn() throws InterruptedException {
+	public static void switchOn() throws InterruptedException {
 		for(int i=0;i<5;i++) {
 			transmit(1);
 			Thread.sleep(5);
@@ -179,7 +179,7 @@ public class DioHelper {
 	 * un-activate switch
 	 * @throws InterruptedException
 	 */
-	public void switchOff() throws InterruptedException {
+	public static void switchOff() throws InterruptedException {
 		for(int i=0;i<5;i++) {
 			transmit(0);
 			Thread.sleep(5);
@@ -206,11 +206,16 @@ public class DioHelper {
 	 * transmit value
 	 * @param value
 	 */
-	private void transmit(int value) {
+	private static void transmit(int value) {
 		int i;
 
-		// Lock Sequence announcing the starting signal to the receiver
 		logger.info("Lock Sequence announcing the starting signal to the receiver on pin {}", pin);
+		logger.info("Transmitter sends the code {}", bit2sender);
+		logger.info("Sends the bit defining whether it is a control group or not (26th bit) {}", 0);
+		logger.info("Sends the bit defining whether it is on or extinguished 27th bit) {}", value);
+		logger.info("Sends the last 4 bits {}", bit2Interruptor);
+		
+		// Lock Sequence announcing the starting signal to the receiver
 		write(1);
 		delayMicroseconds(275);  // a noise bit before starting to put the delays of the receiver 0
 		write(0);
@@ -222,23 +227,19 @@ public class DioHelper {
 		write(1);    // Returning to high to cut the locks of well data
 
 		// Transmitter sends the code (272946 = 1000010101000110010 binary)
-		logger.info("Transmitter sends the code {}", bit2sender);
 		for (i = 0; i < 26; i++) {
 			sendPair(bit2sender[i]);
 		}
 
 		// Sends the bit defining whether it is a control group or not (26th bit)
-		logger.info("Sends the bit defining whether it is a control group or not (26th bit) {}", 0);
 		sendPair(0);
 
 		// Sends the bit defining whether it is on or extinguished 27th bit)
-		logger.info("Sends the bit defining whether it is on or extinguished 27th bit) {}", value);
 		sendPair(value);
 
 		// Sends the last 4 bits, representing the switch code here 0 (4 encodes bit so 0000)
 		// note: on official chacon remote controls, switches are logically named from 0 to x
 		// switch 1 = 0 (ie 0000), switch 2 = 1 (1000), switch 3 = 2 (0100), etc ...
-		logger.info("Sends the last 4 bits {}", bit2Interruptor);
 		for (i = 0; i < 4; i++) {
 			if (bit2Interruptor[i] == 0) {
 				sendPair(0);
@@ -247,17 +248,21 @@ public class DioHelper {
 			}
 		}
 
+		// cut data latch
+		write(1);
+		// wait 275μs
+		delayMicroseconds(275);
+		// 2 2675μs lock to signal the closure of the signal
+		write(0);
+
 		logger.info("End");
-		write(1);   // cut data latch
-		delayMicroseconds(275); // wait 275μs
-		write(0);   // 2 2675μs lock to signal the closure of the signal
 	}
 
 	/**
 	 * send bits as pair values
 	 * @param b
 	 */
-	private void sendPair(int b) {
+	private static void sendPair(int b) {
 		if (b == 1) {
 			sendBit(1);
 			sendBit(0);
@@ -271,7 +276,7 @@ public class DioHelper {
 	 * send raw bit
 	 * @param b
 	 */
-	private void sendBit(int b) {
+	private static void sendBit(int b) {
 		if (b == 1) {
 			write(1);
 			delayMicroseconds(310);   //275 orinally, but tweaked.
@@ -289,7 +294,7 @@ public class DioHelper {
 	 * write to pin
 	 * @param b
 	 */
-	private void write(int b) {
+	private static void write(int b) {
 		if(b == 1) {
 			pinGpio.high();
 		} else {
@@ -302,7 +307,7 @@ public class DioHelper {
 	 * @param power
 	 * @return
 	 */
-	private long power2(int power) {
+	private static long power2(int power) {
 		long integer = 1;
 		for (int i = 0; i < power; i++) {
 			integer *= 2;
@@ -319,7 +324,7 @@ public class DioHelper {
 	 * @param length
 	 * @return 
 	 */
-	private String itob(long integer, int[] arr) {
+	private static String itob(long integer, int[] arr) {
 		for (int i = 0; i < arr.length; i++) {
 			if ((integer / power2(arr.length - 1 - i)) == 1) {
 				integer -= power2(arr.length - 1 - i);
@@ -358,8 +363,8 @@ public class DioHelper {
 		/**
 		 * no change
 		 */
-		if(this.sender == sender) return this;
-		this.sender = sender;
+		if(DioHelper.sender == sender) return this;
+		DioHelper.sender = sender;
 		logger.info("[SENDER] {}", itob(sender, bit2sender));
 		return this;
 	}
@@ -373,8 +378,8 @@ public class DioHelper {
 		/**
 		 * no change
 		 */
-		if(this.interruptor == interruptor) return this;
-		this.interruptor = interruptor;
+		if(DioHelper.interruptor == interruptor) return this;
+		DioHelper.interruptor = interruptor;
 		logger.info("[INTRUP] {}", itob(interruptor, bit2Interruptor));
 		return this;
 	}
@@ -392,10 +397,10 @@ public class DioHelper {
 				.interruptor(Integer.parseInt(argv[2]));
 		if(dioHelper.init()) {
 			if(argv[3].startsWith("on")) {
-				dioHelper.switchOn();
+				DioHelper.switchOn();
 			}
 			if(argv[3].startsWith("off")) {
-				dioHelper.switchOff();
+				DioHelper.switchOff();
 			}
 		} else {
 			logger.warn("Unable to detect wiring PI");
