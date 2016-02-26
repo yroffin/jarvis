@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.yroffin.com.jarvis</groupId>
 	<artifactId>jarvis</artifactId>
@@ -12,7 +13,6 @@
 		<jackson.version>2.4.3</jackson.version>
 		<spark.version>2.2</spark.version>
 		<spring.version>4.2.0.RELEASE</spring.version>
-		<sphinx.version>5prealpha-SNAPSHOT</sphinx.version>
 		<mockito.version>1.10.19</mockito.version>
 		<marytts.version>5.1.2</marytts.version>
 	</properties>
@@ -30,37 +30,32 @@
 			<dependency>
 				<groupId>org.yroffin.com.jarvis</groupId>
 				<artifactId>jarvis-ehcache</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
+				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.yroffin.com.jarvis</groupId>
 				<artifactId>jarvis-core-neo4j-client</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
+				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.yroffin.com.jarvis</groupId>
 				<artifactId>jarvis-aiml</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
-			</dependency>
-			<dependency>
-				<groupId>org.yroffin.com.jarvis</groupId>
-				<artifactId>jarvis-gtranslate-libs</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
+				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.yroffin.com.jarvis</groupId>
 				<artifactId>jarvis-common</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
+				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.yroffin.com.jarvis</groupId>
 				<artifactId>jarvis-java-client</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
+				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.yroffin.com.jarvis</groupId>
 				<artifactId>jarvis-core-model</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
+				<version>${project.version}</version>
 			</dependency>
 
 			<!-- apache client -->
@@ -247,17 +242,6 @@
 				<version>3.0.0.m4</version>
 			</dependency>
 
-			<!-- sphinx -->
-			<dependency>
-				<groupId>edu.cmu.sphinx</groupId>
-				<artifactId>sphinx4-core</artifactId>
-				<version>${sphinx.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>edu.cmu.sphinx</groupId>
-				<artifactId>sphinx4-data</artifactId>
-				<version>${sphinx.version}</version>
-			</dependency>
 			<dependency>
 				<groupId>de.dfki.mary</groupId>
 				<artifactId>voice-enst-catherine-hsmm</artifactId>
@@ -282,7 +266,6 @@
 
 	<modules>
 		<module>jarvis-aiml</module>
-		<module>sphinx-core</module>
 		<module>jarvis-nodejs</module>
 		<module>jarvis-java-client</module>
 		<module>jarvis-scripts</module>
@@ -294,6 +277,7 @@
 		<module>jarvis-core-model</module>
 		<module>jarvis-core-neo4j-client</module>
 		<module>jarvis-marytts</module>
+		<module>marvis-marytts-voices</module>
 	</modules>
 
 	<repositories>
