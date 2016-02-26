@@ -61,11 +61,13 @@ public class CoreRestDaemon {
 		/**
 		 * mount resources
 		 */
-		post("/connectors/remote",
+		post("/api/connectors/remote",
 				(request, response) -> coreRestServices.handler(CoreRestServices.Handler.remote, request, response));
-		post("/connectors/aiml",
+		post("/api/connectors/aiml",
 				(request, response) -> coreRestServices.handler(CoreRestServices.Handler.aiml, request, response));
-		post("/connectors/voice",
+		post("/api/connectors/voice",
 				(request, response) -> coreRestServices.handler(CoreRestServices.Handler.voice, request, response));
+		post("/api/connectors/dio",
+				(request, response) -> coreRestServices.handler(CoreRestServices.Handler.dio, request, response));
 	}
 }
