@@ -9,6 +9,8 @@
 	</parent>
 	<artifactId>jarvis-marytts</artifactId>
 
+	<name>MaryTTS module</name>
+
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>

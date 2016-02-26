@@ -9,6 +9,8 @@
 	</parent>
 	<artifactId>jarvis-aiml</artifactId>
 
+	<name>Artificial Intelligence Markup Language module</name>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>

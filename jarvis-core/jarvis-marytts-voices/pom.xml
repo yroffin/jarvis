@@ -8,6 +8,8 @@
   </parent>
   <artifactId>jarvis-marytts-voices</artifactId>
   
+  <name>MaryTTS voices module</name>
+  
   <build>
   	<plugins>
   		<plugin>

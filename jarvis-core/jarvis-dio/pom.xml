@@ -9,6 +9,8 @@
   <artifactId>jarvis-dio</artifactId>
   <url>http://pi4j.com/download.html</url>
   
+  <name>Core DIO module (wiring pi interface)</name>
+
   <dependencies>
 	<dependency>
 		<groupId>com.pi4j</groupId>

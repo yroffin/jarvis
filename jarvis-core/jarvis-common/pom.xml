@@ -9,6 +9,8 @@
 	</parent>
 	<artifactId>jarvis-common</artifactId>
 
+	<name>Commons elements</name>
+
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>

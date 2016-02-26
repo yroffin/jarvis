@@ -9,6 +9,8 @@
 	</parent>
 	<artifactId>jarvis-rest-module</artifactId>
 
+	<name>Rest module (connectors)</name>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.yroffin.com.jarvis</groupId>

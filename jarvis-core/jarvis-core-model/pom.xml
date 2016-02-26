@@ -8,7 +8,7 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<artifactId>jarvis-core-model</artifactId>
-	<name>Core model</name>
+	<name>Core model (pojo)</name>
 	<description>Core model</description>
 	
 	<dependencies>
