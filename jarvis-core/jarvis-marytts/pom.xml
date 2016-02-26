@@ -12,8 +12,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>marvis-marytts-voices</artifactId>
-			<version>${project.version}</version>
+			<artifactId>jarvis-marytts-voices</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>de.dfki.mary</groupId>

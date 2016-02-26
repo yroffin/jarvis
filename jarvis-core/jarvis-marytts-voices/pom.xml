@@ -6,7 +6,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
-  <artifactId>marvis-marytts-voices</artifactId>
+  <artifactId>jarvis-marytts-voices</artifactId>
   
   <build>
   	<plugins>

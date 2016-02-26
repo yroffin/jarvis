@@ -28,32 +28,42 @@
 		<dependencies>
 			<!-- internal/app -->
 			<dependency>
-				<groupId>org.yroffin.com.jarvis</groupId>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>jarvis-marytts</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>jarvis-marytts-voices</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
 				<artifactId>jarvis-ehcache</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.yroffin.com.jarvis</groupId>
+				<groupId>${project.groupId}</groupId>
 				<artifactId>jarvis-core-neo4j-client</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.yroffin.com.jarvis</groupId>
+				<groupId>${project.groupId}</groupId>
 				<artifactId>jarvis-aiml</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.yroffin.com.jarvis</groupId>
+				<groupId>${project.groupId}</groupId>
 				<artifactId>jarvis-common</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.yroffin.com.jarvis</groupId>
+				<groupId>${project.groupId}</groupId>
 				<artifactId>jarvis-java-client</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.yroffin.com.jarvis</groupId>
+				<groupId>${project.groupId}</groupId>
 				<artifactId>jarvis-core-model</artifactId>
 				<version>${project.version}</version>
 			</dependency>
