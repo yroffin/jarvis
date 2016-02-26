@@ -19,6 +19,7 @@ package org.jarvis.rest.services;
 import java.util.Map;
 
 import org.jarvis.rest.services.impl.JarvisAimlEngine;
+import org.jarvis.rest.services.impl.JarvisDioEngine;
 import org.jarvis.rest.services.impl.JarvisModuleException;
 import org.jarvis.rest.services.impl.JarvisRemoteExec;
 import org.jarvis.rest.services.impl.JarvisVoiceEngine;
@@ -45,6 +46,9 @@ public class CoreRestDefault {
 
 	@Autowired
 	JarvisVoiceEngine jarvisVoiceEngine;
+
+	@Autowired
+	JarvisDioEngine jarvisDioEngine;
 
 	/**
 	 * remote service
@@ -77,5 +81,15 @@ public class CoreRestDefault {
 	 */
 	public Map<String, Object> voice(Map<String, Object> message) throws JarvisModuleException {
 		return jarvisVoiceEngine.onNewMessage(message);
+	}
+
+	/**
+	 * dio service
+	 * @param message
+	 * @return Map<String, Object>
+	 * @throws JarvisModuleException 
+	 */
+	public Map<String, Object> dio(Map<String, Object> message) throws JarvisModuleException {
+		return jarvisDioEngine.onNewMessage(message);
 	}
 }

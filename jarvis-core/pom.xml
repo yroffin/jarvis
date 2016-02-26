@@ -17,6 +17,7 @@
 		<spring.version>4.2.0.RELEASE</spring.version>
 		<mockito.version>1.10.19</mockito.version>
 		<marytts.version>5.1.2</marytts.version>
+		<slf4j.version>1.7.7</slf4j.version>
 	</properties>
 
 	<distributionManagement>
@@ -29,6 +30,11 @@
 	<dependencyManagement>
 		<dependencies>
 			<!-- internal/app -->
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>jarvis-dio</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
 				<artifactId>jarvis-marytts</artifactId>
@@ -68,6 +74,13 @@
 				<groupId>${project.groupId}</groupId>
 				<artifactId>jarvis-core-model</artifactId>
 				<version>${project.version}</version>
+			</dependency>
+
+			<!-- powermock for test -->
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-core</artifactId>
+				<version>2.0.31-beta</version>
 			</dependency>
 
 			<!-- apache client -->
@@ -153,7 +166,22 @@
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-api</artifactId>
-				<version>1.7.7</version>
+				<version>${slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>jul-to-slf4j</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>jcl-to-slf4j</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-jdk14</artifactId>
+				<version>${slf4j.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.logging.log4j</groupId>

@@ -57,11 +57,15 @@ public class CoreRestServices {
 		/**
 		 * aiml module
 		 */
-		aiml, 
+		aiml,
 		/**
 		 * voice module
 		 */
-		voice
+		voice,
+		/**
+		 * dio module
+		 */
+		dio
 	}
 
 	/**
@@ -86,6 +90,11 @@ public class CoreRestServices {
 				break;
 			case voice:
 				result = coreRestDefault.voice(mapper.readValue(request.body(), Map.class));
+				break;
+			case dio:
+				result = coreRestDefault.dio(mapper.readValue(request.body(), Map.class));
+				break;
+			default:
 				break;
 			}
 			return mapper.writeValueAsString(result);

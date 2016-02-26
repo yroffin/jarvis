@@ -15,11 +15,22 @@
  */
 package org.jarvis.dio;
 
+import java.util.EnumSet;
+
+import org.mockito.Matchers;
+import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.bridge.SLF4JBridgeHandler;
 
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
+import com.pi4j.io.gpio.GpioPinDigitalOutput;
+import com.pi4j.io.gpio.Pin;
+import com.pi4j.io.gpio.PinMode;
+import com.pi4j.io.gpio.PinPullResistance;
+import com.pi4j.io.gpio.PinState;
+import com.pi4j.io.gpio.RaspiPin;
 
 /**
  * DioHelper
@@ -33,45 +44,111 @@ public class DioHelper {
 	protected static Logger logger = LoggerFactory.getLogger(DioHelper.class);
 	
 	private int pin;
+	private GpioPinDigitalOutput pinGpio;
+	
+	/**
+	 * setter
+	 * @param pin
+	 */
+	public void setPin(int pin) {
+		this.pin = pin;
+		switch(pin) {
+			case 1:
+				pinGpio = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01);
+				break;
+			case 2:
+				pinGpio = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02);
+				break;
+			case 3:
+				pinGpio = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03);
+				break;
+			case 4:
+				pinGpio = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_04);
+				break;
+			case 5:
+				pinGpio = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_05);
+				break;
+			case 6:
+				pinGpio = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_06);
+				break;
+			case 7:
+				pinGpio = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_07);
+				break;
+			case 8:
+				pinGpio = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_08);
+				break;
+			case 9:
+				pinGpio = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_19);
+				break;
+			case 10:
+				pinGpio = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_10);
+				break;
+			case 11:
+				pinGpio = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_11);
+				break;
+			case 12:
+				pinGpio = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_12);
+				break;
+			case 13:
+				pinGpio = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_13);
+				break;
+			case 14:
+				pinGpio = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_14);
+				break;
+			case 15:
+				pinGpio = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_15);
+				break;
+			case 16:
+				pinGpio = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_16);
+				break;
+			default:
+				break;
+		}
+	}
+
+
 	private int sender;
 	private int interruptor;
 	private int bit2sender[] = new int[26];     // 26 bit sender identifier
 	private int bit2Interruptor[] = new int[4]; // 4 bit interuptor
 
-	private static GpioController gpio;
+	protected static GpioController gpio;
 	
 	/**
-	 * constructor
-	 * @param pin
-	 * @param sender
-	 * @param interruptor
+	 * default constructor
 	 */
-	DioHelper(int pin, int sender, int interruptor) {
-		this.pin = pin;
-		this.sender = sender;
-		this.interruptor = interruptor;
+	public DioHelper() {
+		init();
 	}
 	
-	boolean init() {
-		try {
-			// create gpio controller
-	        gpio = GpioFactory.getInstance();
-		} catch(UnsatisfiedLinkError e) {
-			return false;
-		}
+	/**
+	 * http://www.slf4j.org/api/org/slf4j/bridge/SLF4JBridgeHandler.html
+	 */
+	{
+		// Optionally remove existing handlers attached to j.u.l root logger
+		 SLF4JBridgeHandler.removeHandlersForRootLogger();  // (since SLF4J 1.6.5)
 
-		logger.info("Pin {} Sender {} Interuptor {}", this.pin, this.sender, this.interruptor);
-		logger.info("Fix pin {} to output mode", pin);
-		/**
-		 * TODO
-		 * fix pin pin in OUTPUT mode
-		 */
-		
-		/**
-		 * converting the code of the transmitter in binary code
-		 */
-		logger.info("[SENDER] {}", itob(sender, bit2sender));
-		logger.info("[INTRUP] {}", itob(interruptor, bit2Interruptor));
+		 // add SLF4JBridgeHandler to j.u.l's root logger, should be done once during
+		 // the initialization phase of your application
+		 SLF4JBridgeHandler.install();
+	}
+	
+	GpioPinDigitalOutput mockedPin;
+	
+	boolean init() throws RuntimeException {
+		try {
+			try {
+				// create gpio controller
+		        gpio = GpioFactory.getInstance();
+			} catch(Throwable e) {
+				throw new Exception(e);
+			}
+		} catch(Exception e) {
+			gpio = Mockito.mock(GpioController.class);
+			mockedPin = Mockito.mock(GpioPinDigitalOutput.class);
+			Mockito.when(gpio.provisionDigitalOutputPin((Pin) Matchers.any(Pin.class))).thenReturn(mockedPin);
+			return true;
+		}
 		return true;
 	}
 
@@ -79,7 +156,7 @@ public class DioHelper {
 	 * activate switch
 	 * @throws InterruptedException
 	 */
-	void switchOn() throws InterruptedException {
+	public void switchOn() throws InterruptedException {
 		for(int i=0;i<5;i++) {
 			transmit(1);
 			Thread.sleep(10);
@@ -90,7 +167,7 @@ public class DioHelper {
 	 * un-activate switch
 	 * @throws InterruptedException
 	 */
-	void switchOff() throws InterruptedException {
+	public void switchOff() throws InterruptedException {
 		for(int i=0;i<5;i++) {
 			transmit(0);
 			Thread.sleep(10);
@@ -200,6 +277,11 @@ public class DioHelper {
 	 */
 	private void write(int b) {
 		logger.debug("[RASPBERRY] pin {} set to {}", pin, b);
+		if(b == 1) {
+			pinGpio.setState(PinState.HIGH);
+		} else {
+			pinGpio.setState(PinState.LOW);
+		}
 	}
 
 	/**
@@ -245,12 +327,53 @@ public class DioHelper {
 	}
 	
 	/**
+	 * set pin for this helper
+	 * @param pin
+	 * @return DioHelper
+	 */
+	public DioHelper pin(int pin) {
+		setPin(pin);
+		return this;
+	}
+
+	/**
+	 * set pin for this helper
+	 * @param sender
+	 * @return DioHelper
+	 */
+	public DioHelper sender(int sender) {
+		/**
+		 * no change
+		 */
+		if(this.sender == sender) return this;
+		this.sender = sender;
+		logger.info("[SENDER] {}", itob(sender, bit2sender));
+		return this;
+	}
+
+	/**
+	 * set pin for this helper
+	 * @param interruptor
+	 * @return DioHelper
+	 */
+	public DioHelper interruptor(int interruptor) {
+		/**
+		 * no change
+		 */
+		if(this.interruptor == interruptor) return this;
+		this.interruptor = interruptor;
+		logger.info("[INTRUP] {}", itob(interruptor, bit2Interruptor));
+		return this;
+	}
+
+
+	/**
 	 * static launcher
 	 * @param argv
 	 * @throws InterruptedException
 	 */
 	public static void main(String[] argv) throws InterruptedException {
-		DioHelper dioHelper = new DioHelper(Integer.parseInt(argv[0]),Integer.parseInt(argv[1]),Integer.parseInt(argv[2]));
+		DioHelper dioHelper = new DioHelper().pin(Integer.parseInt(argv[0])).interruptor(Integer.parseInt(argv[1])).sender(Integer.parseInt(argv[2]));
 		if(dioHelper.init()) {
 			if(argv[3].startsWith("on")) {
 				dioHelper.switchOn();
