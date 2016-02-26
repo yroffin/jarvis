@@ -13,7 +13,7 @@ public class DioHelperTest {
 	@Test
 	public void testSwitchOn() throws InterruptedException {
 		DioHelper dioHelper = new DioHelper();
-		dioHelper.pin(1).sender(123456789).interruptor(4).switchOn();
+		dioHelper.pin(17).sender(8217034).interruptor(1).switchOn();
 	}
 
 }

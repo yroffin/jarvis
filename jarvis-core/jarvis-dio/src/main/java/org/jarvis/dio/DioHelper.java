@@ -31,6 +31,7 @@ import com.pi4j.io.gpio.PinMode;
 import com.pi4j.io.gpio.PinPullResistance;
 import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
+import com.pi4j.wiringpi.Gpio;
 
 /**
  * DioHelper
@@ -43,7 +44,7 @@ public class DioHelper {
 	 */
 	protected static Logger logger = LoggerFactory.getLogger(DioHelper.class);
 	
-	private int pin;
+	private int pin = -1;
 	private GpioPinDigitalOutput pinGpio;
 	
 	/**
@@ -51,8 +52,12 @@ public class DioHelper {
 	 * @param pin
 	 */
 	public void setPin(int pin) {
+		if(this.pin == pin) return;
 		this.pin = pin;
 		switch(pin) {
+			case 0:
+				pinGpio = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_00);
+				break;
 			case 1:
 				pinGpio = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01);
 				break;
@@ -101,9 +106,16 @@ public class DioHelper {
 			case 16:
 				pinGpio = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_16);
 				break;
+			case 17:
+				pinGpio = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_17);
+				break;
 			default:
 				break;
 		}
+		
+		pinGpio.setShutdownOptions(true, PinState.LOW);
+
+		logger.info("Select pin {} {}", pin, pinGpio);
 	}
 
 
@@ -179,11 +191,11 @@ public class DioHelper {
 	 * @param nanos
 	 */
 	private static void delayMicroseconds(long nanos) {
-	  long elapsed;
-	  final long startTime = System.nanoTime();
-	  do {
-	    elapsed = System.nanoTime() - startTime;
-	  } while (elapsed < nanos * 1000);
+		try {
+			Gpio.delayMicroseconds(nanos);
+		} catch(Throwable e) {
+			
+		}
 	}
 	
 	/**
@@ -242,7 +254,6 @@ public class DioHelper {
 	 * @param b
 	 */
 	private void sendPair(int b) {
-		logger.info("[PAIR] {}", b);
 		if (b == 1) {
 			sendBit(1);
 			sendBit(0);
@@ -257,7 +268,6 @@ public class DioHelper {
 	 * @param b
 	 */
 	private void sendBit(int b) {
-		logger.info("[BITS] {}", b);
 		if (b == 1) {
 			write(1);
 			delayMicroseconds(310);   //275 orinally, but tweaked.
@@ -276,11 +286,10 @@ public class DioHelper {
 	 * @param b
 	 */
 	private void write(int b) {
-		logger.debug("[RASPBERRY] pin {} set to {}", pin, b);
 		if(b == 1) {
-			pinGpio.setState(PinState.HIGH);
+			pinGpio.high();
 		} else {
-			pinGpio.setState(PinState.LOW);
+			pinGpio.low();
 		}
 	}
 
@@ -373,7 +382,10 @@ public class DioHelper {
 	 * @throws InterruptedException
 	 */
 	public static void main(String[] argv) throws InterruptedException {
-		DioHelper dioHelper = new DioHelper().pin(Integer.parseInt(argv[0])).interruptor(Integer.parseInt(argv[1])).sender(Integer.parseInt(argv[2]));
+		DioHelper dioHelper = new DioHelper()
+				.pin(Integer.parseInt(argv[0]))
+				.sender(Integer.parseInt(argv[1]))
+				.interruptor(Integer.parseInt(argv[2]));
 		if(dioHelper.init()) {
 			if(argv[3].startsWith("on")) {
 				dioHelper.switchOn();
