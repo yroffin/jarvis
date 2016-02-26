@@ -171,7 +171,7 @@ public class DioHelper {
 	public void switchOn() throws InterruptedException {
 		for(int i=0;i<5;i++) {
 			transmit(1);
-			Gpio.delay(10);
+			Gpio.delay(5);
 		}
 	}
 
@@ -182,7 +182,7 @@ public class DioHelper {
 	public void switchOff() throws InterruptedException {
 		for(int i=0;i<5;i++) {
 			transmit(0);
-			Gpio.delay(10);
+			Thread.sleep(5);
 		}
 	}
 
