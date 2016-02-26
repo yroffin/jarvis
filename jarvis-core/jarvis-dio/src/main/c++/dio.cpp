@@ -30,6 +30,11 @@ void log(string a) {
 	cout << a << endl;
 }
 
+void logWrite(string a) {
+	cout << "WRITE: ";
+	cout << a << endl;
+}
+
 void scheduler_realtime() {
 
 	struct sched_param p;

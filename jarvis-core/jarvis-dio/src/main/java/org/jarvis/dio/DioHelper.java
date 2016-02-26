@@ -171,7 +171,7 @@ public class DioHelper {
 	public void switchOn() throws InterruptedException {
 		for(int i=0;i<5;i++) {
 			transmit(1);
-			Thread.sleep(10);
+			Gpio.delay(10);
 		}
 	}
 
@@ -182,7 +182,7 @@ public class DioHelper {
 	public void switchOff() throws InterruptedException {
 		for(int i=0;i<5;i++) {
 			transmit(0);
-			Thread.sleep(10);
+			Gpio.delay(10);
 		}
 	}
 
@@ -194,7 +194,11 @@ public class DioHelper {
 		try {
 			Gpio.delayMicroseconds(nanos);
 		} catch(Throwable e) {
-			
+			/**
+			 * catch this exception in order to
+			 * test this code on pc plateform, delayMicroseconds only existe
+			 * in wiringPi library
+			 */
 		}
 	}
 	
