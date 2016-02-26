@@ -68,7 +68,15 @@ public class JarvisVoiceEngine extends JarvisRestClientImpl implements JarvisCon
 		/**
 		 * set catherine voice
 		 */
-		marytts.setVoice("enst-catherine-hsmm");
+		logger.info("Voices {}", marytts.getAvailableVoices().size());
+		for(String voice : marytts.getAvailableVoices()) {
+			logger.info("Voice {}", voice);
+		}
+		try {
+			marytts.setVoice("enst-catherine-hsmm");
+		} catch(Exception e) {
+			logger.warn("Erreur {}", e);
+		}
 	}
 
 	/**
