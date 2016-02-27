@@ -15,22 +15,13 @@
  */
 package org.jarvis.dio;
 
-import java.util.EnumSet;
+import java.io.IOException;
 
-import org.mockito.Matchers;
-import org.mockito.Mockito;
+import org.jarvis.runtime.ProcessExec;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 
-import com.pi4j.io.gpio.GpioController;
-import com.pi4j.io.gpio.GpioFactory;
-import com.pi4j.io.gpio.GpioPinDigitalOutput;
-import com.pi4j.io.gpio.Pin;
-import com.pi4j.io.gpio.PinMode;
-import com.pi4j.io.gpio.PinPullResistance;
-import com.pi4j.io.gpio.PinState;
-import com.pi4j.io.gpio.RaspiPin;
 import com.pi4j.wiringpi.Gpio;
 
 /**
@@ -44,93 +35,28 @@ public class DioHelper {
 	 */
 	protected static Logger logger = LoggerFactory.getLogger(DioHelper.class);
 	
-	private static int pin = -1;
-	private static GpioPinDigitalOutput pinGpio;
+	private int pin = -1;
 	
 	/**
 	 * setter
 	 * @param pin
 	 */
-	public static void setPin(int pin) {
-		if(DioHelper.pin == pin) return;
-		DioHelper.pin = pin;
-		switch(pin) {
-			case 0:
-				pinGpio = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_00);
-				break;
-			case 1:
-				pinGpio = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01);
-				break;
-			case 2:
-				pinGpio = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02);
-				break;
-			case 3:
-				pinGpio = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03);
-				break;
-			case 4:
-				pinGpio = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_04);
-				break;
-			case 5:
-				pinGpio = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_05);
-				break;
-			case 6:
-				pinGpio = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_06);
-				break;
-			case 7:
-				pinGpio = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_07);
-				break;
-			case 8:
-				pinGpio = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_08);
-				break;
-			case 9:
-				pinGpio = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_19);
-				break;
-			case 10:
-				pinGpio = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_10);
-				break;
-			case 11:
-				pinGpio = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_11);
-				break;
-			case 12:
-				pinGpio = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_12);
-				break;
-			case 13:
-				pinGpio = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_13);
-				break;
-			case 14:
-				pinGpio = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_14);
-				break;
-			case 15:
-				pinGpio = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_15);
-				break;
-			case 16:
-				pinGpio = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_16);
-				break;
-			case 17:
-				pinGpio = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_17);
-				break;
-			default:
-				break;
-		}
-		
-		pinGpio.setShutdownOptions(true, PinState.LOW);
-
-		logger.info("Select pin {} {}", pin, pinGpio);
+	public void setPin(int pin) {
+		if(this.pin == pin) return;
+		this.pin = pin;
+		logger.info("Select pin {}", pin);
 	}
 
 
-	private static int sender;
-	private static int interruptor;
-	private static int bit2sender[] = new int[26];     // 26 bit sender identifier
-	private static int bit2Interruptor[] = new int[4]; // 4 bit interuptor
-
-	protected static GpioController gpio;
+	private int sender;
+	private int interruptor;
+	private int bit2sender[] = new int[26];     // 26 bit sender identifier
+	private int bit2Interruptor[] = new int[4]; // 4 bit interuptor
 	
 	/**
 	 * default constructor
 	 */
 	public DioHelper() {
-		init();
 	}
 	
 	/**
@@ -145,21 +71,13 @@ public class DioHelper {
 		 SLF4JBridgeHandler.install();
 	}
 	
-	GpioPinDigitalOutput mockedPin;
+	static boolean simulation = true;
 	
-	boolean init() throws RuntimeException {
+	boolean wiringPiSetup() {
 		try {
-			try {
-				// create gpio controller
-		        gpio = GpioFactory.getInstance();
-			} catch(Throwable e) {
-				throw new Exception(e);
-			}
-		} catch(Exception e) {
-			gpio = Mockito.mock(GpioController.class);
-			mockedPin = Mockito.mock(GpioPinDigitalOutput.class);
-			Mockito.when(gpio.provisionDigitalOutputPin((Pin) Matchers.any(Pin.class))).thenReturn(mockedPin);
-			return true;
+			Gpio.wiringPiSetup();
+		} catch(Throwable e) {
+			return false;
 		}
 		return true;
 	}
@@ -167,23 +85,53 @@ public class DioHelper {
 	/**
 	 * activate switch
 	 * @throws InterruptedException
+	 * @throws IOException 
 	 */
-	public static void switchOn() throws InterruptedException {
-		for(int i=0;i<5;i++) {
-			transmit(1);
-			Thread.sleep(5);
+	public void switchOnProcess() throws IOException, InterruptedException {
+		logger.info("SwitchOn: {}", ProcessExec.execute("sudo raspi-dio "+pin+" "+interruptor+" "+sender+" on"));
+	}
+
+	/**
+	 * activate switch
+	 * @throws InterruptedException
+	 * @throws IOException 
+	 */
+	public void switchOn() throws InterruptedException, IOException {
+		if(!simulation) {
+			for(int i=0;i<5;i++) {
+				transmit(1);
+				Gpio.piHiPri(0);
+				delay(10);
+			}
+		} else {
+			switchOnProcess();
 		}
 	}
 
 	/**
 	 * un-activate switch
 	 * @throws InterruptedException
+	 * @throws IOException 
 	 */
-	public static void switchOff() throws InterruptedException {
-		for(int i=0;i<5;i++) {
-			transmit(0);
-			Thread.sleep(5);
+	public void switchOff() throws InterruptedException, IOException {
+		if(!simulation) {
+			for(int i=0;i<5;i++) {
+				transmit(0);
+				Gpio.piHiPri(0);
+				delay(10);
+			}
+		} else {
+			switchOffProcess();
 		}
+	}
+
+	/**
+	 * activate switch
+	 * @throws InterruptedException
+	 * @throws IOException 
+	 */
+	public void switchOffProcess() throws IOException, InterruptedException {
+		logger.info("SwitchOff: {}", ProcessExec.execute("sudo raspi-dio "+pin+" "+interruptor+" "+sender+" off"));
 	}
 
 	/**
@@ -203,28 +151,44 @@ public class DioHelper {
 	}
 	
 	/**
+	 * wait on milliseconds second
+	 * @param nanos
+	 */
+	private static void delay(long milliseconds) {
+		try {
+			Gpio.delay(milliseconds);
+		} catch(Throwable e) {
+			/**
+			 * catch this exception in order to
+			 * test this code on pc plateform, delayMicroseconds only existe
+			 * in wiringPi library
+			 */
+		}
+	}
+	
+	/**
 	 * transmit value
 	 * @param value
 	 */
-	private static void transmit(int value) {
+	private void transmit(int value) {
 		int i;
 
-		logger.info("Lock Sequence announcing the starting signal to the receiver on pin {}", pin);
-		logger.info("Transmitter sends the code {}", bit2sender);
-		logger.info("Sends the bit defining whether it is a control group or not (26th bit) {}", 0);
-		logger.info("Sends the bit defining whether it is on or extinguished 27th bit) {}", value);
-		logger.info("Sends the last 4 bits {}", bit2Interruptor);
+//		logger.info("Lock Sequence announcing the starting signal to the receiver on pin {}", pin);
+//		logger.info("Transmitter sends the code {}", bit2sender);
+//		logger.info("Sends the bit defining whether it is a control group or not (26th bit) {}", 0);
+//		logger.info("Sends the bit defining whether it is on or extinguished 27th bit) {}", value);
+//		logger.info("Sends the last 4 bits {}", bit2Interruptor);
 		
 		// Lock Sequence announcing the starting signal to the receiver
-		write(1);
+		digitalWrite(pin, 1);
 		delayMicroseconds(275);  // a noise bit before starting to put the delays of the receiver 0
-		write(0);
+		digitalWrite(pin, 0);
 		delayMicroseconds(9900); // 9900μs first lock
-		write(1);    // high again
+		digitalWrite(pin, 1);    // high again
 		delayMicroseconds(275);  // pending 275μs between two locks
-		write(0);    // 2675μs second lock
+		digitalWrite(pin, 0);    // 2675μs second lock
 		delayMicroseconds(2675);
-		write(1);    // Returning to high to cut the locks of well data
+		digitalWrite(pin, 1);    // Returning to high to cut the locks of well data
 
 		// Transmitter sends the code (272946 = 1000010101000110010 binary)
 		for (i = 0; i < 26; i++) {
@@ -249,26 +213,24 @@ public class DioHelper {
 		}
 
 		// cut data latch
-		write(1);
+		digitalWrite(pin, 1);
 		// wait 275μs
 		delayMicroseconds(275);
 		// 2 2675μs lock to signal the closure of the signal
-		write(0);
-
-		logger.info("End");
+		digitalWrite(pin, 0);
 	}
 
 	/**
 	 * send bits as pair values
 	 * @param b
 	 */
-	private static void sendPair(int b) {
+	private void sendPair(int b) {
 		if (b == 1) {
-			sendBit(1);
-			sendBit(0);
+			sendBit(pin, 1);
+			sendBit(pin, 0);
 		} else {
-			sendBit(0);
-			sendBit(1);
+			sendBit(pin, 0);
+			sendBit(pin, 1);
 		}
 	}
 
@@ -276,16 +238,16 @@ public class DioHelper {
 	 * send raw bit
 	 * @param b
 	 */
-	private static void sendBit(int b) {
-		if (b == 1) {
-			write(1);
+	private static void sendBit(int pin, int value) {
+		if (value == 1) {
+			digitalWrite(pin, 1);
 			delayMicroseconds(310);   //275 orinally, but tweaked.
-			write(0);
+			digitalWrite(pin, 0);
 			delayMicroseconds(1340);  //1225 orinally, but tweaked.
 		} else {
-			write(1);
+			digitalWrite(pin, 1);
 			delayMicroseconds(310);   //275 orinally, but tweaked.
-			write(0);
+			digitalWrite(pin, 0);
 			delayMicroseconds(310);   //275 orinally, but tweaked.
 		}
 	}
@@ -294,11 +256,15 @@ public class DioHelper {
 	 * write to pin
 	 * @param b
 	 */
-	private static void write(int b) {
-		if(b == 1) {
-			pinGpio.high();
-		} else {
-			pinGpio.low();
+	private static void digitalWrite(int pin, int value) {
+		try {
+			Gpio.digitalWrite(pin, value);
+		} catch(Throwable e) {
+			/**
+			 * catch this exception in order to
+			 * test this code on pc plateform, delayMicroseconds only existe
+			 * in wiringPi library
+			 */
 		}
 	}
 
@@ -351,6 +317,9 @@ public class DioHelper {
 	 */
 	public DioHelper pin(int pin) {
 		setPin(pin);
+		if(!simulation) {
+			Gpio.pinMode(pin, 1);
+		}
 		return this;
 	}
 
@@ -363,8 +332,8 @@ public class DioHelper {
 		/**
 		 * no change
 		 */
-		if(DioHelper.sender == sender) return this;
-		DioHelper.sender = sender;
+		if(this.sender == sender) return this;
+		this.sender = sender;
 		logger.info("[SENDER] {}", itob(sender, bit2sender));
 		return this;
 	}
@@ -378,8 +347,8 @@ public class DioHelper {
 		/**
 		 * no change
 		 */
-		if(DioHelper.interruptor == interruptor) return this;
-		DioHelper.interruptor = interruptor;
+		if(this.interruptor == interruptor) return this;
+		this.interruptor = interruptor;
 		logger.info("[INTRUP] {}", itob(interruptor, bit2Interruptor));
 		return this;
 	}
@@ -389,21 +358,52 @@ public class DioHelper {
 	 * static launcher
 	 * @param argv
 	 * @throws InterruptedException
+	 * @throws IOException 
 	 */
-	public static void main(String[] argv) throws InterruptedException {
-		DioHelper dioHelper = new DioHelper()
+	public static void main(String[] argv) throws InterruptedException, IOException {
+		logger.warn("args {}", (Object) argv);
+		DioHelper dioHelper = new DioHelper();
+
+		if(simulation) {
+			/**
+			 * fix pin
+			 */
+			dioHelper
 				.pin(Integer.parseInt(argv[0]))
-				.sender(Integer.parseInt(argv[1]))
-				.interruptor(Integer.parseInt(argv[2]));
-		if(dioHelper.init()) {
-			if(argv[3].startsWith("on")) {
-				DioHelper.switchOn();
-			}
-			if(argv[3].startsWith("off")) {
-				DioHelper.switchOff();
-			}
+				.sender(Integer.parseInt(argv[2]))
+				.interruptor(Integer.parseInt(argv[1]));
+			
+				if(argv[3].startsWith("on")) {
+					dioHelper.switchOn();
+				}
+				if(argv[3].startsWith("off")) {
+					dioHelper.switchOff();
+				}
 		} else {
-			logger.warn("Unable to detect wiring PI");
+			if(Gpio.piHiPri(99) != -1) {
+				if(dioHelper.wiringPiSetup()) {
+					/**
+					 * fix pin
+					 */
+					dioHelper
+						.pin(Integer.parseInt(argv[0]))
+						.sender(Integer.parseInt(argv[2]))
+						.interruptor(Integer.parseInt(argv[1]));
+					
+						if(argv[3].startsWith("on")) {
+							dioHelper.switchOn();
+						}
+						if(argv[3].startsWith("off")) {
+							dioHelper.switchOff();
+						}
+				} else {
+					logger.warn("Unable to detect wiring PI");
+				}
+				Gpio.piHiPri(0);
+			} else {
+				throw new InterruptedException("Unable to set priority");
+			}
+			Gpio.piHiPri(0);
 		}
 	}
 }

@@ -1,5 +1,8 @@
 package org.jarvis.dio;
 
+import java.io.IOException;
+
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -9,9 +12,11 @@ public class DioHelperTest {
 
 	/**
 	 * @throws InterruptedException
+	 * @throws IOException 
 	 */
 	@Test
-	public void testSwitchOn() throws InterruptedException {
+	@Ignore
+	public void testSwitchOn() throws InterruptedException, IOException {
 		DioHelper dioHelper = new DioHelper();
 		dioHelper.pin(17).sender(8217034).interruptor(1).switchOn();
 	}
