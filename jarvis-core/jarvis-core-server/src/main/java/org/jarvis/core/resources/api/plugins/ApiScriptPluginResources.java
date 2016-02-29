@@ -67,8 +67,11 @@ public class ApiScriptPluginResources extends ApiLinkedResources<ScriptPluginRes
 	public ResourcePair doRealTask(ScriptPluginBean bean, GenericMap args, TaskType taskType) throws Exception {
 		GenericMap result;
 		switch(taskType) {
+			case RENDER:
+				result = renderOrExecute(bean, args, new GenericMap(), true);
+				break;
 			case EXECUTE:
-				result = execute(bean, args, new GenericMap());
+				result = renderOrExecute(bean, args, new GenericMap(), false);
 				break;
 			default:
 				result = new GenericMap();
@@ -77,14 +80,33 @@ public class ApiScriptPluginResources extends ApiLinkedResources<ScriptPluginRes
 	}
 
 	/**
-	 * execute all command of this script as a pipeline
+	 * render all data command of this script as a pipeline
 	 * @param script
-	 * @param args 
+	 * 		the script to render
+	 * @param args
+	 * 		arguments for this script
 	 * @return GenericMap
-	 * @throws TechnicalNotFoundException 
+	 * 		a result as a generic map
+	 * @throws TechnicalNotFoundException
+	 * 		if not found 
+	 */
+	public GenericMap render(ScriptPluginRest script, GenericMap args) throws TechnicalNotFoundException {
+		return renderOrExecute(mapperFactory.getMapperFacade().map(script, ScriptPluginBean.class), args, new GenericMap(), true);
+	}
+
+	/**
+	 * execute all action command of this script as a pipeline
+	 * @param script
+	 * 		the script to render
+	 * @param args
+	 * 		arguments for this script
+	 * @return GenericMap
+	 * 		a result as a generic map
+	 * @throws TechnicalNotFoundException
+	 * 		if not found 
 	 */
 	public GenericMap execute(ScriptPluginRest script, GenericMap args) throws TechnicalNotFoundException {
-		return execute(mapperFactory.getMapperFacade().map(script, ScriptPluginBean.class), args, new GenericMap());
+		return renderOrExecute(mapperFactory.getMapperFacade().map(script, ScriptPluginBean.class), args, new GenericMap(), false);
 	}
 
 	/**
@@ -95,12 +117,31 @@ public class ApiScriptPluginResources extends ApiLinkedResources<ScriptPluginRes
 	 * @return GenericMap
 	 * @throws TechnicalNotFoundException 
 	 */
-	public GenericMap execute(ScriptPluginBean script, GenericMap args, GenericMap output) throws TechnicalNotFoundException {
+	private GenericMap renderOrExecute(ScriptPluginBean script, GenericMap args, GenericMap output, boolean render) throws TechnicalNotFoundException {
 		GenericMap result = args;
 		int index = 0;
 		for(GenericEntity entity : sort(apiHrefPluginCommandResources.findAll(script), "order")) {
+			/**
+			 * retrieve command to execute
+			 */
 			CommandRest command = apiCommandResources.doGetById(entity.id);
-			result = apiCommandResources.execute(mapperFactory.getMapperFacade().map(command, CommandBean.class), result);
+			/**
+			 * in render mode only execute data
+			 */
+			if(entity.get("type") != null && entity.get("type").equals("data") && render) {
+				logger.info("Render {}", command);
+				result = apiCommandResources.execute(mapperFactory.getMapperFacade().map(command, CommandBean.class), result);
+			}
+			/**
+			 * in execute mode only execute action
+			 */
+			if(entity.get("type") != null && entity.get("type").equals("action") && !render) {
+				logger.info("Execute {}", command);
+				result = apiCommandResources.execute(mapperFactory.getMapperFacade().map(command, CommandBean.class), result);
+			}
+			/**
+			 * store result in output
+			 */
 			if(entity.get("name") != null) {
 				output.put((String) entity.get("name"), result);
 			} else {

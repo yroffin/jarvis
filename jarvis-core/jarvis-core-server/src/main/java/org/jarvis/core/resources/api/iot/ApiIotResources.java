@@ -104,6 +104,9 @@ public class ApiIotResources extends ApiLinkedThirdResources<IotRest,IotBean,Iot
 			case RENDER:
 				result = render(iot, args);
 				break;
+			case EXECUTE:
+				result = execute(iot, args);
+				break;
 			default:
 				result = new GenericMap();
 		}
@@ -117,8 +120,31 @@ public class ApiIotResources extends ApiLinkedThirdResources<IotRest,IotBean,Iot
 	 * @return GenericMap
 	 * @throws Exception
 	 */
-	@SuppressWarnings("unchecked")
 	public GenericMap render(IotBean iot, GenericMap args) throws Exception {
+		return renderOrExecute(iot, args, true);
+	}
+
+	/**
+	 * execute action on this connected object
+	 * @param iot
+	 * @param args
+	 * @return GenericMap
+	 * @throws Exception
+	 */
+	public GenericMap execute(IotBean iot, GenericMap args) throws Exception {
+		return renderOrExecute(iot, args, false);
+	}
+
+	/**
+	 * genric method for render and execute
+	 * @param iot
+	 * @param args
+	 * @param render
+	 * @return GenericMap
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	private GenericMap renderOrExecute(IotBean iot, GenericMap args, boolean render) throws Exception {
 		GenericMap result = args;
 		/**
 		 * read parameters and fix a default value
@@ -136,14 +162,19 @@ public class ApiIotResources extends ApiLinkedThirdResources<IotRest,IotBean,Iot
 		 * iterate on each entity and execute them as a pipeline
 		 */
 		for(Entry<String, Object> entry : parameters.entrySet()) {
-			logger.info("Render {}", entry.getKey());
 			GenericMap params = new GenericMap();
 			for(Entry<String, Object> param : ((Map<String,Object>) entry.getValue()).entrySet()) {
 				params.put(param.getKey(), param.getValue());
 			}
 			for(GenericEntity entity : sort(apiHrefIotScriptPluginResources.findAll(iotRest, HREF), "order")) {
 				ScriptPluginRest script = apiScriptPluginResources.doGetById(entity.id);
-				result = apiScriptPluginResources.execute(script, params);
+				if(render) {
+					logger.info("Render {}", params);
+					result = apiScriptPluginResources.render(script, params);
+				} else {
+					logger.info("Execute {}", params);
+					result = apiScriptPluginResources.execute(script, params);
+				}
 			}
 		}
 		return result;

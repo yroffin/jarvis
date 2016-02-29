@@ -126,12 +126,12 @@ angular.module('JarvisApp.config',[])
         };
 
         /**
-    	 * render this iot, assume no args by default
-    	 * @param iot, the iot to render
+    	 * on server side execute all action on this iot
+    	 * @param iot
     	 */
-    	$scope.render = function(iot) {
-    	 	iotResourceService.iot.task(iot.id, 'render', {}, function(data) {
-    	 		$log.debug('JarvisAppCtrl::render', data);
+    	$scope.execute = function(iot) {
+    	 	iotResourceService.iot.task(iot.id, 'execute', {}, function(data) {
+    	 		$log.debug('JarvisAppCtrl::execute', data);
     	 	    $scope.renderdata = data;
     	    }, toastService.failure);
     	}
