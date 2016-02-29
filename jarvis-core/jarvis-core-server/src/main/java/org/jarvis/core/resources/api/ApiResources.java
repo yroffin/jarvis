@@ -487,7 +487,7 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 		if(!id.equals("*")) {
 			bean = apiService.getById(id);
 			try {
-				logger.info("SCRIPT - CONTEXT {}", mapper.writerWithDefaultPrettyPrinter().writeValueAsString(bean));
+				logger.info("SCRIPT - CONTEXT {} {}", beanClass.getName(), mapper.writerWithDefaultPrettyPrinter().writeValueAsString(bean));
 			} catch (JsonProcessingException e) {
 				throw new TechnicalException(e);
 			}

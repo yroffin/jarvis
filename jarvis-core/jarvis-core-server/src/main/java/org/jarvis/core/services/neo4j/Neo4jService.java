@@ -40,7 +40,9 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
 
+import ma.glasnost.orika.CustomMapper;
 import ma.glasnost.orika.MapperFactory;
+import ma.glasnost.orika.MappingContext;
 import ma.glasnost.orika.converter.builtin.PassThroughConverter;
 import ma.glasnost.orika.impl.DefaultMapperFactory;
 
@@ -60,8 +62,28 @@ public class Neo4jService<S extends GenericBean> {
 	protected MapperFactory mapperFactory = null;
 
 	protected Neo4jService() {
-		mapperFactory = new DefaultMapperFactory.Builder().mapNulls(false).build();
+		mapperFactory = new DefaultMapperFactory.Builder()
+				.mapNulls(false)
+				.build();
+				
 		mapperFactory.getConverterFactory().registerConverter(new PassThroughConverter(org.joda.time.DateTime.class));
+		
+		/**
+		 * custom mapper for CommandType
+		 */
+		mapperFactory
+			.classMap(Object.class, CommandType.class)
+			.byDefault()
+			.customize(
+				   new CustomMapper<Object, CommandType>() {
+					   @Override
+					   public void mapAtoB(Object a, CommandType b, MappingContext context) {
+					         b = CommandType.valueOf((String) a);
+					   }
+			       }
+			)
+			.register();
+		
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		mapper.registerModule(new JodaModule());
 	}
@@ -103,7 +125,8 @@ public class Neo4jService<S extends GenericBean> {
 	 */
 	private Node toNode(S source) throws TechnicalHttpException, TechnicalNotFoundException {
 		@SuppressWarnings("unchecked")
-		Node toCreate = new Node(mapperFactory.getMapperFacade().map(source, Map.class));
+		Map<String, Object> target = (Map<String, Object>) mapperFactory.getMapperFacade().map(source, Map.class);
+		Node toCreate = new Node(target);
 		return apiNeo4Service.createNode(source.getClass().getSimpleName(), toCreate);
 	}
 

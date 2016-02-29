@@ -50,6 +50,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
 	    	scope.pick = {};
 	    	scope.pick.tooltips = attrs.tooltips;
 	    	scope.pick.icon = attrs.icon;
+	    	scope.pick.tooltips = attrs.tooltips;
 	    	scope.pick.ctrl = attrs.ctrl;
 	    	scope.pick.callback = attrs.callback;
 	        scope.pickItemDialog = function(ev, node) {

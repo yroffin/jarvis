@@ -3,10 +3,7 @@
     <h1><br>{{command.name}}<md-tooltip>command#{{command.id}}</md-tooltip></h1>
   </div>
   <md-fab-actions class="md-toolbar-tools">
-	<md-button aria-label="menu" class="md-icon-button" ng-click="go('commands')"><md-icon md-font-icon="material-icons md-16">clear</md-icon></md-button>
-	<md-button aria-label="menu" class="md-icon-button" ng-click="duplicate(command)"><md-icon md-font-icon="material-icons md-16">content_copy</md-icon></md-button>
-	<md-button aria-label="menu" class="md-icon-button" ng-click="remove(command)"><md-icon md-font-icon="material-icons md-16">delete</md-icon></md-button>
-	<md-button aria-label="menu" class="md-icon-button" ng-click="save(command)"><md-icon md-font-icon="material-icons md-16">save</md-icon></md-button>
+  	<jarvis-default-menu-bar close="commands" ng-model="command"></jarvis-default-menu-bar>
 	<md-button aria-label="menu" class="md-icon-button" ng-click="execute(command)"><md-icon md-font-icon="material-icons md-16">play_arrow</md-icon></md-button>
 	<md-button aria-label="menu" class="md-icon-button" ng-click="pretty()"><md-icon md-font-icon="material-icons md-16">loop</md-icon></md-button>
   </md-fab-actions>
