@@ -27,7 +27,7 @@ angular.module('JarvisApp.config',[])
 		  // So, the module will search missing translation tables under the specified urls.
 		  // Those urls are [prefix][langKey][suffix].
 		  $translateProvider.useStaticFilesLoader({
-		    prefix: 'js/partials/l10n/',
+		    prefix: 'js/l10n/',
 		    suffix: '.json'
 		  });
 		  // Tell the module what language to use by default

@@ -1,0 +1,13 @@
+<md-input-container>
+  <label translate="filter"></label>
+  <input type="text" ng-model="searchText">
+</md-input-container>
+<md-grid-list
+      md-cols="3" md-cols-sm="3" md-cols-md="6" md-cols-gt-md="12"
+      md-row-height-gt-md="128px" md-row-height="128px"
+      md-gutter="4px" md-gutter-gt-sm="4px" >
+  <md-grid-tile
+      md-rowspan="1" md-colspan="2" md-colspan-sm="1" ng-repeat="cron in crons | filter:searchText">
+      <jarvis-card element="cron" state="'crons-by-id'"></jarvis-card>
+  </md-grid-tile>
+</md-grid-list>

@@ -110,6 +110,16 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
             controller: 'snapshotCtrl',
             templateUrl: '/ui/js/partials/snapshots/snapshot/page.html'
         })
+        .state('crons', {
+            url: '/crons',
+            controller: 'cronsCtrl',
+            templateUrl: '/ui/js/partials/crons/page.html'
+        })
+        .state('crons-by-id', {
+            url: '/crons/:id',
+            controller: 'cronCtrl',
+            templateUrl: '/ui/js/partials/crons/cron/page.html'
+        })
         .state('scenarios', {
             url: '/scenarios',
             controller: 'scenariosCtrl',

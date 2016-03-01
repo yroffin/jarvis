@@ -1,0 +1,17 @@
+<md-toolbar>
+  <div class="md-toolbar-tools" layout-align="center">
+    <h1><br>{{cron.name}}<md-tooltip>cron#{{cron.id}}</md-tooltip></h1>
+  </div>
+  <md-fab-actions class="md-toolbar-tools">
+  	<jarvis-default-menu-bar close="crons" ng-model="cron"></jarvis-default-menu-bar>
+  </md-fab-actions>
+</md-toolbar>
+<div layout="column" ng-init="load()" ng-cloak>
+	<md-tabs md-dynamic-height md-border-bottom>
+		<md-tab label="{{'cron.general' | translate}}">
+			<md-content layout-padding>
+				<jarvis-cron></jarvis-cron>
+			</md-content>
+		</md-tab>
+	</md-tabs>
+</div>

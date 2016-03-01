@@ -24,6 +24,7 @@ public abstract class ApiMapper {
 	protected static final String EVENT_RESOURCE = "events";
 	protected static final String TRIGGER_RESOURCE = "triggers";
 	protected static final String SNAPSHOT_RESOURCE = "snapshots";
+	protected static final String CRON_RESOURCE = "crons";
 
 	protected static final String IOT = ":iot";
 	protected static final String CONNEXION = ":connexion";

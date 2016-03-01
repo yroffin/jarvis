@@ -289,6 +289,24 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     }
   }
 })
+.directive('jarvisCrons', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/partials/crons/jarvis-crons.html',
+    link: function(scope, element, attrs) {
+    	$log.debug('jarvis-crons');
+    }
+  }
+})
+.directive('jarvisCron', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/partials/crons/cron/jarvis-cron-general.html',
+    link: function(scope, element, attrs) {
+    	$log.debug('jarvis-cron');
+    }
+  }
+})
 .directive('jarvisScenarios', function ($log, $stateParams) {
   return {
     restrict: 'E',
