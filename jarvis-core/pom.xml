@@ -312,7 +312,6 @@
 	<modules>
 		<module>jarvis-aiml</module>
 		<module>jarvis-nodejs</module>
-		<module>jarvis-java-client</module>
 		<module>jarvis-scripts</module>
 		<module>jarvis-common</module>
 		<module>jarvis-dio</module>
