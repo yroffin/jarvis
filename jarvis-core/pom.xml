@@ -37,6 +37,11 @@
 			</dependency>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
+				<artifactId>jarvis-rest-api</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
 				<artifactId>jarvis-marytts</artifactId>
 				<version>${project.version}</version>
 			</dependency>
@@ -323,6 +328,7 @@
 		<module>jarvis-core-neo4j-client</module>
 		<module>jarvis-marytts</module>
 		<module>jarvis-marytts-voices</module>
+		<module>jarvis-rest-api</module>
 	</modules>
 
 	<repositories>

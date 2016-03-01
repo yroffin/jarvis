@@ -26,7 +26,6 @@ import org.jarvis.core.resources.api.ApiResources;
 import org.jarvis.core.resources.api.ResourcePair;
 import org.jarvis.core.services.groovy.PluginGroovyService;
 import org.jarvis.core.services.shell.PluginShellService;
-import org.jarvis.core.type.CommandType;
 import org.jarvis.core.type.GenericMap;
 import org.jarvis.core.type.ResultType;
 import org.jarvis.core.type.TaskType;

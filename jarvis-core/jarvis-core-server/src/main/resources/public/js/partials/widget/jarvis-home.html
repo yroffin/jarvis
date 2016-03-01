@@ -2,18 +2,18 @@
   	<div ng-repeat="view in views">
         <div>
 	        <md-icon md-font-icon="material-icons md-32">{{view.icon}}</md-icon>
-	        <h3>{{view.name}}</h3>
+	        <h3>{{view.name}}<md-icon md-font-icon="material-icons md-64">{{view.icon}}</md-icon></h3>
         </div>
         <div>
 			<md-grid-list
-		        md-cols="4"
+		        md-cols="1"
 		        md-cols-gt-md="8" md-cols-md="6" md-cols-sm="4"
-		        md-row-height="1:1"
+		        md-row-height="2:1"
 		        md-gutter="8px">
 		      <md-grid-tile
 		          ng-repeat="iot in view.iots"
 		          ng-style="{'background': iot.tagColor}"
-		          md-colspan="4"
+		          md-colspan="1"
 		          md-rowspan="1">
 		          <jarvis-inline-template data="iot.render" id="iot.id"></jarvis-inline-template>
 		     </md-grid-tile>

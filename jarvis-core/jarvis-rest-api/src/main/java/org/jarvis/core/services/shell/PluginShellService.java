@@ -21,6 +21,7 @@ import java.util.TreeMap;
 
 import org.jarvis.core.model.bean.plugin.CommandBean;
 import org.jarvis.core.type.GenericMap;
+import org.jarvis.runtime.ProcessExec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
