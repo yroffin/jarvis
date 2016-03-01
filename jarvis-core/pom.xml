@@ -72,11 +72,6 @@
 			</dependency>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>jarvis-java-client</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>${project.groupId}</groupId>
 				<artifactId>jarvis-core-model</artifactId>
 				<version>${project.version}</version>
 			</dependency>
