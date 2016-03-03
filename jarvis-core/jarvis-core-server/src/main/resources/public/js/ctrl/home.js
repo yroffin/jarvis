@@ -20,11 +20,12 @@
 
 angular.module('JarvisApp.ctrl.home', ['JarvisApp.services'])
 .controller('homeCtrl', 
-	function($scope, $log, viewResourceService, iotResourceService, toastService){
+	function($scope, $store, $log, viewResourceService, iotResourceService, toastService){
     /**
      * load this controller
      */
     $scope.load = function() {
+    	$scope.store = $store;
     	$scope.views = [];
     	
 	    /**

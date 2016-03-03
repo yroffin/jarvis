@@ -15,6 +15,10 @@
 		<!-- internal dependencies -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
+			<artifactId>jarvis-websocket</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>jarvis-core-model</artifactId>
 		</dependency>
 		<dependency>

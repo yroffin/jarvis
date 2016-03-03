@@ -13,7 +13,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jackson.version>2.4.3</jackson.version>
-		<spark.version>2.2</spark.version>
+		<spark.version>2.3</spark.version>
 		<spring.version>4.2.0.RELEASE</spring.version>
 		<mockito.version>1.10.19</mockito.version>
 		<marytts.version>5.1.2</marytts.version>
@@ -33,6 +33,11 @@
 			<dependency>
 				<groupId>${project.groupId}</groupId>
 				<artifactId>jarvis-dio</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>jarvis-websocket</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
@@ -323,6 +328,7 @@
 		<module>jarvis-marytts</module>
 		<module>jarvis-marytts-voices</module>
 		<module>jarvis-rest-api</module>
+		<module>jarvis-websocket</module>
 	</modules>
 
 	<repositories>

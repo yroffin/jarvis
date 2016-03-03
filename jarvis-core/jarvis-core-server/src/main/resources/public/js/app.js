@@ -30,6 +30,7 @@ angular.module('JarvisApp', [
      'ngCookies',
      'hljs',
      'ui.tree',
+     'JarvisApp.websocket',
      'JarvisApp.config',
      'JarvisApp.routes',
      /**

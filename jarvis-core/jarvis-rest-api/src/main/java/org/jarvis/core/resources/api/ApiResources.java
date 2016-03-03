@@ -99,6 +99,9 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	}
 
 	private void notifyPut(Request request, Response response, S s) {
+		/**
+		 * notify to all listener on server side
+		 */
         for(ResourcePostListener<S> listener : postListeners){
             listener.put(request,response,s);
         }

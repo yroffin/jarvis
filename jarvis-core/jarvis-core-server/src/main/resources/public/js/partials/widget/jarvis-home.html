@@ -1,8 +1,12 @@
 <md-content>
   	<div ng-repeat="view in views">
-        <div>
-	        <md-icon md-font-icon="material-icons md-32">{{view.icon}}</md-icon>
-	        <h3>{{view.name}}<md-icon md-font-icon="material-icons md-64">{{view.icon}}</md-icon></h3>
+        <div layout="row">
+        	<div>
+	        <md-icon md-font-icon="material-icons md-64">{{view.icon}}</md-icon>
+	        </div>
+	        <div>
+	        <h3>{{view.name}}</h3>
+	        </div>
         </div>
         <div>
 			<md-grid-list

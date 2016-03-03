@@ -17,6 +17,7 @@
 package org.jarvis.core.services;
 
 import org.jarvis.core.resources.CoreResources;
+import org.jarvis.core.resources.CoreWebsocket;
 import org.jarvis.core.resources.api.connectors.ApiConnectorResources;
 import org.jarvis.core.resources.api.connectors.ApiConnexionResources;
 import org.jarvis.core.resources.api.iot.ApiEventResources;
@@ -46,6 +47,9 @@ public class CoreServerDaemon {
 
 	@Autowired
 	CoreResources coreResources;
+	
+	@Autowired
+	CoreWebsocket coreWebsocket;
 
 	@Autowired
 	ApiScenarioResources apiScenarioResources;
@@ -97,9 +101,15 @@ public class CoreServerDaemon {
 		spark.Spark.port(port);
 
 		/**
+		 * websockets
+		 */
+		coreWebsocket.mount();
+
+		/**
 		 * mount resources
 		 */
 		coreResources.mount();
+		
 		/**
 		 * mount plugin resources
 		 */
