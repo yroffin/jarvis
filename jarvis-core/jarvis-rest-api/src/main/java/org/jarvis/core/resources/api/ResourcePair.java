@@ -36,5 +36,10 @@ public class ResourcePair implements Map.Entry<ResultType, String> {
 		this.value = value;
 		return value;
 	}
+
+	@Override
+	public String toString() {
+		return "ResourcePair [key=" + key + ", value=" + value + "]";
+	}
 	
 }

@@ -4,6 +4,7 @@
   </div>
   <md-fab-actions class="md-toolbar-tools">
   	<jarvis-default-menu-bar close="connectors" ng-model="connector"></jarvis-default-menu-bar>
+	<md-button aria-label="menu" class="md-icon-button" ng-click="register($event, connector)"><md-tooltip>{{'connector.register' | translate}}</md-tooltip><md-icon md-font-icon="material-icons md-16">add</md-icon></md-button>
   </md-fab-actions>
 </md-toolbar>
 <div layout="column" ng-init="load()" ng-cloak>

@@ -41,7 +41,7 @@ angular.module('JarvisApp.ctrl.connectors', ['JarvisApp.services'])
 	);
 })
 .controller('connectorCtrl',
-	function($scope, $log, $stateParams, genericResourceService, genericScopeService, connectorResourceService, connexionResourceService, toastService){
+	function($scope, $log, $stateParams, $mdDialog, genericResourceService, genericScopeService, connectorResourceService, connexionResourceService, toastService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
 	 */
@@ -90,6 +90,42 @@ angular.module('JarvisApp.ctrl.connectors', ['JarvisApp.services'])
 				}
 			}
 	);
+    /**
+     * register a new connexion
+     */
+    $scope.register = function(ev, connector) {
+    	/**
+    	 * display a dialog box to register this new connexion
+    	 */
+        $mdDialog.show({
+        	  controller: function(scope) {
+        		scope.connexion = {
+        				href: 'http://...',
+        				isRenderer:false,
+        				isSensor:true,
+        				canAnswer:false
+        		}
+    	    	scope.answer = function(abort, cnx) {
+    	    	    if(abort === true) {
+    	    	    	$mdDialog.hide(cnx);
+    	    	    } else {
+    	    	    	$mdDialog.cancel();
+    	    	    }
+    	    	};
+        	  },
+	          templateUrl: 'js/partials/dialog/connexionsDialog.tmpl.html',
+	          parent: angular.element(document.body),
+	          targetEvent: ev,
+	          clickOutsideToClose:true
+	        })
+	        .then(function(connexion) {
+	        	$log.debug("ok", connexion);
+	        	connectorResourceService.connector.task(connector.id, 'register', connexion, function(data) {
+		        	$log.debug("callback", connexion);
+	        	});
+	        }, function() {
+	        });
+    }
     /**
      * load this controller
      */

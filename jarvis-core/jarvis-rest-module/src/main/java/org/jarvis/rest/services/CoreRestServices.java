@@ -41,9 +41,6 @@ public class CoreRestServices {
 	@Autowired
 	CoreRestDefault coreRestDefault;
 
-	@Autowired
-	CoreRestClient coreRestClient;
-
 	private ObjectMapper mapper = new ObjectMapper();
 
 	/**

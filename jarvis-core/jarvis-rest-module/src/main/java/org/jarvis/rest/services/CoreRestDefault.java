@@ -36,9 +36,6 @@ public class CoreRestDefault {
 	protected Logger logger = LoggerFactory.getLogger(CoreRestDefault.class);
 
 	@Autowired
-	CoreRestClient coreRestClient;
-
-	@Autowired
 	JarvisRemoteExec jarvisRemoteExec;
 
 	@Autowired

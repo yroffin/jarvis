@@ -1,0 +1,44 @@
+<md-dialog md-theme="docs-dark" aria-label="">
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2 translate="connector.register"></h2>
+                <span flex></span>
+                <md-button class="md-icon-button">
+                    <md-icon md-font-icon="material-icons md-16" ng-click="answer(false)">close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+        
+        <div>
+        <div layout="row">
+          <md-input-container class="md-block" flex>
+            <label translate="cnx.href"></label>
+            <input ng-model="connexion.href">
+          </md-input-container>
+        </div>
+	    <div layout="column">
+          <md-switch ng-model="connexion.isRenderer" aria-label="{{'cnx.isRenderer' | translate}}">
+		    {{'cnx.isRenderer' | translate}} : {{ connexion.isRenderer }}
+		  </md-switch>
+          <md-switch ng-model="connexion.isSensor" aria-label="{{'cnx.isSensor' | translate}}">
+		    {{'cnx.isSensor' | translate}} : {{ connexion.isSensor }}
+		  </md-switch>
+          <md-switch ng-model="connexion.canAnswer" aria-label="{{'cnx.canAnswer' | translate}}">
+		    {{'cnx.canAnswer' | translate}} : {{ connexion.canAnswer }}
+		  </md-switch>
+        </div>
+        
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+	      <span flex></span>
+	      <md-button ng-click="answer(false)">
+	        {{ 'action.close' | translate }}
+	      </md-button>
+	      <md-button ng-click="answer(true, connexion)">
+	        {{ 'action.add' | translate }}
+	      </md-button>
+	    </md-dialog-actions>
+    </form>
+</md-dialog>

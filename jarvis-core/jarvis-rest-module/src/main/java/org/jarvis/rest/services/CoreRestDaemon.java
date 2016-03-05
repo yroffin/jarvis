@@ -34,24 +34,15 @@ public class CoreRestDaemon {
 	CoreRestServices coreRestServices;
 
 	@Autowired
-	CoreRestClient coreRestClient;
-
-	@Autowired
 	Environment env;
 
 	/**
 	 * server part
 	 */
 	public void server() {
-		String url = env.getProperty("jarvis.server.url");
 		String iface = env.getProperty("jarvis.connector.interface");
 		int port = Integer.parseInt(env.getProperty("jarvis.connector.port"));
 		spark.Spark.ipAddress(iface);
-
-		/**
-		 * start broadcaster
-		 */
-		coreRestClient.start(url, "http://" + iface + ":" + port + "/connectors");
 
 		/**
 		 * port
