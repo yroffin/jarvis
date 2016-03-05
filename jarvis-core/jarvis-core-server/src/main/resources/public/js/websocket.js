@@ -25,9 +25,24 @@ angular.module('JarvisApp.websocket',['angular-websocket'])
       // Open a WebSocket connection
       var dataStream = $websocket('ws://'+$window.location.hostname+':'+$window.location.port+'/stream/');
 
-      var collection = [];
+      var upsert = function (arr, key, newval) {
+    	    var match = _.find(arr, key);
+    	    if(match){
+    	        var index = _.indexOf(arr, _.find(arr, key));
+    	        arr[key] = newval;
+    	    } else {
+    	        arr.push(newval);
+    	    }
+      };
+
+      var collection = {};
+      collection['SystemIndicator'] = {"1":{"systemLoadAverage":0.0}};
       dataStream.onMessage(function(message) {
-        collection.push(JSON.parse(message.data));
+    	var entity = JSON.parse(message.data);
+    	if(collection[entity.classname] === undefined) {
+    		collection[entity.classname] = {};
+    	}
+        collection[entity.classname][entity.instance] = entity.data;
       });
 
       var methods = {

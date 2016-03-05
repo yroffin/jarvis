@@ -462,3 +462,42 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     }
   }
 })
+.directive('jarvisGauge', function ($log, $store, $parse) {
+  return {
+    restrict: 'AC',
+    controller: function($scope, $element, $attrs) {
+    	$log.debug('jarvis-gauge', $attrs.id);
+    	var opts = {
+    			  fontSize: 10,
+    			  lines: 10, // The number of lines to draw
+    			  angle: 0.0, // The length of each line
+    			  lineWidth: 0.32, // The line thickness
+    			  pointer: {
+    			    length: 0.9, // The radius of the inner circle
+    			    strokeWidth: 0.035, // The rotation offset
+    			    color: '#000000' // Fill color
+    			  },
+    			  limitMax: 'false',   // If true, the pointer will not go past the end of the gauge
+    			  colorStart: '#6FADCF',   // Colors
+    			  colorStop: '#8FC0DA',    // just experiment with them
+    			  strokeColor: '#E0E0E0',   // to see which ones work best for you
+    			  generateGradient: true
+    			};
+		$scope.gauge = new Gauge(document.getElementById($attrs.id)).setOptions(opts); // create sexy gauge!
+		$scope.gauge.maxValue = 100; // set max gauge value
+		$scope.gauge.animationSpeed = 10; // set animation speed (32 is default value)
+		$scope.gauge.set(0); // set actual value
+		
+		$log.debug("gauge",0);
+		// for the $watch
+		$scope.systemIndicator = function() {
+			return $store.collection['SystemIndicator']['1'];
+		}
+		
+		$scope.$watch($scope.systemIndicator, function(newValue, oldValue, scope) {
+			$scope.gauge.set(newValue.systemLoadAverage*10);
+			$log.debug("gauge",newValue.systemLoadAverage*10);
+		});
+    }
+  }
+})

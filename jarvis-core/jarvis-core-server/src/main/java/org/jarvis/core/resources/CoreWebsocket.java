@@ -18,21 +18,41 @@ package org.jarvis.core.resources;
 
 import static spark.Spark.webSocket;
 
+import java.lang.management.ManagementFactory;
+import java.util.concurrent.LinkedBlockingQueue;
+
+import javax.management.Attribute;
+import javax.management.AttributeList;
+import javax.management.InstanceNotFoundException;
+import javax.management.MBeanServer;
+import javax.management.MalformedObjectNameException;
+import javax.management.ObjectName;
+import javax.management.ReflectionException;
+
+import org.eclipse.jetty.websocket.api.Session;
+import org.jarvis.core.model.bean.websocket.WebsocketDataBean;
+import org.jarvis.core.websocket.StreamWebSocketHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.joda.JodaModule;
+
 /**
  * websocket
  */
 @Component
 public class CoreWebsocket {
-	protected Logger logger = LoggerFactory.getLogger(CoreWebsocket.class);
+	protected static Logger logger = LoggerFactory.getLogger(CoreWebsocket.class);
 
 	@Autowired
 	Environment env;
+
+	static protected ObjectMapper mapper = new ObjectMapper();
 
 	/**
 	 * mount local resource
@@ -42,5 +62,122 @@ public class CoreWebsocket {
 		 * mount resources
 		 */
 		webSocket("/stream", StreamWebSocketHandler.class);
+
+		/**
+		 * object mapper
+		 */
+		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		mapper.registerModule(new JodaModule());
+	
+		/**
+		 * internal runner
+		 */
+		runner = new Thread(new WebsocketThread());
+		runner.start();;
+		/**
+		 * system runner
+		 */
+		system = new Thread(new SystemThread());
+		system.start();;
+	}
+
+	/**
+	 * broadcast object (with its identifier to client)
+	 * 
+	 * @param sender
+	 *            client identifier
+	 * @param instance
+	 *            object instance (on server side)
+	 * @param data
+	 *            object itself
+	 */
+	public static void broadcast(String sender, String instance, Object data) {
+		queue.offer(new WebsocketDataBean(instance, data));
+	}
+
+	static Thread system = null;
+	static Thread runner = null;
+	static LinkedBlockingQueue<WebsocketDataBean> queue = new LinkedBlockingQueue<WebsocketDataBean>();
+
+	/**
+	 * internal runner to send data on web socket
+	 */
+	static class WebsocketThread implements Runnable {
+		WebsocketDataBean t = null;
+
+		@Override
+		public void run() {
+			while (true) {
+				try {
+					t = queue.take();
+				} catch (InterruptedException e) {
+					logger.error("While taking {}", e);
+				}
+				StreamWebSocketHandler.sessionMap.keySet().stream().filter(Session::isOpen).forEach(session -> {
+					try {
+						session.getRemote().sendString(mapper.writeValueAsString(t));
+					} catch (Exception e) {
+						logger.error("While broadcast {} {}", t, e);
+					}
+				});
+			}
+		}
+	}
+
+	/**
+	 * internal runner to send data on web socket
+	 */
+	static class SystemThread implements Runnable {
+		
+		public class SystemIndicator {
+			private double systemLoadAverage;
+
+			public SystemIndicator(double systemLoadAverage) {
+				this.systemLoadAverage = systemLoadAverage;
+			}			
+
+			public double getSystemLoadAverage() {
+				return systemLoadAverage;
+			}
+		}
+
+		@Override
+		public void run() {
+			MBeanServer mbs    = ManagementFactory.getPlatformMBeanServer();
+		    ObjectName name = null;
+			try {
+				name = ObjectName.getInstance(ManagementFactory.OPERATING_SYSTEM_MXBEAN_NAME);
+			} catch (MalformedObjectNameException | NullPointerException e) {
+				logger.error("While sleeping {}", e);
+			}
+
+			while (true) {
+				try {
+				    AttributeList list = null;
+					try {
+						list = mbs.getAttributes(name, new String[]{ "ProcessCpuLoad" });
+					} catch (InstanceNotFoundException | ReflectionException e) {
+						logger.error("While sleeping {}", e);
+					}
+
+					Double processCpuLoad;
+					 if (list.isEmpty()) {
+						 processCpuLoad = Double.NaN;
+					 } else {
+					    Attribute att = (Attribute)list.get(0);
+					    Double value  = (Double)att.getValue();
+	
+					    // usually takes a couple of seconds before we get real values
+					    if (value == -1.0) processCpuLoad = Double.NaN;
+					    // returns a percentage value with 1 decimal point precision
+					    processCpuLoad = ((int)(value * 1000) / 10.0);
+					 }
+					broadcast("SystemThread", "1", new SystemIndicator(processCpuLoad));
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					logger.error("While sleeping {}", e);
+				}
+			}
+		}
 	}
 }

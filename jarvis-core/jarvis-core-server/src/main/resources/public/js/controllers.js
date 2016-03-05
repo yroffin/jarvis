@@ -72,7 +72,7 @@ angular.module('JarvisApp.config',[])
      * main controller
      */
     .controller('JarvisAppCtrl',
-    	function($scope, $log, $mdSidenav, $location, $state, genericPickerService, toastService, iotResourceService, eventResourceService){
+    	function($scope, $log, $store, $mdSidenav, $location, $state, genericPickerService, toastService, iotResourceService, eventResourceService){
         /**
          * initialize jarvis configuration
          */
