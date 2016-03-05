@@ -36,7 +36,6 @@ angular.module('JarvisApp.websocket',['angular-websocket'])
       };
 
       var collection = {};
-      collection['SystemIndicator'] = {"1":{"systemLoadAverage":0.0}};
       dataStream.onMessage(function(message) {
     	var entity = JSON.parse(message.data);
     	if(collection[entity.classname] === undefined) {

@@ -488,15 +488,16 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
 		$scope.gauge.animationSpeed = 10; // set animation speed (32 is default value)
 		$scope.gauge.set(0); // set actual value
 		
-		$log.debug("gauge",0);
 		// for the $watch
 		$scope.systemIndicator = function() {
+			if($store.collection == undefined) return 0;
+			if($store.collection['SystemIndicator'] == undefined) return 0;
+			if($store.collection['SystemIndicator']['1'] == undefined) return 0;
 			return $store.collection['SystemIndicator']['1'];
 		}
 		
 		$scope.$watch($scope.systemIndicator, function(newValue, oldValue, scope) {
-			$scope.gauge.set(newValue.systemLoadAverage*10);
-			$log.debug("gauge",newValue.systemLoadAverage*10);
+			$scope.gauge.set(newValue.processCpuLoad*1000);
 		});
     }
   }

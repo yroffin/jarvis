@@ -130,14 +130,64 @@ public class CoreWebsocket {
 	static class SystemThread implements Runnable {
 		
 		public class SystemIndicator {
-			private double systemLoadAverage;
+			private double committedVirtualMemorySize;
+			private double freePhysicalMemorySize;
+			private double freeSwapSpaceSize;
+			private double processCpuLoad;
+			private double processCpuTime;
+			private double systemCpuLoad;
+			private double totalPhysicalMemorySize;
+			private double totalSwapSpaceSize;
 
-			public SystemIndicator(double systemLoadAverage) {
-				this.systemLoadAverage = systemLoadAverage;
-			}			
+			public SystemIndicator(
+					double committedVirtualMemorySize, 
+					double freePhysicalMemorySize, 
+					double freeSwapSpaceSize, 
+					double processCpuLoad, 
+					double processCpuTime, 
+					double systemCpuLoad, 
+					double totalPhysicalMemorySize, 
+					double totalSwapSpaceSize) { 
+				this.committedVirtualMemorySize = committedVirtualMemorySize;
+				this.freePhysicalMemorySize = freePhysicalMemorySize;
+				this.freeSwapSpaceSize = freeSwapSpaceSize;
+				this.processCpuLoad = processCpuLoad;
+				this.processCpuTime = processCpuTime;
+				this.systemCpuLoad = systemCpuLoad;
+				this.totalPhysicalMemorySize = totalPhysicalMemorySize;
+				this.totalSwapSpaceSize = totalSwapSpaceSize;
+			}
 
-			public double getSystemLoadAverage() {
-				return systemLoadAverage;
+			public double getCommittedVirtualMemorySize() {
+				return committedVirtualMemorySize;
+			}
+
+			public double getFreePhysicalMemorySize() {
+				return freePhysicalMemorySize;
+			}
+
+			public double getFreeSwapSpaceSize() {
+				return freeSwapSpaceSize;
+			}
+
+			public double getProcessCpuLoad() {
+				return processCpuLoad;
+			}
+
+			public double getProcessCpuTime() {
+				return processCpuTime;
+			}
+
+			public double getSystemCpuLoad() {
+				return systemCpuLoad;
+			}
+
+			public double getTotalPhysicalMemorySize() {
+				return totalPhysicalMemorySize;
+			}
+
+			public double getTotalSwapSpaceSize() {
+				return totalSwapSpaceSize;
 			}
 		}
 
@@ -155,24 +205,21 @@ public class CoreWebsocket {
 				try {
 				    AttributeList list = null;
 					try {
-						list = mbs.getAttributes(name, new String[]{ "ProcessCpuLoad" });
+						list = mbs.getAttributes(name, new String[]{ "CommittedVirtualMemorySize", "FreePhysicalMemorySize", "FreeSwapSpaceSize", "ProcessCpuLoad", "ProcessCpuTime", "SystemCpuLoad", "TotalPhysicalMemorySize", "TotalSwapSpaceSize" });
 					} catch (InstanceNotFoundException | ReflectionException e) {
 						logger.error("While sleeping {}", e);
 					}
 
-					Double processCpuLoad;
-					 if (list.isEmpty()) {
-						 processCpuLoad = Double.NaN;
-					 } else {
-					    Attribute att = (Attribute)list.get(0);
-					    Double value  = (Double)att.getValue();
-	
-					    // usually takes a couple of seconds before we get real values
-					    if (value == -1.0) processCpuLoad = Double.NaN;
-					    // returns a percentage value with 1 decimal point precision
-					    processCpuLoad = ((int)(value * 1000) / 10.0);
-					 }
-					broadcast("SystemThread", "1", new SystemIndicator(processCpuLoad));
+					broadcast("SystemThread", "1", new SystemIndicator(
+							(long) ((Attribute)list.get(0)).getValue(),
+							(long) ((Attribute)list.get(1)).getValue(),
+							(long) ((Attribute)list.get(2)).getValue(),
+							(double) ((Attribute)list.get(3)).getValue(),
+							(long) ((Attribute)list.get(4)).getValue(),
+							(double) ((Attribute)list.get(5)).getValue(),
+							(long) ((Attribute)list.get(6)).getValue(),
+							(long) ((Attribute)list.get(7)).getValue()
+					));
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
 					logger.error("While sleeping {}", e);
