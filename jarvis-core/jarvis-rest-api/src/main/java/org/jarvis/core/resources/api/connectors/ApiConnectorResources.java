@@ -98,17 +98,27 @@ public class ApiConnectorResources extends ApiLinkedResources<ConnectorRest,Conn
 				/*
 				 * build it
 				 */
-				apiConnexionResources.doCreate(r);
+				ConnexionRest cnx = apiConnexionResources.doCreate(r);
 				apiHrefConnectorResources.add(
 						owner, 
-						apiConnexionResources.doCreate(r),
+						cnx,
 						new GenericMap(),
 						CONNECTOR_RESOURCE.toString(),
 						HREF.toString());
+				/**
+				 * build result
+				 */
+				GenericMap res = new GenericMap();
+				res.put("id", cnx.id);
+				res.put("isRenderer", cnx.isRenderer);
+				res.put("isSensor", cnx.isSensor);
+				res.put("canAnswer", cnx.canAnswer);
+				res.put("adress", cnx.adress);
+				return res;
 			}
 		} catch (TechnicalNotFoundException e) {
 			throw e;
 		}
-		return args;
+		return new GenericMap();
 	}
 }

@@ -119,9 +119,14 @@ angular.module('JarvisApp.ctrl.connectors', ['JarvisApp.services'])
 	          clickOutsideToClose:true
 	        })
 	        .then(function(connexion) {
-	        	$log.debug("ok", connexion);
 	        	connectorResourceService.connector.task(connector.id, 'register', connexion, function(data) {
-		        	$log.debug("callback", connexion);
+	        		/**
+	        		 * push only good object
+	        		 * id can be null if connexion is already created
+	        		 */
+	        		if(data.id != undefined) {
+	        			$scope.connexions.push(data);
+	        		}
 	        	});
 	        }, function() {
 	        });
