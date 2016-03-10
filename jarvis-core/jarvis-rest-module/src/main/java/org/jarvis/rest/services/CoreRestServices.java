@@ -19,6 +19,8 @@ package org.jarvis.rest.services;
 import java.io.IOException;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+
 import org.jarvis.rest.services.impl.JarvisModuleException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +43,17 @@ public class CoreRestServices {
 	@Autowired
 	CoreRestDefault coreRestDefault;
 
+	/**
+	 * simple json mapper
+	 */
 	private ObjectMapper mapper = new ObjectMapper();
+
+	/**
+	 * init this component
+	 */
+	@PostConstruct
+	public void init() {
+	}
 
 	/**
 	 * modules
@@ -62,7 +74,11 @@ public class CoreRestServices {
 		/**
 		 * dio module
 		 */
-		dio
+		dio,
+		/**
+		 * config
+		 */
+		config
 	}
 
 	/**
@@ -78,6 +94,7 @@ public class CoreRestServices {
 	public Object handler(Handler h, Request request, Response response) throws JsonProcessingException {
 		try {
 			Map<String, Object> result = null;
+			response.header("Content-Type", "application/json");
 			switch (h) {
 			case remote:
 				result = coreRestDefault.remote(mapper.readValue(request.body(), Map.class));
@@ -91,6 +108,8 @@ public class CoreRestServices {
 			case dio:
 				result = coreRestDefault.dio(mapper.readValue(request.body(), Map.class));
 				break;
+			case config:
+				return mapper.writeValueAsString(coreRestDefault.config());
 			default:
 				break;
 			}

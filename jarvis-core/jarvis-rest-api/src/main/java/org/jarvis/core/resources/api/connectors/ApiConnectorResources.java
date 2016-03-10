@@ -16,34 +16,32 @@
 
 package org.jarvis.core.resources.api.connectors;
 
-import java.util.List;
+import java.io.IOException;
 
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import org.jarvis.core.exception.TechnicalException;
+import org.jarvis.core.exception.TechnicalHttpException;
 import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.connector.ConnectorBean;
-import org.jarvis.core.model.bean.connector.ConnexionBean;
-import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.model.rest.connector.ConnectorRest;
-import org.jarvis.core.model.rest.connector.ConnexionRest;
-import org.jarvis.core.resources.api.ApiLinkedResources;
+import org.jarvis.core.resources.api.ApiResources;
 import org.jarvis.core.resources.api.ResourcePair;
-import org.jarvis.core.resources.api.href.ApiHrefConnectorResources;
 import org.jarvis.core.type.GenericMap;
 import org.jarvis.core.type.ResultType;
 import org.jarvis.core.type.TaskType;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
  * View resource
  */
 @Component
-public class ApiConnectorResources extends ApiLinkedResources<ConnectorRest,ConnectorBean,ConnexionRest,ConnexionBean> {
+public class ApiConnectorResources extends ApiResources<ConnectorRest,ConnectorBean> {
 
-	@Autowired
-	ApiConnexionResources apiConnexionResources;
-
-	@Autowired
-	ApiHrefConnectorResources apiHrefConnectorResources;
+	protected Client client;
 
 	/**
 	 * constructor
@@ -51,6 +49,9 @@ public class ApiConnectorResources extends ApiLinkedResources<ConnectorRest,Conn
 	public ApiConnectorResources() {
 		setRestClass(ConnectorRest.class);
 		setBeanClass(ConnectorBean.class);
+
+		// create HTTP Client for all call
+		this.client = ClientBuilder.newClient();
 	}
 
 	@Override
@@ -59,18 +60,14 @@ public class ApiConnectorResources extends ApiLinkedResources<ConnectorRest,Conn
 		 * connectors
 		 */
 		declare(CONNECTOR_RESOURCE);
-		/**
-		 * connectors -> connexions
-		 */
-		declare(CONNECTOR_RESOURCE, CONNEXION_RESOURCE, apiConnexionResources, apiHrefConnectorResources, CONNEXION, SORTKEY, HREF);
 	}
 
 	@Override
 	public ResourcePair doRealTask(ConnectorBean bean, GenericMap args, TaskType taskType) throws Exception {
 		GenericMap result;
 		switch(taskType) {
-			case REGISTER:
-				result = register(bean, args, new GenericMap());
+			case PING:
+				result = ping(bean, args, new GenericMap());
 				break;
 			default:
 				result = new GenericMap();
@@ -78,47 +75,26 @@ public class ApiConnectorResources extends ApiLinkedResources<ConnectorRest,Conn
 		return new ResourcePair(ResultType.OBJECT, mapper.writeValueAsString(result));
 	}
 
-	private GenericMap register(ConnectorBean bean, GenericMap args, GenericMap properties) throws TechnicalNotFoundException {
-		try {
-			/**
-			 * retrieve lin if exist
-			 */
-			ConnectorRest owner = apiHrefConnectorResources.toConnectorRest(bean);
-			List<GenericEntity> links = apiHrefConnectorResources.findAllByHref(owner, (String) args.get("href"), HREF.toString());
-			if(links.size() == 0) {
-				/**
-				 * no links with such href
-				 */
-				ConnexionRest r = new ConnexionRest();
-				r.adress = (String) args.get("href");
-				r.isRenderer = (boolean) args.get("isRenderer");
-				r.isSensor = (boolean) args.get("isSensor");
-				r.canAnswer = (boolean) args.get("canAnswer");
-				logger.info("Add connexion {}", r.adress);
-				/*
-				 * build it
-				 */
-				ConnexionRest cnx = apiConnexionResources.doCreate(r);
-				apiHrefConnectorResources.add(
-						owner, 
-						cnx,
-						new GenericMap(),
-						CONNECTOR_RESOURCE.toString(),
-						HREF.toString());
-				/**
-				 * build result
-				 */
-				GenericMap res = new GenericMap();
-				res.put("id", cnx.id);
-				res.put("isRenderer", cnx.isRenderer);
-				res.put("isSensor", cnx.isSensor);
-				res.put("canAnswer", cnx.canAnswer);
-				res.put("adress", cnx.adress);
-				return res;
+	private GenericMap ping(ConnectorBean bean, GenericMap args, GenericMap properties) throws TechnicalNotFoundException, TechnicalHttpException {
+		/**
+		 * build call
+		 */
+		Response entity = client.target(bean.adress)
+	            .request(MediaType.APPLICATION_JSON)
+	            .accept(MediaType.APPLICATION_JSON)
+	            .acceptEncoding("charset=UTF-8")
+	            .get();
+
+		if(entity.getStatus() == 200) {
+			GenericMap body = null;
+			try {
+				body = mapper.readValue(entity.readEntity(String.class), GenericMap.class);
+			} catch (IOException e) {
+				throw new TechnicalException(e);
 			}
-		} catch (TechnicalNotFoundException e) {
-			throw e;
+			return body;
+		} else {
+			throw new TechnicalHttpException(entity.getStatus(), bean.adress);
 		}
-		return new GenericMap();
 	}
 }

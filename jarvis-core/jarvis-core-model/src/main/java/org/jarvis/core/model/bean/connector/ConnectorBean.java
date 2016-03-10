@@ -30,4 +30,20 @@ public class ConnectorBean extends GenericBean {
 	 * icon
 	 */
 	public String icon;
+	/**
+	 * adress
+	 */
+	public String adress;
+	/**
+	 * isRenderer
+	 */
+	public boolean isRenderer;
+	/**
+	 * isSensor
+	 */
+	public boolean isSensor;
+	/**
+	 * canAnswer
+	 */
+	public boolean canAnswer;
 }

@@ -45,10 +45,13 @@ public class PluginGroovyService {
 	@Autowired
 	Environment env;
 
+	@Autowired
+	private PluginGroovyHelper helper;
+
 	private Binding binding;
 
 	private GroovyShell script;
-
+	
 	/**
 	 * init
 	 */
@@ -56,6 +59,10 @@ public class PluginGroovyService {
 	public void init() {
 		binding = new Binding();
 		script = new GroovyShell(binding);
+		/**
+		 * declare helper in script
+		 */
+		binding.setVariable("helper", helper);
 	}
 
 	/**
@@ -80,6 +87,9 @@ public class PluginGroovyService {
 	 * when some internal error 
 	 */
 	public GenericMap groovyAsObject(String command, GenericMap args) throws TechnicalException {
+		/**
+		 * store args in input bind field
+		 */
 		binding.setVariable("input", args);
 		Object raw = script.evaluate(command);
 		Map<?,?> exec = null;

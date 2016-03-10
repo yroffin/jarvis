@@ -36,4 +36,24 @@ public class ConnectorRest extends GenericEntity {
 	 */
 	@JsonProperty("icon")
 	public String icon;
+	/**
+	 * href
+	 */
+	@JsonProperty("adress")
+	public String adress;
+	/**
+	 * isRenderer
+	 */
+	@JsonProperty("isRenderer")
+	public boolean isRenderer;
+	/**
+	 * isSensor
+	 */
+	@JsonProperty("isSensor")
+	public boolean isSensor;
+	/**
+	 * canAnswer
+	 */
+	@JsonProperty("canAnswer")
+	public boolean canAnswer;
 }

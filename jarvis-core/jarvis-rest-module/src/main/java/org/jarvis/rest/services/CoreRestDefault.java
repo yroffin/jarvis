@@ -18,6 +18,9 @@ package org.jarvis.rest.services;
 
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+
+import org.jarvis.core.resources.SystemIndicator;
 import org.jarvis.rest.services.impl.JarvisAimlEngine;
 import org.jarvis.rest.services.impl.JarvisDioEngine;
 import org.jarvis.rest.services.impl.JarvisModuleException;
@@ -46,6 +49,14 @@ public class CoreRestDefault {
 
 	@Autowired
 	JarvisDioEngine jarvisDioEngine;
+
+	/**
+	 * init this component
+	 */
+	@PostConstruct
+	public void init() {
+		SystemIndicator.init();
+	}
 
 	/**
 	 * remote service
@@ -88,5 +99,13 @@ public class CoreRestDefault {
 	 */
 	public Map<String, Object> dio(Map<String, Object> message) throws JarvisModuleException {
 		return jarvisDioEngine.onNewMessage(message);
+	}
+
+	/**
+	 * @return Map<String, Object>
+	 * @throws JarvisModuleException 
+	 */
+	public SystemIndicator config() throws JarvisModuleException {
+		return SystemIndicator.factory();
 	}
 }

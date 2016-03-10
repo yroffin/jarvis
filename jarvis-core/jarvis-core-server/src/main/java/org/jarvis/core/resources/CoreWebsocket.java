@@ -18,16 +18,7 @@ package org.jarvis.core.resources;
 
 import static spark.Spark.webSocket;
 
-import java.lang.management.ManagementFactory;
 import java.util.concurrent.LinkedBlockingQueue;
-
-import javax.management.Attribute;
-import javax.management.AttributeList;
-import javax.management.InstanceNotFoundException;
-import javax.management.MBeanServer;
-import javax.management.MalformedObjectNameException;
-import javax.management.ObjectName;
-import javax.management.ReflectionException;
 
 import org.eclipse.jetty.websocket.api.Session;
 import org.jarvis.core.model.bean.websocket.WebsocketDataBean;
@@ -129,97 +120,12 @@ public class CoreWebsocket {
 	 */
 	static class SystemThread implements Runnable {
 		
-		public class SystemIndicator {
-			private double committedVirtualMemorySize;
-			private double freePhysicalMemorySize;
-			private double freeSwapSpaceSize;
-			private double processCpuLoad;
-			private double processCpuTime;
-			private double systemCpuLoad;
-			private double totalPhysicalMemorySize;
-			private double totalSwapSpaceSize;
-
-			public SystemIndicator(
-					double committedVirtualMemorySize, 
-					double freePhysicalMemorySize, 
-					double freeSwapSpaceSize, 
-					double processCpuLoad, 
-					double processCpuTime, 
-					double systemCpuLoad, 
-					double totalPhysicalMemorySize, 
-					double totalSwapSpaceSize) { 
-				this.committedVirtualMemorySize = committedVirtualMemorySize;
-				this.freePhysicalMemorySize = freePhysicalMemorySize;
-				this.freeSwapSpaceSize = freeSwapSpaceSize;
-				this.processCpuLoad = processCpuLoad;
-				this.processCpuTime = processCpuTime;
-				this.systemCpuLoad = systemCpuLoad;
-				this.totalPhysicalMemorySize = totalPhysicalMemorySize;
-				this.totalSwapSpaceSize = totalSwapSpaceSize;
-			}
-
-			public double getCommittedVirtualMemorySize() {
-				return committedVirtualMemorySize;
-			}
-
-			public double getFreePhysicalMemorySize() {
-				return freePhysicalMemorySize;
-			}
-
-			public double getFreeSwapSpaceSize() {
-				return freeSwapSpaceSize;
-			}
-
-			public double getProcessCpuLoad() {
-				return processCpuLoad;
-			}
-
-			public double getProcessCpuTime() {
-				return processCpuTime;
-			}
-
-			public double getSystemCpuLoad() {
-				return systemCpuLoad;
-			}
-
-			public double getTotalPhysicalMemorySize() {
-				return totalPhysicalMemorySize;
-			}
-
-			public double getTotalSwapSpaceSize() {
-				return totalSwapSpaceSize;
-			}
-		}
-
 		@Override
 		public void run() {
-			MBeanServer mbs    = ManagementFactory.getPlatformMBeanServer();
-		    ObjectName name = null;
-			try {
-				name = ObjectName.getInstance(ManagementFactory.OPERATING_SYSTEM_MXBEAN_NAME);
-			} catch (MalformedObjectNameException | NullPointerException e) {
-				logger.error("While sleeping {}", e);
-			}
-
+			SystemIndicator.init();
 			while (true) {
 				try {
-				    AttributeList list = null;
-					try {
-						list = mbs.getAttributes(name, new String[]{ "CommittedVirtualMemorySize", "FreePhysicalMemorySize", "FreeSwapSpaceSize", "ProcessCpuLoad", "ProcessCpuTime", "SystemCpuLoad", "TotalPhysicalMemorySize", "TotalSwapSpaceSize" });
-					} catch (InstanceNotFoundException | ReflectionException e) {
-						logger.error("While sleeping {}", e);
-					}
-
-					broadcast("SystemThread", "1", new SystemIndicator(
-							(long) ((Attribute)list.get(0)).getValue(),
-							(long) ((Attribute)list.get(1)).getValue(),
-							(long) ((Attribute)list.get(2)).getValue(),
-							(double) ((Attribute)list.get(3)).getValue(),
-							(long) ((Attribute)list.get(4)).getValue(),
-							(double) ((Attribute)list.get(5)).getValue(),
-							(long) ((Attribute)list.get(6)).getValue(),
-							(long) ((Attribute)list.get(7)).getValue()
-					));
+					broadcast("SystemThread", "1", SystemIndicator.factory());
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
 					logger.error("While sleeping {}", e);

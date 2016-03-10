@@ -47,5 +47,9 @@ public enum TaskType {
 	/**
 	 * register
 	 */
-	REGISTER
+	REGISTER,
+	/**
+	 * ping
+	 */
+	PING
 }

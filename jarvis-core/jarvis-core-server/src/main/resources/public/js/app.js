@@ -47,7 +47,6 @@ angular.module('JarvisApp', [
      'JarvisApp.services.cron',
      'JarvisApp.services.view',
      'JarvisApp.services.connector',
-     'JarvisApp.services.connexion',
      'JarvisApp.services.iot',
      'JarvisApp.services.event',
      'JarvisApp.services.trigger',

@@ -16,10 +16,10 @@
 
 package org.jarvis.core.services;
 
+
 import org.jarvis.core.resources.CoreResources;
 import org.jarvis.core.resources.CoreWebsocket;
 import org.jarvis.core.resources.api.connectors.ApiConnectorResources;
-import org.jarvis.core.resources.api.connectors.ApiConnexionResources;
 import org.jarvis.core.resources.api.iot.ApiEventResources;
 import org.jarvis.core.resources.api.iot.ApiIotResources;
 import org.jarvis.core.resources.api.iot.ApiTriggerResources;
@@ -84,9 +84,6 @@ public class CoreServerDaemon {
 	@Autowired
 	ApiConnectorResources apiConnectorResources;
 
-	@Autowired
-	ApiConnexionResources apiConnexionResources;
-
 	/**
 	 * start component
 	 */
@@ -130,6 +127,5 @@ public class CoreServerDaemon {
 		apiCronResources.mount();
 		apiToolResources.mount();
 		apiConnectorResources.mount();
-		apiConnexionResources.mount();
 	}
 }

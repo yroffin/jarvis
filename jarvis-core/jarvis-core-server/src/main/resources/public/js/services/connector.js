@@ -23,7 +23,6 @@
  */
 angular.module('JarvisApp.services.connector', []).factory('connectorResourceService', function(genericResourceService) {
   return {
-	  connector : genericResourceService.crud(['connectors']),
-	  connexions : genericResourceService.links(['connectors'], ['connexions'])
+	  connector : genericResourceService.crud(['connectors'])
   }
 });

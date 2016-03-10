@@ -16,6 +16,7 @@
 
 package org.jarvis.rest.services;
 
+import static spark.Spark.get;
 import static spark.Spark.post;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,5 +61,16 @@ public class CoreRestDaemon {
 				(request, response) -> coreRestServices.handler(CoreRestServices.Handler.voice, request, response));
 		post("/api/connectors/dio",
 				(request, response) -> coreRestServices.handler(CoreRestServices.Handler.dio, request, response));
+		/**
+		 * just display config
+		 */
+		get("/api/connectors/remote",
+				(request, response) -> coreRestServices.handler(CoreRestServices.Handler.config, request, response));
+		get("/api/connectors/aiml",
+				(request, response) -> coreRestServices.handler(CoreRestServices.Handler.config, request, response));
+		get("/api/connectors/voice",
+				(request, response) -> coreRestServices.handler(CoreRestServices.Handler.config, request, response));
+		get("/api/connectors/dio",
+				(request, response) -> coreRestServices.handler(CoreRestServices.Handler.config, request, response));
 	}
 }

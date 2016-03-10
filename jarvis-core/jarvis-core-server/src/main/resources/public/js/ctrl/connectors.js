@@ -36,12 +36,15 @@ angular.module('JarvisApp.ctrl.connectors', ['JarvisApp.services'])
 			connectorResourceService.connector,
 			{
     			name: "connector name",
-    			icon: "settings_input_antenna"
+    			icon: "settings_input_antenna",
+    			isRenderer: false,
+    			isSensor: false,
+    			canAnswer: false
     		}
 	);
 })
 .controller('connectorCtrl',
-	function($scope, $log, $stateParams, $mdDialog, genericResourceService, genericScopeService, connectorResourceService, connexionResourceService, toastService){
+	function($scope, $log, $stateParams, $mdDialog, genericResourceService, genericScopeService, connectorResourceService, toastService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
 	 */
@@ -50,86 +53,16 @@ angular.module('JarvisApp.ctrl.connectors', ['JarvisApp.services'])
 			'connector', 
 			'connectors', 
 			connectorResourceService.connector);
-	/**
-	 * declare links
-	 */
-	$scope.links = {
-			connexions: {}
-	};
-	/**
-	 * declare generic scope resource link (and inject it in scope)
-	 */
-	genericScopeService.scope.resourceLink(
-			function() {
-				return $scope.connexions;
-			},
-			$scope.links.connexions, 
-			'connector', 
-			'connectors', 
-			connectorResourceService.connector, 
-			connectorResourceService.connexions, 
-			{
-			},
-			$stateParams.id,
-			{
-				/**
-				 * drop callback, to delete target connexion (orignal remove is cancelled)
-				 * @param data
-				 * @returns
-				 */
-				remove: function(data) {
-					connexionResourceService.connexion.delete(data.id, function() {
-						$log.info("Drop any ", data);
-			  			var toremove = data.instance;
-			  			_.remove($scope.connexions, function(element) {
-			  				return element.instance == toremove;
-			  			});
-					}, function() {
-						$log.warn("While dropping any ", data);
-					});
-				}
-			}
-	);
     /**
-     * register a new connexion
+     * verify this connector
      */
-    $scope.register = function(ev, connector) {
-    	/**
-    	 * display a dialog box to register this new connexion
-    	 */
-        $mdDialog.show({
-        	  controller: function(scope) {
-        		scope.connexion = {
-        				href: 'http://...',
-        				isRenderer:false,
-        				isSensor:true,
-        				canAnswer:false
-        		}
-    	    	scope.answer = function(abort, cnx) {
-    	    	    if(abort === true) {
-    	    	    	$mdDialog.hide(cnx);
-    	    	    } else {
-    	    	    	$mdDialog.cancel();
-    	    	    }
-    	    	};
-        	  },
-	          templateUrl: 'js/partials/dialog/connexionsDialog.tmpl.html',
-	          parent: angular.element(document.body),
-	          targetEvent: ev,
-	          clickOutsideToClose:true
-	        })
-	        .then(function(connexion) {
-	        	connectorResourceService.connector.task(connector.id, 'register', connexion, function(data) {
-	        		/**
-	        		 * push only good object
-	        		 * id can be null if connexion is already created
-	        		 */
-	        		if(data.id != undefined) {
-	        			$scope.connexions.push(data);
-	        		}
-	        	});
-	        }, function() {
-	        });
+    $scope.ping = function(connector) {
+    	connectorResourceService.connector.task(connector.id, 'ping', connector, function(data) {
+    		/**
+    		 * check data for ping result
+    		 */
+    		$scope.status = angular.toJson(data, true);
+    	});
     }
     /**
      * load this controller
@@ -138,14 +71,9 @@ angular.module('JarvisApp.ctrl.connectors', ['JarvisApp.services'])
 		/**
 		 * get current connector
 		 */
-    	$scope.connectors = [];
-    	genericResourceService.scope.entity.get($stateParams.id, function(update) {$scope.connector=update}, connectorResourceService.connector);
-
-		/**
-		 * get all views
-		 */
-		$scope.connexions = [];
-    	genericResourceService.scope.collections.findAll('connexions', $stateParams.id, $scope.connexions, connectorResourceService.connexions);
+    	genericResourceService.scope.entity.get($stateParams.id, function(update) {
+    		$scope.connector=update;
+    	}, connectorResourceService.connector);
 
     	$log.info('connector-ctrl', $scope.connectors);
     }
