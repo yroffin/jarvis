@@ -8,8 +8,8 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<artifactId>jarvis-common</artifactId>
-
-	<name>Commons elements</name>
+	<name>Commons</name>
+	<description>Commons</description>
 
 	<dependencies>
 		<dependency>

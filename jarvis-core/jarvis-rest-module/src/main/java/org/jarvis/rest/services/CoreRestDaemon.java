@@ -19,6 +19,8 @@ package org.jarvis.rest.services;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -40,6 +42,7 @@ public class CoreRestDaemon {
 	/**
 	 * server part
 	 */
+	@PostConstruct
 	public void server() {
 		String iface = env.getProperty("jarvis.connector.interface");
 		int port = Integer.parseInt(env.getProperty("jarvis.connector.port"));

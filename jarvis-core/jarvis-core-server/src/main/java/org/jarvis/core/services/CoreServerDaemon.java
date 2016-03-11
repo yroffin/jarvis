@@ -17,6 +17,8 @@
 package org.jarvis.core.services;
 
 
+import javax.annotation.PostConstruct;
+
 import org.jarvis.core.resources.CoreResources;
 import org.jarvis.core.resources.CoreWebsocket;
 import org.jarvis.core.resources.api.connectors.ApiConnectorResources;
@@ -87,6 +89,7 @@ public class CoreServerDaemon {
 	/**
 	 * start component
 	 */
+	@PostConstruct
 	public void server() {
 		String iface = env.getProperty("jarvis.server.interface");
 		int port = Integer.parseInt(env.getProperty("jarvis.server.port"));
