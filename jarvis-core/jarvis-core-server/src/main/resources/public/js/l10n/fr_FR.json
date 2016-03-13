@@ -97,6 +97,7 @@
     "view.general"    	: "Général",
     "view.name"    		: "Nom de la vue",
     "view.icon"    		: "Icon de la vue",
+    "view.url"    		: "Image de fond",
     "view.iots"    		: "Mes iots",
     "view.ishome"    	: "Vue principale",
     "scenario.graph"    : "Graphe",

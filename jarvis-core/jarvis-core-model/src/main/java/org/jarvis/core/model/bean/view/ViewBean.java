@@ -31,6 +31,10 @@ public class ViewBean extends GenericBean {
 	 */
 	public String icon;
 	/**
+	 * url
+	 */
+	public String url;
+	/**
 	 * ishome
 	 */
 	public boolean ishome;

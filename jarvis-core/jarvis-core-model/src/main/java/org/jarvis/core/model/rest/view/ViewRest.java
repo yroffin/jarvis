@@ -37,8 +37,18 @@ public class ViewRest extends GenericEntity {
 	@JsonProperty("icon")
 	public String icon;
 	/**
+	 * url
+	 */
+	@JsonProperty("url")
+	public String url;
+	/**
 	 * ishome
 	 */
 	@JsonProperty("ishome")
 	public boolean ishome;
+	
+	@Override
+	public String toString() {
+		return "ViewRest [name=" + name + ", icon=" + icon + ", url=" + url + ", ishome=" + ishome + "]";
+	}
 }

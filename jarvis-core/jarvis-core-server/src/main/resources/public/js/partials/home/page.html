@@ -1,9 +1,9 @@
-<div ng-init="load()" ng-cloak>
+<div ng-init="load()" ng-cloak md-swipe-left="onSwipeLeft()" md-swipe-right="onSwipeRight()">
   	<h3 translate="home.title"></h3>
 	<md-tabs md-dynamic-height md-border-bottom>
-		<md-tab label="{{view.name}}" ng-repeat="view in views" md-active="activeTab(view, $index)">
-			<md-content layout-padding>
-				<jarvis-home md-swipe-left="onSwipeLeft()" md-swipe-right="onSwipeRight()"></jarvis-home>
+		<md-tab label="{{view.name}}" ng-repeat="view in views" md-on-select="selectTab(view, $index)" md-active="activeTab(view, $index)">
+			<md-content ng-style="{'background-image': view.urlBackground, 'background-position': 'center', 'background-size': 'cover'}" layout-padding>
+				<jarvis-home></jarvis-home>
 			</md-content>
 		</md-tab>
 	</md-tabs>

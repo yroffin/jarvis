@@ -65,8 +65,7 @@ angular.module('JarvisApp.config',[])
             .primaryPalette('deep-orange')
             .warnPalette('red')
             .accentPalette('brown')
-            .backgroundPalette('grey')
-            .dark();
+            .backgroundPalette('orange')
     })
     /**
      * main controller

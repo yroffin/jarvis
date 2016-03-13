@@ -25,23 +25,33 @@ angular.module('JarvisApp.ctrl.home', ['JarvisApp.services'])
      * swipe left
      */
     $scope.onSwipeLeft = function() {
-    	_.forEach($scope.views, function(view) {
-    		view.isActive = !view.isActive;
-    	});
+    	if($scope.tabIndex >= ($scope.views.length-1)) {
+    		$scope.tabIndex = $scope.views.length-1;
+    		return;
+    	}
+    	$scope.tabIndex++;
     }
     /**
      * swipe right
      */
     $scope.onSwipeRight = function() {
-    	_.forEach($scope.views, function(view) {
-    		view.isActive = !view.isActive;
-    	});
+    	if($scope.tabIndex <= 0) {
+    		$scope.tabIndex = 0;
+    		return;
+    	}
+    	$scope.tabIndex--;
     }
     /**
-     * swipe right
+     * select tab callback
      */
-    $scope.activeTab = function(view,index) {
-    	return view.isActive;
+    $scope.selectTab = function(view, index) {
+    	$scope.tabIndex = index;
+    }
+    /**
+     * is selected
+     */
+    $scope.activeTab = function(view, index) {
+    	return $scope.tabIndex == index;
     }
     /**
      * load this controller
@@ -49,19 +59,19 @@ angular.module('JarvisApp.ctrl.home', ['JarvisApp.services'])
     $scope.load = function() {
     	$scope.store = $store;
     	$scope.views = [];
+    	$scope.tabIndex = -1;
     	
 	    /**
 	     * loading views
 	     */
 		viewResourceService.view.findAll(function(data) {
 	        var arr = [];
-	        var index = 0;
 	    	_.forEach(data, function(element) {
 	            /**
 	             * load this view only if ishome
 	             */
 	            if(element.ishome) {
-	            	element.isActive = false;
+	            	element.urlBackground = "url('"+element.url+"')";
 	            	arr.push(element);
 	            }
 	        });
@@ -88,7 +98,7 @@ angular.module('JarvisApp.ctrl.home', ['JarvisApp.services'])
 	    	
 	        $scope.views = arr;
 	        if($scope.views.length > 0) {
-	        	$scope.views[0].isActive = true;
+	        	$scope.tabIndex = 0;
 	        }
 	    }, toastService.failure);
 	
