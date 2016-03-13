@@ -391,7 +391,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
 .directive('jarvisHome', function ($log, $stateParams) {
   return {
     restrict: 'E',
-    templateUrl: '/ui/js/partials/widget/jarvis-home.html',
+    templateUrl: '/ui/js/partials/home/jarvis-home.html',
     link: function(scope, element, attrs) {
     	$log.debug('jarvis-home');
     }

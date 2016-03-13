@@ -1,4 +1,10 @@
 <div ng-init="load()" ng-cloak>
   	<h3 translate="home.title"></h3>
-  	<jarvis-home></jarvis-home>
+	<md-tabs md-dynamic-height md-border-bottom>
+		<md-tab label="{{view.name}}" ng-repeat="view in views" md-active="activeTab(view, $index)">
+			<md-content layout-padding>
+				<jarvis-home md-swipe-left="onSwipeLeft()" md-swipe-right="onSwipeRight()"></jarvis-home>
+			</md-content>
+		</md-tab>
+	</md-tabs>
 </div>

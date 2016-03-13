@@ -22,6 +22,28 @@ angular.module('JarvisApp.ctrl.home', ['JarvisApp.services'])
 .controller('homeCtrl', 
 	function($scope, $store, $log, viewResourceService, iotResourceService, toastService){
     /**
+     * swipe left
+     */
+    $scope.onSwipeLeft = function() {
+    	_.forEach($scope.views, function(view) {
+    		view.isActive = !view.isActive;
+    	});
+    }
+    /**
+     * swipe right
+     */
+    $scope.onSwipeRight = function() {
+    	_.forEach($scope.views, function(view) {
+    		view.isActive = !view.isActive;
+    	});
+    }
+    /**
+     * swipe right
+     */
+    $scope.activeTab = function(view,index) {
+    	return view.isActive;
+    }
+    /**
      * load this controller
      */
     $scope.load = function() {
@@ -33,11 +55,13 @@ angular.module('JarvisApp.ctrl.home', ['JarvisApp.services'])
 	     */
 		viewResourceService.view.findAll(function(data) {
 	        var arr = [];
+	        var index = 0;
 	    	_.forEach(data, function(element) {
 	            /**
 	             * load this view only if ishome
 	             */
 	            if(element.ishome) {
+	            	element.isActive = false;
 	            	arr.push(element);
 	            }
 	        });
@@ -63,6 +87,9 @@ angular.module('JarvisApp.ctrl.home', ['JarvisApp.services'])
 			});
 	    	
 	        $scope.views = arr;
+	        if($scope.views.length > 0) {
+	        	$scope.views[0].isActive = true;
+	        }
 	    }, toastService.failure);
 	
 		$log.info('views-ctrl');
