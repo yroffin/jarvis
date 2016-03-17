@@ -3,6 +3,8 @@ jarvis
 
 Just Another Ridiculous Very Inteligent System
 
+[![Build Status](https://snap-ci.com/yroffin/jarvis/branch/master/build_image)](https://snap-ci.com/yroffin/jarvis/branch/master)
+
 Introduction
 ------------
 
