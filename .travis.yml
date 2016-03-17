@@ -1,5 +1,6 @@
 language: java
 jdk:
-- openjdk7
+  - openjdk7
 before_deploy:
-- mvn package
+  - cd jarvis-core
+  - mvn package
