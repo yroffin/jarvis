@@ -57,6 +57,11 @@ public class IotRest extends GenericEntity {
 	@JsonProperty("tagColor")
 	public String tagColor;
 	/**
+	 * tag opacity
+	 */
+	@JsonProperty("tagOpacity")
+	public String tagOpacity;
+	/**
 	 * tag text color
 	 */
 	@JsonProperty("tagTextColor")

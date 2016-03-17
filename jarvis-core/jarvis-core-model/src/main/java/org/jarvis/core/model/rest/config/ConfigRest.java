@@ -14,51 +14,41 @@
  *   limitations under the License.
  */
 
-package org.jarvis.core.model.bean.iot;
+package org.jarvis.core.model.rest.config;
 
-import org.jarvis.core.model.bean.GenericBean;
+import org.jarvis.core.model.rest.GenericEntity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * IOT object
+ * VIEW object
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class IotBean extends GenericBean {
+public class ConfigRest extends GenericEntity {
 	/**
-	 * name of this iot
+	 * name
 	 */
+	@JsonProperty("name")
 	public String name;
 	/**
-	 * parameters
+	 * active
 	 */
-	public String parameters;
+	@JsonProperty("active")
+	public boolean active;
 	/**
-	 * owner of this iot
+	 * opacity
 	 */
-	public String owner;
+	@JsonProperty("opacity")
+	public String opacity;
 	/**
-	 * visible
+	 * backgroundUrl
 	 */
-	public boolean visible;
-	/**
-	 * icon of this iot
-	 */
-	public String icon;
-	/**
-	 * tag color
-	 */
-	public String tagColor;
-	/**
-	 * tag opacity
-	 */
-	public String tagOpacity;
-	/**
-	 * tag text color
-	 */
-	public String tagTextColor;
-	/**
-	 * template
-	 */
-	public String template;
+	@JsonProperty("backgroundUrl")
+	public String backgroundUrl;
+	
+	@Override
+	public String toString() {
+		return "ConfigRest [name=" + name + ", opacity=" + opacity + ", backgroundUrl=" + backgroundUrl + "]";
+	}
 }

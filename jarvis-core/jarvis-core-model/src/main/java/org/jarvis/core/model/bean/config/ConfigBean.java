@@ -14,51 +14,28 @@
  *   limitations under the License.
  */
 
-package org.jarvis.core.model.bean.iot;
+package org.jarvis.core.model.bean.config;
 
 import org.jarvis.core.model.bean.GenericBean;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-
 /**
- * IOT object
+ * configuration object
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class IotBean extends GenericBean {
+public class ConfigBean extends GenericBean {
 	/**
-	 * name of this iot
+	 * name
 	 */
 	public String name;
 	/**
-	 * parameters
+	 * active
 	 */
-	public String parameters;
+	public boolean active;
 	/**
-	 * owner of this iot
+	 * opacity
 	 */
-	public String owner;
+	public String opacity;
 	/**
-	 * visible
+	 * backgroundUrl
 	 */
-	public boolean visible;
-	/**
-	 * icon of this iot
-	 */
-	public String icon;
-	/**
-	 * tag color
-	 */
-	public String tagColor;
-	/**
-	 * tag opacity
-	 */
-	public String tagOpacity;
-	/**
-	 * tag text color
-	 */
-	public String tagTextColor;
-	/**
-	 * template
-	 */
-	public String template;
+	public String backgroundUrl;
 }

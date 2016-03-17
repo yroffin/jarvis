@@ -71,11 +71,20 @@ angular.module('JarvisApp.config',[])
      * main controller
      */
     .controller('JarvisAppCtrl',
-    	function($scope, $log, $store, $mdSidenav, $location, $state, genericPickerService, toastService, iotResourceService, eventResourceService){
+    	function($scope, $log, $store, $mdSidenav, $location, $state, genericPickerService, toastService, iotResourceService, eventResourceService, configurationResourceService){
         /**
          * initialize jarvis configuration
          */
-        $scope.jarvis = {};
+        $scope.config = {};
+        
+        configurationResourceService.configuration.findAll(function(data) {
+        	var config = _.find(data, 'active');
+        	if(config) {
+        		$log.debug('JarvisAppCtrl::config', config);
+                $scope.config.backgroundUrl = config.backgroundUrl;
+                $scope.config.opacity = config.opacity;
+        	}
+	    }, toastService.failure);
 
         /**
          * highlight JS

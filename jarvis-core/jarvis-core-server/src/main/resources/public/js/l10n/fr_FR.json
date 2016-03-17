@@ -100,6 +100,13 @@
     "view.url"    		: "Image de fond",
     "view.iots"    		: "Mes iots",
     "view.ishome"    	: "Vue principale",
+    "config.title"    	: "Mes configurations",
+    "config.active"    	: "active",
+    "config.name"    	: "Nom de la configuration",
+    "config.general"    : "Général",
+    "config.name"    	: "Nom de la configuration",
+    "config.opacity"    : "Opacité du fond",
+    "config.backUrl"	: "Image de fond (url)",
     "scenario.graph"    : "Graphe",
     "scenario.title"    : "Mes scenarii",
     "scenario.general"  : "Général",
@@ -110,6 +117,7 @@
     "iot.icon" 			: "Icône",
     "iot.name" 			: "Nom de l'objet connecté",
     "iot.tagColor" 		: "Couleur du tag",
+    "iot.tagOpacity"	: "Opacité du tag",
     "iot.tagTextColor" 	: "Couleur du texte",
     "iot.visible" 		: "Visible",
     "plugin.name"   	: "Nom du plugin",
@@ -157,5 +165,7 @@
     "yes"   			: "Oui",
     "no"  	 			: "Non",
     "True"   			: "Oui",
-    "False"   			: "Non"
+    "False"   			: "Non",
+    "true"   			: "Oui",
+    "false"   			: "Non"
 }

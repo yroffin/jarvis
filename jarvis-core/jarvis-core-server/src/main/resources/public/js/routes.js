@@ -90,6 +90,16 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
             controller: 'viewCtrl',
             templateUrl: '/ui/js/partials/views/view/page.html'
         })
+        .state('configurations', {
+            url: '/configurations',
+            controller: 'configurationsCtrl',
+            templateUrl: '/ui/js/partials/configurations/page.html'
+        })
+        .state('configurations-by-id', {
+            url: '/configurations/:id',
+            controller: 'configurationCtrl',
+            templateUrl: '/ui/js/partials/configurations/configuration/page.html'
+        })
         .state('connectors', {
             url: '/connectors',
             controller: 'connectorsCtrl',
