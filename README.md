@@ -4,6 +4,7 @@ jarvis
 Just Another Ridiculous Very Inteligent System
 
 [![Build Status](https://snap-ci.com/yroffin/jarvis/branch/master/build_image)](https://snap-ci.com/yroffin/jarvis/branch/master)
+[![Build Status](https://travis-ci.org/yroffin/jarvis.svg?branch=master)](https://travis-ci.org/yroffin/jarvis)
 
 Introduction
 ------------
