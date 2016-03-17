@@ -1,2 +1,5 @@
 language: java
-  mvn test
+jdk:
+- openjdk8
+before_deploy:
+- "mvn -DskipTests package"
