@@ -115,6 +115,16 @@ angular.module('JarvisApp.config',[])
         hljs.initHighlightingOnLoad();
         
         /**
+         * default value
+         */
+        $scope.defaultValue = function(value, def) {
+        	if(value === undefined) {
+        		return def;
+        	}
+        	return value
+        }
+        
+        /**
          * load settings
          */
         $scope.loadSettings = function() {

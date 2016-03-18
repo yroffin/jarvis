@@ -25,8 +25,15 @@
 			md-row-height="1:1"
 			md-gutter="8px">
 			<md-grid-tile
-				ng-repeat="iot in view.iots" ng-style="{'background': iot.tagColor, 'opacity': iot.tagOpacity}"
-				md-colspan="{{iot.colSpan}}" md-rowspan="{{iot.rowSpan}}">
+				ng-repeat="iot in view.iots" 
+				ng-style="{'background': iot.tagColor, 'opacity': iot.tagOpacity}"
+				md-colspan="{{defaultValue(iot.colSpan,1)}}" 
+				md-rowspan="{{defaultValue(iot.rowSpan,1)}}"
+				md-colspan-xs="1"
+                md-rowspan-xs="1"
+                md-colspan-sm="1"
+                md-rowspan-sm="1"
+			>
 				<jarvis-inline-template data="iot.render" id="iot.id"></jarvis-inline-template>
 			</md-grid-tile>
 		</md-grid-list>

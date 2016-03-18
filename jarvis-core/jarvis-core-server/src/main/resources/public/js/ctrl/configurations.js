@@ -59,7 +59,7 @@ angular.module('JarvisApp.ctrl.configurations', ['JarvisApp.services'])
 		 * get current configuration
 		 */
     	genericResourceService.scope.entity.get($stateParams.id, function(update) {
-    		$scope.configuration=update;
+    		$scope.config=update;
     	}, configurationResourceService.configuration);
 
     	$log.info('configuration-ctrl', $scope.configurations);
