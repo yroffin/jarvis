@@ -1,17 +1,53 @@
 <div layout="column">
 	<md-input-container>
 	  <label translate="config.name"></label>
-	  <input ng-model="configuration.name">
+	  <input ng-model="config.name">
 	</md-input-container>
-	<md-switch ng-model="configuration.active" aria-label="{{configuration.active | translate}}">
-		{{'config.active' | translate}} {{configuration.active | translate}}
+	<md-switch ng-model="config.active" aria-label="{{config.active | translate}}">
+		{{'config.active' | translate}} {{config.active | translate}}
 	</md-switch>
 	<md-input-container>
 	  <label translate="config.opacity"></label>
-	  <input ng-model="configuration.opacity">
+	  <input ng-model="config.opacity">
 	</md-input-container>
 	<md-input-container>
 	  <label translate="config.backUrl"></label>
-	  <input ng-model="configuration.backgroundUrl">
+	  <input ng-model="config.backgroundUrl">
+	</md-input-container>
+	<md-input-container>
+	  <label translate="config.tilesXs"></label>
+	  <input ng-model="config.tilesXs">
+	</md-input-container>
+	<md-input-container>
+	  <label translate="config.tilesGtXs"></label>
+	  <input ng-model="config.tilesGtXs">
+	</md-input-container>
+	<md-input-container>
+	  <label translate="config.tilesSm"></label>
+	  <input ng-model="config.tilesSm">
+	</md-input-container>
+	<md-input-container>
+	  <label translate="config.tilesGtSm"></label>
+	  <input ng-model="config.tilesGtSm">
+	</md-input-container>
+	<md-input-container>
+	  <label translate="config.tilesMd"></label>
+	  <input ng-model="config.tilesMd">
+	</md-input-container>
+	<md-input-container>
+	  <label translate="config.tilesGtMd"></label>
+	  <input ng-model="config.tilesGtMd">
+	</md-input-container>
+	<md-input-container>
+	  <label translate="config.tilesLg"></label>
+	  <input ng-model="config.tilesLg">
+	</md-input-container>
+	<md-input-container>
+	  <label translate="config.tilesGtLg"></label>
+	  <input ng-model="config.tilesGtLg">
+	</md-input-container>
+	<md-input-container>
+	  <label translate="config.tilesXl"></label>
+	  <input ng-model="config.tilesXl">
 	</md-input-container>
 </div>

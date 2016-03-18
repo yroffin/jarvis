@@ -1,0 +1,16 @@
+<md-dialog 
+	ng-style="{'opacity': '0.6'}"
+	aria-label=""
+	flex="66"
+>
+      <md-dialog-content>
+		<md-tabs md-dynamic-height md-border-bottom flex>
+			<md-tab label="{{'config.general' | translate}}">
+				<md-button aria-label="menu" class="md-icon-button" ng-click="saveSettings()"><md-tooltip>{{'default.save'|translate}}</md-tooltip><md-icon md-font-icon="material-icons md-16">save</md-icon></md-button>
+				<md-content layout-padding>
+					<jarvis-configuration></jarvis-configuration>
+				</md-content>
+			</md-tab>
+		</md-tabs>
+      <md-dialog-content>
+</md-dialog>

@@ -71,26 +71,93 @@ angular.module('JarvisApp.config',[])
      * main controller
      */
     .controller('JarvisAppCtrl',
-    	function($scope, $log, $store, $mdSidenav, $location, $state, genericPickerService, toastService, iotResourceService, eventResourceService, configurationResourceService){
+    	function($scope, $log, $store, $mdDialog, $mdSidenav, $mdMedia, $location, $state, genericPickerService, toastService, iotResourceService, eventResourceService, configurationResourceService){
         /**
          * initialize jarvis configuration
          */
         $scope.config = {};
         
-        configurationResourceService.configuration.findAll(function(data) {
-        	var config = _.find(data, 'active');
-        	if(config) {
-        		$log.debug('JarvisAppCtrl::config', config);
-                $scope.config.backgroundUrl = config.backgroundUrl;
-                $scope.config.opacity = config.opacity;
-        	}
-	    }, toastService.failure);
+        $scope.media = $mdMedia('xs');
+        $scope.$watch(function() { return $mdMedia('xs'); }, function(media) {
+            if(media) $scope.media = 'xs';
+        });
+        $scope.$watch(function() { return $mdMedia('gt-xs'); }, function(media) {
+            if(media) $scope.media = 'gt-xs';
+        });
+        $scope.$watch(function() { return $mdMedia('sm'); }, function(media) {
+            if(media) $scope.media = 'sm';
+        });
+        $scope.$watch(function() { return $mdMedia('gt-sm'); }, function(media) {
+            if(media) $scope.media = 'gt-sm';
+        });
+        $scope.$watch(function() { return $mdMedia('md'); }, function(media) {
+            if(media) $scope.media = 'md';
+        });
+        $scope.$watch(function() { return $mdMedia('gt-md'); }, function(media) {
+            if(media) $scope.media = 'gt-md';
+        });
+        $scope.$watch(function() { return $mdMedia('lg'); }, function(media) {
+            if(media) $scope.media = 'lg';
+        });
+        $scope.$watch(function() { return $mdMedia('gt-lg'); }, function(media) {
+            if(media) $scope.media = 'gt-lg';
+        });
+        $scope.$watch(function() { return $mdMedia('xl'); }, function(media) {
+            if(media) $scope.media = 'xl';
+        });
+        $scope.$watch(function() { return $mdMedia('print'); }, function(media) {
+            if(media) $scope.media = 'print';
+        });
 
         /**
          * highlight JS
          */
         hljs.initHighlightingOnLoad();
         
+        /**
+         * load settings
+         */
+        $scope.loadSettings = function() {
+            configurationResourceService.configuration.findAll(function(data) {
+            	var config = _.find(data, 'active');
+            	if(config) {
+                    $scope.config = config;
+            	}
+    	    }, toastService.failure);
+        }
+
+        /**
+         * load it once
+         */
+        $scope.loadSettings();
+
+        /**
+         * load settings
+         */
+        $scope.saveSettings = function() {
+            configurationResourceService.configuration.put($scope.config, function(data) {
+            	$log.info("Updated", data);
+    	    }, toastService.failure);
+        }
+
+        $scope.settings = function(ev) {
+        	var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'));
+        	$mdDialog.show({
+        		  scope: $scope,
+        		  preserveScope: true,
+        	      templateUrl: 'js/partials/dialog/settingsDialog.tmpl.html',
+        	      parent: angular.element(document.body),
+        	      targetEvent: ev,
+        	      clickOutsideToClose:true,
+        	      fullscreen: useFullScreen
+        	}).then(function(answer) {
+        			$log.debug("ok:",answer);
+        	   }, function() {
+        		   $log.debug("ko:",answer);
+        	   }
+        	);
+        }
+
         /**
          * toggle navbar
          * @param menuId

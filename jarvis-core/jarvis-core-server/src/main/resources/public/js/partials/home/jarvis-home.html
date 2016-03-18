@@ -1,10 +1,32 @@
 <div>
 	<div>
-		<md-grid-list md-cols="1" md-cols-gt-md="8" md-cols-md="6"
-			md-cols-sm="4" md-row-height="2:1" md-gutter="8px">
+		<md-grid-list
+			/*
+				xs		(max-width: 599px)
+				gt-xs	(min-width: 600px)
+				sm		(min-width: 600px) and (max-width: 959px)
+				gt-sm	(min-width: 960px)
+				md		(min-width: 960px) and (max-width: 1279px)
+				gt-md	(min-width: 1280px)
+				lg		(min-width: 1280px) and (max-width: 1919px)
+				gt-lg	(min-width: 1920px)
+				xl		(min-width: 1920px)
+			*/
+			md-cols="1"
+			md-cols-xs="{{config.tilesXs}}"
+			md-cols-gt-xs="{{config.tilesGtXs}}"
+			md-cols-sm="{{config.tilesSm}}"
+			md-cols-gt-sm="{{config.tilesGtSm}}"
+			md-cols-md="{{config.tilesMd}}"
+			md-cols-gt-md="{{config.tilesGtMd}}"
+			md-cols-lg="{{config.tilesLg}}"
+			md-cols-gt-lg="{{config.tilesGtLg}}"
+			md-cols-xl="{{config.tilesXl}}"
+			md-row-height="1:1"
+			md-gutter="8px">
 			<md-grid-tile
-			ng-repeat="iot in view.iots" ng-style="{'background': iot.tagColor, 'opacity': iot.tagOpacity}"
-			md-colspan="1" md-rowspan="1">
+				ng-repeat="iot in view.iots" ng-style="{'background': iot.tagColor, 'opacity': iot.tagOpacity}"
+				md-colspan="1" md-rowspan="1">
 				<jarvis-inline-template data="iot.render" id="iot.id"></jarvis-inline-template>
 			</md-grid-tile>
 		</md-grid-list>

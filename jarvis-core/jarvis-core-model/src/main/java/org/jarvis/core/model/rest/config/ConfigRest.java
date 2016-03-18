@@ -46,9 +46,57 @@ public class ConfigRest extends GenericEntity {
 	 */
 	@JsonProperty("backgroundUrl")
 	public String backgroundUrl;
+	/**
+	 * tilesXs
+	 */
+	@JsonProperty("tilesXs")
+	public String tilesXs;
+	/**
+	 * tilesGtXs
+	 */
+	@JsonProperty("tilesGtXs")
+	public String tilesGtXs;
+	/**
+	 * tilesSm
+	 */
+	@JsonProperty("tilesSm")
+	public String tilesSm;
+	/**
+	 * tilesGtSm
+	 */
+	@JsonProperty("tilesGtSm")
+	public String tilesGtSm;
+	/**
+	 * tilesMd
+	 */
+	@JsonProperty("tilesMd")
+	public String tilesMd;
+	/**
+	 * tilesGtMd
+	 */
+	@JsonProperty("tilesGtMd")
+	public String tilesGtMd;
+	/**
+	 * tilesLg
+	 */
+	@JsonProperty("tilesLg")
+	public String tilesLg;
+	/**
+	 * tilesGtLg
+	 */
+	@JsonProperty("tilesGtLg")
+	public String tilesGtLg;
+	/**
+	 * tilesXl
+	 */
+	@JsonProperty("tilesXl")
+	public String tilesXl;
 	
 	@Override
 	public String toString() {
-		return "ConfigRest [name=" + name + ", opacity=" + opacity + ", backgroundUrl=" + backgroundUrl + "]";
+		return "ConfigRest [name=" + name + ", active=" + active + ", opacity=" + opacity + ", backgroundUrl="
+				+ backgroundUrl + ", tilesXs=" + tilesXs + ", tilesGtXs=" + tilesGtXs + ", tilesSm=" + tilesSm
+				+ ", tilesGtSm=" + tilesGtSm + ", tilesMd=" + tilesMd + ", tilesGtMd=" + tilesGtMd + ", tilesLg="
+				+ tilesLg + ", tilesGtLg=" + tilesGtLg + ", tilesXl=" + tilesXl + "]";
 	}
 }

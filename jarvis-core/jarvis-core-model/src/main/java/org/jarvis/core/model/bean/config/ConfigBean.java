@@ -38,4 +38,40 @@ public class ConfigBean extends GenericBean {
 	 * backgroundUrl
 	 */
 	public String backgroundUrl;
+	/**
+	 * tilesXs
+	 */
+	public String tilesXs;
+	/**
+	 * tilesGtXs
+	 */
+	public String tilesGtXs;
+	/**
+	 * tilesSm
+	 */
+	public String tilesSm;
+	/**
+	 * tilesGtSm
+	 */
+	public String tilesGtSm;
+	/**
+	 * tilesMd
+	 */
+	public String tilesMd;
+	/**
+	 * tilesGtMd
+	 */
+	public String tilesGtMd;
+	/**
+	 * tilesLg
+	 */
+	public String tilesLg;
+	/**
+	 * tilesGtLg
+	 */
+	public String tilesGtLg;
+	/**
+	 * tilesXl
+	 */
+	public String tilesXl;
 }
