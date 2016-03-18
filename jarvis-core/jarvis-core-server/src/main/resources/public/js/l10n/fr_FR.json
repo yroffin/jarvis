@@ -129,6 +129,8 @@
     "iot.tagColor" 		: "Couleur du tag",
     "iot.tagOpacity"	: "Opacité du tag",
     "iot.tagTextColor" 	: "Couleur du texte",
+    "iot.rowSpan" 		: "Taille de la tuile (ligne)",
+    "iot.colSpan" 		: "Taille de la tuile (colonne)",
     "iot.visible" 		: "Visible",
     "plugin.name"   	: "Nom du plugin",
     "plugin.icon"   	: "Icône",
