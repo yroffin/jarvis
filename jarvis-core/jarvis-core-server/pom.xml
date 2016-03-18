@@ -14,19 +14,19 @@
 	<dependencies>
 		<!-- internal dependencies -->
 		<dependency>
-			<groupId>${project.groupId}</groupId>
+			<groupId>org.yroffin.com.jarvis</groupId>
 			<artifactId>jarvis-core-model</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>${project.groupId}</groupId>
+			<groupId>org.yroffin.com.jarvis</groupId>
 			<artifactId>jarvis-websocket</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>${project.groupId}</groupId>
+			<groupId>org.yroffin.com.jarvis</groupId>
 			<artifactId>jarvis-ehcache</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>${project.groupId}</groupId>
+			<groupId>org.yroffin.com.jarvis</groupId>
 			<artifactId>jarvis-rest-api</artifactId>
 		</dependency>
 		<!-- external dependencies -->
