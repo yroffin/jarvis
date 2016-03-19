@@ -160,10 +160,10 @@ angular.module('JarvisApp.config',[])
         	      targetEvent: ev,
         	      clickOutsideToClose:true,
         	      fullscreen: useFullScreen
-        	}).then(function(answer) {
-        			$log.debug("ok:",answer);
+        	}).then(function() {
+     		   		$log.warn("Saving settings");
         	   }, function() {
-        		   $log.debug("ko:",answer);
+        		   	$log.warn("Cancel settings save");
         	   }
         	);
         }

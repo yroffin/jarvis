@@ -1,9 +1,9 @@
 <md-toolbar>
   <div class="md-toolbar-tools" layout-align="center">
-    <h1><br>{{configuration.name}}<md-tooltip>configuration#{{configuration.id}}</md-tooltip></h1>
+    <h1><br>{{config.name}}<md-tooltip>configuration#{{config.id}}</md-tooltip></h1>
   </div>
   <md-fab-actions class="md-toolbar-tools">
-  	<jarvis-default-menu-bar close="configurations" ng-model="configuration"></jarvis-default-menu-bar>
+  	<jarvis-default-menu-bar close="configurations" ng-model="config"></jarvis-default-menu-bar>
   </md-fab-actions>
 </md-toolbar>
 <div layout="column" ng-init="load()" ng-cloak>
