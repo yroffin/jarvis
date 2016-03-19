@@ -134,12 +134,19 @@ angular.module('JarvisApp.config',[])
         $scope.loadSettings();
 
         /**
-         * load settings
+         * save settings
          */
         $scope.saveSettings = function() {
             configurationResourceService.configuration.put($scope.config, function(data) {
             	$log.info("Updated", data);
     	    }, toastService.failure);
+        }
+
+        /**
+         * close settings
+         */
+        $scope.closeSettings = function() {
+            $mdDialog.hide();
         }
 
         $scope.settings = function(ev) {
