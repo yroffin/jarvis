@@ -59,14 +59,6 @@ angular.module('JarvisApp.config',[])
     	    	}
     	    });
     }])
-    .config(function($mdThemingProvider){
-        // Configure a dark theme with primary foreground yellow
-        $mdThemingProvider.theme('docs-dark','default')
-            .primaryPalette('deep-orange')
-            .warnPalette('red')
-            .accentPalette('brown')
-            .backgroundPalette('orange')
-    })
     /**
      * main controller
      */

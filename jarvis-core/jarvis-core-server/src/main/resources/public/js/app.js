@@ -32,6 +32,7 @@ angular.module('JarvisApp', [
      'ui.tree',
      'JarvisApp.websocket',
      'JarvisApp.config',
+     'JarvisApp.theme',
      'JarvisApp.routes',
      /**
       * services
