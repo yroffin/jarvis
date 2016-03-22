@@ -40,23 +40,96 @@ limitations under the License.
     <!-- Just for external configuration -->
     <script src="config.js"></script>
 </head>
+
 <body
 	ng-controller="JarvisPrezCtrl as ctrl"
 	ng-style="{}"
-	ng-init="ctrl.load()"
+	ng-init="load()"
 	ng-cloak
+	ng-keyup="handler($event)"
 >
 
-<md-content 
-	ng-style="{}"
+<div>
+</div>
+
+<md-content
+	id="{{slide.id}}"
+	ng-repeat="slide in slides"
+	ng-style="{'position': 'absolute', 'transform': transform3d(slide), 'perspective': perspective3d(slide), 'perspective-origin': perspectiveOrigin3d(slide), 'transform-style': 'preserve-3d', 'transition': 'all 1s', 'z-index': slide.current.zIndex}"
 	ui-view
 	flex
-	class="md-padding"
 >
 </md-content>
 
+<script type='text/ng-template' id='tpl-settings'>
+	<md-dialog aria-label="Settings"  ng-cloak>
+		<form>
+			<md-toolbar>
+			</md-toolbar>
+			<md-dialog-content>
+				<div layout="row" ng-repeat="slide in slides">
+				  <md-slider-container>
+                     <md-input-container>
+  		               <input type="number" flex ng-model="slide.current.translate.x">
+                     <md-input-container>
+                  </md-slider-container>
+				  <md-slider-container>
+                     <md-input-container>
+  		               <input type="number" flex ng-model="slide.current.translate.y">
+                     </md-input-container>
+                  </md-slider-container>
+				  <md-slider-container>
+                     <md-input-container>
+  		                 <input type="number" flex ng-model="slide.current.translate.z">
+                     </md-input-container>
+                  </md-slider-container>
+				  <md-slider-container>
+                     <md-input-container>
+  		               <input type="number" flex ng-model="slide.current.rotate.x">
+                     <md-input-container>
+                  </md-slider-container>
+				  <md-slider-container>
+                     <md-input-container>
+  		               <input type="number" flex ng-model="slide.current.rotate.y">
+                     </md-input-container>
+                  </md-slider-container>
+				  <md-slider-container>
+                     <md-input-container>
+  		                 <input type="number" flex ng-model="slide.current.rotate.z">
+                     </md-input-container>
+                  </md-slider-container>
+				  <md-slider-container>
+                     <md-input-container>
+  		                 <input type="number" flex ng-model="slide.current.scale">
+                     </md-input-container>
+                  </md-slider-container>
+				  <md-slider-container>
+                     <md-input-container>
+  		                 <input type="number" flex ng-model="slide.current.perspective.x">
+                     </md-input-container>
+                  </md-slider-container>
+				  <md-slider-container>
+                     <md-input-container>
+  		                 <input type="number" flex ng-model="slide.current.perspective.y">
+                     </md-input-container>
+                  </md-slider-container>
+				  <md-slider-container>
+                     <md-input-container>
+  		                 <input type="number" flex ng-model="slide.current.perspective.z">
+                     </md-input-container>
+                  </md-slider-container>
+				</div>
+			</md-dialog-content>
+		</form>
+	</md-dialog>
+</script>
+
 <script type='text/ng-template' id='tpl-home'>
  <div class="list-group-item">
+    <h3>Hello <em class="pull-right">Brother</em></h3>
+    <h3>Hello <em class="pull-right">Brother</em></h3>
+    <h3>Hello <em class="pull-right">Brother</em></h3>
+    <h3>Hello <em class="pull-right">Brother</em></h3>
     <h3>Hello <em class="pull-right">Brother</em></h3>
 </div>
 </script>

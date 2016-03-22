@@ -23,7 +23,7 @@ angular.module('JarvisPrez.ctrl',[])
      * main controller
      */
     .controller('JarvisPrezCtrl',
-    	function($scope, $log, $mdDialog, $mdSidenav, $mdMedia, $location, $state, toastService){
+    	function($scope, $log, $mdDialog,$mdMedia, $location, $state, toastService){
         /**
          * highlight JS
          */
@@ -33,6 +33,187 @@ angular.module('JarvisPrez.ctrl',[])
          * load configuration
          */
         $scope.load = function() {
+        	$log.debug("load");
+        }
+
+        $scope.slides = {};
+        $scope.current = 'slide01';
+
+        $scope.slides['slide01'] = {
+    		id: 'slide01',
+	        zIndex: 0,
+    		origin: {
+	            translate : {
+	        		x: 100, y: 10, z: 0
+	            },
+		        rotate : {
+	        		x: 0, y: 0, z: 10
+		        },
+		        perspective : {
+	        		x: 0, y: 0, z: 0
+		        },
+		        scale : 1
+    		},
+			current:{}
+        }
+
+        $scope.slides['slide02'] = {
+    		id: 'slide02',
+	        zIndex: 0,
+    		origin: {
+                translate : {
+            		x: 100, y: 50, z: 0
+                },
+    	        rotate : {
+            		x: 0, y: 0, z: 50
+    	        },
+    	        perspective : {
+    	        	x: 0, y: 0, z: 0
+    	        },
+    	        scale : 1
+    		},
+    		current:{}
+        }
+
+        /**
+         * fix all original position of each slide 
+         * @param slide
+         */
+        $scope.indexSlides = [];
+        _.each($scope.slides, function(slide) {
+        	angular.copy(slide.origin,slide.current);
+        	$scope.indexSlides.push(slide.id);
+        });
+
+        /**
+         * `handler` keyup handler.
+         */
+        $scope.handler = function(event) {
+        	$log.info("handler", event);
+        	if(event.keyCode == 102) {
+        		var index = _.findIndex($scope.indexSlides, function(slide) {
+        			return slide === $scope.current;
+        		});
+        		if(index == ($scope.indexSlides.length -1)) {
+        			$scope.current = $scope.indexSlides[0];
+        		} else {
+        			$scope.current = $scope.indexSlides[index+1];
+        		}
+        		$scope.select($scope.current);
+        	}
+        }
+        
+        /**
+         * `select` put this slide in front.
+         */
+        $scope.select = function(slide) {
+        	/**
+        	 * restore all slides positions
+        	 */
+        	_.each($scope.slides, function(other) {
+    			other.current.translate.x = other.origin.translate.x;
+    			other.current.translate.y = other.origin.translate.y;
+    			other.current.translate.z = other.origin.translate.z;
+    			other.current.rotate.x = other.origin.rotate.x;
+    			other.current.rotate.y = other.origin.rotate.y;
+    			other.current.rotate.z = other.origin.rotate.z;
+    			other.current.scale = other.origin.scale;
+    			other.current.zIndex = other.origin.zIndex;
+            });
+        	/**
+        	 * select slide and bring it to front
+        	 */
+        	var height = $(window).height();
+        	var width = $(window).width();
+        	var rect = $('#'+slide)[0].getBoundingClientRect();
+        	var wratio = width/(rect.right - rect.left + 10);
+        	var hratio = height/(rect.bottom - rect.top + 10);
+        	var ratio = 0;
+        	if(wratio < hratio) {
+        		ratio = wratio;
+        	} else {
+        		ratio = hratio;
+        	}
+        	
+        	$scope.slides[slide].current.translate.x = width  / 2;
+        	$scope.slides[slide].current.translate.y = height / 2;
+        	$scope.slides[slide].current.translate.z = 0;
+        	$scope.slides[slide].current.rotate.x = 0;
+        	$scope.slides[slide].current.rotate.y = 0;
+        	$scope.slides[slide].current.rotate.z = 0;
+        	$scope.slides[slide].current.scale = ratio;
+        	$scope.slides[slide].current.zIndex = 99;
+        }
+
+        /**
+         * `toNumber` takes a value given as `numeric` parameter and tries to turn
+         * it into a number. If it is not possible it returns 0 (or other value
+         * given as `fallback`).
+         */
+        var toNumber = function (numeric, fallback) {
+            return isNaN(numeric) ? (fallback || 0) : Number(numeric);
+        }
+        
+        /**
+         * `translate` builds a translate transform string for given data.
+         */
+        $scope.transform3d = function ( slide, revert ) {
+        	/**
+        	 * translation
+        	 */
+        	var html = 'translate(-50%,-50%)';
+        	
+        	/**
+        	 * translate 3d
+        	 */
+            html = html + ' translate3d(' + slide.current.translate.x + 'px,' + slide.current.translate.y + 'px,' + slide.current.translate.z + 'px) ';
+
+            /**
+             * rotation
+             */
+            var rX = " rotateX(" + slide.current.rotate.x + "deg) ",
+            rY = " rotateY(" + slide.current.rotate.y + "deg) ",
+            rZ = " rotateZ(" + slide.current.rotate.z + "deg) ";
+        
+            revert ? html = html + ' ' + rZ+rY+rX : html = html + ' ' + rX+rY+rZ;
+            
+            /**
+             * scale
+             */
+            html = html + ' scale(' + slide.current.scale + ')';
+            return html;
+        };
+        
+        /**
+         * `perspective3d` how far the element is placed from the view.
+         */
+        $scope.perspective3d = function ( slide ) {
+            return slide.current.perspective.z + "px";
+        };
+        
+        /**
+         * `perspectiveOrigin3d` how far the element is placed from the view.
+         */
+        $scope.perspectiveOrigin3d = function ( slide ) {
+            return slide.current.perspective.x + "px " + slide.current.perspective.y + "px";
+        };
+        
+        $scope.settings = function(ev) {
+        	$log.debug("Event:", ev);
+        	$mdDialog.show({
+        		  scope: $scope,
+        		  preserveScope: true,
+        	      templateUrl: 'tpl-settings',
+        	      parent: angular.element(document.body),
+        	      targetEvent: ev,
+        	      clickOutsideToClose:true,
+        	      fullscreen: false
+        	}).then(function() {
+     		   		$log.warn("Validate settings");
+        	   }, function() {
+        		   	$log.warn("Cancel settings");
+        	   }
+        	);
         }
 
         /**
