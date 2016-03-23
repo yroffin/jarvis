@@ -44,15 +44,15 @@ angular.module('JarvisPrez.ctrl',[])
 	        zIndex: 0,
     		origin: {
 	            translate : {
-	        		x: 100, y: 10, z: 0
+	        		x: 800, y: 200, z: 0
 	            },
 		        rotate : {
-	        		x: 0, y: 0, z: 10
+	        		x: 0, y: 0, z: 180
 		        },
 		        perspective : {
 	        		x: 0, y: 0, z: 0
 		        },
-		        scale : 1
+		        scale : 0.01
     		},
 			current:{}
         }
@@ -62,18 +62,36 @@ angular.module('JarvisPrez.ctrl',[])
 	        zIndex: 0,
     		origin: {
                 translate : {
-            		x: 100, y: 50, z: 0
+            		x: 400, y: 250, z: 0
                 },
     	        rotate : {
-            		x: 0, y: 0, z: 50
+            		x: 0, y: 0, z: 180
     	        },
     	        perspective : {
     	        	x: 0, y: 0, z: 0
     	        },
-    	        scale : 1
+    	        scale : 0.01
     		},
     		current:{}
         }
+
+        $scope.slides['slide03'] = {
+        		id: 'slide03',
+    	        zIndex: 0,
+        		origin: {
+                    translate : {
+                		x: 200, y: 250, z: 0
+                    },
+        	        rotate : {
+                		x: 0, y: 0, z: 180
+        	        },
+        	        perspective : {
+        	        	x: 0, y: 0, z: 0
+        	        },
+        	        scale : 0.01
+        		},
+        		current:{}
+            }
 
         /**
          * fix all original position of each slide 
@@ -107,6 +125,10 @@ angular.module('JarvisPrez.ctrl',[])
          * `select` put this slide in front.
          */
         $scope.select = function(slide) {
+        	$log.debug(slide);
+        	var height = $(window).height();
+        	var width = $(window).width();
+
         	/**
         	 * restore all slides positions
         	 */
@@ -120,28 +142,26 @@ angular.module('JarvisPrez.ctrl',[])
     			other.current.scale = other.origin.scale;
     			other.current.zIndex = other.origin.zIndex;
             });
+        	_.each($scope.slides, function(other) {
+       			other.current.translate.x = other.current.translate.x - $scope.slides[slide].current.translate.x + (width / 2);
+       			other.current.translate.y = other.current.translate.y - $scope.slides[slide].current.translate.y + (height / 2);
+       			other.current.rotate.z = other.current.rotate.z - $scope.slides[slide].current.rotate.z;
+            });
+
         	/**
         	 * select slide and bring it to front
         	 */
-        	var height = $(window).height();
-        	var width = $(window).width();
         	var rect = $('#'+slide)[0].getBoundingClientRect();
-        	var wratio = width/(rect.right - rect.left + 10);
-        	var hratio = height/(rect.bottom - rect.top + 10);
+        	var wratio = width/(rect.right - rect.left);
+        	var hratio = height/(rect.bottom - rect.top);
         	var ratio = 0;
         	if(wratio < hratio) {
         		ratio = wratio;
         	} else {
         		ratio = hratio;
         	}
-        	
-        	$scope.slides[slide].current.translate.x = width  / 2;
-        	$scope.slides[slide].current.translate.y = height / 2;
-        	$scope.slides[slide].current.translate.z = 0;
-        	$scope.slides[slide].current.rotate.x = 0;
-        	$scope.slides[slide].current.rotate.y = 0;
-        	$scope.slides[slide].current.rotate.z = 0;
-        	$scope.slides[slide].current.scale = ratio;
+
+        	$scope.slides[slide].current.scale = wratio * $scope.slides[slide].origin.scale;
         	$scope.slides[slide].current.zIndex = 99;
         }
 

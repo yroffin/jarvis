@@ -55,7 +55,7 @@ limitations under the License.
 <md-content
 	id="{{slide.id}}"
 	ng-repeat="slide in slides"
-	ng-style="{'position': 'absolute', 'transform': transform3d(slide), 'perspective': perspective3d(slide), 'perspective-origin': perspectiveOrigin3d(slide), 'transform-style': 'preserve-3d', 'transition': 'all 1s', 'z-index': slide.current.zIndex}"
+	ng-style="{'width': '600px', 'position': 'absolute', 'transform': transform3d(slide), 'perspective': perspective3d(slide), 'perspective-origin': perspectiveOrigin3d(slide), 'transform-style': 'preserve-3d', 'transition': 'all 2s', 'z-index': slide.current.zIndex}"
 	ui-view
 	flex
 >
