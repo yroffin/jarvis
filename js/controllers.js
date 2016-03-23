@@ -144,7 +144,7 @@ angular.module('JarvisPrez.ctrl',[])
             });
         	_.each($scope.slides, function(other) {
        			other.current.translate.x = other.current.translate.x - $scope.slides[slide].current.translate.x + (width / 2);
-       			other.current.translate.y = other.current.translate.y - $scope.slides[slide].current.translate.y + (height / 2);
+       			other.current.translate.y = other.current.translate.y - $scope.slides[slide].current.translate.y + (height / 2) - 100;
        			other.current.rotate.z = other.current.rotate.z - $scope.slides[slide].current.rotate.z;
             });
 
