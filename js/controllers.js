@@ -23,7 +23,7 @@ angular.module('JarvisPrez.ctrl',[])
      * main controller
      */
     .controller('JarvisPrezCtrl',
-    	function($scope, $log, $mdDialog,$mdMedia, $location, $state, toastService){
+    	function($scope, $log, $mdDialog, $mdMedia, $location, $state, $window, toastService){
         /**
          * highlight JS
          */
@@ -240,7 +240,16 @@ angular.module('JarvisPrez.ctrl',[])
          * jump to location
          */
         $scope.location = function(target) {
-            $location.path(target);
+        	$log.info("location", target);
+            $location.href(target);
+        };
+
+        /**
+         * jump to location
+         */
+        $scope.href = function(target) {
+        	$log.info("href", target);
+            $window.location.href = target;
         };
 
         /**

@@ -33,7 +33,12 @@ angular.module('JarvisPrez.routes',['JarvisPrez.ctrl'])
         .state('home', {
             url: '/home',
             controller: 'JarvisPrezCtrl.home',
-            templateUrl: 'tpl-home'
+            templateUrl: 'partials/home.html'
+        })
+        .state('slides', {
+            url: '/slides',
+            controller: 'JarvisPrezCtrl.home',
+            templateUrl: 'partials/slides.html'
         })
         ;
     })

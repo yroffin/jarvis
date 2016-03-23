@@ -55,88 +55,52 @@ limitations under the License.
 	ng-keyup="handler($event)"
 >
 
-<section class="page-header">
-      <h1 class="project-name">Jarvis</h1>
-      <h2 class="project-tagline">Just Another Ridiculous Very Inteligent System</h2>
-      <a href="https://github.com/yroffin/jarvis" class="btn">View on GitHub</a>
-      <a href="https://github.com/yroffin/jarvis/zipball/master" class="btn">Download .zip</a>
-      <a href="https://github.com/yroffin/jarvis/tarball/master" class="btn">Download .tar.gz</a>
-</section>
+<md-toolbar>
+	<div class="md-toolbar-tools">
+		<md-button class="md-icon-button" aria-label="Settings">
+          <md-icon md-font-icon="material-icons md-24">menu</md-icon>
+        </md-button>
+        <h2>
+          <span>Jarvis : Just Another Ridiculous Very Inteligent System</span>
+        </h2>
+        <span flex></span>
+		<md-button class="md-icon-button" aria-label="Github" ng-click="href('https://github.com/yroffin/jarvis')">
+          <md-icon md-font-icon="material-icons md-24">home</md-icon>
+        </md-button>
+		<md-button class="md-icon-button" aria-label="Zip" ng-click="href('https://github.com/yroffin/jarvis/zipball/master')">
+          <md-icon md-font-icon="material-icons md-24">unarchive</md-icon>
+        </md-button>
+		<md-button class="md-icon-button" aria-label="Tar" ng-click="href('https://github.com/yroffin/jarvis/tarball/master')">
+          <md-icon md-font-icon="material-icons md-24">attach_file</md-icon>
+        </md-button>
+	</div>
+</md-toolbar>
 
-<md-content
-	id="{{slide.id}}"
-	ng-repeat="slide in slides"
-	ng-style="{'width': '600px', 'position': 'absolute', 'transform': transform3d(slide), 'perspective': perspective3d(slide), 'perspective-origin': perspectiveOrigin3d(slide), 'transform-style': 'preserve-3d', 'transition': 'all 2s', 'z-index': slide.current.zIndex}"
-	ui-view
-	flex
->
-</md-content>
+<div ui-view>
+</div>
 
-<script type='text/ng-template' id='tpl-settings'>
-	<md-dialog aria-label="Settings"  ng-cloak>
-		<form>
-			<md-toolbar>
-			</md-toolbar>
-			<md-dialog-content>
-				<div layout="row" ng-repeat="slide in slides">
-				  <md-slider-container>
-                     <md-input-container>
-  		               <input type="number" flex ng-model="slide.current.translate.x">
-                     <md-input-container>
-                  </md-slider-container>
-				  <md-slider-container>
-                     <md-input-container>
-  		               <input type="number" flex ng-model="slide.current.translate.y">
-                     </md-input-container>
-                  </md-slider-container>
-				  <md-slider-container>
-                     <md-input-container>
-  		                 <input type="number" flex ng-model="slide.current.translate.z">
-                     </md-input-container>
-                  </md-slider-container>
-				  <md-slider-container>
-                     <md-input-container>
-  		               <input type="number" flex ng-model="slide.current.rotate.x">
-                     <md-input-container>
-                  </md-slider-container>
-				  <md-slider-container>
-                     <md-input-container>
-  		               <input type="number" flex ng-model="slide.current.rotate.y">
-                     </md-input-container>
-                  </md-slider-container>
-				  <md-slider-container>
-                     <md-input-container>
-  		                 <input type="number" flex ng-model="slide.current.rotate.z">
-                     </md-input-container>
-                  </md-slider-container>
-				  <md-slider-container>
-                     <md-input-container>
-  		                 <input type="number" flex ng-model="slide.current.scale">
-                     </md-input-container>
-                  </md-slider-container>
-				  <md-slider-container>
-                     <md-input-container>
-  		                 <input type="number" flex ng-model="slide.current.perspective.x">
-                     </md-input-container>
-                  </md-slider-container>
-				  <md-slider-container>
-                     <md-input-container>
-  		                 <input type="number" flex ng-model="slide.current.perspective.y">
-                     </md-input-container>
-                  </md-slider-container>
-				  <md-slider-container>
-                     <md-input-container>
-  		                 <input type="number" flex ng-model="slide.current.perspective.z">
-                     </md-input-container>
-                  </md-slider-container>
-				</div>
-			</md-dialog-content>
-		</form>
-	</md-dialog>
-</script>
+<md-sidenav
+        class="md-sidenav-left"
+        md-component-id="left"
+        md-is-locked-open="$mdMedia('gt-md')"
+        md-disable-backdrop
+        md-whiteframe="4">
+      <md-toolbar class="md-theme-indigo">
+        <h1 class="md-toolbar-tools">Sidenav Left</h1>
+      </md-toolbar>
+      <md-content layout-padding ng-controller="LeftCtrl">
+        <md-button ng-click="close()" class="md-primary" hide-gt-md>
+          Close Sidenav Left
+        </md-button>
+        <p hide-md show-gt-md>
+          This sidenav is locked open on your device. To go back to the default behavior,
+          narrow your display.
+        </p>
+      </md-content>
+</md-sidenav>
 
 <script type='text/ng-template' id='tpl-home'>
- <div class="list-group-item">
+<div class="list-group-item">
     <h3>Hello <em class="pull-right">Brother</em></h3>
     <h3>Hello <em class="pull-right">Brother</em></h3>
     <h3>Hello <em class="pull-right">Brother</em></h3>
