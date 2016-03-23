@@ -16,20 +16,11 @@
 
 'use strict';
 
-/**
- * Declare app level module which depends on filters, and services
- */
+/* Filters */
 
-angular.module('JarvisPrez', [
-     'ngMaterial',
-     'ui.router',
-     'ui.router.router',
-     'hljs',
-     /**
-      * app
-      */
-     'JarvisPrez.ctrl',
-     'JarvisPrez.routes',
-     'JarvisPrez.services',
-     'JarvisPrez.filters'
-]);
+angular.module('JarvisPrez.filters', []).
+    filter('interpolate', ['version', function(version) {
+      return function(text) {
+        return String(text).replace(/\%VERSION\%/mg, version);
+      }
+    }]);

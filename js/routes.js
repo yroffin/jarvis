@@ -16,20 +16,24 @@
 
 'use strict';
 
-/**
- * Declare app level module which depends on filters, and services
- */
+/* Controllers */
 
-angular.module('JarvisPrez', [
-     'ngMaterial',
-     'ui.router',
-     'ui.router.router',
-     'hljs',
-     /**
-      * app
-      */
-     'JarvisPrez.ctrl',
-     'JarvisPrez.routes',
-     'JarvisPrez.services',
-     'JarvisPrez.filters'
-]);
+angular.module('JarvisPrez.routes',['JarvisPrez.ctrl'])
+    .config(function($urlRouterProvider) {
+        /**
+         * default state
+         */
+        $urlRouterProvider.otherwise('/home');
+    })
+    .config(function($stateProvider) {
+        /**
+         * now set up the state
+         */
+        $stateProvider
+        .state('home', {
+            url: '/home',
+            controller: 'JarvisPrezCtrl.home',
+            templateUrl: 'tpl-home'
+        })
+        ;
+    })
