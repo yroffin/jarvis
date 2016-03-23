@@ -1,11 +1,15 @@
 <!DOCTYPE html>
-<md-content ng-repeat="slide in slides" id="{{slide.id}}" ng-style="{'width': '600px', 'position': 'absolute', 'transform': transform3d(slide), 'perspective': perspective3d(slide), 'perspective-origin': perspectiveOrigin3d(slide), 'transform-style': 'preserve-3d', 'transition': 'all 2s', 'z-index': slide.current.zIndex}">
-<div class="list-group-item">
-    <h3>Hello <em class="pull-right">Brother</em></h3>
-    <h3>Hello <em class="pull-right">Brother</em></h3>
-    <h3>Hello <em class="pull-right">Brother</em></h3>
-    <h3>Hello <em class="pull-right">Brother</em></h3>
-    <h3>Hello <em class="pull-right">Brother</em></h3>
-</div>
+<md-content ng-repeat="slide in slides" id="{{slide.id}}" ng-style="{'position': 'absolute', 'transform': transform3d(slide), 'perspective': perspective3d(slide), 'perspective-origin': perspectiveOrigin3d(slide), 'transform-style': 'preserve-3d', 'transition': 'all 2s', 'z-index': slide.current.zIndex}">
+	<div ng-include src="slide.url"></div>
 </md-content>
-
+<span layout="row" layout-align="center end">
+	<md-button class="md-icon-button" aria-label="Previous" ng-click="previous()">
+		<md-icon md-font-icon="material-icons md-24">keyboard_arrow_left</md-icon>
+	</md-button>
+	<md-button aria-label="Title">
+	{{slides[current].title}}
+	</md-button>
+	<md-button class="md-icon-button" aria-label="Next" ng-click="next()">
+		<md-icon md-font-icon="material-icons md-24">keyboard_arrow_right</md-icon>
+	</md-button>
+</span>

@@ -55,9 +55,9 @@ limitations under the License.
 	ng-keyup="handler($event)"
 >
 
-<md-toolbar>
+<md-toolbar id="toolbar" >
 	<div class="md-toolbar-tools">
-		<md-button class="md-icon-button" aria-label="Settings">
+		<md-button class="md-icon-button" aria-label="Settings" ng-click="sidebar()">
           <md-icon md-font-icon="material-icons md-24">menu</md-icon>
         </md-button>
         <h2>
@@ -79,15 +79,25 @@ limitations under the License.
 <div ui-view>
 </div>
 
-<script type='text/ng-template' id='tpl-home'>
-<div class="list-group-item">
-    <h3>Hello <em class="pull-right">Brother</em></h3>
-    <h3>Hello <em class="pull-right">Brother</em></h3>
-    <h3>Hello <em class="pull-right">Brother</em></h3>
-    <h3>Hello <em class="pull-right">Brother</em></h3>
-    <h3>Hello <em class="pull-right">Brother</em></h3>
-</div>
-</script>
+<md-sidenav
+        md-component-id="left"
+        md-is-locked-open="false"
+        md-disable-backdrop
+        md-whiteframe="4">
+      <md-toolbar>
+        <h1 class="md-toolbar-tools">Jarvis</h1>
+      </md-toolbar>
+      <md-content layout="column">
+		<md-button aria-label="Home" ng-click="go('home')">
+          <md-icon md-font-icon="material-icons md-24">home</md-icon>
+		  Home
+        </md-button>
+		<md-button aria-label="Slides" ng-click="go('slides')">
+          <md-icon md-font-icon="material-icons md-24">content_copy</md-icon>
+		  Abstract
+        </md-button>
+      </md-content>
+</md-sidenav>
 
 <!-- jQuery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>

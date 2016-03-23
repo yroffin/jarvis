@@ -37,7 +37,7 @@ angular.module('JarvisPrez.routes',['JarvisPrez.ctrl'])
         })
         .state('slides', {
             url: '/slides',
-            controller: 'JarvisPrezCtrl.home',
+            controller: 'JarvisPrezCtrl.slides',
             templateUrl: 'partials/slides.html'
         })
         ;

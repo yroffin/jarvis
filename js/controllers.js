@@ -23,7 +23,7 @@ angular.module('JarvisPrez.ctrl',[])
      * main controller
      */
     .controller('JarvisPrezCtrl',
-    	function($scope, $log, $mdDialog, $mdMedia, $location, $state, $window, toastService){
+    	function($scope, $log, $mdSidenav, $mdDialog, $mdMedia, $location, $state, $window, toastService){
         /**
          * highlight JS
          */
@@ -36,206 +36,17 @@ angular.module('JarvisPrez.ctrl',[])
         	$log.debug("load");
         }
 
-        $scope.slides = {};
-        $scope.current = 'slide01';
-
-        $scope.slides['slide01'] = {
-    		id: 'slide01',
-	        zIndex: 0,
-    		origin: {
-	            translate : {
-	        		x: 800, y: 200, z: 0
-	            },
-		        rotate : {
-	        		x: 0, y: 0, z: 180
-		        },
-		        perspective : {
-	        		x: 0, y: 0, z: 0
-		        },
-		        scale : 0.01
-    		},
-			current:{}
-        }
-
-        $scope.slides['slide02'] = {
-    		id: 'slide02',
-	        zIndex: 0,
-    		origin: {
-                translate : {
-            		x: 400, y: 250, z: 0
-                },
-    	        rotate : {
-            		x: 0, y: 0, z: 180
-    	        },
-    	        perspective : {
-    	        	x: 0, y: 0, z: 0
-    	        },
-    	        scale : 0.01
-    		},
-    		current:{}
-        }
-
-        $scope.slides['slide03'] = {
-        		id: 'slide03',
-    	        zIndex: 0,
-        		origin: {
-                    translate : {
-                		x: 200, y: 250, z: 0
-                    },
-        	        rotate : {
-                		x: 0, y: 0, z: 180
-        	        },
-        	        perspective : {
-        	        	x: 0, y: 0, z: 0
-        	        },
-        	        scale : 0.01
-        		},
-        		current:{}
-            }
-
         /**
-         * fix all original position of each slide 
-         * @param slide
+         * sidebar handler
          */
-        $scope.indexSlides = [];
-        _.each($scope.slides, function(slide) {
-        	angular.copy(slide.origin,slide.current);
-        	$scope.indexSlides.push(slide.id);
-        });
-
-        /**
-         * `handler` keyup handler.
-         */
-        $scope.handler = function(event) {
-        	$log.info("handler", event);
-        	if(event.keyCode == 102) {
-        		var index = _.findIndex($scope.indexSlides, function(slide) {
-        			return slide === $scope.current;
-        		});
-        		if(index == ($scope.indexSlides.length -1)) {
-        			$scope.current = $scope.indexSlides[0];
-        		} else {
-        			$scope.current = $scope.indexSlides[index+1];
-        		}
-        		$scope.select($scope.current);
-        	}
-        }
-        
-        /**
-         * `select` put this slide in front.
-         */
-        $scope.select = function(slide) {
-        	$log.debug(slide);
-        	var height = $(window).height();
-        	var width = $(window).width();
-
-        	/**
-        	 * restore all slides positions
-        	 */
-        	_.each($scope.slides, function(other) {
-    			other.current.translate.x = other.origin.translate.x;
-    			other.current.translate.y = other.origin.translate.y;
-    			other.current.translate.z = other.origin.translate.z;
-    			other.current.rotate.x = other.origin.rotate.x;
-    			other.current.rotate.y = other.origin.rotate.y;
-    			other.current.rotate.z = other.origin.rotate.z;
-    			other.current.scale = other.origin.scale;
-    			other.current.zIndex = other.origin.zIndex;
+        $scope.sidebar = function() {
+          $mdSidenav('left')
+            .toggle()
+            .then(function () {
+              $log.info("toggle left is done");
             });
-        	_.each($scope.slides, function(other) {
-       			other.current.translate.x = other.current.translate.x - $scope.slides[slide].current.translate.x + (width / 2);
-       			other.current.translate.y = other.current.translate.y - $scope.slides[slide].current.translate.y + (height / 2) - 100;
-       			other.current.rotate.z = other.current.rotate.z - $scope.slides[slide].current.rotate.z;
-            });
-
-        	/**
-        	 * select slide and bring it to front
-        	 */
-        	var rect = $('#'+slide)[0].getBoundingClientRect();
-        	var wratio = width/(rect.right - rect.left);
-        	var hratio = height/(rect.bottom - rect.top);
-        	var ratio = 0;
-        	if(wratio < hratio) {
-        		ratio = wratio;
-        	} else {
-        		ratio = hratio;
-        	}
-
-        	$scope.slides[slide].current.scale = wratio * $scope.slides[slide].origin.scale;
-        	$scope.slides[slide].current.zIndex = 99;
-        }
-
-        /**
-         * `toNumber` takes a value given as `numeric` parameter and tries to turn
-         * it into a number. If it is not possible it returns 0 (or other value
-         * given as `fallback`).
-         */
-        var toNumber = function (numeric, fallback) {
-            return isNaN(numeric) ? (fallback || 0) : Number(numeric);
         }
         
-        /**
-         * `translate` builds a translate transform string for given data.
-         */
-        $scope.transform3d = function ( slide, revert ) {
-        	/**
-        	 * translation
-        	 */
-        	var html = 'translate(-50%,-50%)';
-        	
-        	/**
-        	 * translate 3d
-        	 */
-            html = html + ' translate3d(' + slide.current.translate.x + 'px,' + slide.current.translate.y + 'px,' + slide.current.translate.z + 'px) ';
-
-            /**
-             * rotation
-             */
-            var rX = " rotateX(" + slide.current.rotate.x + "deg) ",
-            rY = " rotateY(" + slide.current.rotate.y + "deg) ",
-            rZ = " rotateZ(" + slide.current.rotate.z + "deg) ";
-        
-            revert ? html = html + ' ' + rZ+rY+rX : html = html + ' ' + rX+rY+rZ;
-            
-            /**
-             * scale
-             */
-            html = html + ' scale(' + slide.current.scale + ')';
-            return html;
-        };
-        
-        /**
-         * `perspective3d` how far the element is placed from the view.
-         */
-        $scope.perspective3d = function ( slide ) {
-            return slide.current.perspective.z + "px";
-        };
-        
-        /**
-         * `perspectiveOrigin3d` how far the element is placed from the view.
-         */
-        $scope.perspectiveOrigin3d = function ( slide ) {
-            return slide.current.perspective.x + "px " + slide.current.perspective.y + "px";
-        };
-        
-        $scope.settings = function(ev) {
-        	$log.debug("Event:", ev);
-        	$mdDialog.show({
-        		  scope: $scope,
-        		  preserveScope: true,
-        	      templateUrl: 'tpl-settings',
-        	      parent: angular.element(document.body),
-        	      targetEvent: ev,
-        	      clickOutsideToClose:true,
-        	      fullscreen: false
-        	}).then(function() {
-     		   		$log.warn("Validate settings");
-        	   }, function() {
-        		   	$log.warn("Cancel settings");
-        	   }
-        	);
-        }
-
         /**
          * jump to location
          */
@@ -261,4 +72,206 @@ angular.module('JarvisPrez.ctrl',[])
     })
     .controller('JarvisPrezCtrl.home',
     	function($scope, $log, $mdDialog, $mdSidenav, $mdMedia, $location, $state, toastService){
+    })
+    .controller('JarvisPrezCtrl.slides',
+    	function($scope, $log, $mdDialog, $mdSidenav, $mdMedia, $location, $state, toastService){
+        /**
+         * `select` put this slide in front.
+         */
+        $scope.select = function(slide) {
+        	$log.info("Slide", slide);
+        	var height = $(window).height();
+        	var width = $(window).width();
+
+        	var toolbar = $('#toolbar')[0].getBoundingClientRect();
+
+        	/**
+        	 * restore all slides positions
+        	 */
+        	_.each($scope.slides, function(other) {
+    			other.current.translate.x = other.origin.translate.x;
+    			other.current.translate.y = other.origin.translate.y;
+    			other.current.translate.z = other.origin.translate.z;
+    			other.current.rotate.x = other.origin.rotate.x;
+    			other.current.rotate.y = other.origin.rotate.y;
+    			other.current.rotate.z = other.origin.rotate.z;
+    			other.current.scale = other.origin.scale;
+    			other.current.zIndex = other.origin.zIndex;
+            });
+        	_.each($scope.slides, function(other) {
+       			other.current.translate.x = other.current.translate.x - $scope.slides[slide].current.translate.x + (width / 2);
+       			other.current.translate.y = other.current.translate.y - $scope.slides[slide].current.translate.y + (height / 2);
+       			other.current.rotate.z = other.current.rotate.z - $scope.slides[slide].current.rotate.z;
+            });
+
+        	/**
+        	 * select slide and bring it to front
+        	 */
+        	$scope.hratio = $scope.slides[slide].size.height/height;
+        	$scope.wratio = $scope.slides[slide].size.width/width;
+        	var ratio = 0;
+        	if($scope.wratio > $scope.hratio) {
+        		ratio = $scope.wratio;
+        	} else {
+        		ratio = $scope.hratio;
+        	}
+
+        	$scope.slides[slide].current.scale = 1/ratio;
+        	$scope.slides[slide].current.zIndex = 0;
+        	$log.info("Slide", slide);
+        }
+
+        /**
+         * `toNumber` takes a value given as `numeric` parameter and tries to turn
+         * it into a number. If it is not possible it returns 0 (or other value
+         * given as `fallback`).
+         */
+        $scope.toNumber = function (numeric, fallback) {
+            return isNaN(numeric) ? (fallback || 0) : Number(numeric);
+        }
+        
+        /**
+         * `translate` builds a translate transform string for given data.
+         */
+        $scope.transform3d = function ( slide, revert ) {
+        	/**
+        	 * translation
+        	 */
+        	var html = 'translate(-50%,-50%)';
+        	
+        	/**
+        	 * translate 3d
+        	 */
+            html = html + ' translate3d(' + $scope.toNumber(slide.current.translate.x) + 'px,' + $scope.toNumber(slide.current.translate.y) + 'px,' + $scope.toNumber(slide.current.translate.z) + 'px) ';
+
+            /**
+             * rotation
+             */
+            var rX = " rotateX(" + $scope.toNumber(slide.current.rotate.x) + "deg) ",
+            rY = " rotateY(" + $scope.toNumber(slide.current.rotate.y) + "deg) ",
+            rZ = " rotateZ(" + $scope.toNumber(slide.current.rotate.z) + "deg) ";
+        
+            revert ? html = html + ' ' + rZ+rY+rX : html = html + ' ' + rX+rY+rZ;
+            
+            /**
+             * scale
+             */
+            html = html + ' scale(' + $scope.toNumber(slide.current.scale) + ')';
+            return html;
+        };
+        
+        /**
+         * `perspective3d` how far the element is placed from the view.
+         */
+        $scope.perspective3d = function ( slide ) {
+            return slide.current.perspective.z + "px";
+        };
+        
+        /**
+         * `perspectiveOrigin3d` how far the element is placed from the view.
+         */
+        $scope.perspectiveOrigin3d = function ( slide ) {
+            return slide.current.perspective.x + "px " + slide.current.perspective.y + "px";
+        };
+
+        /**
+         * next slide
+         */
+        $scope.next = function() {
+    		var index = _.findIndex($scope.indexSlides, function(slide) {
+    			return slide === $scope.current;
+    		});
+    		if(index == ($scope.indexSlides.length -1)) {
+    			$scope.current = $scope.indexSlides[0];
+    		} else {
+    			$scope.current = $scope.indexSlides[index+1];
+    		}
+    		$scope.select($scope.current);
+        }
+        
+        $scope.slides = {};
+        $scope.slides['slide01'] = {
+    		id: 'slide01',
+    		url: 'partials/slides/slide01.svg',
+    		title: 'General view',
+	        zIndex: 0,
+    		size: {
+    			width: 800,
+    			height: 602
+    		},
+    		origin: {
+	            translate : {
+	        		x: 800, y: 200, z: 0
+	            },
+		        rotate : {
+	        		x: 0, y: 0, z: 180
+		        },
+		        perspective : {
+	        		x: 0, y: 0, z: 0
+		        },
+		        scale : 0.01
+    		},
+			current:{}
+        }
+
+        $scope.slides['slide02'] = {
+    		id: 'slide02',
+    		url: 'partials/slides/slide02.svg',
+    		title: 'Todo',
+	        zIndex: 0,
+    		size: {
+    			width: 763,
+    			height: 1066
+    		},
+    		origin: {
+                translate : {
+            		x: 400, y: 250, z: 0
+                },
+    	        rotate : {
+            		x: 0, y: 0, z: 180
+    	        },
+    	        perspective : {
+    	        	x: 0, y: 0, z: 0
+    	        },
+    	        scale : 0.01
+    		},
+    		current:{}
+        }
+
+        $scope.slides['slide03'] = {
+        		id: 'slide03',
+        		url: 'partials/slides/slide03.svg',
+        		title: 'Todo',
+    	        zIndex: 0,
+        		size: {
+        			width: 763,
+        			height: 1066
+        		},
+        		origin: {
+                    translate : {
+                		x: 200, y: 250, z: 0
+                    },
+        	        rotate : {
+                		x: 0, y: 0, z: 180
+        	        },
+        	        perspective : {
+        	        	x: 0, y: 0, z: 0
+        	        },
+        	        scale : 0.01
+        		},
+        		current:{}
+            }
+
+        /**
+         * fix all original position of each slide 
+         * @param slide
+         */
+        $scope.indexSlides = [];
+        _.each($scope.slides, function(slide) {
+        	angular.copy(slide.origin,slide.current);
+        	$scope.indexSlides.push(slide.id);
+        });
+        $scope.current = $scope.indexSlides[0];
+
+        $scope.select($scope.current);
     })
