@@ -227,7 +227,7 @@ angular.module('JarvisPrez.ctrl',[])
     		},
     		origin: {
 	            translate : {
-	        		x: -4000, y: 0, z: 0
+	        		x: -2000, y: 0, z: 0
 	            },
 		        rotate : {
 	        		x: 0, y: 0, z: 180
@@ -251,7 +251,7 @@ angular.module('JarvisPrez.ctrl',[])
     		},
     		origin: {
                 translate : {
-            		x: -5000, y: 2000, z: 0
+            		x: -2000, y: 2000, z: 0
                 },
     	        rotate : {
             		x: 0, y: 0, z: 120
@@ -275,7 +275,7 @@ angular.module('JarvisPrez.ctrl',[])
         		},
         		origin: {
                     translate : {
-                		x: 6000, y: 7000, z: 0
+                		x: 1500, y: 7000, z: 0
                     },
         	        rotate : {
                 		x: 0, y: 0, z: 180
@@ -283,7 +283,7 @@ angular.module('JarvisPrez.ctrl',[])
         	        perspective : {
         	        	x: 0, y: 0, z: 0
         	        },
-        	        scale : 0.01
+        	        scale : 0.001
         		},
         		current:{}
             }
@@ -299,7 +299,7 @@ angular.module('JarvisPrez.ctrl',[])
         		},
         		origin: {
                     translate : {
-                		x: 8000, y: 0, z: 0
+                		x: 2000, y: 0, z: 0
                     },
         	        rotate : {
                 		x: 0, y: 0, z: 100
@@ -307,7 +307,7 @@ angular.module('JarvisPrez.ctrl',[])
         	        perspective : {
         	        	x: 0, y: 0, z: 0
         	        },
-        	        scale : 0.01
+        	        scale : 0.001
         		},
         		current:{}
             }
