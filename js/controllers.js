@@ -74,7 +74,7 @@ angular.module('JarvisPrez.ctrl',[])
     	function($scope, $log, $mdDialog, $mdSidenav, $mdMedia, $location, $state, toastService){
     })
     .controller('JarvisPrezCtrl.slides',
-    	function($scope, $log, $mdDialog, $mdSidenav, $mdMedia, $location, $state, toastService){
+    	function($scope, $log, $mdDialog, $mdSidenav, $mdMedia, $location, $state, $stateParams, toastService){
         /**
          * `select` put this slide in front.
          */
@@ -118,6 +118,8 @@ angular.module('JarvisPrez.ctrl',[])
 
         	$scope.slides[slide].current.scale = 1/ratio;
         	$scope.slides[slide].current.zIndex = 0;
+        	$scope.current = slide.id;
+        	$scope.currentSlide = $scope.slides[slide];
         	$log.info("Slide", slide);
         }
 
@@ -190,18 +192,42 @@ angular.module('JarvisPrez.ctrl',[])
         }
         
         $scope.slides = {};
-        $scope.slides['slide01'] = {
-    		id: 'slide01',
-    		url: 'partials/slides/slide01.svg',
-    		title: 'General view',
-	        zIndex: 0,
+        $scope.slides['home'] = {
+        		id: 'home',
+        		url: 'partials/slides/home.svg',
+        		title: 'General view',
+    	        zIndex: -1,
+        		size: {
+        			width: 1600,
+        			height: 600
+        		},
+        		origin: {
+    	            translate : {
+    	        		x: -800, y: 200, z: 0
+    	            },
+    		        rotate : {
+    	        		x: 0, y: 0, z: 180
+    		        },
+    		        perspective : {
+    	        		x: 0, y: 0, z: 0
+    		        },
+    		        scale : 0.01
+        		},
+    			current:{}
+            }
+
+        $scope.slides['purpose'] = {
+    		id: 'purpose',
+    		url: 'partials/slides/purpose.svg',
+    		title: 'Purpose',
+	        zIndex: -1,
     		size: {
     			width: 800,
     			height: 602
     		},
     		origin: {
 	            translate : {
-	        		x: 800, y: 200, z: 0
+	        		x: -800, y: 200, z: 0
 	            },
 		        rotate : {
 	        		x: 0, y: 0, z: 180
@@ -214,18 +240,18 @@ angular.module('JarvisPrez.ctrl',[])
 			current:{}
         }
 
-        $scope.slides['slide02'] = {
-    		id: 'slide02',
-    		url: 'partials/slides/slide02.svg',
-    		title: 'Todo',
-	        zIndex: 0,
+        $scope.slides['structure'] = {
+    		id: 'structure',
+    		url: 'partials/slides/structure.svg',
+    		title: 'Structure',
+	        zIndex: -1,
     		size: {
     			width: 763,
     			height: 1066
     		},
     		origin: {
                 translate : {
-            		x: 400, y: 250, z: 0
+            		x: -400, y: 5250, z: 0
                 },
     	        rotate : {
             		x: 0, y: 0, z: 180
@@ -238,18 +264,42 @@ angular.module('JarvisPrez.ctrl',[])
     		current:{}
         }
 
-        $scope.slides['slide03'] = {
-        		id: 'slide03',
-        		url: 'partials/slides/slide03.svg',
-        		title: 'Todo',
-    	        zIndex: 0,
+        $scope.slides['setup'] = {
+        		id: 'setup',
+        		url: 'partials/slides/setup.svg',
+        		title: 'Setup configuration',
+    	        zIndex: -1,
         		size: {
         			width: 763,
         			height: 1066
         		},
         		origin: {
                     translate : {
-                		x: 200, y: 250, z: 0
+                		x: -200, y: 250, z: 0
+                    },
+        	        rotate : {
+                		x: 0, y: 0, z: 180
+        	        },
+        	        perspective : {
+        	        	x: 0, y: 0, z: 0
+        	        },
+        	        scale : 0.01
+        		},
+        		current:{}
+            }
+
+        $scope.slides['sample'] = {
+        		id: 'sample',
+        		url: 'partials/slides/sample.svg',
+        		title: 'Sample configuration',
+    	        zIndex: -1,
+        		size: {
+        			width: 763,
+        			height: 1066
+        		},
+        		origin: {
+                    translate : {
+                		x: 8000, y: 250, z: 0
                     },
         	        rotate : {
                 		x: 0, y: 0, z: 180
@@ -271,7 +321,11 @@ angular.module('JarvisPrez.ctrl',[])
         	angular.copy(slide.origin,slide.current);
         	$scope.indexSlides.push(slide.id);
         });
-        $scope.current = $scope.indexSlides[0];
 
-        $scope.select($scope.current);
+    	if($stateParams.slide === undefined) {
+            $scope.current = $scope.indexSlides[0];
+    	} else {
+            $scope.current = $stateParams.slide;
+    	}
+		$scope.select($scope.current);
     })

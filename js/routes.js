@@ -23,7 +23,7 @@ angular.module('JarvisPrez.routes',['JarvisPrez.ctrl'])
         /**
          * default state
          */
-        $urlRouterProvider.otherwise('/home');
+        $urlRouterProvider.otherwise('/slides');
     })
     .config(function($stateProvider) {
         /**
@@ -35,8 +35,13 @@ angular.module('JarvisPrez.routes',['JarvisPrez.ctrl'])
             controller: 'JarvisPrezCtrl.home',
             templateUrl: 'partials/home.html'
         })
-        .state('slides', {
+        .state('slides-home', {
             url: '/slides',
+            controller: 'JarvisPrezCtrl.slides',
+            templateUrl: 'partials/slides.html'
+        })
+        .state('slides', {
+            url: '/slides/:slide',
             controller: 'JarvisPrezCtrl.slides',
             templateUrl: 'partials/slides.html'
         })

@@ -6,8 +6,8 @@
 	<md-button class="md-icon-button" aria-label="Previous" ng-click="previous()">
 		<md-icon md-font-icon="material-icons md-24">keyboard_arrow_left</md-icon>
 	</md-button>
-	<md-button aria-label="Title">
-	{{slides[current].title}}
+	<md-button aria-label="Title" ng-click="select('home')">
+	{{currentSlide.title}}
 	</md-button>
 	<md-button class="md-icon-button" aria-label="Next" ng-click="next()">
 		<md-icon md-font-icon="material-icons md-24">keyboard_arrow_right</md-icon>

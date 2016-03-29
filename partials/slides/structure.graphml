@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:java="http://www.yworks.com/xml/yfiles-common/1.0/java" xmlns:sys="http://www.yworks.com/xml/yfiles-common/markup/primitives/2.0" xmlns:x="http://www.yworks.com/xml/yfiles-common/markup/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:y="http://www.yworks.com/xml/graphml" xmlns:yed="http://www.yworks.com/xml/yed/3" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://www.yworks.com/xml/schema/graphml/1.1/ygraphml.xsd">
-  <!--Created by yEd 3.15.0.1-->
+  <!--Created by yEd 3.15.0.2-->
   <key attr.name="Description" attr.type="string" for="graph" id="d0"/>
   <key for="port" id="d1" yfiles.type="portgraphics"/>
   <key for="port" id="d2" yfiles.type="portgeometry"/>
@@ -16,7 +16,6 @@
     <data key="d0"/>
     <node id="n0" yfiles.foldertype="group">
       <data key="d4"/>
-      <data key="d5"/>
       <data key="d6">
         <y:ProxyAutoBoundsNode>
           <y:Realizers active="0">
@@ -45,7 +44,6 @@
       </data>
       <graph edgedefault="directed" id="n0:">
         <node id="n0::n0">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="156.0" width="229.0" x="-373.4729995727539" y="37.76231575012207"/>
@@ -63,7 +61,6 @@
           </data>
         </node>
         <node id="n0::n1">
-          <data key="d5"/>
           <data key="d6">
             <y:ImageNode>
               <y:Geometry height="63.82222222222225" width="60.0" x="-234.44336994312425" y="82.78138436802905"/>
@@ -76,7 +73,6 @@
           </data>
         </node>
         <node id="n0::n2">
-          <data key="d5"/>
           <data key="d6">
             <y:GenericNode configuration="com.yworks.bpmn.Event.withShadow">
               <y:Geometry height="30.0" width="30.0" x="-163.4729995727539" y="99.69249547914018"/>
@@ -84,8 +80,8 @@
               <y:BorderStyle color="#27AE27" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="17.34765625" x="6.326171875" y="5.6494140625">#3</y:NodeLabel>
               <y:StyleProperties>
-                <y:Property class="com.yworks.yfiles.bpmn.view.EventCharEnum" name="com.yworks.bpmn.characteristic" value="EVENT_CHARACTERISTIC_START"/>
                 <y:Property class="java.awt.Color" name="com.yworks.bpmn.icon.line.color" value="#000000"/>
+                <y:Property class="com.yworks.yfiles.bpmn.view.EventCharEnum" name="com.yworks.bpmn.characteristic" value="EVENT_CHARACTERISTIC_START"/>
                 <y:Property class="java.awt.Color" name="com.yworks.bpmn.icon.fill2" value="#d4d4d4cc"/>
                 <y:Property class="java.awt.Color" name="com.yworks.bpmn.icon.fill" value="#ffffffe6"/>
                 <y:Property class="com.yworks.yfiles.bpmn.view.BPMNTypeEnum" name="com.yworks.bpmn.type" value="EVENT_TYPE_PLAIN"/>
@@ -95,7 +91,6 @@
         </node>
         <node id="n0::n3">
           <data key="d4"/>
-          <data key="d5"/>
           <data key="d6">
             <y:GenericNode configuration="com.yworks.bpmn.Event.withShadow">
               <y:Geometry height="30.0" width="30.0" x="-273.9729995727539" y="23.041455956392497"/>
@@ -103,8 +98,8 @@
               <y:BorderStyle color="#27AE27" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="17.34765625" x="6.326171875" y="5.6494140625">#1</y:NodeLabel>
               <y:StyleProperties>
-                <y:Property class="com.yworks.yfiles.bpmn.view.EventCharEnum" name="com.yworks.bpmn.characteristic" value="EVENT_CHARACTERISTIC_INTERMEDIATE_THROWING"/>
                 <y:Property class="java.awt.Color" name="com.yworks.bpmn.icon.line.color" value="#000000"/>
+                <y:Property class="com.yworks.yfiles.bpmn.view.EventCharEnum" name="com.yworks.bpmn.characteristic" value="EVENT_CHARACTERISTIC_INTERMEDIATE_THROWING"/>
                 <y:Property class="java.awt.Color" name="com.yworks.bpmn.icon.fill2" value="#d4d4d4cc"/>
                 <y:Property class="java.awt.Color" name="com.yworks.bpmn.icon.fill" value="#ffffffe6"/>
                 <y:Property class="com.yworks.yfiles.bpmn.view.BPMNTypeEnum" name="com.yworks.bpmn.type" value="EVENT_TYPE_PLAIN"/>
@@ -113,16 +108,15 @@
           </data>
         </node>
         <node id="n0::n4">
-          <data key="d5"/>
           <data key="d6">
             <y:GenericNode configuration="com.yworks.bpmn.Event.withShadow">
-              <y:Geometry height="30.0" width="30.0" x="-388.4729995727539" y="99.69249547914018"/>
+              <y:Geometry height="30.0" width="30.0" x="-273.9729995727539" y="180.62281608581543"/>
               <y:Fill color="#FFFFFFE6" color2="#D4D4D4CC" transparent="false"/>
               <y:BorderStyle color="#27AE27" type="line" width="1.0"/>
-              <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="17.34765625" x="6.326171875" y="5.6494140625">#2</y:NodeLabel>
+              <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="17.34765625" x="6.326171875" y="5.6494140625">#4</y:NodeLabel>
               <y:StyleProperties>
-                <y:Property class="com.yworks.yfiles.bpmn.view.EventCharEnum" name="com.yworks.bpmn.characteristic" value="EVENT_CHARACTERISTIC_START"/>
                 <y:Property class="java.awt.Color" name="com.yworks.bpmn.icon.line.color" value="#000000"/>
+                <y:Property class="com.yworks.yfiles.bpmn.view.EventCharEnum" name="com.yworks.bpmn.characteristic" value="EVENT_CHARACTERISTIC_START"/>
                 <y:Property class="java.awt.Color" name="com.yworks.bpmn.icon.fill2" value="#d4d4d4cc"/>
                 <y:Property class="java.awt.Color" name="com.yworks.bpmn.icon.fill" value="#ffffffe6"/>
                 <y:Property class="com.yworks.yfiles.bpmn.view.BPMNTypeEnum" name="com.yworks.bpmn.type" value="EVENT_TYPE_PLAIN"/>
@@ -131,25 +125,28 @@
           </data>
         </node>
         <node id="n0::n5">
-          <data key="d5"/>
           <data key="d6">
-            <y:GenericNode configuration="com.yworks.bpmn.Event.withShadow">
-              <y:Geometry height="30.0" width="30.0" x="-273.9729995727539" y="180.62281608581543"/>
-              <y:Fill color="#FFFFFFE6" color2="#D4D4D4CC" transparent="false"/>
-              <y:BorderStyle color="#27AE27" type="line" width="1.0"/>
-              <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="17.34765625" x="6.326171875" y="5.6494140625">#4</y:NodeLabel>
+            <y:GenericNode configuration="com.yworks.bpmn.Artifact.withShadow">
+              <y:Geometry height="24.0" width="35.0" x="-238.9729995727539" y="-49.726836769833426"/>
+              <y:Fill color="#FFFFFFE6" transparent="false"/>
+              <y:BorderStyle color="#000000" type="line" width="1.0"/>
+              <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="custom" textColor="#000000" visible="true" width="36.00390625" x="-0.501953125" y="28.0">REST<y:LabelModel>
+                  <y:SmartNodeLabelModel distance="4.0"/>
+                </y:LabelModel>
+                <y:ModelParameter>
+                  <y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="-0.5" nodeRatioX="0.0" nodeRatioY="0.5" offsetX="0.0" offsetY="4.0" upX="0.0" upY="-1.0"/>
+                </y:ModelParameter>
+              </y:NodeLabel>
               <y:StyleProperties>
-                <y:Property class="com.yworks.yfiles.bpmn.view.EventCharEnum" name="com.yworks.bpmn.characteristic" value="EVENT_CHARACTERISTIC_START"/>
                 <y:Property class="java.awt.Color" name="com.yworks.bpmn.icon.line.color" value="#000000"/>
                 <y:Property class="java.awt.Color" name="com.yworks.bpmn.icon.fill2" value="#d4d4d4cc"/>
                 <y:Property class="java.awt.Color" name="com.yworks.bpmn.icon.fill" value="#ffffffe6"/>
-                <y:Property class="com.yworks.yfiles.bpmn.view.BPMNTypeEnum" name="com.yworks.bpmn.type" value="EVENT_TYPE_PLAIN"/>
+                <y:Property class="com.yworks.yfiles.bpmn.view.BPMNTypeEnum" name="com.yworks.bpmn.type" value="ARTIFACT_TYPE_REQUEST_MESSAGE"/>
               </y:StyleProperties>
             </y:GenericNode>
           </data>
         </node>
         <node id="n0::n6">
-          <data key="d5"/>
           <data key="d6">
             <y:GenericNode configuration="com.yworks.bpmn.Artifact.withShadow">
               <y:Geometry height="24.0" width="35.0" x="-453.4729995727539" y="129.69249547914018"/>
@@ -172,24 +169,18 @@
           </data>
         </node>
         <node id="n0::n7">
-          <data key="d5"/>
           <data key="d6">
-            <y:GenericNode configuration="com.yworks.bpmn.Artifact.withShadow">
-              <y:Geometry height="24.0" width="35.0" x="-238.9729995727539" y="-49.726836769833426"/>
-              <y:Fill color="#FFFFFFE6" transparent="false"/>
-              <y:BorderStyle color="#000000" type="line" width="1.0"/>
-              <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="custom" textColor="#000000" visible="true" width="36.00390625" x="-0.501953125" y="28.0">REST<y:LabelModel>
-                  <y:SmartNodeLabelModel distance="4.0"/>
-                </y:LabelModel>
-                <y:ModelParameter>
-                  <y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="-0.5" nodeRatioX="0.0" nodeRatioY="0.5" offsetX="0.0" offsetY="4.0" upX="0.0" upY="-1.0"/>
-                </y:ModelParameter>
-              </y:NodeLabel>
+            <y:GenericNode configuration="com.yworks.bpmn.Event.withShadow">
+              <y:Geometry height="30.0" width="30.0" x="-388.4729995727539" y="99.69249547914018"/>
+              <y:Fill color="#FFFFFFE6" color2="#D4D4D4CC" transparent="false"/>
+              <y:BorderStyle color="#27AE27" type="line" width="1.0"/>
+              <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="17.34765625" x="6.326171875" y="5.6494140625">#2</y:NodeLabel>
               <y:StyleProperties>
                 <y:Property class="java.awt.Color" name="com.yworks.bpmn.icon.line.color" value="#000000"/>
+                <y:Property class="com.yworks.yfiles.bpmn.view.EventCharEnum" name="com.yworks.bpmn.characteristic" value="EVENT_CHARACTERISTIC_START"/>
                 <y:Property class="java.awt.Color" name="com.yworks.bpmn.icon.fill2" value="#d4d4d4cc"/>
                 <y:Property class="java.awt.Color" name="com.yworks.bpmn.icon.fill" value="#ffffffe6"/>
-                <y:Property class="com.yworks.yfiles.bpmn.view.BPMNTypeEnum" name="com.yworks.bpmn.type" value="ARTIFACT_TYPE_REQUEST_MESSAGE"/>
+                <y:Property class="com.yworks.yfiles.bpmn.view.BPMNTypeEnum" name="com.yworks.bpmn.type" value="EVENT_TYPE_PLAIN"/>
               </y:StyleProperties>
             </y:GenericNode>
           </data>
@@ -198,7 +189,6 @@
     </node>
     <node id="n1" yfiles.foldertype="group">
       <data key="d4"/>
-      <data key="d5"/>
       <data key="d6">
         <y:ProxyAutoBoundsNode>
           <y:Realizers active="0">
@@ -227,7 +217,6 @@
       </data>
       <graph edgedefault="directed" id="n1:">
         <node id="n1::n0">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="156.0" width="229.0" x="-373.4729995727539" y="327.3022199231525"/>
@@ -245,7 +234,6 @@
           </data>
         </node>
         <node id="n1::n1">
-          <data key="d5"/>
           <data key="d6">
             <y:ImageNode>
               <y:Geometry height="63.82222222222225" width="60.0" x="-223.4729995727539" y="373.39110881204135"/>
@@ -258,7 +246,6 @@
           </data>
         </node>
         <node id="n1::n2">
-          <data key="d5"/>
           <data key="d6">
             <y:GenericNode configuration="com.yworks.bpmn.Event.withShadow">
               <y:Geometry height="30.0" width="30.0" x="-273.9729995727539" y="313.39110881204135"/>
@@ -266,8 +253,8 @@
               <y:BorderStyle color="#27AE27" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="17.34765625" x="6.326171875" y="5.6494140625">#1</y:NodeLabel>
               <y:StyleProperties>
-                <y:Property class="com.yworks.yfiles.bpmn.view.EventCharEnum" name="com.yworks.bpmn.characteristic" value="EVENT_CHARACTERISTIC_START"/>
                 <y:Property class="java.awt.Color" name="com.yworks.bpmn.icon.line.color" value="#000000"/>
+                <y:Property class="com.yworks.yfiles.bpmn.view.EventCharEnum" name="com.yworks.bpmn.characteristic" value="EVENT_CHARACTERISTIC_START"/>
                 <y:Property class="java.awt.Color" name="com.yworks.bpmn.icon.fill2" value="#d4d4d4cc"/>
                 <y:Property class="java.awt.Color" name="com.yworks.bpmn.icon.fill" value="#ffffffe6"/>
                 <y:Property class="com.yworks.yfiles.bpmn.view.BPMNTypeEnum" name="com.yworks.bpmn.type" value="EVENT_TYPE_PLAIN"/>
@@ -276,7 +263,6 @@
           </data>
         </node>
         <node id="n1::n3">
-          <data key="d5"/>
           <data key="d6">
             <y:GenericNode configuration="com.yworks.bpmn.Event.withShadow">
               <y:Geometry height="30.0" width="30.0" x="-273.9729995727539" y="469.38962503149014"/>
@@ -284,8 +270,8 @@
               <y:BorderStyle color="#27AE27" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="17.34765625" x="6.326171875" y="5.6494140625">#2</y:NodeLabel>
               <y:StyleProperties>
-                <y:Property class="com.yworks.yfiles.bpmn.view.EventCharEnum" name="com.yworks.bpmn.characteristic" value="EVENT_CHARACTERISTIC_START"/>
                 <y:Property class="java.awt.Color" name="com.yworks.bpmn.icon.line.color" value="#000000"/>
+                <y:Property class="com.yworks.yfiles.bpmn.view.EventCharEnum" name="com.yworks.bpmn.characteristic" value="EVENT_CHARACTERISTIC_START"/>
                 <y:Property class="java.awt.Color" name="com.yworks.bpmn.icon.fill2" value="#d4d4d4cc"/>
                 <y:Property class="java.awt.Color" name="com.yworks.bpmn.icon.fill" value="#ffffffe6"/>
                 <y:Property class="com.yworks.yfiles.bpmn.view.BPMNTypeEnum" name="com.yworks.bpmn.type" value="EVENT_TYPE_PLAIN"/>
@@ -297,15 +283,14 @@
     </node>
     <node id="n2" yfiles.foldertype="group">
       <data key="d4"/>
-      <data key="d5"/>
       <data key="d6">
         <y:ProxyAutoBoundsNode>
           <y:Realizers active="0">
             <y:GroupNode>
-              <y:Geometry height="398.12064500163075" width="584.7733979966906" x="-303.9749526977539" y="6.971635685410604"/>
+              <y:Geometry height="398.12064500163075" width="598.5829544067383" x="-303.9749526977539" y="6.971635685410604"/>
               <y:Fill hasColor="false" transparent="false"/>
               <y:BorderStyle hasColor="false" type="line" width="5.0"/>
-              <y:NodeLabel alignment="right" autoSizePolicy="content" borderDistance="0.0" fontFamily="Comic Sans MS" fontSize="20" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="31.87109375" modelName="internal" modelPosition="t" textColor="#000000" visible="false" width="73.90234375" x="255.4355271233453" y="0.0">NEO4J</y:NodeLabel>
+              <y:NodeLabel alignment="right" autoSizePolicy="content" borderDistance="0.0" fontFamily="Comic Sans MS" fontSize="20" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="31.87109375" modelName="internal" modelPosition="t" textColor="#000000" visible="false" width="73.90234375" x="262.34030532836914" y="0.0">NEO4J</y:NodeLabel>
               <y:Shape type="roundrectangle"/>
               <y:State closed="false" closedHeight="50.0" closedWidth="50.0" innerGraphDisplayEnabled="false"/>
               <y:Insets bottom="15" bottomF="15.0" left="15" leftF="15.0" right="15" rightF="15.0" top="15" topF="15.0"/>
@@ -326,7 +311,6 @@
       </data>
       <graph edgedefault="directed" id="n2:">
         <node id="n2::n0">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="156.0" width="229.0" x="2.0540008544921875" y="36.69249547914018"/>
@@ -345,10 +329,9 @@
           </data>
         </node>
         <node id="n2::n1">
-          <data key="d5"/>
           <data key="d6">
             <y:SVGNode>
-              <y:Geometry height="92.88799667358398" width="68.5270004272461" x="197.27144487169062" y="68.24849714234819"/>
+              <y:Geometry height="92.88799667358398" width="68.5270004272461" x="211.08100128173828" y="68.24849714234819"/>
               <y:Fill color="#CCCCFF" transparent="false"/>
               <y:BorderStyle color="#EBEBEB" type="line" width="5.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" modelName="custom" textColor="#000000" visible="true" width="4.0" x="32.26350021362305" y="96.88799667358398">
@@ -367,7 +350,6 @@
           </data>
         </node>
         <node id="n2::n2">
-          <data key="d5"/>
           <data key="d6">
             <y:GenericNode configuration="com.yworks.bpmn.Event.withShadow">
               <y:Geometry height="30.0" width="30.0" x="-7.972999572753906" y="99.69249547914018"/>
@@ -375,8 +357,8 @@
               <y:BorderStyle color="#27AE27" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="17.34765625" x="6.326171875" y="5.6494140625">#1</y:NodeLabel>
               <y:StyleProperties>
-                <y:Property class="com.yworks.yfiles.bpmn.view.EventCharEnum" name="com.yworks.bpmn.characteristic" value="EVENT_CHARACTERISTIC_START"/>
                 <y:Property class="java.awt.Color" name="com.yworks.bpmn.icon.line.color" value="#000000"/>
+                <y:Property class="com.yworks.yfiles.bpmn.view.EventCharEnum" name="com.yworks.bpmn.characteristic" value="EVENT_CHARACTERISTIC_START"/>
                 <y:Property class="java.awt.Color" name="com.yworks.bpmn.icon.fill2" value="#d4d4d4cc"/>
                 <y:Property class="java.awt.Color" name="com.yworks.bpmn.icon.fill" value="#ffffffe6"/>
                 <y:Property class="com.yworks.yfiles.bpmn.view.BPMNTypeEnum" name="com.yworks.bpmn.type" value="EVENT_TYPE_PLAIN"/>
@@ -385,7 +367,6 @@
           </data>
         </node>
         <node id="n2::n3">
-          <data key="d5"/>
           <data key="d6">
             <y:GenericNode configuration="com.yworks.bpmn.Artifact.withShadow">
               <y:Geometry height="24.0" width="35.0" x="-247.9459991455078" y="240.62281608581543"/>
@@ -410,10 +391,9 @@
       </graph>
     </node>
     <node id="n3">
-      <data key="d5"/>
       <data key="d6">
         <y:ImageNode>
-          <y:Geometry height="189.0" width="267.0" x="-751.5270004272461" y="23.041455956392497"/>
+          <y:Geometry height="189.0" width="267.0" x="-1004.7518122018862" y="-163.10179473231273"/>
           <y:Fill color="#CCCCFF" transparent="false"/>
           <y:BorderStyle color="#EBEBEB" type="line" width="5.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" modelName="sandwich" modelPosition="s" textColor="#000000" visible="true" width="4.0" x="131.5" y="193.0"/>
@@ -422,7 +402,6 @@
       </data>
     </node>
     <node id="n4">
-      <data key="d5"/>
       <data key="d6">
         <y:ImageNode>
           <y:Geometry height="63.82222222222225" width="68.5270004272461" x="82.29050064086914" y="92.02959991031221"/>
@@ -434,7 +413,6 @@
       </data>
     </node>
     <node id="n5">
-      <data key="d5"/>
       <data key="d6">
         <y:GenericNode configuration="com.yworks.bpmn.Artifact.withShadow">
           <y:Geometry height="24.0" width="35.0" x="-93.4729995727539" y="123.35067193477346"/>
@@ -457,7 +435,6 @@
       </data>
     </node>
     <node id="n6">
-      <data key="d5"/>
       <data key="d6">
         <y:ImageNode>
           <y:Geometry height="147.0" width="143.0" x="-330.4729995727539" y="584.0"/>
@@ -469,7 +446,6 @@
       </data>
     </node>
     <node id="n7">
-      <data key="d5"/>
       <data key="d6">
         <y:SVGNode>
           <y:Geometry height="92.82645389645597" width="167.07403796499227" x="-342.51001855525004" y="-172.5532906662894"/>
@@ -491,10 +467,9 @@
       </data>
     </node>
     <node id="n8">
-      <data key="d5"/>
       <data key="d6">
         <y:ImageNode>
-          <y:Geometry height="170.05901918063415" width="267.0" x="-129.4729995727539" y="320.2727103328354"/>
+          <y:Geometry height="170.05901918063415" width="267.0" x="-88.31327247619629" y="265.7531876793204"/>
           <y:Fill color="#CCCCFF" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="33.40234375" modelName="custom" textColor="#000000" visible="true" width="261.5078125" x="2.74609375" y="68.3283377153171">Server and module can be deployed on any java
@@ -510,7 +485,6 @@ platform : linux, windows etc ...<y:LabelModel>
       </data>
     </node>
     <edge id="e0" source="n0" target="n0::n0">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="-12.722999572753906" sy="38.721445373081075" tx="0.0" ty="0.0"/>
@@ -521,7 +495,6 @@ platform : linux, windows etc ...<y:LabelModel>
       </data>
     </edge>
     <edge id="e1" source="n0::n2" target="n2::n2">
-      <data key="d9"/>
       <data key="d10">
         <y:GenericEdge configuration="com.yworks.bpmn.Connection">
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -534,7 +507,6 @@ platform : linux, windows etc ...<y:LabelModel>
       </data>
     </edge>
     <edge id="n2::e0" source="n2::n2" target="n2::n0">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -544,8 +516,7 @@ platform : linux, windows etc ...<y:LabelModel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e2" source="n0::n5" target="n1::n2">
-      <data key="d9"/>
+    <edge id="e2" source="n0::n4" target="n1::n2">
       <data key="d10">
         <y:GenericEdge configuration="com.yworks.bpmn.Connection">
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -557,8 +528,7 @@ platform : linux, windows etc ...<y:LabelModel>
         </y:GenericEdge>
       </data>
     </edge>
-    <edge id="e3" source="n0::n4" target="n3">
-      <data key="d9"/>
+    <edge id="e3" source="n0::n7" target="n3">
       <data key="d10">
         <y:GenericEdge configuration="com.yworks.bpmn.Connection">
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -571,7 +541,6 @@ platform : linux, windows etc ...<y:LabelModel>
       </data>
     </edge>
     <edge id="e4" source="n1::n3" target="n6">
-      <data key="d9"/>
       <data key="d10">
         <y:GenericEdge configuration="com.yworks.bpmn.Connection">
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -584,7 +553,6 @@ platform : linux, windows etc ...<y:LabelModel>
       </data>
     </edge>
     <edge id="e5" source="n7" target="n0::n3">
-      <data key="d9"/>
       <data key="d10">
         <y:SplineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
