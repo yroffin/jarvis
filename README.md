@@ -6,18 +6,15 @@ Just Another Ridiculous Very Inteligent System
 [![Build Status](https://snap-ci.com/yroffin/jarvis/branch/master/build_image)](https://snap-ci.com/yroffin/jarvis/branch/master)
 [![Build Status](https://travis-ci.org/yroffin/jarvis.svg?branch=master)](https://travis-ci.org/yroffin/jarvis)
 
-* [Last core server build](https://snap-ci.com/buildartifacts/green/52740/defaultPipeline/96/install/1/jarvis-core/jarvis-core-server/target/jarvis-core-server-0.0.1-SNAPSHOT.jar?archived=true)
-* [Last core module build](https://snap-ci.com/buildartifacts/green/52740/defaultPipeline/96/install/1/jarvis-core/jarvis-rest-module/target/jarvis-rest-module-0.0.1-SNAPSHOT.jar?archived=true)
+- [jarvis-core-server-0.0.1-SNAPSHOT.jar](https://snap-ci.com/buildartifacts/green/52740/defaultPipeline/96/install/1/jarvis-core/jarvis-core-server/target/jarvis-core-server-0.0.1-SNAPSHOT.jar?archived=true)
+- [jarvis-rest-module-0.0.1-SNAPSHOT.jar](https://snap-ci.com/buildartifacts/green/52740/defaultPipeline/96/install/1/jarvis-core/jarvis-rest-module/target/jarvis-rest-module-0.0.1-SNAPSHOT.jar?archived=true)
 
 Introduction
 ------------
 
 Jarvis system aim to introduce a human to machine interface capability with :
-- sphinx 4 (integrated in windows express 2013 components)
-- google TTS
+- marytts
 - and a custom aiml renderer (in java)
-
-[description can be found here](https://www.googledrive.com/host/0B-1rUiMKBiO4RXQzNUNjS0JGWmM/documentation/cartography.html)
 
 Setup
 ======
@@ -25,21 +22,14 @@ Setup
 pre-requisites
 --------------
 
-Jarvis use Java, NodeJS and .Net technologies
-- NodeJS / NPM are a pre-requisite (https://nodejs.org/download) with updated PATH
+Jarvis use Java and Neo4J technologies
 - Neo4J database is a pre-requisite (http://neo4j.com/download), and can start with empty database
 - Java [8 u25](https://www.java.com/fr/download) min (and JAVA_HOME set)
-- .Net [4.0](http://www.microsoft.com/fr-fr/download/details.aspx?id=17851) minimum
-- Redistribuable [Visual C++ pour Visual Studio 2013](http://www.microsoft.com/fr-fr/download/details.aspx?id=40784) only vcredist_x86.exe is needed
 
-windows platforms
------------------
+platforms
+---------
 
-Ide is [Visual Studio Community 2013/update4](http://www.visualstudio.com/en-us/products/visual-studio-community-vs)
+Any Java plateform can run Jarvis
+- windows
+- linux, and also raspberry pi :)
 
-Windows installation process is build with innoSetup
-
-bundles
--------
-
-[bundles can be found here](https://6a1f1411b70ea966ae7d011616f2d38c2be1f67d-www.googledrive.com/host/0B-1rUiMKBiO4RXQzNUNjS0JGWmM/bundles)
