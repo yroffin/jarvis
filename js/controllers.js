@@ -198,8 +198,8 @@ angular.module('JarvisPrez.ctrl',[])
         		title: 'General view',
     	        zIndex: -1,
         		size: {
-        			width: 1600,
-        			height: 600
+        			width: 1024,
+        			height: 768
         		},
         		origin: {
     	            translate : {
@@ -218,16 +218,16 @@ angular.module('JarvisPrez.ctrl',[])
 
         $scope.slides['purpose'] = {
     		id: 'purpose',
-    		url: 'partials/slides/purpose.svg',
+    		url: 'partials/slides/purpose.html',
     		title: 'Purpose',
 	        zIndex: -1,
     		size: {
-    			width: 800,
-    			height: 602
+    			width: 1024,
+    			height: 768
     		},
     		origin: {
 	            translate : {
-	        		x: -800, y: 200, z: 0
+	        		x: -4000, y: 0, z: 0
 	            },
 		        rotate : {
 	        		x: 0, y: 0, z: 180
@@ -246,15 +246,15 @@ angular.module('JarvisPrez.ctrl',[])
     		title: 'Structure',
 	        zIndex: -1,
     		size: {
-    			width: 763,
-    			height: 1066
+    			width: 1024,
+    			height: 768
     		},
     		origin: {
                 translate : {
-            		x: -400, y: 5250, z: 0
+            		x: -5000, y: 2000, z: 0
                 },
     	        rotate : {
-            		x: 0, y: 0, z: 180
+            		x: 0, y: 0, z: 120
     	        },
     	        perspective : {
     	        	x: 0, y: 0, z: 0
@@ -270,12 +270,12 @@ angular.module('JarvisPrez.ctrl',[])
         		title: 'Setup configuration',
     	        zIndex: -1,
         		size: {
-        			width: 763,
-        			height: 1066
+        			width: 1024,
+        			height: 768
         		},
         		origin: {
                     translate : {
-                		x: -200, y: 250, z: 0
+                		x: 6000, y: 7000, z: 0
                     },
         	        rotate : {
                 		x: 0, y: 0, z: 180
@@ -294,15 +294,39 @@ angular.module('JarvisPrez.ctrl',[])
         		title: 'Sample configuration',
     	        zIndex: -1,
         		size: {
-        			width: 763,
-        			height: 1066
+        			width: 1024,
+        			height: 768
         		},
         		origin: {
                     translate : {
-                		x: 8000, y: 250, z: 0
+                		x: 8000, y: 0, z: 0
                     },
         	        rotate : {
-                		x: 0, y: 0, z: 180
+                		x: 0, y: 0, z: 100
+        	        },
+        	        perspective : {
+        	        	x: 0, y: 0, z: 0
+        	        },
+        	        scale : 0.01
+        		},
+        		current:{}
+            }
+
+        $scope.slides['data-model'] = {
+        		id: 'sample',
+        		url: 'partials/slides/data-model.svg',
+        		title: 'Data model',
+    	        zIndex: -1,
+        		size: {
+        			width: 2048,
+        			height: 768
+        		},
+        		origin: {
+                    translate : {
+                		x: 2000, y: 0, z: 0
+                    },
+        	        rotate : {
+                		x: 0, y: 0, z: 45
         	        },
         	        perspective : {
         	        	x: 0, y: 0, z: 0
