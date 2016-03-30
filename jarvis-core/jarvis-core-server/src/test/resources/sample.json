@@ -1,0 +1,98 @@
+{
+  "BlockBean": {},
+  "CommandBean": {
+    "23": {
+      "body": "import groovy.json.*\nimport groovyx.net.http.RESTClient\nimport static groovyx.net.http.ContentType.*\n\n/**\n * simple api call to simulate data\n*/\ndef hue = new RESTClient( 'http://jsonplaceholder.typicode.com' )\ndef resp = hue.get( path: '/users/1' )\n\nif(resp.status == 200) {\n    return resp.data\n} else {\n    return new JsonSlurper().parseText('{}')\n}\nreturn resp",
+      "icon": "whatshot",
+      "id": "23",
+      "name": "Json Sample Call (data)",
+      "type": "GROOVY"
+    },
+    "45": {
+      "body": "import groovy.json.*\n\n/**\n * simple api call to simulate action\n*/\nreturn new JsonSlurper().parseText('{\"status\":true}')",
+      "icon": "whatshot",
+      "id": "45",
+      "name": "Json Sample Call (action)",
+      "type": "GROOVY"
+    },
+    "46": {
+      "body": "import groovy.json.*\n\n/**\n * simple api call to simulate action\n*/\nreturn new JsonSlurper().parseText('{\"status\":false}')",
+      "icon": "whatshot",
+      "id": "46",
+      "name": "Json Sample Call (action)",
+      "type": "GROOVY"
+    }
+  },
+  "HREF": {
+    "20": {
+      "__from": 39,
+      "__to": 23,
+      "href": "HREF",
+      "name": "user",
+      "nature": "json",
+      "order": "3",
+      "type": "data"
+    },
+    "21": {
+      "__from": 29,
+      "__to": 39
+    },
+    "22": {
+      "__from": 42,
+      "__to": 29
+    },
+    "23": {
+      "__from": 39,
+      "__to": 45,
+      "href": "HREF",
+      "name": "always_true",
+      "nature": "json",
+      "order": "1",
+      "type": "action"
+    },
+    "24": {
+      "__from": 39,
+      "__to": 46,
+      "href": "HREF",
+      "name": "always_false",
+      "nature": "json",
+      "order": "2",
+      "type": "action"
+    }
+  },
+  "HREF_ELSE": {},
+  "HREF_IF": {},
+  "HREF_THEN": {},
+  "IotBean": {
+    "29": {
+      "icon": "touch_app",
+      "id": "29",
+      "name": "Device Json Mapper",
+      "parameters": "{\"instance0\":{}}",
+      "tagColor": "red",
+      "template": "<ul>\n<li>{{iot.name}}</li>\n<li>{{data.user.username}}</li>\n<ul>\n<md-button ng-click=\"execute(iot)\">{{iot.name}}<md-tooltip>{{data}}</md-tooltip></md-button>",
+      "visible": true
+    }
+  },
+  "ScenarioBean": {},
+  "ScriptPluginBean": {
+    "39": {
+      "active": false,
+      "icon": "lightbulb_outline",
+      "id": "39",
+      "name": "Json Command Mapper",
+      "type": "script",
+      "visible": false
+    }
+  },
+  "TriggerBean": {},
+  "ViewBean": {
+    "42": {
+      "icon": "list",
+      "id": "42",
+      "ishome": true,
+      "name": "Json Sample",
+      "url": ""
+    }
+  }
+}

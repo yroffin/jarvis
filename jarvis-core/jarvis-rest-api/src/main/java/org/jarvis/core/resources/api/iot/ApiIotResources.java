@@ -169,11 +169,13 @@ public class ApiIotResources extends ApiLinkedThirdResources<IotRest,IotBean,Iot
 			for(GenericEntity entity : sort(apiHrefIotScriptPluginResources.findAll(iotRest, HREF), "order")) {
 				ScriptPluginRest script = apiScriptPluginResources.doGetById(entity.id);
 				if(render) {
-					logger.info("Render {}", params);
+					logger.info("Before render params = {}, context = {}", params, result);
 					result = apiScriptPluginResources.render(script, params);
+					logger.info("After render params = {}, context = {}", params, result);
 				} else {
-					logger.info("Execute {}", params);
+					logger.info("Before execute params = {}, context = {}", params, result);
 					result = apiScriptPluginResources.execute(script, params);
+					logger.info("After execute params = {}, context = {}", params, result);
 				}
 			}
 		}

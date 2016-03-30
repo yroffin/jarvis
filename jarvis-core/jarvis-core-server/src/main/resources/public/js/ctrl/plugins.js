@@ -79,13 +79,26 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
 			$stateParams.id
 	);
     /**
-     * execute this command on server side
+     * execute these command on server side (only action command)
 	 * @param command, the command to be executed
      */
     $scope.execute = function(command) {
     	if(command != undefined && command.id != undefined && command.id != '') {
     		pluginResourceService.scripts.task(command.id, 'execute', $scope.rawoutput, function(data) {
        	    	$log.debug('pluginScriptCtrl::execute', command, data);
+       	    	$scope.rawoutput = data;
+       	    	$scope.output = angular.toJson(data, true);
+    	    }, toastService.failure);
+    	}
+    }
+    /**
+     * render these command on server side (only data command)
+	 * @param command, the command to be executed
+     */
+    $scope.render = function(command) {
+    	if(command != undefined && command.id != undefined && command.id != '') {
+    		pluginResourceService.scripts.task(command.id, 'render', $scope.rawoutput, function(data) {
+       	    	$log.debug('pluginScriptCtrl::render', command, data);
        	    	$scope.rawoutput = data;
        	    	$scope.output = angular.toJson(data, true);
     	    }, toastService.failure);

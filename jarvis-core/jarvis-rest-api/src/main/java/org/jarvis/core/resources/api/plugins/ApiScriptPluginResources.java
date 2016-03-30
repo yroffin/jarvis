@@ -63,6 +63,9 @@ public class ApiScriptPluginResources extends ApiLinkedResources<ScriptPluginRes
 		declare(SCRIPT_RESOURCE, COMMAND_RESOURCE, apiCommandResources, apiHrefPluginCommandResources, COMMAND, SORTKEY, HREF);
 	}
 
+	/**
+	 * all script have two phase : a render (data) phase and an execute (action) phase
+	 */
 	@Override
 	public ResourcePair doRealTask(ScriptPluginBean bean, GenericMap args, TaskType taskType) throws Exception {
 		GenericMap result;
@@ -122,23 +125,22 @@ public class ApiScriptPluginResources extends ApiLinkedResources<ScriptPluginRes
 		int index = 0;
 		for(GenericEntity entity : sort(apiHrefPluginCommandResources.findAll(script), "order")) {
 			/**
+			 * ignore data in phase action
+			 */
+			if(entity.get("type") != null && entity.get("type").equals("data") && !render) continue;
+			/**
+			 * ignore action in phase data
+			 */
+			if(entity.get("type") != null && entity.get("type").equals("action") && render) continue;
+			
+			/**
 			 * retrieve command to execute
 			 */
 			CommandRest command = apiCommandResources.doGetById(entity.id);
-			/**
-			 * in render mode only execute data
-			 */
-			if(entity.get("type") != null && entity.get("type").equals("data") && render) {
-				logger.info("Render {}", command);
-				result = apiCommandResources.execute(mapperFactory.getMapperFacade().map(command, CommandBean.class), result);
-			}
-			/**
-			 * in execute mode only execute action
-			 */
-			if(entity.get("type") != null && entity.get("type").equals("action") && !render) {
-				logger.info("Execute {}", command);
-				result = apiCommandResources.execute(mapperFactory.getMapperFacade().map(command, CommandBean.class), result);
-			}
+			logger.info("Before render params = {}, context = {}", command, result);
+			result = apiCommandResources.execute(mapperFactory.getMapperFacade().map(command, CommandBean.class), result);
+			logger.info("After render params = {}, context = {}", command, result);
+
 			/**
 			 * store result in output
 			 */
