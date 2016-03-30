@@ -8,6 +8,8 @@ Just Another Ridiculous Very Inteligent System
 
 - [jarvis-core-server-0.0.1-SNAPSHOT.jar](https://snap-ci.com/buildartifacts/green/52740/defaultPipeline/96/install/1/jarvis-core/jarvis-core-server/target/jarvis-core-server-0.0.1-SNAPSHOT.jar?archived=true)
 - [jarvis-rest-module-0.0.1-SNAPSHOT.jar](https://snap-ci.com/buildartifacts/green/52740/defaultPipeline/96/install/1/jarvis-core/jarvis-rest-module/target/jarvis-rest-module-0.0.1-SNAPSHOT.jar?archived=true)
+- [sample.json](https://snap-ci.com/buildartifacts/green/52740/defaultPipeline/96/install/1/jarvis-core-server/src/test/resources/sample.json?archived=true)
+
 
 Introduction
 ------------
@@ -33,3 +35,10 @@ Any Java plateform can run Jarvis
 - windows
 - linux, and also raspberry pi :)
 
+sample configuration
+--------------------
+
+This simple paragraph is a simple way to have a little configuration, just create a snapshot and then
+- upload sample data with the 'attachment' icon
+- store this configuration with the 'floppy' icon
+- and then restore this resource (with the last icon)

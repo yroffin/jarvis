@@ -4,10 +4,10 @@
   </div>
   <md-fab-actions class="md-toolbar-tools">
   	<jarvis-default-menu-bar close="snapshots" ng-model="snapshot"></jarvis-default-menu-bar>
-	<md-button aria-label="menu" class="md-icon-button" ng-click="download(snapshot)"><md-icon md-font-icon="material-icons md-16">cloud_upload</md-icon></md-button>
-	<md-button aria-label="menu" class="md-icon-button" ng-click="upload('file1')"><md-icon md-font-icon="material-icons md-16">attachment</md-icon></md-button>
+	<md-button aria-label="menu" class="md-icon-button" ng-click="download(snapshot)"><md-tooltip>{{'snapshot.download'|translate}}</md-tooltip><md-icon md-font-icon="material-icons md-16">cloud_upload</md-icon></md-button>
+	<md-button aria-label="menu" class="md-icon-button" ng-click="upload('file1')"><md-tooltip>{{'snapshot.upload'|translate}}</md-tooltip><md-icon md-font-icon="material-icons md-16">attachment</md-icon></md-button>
     <input id="file1" type="file" style="display:none" ng-model="file.data" file-select="data" file-loaded="loaded(snapshot, file)" file-error="error($error)" file-progress="progress($total,$loaded)">
-	<md-button aria-label="menu" class="md-icon-button" ng-click="restore(snapshot)"><md-icon md-font-icon="material-icons md-16">replay</md-icon></md-button>
+	<md-button aria-label="menu" class="md-icon-button" ng-click="restore(snapshot)"><md-tooltip>{{'snapshot.restore'|translate}}</md-tooltip><md-icon md-font-icon="material-icons md-16">replay</md-icon></md-button>
   </md-fab-actions>
 </md-toolbar>
 <div layout="column" ng-init="load()" ng-cloak>
