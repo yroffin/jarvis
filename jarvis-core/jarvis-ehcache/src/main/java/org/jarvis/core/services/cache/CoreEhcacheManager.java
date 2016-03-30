@@ -33,7 +33,6 @@ import org.springframework.stereotype.Component;
  * main daemon
  */
 @Component
-@PropertySource("classpath:server.properties")
 public class CoreEhcacheManager {
 
 	protected Logger logger = LoggerFactory.getLogger(CoreEhcacheManager.class);

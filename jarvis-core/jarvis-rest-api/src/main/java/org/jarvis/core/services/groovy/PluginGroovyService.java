@@ -38,7 +38,6 @@ import groovy.lang.GroovyShell;
  * main daemon
  */
 @Component
-@PropertySource("classpath:server.properties")
 public class PluginGroovyService {
 	protected Logger logger = LoggerFactory.getLogger(PluginGroovyService.class);
 

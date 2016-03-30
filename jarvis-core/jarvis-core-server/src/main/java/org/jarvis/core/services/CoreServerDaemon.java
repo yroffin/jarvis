@@ -33,17 +33,26 @@ import org.jarvis.core.resources.api.scenario.ApiScenarioResources;
 import org.jarvis.core.resources.api.tools.ApiCronResources;
 import org.jarvis.core.resources.api.tools.ApiToolResources;
 import org.jarvis.core.resources.api.views.ApiViewResources;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
+
+import jersey.repackaged.com.google.common.collect.ImmutableList;
 
 /**
  * main daemon
  */
 @Component
-@PropertySource("classpath:server.properties,file:./server.properties")
+@PropertySources({
+	@PropertySource(value = "classpath:server.properties", ignoreResourceNotFound = true),
+	@PropertySource(value = "file://${jarvis.user.dir}/config.properties", ignoreResourceNotFound = true)
+})
 public class CoreServerDaemon {
+	protected Logger logger = LoggerFactory.getLogger(CoreServerDaemon.class);
 
 	@Autowired
 	Environment env;
@@ -95,6 +104,10 @@ public class CoreServerDaemon {
 	 */
 	@PostConstruct
 	public void server() {
+		for(String key : ImmutableList.of("jarvis.user.dir", "jarvis.log.dir", "jarvis.server.url", "jarvis.neo4j.url")) {
+			logger.info("{} = {}", key, env.getProperty(key));
+		}
+		
 		String iface = env.getProperty("jarvis.server.interface");
 		int port = Integer.parseInt(env.getProperty("jarvis.server.port"));
 		spark.Spark.ipAddress(iface);

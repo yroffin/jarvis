@@ -16,6 +16,10 @@
 
 package org.jarvis.core;
 
+import java.net.MalformedURLException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
@@ -28,12 +32,19 @@ import org.springframework.context.annotation.Configuration;
 @EnableAutoConfiguration
 @ComponentScan
 public class JarvisCoreServer {
+	protected static String normalizedPath = JarvisStatic.normalizedPath;
+	protected static Logger logger = LoggerFactory.getLogger(JarvisCoreServer.class);
+
 	/**
 	 * main entry
 	 * 
 	 * @param args
+	 * @throws MalformedURLException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws MalformedURLException {
+		/**
+		 * start application
+		 */
 		SpringApplication.run(JarvisCoreServer.class, args);
 	}
 }

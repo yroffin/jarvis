@@ -1,0 +1,85 @@
+23:28:11.560 [main] INFO  org.jarvis.core.JarvisCoreServer - Starting JarvisCoreServer on kazoar-PC with PID 24912 (Y:\mars\git\jarvis\jarvis-core\jarvis-core-server\target\classes started by kazoar in Y:\mars\git\jarvis\jarvis-core\jarvis-core-server)
+23:28:11.575 [main] INFO  org.jarvis.core.JarvisCoreServer - No active profile set, falling back to default profiles: default
+23:28:11.861 [main] INFO  org.springframework.context.annotation.AnnotationConfigApplicationContext - Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@1381794: startup date [Wed Mar 30 23:28:11 CEST 2016]; root of context hierarchy
+23:28:12.662 [main] INFO  org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+23:28:12.763 [main] INFO  org.ehcache.spi.ServiceLocator - All Services successfully started.
+23:28:12.763 [main] INFO  org.ehcache.EhcacheManager - Cache 'preConfigured' is getting created in EhcacheManager.
+23:28:12.763 [main] INFO  org.ehcache.spi.serialization.DefaultSerializationProvider - Serializer for <java.lang.String> : org.ehcache.internal.serialization.CompactJavaSerializer@1f587ef
+23:28:12.779 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.String> : org.ehcache.internal.copy.IdentityCopier@c5b667
+23:28:12.779 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.Object> : org.ehcache.internal.copy.IdentityCopier@1edc883
+23:28:12.851 [main] INFO  class org.ehcache.Ehcache-preConfigured - Initialize successful.
+23:28:12.851 [main] INFO  org.ehcache.EhcacheManager - Cache 'preConfigured' created in EhcacheManager.
+23:28:12.851 [main] INFO  org.ehcache.EhcacheManager - Initialize successful.
+23:28:12.852 [main] INFO  org.ehcache.EhcacheManager - Cache 'myCache' is getting created in EhcacheManager.
+23:28:12.853 [main] INFO  org.ehcache.spi.serialization.DefaultSerializationProvider - Serializer for <java.lang.String> : org.ehcache.internal.serialization.CompactJavaSerializer@13ffad1
+23:28:12.853 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.String> : org.ehcache.internal.copy.IdentityCopier@1c793c2
+23:28:12.853 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.Object> : org.ehcache.internal.copy.IdentityCopier@175f671
+23:28:12.856 [main] INFO  class org.ehcache.Ehcache-myCache - Initialize successful.
+23:28:12.856 [main] INFO  org.ehcache.EhcacheManager - Cache 'myCache' created in EhcacheManager.
+23:28:13.546 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.server.url = http://0.0.0.0:8082/ui
+23:28:13.546 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.neo4j.url = http://localhost:7474
+23:28:13.646 [Thread-4] INFO  org.eclipse.jetty.util.log - Logging initialized @3422ms
+23:28:13.815 [main] INFO  org.springframework.jmx.export.annotation.AnnotationMBeanExporter - Registering beans for JMX exposure on startup
+23:28:13.841 [main] INFO  org.jarvis.core.JarvisCoreServer - Started JarvisCoreServer in 2.567 seconds (JVM running for 3.613)
+23:28:13.841 [Thread-4] INFO  spark.webserver.JettySparkServer - == Spark has ignited ...
+23:28:13.841 [Thread-4] INFO  spark.webserver.JettySparkServer - >> Listening on 0.0.0.0:8082
+23:28:13.857 [Thread-4] INFO  org.eclipse.jetty.server.Server - jetty-9.3.2.v20150730
+23:28:13.915 [Thread-4] INFO  org.eclipse.jetty.server.handler.ContextHandler - Started o.e.j.s.ServletContextHandler@19e7160{/,null,AVAILABLE}
+23:28:13.947 [Thread-4] INFO  org.eclipse.jetty.server.ServerConnector - Started ServerConnector@14b34a1{HTTP/1.1,[http/1.1]}{0.0.0.0:8082}
+23:28:13.947 [Thread-4] INFO  org.eclipse.jetty.server.Server - Started @3718ms
+23:30:41.458 [main] INFO  org.jarvis.core.JarvisCoreServer - Starting JarvisCoreServer on kazoar-PC with PID 16968 (Y:\mars\git\jarvis\jarvis-core\jarvis-core-server\target\classes started by kazoar in Y:\mars\git\jarvis\jarvis-core\jarvis-core-server)
+23:30:41.459 [main] INFO  org.jarvis.core.JarvisCoreServer - No active profile set, falling back to default profiles: default
+23:30:41.822 [main] INFO  org.springframework.context.annotation.AnnotationConfigApplicationContext - Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@1e2a2d: startup date [Wed Mar 30 23:30:41 CEST 2016]; root of context hierarchy
+23:30:42.759 [main] INFO  org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+23:30:42.906 [main] INFO  org.ehcache.spi.ServiceLocator - All Services successfully started.
+23:30:42.906 [main] INFO  org.ehcache.EhcacheManager - Cache 'preConfigured' is getting created in EhcacheManager.
+23:30:42.922 [main] INFO  org.ehcache.spi.serialization.DefaultSerializationProvider - Serializer for <java.lang.String> : org.ehcache.internal.serialization.CompactJavaSerializer@b042da
+23:30:42.922 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.String> : org.ehcache.internal.copy.IdentityCopier@11febf3
+23:30:42.922 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.Object> : org.ehcache.internal.copy.IdentityCopier@1d3d05e
+23:30:43.006 [main] INFO  class org.ehcache.Ehcache-preConfigured - Initialize successful.
+23:30:43.006 [main] INFO  org.ehcache.EhcacheManager - Cache 'preConfigured' created in EhcacheManager.
+23:30:43.006 [main] INFO  org.ehcache.EhcacheManager - Initialize successful.
+23:30:43.006 [main] INFO  org.ehcache.EhcacheManager - Cache 'myCache' is getting created in EhcacheManager.
+23:30:43.006 [main] INFO  org.ehcache.spi.serialization.DefaultSerializationProvider - Serializer for <java.lang.String> : org.ehcache.internal.serialization.CompactJavaSerializer@169ea63
+23:30:43.006 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.String> : org.ehcache.internal.copy.IdentityCopier@bd06a9
+23:30:43.006 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.Object> : org.ehcache.internal.copy.IdentityCopier@c587de
+23:30:43.022 [main] INFO  class org.ehcache.Ehcache-myCache - Initialize successful.
+23:30:43.022 [main] INFO  org.ehcache.EhcacheManager - Cache 'myCache' created in EhcacheManager.
+23:33:47.648 [main] INFO  org.jarvis.core.JarvisCoreServer - Starting JarvisCoreServer on kazoar-PC with PID 23260 (Y:\mars\git\jarvis\jarvis-core\jarvis-core-server\target\classes started by kazoar in Y:\mars\git\jarvis\jarvis-core\jarvis-core-server)
+23:33:47.648 [main] INFO  org.jarvis.core.JarvisCoreServer - No active profile set, falling back to default profiles: default
+23:33:47.995 [main] INFO  org.springframework.context.annotation.AnnotationConfigApplicationContext - Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@1e2a2d: startup date [Wed Mar 30 23:33:47 CEST 2016]; root of context hierarchy
+23:33:48.931 [main] INFO  org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+23:33:49.080 [main] INFO  org.ehcache.spi.ServiceLocator - All Services successfully started.
+23:33:49.080 [main] INFO  org.ehcache.EhcacheManager - Cache 'preConfigured' is getting created in EhcacheManager.
+23:33:49.080 [main] INFO  org.ehcache.spi.serialization.DefaultSerializationProvider - Serializer for <java.lang.String> : org.ehcache.internal.serialization.CompactJavaSerializer@10acd6
+23:33:49.080 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.String> : org.ehcache.internal.copy.IdentityCopier@d951e7
+23:33:49.080 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.Object> : org.ehcache.internal.copy.IdentityCopier@1ad12b6
+23:33:49.164 [main] INFO  class org.ehcache.Ehcache-preConfigured - Initialize successful.
+23:33:49.164 [main] INFO  org.ehcache.EhcacheManager - Cache 'preConfigured' created in EhcacheManager.
+23:33:49.164 [main] INFO  org.ehcache.EhcacheManager - Initialize successful.
+23:33:49.164 [main] INFO  org.ehcache.EhcacheManager - Cache 'myCache' is getting created in EhcacheManager.
+23:33:49.164 [main] INFO  org.ehcache.spi.serialization.DefaultSerializationProvider - Serializer for <java.lang.String> : org.ehcache.internal.serialization.CompactJavaSerializer@1b67fcb
+23:33:49.164 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.String> : org.ehcache.internal.copy.IdentityCopier@19f74d0
+23:33:49.164 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.Object> : org.ehcache.internal.copy.IdentityCopier@1c86db8
+23:33:49.179 [main] INFO  class org.ehcache.Ehcache-myCache - Initialize successful.
+23:33:49.179 [main] INFO  org.ehcache.EhcacheManager - Cache 'myCache' created in EhcacheManager.
+23:36:22.967 [main] INFO  org.jarvis.core.JarvisCoreServer - Starting JarvisCoreServer on kazoar-PC with PID 29428 (Y:\mars\git\jarvis\jarvis-core\jarvis-core-server\target\classes started by kazoar in Y:\mars\git\jarvis\jarvis-core\jarvis-core-server)
+23:36:22.967 [main] INFO  org.jarvis.core.JarvisCoreServer - No active profile set, falling back to default profiles: default
+23:36:23.337 [main] INFO  org.springframework.context.annotation.AnnotationConfigApplicationContext - Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@5b3fee: startup date [Wed Mar 30 23:36:23 CEST 2016]; root of context hierarchy
+23:36:24.254 [main] INFO  org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+23:36:24.419 [main] INFO  org.ehcache.spi.ServiceLocator - All Services successfully started.
+23:36:24.422 [main] INFO  org.ehcache.EhcacheManager - Cache 'preConfigured' is getting created in EhcacheManager.
+23:36:24.422 [main] INFO  org.ehcache.spi.serialization.DefaultSerializationProvider - Serializer for <java.lang.String> : org.ehcache.internal.serialization.CompactJavaSerializer@118c260
+23:36:24.422 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.String> : org.ehcache.internal.copy.IdentityCopier@1c05ea2
+23:36:24.422 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.Object> : org.ehcache.internal.copy.IdentityCopier@891ba7
+23:36:24.518 [main] INFO  class org.ehcache.Ehcache-preConfigured - Initialize successful.
+23:36:24.518 [main] INFO  org.ehcache.EhcacheManager - Cache 'preConfigured' created in EhcacheManager.
+23:36:24.518 [main] INFO  org.ehcache.EhcacheManager - Initialize successful.
+23:36:24.520 [main] INFO  org.ehcache.EhcacheManager - Cache 'myCache' is getting created in EhcacheManager.
+23:36:24.520 [main] INFO  org.ehcache.spi.serialization.DefaultSerializationProvider - Serializer for <java.lang.String> : org.ehcache.internal.serialization.CompactJavaSerializer@15e3f51
+23:36:24.520 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.String> : org.ehcache.internal.copy.IdentityCopier@7873d3
+23:36:24.520 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.Object> : org.ehcache.internal.copy.IdentityCopier@8bc8f8
+23:36:24.523 [main] INFO  class org.ehcache.Ehcache-myCache - Initialize successful.
+23:36:24.523 [main] INFO  org.ehcache.EhcacheManager - Cache 'myCache' created in EhcacheManager.
+23:36:36.409 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.server.url = null
+23:36:40.498 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.neo4j.url = null

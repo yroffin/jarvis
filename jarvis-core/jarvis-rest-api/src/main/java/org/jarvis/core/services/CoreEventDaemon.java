@@ -50,7 +50,6 @@ import ma.glasnost.orika.impl.DefaultMapperFactory;
  * main daemon
  */
 @Component
-@PropertySource("classpath:server.properties")
 public class CoreEventDaemon {
 	
 	protected Logger logger = LoggerFactory.getLogger(CoreEventDaemon.class);

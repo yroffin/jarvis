@@ -39,7 +39,6 @@ import org.springframework.stereotype.Component;
  * Neo4j driver
  */
 @Component
-@PropertySource("classpath:server.properties")
 public class ApiNeo4Service  {
 	protected Logger logger = LoggerFactory.getLogger(ApiNeo4Service.class);
 

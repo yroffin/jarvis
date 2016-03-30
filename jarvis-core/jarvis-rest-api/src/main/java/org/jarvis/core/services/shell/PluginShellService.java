@@ -30,7 +30,6 @@ import org.springframework.stereotype.Component;
  * main daemon
  */
 @Component
-@PropertySource("classpath:server.properties")
 public class PluginShellService {
 
 	@Autowired
