@@ -42,7 +42,7 @@ import org.springframework.stereotype.Component;
  * main daemon
  */
 @Component
-@PropertySource("classpath:server.properties")
+@PropertySource("classpath:server.properties,file:./server.properties")
 public class CoreServerDaemon {
 
 	@Autowired
