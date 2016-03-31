@@ -38,6 +38,11 @@ sample configuration
 --------------------
 
 This simple paragraph is a simple way to have a little configuration, just create a snapshot and then
-- upload [sample.json](https://snap-ci.com/buildartifacts/green/52740/defaultPipeline/106/install/1/jarvis-core/jarvis-core-server/src/test/resources/sample.json?archived=true) with the 'attachment' icon
-- store this configuration with the 'floppy' icon
-- and then restore this resource (with the last icon)
+![STEP-0](http://yroffin.github.io/jarvis/images/init/step-0.PNG)
+
+Then upload [sample.json](https://snap-ci.com/buildartifacts/green/52740/defaultPipeline/106/install/1/jarvis-core/jarvis-core-server/src/test/resources/sample.json?archived=true) with the 'attachment' icon
+![STEP-1](http://yroffin.github.io/jarvis/images/init/step-1.PNG)
+
+After store this configuration with the 'floppy' icon
+and then restore this resource (with the last icon)
+![STEP-2](http://yroffin.github.io/jarvis/images/init/step-3.PNG)
