@@ -355,6 +355,9 @@
 		<module>jarvis-marytts</module>
 		<module>jarvis-marytts-voices</module>
 		<module>jarvis-rest-module-dio</module>
+		<module>jarvis-rest-module-aiml</module>
+		<module>jarvis-rest-module-voice</module>
+		<module>jarvis-rest-module-exec</module>
 	</modules>
 
 	<repositories>
