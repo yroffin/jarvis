@@ -16,15 +16,13 @@
 
 package org.jarvis.rest.services.impl;
 
-import org.jarvis.rest.services.JarvisConnector;
+import org.jarvis.core.services.JarvisConnector;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 
 /**
  * simple rest client
  */
-@PropertySource("classpath:connector.properties")
 public abstract class JarvisRestClientImpl implements JarvisConnector {
 
 	private String id;

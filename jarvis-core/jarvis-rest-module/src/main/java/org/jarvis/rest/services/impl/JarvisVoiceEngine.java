@@ -23,8 +23,8 @@ import javax.annotation.PostConstruct;
 import javax.sound.sampled.AudioInputStream;
 
 import org.jarvis.core.exception.TechnicalException;
-import org.jarvis.rest.services.CoreRestServices;
-import org.jarvis.rest.services.JarvisConnector;
+import org.jarvis.core.services.JarvisConnector;
+import org.jarvis.core.services.JarvisConnectorImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -39,7 +39,7 @@ import marytts.util.data.audio.AudioPlayer;
  * voide module
  */
 @Component
-public class JarvisVoiceEngine extends JarvisRestClientImpl implements JarvisConnector {
+public class JarvisVoiceEngine extends JarvisConnectorImpl implements JarvisConnector {
 
 	protected Logger logger = LoggerFactory.getLogger(JarvisVoiceEngine.class);
 
@@ -50,11 +50,9 @@ public class JarvisVoiceEngine extends JarvisRestClientImpl implements JarvisCon
 	 */
 	@PostConstruct
 	public void init() {
-		super.init(CoreRestServices.Handler.voice.name(), "jarvis-voice-engine-v1.0b");
-
-		setRenderer(true);
-		setSensor(true);
-		setCanAnswer(true);
+		renderer = true;
+		sensor = true;
+		canAnswer = true;
 
 		/**
 		 * fix voices here
@@ -93,7 +91,7 @@ public class JarvisVoiceEngine extends JarvisRestClientImpl implements JarvisCon
 	}
 
 	@Override
-	public Map<String, Object> onNewMessage(Map<String, Object> message) throws JarvisModuleException {
+	public Map<String, Object> get(Map<String, String> message) throws JarvisModuleException {
 		try {
 			try {
 				speak((String) message.get("data"));
@@ -105,6 +103,6 @@ public class JarvisVoiceEngine extends JarvisRestClientImpl implements JarvisCon
 					e.getMessage());
 			throw new JarvisModuleException(e);
 		}
-		return message;
+		return null;
 	}
 }

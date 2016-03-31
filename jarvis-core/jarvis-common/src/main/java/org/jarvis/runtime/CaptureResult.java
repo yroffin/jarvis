@@ -23,6 +23,9 @@ import java.io.Writer;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
 
+/**
+ * simplae capture stdout class
+ */
 public class CaptureResult {
 	CaptureStream inputStream;
 	CaptureStream errorStream;
@@ -44,18 +47,31 @@ public class CaptureResult {
 		errorStream.join();
 	}
 
+	/**
+	 * @return CaptureStream
+	 */
 	public CaptureStream getInputStream() {
 		return inputStream;
 	}
 
+	/**
+	 * @return CaptureStream
+	 */
 	public CaptureStream getErrorStream() {
 		return errorStream;
 	}
 
+	/**
+	 * @return int
+	 */
 	public int getResult() {
 		return result;
 	}
 
+	/**
+	 * @return String
+	 * @throws IOException
+	 */
 	public String getJson() throws IOException {
 		JsonFactory jfactory = new JsonFactory();
 		Writer w = new StringWriter();

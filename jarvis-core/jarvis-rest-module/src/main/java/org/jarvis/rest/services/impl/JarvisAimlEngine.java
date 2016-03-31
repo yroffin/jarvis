@@ -24,12 +24,11 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
-import org.jarvis.main.core.IJarvisCoreSystem;
+import org.jarvis.core.services.JarvisConnector;
+import org.jarvis.core.services.JarvisConnectorImpl;
 import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.main.core.impl.JarvisCoreSystemImpl;
 import org.jarvis.main.model.parser.history.IAimlHistory;
-import org.jarvis.rest.services.CoreRestServices;
-import org.jarvis.rest.services.JarvisConnector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -38,11 +37,11 @@ import org.springframework.stereotype.Component;
  * aiml module
  */
 @Component
-public class JarvisAimlEngine extends JarvisRestClientImpl implements JarvisConnector {
+public class JarvisAimlEngine extends JarvisConnectorImpl implements JarvisConnector {
 
 	protected Logger logger = LoggerFactory.getLogger(JarvisAimlEngine.class);
 
-	IJarvisCoreSystem jarvis;
+	JarvisCoreSystemImpl jarvis;
 
 	private boolean voice;
 
@@ -51,13 +50,9 @@ public class JarvisAimlEngine extends JarvisRestClientImpl implements JarvisConn
 	 */
 	@PostConstruct
 	public void init() {
-		super.init(CoreRestServices.Handler.aiml.name(), "jarvis-aiml-engine-v1.0b");
-
-		this.voice = Boolean.parseBoolean(env.getProperty("jarvis.aiml.voice"));
-
-		setRenderer(true);
-		setSensor(true);
-		setCanAnswer(true);
+		renderer = true;
+		sensor = true;
+		canAnswer = true;
 
 		/**
 		 * implement jarvis system
@@ -89,7 +84,7 @@ public class JarvisAimlEngine extends JarvisRestClientImpl implements JarvisConn
 	}
 
 	@Override
-	public Map<String, Object> onNewMessage(Map<String, Object> message) throws JarvisModuleException {
+	public Map<String, Object> get(Map<String, String> message) throws JarvisModuleException {
 		Map<String, Object> nextMessage = new LinkedHashMap<String, Object>();
 
 		try {

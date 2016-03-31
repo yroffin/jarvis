@@ -14,26 +14,33 @@
  *   limitations under the License.
  */
 
-package org.jarvis.rest.services.impl;
+package org.jarvis.core.module;
 
 import java.io.IOException;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
+import org.jarvis.core.services.CoreMethod;
+import org.jarvis.core.services.CoreRestDaemon;
+import org.jarvis.core.services.JarvisConnector;
+import org.jarvis.core.services.JarvisConnectorImpl;
 import org.jarvis.dio.DioHelper;
-import org.jarvis.rest.services.CoreRestServices;
-import org.jarvis.rest.services.JarvisConnector;
+import org.jarvis.rest.services.impl.JarvisModuleException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
  * voide module
  */
 @Component
-public class JarvisDioEngine extends JarvisRestClientImpl implements JarvisConnector {
+public class JarvisDioEngine extends JarvisConnectorImpl implements JarvisConnector {
 
+	@Autowired
+	CoreRestDaemon daemon;
+	
 	protected Logger logger = LoggerFactory.getLogger(JarvisDioEngine.class);
 	DioHelper dioHelper;
 
@@ -42,13 +49,17 @@ public class JarvisDioEngine extends JarvisRestClientImpl implements JarvisConne
 	 */
 	@PostConstruct
 	public void init() {
-		super.init(CoreRestServices.Handler.voice.name(), "jarvis-voice-engine-v1.0b");
-
-		setRenderer(true);
-		setSensor(false);
-		setCanAnswer(false);
+		renderer = true;
 		
+		/**
+		 * declare helper
+		 */
 		dioHelper = new DioHelper();
+		
+		/**
+		 * register api
+		 */
+		daemon.register(CoreMethod.POST, "/api/dio", this);
 	}
 
 	/**
@@ -69,18 +80,18 @@ public class JarvisDioEngine extends JarvisRestClientImpl implements JarvisConne
 	}
 
 	@Override
-	public Map<String, Object> onNewMessage(Map<String, Object> message) throws JarvisModuleException {
+	public Map<String, Object> post(Map<String, Object> input, Map<String, String> params) throws JarvisModuleException {
 		try {
 			try {
-				action((String) message.get("pin"), (String) message.get("sender"), (String) message.get("interruptor"), Boolean.parseBoolean((String) message.get("on")));
+				action((String) input.get("pin"), (String) input.get("sender"), (String) input.get("interruptor"), Boolean.parseBoolean((String) input.get("on")));
 			} catch (NumberFormatException | InterruptedException e) {
 				throw new IOException(e);
 			}
 		} catch (IOException e) {
-			logger.error("Error, while accessing to jarvis with {} exception {}", message,
+			logger.error("Error, while accessing to jarvis with {} exception {}", input,
 					e.getMessage());
 			throw new JarvisModuleException(e);
 		}
-		return message;
+		return input;
 	}
 }

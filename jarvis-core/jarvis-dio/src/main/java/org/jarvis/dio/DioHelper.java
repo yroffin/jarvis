@@ -88,7 +88,8 @@ public class DioHelper {
 	 * @throws IOException 
 	 */
 	public void switchOnProcess() throws IOException, InterruptedException {
-		logger.info("SwitchOn: {}", ProcessExec.execute("sudo raspi-dio "+pin+" "+interruptor+" "+sender+" on"));
+		logger.info("SwitchOn: pin={} interruptor={} sender={} status={}", pin, interruptor, sender, "on");
+		ProcessExec.execute("sudo raspi-dio "+pin+" "+interruptor+" "+sender+" on");
 	}
 
 	/**
@@ -131,7 +132,8 @@ public class DioHelper {
 	 * @throws IOException 
 	 */
 	public void switchOffProcess() throws IOException, InterruptedException {
-		logger.info("SwitchOff: {}", ProcessExec.execute("sudo raspi-dio "+pin+" "+interruptor+" "+sender+" off"));
+		logger.info("SwitchOff: pin={} interruptor={} sender={} status={}", pin, interruptor, sender, "off");
+		ProcessExec.execute("sudo raspi-dio "+pin+" "+interruptor+" "+sender+" off");
 	}
 
 	/**

@@ -21,8 +21,8 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
-import org.jarvis.rest.services.CoreRestServices;
-import org.jarvis.rest.services.JarvisConnector;
+import org.jarvis.core.services.JarvisConnector;
+import org.jarvis.core.services.JarvisConnectorImpl;
 import org.jarvis.runtime.ProcessExec;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +32,7 @@ import org.springframework.stereotype.Component;
  * remote exec module
  */
 @Component
-public class JarvisRemoteExec extends JarvisRestClientImpl implements JarvisConnector {
+public class JarvisRemoteExec extends JarvisConnectorImpl implements JarvisConnector {
 
 	protected Logger logger = LoggerFactory.getLogger(JarvisRemoteExec.class);
 
@@ -41,15 +41,13 @@ public class JarvisRemoteExec extends JarvisRestClientImpl implements JarvisConn
 	 */
 	@PostConstruct
 	public void init() {
-		super.init(CoreRestServices.Handler.remote.name(), "jarvis-remote-engine-v1.0b");
-
-		setRenderer(true);
-		setSensor(true);
-		setCanAnswer(true);
+		renderer = true;
+		sensor = true;
+		canAnswer = true;
 	}
 
 	@Override
-	public Map<String, Object> onNewMessage(Map<String, Object> message) throws JarvisModuleException {
+	public Map<String, Object> get(Map<String, String> message) throws JarvisModuleException {
 		try {
 			String result = ProcessExec.execute((String) message.get("data"));
 			Map<String, Object> nextMessage = new LinkedHashMap<String, Object>();

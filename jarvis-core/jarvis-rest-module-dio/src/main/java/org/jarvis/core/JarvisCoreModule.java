@@ -13,21 +13,31 @@
  *  See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+package org.jarvis.core;
 
-package org.jarvis.rest;
-
+import org.jarvis.core.module.JarvisDioEngine;
+import org.jarvis.core.services.CoreRestDaemon;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.FilterType;
 
 /**
  * simple bootstrap for rest bootstrap
  */
 @Configuration
 @EnableAutoConfiguration
-@ComponentScan
+@ComponentScan(
+	    basePackages = {"org.jarvis.core.module, org.jarvis.core.services"}, 
+	    useDefaultFilters = false,
+	    includeFilters = {
+	        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = JarvisDioEngine.class),
+	        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = CoreRestDaemon.class)
+})
 public class JarvisCoreModule {
+	protected static String normalizedPath = JarvisStatic.normalizedPath;
+
 	/**
 	 * main entry
 	 * 

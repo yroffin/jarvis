@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package org.jarvis.rest.services;
+package org.jarvis.core.services;
 
 import java.util.Map;
 
@@ -24,15 +24,6 @@ import org.jarvis.rest.services.impl.JarvisModuleException;
  * jarvis connector
  */
 public interface JarvisConnector {
-
-	/**
-	 * message handler
-	 * @param message
-	 * @return Map
-	 * @throws JarvisModuleException
-	 */
-	Map<String, Object> onNewMessage(Map<String, Object> message) throws JarvisModuleException;
-
 	/**
 	 * @return id
 	 */
@@ -57,4 +48,19 @@ public interface JarvisConnector {
 	 * @return if can answer to query
 	 */
 	public boolean canAnswer();
+
+	/**
+	 * @param input
+	 * @param params
+	 * @return Map<String, Object>
+	 * @throws JarvisModuleException 
+	 */
+	Map<String, Object> post(Map<String, Object> input, Map<String, String> params) throws JarvisModuleException;
+
+	/**
+	 * @param params
+	 * @return Map<String, Object>
+	 * @throws JarvisModuleException 
+	 */
+	Map<String, Object> get(Map<String, String> params) throws JarvisModuleException;
 }

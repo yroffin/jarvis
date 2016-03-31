@@ -21,7 +21,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jarvis.main.core.IJarvisCoreSystem;
 import org.jarvis.main.engine.IAimlCoreEngine;
 import org.jarvis.main.engine.impl.AimlCoreEngineImpl;
 import org.jarvis.main.exception.AimlParsingError;
@@ -32,7 +31,7 @@ import org.slf4j.LoggerFactory;
 /**
  * jarvis connector implementation
  */
-public class JarvisCoreSystemImpl implements IJarvisCoreSystem {
+public class JarvisCoreSystemImpl {
 	protected Logger logger = LoggerFactory
 			.getLogger(JarvisCoreSystemImpl.class);
 
@@ -72,7 +71,6 @@ public class JarvisCoreSystemImpl implements IJarvisCoreSystem {
 	 * Audio voiceManager = null;
 	 */
 
-	@Override
 	public void initialize(String botname, String aiml)
 			throws AimlParsingError, IOException {
 		/*
@@ -95,7 +93,6 @@ public class JarvisCoreSystemImpl implements IJarvisCoreSystem {
 		engine.setBot("name", botname);
 	}
 
-	@Override
 	public void speak(String value) throws IOException {
 		InputStream sound = null;
 		try {
@@ -118,17 +115,14 @@ public class JarvisCoreSystemImpl implements IJarvisCoreSystem {
 		}
 	}
 
-	@Override
 	public void release() {
 	}
 
-	@Override
 	public List<IAimlHistory> chat(String sentence) throws AimlParsingError {
 		List<IAimlHistory> answers = engine.ask(sentence);
 		return answers;
 	}
 
-	@Override
 	public List<IAimlHistory> ask(String sentence) throws AimlParsingError {
 		List<IAimlHistory> answers = chat(sentence);
 		for (IAimlHistory answer : answers) {
@@ -142,14 +136,12 @@ public class JarvisCoreSystemImpl implements IJarvisCoreSystem {
 		return answers;
 	}
 
-	@Override
 	public List<IAimlHistory> askSilent(String sentence)
 			throws AimlParsingError {
 		List<IAimlHistory> answers = chat(sentence);
 		return answers;
 	}
 
-	@Override
 	public IAimlCoreEngine getEngine() {
 		return engine;
 	}
