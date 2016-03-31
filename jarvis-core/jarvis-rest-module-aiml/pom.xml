@@ -15,7 +15,7 @@
 		<!-- internal dependencies -->
 		<dependency>
 			<groupId>org.yroffin.com.jarvis</groupId>
-			<artifactId>jarvis-dio</artifactId>
+			<artifactId>jarvis-aiml</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.yroffin.com.jarvis</groupId>

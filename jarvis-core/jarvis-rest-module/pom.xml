@@ -21,22 +21,6 @@
 			<groupId>org.yroffin.com.jarvis</groupId>
 			<artifactId>jarvis-core-model</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.yroffin.com.jarvis</groupId>
-			<artifactId>jarvis-aiml</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.yroffin.com.jarvis</groupId>
-			<artifactId>jarvis-dio</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.yroffin.com.jarvis</groupId>
-			<artifactId>jarvis-marytts</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.yroffin.com.jarvis</groupId>
-			<artifactId>jarvis-marytts-voices</artifactId>
-		</dependency>
 		<!-- technical dependencies -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -80,33 +64,8 @@
 			<artifactId>spark-core</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>de.dfki.mary</groupId>
-			<artifactId>voice-enst-catherine-hsmm</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 		</dependency>
 	</dependencies>
-
-	<properties>
-		<start-class>org.jarvis.core.JarvisCoreModule</start-class>
-	</properties>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<version>${spring-boot.version}</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>repackage</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
 </project>
