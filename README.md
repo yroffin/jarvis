@@ -17,6 +17,25 @@ Jarvis system aim to introduce a human to machine interface capability with :
 - marytts
 - and a custom aiml renderer (in java)
 
+Technology
+----------
+
+- angularjs / angularmd for ui
+- Spark + Spring Boot on server side
+- Neo4j for database (graphdb)
+
+Roadmap
+-------
+
+- handle scenarii (started but not finished)
+- collecte and store statistics in graphdb
+- integrate swagger in project (auto documentation)
+- integrate graylog like tools
+- integrate lightify (Cf. https://github.com/arubenis/golightify/blob/master/http_json_server.go)
+- integrate rfxcom (better than fork unix binarie)
+- handle crontab
+- more tests ... for devops target
+
 Setup
 ======
 
