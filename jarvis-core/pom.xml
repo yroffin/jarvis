@@ -349,6 +349,7 @@
 		<module>jarvis-ehcache</module>
 		<module>jarvis-marytts</module>
 		<module>jarvis-marytts-voices</module>
+		<module>jarvis-rest-module-dio</module>
 	</modules>
 
 	<repositories>
