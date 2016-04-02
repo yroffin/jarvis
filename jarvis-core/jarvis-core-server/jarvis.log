@@ -2870,3 +2870,337 @@ Caused by: java.lang.NullPointerException
 01:44:03.913 [Thread-4] INFO  org.eclipse.jetty.server.Server - Started @4105ms
 01:44:04.179 [qtp6483408-24] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:SnapshotBean) RETURN id(node), node
 01:44:06.255 [qtp6483408-25] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:SnapshotBean) WHERE id(node) = 1 RETURN id(node),node
+19:19:57.833 [main] INFO  org.jarvis.core.JarvisCoreServer - Starting JarvisCoreServer on ITEM-87028 with PID 6584 (D:\Profiles\yroffin\git\jarvis.perso\jarvis-core\jarvis-core-server\target\classes started by yroffin in D:\Profiles\yroffin\git\jarvis.perso\jarvis-core\jarvis-core-server)
+19:19:57.833 [main] INFO  org.jarvis.core.JarvisCoreServer - No active profile set, falling back to default profiles: default
+19:19:58.098 [main] INFO  org.springframework.context.annotation.AnnotationConfigApplicationContext - Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@f381794: startup date [Sat Apr 02 19:19:58 CEST 2016]; root of context hierarchy
+19:19:58.987 [main] INFO  org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+19:19:59.082 [main] INFO  org.ehcache.spi.ServiceLocator - All Services successfully started.
+19:19:59.082 [main] INFO  org.ehcache.EhcacheManager - Cache 'preConfigured' is getting created in EhcacheManager.
+19:19:59.082 [main] INFO  org.ehcache.spi.serialization.DefaultSerializationProvider - Serializer for <java.lang.String> : org.ehcache.internal.serialization.CompactJavaSerializer@21d5c1a0
+19:19:59.097 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.String> : org.ehcache.internal.copy.IdentityCopier@560cbf1a
+19:19:59.097 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.Object> : org.ehcache.internal.copy.IdentityCopier@5fe8b721
+19:19:59.160 [main] INFO  class org.ehcache.Ehcache-preConfigured - Initialize successful.
+19:19:59.160 [main] INFO  org.ehcache.EhcacheManager - Cache 'preConfigured' created in EhcacheManager.
+19:19:59.160 [main] INFO  org.ehcache.EhcacheManager - Initialize successful.
+19:19:59.160 [main] INFO  org.ehcache.EhcacheManager - Cache 'myCache' is getting created in EhcacheManager.
+19:19:59.160 [main] INFO  org.ehcache.spi.serialization.DefaultSerializationProvider - Serializer for <java.lang.String> : org.ehcache.internal.serialization.CompactJavaSerializer@52c8295b
+19:19:59.160 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.String> : org.ehcache.internal.copy.IdentityCopier@251f7d26
+19:19:59.160 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.Object> : org.ehcache.internal.copy.IdentityCopier@77b21474
+19:19:59.160 [main] INFO  class org.ehcache.Ehcache-myCache - Initialize successful.
+19:19:59.160 [main] INFO  org.ehcache.EhcacheManager - Cache 'myCache' created in EhcacheManager.
+19:19:59.924 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.user.dir = /Profiles/yroffin/git/jarvis.perso/jarvis-core/jarvis-core-server
+19:19:59.924 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.log.dir = /Profiles/yroffin/git/jarvis.perso/jarvis-core/jarvis-core-server
+19:19:59.924 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.server.url = http://0.0.0.0:8082/ui
+19:19:59.924 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.neo4j.url = http://localhost:7474
+19:20:00.065 [Thread-4] INFO  org.eclipse.jetty.util.log - Logging initialized @3741ms
+19:20:00.292 [main] INFO  org.springframework.jmx.export.annotation.AnnotationMBeanExporter - Registering beans for JMX exposure on startup
+19:20:00.292 [Thread-4] INFO  spark.webserver.JettySparkServer - == Spark has ignited ...
+19:20:00.292 [Thread-4] INFO  spark.webserver.JettySparkServer - >> Listening on 0.0.0.0:8082
+19:20:00.308 [Thread-4] INFO  org.eclipse.jetty.server.Server - jetty-9.3.2.v20150730
+19:20:00.308 [main] INFO  org.jarvis.core.JarvisCoreServer - Started JarvisCoreServer in 2.757 seconds (JVM running for 3.987)
+19:20:00.354 [Thread-4] INFO  org.eclipse.jetty.server.handler.ContextHandler - Started o.e.j.s.ServletContextHandler@27dd6fce{/,null,AVAILABLE}
+19:20:00.386 [Thread-4] INFO  org.eclipse.jetty.server.ServerConnector - Started ServerConnector@65a83d42{HTTP/1.1,[http/1.1]}{0.0.0.0:8082}
+19:20:00.386 [Thread-4] INFO  org.eclipse.jetty.server.Server - Started @4060ms
+19:20:56.811 [qtp98582241-33] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+19:20:56.971 [qtp98582241-31] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ViewBean) RETURN id(node), node
+19:20:57.075 [qtp98582241-25] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-1
+19:20:57.428 [qtp98582241-31] ERROR org.jarvis.core.services.neo4j.Neo4jService - Exception
+javax.ws.rs.NotAuthorizedException: HTTP 401 Unauthorized
+	at org.glassfish.jersey.client.JerseyInvocation.convertToException(JerseyInvocation.java:1002) ~[jersey-client-2.22.1.jar:?]
+	at org.glassfish.jersey.client.JerseyInvocation.translate(JerseyInvocation.java:816) ~[jersey-client-2.22.1.jar:?]
+	at org.glassfish.jersey.client.JerseyInvocation.access$700(JerseyInvocation.java:92) ~[jersey-client-2.22.1.jar:?]
+	at org.glassfish.jersey.client.JerseyInvocation$2.call(JerseyInvocation.java:700) ~[jersey-client-2.22.1.jar:?]
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:315) ~[jersey-common-2.22.1.jar:?]
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:297) ~[jersey-common-2.22.1.jar:?]
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:228) ~[jersey-common-2.22.1.jar:?]
+	at org.glassfish.jersey.process.internal.RequestScope.runInScope(RequestScope.java:444) ~[jersey-common-2.22.1.jar:?]
+	at org.glassfish.jersey.client.JerseyInvocation.invoke(JerseyInvocation.java:696) ~[jersey-client-2.22.1.jar:?]
+	at org.glassfish.jersey.client.JerseyInvocation$Builder.method(JerseyInvocation.java:448) ~[jersey-client-2.22.1.jar:?]
+	at org.glassfish.jersey.client.JerseyInvocation$Builder.post(JerseyInvocation.java:349) ~[jersey-client-2.22.1.jar:?]
+	at org.jarvis.neo4j.client.CypherRestClient.query(CypherRestClient.java:79) ~[classes/:?]
+	at org.jarvis.neo4j.client.CypherRestClient.matchIdWithEntity(CypherRestClient.java:478) ~[classes/:?]
+	at org.jarvis.core.services.neo4j.ApiNeo4Service.matchIdWithEntity(ApiNeo4Service.java:121) ~[classes/:?]
+	at org.jarvis.core.services.neo4j.Neo4jService.findAll(Neo4jService.java:161) [classes/:?]
+	at org.jarvis.core.services.ApiService.findAll(ApiService.java:54) [classes/:?]
+	at org.jarvis.core.resources.api.ApiResources.doFindAll(ApiResources.java:233) [classes/:?]
+	at org.jarvis.core.resources.api.ApiResources.doFindAll(ApiResources.java:302) [classes/:?]
+	at org.jarvis.core.resources.api.ApiResources$1.handle(ApiResources.java:177) [classes/:?]
+	at spark.RouteImpl$1.handle(RouteImpl.java:58) [spark-core-2.3.jar:?]
+	at spark.webserver.MatcherFilter.doFilter(MatcherFilter.java:162) [spark-core-2.3.jar:?]
+	at spark.webserver.JettyHandler.doHandle(JettyHandler.java:61) [spark-core-2.3.jar:?]
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:189) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:141) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.server.handler.HandlerList.handle(HandlerList.java:52) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:119) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.server.Server.handle(Server.java:517) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.server.HttpChannel.handle(HttpChannel.java:302) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.server.HttpConnection.onFillable(HttpConnection.java:242) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.io.AbstractConnection$ReadCallback.succeeded(AbstractConnection.java:245) [jetty-io-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:95) [jetty-io-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.io.SelectChannelEndPoint$2.run(SelectChannelEndPoint.java:75) [jetty-io-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.produceAndRun(ExecuteProduceConsume.java:213) [jetty-util-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.run(ExecuteProduceConsume.java:147) [jetty-util-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:654) [jetty-util-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:572) [jetty-util-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at java.lang.Thread.run(Unknown Source) [?:1.8.0_65]
+19:20:57.428 [qtp98582241-33] ERROR org.jarvis.core.services.neo4j.Neo4jService - Exception
+javax.ws.rs.NotAuthorizedException: HTTP 401 Unauthorized
+	at org.glassfish.jersey.client.JerseyInvocation.convertToException(JerseyInvocation.java:1002) ~[jersey-client-2.22.1.jar:?]
+	at org.glassfish.jersey.client.JerseyInvocation.translate(JerseyInvocation.java:816) ~[jersey-client-2.22.1.jar:?]
+	at org.glassfish.jersey.client.JerseyInvocation.access$700(JerseyInvocation.java:92) ~[jersey-client-2.22.1.jar:?]
+	at org.glassfish.jersey.client.JerseyInvocation$2.call(JerseyInvocation.java:700) ~[jersey-client-2.22.1.jar:?]
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:315) ~[jersey-common-2.22.1.jar:?]
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:297) ~[jersey-common-2.22.1.jar:?]
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:228) ~[jersey-common-2.22.1.jar:?]
+	at org.glassfish.jersey.process.internal.RequestScope.runInScope(RequestScope.java:444) ~[jersey-common-2.22.1.jar:?]
+	at org.glassfish.jersey.client.JerseyInvocation.invoke(JerseyInvocation.java:696) ~[jersey-client-2.22.1.jar:?]
+	at org.glassfish.jersey.client.JerseyInvocation$Builder.method(JerseyInvocation.java:448) ~[jersey-client-2.22.1.jar:?]
+	at org.glassfish.jersey.client.JerseyInvocation$Builder.post(JerseyInvocation.java:349) ~[jersey-client-2.22.1.jar:?]
+	at org.jarvis.neo4j.client.CypherRestClient.query(CypherRestClient.java:79) ~[classes/:?]
+	at org.jarvis.neo4j.client.CypherRestClient.matchIdWithEntity(CypherRestClient.java:478) ~[classes/:?]
+	at org.jarvis.core.services.neo4j.ApiNeo4Service.matchIdWithEntity(ApiNeo4Service.java:121) ~[classes/:?]
+	at org.jarvis.core.services.neo4j.Neo4jService.findAll(Neo4jService.java:161) [classes/:?]
+	at org.jarvis.core.services.ApiService.findAll(ApiService.java:54) [classes/:?]
+	at org.jarvis.core.resources.api.ApiResources.doFindAll(ApiResources.java:233) [classes/:?]
+	at org.jarvis.core.resources.api.ApiResources.doFindAll(ApiResources.java:302) [classes/:?]
+	at org.jarvis.core.resources.api.ApiResources$1.handle(ApiResources.java:177) [classes/:?]
+	at spark.RouteImpl$1.handle(RouteImpl.java:58) [spark-core-2.3.jar:?]
+	at spark.webserver.MatcherFilter.doFilter(MatcherFilter.java:162) [spark-core-2.3.jar:?]
+	at spark.webserver.JettyHandler.doHandle(JettyHandler.java:61) [spark-core-2.3.jar:?]
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:189) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:141) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.server.handler.HandlerList.handle(HandlerList.java:52) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:119) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.server.Server.handle(Server.java:517) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.server.HttpChannel.handle(HttpChannel.java:302) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.server.HttpConnection.onFillable(HttpConnection.java:242) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.io.AbstractConnection$ReadCallback.succeeded(AbstractConnection.java:245) [jetty-io-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:95) [jetty-io-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.io.SelectChannelEndPoint$2.run(SelectChannelEndPoint.java:75) [jetty-io-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.produceAndRun(ExecuteProduceConsume.java:213) [jetty-util-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.run(ExecuteProduceConsume.java:147) [jetty-util-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:654) [jetty-util-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:572) [jetty-util-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at java.lang.Thread.run(Unknown Source) [?:1.8.0_65]
+19:20:57.437 [qtp98582241-31] ERROR spark.webserver.MatcherFilter - 
+org.jarvis.core.exception.TechnicalException: javax.ws.rs.NotAuthorizedException: HTTP 401 Unauthorized
+	at org.jarvis.core.services.neo4j.Neo4jService.findAll(Neo4jService.java:173) ~[classes/:?]
+	at org.jarvis.core.services.ApiService.findAll(ApiService.java:54) ~[classes/:?]
+	at org.jarvis.core.resources.api.ApiResources.doFindAll(ApiResources.java:233) ~[classes/:?]
+	at org.jarvis.core.resources.api.ApiResources.doFindAll(ApiResources.java:302) ~[classes/:?]
+	at org.jarvis.core.resources.api.ApiResources$1.handle(ApiResources.java:177) ~[classes/:?]
+	at spark.RouteImpl$1.handle(RouteImpl.java:58) ~[spark-core-2.3.jar:?]
+	at spark.webserver.MatcherFilter.doFilter(MatcherFilter.java:162) [spark-core-2.3.jar:?]
+	at spark.webserver.JettyHandler.doHandle(JettyHandler.java:61) [spark-core-2.3.jar:?]
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:189) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:141) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.server.handler.HandlerList.handle(HandlerList.java:52) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:119) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.server.Server.handle(Server.java:517) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.server.HttpChannel.handle(HttpChannel.java:302) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.server.HttpConnection.onFillable(HttpConnection.java:242) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.io.AbstractConnection$ReadCallback.succeeded(AbstractConnection.java:245) [jetty-io-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:95) [jetty-io-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.io.SelectChannelEndPoint$2.run(SelectChannelEndPoint.java:75) [jetty-io-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.produceAndRun(ExecuteProduceConsume.java:213) [jetty-util-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.run(ExecuteProduceConsume.java:147) [jetty-util-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:654) [jetty-util-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:572) [jetty-util-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at java.lang.Thread.run(Unknown Source) [?:1.8.0_65]
+Caused by: javax.ws.rs.NotAuthorizedException: HTTP 401 Unauthorized
+	at org.glassfish.jersey.client.JerseyInvocation.convertToException(JerseyInvocation.java:1002) ~[jersey-client-2.22.1.jar:?]
+	at org.glassfish.jersey.client.JerseyInvocation.translate(JerseyInvocation.java:816) ~[jersey-client-2.22.1.jar:?]
+	at org.glassfish.jersey.client.JerseyInvocation.access$700(JerseyInvocation.java:92) ~[jersey-client-2.22.1.jar:?]
+	at org.glassfish.jersey.client.JerseyInvocation$2.call(JerseyInvocation.java:700) ~[jersey-client-2.22.1.jar:?]
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:315) ~[jersey-common-2.22.1.jar:?]
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:297) ~[jersey-common-2.22.1.jar:?]
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:228) ~[jersey-common-2.22.1.jar:?]
+	at org.glassfish.jersey.process.internal.RequestScope.runInScope(RequestScope.java:444) ~[jersey-common-2.22.1.jar:?]
+	at org.glassfish.jersey.client.JerseyInvocation.invoke(JerseyInvocation.java:696) ~[jersey-client-2.22.1.jar:?]
+	at org.glassfish.jersey.client.JerseyInvocation$Builder.method(JerseyInvocation.java:448) ~[jersey-client-2.22.1.jar:?]
+	at org.glassfish.jersey.client.JerseyInvocation$Builder.post(JerseyInvocation.java:349) ~[jersey-client-2.22.1.jar:?]
+	at org.jarvis.neo4j.client.CypherRestClient.query(CypherRestClient.java:79) ~[classes/:?]
+	at org.jarvis.neo4j.client.CypherRestClient.matchIdWithEntity(CypherRestClient.java:478) ~[classes/:?]
+	at org.jarvis.core.services.neo4j.ApiNeo4Service.matchIdWithEntity(ApiNeo4Service.java:121) ~[classes/:?]
+	at org.jarvis.core.services.neo4j.Neo4jService.findAll(Neo4jService.java:161) ~[classes/:?]
+	... 22 more
+19:20:57.438 [qtp98582241-33] ERROR spark.webserver.MatcherFilter - 
+org.jarvis.core.exception.TechnicalException: javax.ws.rs.NotAuthorizedException: HTTP 401 Unauthorized
+	at org.jarvis.core.services.neo4j.Neo4jService.findAll(Neo4jService.java:173) ~[classes/:?]
+	at org.jarvis.core.services.ApiService.findAll(ApiService.java:54) ~[classes/:?]
+	at org.jarvis.core.resources.api.ApiResources.doFindAll(ApiResources.java:233) ~[classes/:?]
+	at org.jarvis.core.resources.api.ApiResources.doFindAll(ApiResources.java:302) ~[classes/:?]
+	at org.jarvis.core.resources.api.ApiResources$1.handle(ApiResources.java:177) ~[classes/:?]
+	at spark.RouteImpl$1.handle(RouteImpl.java:58) ~[spark-core-2.3.jar:?]
+	at spark.webserver.MatcherFilter.doFilter(MatcherFilter.java:162) [spark-core-2.3.jar:?]
+	at spark.webserver.JettyHandler.doHandle(JettyHandler.java:61) [spark-core-2.3.jar:?]
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:189) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:141) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.server.handler.HandlerList.handle(HandlerList.java:52) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:119) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.server.Server.handle(Server.java:517) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.server.HttpChannel.handle(HttpChannel.java:302) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.server.HttpConnection.onFillable(HttpConnection.java:242) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.io.AbstractConnection$ReadCallback.succeeded(AbstractConnection.java:245) [jetty-io-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:95) [jetty-io-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.io.SelectChannelEndPoint$2.run(SelectChannelEndPoint.java:75) [jetty-io-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.produceAndRun(ExecuteProduceConsume.java:213) [jetty-util-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.run(ExecuteProduceConsume.java:147) [jetty-util-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:654) [jetty-util-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:572) [jetty-util-9.3.2.v20150730.jar:9.3.2.v20150730]
+	at java.lang.Thread.run(Unknown Source) [?:1.8.0_65]
+Caused by: javax.ws.rs.NotAuthorizedException: HTTP 401 Unauthorized
+	at org.glassfish.jersey.client.JerseyInvocation.convertToException(JerseyInvocation.java:1002) ~[jersey-client-2.22.1.jar:?]
+	at org.glassfish.jersey.client.JerseyInvocation.translate(JerseyInvocation.java:816) ~[jersey-client-2.22.1.jar:?]
+	at org.glassfish.jersey.client.JerseyInvocation.access$700(JerseyInvocation.java:92) ~[jersey-client-2.22.1.jar:?]
+	at org.glassfish.jersey.client.JerseyInvocation$2.call(JerseyInvocation.java:700) ~[jersey-client-2.22.1.jar:?]
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:315) ~[jersey-common-2.22.1.jar:?]
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:297) ~[jersey-common-2.22.1.jar:?]
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:228) ~[jersey-common-2.22.1.jar:?]
+	at org.glassfish.jersey.process.internal.RequestScope.runInScope(RequestScope.java:444) ~[jersey-common-2.22.1.jar:?]
+	at org.glassfish.jersey.client.JerseyInvocation.invoke(JerseyInvocation.java:696) ~[jersey-client-2.22.1.jar:?]
+	at org.glassfish.jersey.client.JerseyInvocation$Builder.method(JerseyInvocation.java:448) ~[jersey-client-2.22.1.jar:?]
+	at org.glassfish.jersey.client.JerseyInvocation$Builder.post(JerseyInvocation.java:349) ~[jersey-client-2.22.1.jar:?]
+	at org.jarvis.neo4j.client.CypherRestClient.query(CypherRestClient.java:79) ~[classes/:?]
+	at org.jarvis.neo4j.client.CypherRestClient.matchIdWithEntity(CypherRestClient.java:478) ~[classes/:?]
+	at org.jarvis.core.services.neo4j.ApiNeo4Service.matchIdWithEntity(ApiNeo4Service.java:121) ~[classes/:?]
+	at org.jarvis.core.services.neo4j.Neo4jService.findAll(Neo4jService.java:161) ~[classes/:?]
+	... 22 more
+19:21:26.329 [qtp98582241-21] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+19:21:27.131 [qtp98582241-21] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+19:21:27.239 [qtp98582241-20] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ViewBean) RETURN id(node), node
+19:21:27.247 [qtp98582241-24] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-2
+19:21:43.384 [qtp98582241-20] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-3
+19:21:43.464 [qtp98582241-33] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+19:21:43.606 [qtp98582241-32] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ViewBean) RETURN id(node), node
+19:21:43.619 [qtp98582241-26] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+19:22:09.904 [qtp98582241-25] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:SnapshotBean) RETURN id(node), node
+19:22:19.560 [qtp98582241-33] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+19:22:20.355 [qtp98582241-21] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+19:22:20.364 [qtp98582241-24] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-4
+19:22:20.372 [qtp98582241-32] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:SnapshotBean) RETURN id(node), node
+19:24:16.723 [qtp98582241-34] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+19:25:17.589 [qtp98582241-25] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+19:25:17.670 [qtp98582241-34] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-5
+19:25:17.675 [qtp98582241-26] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:SnapshotBean) RETURN id(node), node
+19:25:33.988 [qtp98582241-32] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+19:25:35.517 [qtp98582241-34] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+19:25:35.620 [qtp98582241-41] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-6
+19:25:35.654 [qtp98582241-41] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:SnapshotBean) RETURN id(node), node
+19:26:14.377 [qtp98582241-24] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+19:26:15.725 [qtp98582241-41] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+19:26:15.856 [qtp98582241-43] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:SnapshotBean) RETURN id(node), node
+19:26:15.867 [qtp98582241-25] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-7
+19:28:20.032 [main] INFO  org.jarvis.core.JarvisCoreServer - Starting JarvisCoreServer on ITEM-87028 with PID 3656 (D:\Profiles\yroffin\git\jarvis.perso\jarvis-core\jarvis-core-server\target\classes started by yroffin in D:\Profiles\yroffin\git\jarvis.perso\jarvis-core\jarvis-core-server)
+19:28:20.033 [main] INFO  org.jarvis.core.JarvisCoreServer - No active profile set, falling back to default profiles: default
+19:28:20.356 [main] INFO  org.springframework.context.annotation.AnnotationConfigApplicationContext - Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@49872d67: startup date [Sat Apr 02 19:28:20 CEST 2016]; root of context hierarchy
+19:28:21.286 [main] INFO  org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+19:28:21.405 [main] INFO  org.ehcache.spi.ServiceLocator - All Services successfully started.
+19:28:21.407 [main] INFO  org.ehcache.EhcacheManager - Cache 'preConfigured' is getting created in EhcacheManager.
+19:28:21.411 [main] INFO  org.ehcache.spi.serialization.DefaultSerializationProvider - Serializer for <java.lang.String> : org.ehcache.internal.serialization.CompactJavaSerializer@213c3543
+19:28:21.414 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.String> : org.ehcache.internal.copy.IdentityCopier@7afbf561
+19:28:21.414 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.Object> : org.ehcache.internal.copy.IdentityCopier@2f98635e
+19:28:21.493 [main] INFO  class org.ehcache.Ehcache-preConfigured - Initialize successful.
+19:28:21.493 [main] INFO  org.ehcache.EhcacheManager - Cache 'preConfigured' created in EhcacheManager.
+19:28:21.493 [main] INFO  org.ehcache.EhcacheManager - Initialize successful.
+19:28:21.496 [main] INFO  org.ehcache.EhcacheManager - Cache 'myCache' is getting created in EhcacheManager.
+19:28:21.496 [main] INFO  org.ehcache.spi.serialization.DefaultSerializationProvider - Serializer for <java.lang.String> : org.ehcache.internal.serialization.CompactJavaSerializer@45bf6f39
+19:28:21.496 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.String> : org.ehcache.internal.copy.IdentityCopier@6c42f2a1
+19:28:21.496 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.Object> : org.ehcache.internal.copy.IdentityCopier@17a703f5
+19:28:21.500 [main] INFO  class org.ehcache.Ehcache-myCache - Initialize successful.
+19:28:21.500 [main] INFO  org.ehcache.EhcacheManager - Cache 'myCache' created in EhcacheManager.
+19:28:22.417 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.user.dir = /Profiles/yroffin/git/jarvis.perso/jarvis-core/jarvis-core-server
+19:28:22.417 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.log.dir = /Profiles/yroffin/git/jarvis.perso/jarvis-core/jarvis-core-server
+19:28:22.417 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.server.url = http://0.0.0.0:8082/ui
+19:28:22.417 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.neo4j.url = http://localhost:7474
+19:28:22.577 [Thread-4] INFO  org.eclipse.jetty.util.log - Logging initialized @4092ms
+19:28:22.839 [Thread-4] INFO  spark.webserver.JettySparkServer - == Spark has ignited ...
+19:28:22.839 [Thread-4] INFO  spark.webserver.JettySparkServer - >> Listening on 0.0.0.0:8082
+19:28:22.843 [Thread-4] INFO  org.eclipse.jetty.server.Server - jetty-9.3.2.v20150730
+19:28:22.902 [main] INFO  org.springframework.jmx.export.annotation.AnnotationMBeanExporter - Registering beans for JMX exposure on startup
+19:28:22.930 [main] INFO  org.jarvis.core.JarvisCoreServer - Started JarvisCoreServer in 3.233 seconds (JVM running for 4.448)
+19:28:22.931 [Thread-4] INFO  org.eclipse.jetty.server.handler.ContextHandler - Started o.e.j.s.ServletContextHandler@49a34b64{/,null,AVAILABLE}
+19:28:22.987 [Thread-4] INFO  org.eclipse.jetty.server.ServerConnector - Started ServerConnector@1351b709{HTTP/1.1,[http/1.1]}{0.0.0.0:8082}
+19:28:22.987 [Thread-4] INFO  org.eclipse.jetty.server.Server - Started @4505ms
+19:29:54.308 [main] INFO  org.jarvis.core.JarvisCoreServer - Starting JarvisCoreServer on ITEM-87028 with PID 1124 (D:\Profiles\yroffin\git\jarvis.perso\jarvis-core\jarvis-core-server\target\classes started by yroffin in D:\Profiles\yroffin\git\jarvis.perso\jarvis-core\jarvis-core-server)
+19:29:54.310 [main] INFO  org.jarvis.core.JarvisCoreServer - No active profile set, falling back to default profiles: default
+19:29:54.649 [main] INFO  org.springframework.context.annotation.AnnotationConfigApplicationContext - Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@49872d67: startup date [Sat Apr 02 19:29:54 CEST 2016]; root of context hierarchy
+19:29:55.579 [main] INFO  org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+19:29:55.710 [main] INFO  org.ehcache.spi.ServiceLocator - All Services successfully started.
+19:29:55.713 [main] INFO  org.ehcache.EhcacheManager - Cache 'preConfigured' is getting created in EhcacheManager.
+19:29:55.717 [main] INFO  org.ehcache.spi.serialization.DefaultSerializationProvider - Serializer for <java.lang.String> : org.ehcache.internal.serialization.CompactJavaSerializer@213c3543
+19:29:55.720 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.String> : org.ehcache.internal.copy.IdentityCopier@7afbf561
+19:29:55.720 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.Object> : org.ehcache.internal.copy.IdentityCopier@2f98635e
+19:29:55.807 [main] INFO  class org.ehcache.Ehcache-preConfigured - Initialize successful.
+19:29:55.807 [main] INFO  org.ehcache.EhcacheManager - Cache 'preConfigured' created in EhcacheManager.
+19:29:55.808 [main] INFO  org.ehcache.EhcacheManager - Initialize successful.
+19:29:55.809 [main] INFO  org.ehcache.EhcacheManager - Cache 'myCache' is getting created in EhcacheManager.
+19:29:55.809 [main] INFO  org.ehcache.spi.serialization.DefaultSerializationProvider - Serializer for <java.lang.String> : org.ehcache.internal.serialization.CompactJavaSerializer@45bf6f39
+19:29:55.809 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.String> : org.ehcache.internal.copy.IdentityCopier@6c42f2a1
+19:29:55.809 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.Object> : org.ehcache.internal.copy.IdentityCopier@17a703f5
+19:29:55.815 [main] INFO  class org.ehcache.Ehcache-myCache - Initialize successful.
+19:29:55.815 [main] INFO  org.ehcache.EhcacheManager - Cache 'myCache' created in EhcacheManager.
+19:29:56.851 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.user.dir = /Profiles/yroffin/git/jarvis.perso/jarvis-core/jarvis-core-server
+19:29:56.851 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.log.dir = /Profiles/yroffin/git/jarvis.perso/jarvis-core/jarvis-core-server
+19:29:56.851 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.server.url = http://0.0.0.0:8082/ui
+19:29:56.851 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.neo4j.url = http://localhost:7474
+19:29:57.156 [Thread-4] INFO  org.eclipse.jetty.util.log - Logging initialized @4383ms
+19:29:57.357 [Thread-4] INFO  spark.webserver.JettySparkServer - == Spark has ignited ...
+19:29:57.358 [Thread-4] INFO  spark.webserver.JettySparkServer - >> Listening on 0.0.0.0:8082
+19:29:57.362 [Thread-4] INFO  org.eclipse.jetty.server.Server - jetty-9.3.2.v20150730
+19:29:57.467 [Thread-4] INFO  org.eclipse.jetty.server.handler.ContextHandler - Started o.e.j.s.ServletContextHandler@23d15144{/,null,AVAILABLE}
+19:29:57.524 [Thread-4] INFO  org.eclipse.jetty.server.ServerConnector - Started ServerConnector@2523d303{HTTP/1.1,[http/1.1]}{0.0.0.0:8082}
+19:29:57.525 [Thread-4] INFO  org.eclipse.jetty.server.Server - Started @4755ms
+19:29:57.818 [main] INFO  org.springframework.jmx.export.annotation.AnnotationMBeanExporter - Registering beans for JMX exposure on startup
+19:29:57.844 [main] INFO  org.jarvis.core.JarvisCoreServer - Started JarvisCoreServer in 3.841 seconds (JVM running for 5.074)
+19:30:08.945 [qtp1203168509-22] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:SnapshotBean) WHERE id(node) = 0 RETURN id(node),node
+19:30:17.979 [qtp1203168509-23] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:SnapshotBean) WHERE id(node) = 0 RETURN id(node),node
+19:30:17.998 [qtp1203168509-23] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - CONTEXT org.jarvis.core.model.bean.tools.SnapshotBean {
+  "id" : "0",
+  "trigger" : null,
+  "timestamp" : null,
+  "href" : null,
+  "name" : "démo",
+  "icon" : "list",
+  "json" : null
+}
+19:30:17.999 [qtp1203168509-23] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - INPUT   { }
+19:30:18.304 [qtp1203168509-23] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find entities */ MATCH (node:BlockBean) return id(node),node
+19:30:18.330 [qtp1203168509-23] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find entities */ MATCH (node:CommandBean) return id(node),node
+19:30:18.353 [qtp1203168509-23] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find entities */ MATCH (node:IotBean) return id(node),node
+19:30:18.381 [qtp1203168509-23] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find entities */ MATCH (node:ScenarioBean) return id(node),node
+19:30:18.404 [qtp1203168509-23] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find entities */ MATCH (node:ScriptPluginBean) return id(node),node
+19:30:18.428 [qtp1203168509-23] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find entities */ MATCH (node:TriggerBean) return id(node),node
+19:30:18.454 [qtp1203168509-23] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find entities */ MATCH (node:ViewBean) return id(node),node
+19:30:18.481 [qtp1203168509-23] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT ResourcePair [key=FILE_STREAM, value={
+  "BlockBean" : { },
+  "CommandBean" : { },
+  "HREF" : { },
+  "HREF_ELSE" : { },
+  "HREF_IF" : { },
+  "HREF_THEN" : { },
+  "IotBean" : { },
+  "ScenarioBean" : { },
+  "ScriptPluginBean" : { },
+  "TriggerBean" : { },
+  "ViewBean" : { }
+}]
+19:38:53.395 [qtp1203168509-37] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+19:38:53.838 [qtp1203168509-22] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-1
+19:38:53.858 [qtp1203168509-23] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:SnapshotBean) WHERE id(node) = 0 RETURN id(node),node
+19:39:42.516 [qtp1203168509-38] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+19:39:45.979 [qtp1203168509-22] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+19:39:46.416 [qtp1203168509-39] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-2
+19:39:46.433 [qtp1203168509-23] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:SnapshotBean) WHERE id(node) = 0 RETURN id(node),node
+19:42:16.978 [qtp1203168509-37] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+19:42:19.880 [qtp1203168509-36] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+19:42:20.193 [qtp1203168509-24] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-3
+19:42:20.401 [qtp1203168509-24] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:SnapshotBean) WHERE id(node) = 0 RETURN id(node),node
+19:42:54.928 [qtp1203168509-22] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+19:42:58.002 [qtp1203168509-22] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+19:42:58.447 [qtp1203168509-24] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-4
+19:42:58.482 [qtp1203168509-24] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:SnapshotBean) WHERE id(node) = 0 RETURN id(node),node
+19:44:32.382 [qtp1203168509-21] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+19:44:35.483 [qtp1203168509-36] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+19:44:35.965 [qtp1203168509-43] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-5
+19:44:35.985 [qtp1203168509-43] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:SnapshotBean) WHERE id(node) = 0 RETURN id(node),node
