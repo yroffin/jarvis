@@ -328,7 +328,7 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * @throws Exception
 	 */
 	public String doCreate(Request request, Response response, Class<T> klass) throws Exception {
-    	if(request.contentType() == null || !request.contentType().equals("application/json")) {
+    	if(request.contentType() == null || !request.contentType().contains("application/json")) {
     		response.status(403);
     		return "";
     	}
@@ -349,7 +349,7 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * @throws Exception
 	 */
 	public String doUpdate(Request request, String id, Response response, Class<T> klass) throws Exception {
-    	if(request.contentType() == null || !request.contentType().equals("application/json")) {
+    	if(request.contentType() == null || !request.contentType().contains("application/json")) {
     		response.status(403);
     		return "";
     	}
@@ -375,7 +375,7 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * @throws Exception
 	 */
 	public String doDelete(Request request, String id, Response response, Class<T> klass) throws Exception {
-    	if(request.contentType() == null || !request.contentType().equals("application/json")) {
+    	if(request.contentType() == null || !request.contentType().contains("application/json")) {
     		response.status(403);
     		return "";
     	}
@@ -415,7 +415,7 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
     		body = new GenericMap();
     		body.put("multipart/form-data", extractMultipart(request,response));
     	} else {
-	    	if(request.contentType() == null || !request.contentType().equals("application/json")) {
+	    	if(request.contentType() == null || !request.contentType().contains("application/json")) {
 	    		response.status(403);
 	    		return "";
 	    	}

@@ -47,8 +47,10 @@ angular.module('JarvisApp.directives', [])
 	            var fileReader = new $window.FileReader();
 	
 	            fileReader.onload = function () {
-	            	$log.debug("result:",atob(fileReader.result.substr(13)))
-	                ctrl.$setViewValue(atob(fileReader.result.substr(13)));
+	            	var base64 = fileReader.result.substr(fileReader.result.lastIndexOf(",")+1);
+	            	$log.debug("result:",fileReader.result)
+	            	$log.debug("result base64 value:",base64)
+	                ctrl.$setViewValue(atob(base64));
 	
 	                if ('fileLoaded' in attr) {
 	                    scope.$eval(attr['fileLoaded']);
