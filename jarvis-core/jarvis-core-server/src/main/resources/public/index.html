@@ -38,6 +38,9 @@ limitations under the License.
 	
     <!-- highlight -->
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.0.0/styles/default.min.css">
+	
+    <!-- google font -->
+	<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'  type='text/css'>
 
     <link rel="stylesheet" href="css/specific.css">
     <!-- Just for external configuration -->
@@ -58,6 +61,9 @@ limitations under the License.
         <h1 ng-click="location('left', '/home');">Jarvis - {{media}}</h1>
        	<canvas width="100" height="50" id="gauge" jarvis-gauge></canvas>
        	<span flex></span>
+        <md-button ng-click="helper($event)" class="md-icon-button">
+        	<md-icon md-font-icon="material-icons md-24">help</md-icon>
+        </md-button>
         <md-button ng-click="settings($event)" class="md-icon-button">
         	<md-icon md-font-icon="material-icons md-24">settings</md-icon>
         </md-button>
@@ -65,19 +71,25 @@ limitations under the License.
 </md-toolbar>
 
 <div>
+    <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z4" md-component-id="right">
+    	<div ng-bind-html="help.content"></div>
+    </md-sidenav>
+</div>
+
+<div>
     <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z4" md-component-id="left">
-        <md-button ng-click="location('left', '/scenarios');">Scenario</md-button>
-        <md-button ng-click="location('left', '/blocks');">Block</md-button>
-        <md-button ng-click="location('left', '/iots');">Connected object(s)</md-button>
-        <md-button ng-click="location('left', '/events');">Events</md-button>
-        <md-button ng-click="location('left', '/triggers');">Triggers</md-button>
-        <md-button ng-click="location('left', '/plugins');">Plugin(s)</md-button>
-        <md-button ng-click="location('left', '/commands');">Command(s)</md-button>
-        <md-button ng-click="location('left', '/views');">View(s)</md-button>
-        <md-button ng-click="location('left', '/snapshots');">Snapshot(s)</md-button>
-        <md-button ng-click="location('left', '/crons');">Crontab(s)</md-button>
-        <md-button ng-click="location('left', '/connectors');">Connector(s)</md-button>
-        <md-button ng-click="location('left', '/configurations');">Configuration(s)</md-button>
+        <md-button ng-click="location('left', '/iots');"><div layout="row"><i class="help-icons">touch_app</i><span flex></span><span>Connected object(s)</span></div></md-button>
+        <md-button ng-click="location('left', '/plugins');"><div layout="row"><i class="help-icons">receipt</i><span flex></span><span>Plugin(s)</span></div></md-button>
+        <md-button ng-click="location('left', '/commands');"><div layout="row"><i class="help-icons">input</i><span flex></span><span>Command(s)</span></div></md-button>
+        <md-button ng-click="location('left', '/scenarios');"><div layout="row"><i class="help-icons">add</i><span flex></span><span>Scenario</span></div></md-button>
+        <md-button ng-click="location('left', '/blocks');"><div layout="row"><i class="help-icons">add</i><span flex></span><span>Block</span></div></md-button>
+        <md-button ng-click="location('left', '/events');"><div layout="row"><i class="help-icons">add</i><span flex></span><span>Events</span></div></md-button>
+        <md-button ng-click="location('left', '/triggers');"><div layout="row"><i class="help-icons">add</i><span flex></span><span>Triggers</span></div></md-button>
+        <md-button ng-click="location('left', '/views');"><div layout="row"><i class="help-icons">add</i><span flex></span><span>View(s)</span></div></md-button>
+        <md-button ng-click="location('left', '/snapshots');"><div layout="row"><i class="help-icons">add</i><span flex></span><span>Snapshot(s)</span></div></md-button>
+        <md-button ng-click="location('left', '/crons');"><div layout="row"><i class="help-icons">add</i><span flex></span><span>Crontab(s)</span></div></md-button>
+        <md-button ng-click="location('left', '/connectors');"><div layout="row"><i class="help-icons">add</i><span flex></span><span>Connector(s)</span></div></md-button>
+        <md-button ng-click="location('left', '/configurations');"><div layout="row"><i class="help-icons">add</i><span flex></span><span>Configuration(s)</span></div></md-button>
     </md-sidenav>
     <md-content ng-style="{'opacity': config.opacity}" ui-view flex class="md-padding">
     </md-content>
@@ -89,6 +101,7 @@ limitations under the License.
 <!-- AngularJS -->
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-sanitize.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-resource.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-animate.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-aria.js"></script>
@@ -122,6 +135,9 @@ limitations under the License.
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-websocket/1.0.14/angular-websocket.min.js" charset="utf-8"></script>
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js" charset="utf-8"></script>
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="js/lib/gauge.min.js" charset="utf-8"></script>

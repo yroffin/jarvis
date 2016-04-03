@@ -23,6 +23,7 @@
 angular.module('JarvisApp', [
      'ngMaterial',
      'ngMdIcons',
+     'ngSanitize',
      'restangular',
      'ui.router',
      'ui.router.router',

@@ -63,7 +63,7 @@ angular.module('JarvisApp.config',[])
      * main controller
      */
     .controller('JarvisAppCtrl',
-    	function($scope, $log, $store, $mdDialog, $mdSidenav, $mdMedia, $location, $state, genericPickerService, toastService, iotResourceService, eventResourceService, configurationResourceService){
+    	function($scope, $log, $store, $http, $mdDialog, $mdSidenav, $mdMedia, $location, $state, genericPickerService, toastService, iotResourceService, eventResourceService, configurationResourceService){
         /**
          * initialize jarvis configuration
          */
@@ -166,6 +166,35 @@ angular.module('JarvisApp.config',[])
         	   }
         	);
         }
+
+        /**
+         * create showdown service in global scope
+         */
+        $scope.markdown = new showdown.Converter({
+        	'tables': 'true',
+        	'ghCodeBlocks': 'true'
+        });
+        
+        /**
+         * helper
+         * @param help key
+         */
+        $scope.helper = function(key) {
+        	$log.debug('State', $state.current.name);
+        	
+        	/**
+        	 * read raw resource (partial load)
+        	 */
+        	$http.get('js/helps/fr/'+$state.current.name+'.markdown').then(function(response) {
+        		/**
+        		 * render markdown to html
+        		 */
+        		var html = $scope.markdown.makeHtml(response.data);
+            	$scope.help = {"content": html.replace(/<table>/g, '<table class="table table-striped table-bordered table-hover">')};
+            	$log.debug('Help', $scope.help);
+                $mdSidenav('right').toggle();
+        	});
+        };
 
         /**
          * toggle navbar
