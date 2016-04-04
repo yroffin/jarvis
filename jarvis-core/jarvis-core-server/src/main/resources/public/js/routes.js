@@ -35,6 +35,11 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
             controller: 'homeCtrl',
             templateUrl: '/ui/js/partials/home/page.html'
         })
+        .state('helper-iots', {
+            url: '/helper-iots',
+            controller: 'helperCtrl',
+            templateUrl: '/ui/js/partials/helper/jarvis-commands.svg'
+        })
         .state('events', {
             url: '/events',
             controller: 'eventsCtrl',

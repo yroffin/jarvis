@@ -1,319 +1,33 @@
-00:00:35.290 [qtp1375606951-126] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:00:36.233 [qtp1375606951-117] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:00:36.473 [qtp1375606951-107] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:SnapshotBean) WHERE id(node) = 0 RETURN id(node),node
-00:00:36.498 [qtp1375606951-126] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-54
-00:01:27.932 [qtp1375606951-126] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:01:29.095 [qtp1375606951-132] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:01:29.289 [qtp1375606951-107] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-55
-00:01:29.299 [qtp1375606951-150] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:SnapshotBean) WHERE id(node) = 0 RETURN id(node),node
-00:04:09.205 [qtp1375606951-133] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:04:10.596 [qtp1375606951-150] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:04:10.797 [qtp1375606951-133] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-56
-00:04:10.814 [qtp1375606951-145] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:SnapshotBean) WHERE id(node) = 0 RETURN id(node),node
-00:04:39.065 [qtp1375606951-124] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:04:40.192 [qtp1375606951-117] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:04:40.367 [qtp1375606951-153] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-57
-00:04:40.412 [qtp1375606951-150] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:SnapshotBean) WHERE id(node) = 0 RETURN id(node),node
-00:05:57.275 [qtp1375606951-153] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ScenarioBean) RETURN id(node), node
-00:05:59.169 [qtp1375606951-133] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:SnapshotBean) WHERE id(node) = 0 RETURN id(node),node
-00:06:00.536 [qtp1375606951-124] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:SnapshotBean) RETURN id(node), node
-00:06:09.544 [qtp1375606951-154] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:06:10.579 [qtp1375606951-117] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:06:10.676 [qtp1375606951-133] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:SnapshotBean) RETURN id(node), node
-00:06:10.684 [qtp1375606951-153] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-58
-00:06:17.010 [qtp1375606951-150] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ViewBean) RETURN id(node), node
-00:06:17.149 [qtp1375606951-133] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ViewBean) WHERE id(node) = 6 RETURN id(node),node
-00:06:17.154 [qtp1375606951-133] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ViewBean)-[relation:HREF]->(entity:IotBean) WHERE id(left) = 6 RETURN id(relation),relation,id(entity),entity
-00:06:17.159 [qtp1375606951-133] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 4 RETURN id(node),node
-00:06:17.742 [qtp1375606951-117] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 4 RETURN id(node),node
-00:06:17.747 [qtp1375606951-117] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - CONTEXT org.jarvis.core.model.bean.iot.IotBean {
-  "id" : "4",
-  "name" : "Device Json Mapper",
-  "parameters" : "{\"instance0\":{}}",
-  "visible" : true,
-  "icon" : "touch_app",
-  "tagColor" : "red",
-  "template" : "<ul>\n<li>{{iot.name}}</li>\n<li>{{data.user.username}}</li>\n<ul>\n<md-button ng-click=\"execute(iot)\">{{iot.name}}<md-tooltip>{{data}}</md-tooltip></md-button>"
-}
-00:06:17.747 [qtp1375606951-117] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - INPUT   { }
-00:06:17.748 [qtp1375606951-117] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:IotBean)-[relation:HREF]->(entity:ScriptPluginBean) WHERE id(left) = 4 RETURN id(relation),relation,id(entity),entity
-00:06:17.753 [qtp1375606951-117] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 5 RETURN id(node),node
-00:06:17.756 [qtp1375606951-117] INFO  org.jarvis.core.resources.api.ApiResources - Before render params = {}, context = {}
-00:06:17.756 [qtp1375606951-117] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ScriptPluginBean)-[relation:HREF]->(entity:CommandBean) WHERE id(left) = 5 RETURN id(relation),relation,id(entity),entity
-00:06:17.762 [qtp1375606951-117] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 1 RETURN id(node),node
-00:06:17.769 [qtp1375606951-117] INFO  org.jarvis.core.resources.api.ApiResources - Before render params = GenericEntity [id=1, href=null, instance=null, extended={}], context = {}
-00:06:17.849 [qtp1375606951-108] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 4 RETURN id(node),node
-00:06:18.613 [qtp1375606951-117] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT  {
-  "address" : {
-    "city" : "Gwenborough",
-    "geo" : {
-      "lat" : "-37.3159",
-      "lng" : "81.1496"
-    },
-    "street" : "Kulas Light",
-    "suite" : "Apt. 556",
-    "zipcode" : "92998-3874"
-  },
-  "company" : {
-    "bs" : "harness real-time e-markets",
-    "catchPhrase" : "Multi-layered client-server neural-net",
-    "name" : "Romaguera-Crona"
-  },
-  "email" : "Sincere@april.biz",
-  "id" : 1,
-  "name" : "Leanne Graham",
-  "phone" : "1-770-736-8031 x56442",
-  "username" : "Bret",
-  "website" : "hildegard.org"
-}
-00:06:18.614 [qtp1375606951-117] INFO  org.jarvis.core.resources.api.ApiResources - After render params = GenericEntity [id=1, href=null, instance=null, extended={}], context = {address={city=Gwenborough, geo={lat=-37.3159, lng=81.1496}, street=Kulas Light, suite=Apt. 556, zipcode=92998-3874}, company={bs=harness real-time e-markets, catchPhrase=Multi-layered client-server neural-net, name=Romaguera-Crona}, email=Sincere@april.biz, id=1, name=Leanne Graham, phone=1-770-736-8031 x56442, username=Bret, website=hildegard.org}
-00:06:18.614 [qtp1375606951-117] INFO  org.jarvis.core.resources.api.ApiResources - After render params = {}, context = {user={address={city=Gwenborough, geo={lat=-37.3159, lng=81.1496}, street=Kulas Light, suite=Apt. 556, zipcode=92998-3874}, company={bs=harness real-time e-markets, catchPhrase=Multi-layered client-server neural-net, name=Romaguera-Crona}, email=Sincere@april.biz, id=1, name=Leanne Graham, phone=1-770-736-8031 x56442, username=Bret, website=hildegard.org}}
-00:06:18.615 [qtp1375606951-117] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT ResourcePair [key=OBJECT, value={"user":{"address":{"city":"Gwenborough","geo":{"lat":"-37.3159","lng":"81.1496"},"street":"Kulas Light","suite":"Apt. 556","zipcode":"92998-3874"},"company":{"bs":"harness real-time e-markets","catchPhrase":"Multi-layered client-server neural-net","name":"Romaguera-Crona"},"email":"Sincere@april.biz","id":1,"name":"Leanne Graham","phone":"1-770-736-8031 x56442","username":"Bret","website":"hildegard.org"}}]
-00:08:23.306 [qtp1375606951-124] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:08:24.410 [qtp1375606951-160] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:08:24.505 [qtp1375606951-154] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ViewBean) RETURN id(node), node
-00:08:24.535 [qtp1375606951-153] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-59
-00:08:24.662 [qtp1375606951-161] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ViewBean) WHERE id(node) = 6 RETURN id(node),node
-00:08:24.666 [qtp1375606951-161] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ViewBean)-[relation:HREF]->(entity:IotBean) WHERE id(left) = 6 RETURN id(relation),relation,id(entity),entity
-00:08:24.670 [qtp1375606951-161] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 4 RETURN id(node),node
-00:08:24.912 [qtp1375606951-145] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 4 RETURN id(node),node
-00:08:24.914 [qtp1375606951-160] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 4 RETURN id(node),node
-00:08:24.917 [qtp1375606951-145] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - CONTEXT org.jarvis.core.model.bean.iot.IotBean {
-  "id" : "4",
-  "name" : "Device Json Mapper",
-  "parameters" : "{\"instance0\":{}}",
-  "visible" : true,
-  "icon" : "touch_app",
-  "tagColor" : "red",
-  "template" : "<ul>\n<li>{{iot.name}}</li>\n<li>{{data.user.username}}</li>\n<ul>\n<md-button ng-click=\"execute(iot)\">{{iot.name}}<md-tooltip>{{data}}</md-tooltip></md-button>"
-}
-00:08:24.917 [qtp1375606951-145] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - INPUT   { }
-00:08:24.917 [qtp1375606951-145] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:IotBean)-[relation:HREF]->(entity:ScriptPluginBean) WHERE id(left) = 4 RETURN id(relation),relation,id(entity),entity
-00:08:24.924 [qtp1375606951-145] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 5 RETURN id(node),node
-00:08:24.928 [qtp1375606951-145] INFO  org.jarvis.core.resources.api.ApiResources - Before render params = {}, context = {}
-00:08:24.929 [qtp1375606951-145] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ScriptPluginBean)-[relation:HREF]->(entity:CommandBean) WHERE id(left) = 5 RETURN id(relation),relation,id(entity),entity
-00:08:24.935 [qtp1375606951-145] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 1 RETURN id(node),node
-00:08:24.940 [qtp1375606951-145] INFO  org.jarvis.core.resources.api.ApiResources - Before render params = GenericEntity [id=1, href=null, instance=null, extended={}], context = {}
-00:08:25.515 [qtp1375606951-145] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT  {
-  "address" : {
-    "city" : "Gwenborough",
-    "geo" : {
-      "lat" : "-37.3159",
-      "lng" : "81.1496"
-    },
-    "street" : "Kulas Light",
-    "suite" : "Apt. 556",
-    "zipcode" : "92998-3874"
-  },
-  "company" : {
-    "bs" : "harness real-time e-markets",
-    "catchPhrase" : "Multi-layered client-server neural-net",
-    "name" : "Romaguera-Crona"
-  },
-  "email" : "Sincere@april.biz",
-  "id" : 1,
-  "name" : "Leanne Graham",
-  "phone" : "1-770-736-8031 x56442",
-  "username" : "Bret",
-  "website" : "hildegard.org"
-}
-00:08:25.515 [qtp1375606951-145] INFO  org.jarvis.core.resources.api.ApiResources - After render params = GenericEntity [id=1, href=null, instance=null, extended={}], context = {address={city=Gwenborough, geo={lat=-37.3159, lng=81.1496}, street=Kulas Light, suite=Apt. 556, zipcode=92998-3874}, company={bs=harness real-time e-markets, catchPhrase=Multi-layered client-server neural-net, name=Romaguera-Crona}, email=Sincere@april.biz, id=1, name=Leanne Graham, phone=1-770-736-8031 x56442, username=Bret, website=hildegard.org}
-00:08:25.515 [qtp1375606951-145] INFO  org.jarvis.core.resources.api.ApiResources - After render params = {}, context = {user={address={city=Gwenborough, geo={lat=-37.3159, lng=81.1496}, street=Kulas Light, suite=Apt. 556, zipcode=92998-3874}, company={bs=harness real-time e-markets, catchPhrase=Multi-layered client-server neural-net, name=Romaguera-Crona}, email=Sincere@april.biz, id=1, name=Leanne Graham, phone=1-770-736-8031 x56442, username=Bret, website=hildegard.org}}
-00:08:25.515 [qtp1375606951-145] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT ResourcePair [key=OBJECT, value={"user":{"address":{"city":"Gwenborough","geo":{"lat":"-37.3159","lng":"81.1496"},"street":"Kulas Light","suite":"Apt. 556","zipcode":"92998-3874"},"company":{"bs":"harness real-time e-markets","catchPhrase":"Multi-layered client-server neural-net","name":"Romaguera-Crona"},"email":"Sincere@april.biz","id":1,"name":"Leanne Graham","phone":"1-770-736-8031 x56442","username":"Bret","website":"hildegard.org"}}]
-00:08:40.328 [qtp1375606951-159] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:CommandBean) RETURN id(node), node
-00:09:02.932 [qtp1375606951-145] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:09:03.968 [qtp1375606951-154] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:09:04.038 [qtp1375606951-160] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-60
-00:09:04.056 [qtp1375606951-153] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:CommandBean) RETURN id(node), node
-00:09:57.630 [qtp1375606951-160] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:09:58.600 [qtp1375606951-162] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:09:58.683 [qtp1375606951-145] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:CommandBean) RETURN id(node), node
-00:09:58.725 [qtp1375606951-161] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-61
-00:10:32.172 [qtp1375606951-108] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:10:33.231 [qtp1375606951-160] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:10:33.306 [qtp1375606951-159] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-62
-00:10:33.322 [qtp1375606951-150] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:CommandBean) RETURN id(node), node
-00:11:36.390 [qtp1375606951-153] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:11:37.460 [qtp1375606951-150] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:11:37.547 [qtp1375606951-108] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:CommandBean) RETURN id(node), node
-00:11:37.594 [qtp1375606951-162] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-63
-00:11:39.716 [qtp1375606951-154] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 1 RETURN id(node),node
-00:14:49.943 [qtp1375606951-150] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:14:51.018 [qtp1375606951-170] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:14:51.261 [qtp1375606951-169] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 1 RETURN id(node),node
-00:14:51.364 [qtp1375606951-145] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-64
-00:15:23.664 [qtp1375606951-173] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:15:24.715 [qtp1375606951-173] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:15:24.947 [qtp1375606951-171] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 1 RETURN id(node),node
-00:15:25.045 [qtp1375606951-153] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-65
-00:17:42.181 [qtp1375606951-153] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:17:43.482 [qtp1375606951-159] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:17:43.731 [qtp1375606951-173] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 1 RETURN id(node),node
-00:17:43.829 [qtp1375606951-159] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-66
-00:18:49.407 [qtp1375606951-171] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:CommandBean) RETURN id(node), node
-00:18:50.409 [qtp1375606951-150] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:18:51.407 [qtp1375606951-154] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:18:51.506 [qtp1375606951-145] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-67
-00:18:51.628 [qtp1375606951-171] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:CommandBean) RETURN id(node), node
-00:18:59.019 [qtp1375606951-171] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 1 RETURN id(node),node
-00:19:18.469 [qtp1375606951-154] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:CommandBean) RETURN id(node), node
-00:21:19.304 [qtp1375606951-153] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:21:20.719 [qtp1375606951-179] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:21:20.783 [qtp1375606951-145] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:CommandBean) RETURN id(node), node
-00:21:20.833 [qtp1375606951-154] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-68
-00:21:51.130 [qtp1375606951-173] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:21:52.109 [qtp1375606951-154] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:21:52.190 [qtp1375606951-169] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-69
-00:21:52.206 [qtp1375606951-173] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:CommandBean) RETURN id(node), node
-00:21:58.967 [qtp1375606951-181] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:IotBean) RETURN id(node), node
-00:22:00.986 [qtp1375606951-154] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:22:01.969 [qtp1375606951-180] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:22:02.069 [qtp1375606951-154] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:IotBean) RETURN id(node), node
-00:22:02.078 [qtp1375606951-179] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-70
-00:24:19.323 [qtp1375606951-153] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:24:20.549 [qtp1375606951-173] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:24:20.632 [qtp1375606951-153] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:IotBean) RETURN id(node), node
-00:24:20.639 [qtp1375606951-153] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-71
-00:24:45.544 [qtp1375606951-153] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:24:46.569 [qtp1375606951-154] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:24:46.647 [qtp1375606951-169] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:IotBean) RETURN id(node), node
-00:24:46.650 [qtp1375606951-173] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-72
-00:25:52.243 [qtp1375606951-181] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:25:53.416 [qtp1375606951-154] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:25:53.499 [qtp1375606951-153] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:IotBean) RETURN id(node), node
-00:25:53.542 [qtp1375606951-179] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-73
-00:26:08.668 [qtp1375606951-169] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:26:09.686 [qtp1375606951-153] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:26:09.777 [qtp1375606951-154] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:IotBean) RETURN id(node), node
-00:26:09.816 [qtp1375606951-189] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-74
-00:26:19.101 [qtp1375606951-173] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ViewBean) RETURN id(node), node
-00:26:19.249 [qtp1375606951-179] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ViewBean) WHERE id(node) = 6 RETURN id(node),node
-00:26:19.256 [qtp1375606951-179] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ViewBean)-[relation:HREF]->(entity:IotBean) WHERE id(left) = 6 RETURN id(relation),relation,id(entity),entity
-00:26:19.261 [qtp1375606951-179] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 4 RETURN id(node),node
-00:26:19.406 [qtp1375606951-193] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 4 RETURN id(node),node
-00:26:19.407 [qtp1375606951-189] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 4 RETURN id(node),node
-00:26:19.410 [qtp1375606951-193] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - CONTEXT org.jarvis.core.model.bean.iot.IotBean {
-  "id" : "4",
-  "name" : "Device Json Mapper",
-  "parameters" : "{\"instance0\":{}}",
-  "visible" : true,
-  "icon" : "touch_app",
-  "tagColor" : "red",
-  "template" : "<ul>\n<li>{{iot.name}}</li>\n<li>{{data.user.username}}</li>\n<ul>\n<md-button ng-click=\"execute(iot)\">{{iot.name}}<md-tooltip>{{data}}</md-tooltip></md-button>"
-}
-00:26:19.410 [qtp1375606951-193] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - INPUT   { }
-00:26:19.410 [qtp1375606951-193] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:IotBean)-[relation:HREF]->(entity:ScriptPluginBean) WHERE id(left) = 4 RETURN id(relation),relation,id(entity),entity
-00:26:19.415 [qtp1375606951-193] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 5 RETURN id(node),node
-00:26:19.419 [qtp1375606951-193] INFO  org.jarvis.core.resources.api.ApiResources - Before render params = {}, context = {}
-00:26:19.419 [qtp1375606951-193] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ScriptPluginBean)-[relation:HREF]->(entity:CommandBean) WHERE id(left) = 5 RETURN id(relation),relation,id(entity),entity
-00:26:19.429 [qtp1375606951-193] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 1 RETURN id(node),node
-00:26:19.434 [qtp1375606951-193] INFO  org.jarvis.core.resources.api.ApiResources - Before render params = GenericEntity [id=1, href=null, instance=null, extended={}], context = {}
-00:26:20.275 [qtp1375606951-193] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT  {
-  "address" : {
-    "city" : "Gwenborough",
-    "geo" : {
-      "lat" : "-37.3159",
-      "lng" : "81.1496"
-    },
-    "street" : "Kulas Light",
-    "suite" : "Apt. 556",
-    "zipcode" : "92998-3874"
-  },
-  "company" : {
-    "bs" : "harness real-time e-markets",
-    "catchPhrase" : "Multi-layered client-server neural-net",
-    "name" : "Romaguera-Crona"
-  },
-  "email" : "Sincere@april.biz",
-  "id" : 1,
-  "name" : "Leanne Graham",
-  "phone" : "1-770-736-8031 x56442",
-  "username" : "Bret",
-  "website" : "hildegard.org"
-}
-00:26:20.275 [qtp1375606951-193] INFO  org.jarvis.core.resources.api.ApiResources - After render params = GenericEntity [id=1, href=null, instance=null, extended={}], context = {address={city=Gwenborough, geo={lat=-37.3159, lng=81.1496}, street=Kulas Light, suite=Apt. 556, zipcode=92998-3874}, company={bs=harness real-time e-markets, catchPhrase=Multi-layered client-server neural-net, name=Romaguera-Crona}, email=Sincere@april.biz, id=1, name=Leanne Graham, phone=1-770-736-8031 x56442, username=Bret, website=hildegard.org}
-00:26:20.275 [qtp1375606951-193] INFO  org.jarvis.core.resources.api.ApiResources - After render params = {}, context = {user={address={city=Gwenborough, geo={lat=-37.3159, lng=81.1496}, street=Kulas Light, suite=Apt. 556, zipcode=92998-3874}, company={bs=harness real-time e-markets, catchPhrase=Multi-layered client-server neural-net, name=Romaguera-Crona}, email=Sincere@april.biz, id=1, name=Leanne Graham, phone=1-770-736-8031 x56442, username=Bret, website=hildegard.org}}
-00:26:20.275 [qtp1375606951-193] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT ResourcePair [key=OBJECT, value={"user":{"address":{"city":"Gwenborough","geo":{"lat":"-37.3159","lng":"81.1496"},"street":"Kulas Light","suite":"Apt. 556","zipcode":"92998-3874"},"company":{"bs":"harness real-time e-markets","catchPhrase":"Multi-layered client-server neural-net","name":"Romaguera-Crona"},"email":"Sincere@april.biz","id":1,"name":"Leanne Graham","phone":"1-770-736-8031 x56442","username":"Bret","website":"hildegard.org"}}]
-00:26:30.287 [qtp1375606951-191] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:IotBean) RETURN id(node), node
-00:26:37.587 [qtp1375606951-186] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:CommandBean) RETURN id(node), node
-00:26:48.996 [qtp1375606951-154] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 1 RETURN id(node),node
-00:26:59.959 [qtp1375606951-169] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:IotBean) RETURN id(node), node
-00:27:54.227 [qtp1375606951-189] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:27:55.952 [qtp1375606951-193] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:27:56.118 [qtp1375606951-173] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:IotBean) RETURN id(node), node
-00:27:56.128 [qtp1375606951-190] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-75
-00:29:44.415 [qtp1375606951-189] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 4 RETURN id(node),node
-00:29:44.415 [qtp1375606951-169] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 4 RETURN id(node),node
-00:29:44.416 [qtp1375606951-181] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 4 RETURN id(node),node
-00:29:44.416 [qtp1375606951-173] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 4 RETURN id(node),node
-00:29:44.428 [qtp1375606951-169] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:IotBean)-[relation:HREF]->(entity:ScriptPluginBean) WHERE id(left) = 4 RETURN id(relation),relation,id(entity),entity
-00:29:44.431 [qtp1375606951-169] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 5 RETURN id(node),node
-00:29:44.451 [qtp1375606951-173] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:IotBean)-[relation:HREF]->(entity:IotBean) WHERE id(left) = 4 RETURN id(relation),relation,id(entity),entity
-00:29:44.465 [qtp1375606951-181] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:IotBean)-[relation:HREF]->(entity:TriggerBean) WHERE id(left) = 4 RETURN id(relation),relation,id(entity),entity
-00:29:44.954 [qtp1375606951-189] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 4 RETURN id(node),node
-00:29:45.920 [qtp1375606951-192] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:29:47.549 [qtp1375606951-169] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:29:47.823 [qtp1375606951-179] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-76
-00:29:47.868 [qtp1375606951-186] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 4 RETURN id(node),node
-00:29:47.869 [qtp1375606951-191] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 4 RETURN id(node),node
-00:29:47.869 [qtp1375606951-145] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 4 RETURN id(node),node
-00:29:47.870 [qtp1375606951-190] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 4 RETURN id(node),node
-00:29:47.875 [qtp1375606951-145] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:IotBean)-[relation:HREF]->(entity:ScriptPluginBean) WHERE id(left) = 4 RETURN id(relation),relation,id(entity),entity
-00:29:47.884 [qtp1375606951-191] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:IotBean)-[relation:HREF]->(entity:IotBean) WHERE id(left) = 4 RETURN id(relation),relation,id(entity),entity
-00:29:47.886 [qtp1375606951-190] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:IotBean)-[relation:HREF]->(entity:TriggerBean) WHERE id(left) = 4 RETURN id(relation),relation,id(entity),entity
-00:29:47.887 [qtp1375606951-145] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 5 RETURN id(node),node
-00:29:48.384 [qtp1375606951-169] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 4 RETURN id(node),node
-00:32:25.556 [qtp1375606951-181] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:32:27.153 [qtp1375606951-173] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:32:27.446 [qtp1375606951-191] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-77
-00:32:27.472 [qtp1375606951-169] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 4 RETURN id(node),node
-00:32:27.473 [qtp1375606951-189] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 4 RETURN id(node),node
-00:32:27.474 [qtp1375606951-190] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 4 RETURN id(node),node
-00:32:27.475 [qtp1375606951-181] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 4 RETURN id(node),node
-00:32:27.493 [qtp1375606951-181] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:IotBean)-[relation:HREF]->(entity:TriggerBean) WHERE id(left) = 4 RETURN id(relation),relation,id(entity),entity
-00:32:27.494 [qtp1375606951-190] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:IotBean)-[relation:HREF]->(entity:IotBean) WHERE id(left) = 4 RETURN id(relation),relation,id(entity),entity
-00:32:27.495 [qtp1375606951-169] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:IotBean)-[relation:HREF]->(entity:ScriptPluginBean) WHERE id(left) = 4 RETURN id(relation),relation,id(entity),entity
-00:32:27.503 [qtp1375606951-169] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 5 RETURN id(node),node
-00:32:27.896 [qtp1375606951-145] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = undefined RETURN id(node),node
-00:32:27.903 [qtp1375606951-202] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 4 RETURN id(node),node
-00:32:27.923 [qtp1375606951-145] ERROR org.jarvis.neo4j.client.CypherRestClient - Cypher error [Neo.ClientError.Statement.InvalidSyntax, undefined not defined (line 1, column 59 (offset: 58))
-"/* find one node */ MATCH (node:IotBean) WHERE id(node) = undefined RETURN id(node),node"
-                                                           ^]
-00:32:27.923 [qtp1375606951-145] ERROR org.jarvis.core.services.neo4j.Neo4jService - Exception
-org.jarvis.core.exception.TechnicalException: Cypher error
-	at org.jarvis.neo4j.client.CypherRestClient.decodeResult(CypherRestClient.java:109) ~[classes/:?]
-	at org.jarvis.neo4j.client.CypherRestClient.query(CypherRestClient.java:84) ~[classes/:?]
-	at org.jarvis.neo4j.client.CypherRestClient.matchIdWithEntity(CypherRestClient.java:478) ~[classes/:?]
-	at org.jarvis.core.services.neo4j.ApiNeo4Service.matchIdWithEntity(ApiNeo4Service.java:121) ~[classes/:?]
-	at org.jarvis.core.services.neo4j.ApiNeo4Service.cypherOne(ApiNeo4Service.java:148) ~[classes/:?]
-	at org.jarvis.core.services.neo4j.Neo4jService.getById(Neo4jService.java:190) [classes/:?]
-	at org.jarvis.core.services.ApiService.getById(ApiService.java:64) [classes/:?]
-	at org.jarvis.core.resources.api.ApiResources.doGetById(ApiResources.java:256) [classes/:?]
-	at org.jarvis.core.resources.api.iot.ApiIotResources$1.handle(ApiIotResources.java:94) [classes/:?]
-	at spark.RouteImpl$1.handle(RouteImpl.java:58) [spark-core-2.3.jar:?]
-	at spark.webserver.MatcherFilter.doFilter(MatcherFilter.java:162) [spark-core-2.3.jar:?]
-	at spark.webserver.JettyHandler.doHandle(JettyHandler.java:61) [spark-core-2.3.jar:?]
-	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:189) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:141) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.server.handler.HandlerList.handle(HandlerList.java:52) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:119) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.server.Server.handle(Server.java:517) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.server.HttpChannel.handle(HttpChannel.java:302) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.server.HttpConnection.onFillable(HttpConnection.java:242) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.io.AbstractConnection$ReadCallback.succeeded(AbstractConnection.java:245) [jetty-io-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:95) [jetty-io-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.io.SelectChannelEndPoint$2.run(SelectChannelEndPoint.java:75) [jetty-io-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.produceAndRun(ExecuteProduceConsume.java:213) [jetty-util-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.run(ExecuteProduceConsume.java:147) [jetty-util-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:654) [jetty-util-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:572) [jetty-util-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at java.lang.Thread.run(Unknown Source) [?:1.8.0_65]
-00:32:27.930 [qtp1375606951-145] ERROR spark.webserver.MatcherFilter - 
-org.jarvis.core.exception.TechnicalException: org.jarvis.core.exception.TechnicalException: Cypher error
-	at org.jarvis.core.services.neo4j.Neo4jService.getById(Neo4jService.java:207) ~[classes/:?]
-	at org.jarvis.core.services.ApiService.getById(ApiService.java:64) ~[classes/:?]
-	at org.jarvis.core.resources.api.ApiResources.doGetById(ApiResources.java:256) ~[classes/:?]
-	at org.jarvis.core.resources.api.iot.ApiIotResources$1.handle(ApiIotResources.java:94) ~[classes/:?]
+00:14:02.387 [qtp17896604-23] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+00:14:03.424 [qtp17896604-18] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-3
+00:14:03.624 [qtp17896604-19] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:14:03.811 [qtp17896604-21] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ViewBean) RETURN id(node), node
+00:15:46.133 [qtp17896604-22] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+00:15:47.279 [qtp17896604-23] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-4
+00:15:47.437 [qtp17896604-22] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:16:29.889 [qtp17896604-19] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+00:16:31.906 [qtp17896604-24] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-5
+00:16:32.079 [qtp17896604-23] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:16:37.660 [qtp17896604-25] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+00:16:38.633 [qtp17896604-18] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-6
+00:16:38.915 [qtp17896604-23] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:17:49.864 [qtp17896604-19] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+00:17:52.121 [qtp17896604-21] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-7
+00:17:52.352 [qtp17896604-25] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:18:25.738 [qtp17896604-18] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+00:18:28.027 [qtp17896604-18] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-8
+00:18:28.212 [qtp17896604-21] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:18:48.928 [qtp17896604-25] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+00:18:51.080 [qtp17896604-19] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-9
+00:18:51.252 [qtp17896604-25] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:18:51.476 [qtp17896604-22] ERROR spark.webserver.MatcherFilter - 
+java.lang.NullPointerException
+	at org.ehcache.Ehcache.checkNonNull(Ehcache.java:1123) ~[ehcache-3.0.0.m4.jar:3.0.0.m4]
+	at org.ehcache.Ehcache.checkNonNull(Ehcache.java:1129) ~[ehcache-3.0.0.m4.jar:3.0.0.m4]
+	at org.ehcache.Ehcache.put(Ehcache.java:233) ~[ehcache-3.0.0.m4.jar:3.0.0.m4]
+	at org.jarvis.core.services.cache.CoreEhcacheManager.put(CoreEhcacheManager.java:87) ~[classes/:?]
+	at org.jarvis.core.resources.CoreResources.getData(CoreResources.java:92) ~[classes/:?]
+	at org.jarvis.core.resources.CoreResources$1.handle(CoreResources.java:110) ~[classes/:?]
 	at spark.RouteImpl$1.handle(RouteImpl.java:58) ~[spark-core-2.3.jar:?]
 	at spark.webserver.MatcherFilter.doFilter(MatcherFilter.java:162) [spark-core-2.3.jar:?]
 	at spark.webserver.JettyHandler.doHandle(JettyHandler.java:61) [spark-core-2.3.jar:?]
@@ -331,382 +45,161 @@ org.jarvis.core.exception.TechnicalException: org.jarvis.core.exception.Technica
 	at org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.run(ExecuteProduceConsume.java:147) [jetty-util-9.3.2.v20150730.jar:9.3.2.v20150730]
 	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:654) [jetty-util-9.3.2.v20150730.jar:9.3.2.v20150730]
 	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:572) [jetty-util-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at java.lang.Thread.run(Unknown Source) [?:1.8.0_65]
-Caused by: org.jarvis.core.exception.TechnicalException: Cypher error
-	at org.jarvis.neo4j.client.CypherRestClient.decodeResult(CypherRestClient.java:109) ~[classes/:?]
-	at org.jarvis.neo4j.client.CypherRestClient.query(CypherRestClient.java:84) ~[classes/:?]
-	at org.jarvis.neo4j.client.CypherRestClient.matchIdWithEntity(CypherRestClient.java:478) ~[classes/:?]
-	at org.jarvis.core.services.neo4j.ApiNeo4Service.matchIdWithEntity(ApiNeo4Service.java:121) ~[classes/:?]
-	at org.jarvis.core.services.neo4j.ApiNeo4Service.cypherOne(ApiNeo4Service.java:148) ~[classes/:?]
-	at org.jarvis.core.services.neo4j.Neo4jService.getById(Neo4jService.java:190) ~[classes/:?]
-	... 21 more
-00:37:01.222 [qtp1375606951-191] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:37:02.902 [qtp1375606951-191] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:37:03.183 [qtp1375606951-192] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 4 RETURN id(node),node
-00:37:03.184 [qtp1375606951-145] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 4 RETURN id(node),node
-00:37:03.187 [qtp1375606951-173] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 4 RETURN id(node),node
-00:37:03.190 [qtp1375606951-205] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 4 RETURN id(node),node
-00:37:03.194 [qtp1375606951-192] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:IotBean)-[relation:HREF]->(entity:TriggerBean) WHERE id(left) = 4 RETURN id(relation),relation,id(entity),entity
-00:37:03.202 [qtp1375606951-173] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:IotBean)-[relation:HREF]->(entity:IotBean) WHERE id(left) = 4 RETURN id(relation),relation,id(entity),entity
-00:37:03.205 [qtp1375606951-205] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:IotBean)-[relation:HREF]->(entity:ScriptPluginBean) WHERE id(left) = 4 RETURN id(relation),relation,id(entity),entity
-00:37:03.212 [qtp1375606951-205] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 5 RETURN id(node),node
-00:37:03.306 [qtp1375606951-203] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-78
-00:37:03.644 [qtp1375606951-203] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = undefined RETURN id(node),node
-00:37:03.648 [qtp1375606951-202] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 4 RETURN id(node),node
-00:37:03.662 [qtp1375606951-203] ERROR org.jarvis.neo4j.client.CypherRestClient - Cypher error [Neo.ClientError.Statement.InvalidSyntax, undefined not defined (line 1, column 59 (offset: 58))
-"/* find one node */ MATCH (node:IotBean) WHERE id(node) = undefined RETURN id(node),node"
-                                                           ^]
-00:37:03.662 [qtp1375606951-203] ERROR org.jarvis.core.services.neo4j.Neo4jService - Exception
-org.jarvis.core.exception.TechnicalException: Cypher error
-	at org.jarvis.neo4j.client.CypherRestClient.decodeResult(CypherRestClient.java:109) ~[classes/:?]
-	at org.jarvis.neo4j.client.CypherRestClient.query(CypherRestClient.java:84) ~[classes/:?]
-	at org.jarvis.neo4j.client.CypherRestClient.matchIdWithEntity(CypherRestClient.java:478) ~[classes/:?]
-	at org.jarvis.core.services.neo4j.ApiNeo4Service.matchIdWithEntity(ApiNeo4Service.java:121) ~[classes/:?]
-	at org.jarvis.core.services.neo4j.ApiNeo4Service.cypherOne(ApiNeo4Service.java:148) ~[classes/:?]
-	at org.jarvis.core.services.neo4j.Neo4jService.getById(Neo4jService.java:190) [classes/:?]
-	at org.jarvis.core.services.ApiService.getById(ApiService.java:64) [classes/:?]
-	at org.jarvis.core.resources.api.ApiResources.doGetById(ApiResources.java:256) [classes/:?]
-	at org.jarvis.core.resources.api.iot.ApiIotResources$1.handle(ApiIotResources.java:94) [classes/:?]
-	at spark.RouteImpl$1.handle(RouteImpl.java:58) [spark-core-2.3.jar:?]
-	at spark.webserver.MatcherFilter.doFilter(MatcherFilter.java:162) [spark-core-2.3.jar:?]
-	at spark.webserver.JettyHandler.doHandle(JettyHandler.java:61) [spark-core-2.3.jar:?]
-	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:189) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:141) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.server.handler.HandlerList.handle(HandlerList.java:52) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:119) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.server.Server.handle(Server.java:517) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.server.HttpChannel.handle(HttpChannel.java:302) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.server.HttpConnection.onFillable(HttpConnection.java:242) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.io.AbstractConnection$ReadCallback.succeeded(AbstractConnection.java:245) [jetty-io-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:95) [jetty-io-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.io.SelectChannelEndPoint$2.run(SelectChannelEndPoint.java:75) [jetty-io-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.produceAndRun(ExecuteProduceConsume.java:213) [jetty-util-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.run(ExecuteProduceConsume.java:147) [jetty-util-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:654) [jetty-util-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:572) [jetty-util-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at java.lang.Thread.run(Unknown Source) [?:1.8.0_65]
-00:37:03.663 [qtp1375606951-203] ERROR spark.webserver.MatcherFilter - 
-org.jarvis.core.exception.TechnicalException: org.jarvis.core.exception.TechnicalException: Cypher error
-	at org.jarvis.core.services.neo4j.Neo4jService.getById(Neo4jService.java:207) ~[classes/:?]
-	at org.jarvis.core.services.ApiService.getById(ApiService.java:64) ~[classes/:?]
-	at org.jarvis.core.resources.api.ApiResources.doGetById(ApiResources.java:256) ~[classes/:?]
-	at org.jarvis.core.resources.api.iot.ApiIotResources$1.handle(ApiIotResources.java:94) ~[classes/:?]
-	at spark.RouteImpl$1.handle(RouteImpl.java:58) ~[spark-core-2.3.jar:?]
-	at spark.webserver.MatcherFilter.doFilter(MatcherFilter.java:162) [spark-core-2.3.jar:?]
-	at spark.webserver.JettyHandler.doHandle(JettyHandler.java:61) [spark-core-2.3.jar:?]
-	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:189) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:141) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.server.handler.HandlerList.handle(HandlerList.java:52) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:119) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.server.Server.handle(Server.java:517) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.server.HttpChannel.handle(HttpChannel.java:302) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.server.HttpConnection.onFillable(HttpConnection.java:242) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.io.AbstractConnection$ReadCallback.succeeded(AbstractConnection.java:245) [jetty-io-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:95) [jetty-io-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.io.SelectChannelEndPoint$2.run(SelectChannelEndPoint.java:75) [jetty-io-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.produceAndRun(ExecuteProduceConsume.java:213) [jetty-util-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.run(ExecuteProduceConsume.java:147) [jetty-util-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:654) [jetty-util-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:572) [jetty-util-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at java.lang.Thread.run(Unknown Source) [?:1.8.0_65]
-Caused by: org.jarvis.core.exception.TechnicalException: Cypher error
-	at org.jarvis.neo4j.client.CypherRestClient.decodeResult(CypherRestClient.java:109) ~[classes/:?]
-	at org.jarvis.neo4j.client.CypherRestClient.query(CypherRestClient.java:84) ~[classes/:?]
-	at org.jarvis.neo4j.client.CypherRestClient.matchIdWithEntity(CypherRestClient.java:478) ~[classes/:?]
-	at org.jarvis.core.services.neo4j.ApiNeo4Service.matchIdWithEntity(ApiNeo4Service.java:121) ~[classes/:?]
-	at org.jarvis.core.services.neo4j.ApiNeo4Service.cypherOne(ApiNeo4Service.java:148) ~[classes/:?]
-	at org.jarvis.core.services.neo4j.Neo4jService.getById(Neo4jService.java:190) ~[classes/:?]
-	... 21 more
-00:39:25.131 [qtp1375606951-192] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:39:27.196 [qtp1375606951-206] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:39:27.480 [qtp1375606951-191] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-79
-00:39:27.484 [qtp1375606951-191] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 4 RETURN id(node),node
-00:39:27.484 [qtp1375606951-173] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 4 RETURN id(node),node
-00:39:27.487 [qtp1375606951-202] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 4 RETURN id(node),node
-00:39:27.489 [qtp1375606951-204] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 4 RETURN id(node),node
-00:39:27.510 [qtp1375606951-202] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:IotBean)-[relation:HREF]->(entity:IotBean) WHERE id(left) = 4 RETURN id(relation),relation,id(entity),entity
-00:39:27.512 [qtp1375606951-204] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:IotBean)-[relation:HREF]->(entity:ScriptPluginBean) WHERE id(left) = 4 RETURN id(relation),relation,id(entity),entity
-00:39:27.515 [qtp1375606951-173] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:IotBean)-[relation:HREF]->(entity:TriggerBean) WHERE id(left) = 4 RETURN id(relation),relation,id(entity),entity
-00:39:27.524 [qtp1375606951-204] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 5 RETURN id(node),node
-00:39:27.902 [qtp1375606951-208] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = undefined RETURN id(node),node
-00:39:27.919 [qtp1375606951-208] ERROR org.jarvis.neo4j.client.CypherRestClient - Cypher error [Neo.ClientError.Statement.InvalidSyntax, undefined not defined (line 1, column 59 (offset: 58))
-"/* find one node */ MATCH (node:IotBean) WHERE id(node) = undefined RETURN id(node),node"
-                                                           ^]
-00:39:27.919 [qtp1375606951-208] ERROR org.jarvis.core.services.neo4j.Neo4jService - Exception
-org.jarvis.core.exception.TechnicalException: Cypher error
-	at org.jarvis.neo4j.client.CypherRestClient.decodeResult(CypherRestClient.java:109) ~[classes/:?]
-	at org.jarvis.neo4j.client.CypherRestClient.query(CypherRestClient.java:84) ~[classes/:?]
-	at org.jarvis.neo4j.client.CypherRestClient.matchIdWithEntity(CypherRestClient.java:478) ~[classes/:?]
-	at org.jarvis.core.services.neo4j.ApiNeo4Service.matchIdWithEntity(ApiNeo4Service.java:121) ~[classes/:?]
-	at org.jarvis.core.services.neo4j.ApiNeo4Service.cypherOne(ApiNeo4Service.java:148) ~[classes/:?]
-	at org.jarvis.core.services.neo4j.Neo4jService.getById(Neo4jService.java:190) [classes/:?]
-	at org.jarvis.core.services.ApiService.getById(ApiService.java:64) [classes/:?]
-	at org.jarvis.core.resources.api.ApiResources.doGetById(ApiResources.java:256) [classes/:?]
-	at org.jarvis.core.resources.api.iot.ApiIotResources$1.handle(ApiIotResources.java:94) [classes/:?]
-	at spark.RouteImpl$1.handle(RouteImpl.java:58) [spark-core-2.3.jar:?]
-	at spark.webserver.MatcherFilter.doFilter(MatcherFilter.java:162) [spark-core-2.3.jar:?]
-	at spark.webserver.JettyHandler.doHandle(JettyHandler.java:61) [spark-core-2.3.jar:?]
-	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:189) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:141) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.server.handler.HandlerList.handle(HandlerList.java:52) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:119) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.server.Server.handle(Server.java:517) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.server.HttpChannel.handle(HttpChannel.java:302) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.server.HttpConnection.onFillable(HttpConnection.java:242) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.io.AbstractConnection$ReadCallback.succeeded(AbstractConnection.java:245) [jetty-io-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:95) [jetty-io-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.io.SelectChannelEndPoint$2.run(SelectChannelEndPoint.java:75) [jetty-io-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.produceAndRun(ExecuteProduceConsume.java:213) [jetty-util-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.run(ExecuteProduceConsume.java:147) [jetty-util-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:654) [jetty-util-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:572) [jetty-util-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at java.lang.Thread.run(Unknown Source) [?:1.8.0_65]
-00:39:27.920 [qtp1375606951-208] ERROR spark.webserver.MatcherFilter - 
-org.jarvis.core.exception.TechnicalException: org.jarvis.core.exception.TechnicalException: Cypher error
-	at org.jarvis.core.services.neo4j.Neo4jService.getById(Neo4jService.java:207) ~[classes/:?]
-	at org.jarvis.core.services.ApiService.getById(ApiService.java:64) ~[classes/:?]
-	at org.jarvis.core.resources.api.ApiResources.doGetById(ApiResources.java:256) ~[classes/:?]
-	at org.jarvis.core.resources.api.iot.ApiIotResources$1.handle(ApiIotResources.java:94) ~[classes/:?]
-	at spark.RouteImpl$1.handle(RouteImpl.java:58) ~[spark-core-2.3.jar:?]
-	at spark.webserver.MatcherFilter.doFilter(MatcherFilter.java:162) [spark-core-2.3.jar:?]
-	at spark.webserver.JettyHandler.doHandle(JettyHandler.java:61) [spark-core-2.3.jar:?]
-	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:189) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:141) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.server.handler.HandlerList.handle(HandlerList.java:52) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:119) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.server.Server.handle(Server.java:517) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.server.HttpChannel.handle(HttpChannel.java:302) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.server.HttpConnection.onFillable(HttpConnection.java:242) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.io.AbstractConnection$ReadCallback.succeeded(AbstractConnection.java:245) [jetty-io-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:95) [jetty-io-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.io.SelectChannelEndPoint$2.run(SelectChannelEndPoint.java:75) [jetty-io-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.produceAndRun(ExecuteProduceConsume.java:213) [jetty-util-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.run(ExecuteProduceConsume.java:147) [jetty-util-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:654) [jetty-util-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:572) [jetty-util-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at java.lang.Thread.run(Unknown Source) [?:1.8.0_65]
-Caused by: org.jarvis.core.exception.TechnicalException: Cypher error
-	at org.jarvis.neo4j.client.CypherRestClient.decodeResult(CypherRestClient.java:109) ~[classes/:?]
-	at org.jarvis.neo4j.client.CypherRestClient.query(CypherRestClient.java:84) ~[classes/:?]
-	at org.jarvis.neo4j.client.CypherRestClient.matchIdWithEntity(CypherRestClient.java:478) ~[classes/:?]
-	at org.jarvis.core.services.neo4j.ApiNeo4Service.matchIdWithEntity(ApiNeo4Service.java:121) ~[classes/:?]
-	at org.jarvis.core.services.neo4j.ApiNeo4Service.cypherOne(ApiNeo4Service.java:148) ~[classes/:?]
-	at org.jarvis.core.services.neo4j.Neo4jService.getById(Neo4jService.java:190) ~[classes/:?]
-	... 21 more
-00:39:27.964 [qtp1375606951-203] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 4 RETURN id(node),node
-00:39:35.843 [qtp1375606951-191] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:IotBean) RETURN id(node), node
-00:39:39.084 [qtp1375606951-203] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ScriptPluginBean) RETURN id(node), node
-00:40:51.980 [qtp1375606951-206] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:40:53.563 [qtp1375606951-169] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:40:53.682 [qtp1375606951-210] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-80
-00:40:53.696 [qtp1375606951-210] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ScriptPluginBean) RETURN id(node), node
-00:41:19.967 [qtp1375606951-210] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 5 RETURN id(node),node
-00:41:19.967 [qtp1375606951-191] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 5 RETURN id(node),node
-00:41:19.967 [qtp1375606951-203] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:IotBean) RETURN id(node), node
-00:41:19.985 [qtp1375606951-191] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ScriptPluginBean)-[relation:HREF]->(entity:CommandBean) WHERE id(left) = 5 RETURN id(relation),relation,id(entity),entity
-00:41:19.994 [qtp1375606951-191] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 2 RETURN id(node),node
-00:41:20.013 [qtp1375606951-191] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 3 RETURN id(node),node
-00:41:20.031 [qtp1375606951-191] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 1 RETURN id(node),node
-00:47:47.633 [qtp1375606951-202] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:47:49.700 [qtp1375606951-169] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:47:49.983 [qtp1375606951-192] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-81
-00:47:50.003 [qtp1375606951-214] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 5 RETURN id(node),node
-00:47:50.004 [qtp1375606951-206] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:IotBean) RETURN id(node), node
-00:47:50.005 [qtp1375606951-191] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 5 RETURN id(node),node
-00:47:50.041 [qtp1375606951-214] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ScriptPluginBean)-[relation:HREF]->(entity:CommandBean) WHERE id(left) = 5 RETURN id(relation),relation,id(entity),entity
-00:47:50.047 [qtp1375606951-214] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 2 RETURN id(node),node
-00:47:50.052 [qtp1375606951-214] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 3 RETURN id(node),node
-00:47:50.056 [qtp1375606951-214] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 1 RETURN id(node),node
-00:48:12.108 [qtp1375606951-216] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:48:13.939 [qtp1375606951-216] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:48:14.232 [qtp1375606951-202] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-82
-00:48:14.273 [qtp1375606951-204] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 5 RETURN id(node),node
-00:48:14.273 [qtp1375606951-169] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:IotBean) RETURN id(node), node
-00:48:14.273 [qtp1375606951-208] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 5 RETURN id(node),node
-00:48:14.301 [qtp1375606951-208] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ScriptPluginBean)-[relation:HREF]->(entity:CommandBean) WHERE id(left) = 5 RETURN id(relation),relation,id(entity),entity
-00:48:14.318 [qtp1375606951-208] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 2 RETURN id(node),node
-00:48:14.322 [qtp1375606951-208] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 3 RETURN id(node),node
-00:48:14.326 [qtp1375606951-208] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 1 RETURN id(node),node
-00:48:42.607 [qtp1375606951-202] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 5 RETURN id(node),node
-00:48:42.613 [qtp1375606951-202] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 1 RETURN id(node),node
-00:48:44.632 [qtp1375606951-214] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 5 RETURN id(node),node
-00:48:44.656 [qtp1375606951-214] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 3 RETURN id(node),node
-00:48:47.638 [qtp1375606951-216] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 5 RETURN id(node),node
-00:48:47.662 [qtp1375606951-216] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 2 RETURN id(node),node
-00:48:50.491 [qtp1375606951-169] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:48:52.100 [qtp1375606951-204] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:48:52.390 [qtp1375606951-208] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-83
-00:48:52.432 [qtp1375606951-208] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 5 RETURN id(node),node
-00:48:52.432 [qtp1375606951-214] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 5 RETURN id(node),node
-00:48:52.432 [qtp1375606951-216] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:IotBean) RETURN id(node), node
-00:48:52.467 [qtp1375606951-214] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ScriptPluginBean)-[relation:HREF]->(entity:CommandBean) WHERE id(left) = 5 RETURN id(relation),relation,id(entity),entity
-00:48:52.473 [qtp1375606951-214] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 2 RETURN id(node),node
-00:48:52.477 [qtp1375606951-214] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 3 RETURN id(node),node
-00:48:52.481 [qtp1375606951-214] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 1 RETURN id(node),node
-00:49:52.746 [qtp1375606951-202] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:49:54.625 [qtp1375606951-169] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:49:54.926 [qtp1375606951-191] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 5 RETURN id(node),node
-00:49:54.929 [qtp1375606951-192] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 5 RETURN id(node),node
-00:49:54.931 [qtp1375606951-204] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:IotBean) RETURN id(node), node
-00:49:54.941 [qtp1375606951-192] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ScriptPluginBean)-[relation:HREF]->(entity:CommandBean) WHERE id(left) = 5 RETURN id(relation),relation,id(entity),entity
-00:49:54.956 [qtp1375606951-192] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 2 RETURN id(node),node
-00:49:54.984 [qtp1375606951-192] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 3 RETURN id(node),node
-00:49:54.989 [qtp1375606951-192] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 1 RETURN id(node),node
-00:49:55.056 [qtp1375606951-191] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-84
-00:50:30.981 [qtp1375606951-214] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:50:32.969 [qtp1375606951-214] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:50:33.315 [qtp1375606951-192] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 5 RETURN id(node),node
-00:50:33.315 [qtp1375606951-220] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:IotBean) RETURN id(node), node
-00:50:33.315 [qtp1375606951-169] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 5 RETURN id(node),node
-00:50:33.323 [qtp1375606951-169] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ScriptPluginBean)-[relation:HREF]->(entity:CommandBean) WHERE id(left) = 5 RETURN id(relation),relation,id(entity),entity
-00:50:33.331 [qtp1375606951-169] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 2 RETURN id(node),node
-00:50:33.337 [qtp1375606951-169] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 3 RETURN id(node),node
-00:50:33.343 [qtp1375606951-169] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 1 RETURN id(node),node
-00:50:33.442 [qtp1375606951-191] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-85
-00:51:44.340 [qtp1375606951-192] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:51:46.438 [qtp1375606951-216] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:51:46.774 [qtp1375606951-220] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 5 RETURN id(node),node
-00:51:46.775 [qtp1375606951-223] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 5 RETURN id(node),node
-00:51:46.778 [qtp1375606951-192] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:IotBean) RETURN id(node), node
-00:51:46.803 [qtp1375606951-223] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ScriptPluginBean)-[relation:HREF]->(entity:CommandBean) WHERE id(left) = 5 RETURN id(relation),relation,id(entity),entity
-00:51:46.811 [qtp1375606951-223] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 2 RETURN id(node),node
-00:51:46.815 [qtp1375606951-223] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 3 RETURN id(node),node
-00:51:46.818 [qtp1375606951-223] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 1 RETURN id(node),node
-00:51:46.913 [qtp1375606951-169] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-86
-00:53:41.276 [qtp1375606951-220] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:53:43.806 [qtp1375606951-216] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:53:44.233 [qtp1375606951-204] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 5 RETURN id(node),node
-00:53:44.235 [qtp1375606951-220] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:IotBean) RETURN id(node), node
-00:53:44.235 [qtp1375606951-169] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 5 RETURN id(node),node
-00:53:44.246 [qtp1375606951-169] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ScriptPluginBean)-[relation:HREF]->(entity:CommandBean) WHERE id(left) = 5 RETURN id(relation),relation,id(entity),entity
-00:53:44.252 [qtp1375606951-169] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 2 RETURN id(node),node
-00:53:44.279 [qtp1375606951-169] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 3 RETURN id(node),node
-00:53:44.282 [qtp1375606951-169] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 1 RETURN id(node),node
-00:53:44.392 [qtp1375606951-192] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-87
-00:54:14.743 [qtp1375606951-223] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:54:16.791 [qtp1375606951-169] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:54:17.169 [qtp1375606951-192] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 5 RETURN id(node),node
-00:54:17.170 [qtp1375606951-204] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 5 RETURN id(node),node
-00:54:17.170 [qtp1375606951-202] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:IotBean) RETURN id(node), node
-00:54:17.176 [qtp1375606951-204] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ScriptPluginBean)-[relation:HREF]->(entity:CommandBean) WHERE id(left) = 5 RETURN id(relation),relation,id(entity),entity
-00:54:17.183 [qtp1375606951-204] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 2 RETURN id(node),node
-00:54:17.188 [qtp1375606951-204] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 3 RETURN id(node),node
-00:54:17.191 [qtp1375606951-204] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 1 RETURN id(node),node
-00:54:17.280 [qtp1375606951-227] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-88
-00:54:53.124 [qtp1375606951-216] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:54:55.303 [qtp1375606951-204] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:54:55.695 [qtp1375606951-169] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 5 RETURN id(node),node
-00:54:55.696 [qtp1375606951-223] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:IotBean) RETURN id(node), node
-00:54:55.696 [qtp1375606951-227] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 5 RETURN id(node),node
-00:54:55.711 [qtp1375606951-227] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ScriptPluginBean)-[relation:HREF]->(entity:CommandBean) WHERE id(left) = 5 RETURN id(relation),relation,id(entity),entity
-00:54:55.719 [qtp1375606951-227] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 2 RETURN id(node),node
-00:54:55.724 [qtp1375606951-227] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 3 RETURN id(node),node
-00:54:55.727 [qtp1375606951-227] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 1 RETURN id(node),node
-00:54:55.817 [qtp1375606951-191] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-89
-00:55:20.168 [qtp1375606951-169] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:55:22.411 [qtp1375606951-204] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:55:22.844 [qtp1375606951-192] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:IotBean) RETURN id(node), node
-00:55:22.849 [qtp1375606951-230] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 5 RETURN id(node),node
-00:55:22.853 [qtp1375606951-225] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 5 RETURN id(node),node
-00:55:22.915 [qtp1375606951-202] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-90
-00:55:22.934 [qtp1375606951-225] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ScriptPluginBean)-[relation:HREF]->(entity:CommandBean) WHERE id(left) = 5 RETURN id(relation),relation,id(entity),entity
-00:55:22.941 [qtp1375606951-225] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 2 RETURN id(node),node
-00:55:22.945 [qtp1375606951-225] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 3 RETURN id(node),node
-00:55:22.954 [qtp1375606951-225] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 1 RETURN id(node),node
-00:55:38.413 [qtp1375606951-202] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:55:41.027 [qtp1375606951-202] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:55:41.369 [qtp1375606951-204] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 5 RETURN id(node),node
-00:55:41.371 [qtp1375606951-191] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 5 RETURN id(node),node
-00:55:41.371 [qtp1375606951-230] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:IotBean) RETURN id(node), node
-00:55:41.384 [qtp1375606951-191] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ScriptPluginBean)-[relation:HREF]->(entity:CommandBean) WHERE id(left) = 5 RETURN id(relation),relation,id(entity),entity
-00:55:41.391 [qtp1375606951-191] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 2 RETURN id(node),node
-00:55:41.404 [qtp1375606951-191] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 3 RETURN id(node),node
-00:55:41.411 [qtp1375606951-191] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 1 RETURN id(node),node
-00:55:41.489 [qtp1375606951-227] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-91
-00:56:27.301 [qtp1375606951-227] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:56:29.417 [qtp1375606951-191] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:56:29.795 [qtp1375606951-227] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 5 RETURN id(node),node
-00:56:29.803 [qtp1375606951-227] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ScriptPluginBean)-[relation:HREF]->(entity:CommandBean) WHERE id(left) = 5 RETURN id(relation),relation,id(entity),entity
-00:56:29.807 [qtp1375606951-202] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:IotBean) RETURN id(node), node
-00:56:29.808 [qtp1375606951-234] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 5 RETURN id(node),node
-00:56:29.809 [qtp1375606951-227] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 2 RETURN id(node),node
-00:56:29.866 [qtp1375606951-216] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-92
-00:56:29.868 [qtp1375606951-227] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 3 RETURN id(node),node
-00:56:29.872 [qtp1375606951-227] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 1 RETURN id(node),node
-00:56:45.219 [qtp1375606951-216] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:56:47.441 [qtp1375606951-233] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:56:47.862 [qtp1375606951-227] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 5 RETURN id(node),node
-00:56:47.863 [qtp1375606951-230] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:IotBean) RETURN id(node), node
-00:56:47.863 [qtp1375606951-191] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 5 RETURN id(node),node
-00:56:47.870 [qtp1375606951-191] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ScriptPluginBean)-[relation:HREF]->(entity:CommandBean) WHERE id(left) = 5 RETURN id(relation),relation,id(entity),entity
-00:56:47.876 [qtp1375606951-191] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 2 RETURN id(node),node
-00:56:47.879 [qtp1375606951-191] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 3 RETURN id(node),node
-00:56:47.883 [qtp1375606951-191] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 1 RETURN id(node),node
-00:56:47.963 [qtp1375606951-216] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-93
-00:58:14.698 [qtp1375606951-216] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:58:17.412 [qtp1375606951-216] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:58:17.806 [qtp1375606951-233] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 5 RETURN id(node),node
-00:58:17.806 [qtp1375606951-230] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 5 RETURN id(node),node
-00:58:17.806 [qtp1375606951-202] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:IotBean) RETURN id(node), node
-00:58:17.823 [qtp1375606951-230] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ScriptPluginBean)-[relation:HREF]->(entity:CommandBean) WHERE id(left) = 5 RETURN id(relation),relation,id(entity),entity
-00:58:17.892 [qtp1375606951-230] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 2 RETURN id(node),node
-00:58:17.899 [qtp1375606951-230] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 3 RETURN id(node),node
-00:58:17.903 [qtp1375606951-230] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 1 RETURN id(node),node
-00:58:17.908 [qtp1375606951-216] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-94
-01:01:20.777 [qtp1375606951-233] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-95
-01:01:21.419 [qtp1375606951-238] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-01:01:22.078 [qtp1375606951-169] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ViewBean) RETURN id(node), node
-01:01:22.444 [qtp1375606951-233] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ViewBean) WHERE id(node) = 6 RETURN id(node),node
-01:01:22.448 [qtp1375606951-233] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ViewBean)-[relation:HREF]->(entity:IotBean) WHERE id(left) = 6 RETURN id(relation),relation,id(entity),entity
-01:01:22.452 [qtp1375606951-233] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 4 RETURN id(node),node
-01:01:22.755 [qtp1375606951-230] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 4 RETURN id(node),node
-01:01:22.762 [qtp1375606951-230] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - CONTEXT org.jarvis.core.model.bean.iot.IotBean {
-  "id" : "4",
-  "name" : "Device Json Mapper",
-  "parameters" : "{\"instance0\":{}}",
-  "visible" : true,
-  "icon" : "touch_app",
-  "tagColor" : "red",
-  "template" : "<ul>\n<li>{{iot.name}}</li>\n<li>{{data.user.username}}</li>\n<ul>\n<md-button ng-click=\"execute(iot)\">{{iot.name}}<md-tooltip>{{data}}</md-tooltip></md-button>"
-}
-01:01:22.763 [qtp1375606951-230] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - INPUT   { }
-01:01:22.763 [qtp1375606951-230] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:IotBean)-[relation:HREF]->(entity:ScriptPluginBean) WHERE id(left) = 4 RETURN id(relation),relation,id(entity),entity
-01:01:22.772 [qtp1375606951-230] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 5 RETURN id(node),node
-01:01:22.780 [qtp1375606951-230] INFO  org.jarvis.core.resources.api.ApiResources - Before render params = {}, context = {}
-01:01:22.780 [qtp1375606951-230] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ScriptPluginBean)-[relation:HREF]->(entity:CommandBean) WHERE id(left) = 5 RETURN id(relation),relation,id(entity),entity
-01:01:22.792 [qtp1375606951-230] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 3 RETURN id(node),node
-01:01:22.795 [qtp1375606951-230] INFO  org.jarvis.core.resources.api.ApiResources - Before render params = GenericEntity [id=3, href=null, instance=null, extended={}], context = {}
-01:01:22.823 [qtp1375606951-230] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT  {
-  "status" : false
-}
-01:01:22.824 [qtp1375606951-230] INFO  org.jarvis.core.resources.api.ApiResources - After render params = GenericEntity [id=3, href=null, instance=null, extended={}], context = {status=false}
-01:01:22.824 [qtp1375606951-230] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 1 RETURN id(node),node
-01:01:22.827 [qtp1375606951-230] INFO  org.jarvis.core.resources.api.ApiResources - Before render params = GenericEntity [id=1, href=null, instance=null, extended={}], context = {status=false}
-01:01:22.957 [qtp1375606951-204] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 4 RETURN id(node),node
-01:01:23.665 [qtp1375606951-230] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT  {
-  "address" : {
-    "city" : "Gwenborough",
-    "geo" : {
-      "lat" : "-37.3159",
-      "lng" : "81.1496"
-    },
-    "street" : "Kulas Light",
-    "suite" : "Apt. 556",
-    "zipcode" : "92998-3874"
-  },
-  "company" : {
-    "bs" : "harness real-time e-markets",
-    "catchPhrase" : "Multi-layered client-server neural-net",
-    "name" : "Romaguera-Crona"
-  },
-  "email" : "Sincere@april.biz",
-  "id" : 1,
-  "name" : "Leanne Graham",
-  "phone" : "1-770-736-8031 x56442",
-  "username" : "Bret",
-  "website" : "hildegard.org"
-}
-01:01:23.665 [qtp1375606951-230] INFO  org.jarvis.core.resources.api.ApiResources - After render params = GenericEntity [id=1, href=null, instance=null, extended={}], context = {address={city=Gwenborough, geo={lat=-37.3159, lng=81.1496}, street=Kulas Light, suite=Apt. 556, zipcode=92998-3874}, company={bs=harness real-time e-markets, catchPhrase=Multi-layered client-server neural-net, name=Romaguera-Crona}, email=Sincere@april.biz, id=1, name=Leanne Graham, phone=1-770-736-8031 x56442, username=Bret, website=hildegard.org}
-01:01:23.665 [qtp1375606951-230] INFO  org.jarvis.core.resources.api.ApiResources - After render params = {}, context = {always_false={status=false}, user={address={city=Gwenborough, geo={lat=-37.3159, lng=81.1496}, street=Kulas Light, suite=Apt. 556, zipcode=92998-3874}, company={bs=harness real-time e-markets, catchPhrase=Multi-layered client-server neural-net, name=Romaguera-Crona}, email=Sincere@april.biz, id=1, name=Leanne Graham, phone=1-770-736-8031 x56442, username=Bret, website=hildegard.org}}
-01:01:23.666 [qtp1375606951-230] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT ResourcePair [key=OBJECT, value={"always_false":{"status":false},"user":{"address":{"city":"Gwenborough","geo":{"lat":"-37.3159","lng":"81.1496"},"street":"Kulas Light","suite":"Apt. 556","zipcode":"92998-3874"},"company":{"bs":"harness real-time e-markets","catchPhrase":"Multi-layered client-server neural-net","name":"Romaguera-Crona"},"email":"Sincere@april.biz","id":1,"name":"Leanne Graham","phone":"1-770-736-8031 x56442","username":"Bret","website":"hildegard.org"}}]
-01:02:30.060 [qtp1375606951-169] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1006 WebSocket Read EOF
+	at java.lang.Thread.run(Thread.java:745) [?:1.8.0_60]
+00:19:48.666 [main] INFO  org.jarvis.core.JarvisCoreServer - Starting JarvisCoreServer on kazoar-PC with PID 9052 (Y:\mars\git\jarvis\jarvis-core\jarvis-core-server\target\classes started by kazoar in Y:\mars\git\jarvis\jarvis-core\jarvis-core-server)
+00:19:48.668 [main] INFO  org.jarvis.core.JarvisCoreServer - No active profile set, falling back to default profiles: default
+00:19:49.000 [main] INFO  org.springframework.context.annotation.AnnotationConfigApplicationContext - Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@dd0d4b: startup date [Tue Apr 05 00:19:48 CEST 2016]; root of context hierarchy
+00:19:49.886 [main] INFO  org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+00:19:50.012 [main] INFO  org.ehcache.spi.ServiceLocator - All Services successfully started.
+00:19:50.015 [main] INFO  org.ehcache.EhcacheManager - Cache 'preConfigured' is getting created in EhcacheManager.
+00:19:50.021 [main] INFO  org.ehcache.spi.serialization.DefaultSerializationProvider - Serializer for <java.lang.String> : org.ehcache.internal.serialization.CompactJavaSerializer@1d5c1a0
+00:19:50.025 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.String> : org.ehcache.internal.copy.IdentityCopier@cbf1a
+00:19:50.025 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.Object> : org.ehcache.internal.copy.IdentityCopier@1e8b721
+00:19:50.115 [main] INFO  class org.ehcache.Ehcache-preConfigured - Initialize successful.
+00:19:50.116 [main] INFO  org.ehcache.EhcacheManager - Cache 'preConfigured' created in EhcacheManager.
+00:19:50.116 [main] INFO  org.ehcache.EhcacheManager - Initialize successful.
+00:19:50.117 [main] INFO  org.ehcache.EhcacheManager - Cache 'myCache' is getting created in EhcacheManager.
+00:19:50.119 [main] INFO  org.ehcache.spi.serialization.DefaultSerializationProvider - Serializer for <java.lang.String> : org.ehcache.internal.serialization.CompactJavaSerializer@c8295b
+00:19:50.119 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.String> : org.ehcache.internal.copy.IdentityCopier@11f7d26
+00:19:50.119 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.Object> : org.ehcache.internal.copy.IdentityCopier@1b21474
+00:19:50.125 [main] INFO  class org.ehcache.Ehcache-myCache - Initialize successful.
+00:19:50.125 [main] INFO  org.ehcache.EhcacheManager - Cache 'myCache' created in EhcacheManager.
+00:19:51.039 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.user.dir = /mars/git/jarvis/jarvis-core/jarvis-core-server
+00:19:51.039 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.log.dir = /mars/git/jarvis/jarvis-core/jarvis-core-server
+00:19:51.040 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.server.url = http://0.0.0.0:8082/ui
+00:19:51.040 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.neo4j.url = http://localhost:7474
+00:19:51.145 [Thread-4] INFO  org.eclipse.jetty.util.log - Logging initialized @3913ms
+00:19:51.338 [main] INFO  org.springframework.jmx.export.annotation.AnnotationMBeanExporter - Registering beans for JMX exposure on startup
+00:19:51.359 [main] INFO  org.jarvis.core.JarvisCoreServer - Started JarvisCoreServer in 3.022 seconds (JVM running for 4.13)
+00:19:51.372 [Thread-4] INFO  spark.webserver.JettySparkServer - == Spark has ignited ...
+00:19:51.372 [Thread-4] INFO  spark.webserver.JettySparkServer - >> Listening on 0.0.0.0:8082
+00:19:51.376 [Thread-4] INFO  org.eclipse.jetty.server.Server - jetty-9.3.2.v20150730
+00:19:51.447 [Thread-4] INFO  org.eclipse.jetty.server.handler.ContextHandler - Started o.e.j.s.ServletContextHandler@19e7160{/,null,AVAILABLE}
+00:19:51.477 [Thread-4] INFO  org.eclipse.jetty.server.ServerConnector - Started ServerConnector@14b34a1{HTTP/1.1,[http/1.1]}{0.0.0.0:8082}
+00:19:51.477 [Thread-4] INFO  org.eclipse.jetty.server.Server - Started @4248ms
+00:19:56.555 [qtp619137-29] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-1
+00:19:56.645 [qtp619137-25] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:21:28.185 [qtp619137-18] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+00:21:30.456 [qtp619137-33] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-2
+00:21:30.624 [qtp619137-21] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:22:10.826 [qtp619137-33] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+00:22:13.029 [qtp619137-22] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-3
+00:22:13.187 [qtp619137-29] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:22:32.783 [qtp619137-21] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+00:22:35.125 [qtp619137-21] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-4
+00:22:35.487 [qtp619137-33] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:22:45.593 [qtp619137-18] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+00:22:47.849 [qtp619137-18] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-5
+00:22:47.997 [qtp619137-29] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:24:02.905 [qtp619137-21] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+00:24:04.953 [qtp619137-33] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-6
+00:24:05.120 [qtp619137-22] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:24:16.659 [qtp619137-21] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+00:24:17.728 [qtp619137-22] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-7
+00:24:17.898 [qtp619137-24] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:24:27.405 [qtp619137-33] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+00:24:28.364 [qtp619137-33] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-8
+00:24:28.570 [qtp619137-30] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:26:03.187 [qtp619137-25] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+00:26:04.298 [qtp619137-29] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-9
+00:26:04.457 [qtp619137-21] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:29:02.239 [qtp619137-24] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+00:29:04.159 [qtp619137-43] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-10
+00:29:04.334 [qtp619137-22] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:30:29.791 [qtp619137-21] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+00:30:31.889 [qtp619137-42] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-11
+00:30:32.063 [qtp619137-29] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:30:33.809 [qtp619137-30] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:CommandBean) RETURN id(node), node
+00:30:40.301 [qtp619137-22] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:CommandBean) WHERE id(node) = 200 RETURN id(node),node
+00:30:40.574 [qtp619137-22] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:CommandBean) WHERE id(node) = 200 DETACH DELETE node
+00:30:42.071 [qtp619137-21] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:CommandBean) WHERE id(node) = 201 RETURN id(node),node
+00:30:42.117 [qtp619137-21] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:CommandBean) WHERE id(node) = 201 DETACH DELETE node
+00:30:43.183 [qtp619137-29] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ViewBean) RETURN id(node), node
+00:32:41.829 [qtp619137-25] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+00:32:43.880 [qtp619137-22] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-12
+00:32:44.044 [qtp619137-21] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:32:45.441 [qtp619137-42] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ScriptPluginBean) RETURN id(node), node
+00:32:52.575 [qtp619137-30] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:CommandBean) RETURN id(node), node
+00:34:48.498 [qtp619137-42] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ScriptPluginBean) RETURN id(node), node
+00:37:36.815 [qtp619137-29] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+00:37:37.868 [qtp619137-22] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-13
+00:37:38.042 [qtp619137-29] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:37:38.177 [qtp619137-25] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ScriptPluginBean) RETURN id(node), node
+00:37:43.373 [qtp619137-30] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:IotBean) RETURN id(node), node
+00:39:14.361 [qtp619137-22] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:IotBean) RETURN id(node), node
+00:44:49.325 [qtp619137-22] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+00:44:51.287 [qtp619137-25] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-14
+00:44:51.485 [qtp619137-42] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:44:52.576 [qtp619137-22] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:IotBean) RETURN id(node), node
+00:44:56.676 [qtp619137-21] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ScriptPluginBean) RETURN id(node), node
+00:45:08.448 [qtp619137-22] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+00:45:10.103 [qtp619137-22] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-15
+00:45:10.214 [qtp619137-24] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:45:29.231 [qtp619137-30] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+00:45:31.725 [qtp619137-42] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-16
+00:45:31.853 [qtp619137-22] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:45:46.340 [main] INFO  org.jarvis.core.JarvisCoreServer - Starting JarvisCoreServer on kazoar-PC with PID 9600 (Y:\mars\git\jarvis\jarvis-core\jarvis-core-server\target\classes started by kazoar in Y:\mars\git\jarvis\jarvis-core\jarvis-core-server)
+00:45:46.342 [main] INFO  org.jarvis.core.JarvisCoreServer - No active profile set, falling back to default profiles: default
+00:45:46.664 [main] INFO  org.springframework.context.annotation.AnnotationConfigApplicationContext - Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@dd0d4b: startup date [Tue Apr 05 00:45:46 CEST 2016]; root of context hierarchy
+00:45:47.948 [main] INFO  org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+00:45:48.054 [main] INFO  org.ehcache.spi.ServiceLocator - All Services successfully started.
+00:45:48.056 [main] INFO  org.ehcache.EhcacheManager - Cache 'preConfigured' is getting created in EhcacheManager.
+00:45:48.060 [main] INFO  org.ehcache.spi.serialization.DefaultSerializationProvider - Serializer for <java.lang.String> : org.ehcache.internal.serialization.CompactJavaSerializer@1d5c1a0
+00:45:48.063 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.String> : org.ehcache.internal.copy.IdentityCopier@cbf1a
+00:45:48.063 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.Object> : org.ehcache.internal.copy.IdentityCopier@1e8b721
+00:45:48.138 [main] INFO  class org.ehcache.Ehcache-preConfigured - Initialize successful.
+00:45:48.139 [main] INFO  org.ehcache.EhcacheManager - Cache 'preConfigured' created in EhcacheManager.
+00:45:48.139 [main] INFO  org.ehcache.EhcacheManager - Initialize successful.
+00:45:48.140 [main] INFO  org.ehcache.EhcacheManager - Cache 'myCache' is getting created in EhcacheManager.
+00:45:48.140 [main] INFO  org.ehcache.spi.serialization.DefaultSerializationProvider - Serializer for <java.lang.String> : org.ehcache.internal.serialization.CompactJavaSerializer@c8295b
+00:45:48.141 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.String> : org.ehcache.internal.copy.IdentityCopier@11f7d26
+00:45:48.141 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.Object> : org.ehcache.internal.copy.IdentityCopier@1b21474
+00:45:48.146 [main] INFO  class org.ehcache.Ehcache-myCache - Initialize successful.
+00:45:48.147 [main] INFO  org.ehcache.EhcacheManager - Cache 'myCache' created in EhcacheManager.
+00:45:48.997 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.user.dir = /mars/git/jarvis/jarvis-core/jarvis-core-server
+00:45:48.997 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.log.dir = /mars/git/jarvis/jarvis-core/jarvis-core-server
+00:45:48.997 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.server.url = http://0.0.0.0:8082/ui
+00:45:48.997 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.neo4j.url = http://localhost:7474
+00:45:49.094 [Thread-4] INFO  org.eclipse.jetty.util.log - Logging initialized @4331ms
+00:45:49.264 [main] INFO  org.springframework.jmx.export.annotation.AnnotationMBeanExporter - Registering beans for JMX exposure on startup
+00:45:49.283 [main] INFO  org.jarvis.core.JarvisCoreServer - Started JarvisCoreServer in 3.285 seconds (JVM running for 4.522)
+00:45:49.296 [Thread-4] INFO  spark.webserver.JettySparkServer - == Spark has ignited ...
+00:45:49.296 [Thread-4] INFO  spark.webserver.JettySparkServer - >> Listening on 0.0.0.0:8082
+00:45:49.299 [Thread-4] INFO  org.eclipse.jetty.server.Server - jetty-9.3.2.v20150730
+00:45:49.352 [Thread-4] INFO  org.eclipse.jetty.server.handler.ContextHandler - Started o.e.j.s.ServletContextHandler@f4444e{/,null,AVAILABLE}
+00:45:49.381 [Thread-4] INFO  org.eclipse.jetty.server.ServerConnector - Started ServerConnector@78288{HTTP/1.1,[http/1.1]}{0.0.0.0:8082}
+00:45:49.381 [Thread-4] INFO  org.eclipse.jetty.server.Server - Started @4620ms
+00:45:51.634 [qtp5191793-25] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-1
+00:45:51.708 [qtp5191793-23] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:46:04.994 [qtp5191793-18] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+00:46:06.961 [qtp5191793-24] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-2
+00:46:07.094 [qtp5191793-25] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:46:32.127 [qtp5191793-19] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+00:46:34.078 [qtp5191793-18] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-3
+00:46:34.215 [qtp5191793-21] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:46:36.679 [qtp5191793-23] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:IotBean) RETURN id(node), node
+00:46:39.802 [qtp5191793-24] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ScriptPluginBean) RETURN id(node), node
+00:46:42.901 [qtp5191793-18] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:CommandBean) RETURN id(node), node
+00:47:32.529 [qtp5191793-22] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-4
+00:47:33.284 [qtp5191793-18] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:47:33.996 [qtp5191793-24] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ViewBean) RETURN id(node), node
+00:47:48.539 [qtp5191793-25] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:IotBean) RETURN id(node), node
+00:47:55.991 [qtp5191793-23] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:CommandBean) RETURN id(node), node
+00:48:04.519 [qtp5191793-19] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ScriptPluginBean) RETURN id(node), node
+00:50:11.523 [qtp5191793-22] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+00:50:13.172 [qtp5191793-21] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-5
+00:50:13.320 [qtp5191793-22] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:50:18.503 [qtp5191793-23] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+00:50:21.321 [qtp5191793-21] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-6
+00:50:21.865 [qtp5191793-19] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:50:30.289 [qtp5191793-21] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:CommandBean) RETURN id(node), node
+00:50:37.699 [qtp5191793-24] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ScriptPluginBean) RETURN id(node), node
+00:50:42.304 [qtp5191793-21] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:IotBean) RETURN id(node), node
+00:51:56.416 [qtp5191793-23] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:IotBean) RETURN id(node), node
+00:51:59.419 [qtp5191793-24] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ScriptPluginBean) RETURN id(node), node
+00:52:01.569 [qtp5191793-38] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:CommandBean) RETURN id(node), node
+00:52:03.525 [qtp5191793-19] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ScriptPluginBean) RETURN id(node), node
+00:52:05.592 [qtp5191793-25] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:CommandBean) RETURN id(node), node
+00:52:08.169 [qtp5191793-37] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:IotBean) RETURN id(node), node
+00:52:10.469 [qtp5191793-24] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ViewBean) RETURN id(node), node
+00:52:11.134 [qtp5191793-21] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null

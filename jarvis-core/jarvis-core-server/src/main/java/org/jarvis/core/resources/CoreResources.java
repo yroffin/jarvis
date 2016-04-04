@@ -76,6 +76,10 @@ public class CoreResources {
 			        value = new ResourceData(IOUtils.toString(inputStream));
 	        		value.setContentType("text/html; charset=utf-8");
 	        	}
+	        	if(key.endsWith(".svg")) {
+			        value = new ResourceData(IOUtils.toString(inputStream));
+	        		value.setContentType("text/html; charset=utf-8");
+	        	}
 	        	if(key.endsWith(".ico")) {
 			        value = new ResourceData(IOUtils.toString(inputStream));
 	        		value.setContentType("image/x-icon");
