@@ -7,15 +7,15 @@ L'accueil permet d'afficher sous forme de tuiles les divers [objets connectés](
 | Action                                 | Description               |
 | -------------------------------------- |:-------------------------:|
 | <i class="help-icons">menu</i>         | Affichage du menu         |
+| ![Statistiques système](js/helps/images/stat.png =32x26 "Statistiques du serveur") | CPU du serveur |
 | <i class="help-icons">help</i>         | Aide contextuelle         |
 | <i class="help-icons">settings</i>     | Paramétrage               |
-| ![Statistiques système](js/helps/images/stat.png =32x26 "Statistiques du serveur") | CPU du serveur |
 
 ### Principes
 
 La notion de [commande](#/commands) est l'élément de base du système Jarvis.
 
-Une fois une [commande](#/commands) il faut ensuite la déclarée dans un [plugin](#/plugins).
+Une fois la [commande](#/commands) créée il faut ensuite la déclarée dans un [plugin](#/plugins).
 
 Chaque [plugin](#/plugins) est enfin manipulable à travers un [objets connectés](#/iots).
 

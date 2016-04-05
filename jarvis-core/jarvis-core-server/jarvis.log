@@ -1184,3 +1184,505 @@
 00:54:52.386 [qtp619137-24] INFO  org.jarvis.core.resources.api.ApiResources - After render params = GenericEntity [id=203, href=null, instance=null, extended={}], context = {address={city=Gwenborough, geo={lat=-37.3159, lng=81.1496}, street=Kulas Light, suite=Apt. 556, zipcode=92998-3874}, company={bs=harness real-time e-markets, catchPhrase=Multi-layered client-server neural-net, name=Romaguera-Crona}, email=Sincere@april.biz, id=1, name=Leanne Graham, phone=1-770-736-8031 x56442, username=Bret, website=hildegard.org}
 00:54:52.386 [qtp619137-24] INFO  org.jarvis.core.resources.api.ApiResources - After render params = {}, context = {user={address={city=Gwenborough, geo={lat=-37.3159, lng=81.1496}, street=Kulas Light, suite=Apt. 556, zipcode=92998-3874}, company={bs=harness real-time e-markets, catchPhrase=Multi-layered client-server neural-net, name=Romaguera-Crona}, email=Sincere@april.biz, id=1, name=Leanne Graham, phone=1-770-736-8031 x56442, username=Bret, website=hildegard.org}}
 00:54:52.386 [qtp619137-24] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT ResourcePair [key=OBJECT, value={"user":{"address":{"city":"Gwenborough","geo":{"lat":"-37.3159","lng":"81.1496"},"street":"Kulas Light","suite":"Apt. 556","zipcode":"92998-3874"},"company":{"bs":"harness real-time e-markets","catchPhrase":"Multi-layered client-server neural-net","name":"Romaguera-Crona"},"email":"Sincere@april.biz","id":1,"name":"Leanne Graham","phone":"1-770-736-8031 x56442","username":"Bret","website":"hildegard.org"}}]
+00:57:03.555 [qtp619137-25] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ViewBean) RETURN id(node), node
+00:57:03.613 [qtp619137-23] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ViewBean) WHERE id(node) = 208 RETURN id(node),node
+00:57:03.621 [qtp619137-23] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ViewBean)-[relation:HREF]->(entity:IotBean) WHERE id(left) = 208 RETURN id(relation),relation,id(entity),entity
+00:57:03.627 [qtp619137-23] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+00:57:03.700 [qtp619137-18] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+00:57:03.708 [qtp619137-18] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - CONTEXT org.jarvis.core.model.bean.iot.IotBean {
+  "id" : "206",
+  "name" : "Device Json Mapper",
+  "parameters" : "{\"instance0\":{}}",
+  "visible" : true,
+  "icon" : "touch_app",
+  "tagColor" : "red",
+  "template" : "<ul>\n<li>{{iot.name}}</li>\n<li>{{data.user.username}}</li>\n<ul>\n<md-button ng-click=\"execute(iot)\">{{iot.name}}<md-tooltip>{{data}}</md-tooltip></md-button>"
+}
+00:57:03.708 [qtp619137-18] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - INPUT   { }
+00:57:03.709 [qtp619137-18] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:IotBean)-[relation:HREF]->(entity:ScriptPluginBean) WHERE id(left) = 206 RETURN id(relation),relation,id(entity),entity
+00:57:03.717 [qtp619137-18] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 207 RETURN id(node),node
+00:57:03.724 [qtp619137-18] INFO  org.jarvis.core.resources.api.ApiResources - Before render params = {}, context = {}
+00:57:03.725 [qtp619137-18] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ScriptPluginBean)-[relation:HREF]->(entity:CommandBean) WHERE id(left) = 207 RETURN id(relation),relation,id(entity),entity
+00:57:03.736 [qtp619137-18] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 203 RETURN id(node),node
+00:57:03.744 [qtp619137-18] INFO  org.jarvis.core.resources.api.ApiResources - Before render params = GenericEntity [id=203, href=null, instance=null, extended={}], context = {}
+00:57:04.517 [qtp619137-18] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT  {
+  "address" : {
+    "city" : "Gwenborough",
+    "geo" : {
+      "lat" : "-37.3159",
+      "lng" : "81.1496"
+    },
+    "street" : "Kulas Light",
+    "suite" : "Apt. 556",
+    "zipcode" : "92998-3874"
+  },
+  "company" : {
+    "bs" : "harness real-time e-markets",
+    "catchPhrase" : "Multi-layered client-server neural-net",
+    "name" : "Romaguera-Crona"
+  },
+  "email" : "Sincere@april.biz",
+  "id" : 1,
+  "name" : "Leanne Graham",
+  "phone" : "1-770-736-8031 x56442",
+  "username" : "Bret",
+  "website" : "hildegard.org"
+}
+00:57:04.517 [qtp619137-18] INFO  org.jarvis.core.resources.api.ApiResources - After render params = GenericEntity [id=203, href=null, instance=null, extended={}], context = {address={city=Gwenborough, geo={lat=-37.3159, lng=81.1496}, street=Kulas Light, suite=Apt. 556, zipcode=92998-3874}, company={bs=harness real-time e-markets, catchPhrase=Multi-layered client-server neural-net, name=Romaguera-Crona}, email=Sincere@april.biz, id=1, name=Leanne Graham, phone=1-770-736-8031 x56442, username=Bret, website=hildegard.org}
+00:57:04.517 [qtp619137-18] INFO  org.jarvis.core.resources.api.ApiResources - After render params = {}, context = {user={address={city=Gwenborough, geo={lat=-37.3159, lng=81.1496}, street=Kulas Light, suite=Apt. 556, zipcode=92998-3874}, company={bs=harness real-time e-markets, catchPhrase=Multi-layered client-server neural-net, name=Romaguera-Crona}, email=Sincere@april.biz, id=1, name=Leanne Graham, phone=1-770-736-8031 x56442, username=Bret, website=hildegard.org}}
+00:57:04.518 [qtp619137-18] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT ResourcePair [key=OBJECT, value={"user":{"address":{"city":"Gwenborough","geo":{"lat":"-37.3159","lng":"81.1496"},"street":"Kulas Light","suite":"Apt. 556","zipcode":"92998-3874"},"company":{"bs":"harness real-time e-markets","catchPhrase":"Multi-layered client-server neural-net","name":"Romaguera-Crona"},"email":"Sincere@april.biz","id":1,"name":"Leanne Graham","phone":"1-770-736-8031 x56442","username":"Bret","website":"hildegard.org"}}]
+00:58:23.445 [qtp619137-33] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+00:58:24.479 [qtp619137-24] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-5
+00:58:24.629 [qtp619137-18] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:58:24.767 [qtp619137-33] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ViewBean) RETURN id(node), node
+00:58:24.816 [qtp619137-24] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ViewBean) WHERE id(node) = 208 RETURN id(node),node
+00:58:24.822 [qtp619137-24] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ViewBean)-[relation:HREF]->(entity:IotBean) WHERE id(left) = 208 RETURN id(relation),relation,id(entity),entity
+00:58:24.830 [qtp619137-24] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+00:58:24.916 [qtp619137-32] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+00:58:24.924 [qtp619137-32] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - CONTEXT org.jarvis.core.model.bean.iot.IotBean {
+  "id" : "206",
+  "name" : "Device Json Mapper",
+  "parameters" : "{\"instance0\":{}}",
+  "visible" : true,
+  "icon" : "touch_app",
+  "tagColor" : "red",
+  "template" : "<ul>\n<li>{{iot.name}}</li>\n<li>{{data.user.username}}</li>\n<ul>\n<md-button ng-click=\"execute(iot)\">{{iot.name}}<md-tooltip>{{data}}</md-tooltip></md-button>"
+}
+00:58:24.924 [qtp619137-32] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - INPUT   { }
+00:58:24.925 [qtp619137-32] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:IotBean)-[relation:HREF]->(entity:ScriptPluginBean) WHERE id(left) = 206 RETURN id(relation),relation,id(entity),entity
+00:58:24.932 [qtp619137-32] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 207 RETURN id(node),node
+00:58:24.943 [qtp619137-32] INFO  org.jarvis.core.resources.api.ApiResources - Before render params = {}, context = {}
+00:58:24.944 [qtp619137-32] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ScriptPluginBean)-[relation:HREF]->(entity:CommandBean) WHERE id(left) = 207 RETURN id(relation),relation,id(entity),entity
+00:58:24.953 [qtp619137-32] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 203 RETURN id(node),node
+00:58:24.961 [qtp619137-32] INFO  org.jarvis.core.resources.api.ApiResources - Before render params = GenericEntity [id=203, href=null, instance=null, extended={}], context = {}
+00:58:24.965 [qtp619137-25] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+00:58:25.787 [qtp619137-32] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT  {
+  "address" : {
+    "city" : "Gwenborough",
+    "geo" : {
+      "lat" : "-37.3159",
+      "lng" : "81.1496"
+    },
+    "street" : "Kulas Light",
+    "suite" : "Apt. 556",
+    "zipcode" : "92998-3874"
+  },
+  "company" : {
+    "bs" : "harness real-time e-markets",
+    "catchPhrase" : "Multi-layered client-server neural-net",
+    "name" : "Romaguera-Crona"
+  },
+  "email" : "Sincere@april.biz",
+  "id" : 1,
+  "name" : "Leanne Graham",
+  "phone" : "1-770-736-8031 x56442",
+  "username" : "Bret",
+  "website" : "hildegard.org"
+}
+00:58:25.787 [qtp619137-32] INFO  org.jarvis.core.resources.api.ApiResources - After render params = GenericEntity [id=203, href=null, instance=null, extended={}], context = {address={city=Gwenborough, geo={lat=-37.3159, lng=81.1496}, street=Kulas Light, suite=Apt. 556, zipcode=92998-3874}, company={bs=harness real-time e-markets, catchPhrase=Multi-layered client-server neural-net, name=Romaguera-Crona}, email=Sincere@april.biz, id=1, name=Leanne Graham, phone=1-770-736-8031 x56442, username=Bret, website=hildegard.org}
+00:58:25.787 [qtp619137-32] INFO  org.jarvis.core.resources.api.ApiResources - After render params = {}, context = {user={address={city=Gwenborough, geo={lat=-37.3159, lng=81.1496}, street=Kulas Light, suite=Apt. 556, zipcode=92998-3874}, company={bs=harness real-time e-markets, catchPhrase=Multi-layered client-server neural-net, name=Romaguera-Crona}, email=Sincere@april.biz, id=1, name=Leanne Graham, phone=1-770-736-8031 x56442, username=Bret, website=hildegard.org}}
+00:58:25.787 [qtp619137-32] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT ResourcePair [key=OBJECT, value={"user":{"address":{"city":"Gwenborough","geo":{"lat":"-37.3159","lng":"81.1496"},"street":"Kulas Light","suite":"Apt. 556","zipcode":"92998-3874"},"company":{"bs":"harness real-time e-markets","catchPhrase":"Multi-layered client-server neural-net","name":"Romaguera-Crona"},"email":"Sincere@april.biz","id":1,"name":"Leanne Graham","phone":"1-770-736-8031 x56442","username":"Bret","website":"hildegard.org"}}]
+00:58:30.621 [qtp619137-33] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ViewBean) RETURN id(node), node
+00:58:30.674 [qtp619137-19] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ViewBean) WHERE id(node) = 208 RETURN id(node),node
+00:58:30.683 [qtp619137-19] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ViewBean)-[relation:HREF]->(entity:IotBean) WHERE id(left) = 208 RETURN id(relation),relation,id(entity),entity
+00:58:30.689 [qtp619137-19] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+00:58:30.745 [qtp619137-25] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+00:58:30.752 [qtp619137-25] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - CONTEXT org.jarvis.core.model.bean.iot.IotBean {
+  "id" : "206",
+  "name" : "Device Json Mapper",
+  "parameters" : "{\"instance0\":{}}",
+  "visible" : true,
+  "icon" : "touch_app",
+  "tagColor" : "red",
+  "template" : "<ul>\n<li>{{iot.name}}</li>\n<li>{{data.user.username}}</li>\n<ul>\n<md-button ng-click=\"execute(iot)\">{{iot.name}}<md-tooltip>{{data}}</md-tooltip></md-button>"
+}
+00:58:30.752 [qtp619137-25] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - INPUT   { }
+00:58:30.752 [qtp619137-25] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:IotBean)-[relation:HREF]->(entity:ScriptPluginBean) WHERE id(left) = 206 RETURN id(relation),relation,id(entity),entity
+00:58:30.758 [qtp619137-25] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 207 RETURN id(node),node
+00:58:30.764 [qtp619137-25] INFO  org.jarvis.core.resources.api.ApiResources - Before render params = {}, context = {}
+00:58:30.764 [qtp619137-25] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ScriptPluginBean)-[relation:HREF]->(entity:CommandBean) WHERE id(left) = 207 RETURN id(relation),relation,id(entity),entity
+00:58:30.774 [qtp619137-25] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 203 RETURN id(node),node
+00:58:30.782 [qtp619137-25] INFO  org.jarvis.core.resources.api.ApiResources - Before render params = GenericEntity [id=203, href=null, instance=null, extended={}], context = {}
+00:58:31.326 [qtp619137-25] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT  {
+  "address" : {
+    "city" : "Gwenborough",
+    "geo" : {
+      "lat" : "-37.3159",
+      "lng" : "81.1496"
+    },
+    "street" : "Kulas Light",
+    "suite" : "Apt. 556",
+    "zipcode" : "92998-3874"
+  },
+  "company" : {
+    "bs" : "harness real-time e-markets",
+    "catchPhrase" : "Multi-layered client-server neural-net",
+    "name" : "Romaguera-Crona"
+  },
+  "email" : "Sincere@april.biz",
+  "id" : 1,
+  "name" : "Leanne Graham",
+  "phone" : "1-770-736-8031 x56442",
+  "username" : "Bret",
+  "website" : "hildegard.org"
+}
+00:58:31.326 [qtp619137-25] INFO  org.jarvis.core.resources.api.ApiResources - After render params = GenericEntity [id=203, href=null, instance=null, extended={}], context = {address={city=Gwenborough, geo={lat=-37.3159, lng=81.1496}, street=Kulas Light, suite=Apt. 556, zipcode=92998-3874}, company={bs=harness real-time e-markets, catchPhrase=Multi-layered client-server neural-net, name=Romaguera-Crona}, email=Sincere@april.biz, id=1, name=Leanne Graham, phone=1-770-736-8031 x56442, username=Bret, website=hildegard.org}
+00:58:31.326 [qtp619137-25] INFO  org.jarvis.core.resources.api.ApiResources - After render params = {}, context = {user={address={city=Gwenborough, geo={lat=-37.3159, lng=81.1496}, street=Kulas Light, suite=Apt. 556, zipcode=92998-3874}, company={bs=harness real-time e-markets, catchPhrase=Multi-layered client-server neural-net, name=Romaguera-Crona}, email=Sincere@april.biz, id=1, name=Leanne Graham, phone=1-770-736-8031 x56442, username=Bret, website=hildegard.org}}
+00:58:31.326 [qtp619137-25] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT ResourcePair [key=OBJECT, value={"user":{"address":{"city":"Gwenborough","geo":{"lat":"-37.3159","lng":"81.1496"},"street":"Kulas Light","suite":"Apt. 556","zipcode":"92998-3874"},"company":{"bs":"harness real-time e-markets","catchPhrase":"Multi-layered client-server neural-net","name":"Romaguera-Crona"},"email":"Sincere@april.biz","id":1,"name":"Leanne Graham","phone":"1-770-736-8031 x56442","username":"Bret","website":"hildegard.org"}}]
+00:59:16.190 [qtp619137-24] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+00:59:17.150 [qtp619137-33] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-6
+00:59:17.319 [qtp619137-25] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:59:17.455 [qtp619137-24] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ViewBean) RETURN id(node), node
+00:59:17.508 [qtp619137-33] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ViewBean) WHERE id(node) = 208 RETURN id(node),node
+00:59:17.517 [qtp619137-33] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ViewBean)-[relation:HREF]->(entity:IotBean) WHERE id(left) = 208 RETURN id(relation),relation,id(entity),entity
+00:59:17.523 [qtp619137-33] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+00:59:17.601 [qtp619137-19] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+00:59:17.612 [qtp619137-19] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - CONTEXT org.jarvis.core.model.bean.iot.IotBean {
+  "id" : "206",
+  "name" : "Device Json Mapper",
+  "parameters" : "{\"instance0\":{}}",
+  "visible" : true,
+  "icon" : "touch_app",
+  "tagColor" : "red",
+  "template" : "<ul>\n<li>{{iot.name}}</li>\n<li>{{data.user.username}}</li>\n<ul>\n<md-button ng-click=\"execute(iot)\">{{iot.name}}<md-tooltip>{{data}}</md-tooltip></md-button>"
+}
+00:59:17.612 [qtp619137-19] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - INPUT   { }
+00:59:17.612 [qtp619137-19] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:IotBean)-[relation:HREF]->(entity:ScriptPluginBean) WHERE id(left) = 206 RETURN id(relation),relation,id(entity),entity
+00:59:17.620 [qtp619137-19] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 207 RETURN id(node),node
+00:59:17.630 [qtp619137-19] INFO  org.jarvis.core.resources.api.ApiResources - Before render params = {}, context = {}
+00:59:17.630 [qtp619137-19] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ScriptPluginBean)-[relation:HREF]->(entity:CommandBean) WHERE id(left) = 207 RETURN id(relation),relation,id(entity),entity
+00:59:17.639 [qtp619137-19] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 203 RETURN id(node),node
+00:59:17.647 [qtp619137-19] INFO  org.jarvis.core.resources.api.ApiResources - Before render params = GenericEntity [id=203, href=null, instance=null, extended={}], context = {}
+00:59:17.666 [qtp619137-23] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+00:59:18.198 [qtp619137-19] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT  {
+  "address" : {
+    "city" : "Gwenborough",
+    "geo" : {
+      "lat" : "-37.3159",
+      "lng" : "81.1496"
+    },
+    "street" : "Kulas Light",
+    "suite" : "Apt. 556",
+    "zipcode" : "92998-3874"
+  },
+  "company" : {
+    "bs" : "harness real-time e-markets",
+    "catchPhrase" : "Multi-layered client-server neural-net",
+    "name" : "Romaguera-Crona"
+  },
+  "email" : "Sincere@april.biz",
+  "id" : 1,
+  "name" : "Leanne Graham",
+  "phone" : "1-770-736-8031 x56442",
+  "username" : "Bret",
+  "website" : "hildegard.org"
+}
+00:59:18.198 [qtp619137-19] INFO  org.jarvis.core.resources.api.ApiResources - After render params = GenericEntity [id=203, href=null, instance=null, extended={}], context = {address={city=Gwenborough, geo={lat=-37.3159, lng=81.1496}, street=Kulas Light, suite=Apt. 556, zipcode=92998-3874}, company={bs=harness real-time e-markets, catchPhrase=Multi-layered client-server neural-net, name=Romaguera-Crona}, email=Sincere@april.biz, id=1, name=Leanne Graham, phone=1-770-736-8031 x56442, username=Bret, website=hildegard.org}
+00:59:18.198 [qtp619137-19] INFO  org.jarvis.core.resources.api.ApiResources - After render params = {}, context = {user={address={city=Gwenborough, geo={lat=-37.3159, lng=81.1496}, street=Kulas Light, suite=Apt. 556, zipcode=92998-3874}, company={bs=harness real-time e-markets, catchPhrase=Multi-layered client-server neural-net, name=Romaguera-Crona}, email=Sincere@april.biz, id=1, name=Leanne Graham, phone=1-770-736-8031 x56442, username=Bret, website=hildegard.org}}
+00:59:18.199 [qtp619137-19] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT ResourcePair [key=OBJECT, value={"user":{"address":{"city":"Gwenborough","geo":{"lat":"-37.3159","lng":"81.1496"},"street":"Kulas Light","suite":"Apt. 556","zipcode":"92998-3874"},"company":{"bs":"harness real-time e-markets","catchPhrase":"Multi-layered client-server neural-net","name":"Romaguera-Crona"},"email":"Sincere@april.biz","id":1,"name":"Leanne Graham","phone":"1-770-736-8031 x56442","username":"Bret","website":"hildegard.org"}}]
+00:59:30.818 [qtp619137-33] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+00:59:31.578 [qtp619137-19] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-7
+00:59:31.677 [qtp619137-33] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:59:31.777 [qtp619137-23] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ViewBean) RETURN id(node), node
+00:59:31.809 [qtp619137-19] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ViewBean) WHERE id(node) = 208 RETURN id(node),node
+00:59:31.817 [qtp619137-19] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ViewBean)-[relation:HREF]->(entity:IotBean) WHERE id(left) = 208 RETURN id(relation),relation,id(entity),entity
+00:59:31.823 [qtp619137-19] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+00:59:31.887 [qtp619137-32] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+00:59:31.894 [qtp619137-32] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - CONTEXT org.jarvis.core.model.bean.iot.IotBean {
+  "id" : "206",
+  "name" : "Device Json Mapper",
+  "parameters" : "{\"instance0\":{}}",
+  "visible" : true,
+  "icon" : "touch_app",
+  "tagColor" : "red",
+  "template" : "<ul>\n<li>{{iot.name}}</li>\n<li>{{data.user.username}}</li>\n<ul>\n<md-button ng-click=\"execute(iot)\">{{iot.name}}<md-tooltip>{{data}}</md-tooltip></md-button>"
+}
+00:59:31.895 [qtp619137-32] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - INPUT   { }
+00:59:31.895 [qtp619137-32] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:IotBean)-[relation:HREF]->(entity:ScriptPluginBean) WHERE id(left) = 206 RETURN id(relation),relation,id(entity),entity
+00:59:31.902 [qtp619137-32] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 207 RETURN id(node),node
+00:59:31.909 [qtp619137-32] INFO  org.jarvis.core.resources.api.ApiResources - Before render params = {}, context = {}
+00:59:31.909 [qtp619137-32] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ScriptPluginBean)-[relation:HREF]->(entity:CommandBean) WHERE id(left) = 207 RETURN id(relation),relation,id(entity),entity
+00:59:31.919 [qtp619137-32] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 203 RETURN id(node),node
+00:59:31.926 [qtp619137-32] INFO  org.jarvis.core.resources.api.ApiResources - Before render params = GenericEntity [id=203, href=null, instance=null, extended={}], context = {}
+00:59:31.930 [qtp619137-24] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+00:59:33.095 [qtp619137-32] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT  {
+  "address" : {
+    "city" : "Gwenborough",
+    "geo" : {
+      "lat" : "-37.3159",
+      "lng" : "81.1496"
+    },
+    "street" : "Kulas Light",
+    "suite" : "Apt. 556",
+    "zipcode" : "92998-3874"
+  },
+  "company" : {
+    "bs" : "harness real-time e-markets",
+    "catchPhrase" : "Multi-layered client-server neural-net",
+    "name" : "Romaguera-Crona"
+  },
+  "email" : "Sincere@april.biz",
+  "id" : 1,
+  "name" : "Leanne Graham",
+  "phone" : "1-770-736-8031 x56442",
+  "username" : "Bret",
+  "website" : "hildegard.org"
+}
+00:59:33.095 [qtp619137-32] INFO  org.jarvis.core.resources.api.ApiResources - After render params = GenericEntity [id=203, href=null, instance=null, extended={}], context = {address={city=Gwenborough, geo={lat=-37.3159, lng=81.1496}, street=Kulas Light, suite=Apt. 556, zipcode=92998-3874}, company={bs=harness real-time e-markets, catchPhrase=Multi-layered client-server neural-net, name=Romaguera-Crona}, email=Sincere@april.biz, id=1, name=Leanne Graham, phone=1-770-736-8031 x56442, username=Bret, website=hildegard.org}
+00:59:33.096 [qtp619137-32] INFO  org.jarvis.core.resources.api.ApiResources - After render params = {}, context = {user={address={city=Gwenborough, geo={lat=-37.3159, lng=81.1496}, street=Kulas Light, suite=Apt. 556, zipcode=92998-3874}, company={bs=harness real-time e-markets, catchPhrase=Multi-layered client-server neural-net, name=Romaguera-Crona}, email=Sincere@april.biz, id=1, name=Leanne Graham, phone=1-770-736-8031 x56442, username=Bret, website=hildegard.org}}
+00:59:33.096 [qtp619137-32] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT ResourcePair [key=OBJECT, value={"user":{"address":{"city":"Gwenborough","geo":{"lat":"-37.3159","lng":"81.1496"},"street":"Kulas Light","suite":"Apt. 556","zipcode":"92998-3874"},"company":{"bs":"harness real-time e-markets","catchPhrase":"Multi-layered client-server neural-net","name":"Romaguera-Crona"},"email":"Sincere@april.biz","id":1,"name":"Leanne Graham","phone":"1-770-736-8031 x56442","username":"Bret","website":"hildegard.org"}}]
+01:00:08.423 [qtp619137-23] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+01:00:09.420 [qtp619137-33] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-8
+01:00:09.568 [qtp619137-18] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+01:00:09.710 [qtp619137-32] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ViewBean) RETURN id(node), node
+01:00:09.754 [qtp619137-33] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ViewBean) WHERE id(node) = 208 RETURN id(node),node
+01:00:09.761 [qtp619137-33] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ViewBean)-[relation:HREF]->(entity:IotBean) WHERE id(left) = 208 RETURN id(relation),relation,id(entity),entity
+01:00:09.767 [qtp619137-33] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+01:00:09.856 [qtp619137-24] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+01:00:09.864 [qtp619137-24] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - CONTEXT org.jarvis.core.model.bean.iot.IotBean {
+  "id" : "206",
+  "name" : "Device Json Mapper",
+  "parameters" : "{\"instance0\":{}}",
+  "visible" : true,
+  "icon" : "touch_app",
+  "tagColor" : "red",
+  "template" : "<ul>\n<li>{{iot.name}}</li>\n<li>{{data.user.username}}</li>\n<ul>\n<md-button ng-click=\"execute(iot)\">{{iot.name}}<md-tooltip>{{data}}</md-tooltip></md-button>"
+}
+01:00:09.864 [qtp619137-24] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - INPUT   { }
+01:00:09.864 [qtp619137-24] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:IotBean)-[relation:HREF]->(entity:ScriptPluginBean) WHERE id(left) = 206 RETURN id(relation),relation,id(entity),entity
+01:00:09.871 [qtp619137-24] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 207 RETURN id(node),node
+01:00:09.877 [qtp619137-24] INFO  org.jarvis.core.resources.api.ApiResources - Before render params = {}, context = {}
+01:00:09.877 [qtp619137-24] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ScriptPluginBean)-[relation:HREF]->(entity:CommandBean) WHERE id(left) = 207 RETURN id(relation),relation,id(entity),entity
+01:00:09.886 [qtp619137-24] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 203 RETURN id(node),node
+01:00:09.892 [qtp619137-24] INFO  org.jarvis.core.resources.api.ApiResources - Before render params = GenericEntity [id=203, href=null, instance=null, extended={}], context = {}
+01:00:09.910 [qtp619137-19] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+01:00:10.435 [qtp619137-24] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT  {
+  "address" : {
+    "city" : "Gwenborough",
+    "geo" : {
+      "lat" : "-37.3159",
+      "lng" : "81.1496"
+    },
+    "street" : "Kulas Light",
+    "suite" : "Apt. 556",
+    "zipcode" : "92998-3874"
+  },
+  "company" : {
+    "bs" : "harness real-time e-markets",
+    "catchPhrase" : "Multi-layered client-server neural-net",
+    "name" : "Romaguera-Crona"
+  },
+  "email" : "Sincere@april.biz",
+  "id" : 1,
+  "name" : "Leanne Graham",
+  "phone" : "1-770-736-8031 x56442",
+  "username" : "Bret",
+  "website" : "hildegard.org"
+}
+01:00:10.435 [qtp619137-24] INFO  org.jarvis.core.resources.api.ApiResources - After render params = GenericEntity [id=203, href=null, instance=null, extended={}], context = {address={city=Gwenborough, geo={lat=-37.3159, lng=81.1496}, street=Kulas Light, suite=Apt. 556, zipcode=92998-3874}, company={bs=harness real-time e-markets, catchPhrase=Multi-layered client-server neural-net, name=Romaguera-Crona}, email=Sincere@april.biz, id=1, name=Leanne Graham, phone=1-770-736-8031 x56442, username=Bret, website=hildegard.org}
+01:00:10.435 [qtp619137-24] INFO  org.jarvis.core.resources.api.ApiResources - After render params = {}, context = {user={address={city=Gwenborough, geo={lat=-37.3159, lng=81.1496}, street=Kulas Light, suite=Apt. 556, zipcode=92998-3874}, company={bs=harness real-time e-markets, catchPhrase=Multi-layered client-server neural-net, name=Romaguera-Crona}, email=Sincere@april.biz, id=1, name=Leanne Graham, phone=1-770-736-8031 x56442, username=Bret, website=hildegard.org}}
+01:00:10.435 [qtp619137-24] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT ResourcePair [key=OBJECT, value={"user":{"address":{"city":"Gwenborough","geo":{"lat":"-37.3159","lng":"81.1496"},"street":"Kulas Light","suite":"Apt. 556","zipcode":"92998-3874"},"company":{"bs":"harness real-time e-markets","catchPhrase":"Multi-layered client-server neural-net","name":"Romaguera-Crona"},"email":"Sincere@april.biz","id":1,"name":"Leanne Graham","phone":"1-770-736-8031 x56442","username":"Bret","website":"hildegard.org"}}]
+01:00:26.757 [qtp619137-33] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+01:00:27.743 [qtp619137-19] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-9
+01:00:27.882 [qtp619137-18] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+01:00:28.030 [qtp619137-33] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ViewBean) RETURN id(node), node
+01:00:28.084 [qtp619137-19] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ViewBean) WHERE id(node) = 208 RETURN id(node),node
+01:00:28.090 [qtp619137-19] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ViewBean)-[relation:HREF]->(entity:IotBean) WHERE id(left) = 208 RETURN id(relation),relation,id(entity),entity
+01:00:28.097 [qtp619137-19] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+01:00:28.192 [qtp619137-23] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+01:00:28.198 [qtp619137-23] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - CONTEXT org.jarvis.core.model.bean.iot.IotBean {
+  "id" : "206",
+  "name" : "Device Json Mapper",
+  "parameters" : "{\"instance0\":{}}",
+  "visible" : true,
+  "icon" : "touch_app",
+  "tagColor" : "red",
+  "template" : "<ul>\n<li>{{iot.name}}</li>\n<li>{{data.user.username}}</li>\n<ul>\n<md-button ng-click=\"execute(iot)\">{{iot.name}}<md-tooltip>{{data}}</md-tooltip></md-button>"
+}
+01:00:28.199 [qtp619137-23] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - INPUT   { }
+01:00:28.199 [qtp619137-23] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:IotBean)-[relation:HREF]->(entity:ScriptPluginBean) WHERE id(left) = 206 RETURN id(relation),relation,id(entity),entity
+01:00:28.205 [qtp619137-23] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 207 RETURN id(node),node
+01:00:28.212 [qtp619137-23] INFO  org.jarvis.core.resources.api.ApiResources - Before render params = {}, context = {}
+01:00:28.212 [qtp619137-23] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ScriptPluginBean)-[relation:HREF]->(entity:CommandBean) WHERE id(left) = 207 RETURN id(relation),relation,id(entity),entity
+01:00:28.221 [qtp619137-23] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 203 RETURN id(node),node
+01:00:28.227 [qtp619137-23] INFO  org.jarvis.core.resources.api.ApiResources - Before render params = GenericEntity [id=203, href=null, instance=null, extended={}], context = {}
+01:00:28.253 [qtp619137-25] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+01:00:28.722 [qtp619137-23] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT  {
+  "address" : {
+    "city" : "Gwenborough",
+    "geo" : {
+      "lat" : "-37.3159",
+      "lng" : "81.1496"
+    },
+    "street" : "Kulas Light",
+    "suite" : "Apt. 556",
+    "zipcode" : "92998-3874"
+  },
+  "company" : {
+    "bs" : "harness real-time e-markets",
+    "catchPhrase" : "Multi-layered client-server neural-net",
+    "name" : "Romaguera-Crona"
+  },
+  "email" : "Sincere@april.biz",
+  "id" : 1,
+  "name" : "Leanne Graham",
+  "phone" : "1-770-736-8031 x56442",
+  "username" : "Bret",
+  "website" : "hildegard.org"
+}
+01:00:28.722 [qtp619137-23] INFO  org.jarvis.core.resources.api.ApiResources - After render params = GenericEntity [id=203, href=null, instance=null, extended={}], context = {address={city=Gwenborough, geo={lat=-37.3159, lng=81.1496}, street=Kulas Light, suite=Apt. 556, zipcode=92998-3874}, company={bs=harness real-time e-markets, catchPhrase=Multi-layered client-server neural-net, name=Romaguera-Crona}, email=Sincere@april.biz, id=1, name=Leanne Graham, phone=1-770-736-8031 x56442, username=Bret, website=hildegard.org}
+01:00:28.722 [qtp619137-23] INFO  org.jarvis.core.resources.api.ApiResources - After render params = {}, context = {user={address={city=Gwenborough, geo={lat=-37.3159, lng=81.1496}, street=Kulas Light, suite=Apt. 556, zipcode=92998-3874}, company={bs=harness real-time e-markets, catchPhrase=Multi-layered client-server neural-net, name=Romaguera-Crona}, email=Sincere@april.biz, id=1, name=Leanne Graham, phone=1-770-736-8031 x56442, username=Bret, website=hildegard.org}}
+01:00:28.723 [qtp619137-23] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT ResourcePair [key=OBJECT, value={"user":{"address":{"city":"Gwenborough","geo":{"lat":"-37.3159","lng":"81.1496"},"street":"Kulas Light","suite":"Apt. 556","zipcode":"92998-3874"},"company":{"bs":"harness real-time e-markets","catchPhrase":"Multi-layered client-server neural-net","name":"Romaguera-Crona"},"email":"Sincere@april.biz","id":1,"name":"Leanne Graham","phone":"1-770-736-8031 x56442","username":"Bret","website":"hildegard.org"}}]
+01:01:55.326 [qtp619137-19] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+01:01:56.576 [qtp619137-23] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-10
+01:01:56.744 [qtp619137-18] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+01:01:56.917 [qtp619137-32] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ViewBean) RETURN id(node), node
+01:01:56.978 [qtp619137-23] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ViewBean) WHERE id(node) = 208 RETURN id(node),node
+01:01:56.985 [qtp619137-23] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ViewBean)-[relation:HREF]->(entity:IotBean) WHERE id(left) = 208 RETURN id(relation),relation,id(entity),entity
+01:01:56.993 [qtp619137-23] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+01:01:57.112 [qtp619137-24] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+01:01:57.119 [qtp619137-24] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - CONTEXT org.jarvis.core.model.bean.iot.IotBean {
+  "id" : "206",
+  "name" : "Device Json Mapper",
+  "parameters" : "{\"instance0\":{}}",
+  "visible" : true,
+  "icon" : "touch_app",
+  "tagColor" : "red",
+  "template" : "<ul>\n<li>{{iot.name}}</li>\n<li>{{data.user.username}}</li>\n<ul>\n<md-button ng-click=\"execute(iot)\">{{iot.name}}<md-tooltip>{{data}}</md-tooltip></md-button>"
+}
+01:01:57.119 [qtp619137-24] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - INPUT   { }
+01:01:57.119 [qtp619137-24] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:IotBean)-[relation:HREF]->(entity:ScriptPluginBean) WHERE id(left) = 206 RETURN id(relation),relation,id(entity),entity
+01:01:57.127 [qtp619137-24] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 207 RETURN id(node),node
+01:01:57.134 [qtp619137-24] INFO  org.jarvis.core.resources.api.ApiResources - Before render params = {}, context = {}
+01:01:57.134 [qtp619137-24] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ScriptPluginBean)-[relation:HREF]->(entity:CommandBean) WHERE id(left) = 207 RETURN id(relation),relation,id(entity),entity
+01:01:57.144 [qtp619137-24] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 203 RETURN id(node),node
+01:01:57.150 [qtp619137-24] INFO  org.jarvis.core.resources.api.ApiResources - Before render params = GenericEntity [id=203, href=null, instance=null, extended={}], context = {}
+01:01:57.183 [qtp619137-25] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+01:01:58.981 [qtp619137-24] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT  {
+  "address" : {
+    "city" : "Gwenborough",
+    "geo" : {
+      "lat" : "-37.3159",
+      "lng" : "81.1496"
+    },
+    "street" : "Kulas Light",
+    "suite" : "Apt. 556",
+    "zipcode" : "92998-3874"
+  },
+  "company" : {
+    "bs" : "harness real-time e-markets",
+    "catchPhrase" : "Multi-layered client-server neural-net",
+    "name" : "Romaguera-Crona"
+  },
+  "email" : "Sincere@april.biz",
+  "id" : 1,
+  "name" : "Leanne Graham",
+  "phone" : "1-770-736-8031 x56442",
+  "username" : "Bret",
+  "website" : "hildegard.org"
+}
+01:01:58.981 [qtp619137-24] INFO  org.jarvis.core.resources.api.ApiResources - After render params = GenericEntity [id=203, href=null, instance=null, extended={}], context = {address={city=Gwenborough, geo={lat=-37.3159, lng=81.1496}, street=Kulas Light, suite=Apt. 556, zipcode=92998-3874}, company={bs=harness real-time e-markets, catchPhrase=Multi-layered client-server neural-net, name=Romaguera-Crona}, email=Sincere@april.biz, id=1, name=Leanne Graham, phone=1-770-736-8031 x56442, username=Bret, website=hildegard.org}
+01:01:58.981 [qtp619137-24] INFO  org.jarvis.core.resources.api.ApiResources - After render params = {}, context = {user={address={city=Gwenborough, geo={lat=-37.3159, lng=81.1496}, street=Kulas Light, suite=Apt. 556, zipcode=92998-3874}, company={bs=harness real-time e-markets, catchPhrase=Multi-layered client-server neural-net, name=Romaguera-Crona}, email=Sincere@april.biz, id=1, name=Leanne Graham, phone=1-770-736-8031 x56442, username=Bret, website=hildegard.org}}
+01:01:58.981 [qtp619137-24] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT ResourcePair [key=OBJECT, value={"user":{"address":{"city":"Gwenborough","geo":{"lat":"-37.3159","lng":"81.1496"},"street":"Kulas Light","suite":"Apt. 556","zipcode":"92998-3874"},"company":{"bs":"harness real-time e-markets","catchPhrase":"Multi-layered client-server neural-net","name":"Romaguera-Crona"},"email":"Sincere@april.biz","id":1,"name":"Leanne Graham","phone":"1-770-736-8031 x56442","username":"Bret","website":"hildegard.org"}}]
+01:02:22.544 [qtp619137-24] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+01:02:23.446 [qtp619137-19] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-11
+01:02:23.618 [qtp619137-32] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+01:02:23.759 [qtp619137-33] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ViewBean) RETURN id(node), node
+01:02:23.813 [qtp619137-19] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ViewBean) WHERE id(node) = 208 RETURN id(node),node
+01:02:23.821 [qtp619137-19] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ViewBean)-[relation:HREF]->(entity:IotBean) WHERE id(left) = 208 RETURN id(relation),relation,id(entity),entity
+01:02:23.828 [qtp619137-19] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+01:02:23.930 [qtp619137-24] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+01:02:23.937 [qtp619137-24] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - CONTEXT org.jarvis.core.model.bean.iot.IotBean {
+  "id" : "206",
+  "name" : "Device Json Mapper",
+  "parameters" : "{\"instance0\":{}}",
+  "visible" : true,
+  "icon" : "touch_app",
+  "tagColor" : "red",
+  "template" : "<ul>\n<li>{{iot.name}}</li>\n<li>{{data.user.username}}</li>\n<ul>\n<md-button ng-click=\"execute(iot)\">{{iot.name}}<md-tooltip>{{data}}</md-tooltip></md-button>"
+}
+01:02:23.937 [qtp619137-24] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - INPUT   { }
+01:02:23.938 [qtp619137-24] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:IotBean)-[relation:HREF]->(entity:ScriptPluginBean) WHERE id(left) = 206 RETURN id(relation),relation,id(entity),entity
+01:02:23.944 [qtp619137-24] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 207 RETURN id(node),node
+01:02:23.951 [qtp619137-24] INFO  org.jarvis.core.resources.api.ApiResources - Before render params = {}, context = {}
+01:02:23.951 [qtp619137-24] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ScriptPluginBean)-[relation:HREF]->(entity:CommandBean) WHERE id(left) = 207 RETURN id(relation),relation,id(entity),entity
+01:02:23.958 [qtp619137-24] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 203 RETURN id(node),node
+01:02:23.966 [qtp619137-24] INFO  org.jarvis.core.resources.api.ApiResources - Before render params = GenericEntity [id=203, href=null, instance=null, extended={}], context = {}
+01:02:23.978 [qtp619137-25] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+01:02:24.602 [qtp619137-24] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT  {
+  "address" : {
+    "city" : "Gwenborough",
+    "geo" : {
+      "lat" : "-37.3159",
+      "lng" : "81.1496"
+    },
+    "street" : "Kulas Light",
+    "suite" : "Apt. 556",
+    "zipcode" : "92998-3874"
+  },
+  "company" : {
+    "bs" : "harness real-time e-markets",
+    "catchPhrase" : "Multi-layered client-server neural-net",
+    "name" : "Romaguera-Crona"
+  },
+  "email" : "Sincere@april.biz",
+  "id" : 1,
+  "name" : "Leanne Graham",
+  "phone" : "1-770-736-8031 x56442",
+  "username" : "Bret",
+  "website" : "hildegard.org"
+}
+01:02:24.602 [qtp619137-24] INFO  org.jarvis.core.resources.api.ApiResources - After render params = GenericEntity [id=203, href=null, instance=null, extended={}], context = {address={city=Gwenborough, geo={lat=-37.3159, lng=81.1496}, street=Kulas Light, suite=Apt. 556, zipcode=92998-3874}, company={bs=harness real-time e-markets, catchPhrase=Multi-layered client-server neural-net, name=Romaguera-Crona}, email=Sincere@april.biz, id=1, name=Leanne Graham, phone=1-770-736-8031 x56442, username=Bret, website=hildegard.org}
+01:02:24.603 [qtp619137-24] INFO  org.jarvis.core.resources.api.ApiResources - After render params = {}, context = {user={address={city=Gwenborough, geo={lat=-37.3159, lng=81.1496}, street=Kulas Light, suite=Apt. 556, zipcode=92998-3874}, company={bs=harness real-time e-markets, catchPhrase=Multi-layered client-server neural-net, name=Romaguera-Crona}, email=Sincere@april.biz, id=1, name=Leanne Graham, phone=1-770-736-8031 x56442, username=Bret, website=hildegard.org}}
+01:02:24.603 [qtp619137-24] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT ResourcePair [key=OBJECT, value={"user":{"address":{"city":"Gwenborough","geo":{"lat":"-37.3159","lng":"81.1496"},"street":"Kulas Light","suite":"Apt. 556","zipcode":"92998-3874"},"company":{"bs":"harness real-time e-markets","catchPhrase":"Multi-layered client-server neural-net","name":"Romaguera-Crona"},"email":"Sincere@april.biz","id":1,"name":"Leanne Graham","phone":"1-770-736-8031 x56442","username":"Bret","website":"hildegard.org"}}]
+01:02:49.790 [qtp619137-19] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+01:02:50.822 [qtp619137-23] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-12
+01:02:50.962 [qtp619137-32] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+01:02:51.111 [qtp619137-24] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ViewBean) RETURN id(node), node
+01:02:51.159 [qtp619137-23] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ViewBean) WHERE id(node) = 208 RETURN id(node),node
+01:02:51.165 [qtp619137-23] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ViewBean)-[relation:HREF]->(entity:IotBean) WHERE id(left) = 208 RETURN id(relation),relation,id(entity),entity
+01:02:51.171 [qtp619137-23] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+01:02:51.283 [qtp619137-19] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+01:02:51.290 [qtp619137-19] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - CONTEXT org.jarvis.core.model.bean.iot.IotBean {
+  "id" : "206",
+  "name" : "Device Json Mapper",
+  "parameters" : "{\"instance0\":{}}",
+  "visible" : true,
+  "icon" : "touch_app",
+  "tagColor" : "red",
+  "template" : "<ul>\n<li>{{iot.name}}</li>\n<li>{{data.user.username}}</li>\n<ul>\n<md-button ng-click=\"execute(iot)\">{{iot.name}}<md-tooltip>{{data}}</md-tooltip></md-button>"
+}
+01:02:51.290 [qtp619137-19] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - INPUT   { }
+01:02:51.290 [qtp619137-19] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:IotBean)-[relation:HREF]->(entity:ScriptPluginBean) WHERE id(left) = 206 RETURN id(relation),relation,id(entity),entity
+01:02:51.297 [qtp619137-19] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 207 RETURN id(node),node
+01:02:51.302 [qtp619137-19] INFO  org.jarvis.core.resources.api.ApiResources - Before render params = {}, context = {}
+01:02:51.302 [qtp619137-19] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ScriptPluginBean)-[relation:HREF]->(entity:CommandBean) WHERE id(left) = 207 RETURN id(relation),relation,id(entity),entity
+01:02:51.310 [qtp619137-19] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 203 RETURN id(node),node
+01:02:51.317 [qtp619137-19] INFO  org.jarvis.core.resources.api.ApiResources - Before render params = GenericEntity [id=203, href=null, instance=null, extended={}], context = {}
+01:02:51.326 [qtp619137-18] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+01:02:51.831 [qtp619137-19] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT  {
+  "address" : {
+    "city" : "Gwenborough",
+    "geo" : {
+      "lat" : "-37.3159",
+      "lng" : "81.1496"
+    },
+    "street" : "Kulas Light",
+    "suite" : "Apt. 556",
+    "zipcode" : "92998-3874"
+  },
+  "company" : {
+    "bs" : "harness real-time e-markets",
+    "catchPhrase" : "Multi-layered client-server neural-net",
+    "name" : "Romaguera-Crona"
+  },
+  "email" : "Sincere@april.biz",
+  "id" : 1,
+  "name" : "Leanne Graham",
+  "phone" : "1-770-736-8031 x56442",
+  "username" : "Bret",
+  "website" : "hildegard.org"
+}
+01:02:51.832 [qtp619137-19] INFO  org.jarvis.core.resources.api.ApiResources - After render params = GenericEntity [id=203, href=null, instance=null, extended={}], context = {address={city=Gwenborough, geo={lat=-37.3159, lng=81.1496}, street=Kulas Light, suite=Apt. 556, zipcode=92998-3874}, company={bs=harness real-time e-markets, catchPhrase=Multi-layered client-server neural-net, name=Romaguera-Crona}, email=Sincere@april.biz, id=1, name=Leanne Graham, phone=1-770-736-8031 x56442, username=Bret, website=hildegard.org}
+01:02:51.832 [qtp619137-19] INFO  org.jarvis.core.resources.api.ApiResources - After render params = {}, context = {user={address={city=Gwenborough, geo={lat=-37.3159, lng=81.1496}, street=Kulas Light, suite=Apt. 556, zipcode=92998-3874}, company={bs=harness real-time e-markets, catchPhrase=Multi-layered client-server neural-net, name=Romaguera-Crona}, email=Sincere@april.biz, id=1, name=Leanne Graham, phone=1-770-736-8031 x56442, username=Bret, website=hildegard.org}}
+01:02:51.832 [qtp619137-19] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT ResourcePair [key=OBJECT, value={"user":{"address":{"city":"Gwenborough","geo":{"lat":"-37.3159","lng":"81.1496"},"street":"Kulas Light","suite":"Apt. 556","zipcode":"92998-3874"},"company":{"bs":"harness real-time e-markets","catchPhrase":"Multi-layered client-server neural-net","name":"Romaguera-Crona"},"email":"Sincere@april.biz","id":1,"name":"Leanne Graham","phone":"1-770-736-8031 x56442","username":"Bret","website":"hildegard.org"}}]

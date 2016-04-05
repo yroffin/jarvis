@@ -58,13 +58,14 @@ limitations under the License.
         <md-button ng-click="toggleSidenav('left')" hide-md-gt-sm class="md-icon-button">
         	<md-icon md-font-icon="material-icons md-24">menu</md-icon>
         </md-button>
-        <h1 ng-click="location('left', '/home');">Jarvis - {{media}}</h1>
-       	<canvas width="100" height="50" id="gauge" jarvis-gauge></canvas>
+        <h1 ng-click="go('home')">Jarvis</h1>
        	<span flex></span>
+       	<canvas width="100" height="40" id="gauge" jarvis-gauge></canvas>
         <md-button ng-click="helper($event)" class="md-icon-button">
         	<md-icon md-font-icon="material-icons md-24">help</md-icon>
         </md-button>
         <md-button ng-click="settings($event)" class="md-icon-button">
+        	<md-tooltip>{{media}}</md-tooltip>
         	<md-icon md-font-icon="material-icons md-24">settings</md-icon>
         </md-button>
     </div>
