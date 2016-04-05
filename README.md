@@ -31,6 +31,7 @@ Roadmap
 -------
 
 - handle scenarii (started but not finished)
+- handle trigger and event
 - collecte and store statistics in graphdb
 - integrate swagger in project (auto documentation)
 - integrate graylog like tools
