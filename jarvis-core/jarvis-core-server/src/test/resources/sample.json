@@ -1,21 +1,21 @@
 {
   "BlockBean": {},
   "CommandBean": {
-    "23": {
+    "203": {
       "body": "import groovy.json.*\nimport groovyx.net.http.RESTClient\nimport static groovyx.net.http.ContentType.*\n\n/**\n * simple api call to simulate data\n*/\ndef hue = new RESTClient( 'http://jsonplaceholder.typicode.com' )\ndef resp = hue.get( path: '/users/1' )\n\nif(resp.status == 200) {\n    return resp.data\n} else {\n    return new JsonSlurper().parseText('{}')\n}\nreturn resp",
       "icon": "whatshot",
       "id": "23",
       "name": "Json Sample Call (data)",
       "type": "GROOVY"
     },
-    "45": {
+    "204": {
       "body": "import groovy.json.*\n\n/**\n * simple api call to simulate action\n*/\nreturn new JsonSlurper().parseText('{\"status\":true}')",
       "icon": "whatshot",
       "id": "45",
       "name": "Json Sample Call (action)",
       "type": "GROOVY"
     },
-    "46": {
+    "205": {
       "body": "import groovy.json.*\n\n/**\n * simple api call to simulate action\n*/\nreturn new JsonSlurper().parseText('{\"status\":false}')",
       "icon": "whatshot",
       "id": "46",
@@ -23,36 +23,58 @@
       "type": "GROOVY"
     }
   },
+  "ConfigBean": {
+    "209": {
+      "active": false,
+      "backgroundUrl": "http://artroyalephotography.com/wp-content/uploads/2011/08/minimal-gray-to-white-gradient-wallpapers_33797_1920x1200-1024x640.jpg",
+      "name": "default",
+      "opacity": "1"
+    },
+    "210": {
+      "active": true,
+      "backgroundUrl": "http://artroyalephotography.com/wp-content/uploads/2011/08/minimal-gray-to-white-gradient-wallpapers_33797_1920x1200-1024x640.jpg",
+      "id": "210",
+      "name": "default",
+      "opacity": "1",
+      "tilesGtMd": "16",
+      "tilesGtSm": "10",
+      "tilesGtXs": "8",
+      "tilesLg": "20",
+      "tilesMd": "12",
+      "tilesSm": "8",
+      "tilesXs": "3"
+    }
+  },
   "HREF": {
-    "20": {
-      "__from": 39,
-      "__to": 23,
+    "107": {
+      "__from": 207,
+      "__to": 203,
       "href": "HREF",
       "name": "user",
       "nature": "json",
       "order": "3",
       "type": "data"
     },
-    "21": {
-      "__from": 29,
-      "__to": 39
+    "108": {
+      "__from": 206,
+      "__to": 207
     },
-    "22": {
-      "__from": 42,
-      "__to": 29
+    "109": {
+      "__from": 208,
+      "__to": 206
     },
-    "23": {
-      "__from": 39,
-      "__to": 45,
+    "110": {
+      "__from": 207,
+      "__to": 204,
       "href": "HREF",
       "name": "always_true",
       "nature": "json",
       "order": "1",
       "type": "action"
     },
-    "24": {
-      "__from": 39,
-      "__to": 46,
+    "111": {
+      "__from": 207,
+      "__to": 205,
       "href": "HREF",
       "name": "always_false",
       "nature": "json",
@@ -64,7 +86,7 @@
   "HREF_IF": {},
   "HREF_THEN": {},
   "IotBean": {
-    "29": {
+    "206": {
       "icon": "touch_app",
       "id": "29",
       "name": "Device Json Mapper",
@@ -76,7 +98,7 @@
   },
   "ScenarioBean": {},
   "ScriptPluginBean": {
-    "39": {
+    "207": {
       "active": false,
       "icon": "lightbulb_outline",
       "id": "39",
@@ -87,7 +109,7 @@
   },
   "TriggerBean": {},
   "ViewBean": {
-    "42": {
+    "208": {
       "icon": "list",
       "id": "42",
       "ishome": true,

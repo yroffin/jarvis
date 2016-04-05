@@ -1,205 +1,827 @@
-00:14:02.387 [qtp17896604-23] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:14:03.424 [qtp17896604-18] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-3
-00:14:03.624 [qtp17896604-19] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:14:03.811 [qtp17896604-21] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ViewBean) RETURN id(node), node
-00:15:46.133 [qtp17896604-22] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:15:47.279 [qtp17896604-23] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-4
-00:15:47.437 [qtp17896604-22] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:16:29.889 [qtp17896604-19] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:16:31.906 [qtp17896604-24] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-5
-00:16:32.079 [qtp17896604-23] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:16:37.660 [qtp17896604-25] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:16:38.633 [qtp17896604-18] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-6
-00:16:38.915 [qtp17896604-23] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:17:49.864 [qtp17896604-19] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:17:52.121 [qtp17896604-21] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-7
-00:17:52.352 [qtp17896604-25] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:18:25.738 [qtp17896604-18] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:18:28.027 [qtp17896604-18] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-8
-00:18:28.212 [qtp17896604-21] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:18:48.928 [qtp17896604-25] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:18:51.080 [qtp17896604-19] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-9
-00:18:51.252 [qtp17896604-25] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:18:51.476 [qtp17896604-22] ERROR spark.webserver.MatcherFilter - 
-java.lang.NullPointerException
-	at org.ehcache.Ehcache.checkNonNull(Ehcache.java:1123) ~[ehcache-3.0.0.m4.jar:3.0.0.m4]
-	at org.ehcache.Ehcache.checkNonNull(Ehcache.java:1129) ~[ehcache-3.0.0.m4.jar:3.0.0.m4]
-	at org.ehcache.Ehcache.put(Ehcache.java:233) ~[ehcache-3.0.0.m4.jar:3.0.0.m4]
-	at org.jarvis.core.services.cache.CoreEhcacheManager.put(CoreEhcacheManager.java:87) ~[classes/:?]
-	at org.jarvis.core.resources.CoreResources.getData(CoreResources.java:92) ~[classes/:?]
-	at org.jarvis.core.resources.CoreResources$1.handle(CoreResources.java:110) ~[classes/:?]
-	at spark.RouteImpl$1.handle(RouteImpl.java:58) ~[spark-core-2.3.jar:?]
-	at spark.webserver.MatcherFilter.doFilter(MatcherFilter.java:162) [spark-core-2.3.jar:?]
-	at spark.webserver.JettyHandler.doHandle(JettyHandler.java:61) [spark-core-2.3.jar:?]
-	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:189) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:141) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.server.handler.HandlerList.handle(HandlerList.java:52) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:119) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.server.Server.handle(Server.java:517) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.server.HttpChannel.handle(HttpChannel.java:302) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.server.HttpConnection.onFillable(HttpConnection.java:242) [jetty-server-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.io.AbstractConnection$ReadCallback.succeeded(AbstractConnection.java:245) [jetty-io-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:95) [jetty-io-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.io.SelectChannelEndPoint$2.run(SelectChannelEndPoint.java:75) [jetty-io-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.produceAndRun(ExecuteProduceConsume.java:213) [jetty-util-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.run(ExecuteProduceConsume.java:147) [jetty-util-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:654) [jetty-util-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:572) [jetty-util-9.3.2.v20150730.jar:9.3.2.v20150730]
-	at java.lang.Thread.run(Thread.java:745) [?:1.8.0_60]
-00:19:48.666 [main] INFO  org.jarvis.core.JarvisCoreServer - Starting JarvisCoreServer on kazoar-PC with PID 9052 (Y:\mars\git\jarvis\jarvis-core\jarvis-core-server\target\classes started by kazoar in Y:\mars\git\jarvis\jarvis-core\jarvis-core-server)
-00:19:48.668 [main] INFO  org.jarvis.core.JarvisCoreServer - No active profile set, falling back to default profiles: default
-00:19:49.000 [main] INFO  org.springframework.context.annotation.AnnotationConfigApplicationContext - Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@dd0d4b: startup date [Tue Apr 05 00:19:48 CEST 2016]; root of context hierarchy
-00:19:49.886 [main] INFO  org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
-00:19:50.012 [main] INFO  org.ehcache.spi.ServiceLocator - All Services successfully started.
-00:19:50.015 [main] INFO  org.ehcache.EhcacheManager - Cache 'preConfigured' is getting created in EhcacheManager.
-00:19:50.021 [main] INFO  org.ehcache.spi.serialization.DefaultSerializationProvider - Serializer for <java.lang.String> : org.ehcache.internal.serialization.CompactJavaSerializer@1d5c1a0
-00:19:50.025 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.String> : org.ehcache.internal.copy.IdentityCopier@cbf1a
-00:19:50.025 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.Object> : org.ehcache.internal.copy.IdentityCopier@1e8b721
-00:19:50.115 [main] INFO  class org.ehcache.Ehcache-preConfigured - Initialize successful.
-00:19:50.116 [main] INFO  org.ehcache.EhcacheManager - Cache 'preConfigured' created in EhcacheManager.
-00:19:50.116 [main] INFO  org.ehcache.EhcacheManager - Initialize successful.
-00:19:50.117 [main] INFO  org.ehcache.EhcacheManager - Cache 'myCache' is getting created in EhcacheManager.
-00:19:50.119 [main] INFO  org.ehcache.spi.serialization.DefaultSerializationProvider - Serializer for <java.lang.String> : org.ehcache.internal.serialization.CompactJavaSerializer@c8295b
-00:19:50.119 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.String> : org.ehcache.internal.copy.IdentityCopier@11f7d26
-00:19:50.119 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.Object> : org.ehcache.internal.copy.IdentityCopier@1b21474
-00:19:50.125 [main] INFO  class org.ehcache.Ehcache-myCache - Initialize successful.
-00:19:50.125 [main] INFO  org.ehcache.EhcacheManager - Cache 'myCache' created in EhcacheManager.
-00:19:51.039 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.user.dir = /mars/git/jarvis/jarvis-core/jarvis-core-server
-00:19:51.039 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.log.dir = /mars/git/jarvis/jarvis-core/jarvis-core-server
-00:19:51.040 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.server.url = http://0.0.0.0:8082/ui
-00:19:51.040 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.neo4j.url = http://localhost:7474
-00:19:51.145 [Thread-4] INFO  org.eclipse.jetty.util.log - Logging initialized @3913ms
-00:19:51.338 [main] INFO  org.springframework.jmx.export.annotation.AnnotationMBeanExporter - Registering beans for JMX exposure on startup
-00:19:51.359 [main] INFO  org.jarvis.core.JarvisCoreServer - Started JarvisCoreServer in 3.022 seconds (JVM running for 4.13)
-00:19:51.372 [Thread-4] INFO  spark.webserver.JettySparkServer - == Spark has ignited ...
-00:19:51.372 [Thread-4] INFO  spark.webserver.JettySparkServer - >> Listening on 0.0.0.0:8082
-00:19:51.376 [Thread-4] INFO  org.eclipse.jetty.server.Server - jetty-9.3.2.v20150730
-00:19:51.447 [Thread-4] INFO  org.eclipse.jetty.server.handler.ContextHandler - Started o.e.j.s.ServletContextHandler@19e7160{/,null,AVAILABLE}
-00:19:51.477 [Thread-4] INFO  org.eclipse.jetty.server.ServerConnector - Started ServerConnector@14b34a1{HTTP/1.1,[http/1.1]}{0.0.0.0:8082}
-00:19:51.477 [Thread-4] INFO  org.eclipse.jetty.server.Server - Started @4248ms
-00:19:56.555 [qtp619137-29] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-1
-00:19:56.645 [qtp619137-25] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:21:28.185 [qtp619137-18] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:21:30.456 [qtp619137-33] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-2
-00:21:30.624 [qtp619137-21] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:22:10.826 [qtp619137-33] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:22:13.029 [qtp619137-22] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-3
-00:22:13.187 [qtp619137-29] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:22:32.783 [qtp619137-21] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:22:35.125 [qtp619137-21] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-4
-00:22:35.487 [qtp619137-33] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:22:45.593 [qtp619137-18] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:22:47.849 [qtp619137-18] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-5
-00:22:47.997 [qtp619137-29] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:24:02.905 [qtp619137-21] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:24:04.953 [qtp619137-33] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-6
-00:24:05.120 [qtp619137-22] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:24:16.659 [qtp619137-21] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:24:17.728 [qtp619137-22] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-7
-00:24:17.898 [qtp619137-24] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:24:27.405 [qtp619137-33] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:24:28.364 [qtp619137-33] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-8
-00:24:28.570 [qtp619137-30] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:26:03.187 [qtp619137-25] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:26:04.298 [qtp619137-29] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-9
-00:26:04.457 [qtp619137-21] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:29:02.239 [qtp619137-24] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:29:04.159 [qtp619137-43] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-10
-00:29:04.334 [qtp619137-22] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:30:29.791 [qtp619137-21] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:30:31.889 [qtp619137-42] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-11
-00:30:32.063 [qtp619137-29] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:30:33.809 [qtp619137-30] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:CommandBean) RETURN id(node), node
-00:30:40.301 [qtp619137-22] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:CommandBean) WHERE id(node) = 200 RETURN id(node),node
-00:30:40.574 [qtp619137-22] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:CommandBean) WHERE id(node) = 200 DETACH DELETE node
-00:30:42.071 [qtp619137-21] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:CommandBean) WHERE id(node) = 201 RETURN id(node),node
-00:30:42.117 [qtp619137-21] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:CommandBean) WHERE id(node) = 201 DETACH DELETE node
-00:30:43.183 [qtp619137-29] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ViewBean) RETURN id(node), node
-00:32:41.829 [qtp619137-25] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:32:43.880 [qtp619137-22] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-12
-00:32:44.044 [qtp619137-21] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:32:45.441 [qtp619137-42] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ScriptPluginBean) RETURN id(node), node
-00:32:52.575 [qtp619137-30] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:CommandBean) RETURN id(node), node
-00:34:48.498 [qtp619137-42] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ScriptPluginBean) RETURN id(node), node
-00:37:36.815 [qtp619137-29] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:37:37.868 [qtp619137-22] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-13
-00:37:38.042 [qtp619137-29] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:37:38.177 [qtp619137-25] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ScriptPluginBean) RETURN id(node), node
-00:37:43.373 [qtp619137-30] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:IotBean) RETURN id(node), node
-00:39:14.361 [qtp619137-22] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:IotBean) RETURN id(node), node
-00:44:49.325 [qtp619137-22] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:44:51.287 [qtp619137-25] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-14
-00:44:51.485 [qtp619137-42] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:44:52.576 [qtp619137-22] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:IotBean) RETURN id(node), node
-00:44:56.676 [qtp619137-21] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ScriptPluginBean) RETURN id(node), node
-00:45:08.448 [qtp619137-22] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:45:10.103 [qtp619137-22] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-15
-00:45:10.214 [qtp619137-24] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:45:29.231 [qtp619137-30] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:45:31.725 [qtp619137-42] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-16
-00:45:31.853 [qtp619137-22] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:45:46.340 [main] INFO  org.jarvis.core.JarvisCoreServer - Starting JarvisCoreServer on kazoar-PC with PID 9600 (Y:\mars\git\jarvis\jarvis-core\jarvis-core-server\target\classes started by kazoar in Y:\mars\git\jarvis\jarvis-core\jarvis-core-server)
-00:45:46.342 [main] INFO  org.jarvis.core.JarvisCoreServer - No active profile set, falling back to default profiles: default
-00:45:46.664 [main] INFO  org.springframework.context.annotation.AnnotationConfigApplicationContext - Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@dd0d4b: startup date [Tue Apr 05 00:45:46 CEST 2016]; root of context hierarchy
-00:45:47.948 [main] INFO  org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
-00:45:48.054 [main] INFO  org.ehcache.spi.ServiceLocator - All Services successfully started.
-00:45:48.056 [main] INFO  org.ehcache.EhcacheManager - Cache 'preConfigured' is getting created in EhcacheManager.
-00:45:48.060 [main] INFO  org.ehcache.spi.serialization.DefaultSerializationProvider - Serializer for <java.lang.String> : org.ehcache.internal.serialization.CompactJavaSerializer@1d5c1a0
-00:45:48.063 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.String> : org.ehcache.internal.copy.IdentityCopier@cbf1a
-00:45:48.063 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.Object> : org.ehcache.internal.copy.IdentityCopier@1e8b721
-00:45:48.138 [main] INFO  class org.ehcache.Ehcache-preConfigured - Initialize successful.
-00:45:48.139 [main] INFO  org.ehcache.EhcacheManager - Cache 'preConfigured' created in EhcacheManager.
-00:45:48.139 [main] INFO  org.ehcache.EhcacheManager - Initialize successful.
-00:45:48.140 [main] INFO  org.ehcache.EhcacheManager - Cache 'myCache' is getting created in EhcacheManager.
-00:45:48.140 [main] INFO  org.ehcache.spi.serialization.DefaultSerializationProvider - Serializer for <java.lang.String> : org.ehcache.internal.serialization.CompactJavaSerializer@c8295b
-00:45:48.141 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.String> : org.ehcache.internal.copy.IdentityCopier@11f7d26
-00:45:48.141 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.Object> : org.ehcache.internal.copy.IdentityCopier@1b21474
-00:45:48.146 [main] INFO  class org.ehcache.Ehcache-myCache - Initialize successful.
-00:45:48.147 [main] INFO  org.ehcache.EhcacheManager - Cache 'myCache' created in EhcacheManager.
-00:45:48.997 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.user.dir = /mars/git/jarvis/jarvis-core/jarvis-core-server
-00:45:48.997 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.log.dir = /mars/git/jarvis/jarvis-core/jarvis-core-server
-00:45:48.997 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.server.url = http://0.0.0.0:8082/ui
-00:45:48.997 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.neo4j.url = http://localhost:7474
-00:45:49.094 [Thread-4] INFO  org.eclipse.jetty.util.log - Logging initialized @4331ms
-00:45:49.264 [main] INFO  org.springframework.jmx.export.annotation.AnnotationMBeanExporter - Registering beans for JMX exposure on startup
-00:45:49.283 [main] INFO  org.jarvis.core.JarvisCoreServer - Started JarvisCoreServer in 3.285 seconds (JVM running for 4.522)
-00:45:49.296 [Thread-4] INFO  spark.webserver.JettySparkServer - == Spark has ignited ...
-00:45:49.296 [Thread-4] INFO  spark.webserver.JettySparkServer - >> Listening on 0.0.0.0:8082
-00:45:49.299 [Thread-4] INFO  org.eclipse.jetty.server.Server - jetty-9.3.2.v20150730
-00:45:49.352 [Thread-4] INFO  org.eclipse.jetty.server.handler.ContextHandler - Started o.e.j.s.ServletContextHandler@f4444e{/,null,AVAILABLE}
-00:45:49.381 [Thread-4] INFO  org.eclipse.jetty.server.ServerConnector - Started ServerConnector@78288{HTTP/1.1,[http/1.1]}{0.0.0.0:8082}
-00:45:49.381 [Thread-4] INFO  org.eclipse.jetty.server.Server - Started @4620ms
-00:45:51.634 [qtp5191793-25] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-1
-00:45:51.708 [qtp5191793-23] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:46:04.994 [qtp5191793-18] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:46:06.961 [qtp5191793-24] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-2
-00:46:07.094 [qtp5191793-25] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:46:32.127 [qtp5191793-19] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:46:34.078 [qtp5191793-18] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-3
-00:46:34.215 [qtp5191793-21] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:46:36.679 [qtp5191793-23] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:IotBean) RETURN id(node), node
-00:46:39.802 [qtp5191793-24] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ScriptPluginBean) RETURN id(node), node
-00:46:42.901 [qtp5191793-18] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:CommandBean) RETURN id(node), node
-00:47:32.529 [qtp5191793-22] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-4
-00:47:33.284 [qtp5191793-18] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:47:33.996 [qtp5191793-24] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ViewBean) RETURN id(node), node
-00:47:48.539 [qtp5191793-25] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:IotBean) RETURN id(node), node
-00:47:55.991 [qtp5191793-23] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:CommandBean) RETURN id(node), node
-00:48:04.519 [qtp5191793-19] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ScriptPluginBean) RETURN id(node), node
-00:50:11.523 [qtp5191793-22] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:50:13.172 [qtp5191793-21] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-5
-00:50:13.320 [qtp5191793-22] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:50:18.503 [qtp5191793-23] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
-00:50:21.321 [qtp5191793-21] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-6
-00:50:21.865 [qtp5191793-19] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
-00:50:30.289 [qtp5191793-21] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:CommandBean) RETURN id(node), node
-00:50:37.699 [qtp5191793-24] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ScriptPluginBean) RETURN id(node), node
-00:50:42.304 [qtp5191793-21] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:IotBean) RETURN id(node), node
-00:51:56.416 [qtp5191793-23] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:IotBean) RETURN id(node), node
-00:51:59.419 [qtp5191793-24] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ScriptPluginBean) RETURN id(node), node
-00:52:01.569 [qtp5191793-38] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:CommandBean) RETURN id(node), node
-00:52:03.525 [qtp5191793-19] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ScriptPluginBean) RETURN id(node), node
-00:52:05.592 [qtp5191793-25] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:CommandBean) RETURN id(node), node
-00:52:08.169 [qtp5191793-37] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:IotBean) RETURN id(node), node
-00:52:10.469 [qtp5191793-24] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ViewBean) RETURN id(node), node
-00:52:11.134 [qtp5191793-21] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+00:00:12.877 [qtp1003940-24] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:00:15.421 [qtp1003940-28] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ScenarioBean) RETURN id(node), node
+00:11:34.074 [qtp1003940-39] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+00:11:35.096 [qtp1003940-24] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-8
+00:11:35.235 [qtp1003940-28] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:12:38.753 [qtp1003940-39] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+00:12:39.797 [qtp1003940-25] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-9
+00:12:39.934 [qtp1003940-28] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:12:50.497 [qtp1003940-25] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+00:12:51.579 [qtp1003940-25] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-10
+00:12:51.731 [qtp1003940-18] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:14:08.754 [qtp1003940-24] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+00:14:09.979 [qtp1003940-39] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-11
+00:14:10.105 [qtp1003940-28] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:20:54.857 [qtp1003940-25] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+00:20:55.988 [qtp1003940-18] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-12
+00:20:56.163 [qtp1003940-25] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:21:20.990 [qtp1003940-28] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+00:21:22.006 [qtp1003940-40] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-13
+00:21:22.176 [qtp1003940-18] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:22:46.643 [qtp1003940-40] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+00:22:47.770 [qtp1003940-25] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-14
+00:22:47.924 [qtp1003940-28] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:22:49.645 [qtp1003940-21] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConnectorBean) RETURN id(node), node
+00:22:52.096 [qtp1003940-25] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:CommandBean) RETURN id(node), node
+00:22:54.181 [qtp1003940-40] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ScriptPluginBean) RETURN id(node), node
+00:22:56.202 [qtp1003940-21] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:IotBean) RETURN id(node), node
+00:22:58.328 [qtp1003940-18] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:23:00.666 [qtp1003940-39] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ViewBean) RETURN id(node), node
+00:23:04.266 [qtp1003940-28] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ScenarioBean) RETURN id(node), node
+00:23:06.753 [qtp1003940-25] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:EventBean) RETURN id(node), node
+00:23:08.681 [qtp1003940-39] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:BlockBean) RETURN id(node), node
+00:23:10.873 [qtp1003940-28] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:TriggerBean) RETURN id(node), node
+00:23:13.584 [qtp1003940-25] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:SnapshotBean) RETURN id(node), node
+00:23:56.933 [qtp1003940-24] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+00:23:57.761 [qtp1003940-25] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-15
+00:23:57.877 [qtp1003940-28] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:23:59.551 [qtp1003940-18] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:CronBean) RETURN id(node), node
+00:24:11.843 [qtp1003940-24] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConnectorBean) RETURN id(node), node
+00:24:15.204 [qtp1003940-18] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:CommandBean) RETURN id(node), node
+00:24:35.216 [qtp1003940-40] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:CommandBean) RETURN id(node), node
+00:24:48.045 [qtp1003940-21] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 202 RETURN id(node),node
+00:25:32.069 [qtp1003940-25] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+00:25:33.149 [qtp1003940-28] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-16
+00:25:33.312 [qtp1003940-18] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:25:33.488 [qtp1003940-28] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 202 RETURN id(node),node
+00:25:37.339 [qtp1003940-40] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:SnapshotBean) RETURN id(node), node
+00:25:42.212 [qtp1003940-25] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:SnapshotBean) WHERE id(node) = 191 RETURN id(node),node
+00:25:42.464 [qtp1003940-25] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:SnapshotBean) WHERE id(node) = 191 DETACH DELETE node
+00:25:44.994 [qtp1003940-40] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:SnapshotBean) WHERE id(node) = 192 RETURN id(node),node
+00:25:45.037 [qtp1003940-40] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:SnapshotBean) WHERE id(node) = 192 DETACH DELETE node
+00:25:46.374 [qtp1003940-39] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:SnapshotBean) WHERE id(node) = 193 RETURN id(node),node
+00:25:46.416 [qtp1003940-39] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:SnapshotBean) WHERE id(node) = 193 DETACH DELETE node
+00:25:47.858 [qtp1003940-28] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:SnapshotBean) WHERE id(node) = 194 RETURN id(node),node
+00:25:47.893 [qtp1003940-28] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:SnapshotBean) WHERE id(node) = 194 DETACH DELETE node
+00:25:49.341 [qtp1003940-40] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:SnapshotBean) WHERE id(node) = 195 RETURN id(node),node
+00:25:49.378 [qtp1003940-40] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:SnapshotBean) WHERE id(node) = 195 DETACH DELETE node
+00:25:50.958 [qtp1003940-39] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:SnapshotBean) WHERE id(node) = 196 RETURN id(node),node
+00:25:51.065 [qtp1003940-39] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:SnapshotBean) WHERE id(node) = 196 DETACH DELETE node
+00:25:52.782 [qtp1003940-28] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:SnapshotBean) WHERE id(node) = 198 RETURN id(node),node
+00:25:52.814 [qtp1003940-28] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:SnapshotBean) WHERE id(node) = 198 DETACH DELETE node
+00:25:55.407 [qtp1003940-40] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:SnapshotBean) WHERE id(node) = 199 RETURN id(node),node
+00:25:55.437 [qtp1003940-40] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:SnapshotBean) WHERE id(node) = 199 DETACH DELETE node
+00:25:56.495 [qtp1003940-39] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:SnapshotBean) WHERE id(node) = 197 RETURN id(node),node
+00:25:59.145 [qtp1003940-25] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:SnapshotBean) WHERE id(node) = 197 RETURN id(node),node
+00:25:59.165 [qtp1003940-25] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - CONTEXT org.jarvis.core.model.bean.tools.SnapshotBean {
+  "id" : "197",
+  "trigger" : null,
+  "timestamp" : null,
+  "href" : null,
+  "name" : "snapshot name",
+  "icon" : "list",
+  "json" : null
+}
+00:25:59.165 [qtp1003940-25] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - INPUT   { }
+00:25:59.967 [qtp1003940-25] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find entities */ MATCH (node:BlockBean) return id(node),node
+00:25:59.984 [qtp1003940-25] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find entities */ MATCH (node:CommandBean) return id(node),node
+00:26:00.001 [qtp1003940-25] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find entities */ MATCH (node:IotBean) return id(node),node
+00:26:00.021 [qtp1003940-25] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find entities */ MATCH (node:ScenarioBean) return id(node),node
+00:26:00.037 [qtp1003940-25] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find entities */ MATCH (node:ScriptPluginBean) return id(node),node
+00:26:00.053 [qtp1003940-25] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find entities */ MATCH (node:TriggerBean) return id(node),node
+00:26:00.086 [qtp1003940-25] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find entities */ MATCH (node:ViewBean) return id(node),node
+00:26:00.130 [qtp1003940-25] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT ResourcePair [key=FILE_STREAM, value={
+  "BlockBean" : { },
+  "CommandBean" : {
+    "202" : {
+      "icon" : "list",
+      "name" : "command name"
+    }
+  },
+  "HREF" : {
+    "104" : {
+      "__from" : 186,
+      "__to" : 186
+    },
+    "105" : {
+      "__from" : 186,
+      "__to" : 187
+    },
+    "106" : {
+      "__from" : 186,
+      "__to" : 188,
+      "href" : "HREF",
+      "order" : "2"
+    }
+  },
+  "HREF_ELSE" : { },
+  "HREF_IF" : { },
+  "HREF_THEN" : { },
+  "IotBean" : {
+    "186" : {
+      "icon" : "list",
+      "id" : "186",
+      "name" : "object name 1",
+      "visible" : false
+    },
+    "189" : {
+      "icon" : "list",
+      "name" : "object name",
+      "visible" : false
+    },
+    "190" : {
+      "icon" : "list",
+      "name" : "object name",
+      "visible" : false
+    }
+  },
+  "ScenarioBean" : { },
+  "ScriptPluginBean" : {
+    "188" : {
+      "active" : false,
+      "icon" : "list",
+      "name" : "script name",
+      "type" : "script",
+      "visible" : false
+    }
+  },
+  "TriggerBean" : {
+    "187" : {
+      "icon" : "settings_remote",
+      "name" : "trigger name"
+    }
+  },
+  "ViewBean" : { }
+}]
+00:26:18.707 [qtp1003940-40] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:SnapshotBean) WHERE id(node) = 197 RETURN id(node),node
+00:26:18.717 [qtp1003940-40] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - CONTEXT org.jarvis.core.model.bean.tools.SnapshotBean {
+  "id" : "197",
+  "trigger" : null,
+  "timestamp" : null,
+  "href" : null,
+  "name" : "snapshot name",
+  "icon" : "list",
+  "json" : "{\n  \"BlockBean\": {},\n  \"CommandBean\": {\n    \"23\": {\n      \"body\": \"import groovy.json.*\\nimport groovyx.net.http.RESTClient\\nimport static groovyx.net.http.ContentType.*\\n\\n/**\\n * simple api call to simulate data\\n*/\\ndef hue = new RESTClient( 'http://jsonplaceholder.typicode.com' )\\ndef resp = hue.get( path: '/users/1' )\\n\\nif(resp.status == 200) {\\n    return resp.data\\n} else {\\n    return new JsonSlurper().parseText('{}')\\n}\\nreturn resp\",\n      \"icon\": \"whatshot\",\n      \"id\": \"23\",\n      \"name\": \"Json Sample Call (data)\",\n      \"type\": \"GROOVY\"\n    },\n    \"45\": {\n      \"body\": \"import groovy.json.*\\n\\n/**\\n * simple api call to simulate action\\n*/\\nreturn new JsonSlurper().parseText('{\\\"status\\\":true}')\",\n      \"icon\": \"whatshot\",\n      \"id\": \"45\",\n      \"name\": \"Json Sample Call (action)\",\n      \"type\": \"GROOVY\"\n    },\n    \"46\": {\n      \"body\": \"import groovy.json.*\\n\\n/**\\n * simple api call to simulate action\\n*/\\nreturn new JsonSlurper().parseText('{\\\"status\\\":false}')\",\n      \"icon\": \"whatshot\",\n      \"id\": \"46\",\n      \"name\": \"Json Sample Call (action)\",\n      \"type\": \"GROOVY\"\n    }\n  },\n  \"HREF\": {\n    \"20\": {\n      \"__from\": 39,\n      \"__to\": 23,\n      \"href\": \"HREF\",\n      \"name\": \"user\",\n      \"nature\": \"json\",\n      \"order\": \"3\",\n      \"type\": \"data\"\n    },\n    \"21\": {\n      \"__from\": 29,\n      \"__to\": 39\n    },\n    \"22\": {\n      \"__from\": 42,\n      \"__to\": 29\n    },\n    \"23\": {\n      \"__from\": 39,\n      \"__to\": 45,\n      \"href\": \"HREF\",\n      \"name\": \"always_true\",\n      \"nature\": \"json\",\n      \"order\": \"1\",\n      \"type\": \"action\"\n    },\n    \"24\": {\n      \"__from\": 39,\n      \"__to\": 46,\n      \"href\": \"HREF\",\n      \"name\": \"always_false\",\n      \"nature\": \"json\",\n      \"order\": \"2\",\n      \"type\": \"action\"\n    }\n  },\n  \"HREF_ELSE\": {},\n  \"HREF_IF\": {},\n  \"HREF_THEN\": {},\n  \"IotBean\": {\n    \"29\": {\n      \"icon\": \"touch_app\",\n      \"id\": \"29\",\n      \"name\": \"Device Json Mapper\",\n      \"parameters\": \"{\\\"instance0\\\":{}}\",\n      \"tagColor\": \"red\",\n      \"template\": \"<ul>\\n<li>{{iot.name}}</li>\\n<li>{{data.user.username}}</li>\\n<ul>\\n<md-button ng-click=\\\"execute(iot)\\\">{{iot.name}}<md-tooltip>{{data}}</md-tooltip></md-button>\",\n      \"visible\": true\n    }\n  },\n  \"ScenarioBean\": {},\n  \"ScriptPluginBean\": {\n    \"39\": {\n      \"active\": false,\n      \"icon\": \"lightbulb_outline\",\n      \"id\": \"39\",\n      \"name\": \"Json Command Mapper\",\n      \"type\": \"script\",\n      \"visible\": false\n    }\n  },\n  \"TriggerBean\": {},\n  \"ViewBean\": {\n    \"42\": {\n      \"icon\": \"list\",\n      \"id\": \"42\",\n      \"ishome\": true,\n      \"name\": \"Json Sample\",\n      \"url\": \"\"\n    }\n  }\n}"
+}
+00:26:18.717 [qtp1003940-40] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - INPUT   { }
+00:26:18.719 [qtp1003940-40] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:BlockBean) DETACH DELETE node
+00:26:18.767 [qtp1003940-40] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:CommandBean) DETACH DELETE node
+00:26:19.014 [qtp1003940-40] INFO  org.jarvis.neo4j.client.CypherRestClient - Index 23 => 203
+00:26:19.107 [qtp1003940-40] INFO  org.jarvis.neo4j.client.CypherRestClient - Index 45 => 204
+00:26:19.208 [qtp1003940-40] INFO  org.jarvis.neo4j.client.CypherRestClient - Index 46 => 205
+00:26:19.209 [qtp1003940-40] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:IotBean) DETACH DELETE node
+00:26:19.517 [qtp1003940-40] INFO  org.jarvis.neo4j.client.CypherRestClient - Index 29 => 206
+00:26:19.517 [qtp1003940-40] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ScenarioBean) DETACH DELETE node
+00:26:19.543 [qtp1003940-40] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ScriptPluginBean) DETACH DELETE node
+00:26:19.697 [qtp1003940-40] INFO  org.jarvis.neo4j.client.CypherRestClient - Index 39 => 207
+00:26:19.697 [qtp1003940-40] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:TriggerBean) DETACH DELETE node
+00:26:19.749 [qtp1003940-40] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ViewBean) DETACH DELETE node
+00:26:19.921 [qtp1003940-40] INFO  org.jarvis.neo4j.client.CypherRestClient - Index 42 => 208
+00:26:19.921 [qtp1003940-40] ERROR org.jarvis.neo4j.client.CypherRestClient - Restore 207 => 203 with Node [id=null, fields={href=HREF, name=user, nature=json, order=3, type=data}]
+00:26:20.013 [qtp1003940-40] ERROR org.jarvis.neo4j.client.CypherRestClient - Restore 206 => 207 with Node [id=null, fields={}]
+00:26:20.037 [qtp1003940-40] ERROR org.jarvis.neo4j.client.CypherRestClient - Restore 208 => 206 with Node [id=null, fields={}]
+00:26:20.063 [qtp1003940-40] ERROR org.jarvis.neo4j.client.CypherRestClient - Restore 207 => 204 with Node [id=null, fields={href=HREF, name=always_true, nature=json, order=1, type=action}]
+00:26:20.087 [qtp1003940-40] ERROR org.jarvis.neo4j.client.CypherRestClient - Restore 207 => 205 with Node [id=null, fields={href=HREF, name=always_false, nature=json, order=2, type=action}]
+00:26:20.112 [qtp1003940-40] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT ResourcePair [key=STRING, value=]
+00:26:23.553 [qtp1003940-21] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ViewBean) RETURN id(node), node
+00:26:23.627 [qtp1003940-39] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ViewBean) WHERE id(node) = 208 RETURN id(node),node
+00:26:23.703 [qtp1003940-39] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ViewBean)-[relation:HREF]->(entity:IotBean) WHERE id(left) = 208 RETURN id(relation),relation,id(entity),entity
+00:26:23.841 [qtp1003940-39] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+00:26:23.937 [qtp1003940-25] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+00:26:23.948 [qtp1003940-25] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - CONTEXT org.jarvis.core.model.bean.iot.IotBean {
+  "id" : "206",
+  "name" : "Device Json Mapper",
+  "parameters" : "{\"instance0\":{}}",
+  "visible" : true,
+  "icon" : "touch_app",
+  "tagColor" : "red",
+  "template" : "<ul>\n<li>{{iot.name}}</li>\n<li>{{data.user.username}}</li>\n<ul>\n<md-button ng-click=\"execute(iot)\">{{iot.name}}<md-tooltip>{{data}}</md-tooltip></md-button>"
+}
+00:26:23.949 [qtp1003940-25] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - INPUT   { }
+00:26:23.949 [qtp1003940-25] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:IotBean)-[relation:HREF]->(entity:ScriptPluginBean) WHERE id(left) = 206 RETURN id(relation),relation,id(entity),entity
+00:26:23.963 [qtp1003940-40] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+00:26:24.146 [qtp1003940-25] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 207 RETURN id(node),node
+00:26:24.220 [qtp1003940-25] INFO  org.jarvis.core.resources.api.ApiResources - Before render params = {}, context = {}
+00:26:24.246 [qtp1003940-25] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ScriptPluginBean)-[relation:HREF]->(entity:CommandBean) WHERE id(left) = 207 RETURN id(relation),relation,id(entity),entity
+00:26:24.319 [qtp1003940-25] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 203 RETURN id(node),node
+00:26:24.342 [qtp1003940-25] INFO  org.jarvis.core.resources.api.ApiResources - Before render params = GenericEntity [id=203, href=null, instance=null, extended={}], context = {}
+00:26:26.941 [qtp1003940-24] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+00:26:27.011 [qtp1003940-25] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT  {
+  "address" : {
+    "city" : "Gwenborough",
+    "geo" : {
+      "lat" : "-37.3159",
+      "lng" : "81.1496"
+    },
+    "street" : "Kulas Light",
+    "suite" : "Apt. 556",
+    "zipcode" : "92998-3874"
+  },
+  "company" : {
+    "bs" : "harness real-time e-markets",
+    "catchPhrase" : "Multi-layered client-server neural-net",
+    "name" : "Romaguera-Crona"
+  },
+  "email" : "Sincere@april.biz",
+  "id" : 1,
+  "name" : "Leanne Graham",
+  "phone" : "1-770-736-8031 x56442",
+  "username" : "Bret",
+  "website" : "hildegard.org"
+}
+00:26:27.019 [qtp1003940-25] INFO  org.jarvis.core.resources.api.ApiResources - After render params = GenericEntity [id=203, href=null, instance=null, extended={}], context = {address={city=Gwenborough, geo={lat=-37.3159, lng=81.1496}, street=Kulas Light, suite=Apt. 556, zipcode=92998-3874}, company={bs=harness real-time e-markets, catchPhrase=Multi-layered client-server neural-net, name=Romaguera-Crona}, email=Sincere@april.biz, id=1, name=Leanne Graham, phone=1-770-736-8031 x56442, username=Bret, website=hildegard.org}
+00:26:27.020 [qtp1003940-25] INFO  org.jarvis.core.resources.api.ApiResources - After render params = {}, context = {user={address={city=Gwenborough, geo={lat=-37.3159, lng=81.1496}, street=Kulas Light, suite=Apt. 556, zipcode=92998-3874}, company={bs=harness real-time e-markets, catchPhrase=Multi-layered client-server neural-net, name=Romaguera-Crona}, email=Sincere@april.biz, id=1, name=Leanne Graham, phone=1-770-736-8031 x56442, username=Bret, website=hildegard.org}}
+00:26:27.021 [qtp1003940-25] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT ResourcePair [key=OBJECT, value={"user":{"address":{"city":"Gwenborough","geo":{"lat":"-37.3159","lng":"81.1496"},"street":"Kulas Light","suite":"Apt. 556","zipcode":"92998-3874"},"company":{"bs":"harness real-time e-markets","catchPhrase":"Multi-layered client-server neural-net","name":"Romaguera-Crona"},"email":"Sincere@april.biz","id":1,"name":"Leanne Graham","phone":"1-770-736-8031 x56442","username":"Bret","website":"hildegard.org"}}]
+00:26:27.986 [qtp1003940-40] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-17
+00:26:28.151 [qtp1003940-24] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:26:28.295 [qtp1003940-25] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ViewBean) RETURN id(node), node
+00:26:28.351 [qtp1003940-40] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ViewBean) WHERE id(node) = 208 RETURN id(node),node
+00:26:28.358 [qtp1003940-40] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ViewBean)-[relation:HREF]->(entity:IotBean) WHERE id(left) = 208 RETURN id(relation),relation,id(entity),entity
+00:26:28.366 [qtp1003940-40] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+00:26:28.469 [qtp1003940-39] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+00:26:28.476 [qtp1003940-39] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - CONTEXT org.jarvis.core.model.bean.iot.IotBean {
+  "id" : "206",
+  "name" : "Device Json Mapper",
+  "parameters" : "{\"instance0\":{}}",
+  "visible" : true,
+  "icon" : "touch_app",
+  "tagColor" : "red",
+  "template" : "<ul>\n<li>{{iot.name}}</li>\n<li>{{data.user.username}}</li>\n<ul>\n<md-button ng-click=\"execute(iot)\">{{iot.name}}<md-tooltip>{{data}}</md-tooltip></md-button>"
+}
+00:26:28.476 [qtp1003940-39] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - INPUT   { }
+00:26:28.477 [qtp1003940-39] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:IotBean)-[relation:HREF]->(entity:ScriptPluginBean) WHERE id(left) = 206 RETURN id(relation),relation,id(entity),entity
+00:26:28.484 [qtp1003940-39] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 207 RETURN id(node),node
+00:26:28.490 [qtp1003940-39] INFO  org.jarvis.core.resources.api.ApiResources - Before render params = {}, context = {}
+00:26:28.490 [qtp1003940-39] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ScriptPluginBean)-[relation:HREF]->(entity:CommandBean) WHERE id(left) = 207 RETURN id(relation),relation,id(entity),entity
+00:26:28.500 [qtp1003940-39] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 203 RETURN id(node),node
+00:26:28.507 [qtp1003940-39] INFO  org.jarvis.core.resources.api.ApiResources - Before render params = GenericEntity [id=203, href=null, instance=null, extended={}], context = {}
+00:26:28.527 [qtp1003940-28] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+00:26:29.051 [qtp1003940-39] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT  {
+  "address" : {
+    "city" : "Gwenborough",
+    "geo" : {
+      "lat" : "-37.3159",
+      "lng" : "81.1496"
+    },
+    "street" : "Kulas Light",
+    "suite" : "Apt. 556",
+    "zipcode" : "92998-3874"
+  },
+  "company" : {
+    "bs" : "harness real-time e-markets",
+    "catchPhrase" : "Multi-layered client-server neural-net",
+    "name" : "Romaguera-Crona"
+  },
+  "email" : "Sincere@april.biz",
+  "id" : 1,
+  "name" : "Leanne Graham",
+  "phone" : "1-770-736-8031 x56442",
+  "username" : "Bret",
+  "website" : "hildegard.org"
+}
+00:26:29.051 [qtp1003940-39] INFO  org.jarvis.core.resources.api.ApiResources - After render params = GenericEntity [id=203, href=null, instance=null, extended={}], context = {address={city=Gwenborough, geo={lat=-37.3159, lng=81.1496}, street=Kulas Light, suite=Apt. 556, zipcode=92998-3874}, company={bs=harness real-time e-markets, catchPhrase=Multi-layered client-server neural-net, name=Romaguera-Crona}, email=Sincere@april.biz, id=1, name=Leanne Graham, phone=1-770-736-8031 x56442, username=Bret, website=hildegard.org}
+00:26:29.051 [qtp1003940-39] INFO  org.jarvis.core.resources.api.ApiResources - After render params = {}, context = {user={address={city=Gwenborough, geo={lat=-37.3159, lng=81.1496}, street=Kulas Light, suite=Apt. 556, zipcode=92998-3874}, company={bs=harness real-time e-markets, catchPhrase=Multi-layered client-server neural-net, name=Romaguera-Crona}, email=Sincere@april.biz, id=1, name=Leanne Graham, phone=1-770-736-8031 x56442, username=Bret, website=hildegard.org}}
+00:26:29.051 [qtp1003940-39] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT ResourcePair [key=OBJECT, value={"user":{"address":{"city":"Gwenborough","geo":{"lat":"-37.3159","lng":"81.1496"},"street":"Kulas Light","suite":"Apt. 556","zipcode":"92998-3874"},"company":{"bs":"harness real-time e-markets","catchPhrase":"Multi-layered client-server neural-net","name":"Romaguera-Crona"},"email":"Sincere@april.biz","id":1,"name":"Leanne Graham","phone":"1-770-736-8031 x56442","username":"Bret","website":"hildegard.org"}}]
+00:30:51.165 [main] INFO  org.jarvis.core.JarvisCoreServer - Starting JarvisCoreServer on kazoar-PC with PID 6156 (Y:\mars\git\jarvis\jarvis-core\jarvis-core-server\target\classes started by kazoar in Y:\mars\git\jarvis\jarvis-core\jarvis-core-server)
+00:30:51.168 [main] INFO  org.jarvis.core.JarvisCoreServer - No active profile set, falling back to default profiles: default
+00:30:51.608 [main] INFO  org.springframework.context.annotation.AnnotationConfigApplicationContext - Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@13dd51e: startup date [Wed Apr 06 00:30:51 CEST 2016]; root of context hierarchy
+00:30:52.742 [main] INFO  org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+00:30:52.917 [main] INFO  org.ehcache.spi.ServiceLocator - All Services successfully started.
+00:30:52.920 [main] INFO  org.ehcache.EhcacheManager - Cache 'preConfigured' is getting created in EhcacheManager.
+00:30:52.925 [main] INFO  org.ehcache.spi.serialization.DefaultSerializationProvider - Serializer for <java.lang.String> : org.ehcache.internal.serialization.CompactJavaSerializer@144ddab
+00:30:52.929 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.String> : org.ehcache.internal.copy.IdentityCopier@f7298d
+00:30:52.929 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.Object> : org.ehcache.internal.copy.IdentityCopier@1ff55ff
+00:30:53.034 [main] INFO  class org.ehcache.Ehcache-preConfigured - Initialize successful.
+00:30:53.034 [main] INFO  org.ehcache.EhcacheManager - Cache 'preConfigured' created in EhcacheManager.
+00:30:53.034 [main] INFO  org.ehcache.EhcacheManager - Initialize successful.
+00:30:53.036 [main] INFO  org.ehcache.EhcacheManager - Cache 'myCache' is getting created in EhcacheManager.
+00:30:53.036 [main] INFO  org.ehcache.spi.serialization.DefaultSerializationProvider - Serializer for <java.lang.String> : org.ehcache.internal.serialization.CompactJavaSerializer@12bfea
+00:30:53.037 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.String> : org.ehcache.internal.copy.IdentityCopier@a6a68e
+00:30:53.037 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.Object> : org.ehcache.internal.copy.IdentityCopier@143a322
+00:30:53.042 [main] INFO  class org.ehcache.Ehcache-myCache - Initialize successful.
+00:30:53.043 [main] INFO  org.ehcache.EhcacheManager - Cache 'myCache' created in EhcacheManager.
+00:31:13.069 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.user.dir = /mars/git/jarvis/jarvis-core/jarvis-core-server
+00:31:13.073 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.log.dir = /mars/git/jarvis/jarvis-core/jarvis-core-server
+00:31:13.077 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.server.url = http://0.0.0.0:8082/ui
+00:31:13.081 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.neo4j.url = http://localhost:7474
+00:31:17.699 [Thread-4] INFO  org.eclipse.jetty.util.log - Logging initialized @29055ms
+00:31:30.278 [Thread-4] INFO  spark.webserver.JettySparkServer - == Spark has ignited ...
+00:31:30.290 [Thread-4] INFO  spark.webserver.JettySparkServer - >> Listening on 0.0.0.0:8082
+00:31:30.449 [Thread-4] INFO  org.eclipse.jetty.server.Server - jetty-9.3.2.v20150730
+00:31:34.774 [Thread-4] INFO  org.eclipse.jetty.server.handler.ContextHandler - Started o.e.j.s.ServletContextHandler@196ee0a{/,null,AVAILABLE}
+00:31:35.629 [Thread-4] INFO  org.eclipse.jetty.server.ServerConnector - Started ServerConnector@19de597{HTTP/1.1,[http/1.1]}{0.0.0.0:8082}
+00:31:35.652 [Thread-4] INFO  org.eclipse.jetty.server.Server - Started @47134ms
+00:31:37.142 [main] INFO  org.springframework.jmx.export.annotation.AnnotationMBeanExporter - Registering beans for JMX exposure on startup
+00:31:38.000 [main] INFO  org.jarvis.core.JarvisCoreServer - Started JarvisCoreServer in 47.224 seconds (JVM running for 49.491)
+00:33:13.392 [qtp325599-22] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:34:03.795 [qtp325599-23] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ConfigBean) WHERE id(node) = 210 RETURN id(node),node
+00:34:17.593 [qtp325599-26] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ViewBean) RETURN id(node), node
+00:34:21.116 [qtp325599-19] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ViewBean) WHERE id(node) = 208 RETURN id(node),node
+00:34:21.267 [qtp325599-19] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ViewBean)-[relation:HREF]->(entity:IotBean) WHERE id(left) = 208 RETURN id(relation),relation,id(entity),entity
+00:34:22.107 [qtp325599-19] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+00:34:24.809 [qtp325599-24] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+00:34:25.098 [qtp325599-24] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - CONTEXT org.jarvis.core.model.bean.iot.IotBean {
+  "id" : "206",
+  "name" : "Device Json Mapper",
+  "parameters" : "{\"instance0\":{}}",
+  "visible" : true,
+  "icon" : "touch_app",
+  "tagColor" : "red",
+  "template" : "<ul>\n<li>{{iot.name}}</li>\n<li>{{data.user.username}}</li>\n<ul>\n<md-button ng-click=\"execute(iot)\">{{iot.name}}<md-tooltip>{{data}}</md-tooltip></md-button>"
+}
+00:34:25.159 [qtp325599-24] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - INPUT   { }
+00:34:25.176 [qtp325599-24] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:IotBean)-[relation:HREF]->(entity:ScriptPluginBean) WHERE id(left) = 206 RETURN id(relation),relation,id(entity),entity
+00:34:26.104 [qtp325599-24] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 207 RETURN id(node),node
+00:34:28.231 [qtp325599-24] INFO  org.jarvis.core.resources.api.ApiResources - Before render params = {}, context = {}
+00:34:31.497 [qtp325599-24] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ScriptPluginBean)-[relation:HREF]->(entity:CommandBean) WHERE id(left) = 207 RETURN id(relation),relation,id(entity),entity
+00:34:32.302 [qtp325599-24] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 203 RETURN id(node),node
+00:34:34.150 [qtp325599-24] INFO  org.jarvis.core.resources.api.ApiResources - Before render params = GenericEntity [id=203, href=null, instance=null, extended={}], context = {}
+00:35:06.565 [qtp325599-24] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT  {
+  "address" : {
+    "city" : "Gwenborough",
+    "geo" : {
+      "lat" : "-37.3159",
+      "lng" : "81.1496"
+    },
+    "street" : "Kulas Light",
+    "suite" : "Apt. 556",
+    "zipcode" : "92998-3874"
+  },
+  "company" : {
+    "bs" : "harness real-time e-markets",
+    "catchPhrase" : "Multi-layered client-server neural-net",
+    "name" : "Romaguera-Crona"
+  },
+  "email" : "Sincere@april.biz",
+  "id" : 1,
+  "name" : "Leanne Graham",
+  "phone" : "1-770-736-8031 x56442",
+  "username" : "Bret",
+  "website" : "hildegard.org"
+}
+00:35:06.591 [qtp325599-24] INFO  org.jarvis.core.resources.api.ApiResources - After render params = GenericEntity [id=203, href=null, instance=null, extended={}], context = {address={city=Gwenborough, geo={lat=-37.3159, lng=81.1496}, street=Kulas Light, suite=Apt. 556, zipcode=92998-3874}, company={bs=harness real-time e-markets, catchPhrase=Multi-layered client-server neural-net, name=Romaguera-Crona}, email=Sincere@april.biz, id=1, name=Leanne Graham, phone=1-770-736-8031 x56442, username=Bret, website=hildegard.org}
+00:35:06.631 [qtp325599-24] INFO  org.jarvis.core.resources.api.ApiResources - After render params = {}, context = {user={address={city=Gwenborough, geo={lat=-37.3159, lng=81.1496}, street=Kulas Light, suite=Apt. 556, zipcode=92998-3874}, company={bs=harness real-time e-markets, catchPhrase=Multi-layered client-server neural-net, name=Romaguera-Crona}, email=Sincere@april.biz, id=1, name=Leanne Graham, phone=1-770-736-8031 x56442, username=Bret, website=hildegard.org}}
+00:35:06.792 [qtp325599-24] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT ResourcePair [key=OBJECT, value={"user":{"address":{"city":"Gwenborough","geo":{"lat":"-37.3159","lng":"81.1496"},"street":"Kulas Light","suite":"Apt. 556","zipcode":"92998-3874"},"company":{"bs":"harness real-time e-markets","catchPhrase":"Multi-layered client-server neural-net","name":"Romaguera-Crona"},"email":"Sincere@april.biz","id":1,"name":"Leanne Graham","phone":"1-770-736-8031 x56442","username":"Bret","website":"hildegard.org"}}]
+00:35:09.331 [qtp325599-26] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:35:11.847 [qtp325599-35] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-1
+00:35:27.328 [qtp325599-20] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ViewBean) RETURN id(node), node
+00:35:27.703 [qtp325599-22] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ViewBean) WHERE id(node) = 208 RETURN id(node),node
+00:35:28.104 [qtp325599-22] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ViewBean)-[relation:HREF]->(entity:IotBean) WHERE id(left) = 208 RETURN id(relation),relation,id(entity),entity
+00:35:28.234 [qtp325599-22] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+00:35:28.617 [qtp325599-19] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+00:35:28.634 [qtp325599-25] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+00:35:28.927 [qtp325599-19] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - CONTEXT org.jarvis.core.model.bean.iot.IotBean {
+  "id" : "206",
+  "name" : "Device Json Mapper",
+  "parameters" : "{\"instance0\":{}}",
+  "visible" : true,
+  "icon" : "touch_app",
+  "tagColor" : "red",
+  "template" : "<ul>\n<li>{{iot.name}}</li>\n<li>{{data.user.username}}</li>\n<ul>\n<md-button ng-click=\"execute(iot)\">{{iot.name}}<md-tooltip>{{data}}</md-tooltip></md-button>"
+}
+00:35:28.938 [qtp325599-19] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - INPUT   { }
+00:35:28.964 [qtp325599-19] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:IotBean)-[relation:HREF]->(entity:ScriptPluginBean) WHERE id(left) = 206 RETURN id(relation),relation,id(entity),entity
+00:35:29.106 [qtp325599-19] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 207 RETURN id(node),node
+00:35:29.231 [qtp325599-19] INFO  org.jarvis.core.resources.api.ApiResources - Before render params = {}, context = {}
+00:35:29.242 [qtp325599-19] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ScriptPluginBean)-[relation:HREF]->(entity:CommandBean) WHERE id(left) = 207 RETURN id(relation),relation,id(entity),entity
+00:35:29.353 [qtp325599-19] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 203 RETURN id(node),node
+00:35:29.479 [qtp325599-19] INFO  org.jarvis.core.resources.api.ApiResources - Before render params = GenericEntity [id=203, href=null, instance=null, extended={}], context = {}
+00:35:32.075 [qtp325599-19] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT  {
+  "address" : {
+    "city" : "Gwenborough",
+    "geo" : {
+      "lat" : "-37.3159",
+      "lng" : "81.1496"
+    },
+    "street" : "Kulas Light",
+    "suite" : "Apt. 556",
+    "zipcode" : "92998-3874"
+  },
+  "company" : {
+    "bs" : "harness real-time e-markets",
+    "catchPhrase" : "Multi-layered client-server neural-net",
+    "name" : "Romaguera-Crona"
+  },
+  "email" : "Sincere@april.biz",
+  "id" : 1,
+  "name" : "Leanne Graham",
+  "phone" : "1-770-736-8031 x56442",
+  "username" : "Bret",
+  "website" : "hildegard.org"
+}
+00:35:32.095 [qtp325599-19] INFO  org.jarvis.core.resources.api.ApiResources - After render params = GenericEntity [id=203, href=null, instance=null, extended={}], context = {address={city=Gwenborough, geo={lat=-37.3159, lng=81.1496}, street=Kulas Light, suite=Apt. 556, zipcode=92998-3874}, company={bs=harness real-time e-markets, catchPhrase=Multi-layered client-server neural-net, name=Romaguera-Crona}, email=Sincere@april.biz, id=1, name=Leanne Graham, phone=1-770-736-8031 x56442, username=Bret, website=hildegard.org}
+00:35:32.112 [qtp325599-19] INFO  org.jarvis.core.resources.api.ApiResources - After render params = {}, context = {user={address={city=Gwenborough, geo={lat=-37.3159, lng=81.1496}, street=Kulas Light, suite=Apt. 556, zipcode=92998-3874}, company={bs=harness real-time e-markets, catchPhrase=Multi-layered client-server neural-net, name=Romaguera-Crona}, email=Sincere@april.biz, id=1, name=Leanne Graham, phone=1-770-736-8031 x56442, username=Bret, website=hildegard.org}}
+00:35:32.121 [qtp325599-19] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT ResourcePair [key=OBJECT, value={"user":{"address":{"city":"Gwenborough","geo":{"lat":"-37.3159","lng":"81.1496"},"street":"Kulas Light","suite":"Apt. 556","zipcode":"92998-3874"},"company":{"bs":"harness real-time e-markets","catchPhrase":"Multi-layered client-server neural-net","name":"Romaguera-Crona"},"email":"Sincere@april.biz","id":1,"name":"Leanne Graham","phone":"1-770-736-8031 x56442","username":"Bret","website":"hildegard.org"}}]
+00:36:04.590 [qtp325599-38] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+00:36:11.254 [qtp325599-22] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-2
+00:36:11.688 [qtp325599-19] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:36:12.195 [qtp325599-26] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ViewBean) RETURN id(node), node
+00:36:12.431 [qtp325599-36] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ViewBean) WHERE id(node) = 208 RETURN id(node),node
+00:36:12.886 [qtp325599-36] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ViewBean)-[relation:HREF]->(entity:IotBean) WHERE id(left) = 208 RETURN id(relation),relation,id(entity),entity
+00:36:13.033 [qtp325599-36] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+00:36:13.362 [qtp325599-25] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+00:36:13.377 [qtp325599-20] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+00:36:13.623 [qtp325599-25] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - CONTEXT org.jarvis.core.model.bean.iot.IotBean {
+  "id" : "206",
+  "name" : "Device Json Mapper",
+  "parameters" : "{\"instance0\":{}}",
+  "visible" : true,
+  "icon" : "touch_app",
+  "tagColor" : "red",
+  "template" : "<ul>\n<li>{{iot.name}}</li>\n<li>{{data.user.username}}</li>\n<ul>\n<md-button ng-click=\"execute(iot)\">{{iot.name}}<md-tooltip>{{data}}</md-tooltip></md-button>"
+}
+00:36:13.641 [qtp325599-25] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - INPUT   { }
+00:36:13.683 [qtp325599-25] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:IotBean)-[relation:HREF]->(entity:ScriptPluginBean) WHERE id(left) = 206 RETURN id(relation),relation,id(entity),entity
+00:36:13.814 [qtp325599-25] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 207 RETURN id(node),node
+00:36:13.912 [qtp325599-25] INFO  org.jarvis.core.resources.api.ApiResources - Before render params = {}, context = {}
+00:36:13.920 [qtp325599-25] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ScriptPluginBean)-[relation:HREF]->(entity:CommandBean) WHERE id(left) = 207 RETURN id(relation),relation,id(entity),entity
+00:36:14.036 [qtp325599-25] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 203 RETURN id(node),node
+00:36:14.136 [qtp325599-25] INFO  org.jarvis.core.resources.api.ApiResources - Before render params = GenericEntity [id=203, href=null, instance=null, extended={}], context = {}
+00:36:16.389 [qtp325599-25] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT  {
+  "address" : {
+    "city" : "Gwenborough",
+    "geo" : {
+      "lat" : "-37.3159",
+      "lng" : "81.1496"
+    },
+    "street" : "Kulas Light",
+    "suite" : "Apt. 556",
+    "zipcode" : "92998-3874"
+  },
+  "company" : {
+    "bs" : "harness real-time e-markets",
+    "catchPhrase" : "Multi-layered client-server neural-net",
+    "name" : "Romaguera-Crona"
+  },
+  "email" : "Sincere@april.biz",
+  "id" : 1,
+  "name" : "Leanne Graham",
+  "phone" : "1-770-736-8031 x56442",
+  "username" : "Bret",
+  "website" : "hildegard.org"
+}
+00:36:16.402 [qtp325599-25] INFO  org.jarvis.core.resources.api.ApiResources - After render params = GenericEntity [id=203, href=null, instance=null, extended={}], context = {address={city=Gwenborough, geo={lat=-37.3159, lng=81.1496}, street=Kulas Light, suite=Apt. 556, zipcode=92998-3874}, company={bs=harness real-time e-markets, catchPhrase=Multi-layered client-server neural-net, name=Romaguera-Crona}, email=Sincere@april.biz, id=1, name=Leanne Graham, phone=1-770-736-8031 x56442, username=Bret, website=hildegard.org}
+00:36:16.418 [qtp325599-25] INFO  org.jarvis.core.resources.api.ApiResources - After render params = {}, context = {user={address={city=Gwenborough, geo={lat=-37.3159, lng=81.1496}, street=Kulas Light, suite=Apt. 556, zipcode=92998-3874}, company={bs=harness real-time e-markets, catchPhrase=Multi-layered client-server neural-net, name=Romaguera-Crona}, email=Sincere@april.biz, id=1, name=Leanne Graham, phone=1-770-736-8031 x56442, username=Bret, website=hildegard.org}}
+00:36:16.426 [qtp325599-25] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT ResourcePair [key=OBJECT, value={"user":{"address":{"city":"Gwenborough","geo":{"lat":"-37.3159","lng":"81.1496"},"street":"Kulas Light","suite":"Apt. 556","zipcode":"92998-3874"},"company":{"bs":"harness real-time e-markets","catchPhrase":"Multi-layered client-server neural-net","name":"Romaguera-Crona"},"email":"Sincere@april.biz","id":1,"name":"Leanne Graham","phone":"1-770-736-8031 x56442","username":"Bret","website":"hildegard.org"}}]
+00:36:29.340 [qtp325599-19] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onClose null 1001 null
+00:36:36.025 [qtp325599-37] INFO  org.jarvis.core.websocket.StreamWebSocketHandler - onConnect websocket-session-3
+00:36:36.397 [qtp325599-25] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ConfigBean) RETURN id(node), node
+00:36:36.881 [qtp325599-19] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:ViewBean) RETURN id(node), node
+00:36:37.200 [qtp325599-24] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ViewBean) WHERE id(node) = 208 RETURN id(node),node
+00:36:37.614 [qtp325599-24] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ViewBean)-[relation:HREF]->(entity:IotBean) WHERE id(left) = 208 RETURN id(relation),relation,id(entity),entity
+00:36:37.750 [qtp325599-24] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+00:36:38.073 [qtp325599-36] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+00:36:38.090 [qtp325599-38] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:IotBean) WHERE id(node) = 206 RETURN id(node),node
+00:36:38.374 [qtp325599-36] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - CONTEXT org.jarvis.core.model.bean.iot.IotBean {
+  "id" : "206",
+  "name" : "Device Json Mapper",
+  "parameters" : "{\"instance0\":{}}",
+  "visible" : true,
+  "icon" : "touch_app",
+  "tagColor" : "red",
+  "template" : "<ul>\n<li>{{iot.name}}</li>\n<li>{{data.user.username}}</li>\n<ul>\n<md-button ng-click=\"execute(iot)\">{{iot.name}}<md-tooltip>{{data}}</md-tooltip></md-button>"
+}
+00:36:38.394 [qtp325599-36] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - INPUT   { }
+00:36:38.432 [qtp325599-36] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:IotBean)-[relation:HREF]->(entity:ScriptPluginBean) WHERE id(left) = 206 RETURN id(relation),relation,id(entity),entity
+00:36:38.589 [qtp325599-36] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:ScriptPluginBean) WHERE id(node) = 207 RETURN id(node),node
+00:36:38.699 [qtp325599-36] INFO  org.jarvis.core.resources.api.ApiResources - Before render params = {}, context = {}
+00:36:38.708 [qtp325599-36] ERROR org.jarvis.neo4j.client.CypherRestClient - /* all links filtered by relation type */ MATCH (left:ScriptPluginBean)-[relation:HREF]->(entity:CommandBean) WHERE id(left) = 207 RETURN id(relation),relation,id(entity),entity
+00:36:38.811 [qtp325599-36] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:CommandBean) WHERE id(node) = 203 RETURN id(node),node
+00:36:38.908 [qtp325599-36] INFO  org.jarvis.core.resources.api.ApiResources - Before render params = GenericEntity [id=203, href=null, instance=null, extended={}], context = {}
+00:36:41.464 [qtp325599-36] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT  {
+  "address" : {
+    "city" : "Gwenborough",
+    "geo" : {
+      "lat" : "-37.3159",
+      "lng" : "81.1496"
+    },
+    "street" : "Kulas Light",
+    "suite" : "Apt. 556",
+    "zipcode" : "92998-3874"
+  },
+  "company" : {
+    "bs" : "harness real-time e-markets",
+    "catchPhrase" : "Multi-layered client-server neural-net",
+    "name" : "Romaguera-Crona"
+  },
+  "email" : "Sincere@april.biz",
+  "id" : 1,
+  "name" : "Leanne Graham",
+  "phone" : "1-770-736-8031 x56442",
+  "username" : "Bret",
+  "website" : "hildegard.org"
+}
+00:36:41.489 [qtp325599-36] INFO  org.jarvis.core.resources.api.ApiResources - After render params = GenericEntity [id=203, href=null, instance=null, extended={}], context = {address={city=Gwenborough, geo={lat=-37.3159, lng=81.1496}, street=Kulas Light, suite=Apt. 556, zipcode=92998-3874}, company={bs=harness real-time e-markets, catchPhrase=Multi-layered client-server neural-net, name=Romaguera-Crona}, email=Sincere@april.biz, id=1, name=Leanne Graham, phone=1-770-736-8031 x56442, username=Bret, website=hildegard.org}
+00:36:41.507 [qtp325599-36] INFO  org.jarvis.core.resources.api.ApiResources - After render params = {}, context = {user={address={city=Gwenborough, geo={lat=-37.3159, lng=81.1496}, street=Kulas Light, suite=Apt. 556, zipcode=92998-3874}, company={bs=harness real-time e-markets, catchPhrase=Multi-layered client-server neural-net, name=Romaguera-Crona}, email=Sincere@april.biz, id=1, name=Leanne Graham, phone=1-770-736-8031 x56442, username=Bret, website=hildegard.org}}
+00:36:41.516 [qtp325599-36] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT ResourcePair [key=OBJECT, value={"user":{"address":{"city":"Gwenborough","geo":{"lat":"-37.3159","lng":"81.1496"},"street":"Kulas Light","suite":"Apt. 556","zipcode":"92998-3874"},"company":{"bs":"harness real-time e-markets","catchPhrase":"Multi-layered client-server neural-net","name":"Romaguera-Crona"},"email":"Sincere@april.biz","id":1,"name":"Leanne Graham","phone":"1-770-736-8031 x56442","username":"Bret","website":"hildegard.org"}}]
+00:38:09.868 [main] INFO  org.jarvis.core.JarvisCoreServer - Starting JarvisCoreServer on kazoar-PC with PID 7336 (Y:\mars\git\jarvis\jarvis-core\jarvis-core-server\target\classes started by kazoar in Y:\mars\git\jarvis\jarvis-core\jarvis-core-server)
+00:38:09.869 [main] INFO  org.jarvis.core.JarvisCoreServer - No active profile set, falling back to default profiles: default
+00:38:10.204 [main] INFO  org.springframework.context.annotation.AnnotationConfigApplicationContext - Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@dd0d4b: startup date [Wed Apr 06 00:38:10 CEST 2016]; root of context hierarchy
+00:38:11.111 [main] INFO  org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+00:38:11.231 [main] INFO  org.ehcache.spi.ServiceLocator - All Services successfully started.
+00:38:11.234 [main] INFO  org.ehcache.EhcacheManager - Cache 'preConfigured' is getting created in EhcacheManager.
+00:38:11.239 [main] INFO  org.ehcache.spi.serialization.DefaultSerializationProvider - Serializer for <java.lang.String> : org.ehcache.internal.serialization.CompactJavaSerializer@1d5c1a0
+00:38:11.243 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.String> : org.ehcache.internal.copy.IdentityCopier@cbf1a
+00:38:11.245 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.Object> : org.ehcache.internal.copy.IdentityCopier@1e8b721
+00:38:11.316 [main] INFO  class org.ehcache.Ehcache-preConfigured - Initialize successful.
+00:38:11.316 [main] INFO  org.ehcache.EhcacheManager - Cache 'preConfigured' created in EhcacheManager.
+00:38:11.316 [main] INFO  org.ehcache.EhcacheManager - Initialize successful.
+00:38:11.317 [main] INFO  org.ehcache.EhcacheManager - Cache 'myCache' is getting created in EhcacheManager.
+00:38:11.318 [main] INFO  org.ehcache.spi.serialization.DefaultSerializationProvider - Serializer for <java.lang.String> : org.ehcache.internal.serialization.CompactJavaSerializer@c8295b
+00:38:11.318 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.String> : org.ehcache.internal.copy.IdentityCopier@11f7d26
+00:38:11.318 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.Object> : org.ehcache.internal.copy.IdentityCopier@1b21474
+00:38:11.322 [main] INFO  class org.ehcache.Ehcache-myCache - Initialize successful.
+00:38:11.322 [main] INFO  org.ehcache.EhcacheManager - Cache 'myCache' created in EhcacheManager.
+00:38:12.093 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.user.dir = /mars/git/jarvis/jarvis-core/jarvis-core-server
+00:38:12.093 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.log.dir = /mars/git/jarvis/jarvis-core/jarvis-core-server
+00:38:12.093 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.server.url = http://0.0.0.0:8082/ui
+00:38:12.093 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.neo4j.url = http://localhost:7474
+00:38:12.193 [Thread-4] INFO  org.eclipse.jetty.util.log - Logging initialized @3766ms
+00:38:12.414 [main] INFO  org.springframework.jmx.export.annotation.AnnotationMBeanExporter - Registering beans for JMX exposure on startup
+00:38:12.446 [main] INFO  org.jarvis.core.JarvisCoreServer - Started JarvisCoreServer in 2.925 seconds (JVM running for 4.022)
+00:38:12.457 [Thread-4] INFO  spark.webserver.JettySparkServer - == Spark has ignited ...
+00:38:12.457 [Thread-4] INFO  spark.webserver.JettySparkServer - >> Listening on 0.0.0.0:8082
+00:38:12.463 [Thread-4] INFO  org.eclipse.jetty.server.Server - jetty-9.3.2.v20150730
+00:38:12.561 [Thread-4] INFO  org.eclipse.jetty.server.handler.ContextHandler - Started o.e.j.s.ServletContextHandler@13a3b13{/,null,AVAILABLE}
+00:38:12.599 [Thread-4] INFO  org.eclipse.jetty.server.ServerConnector - Started ServerConnector@a94a88{HTTP/1.1,[http/1.1]}{0.0.0.0:8082}
+00:38:12.600 [Thread-4] INFO  org.eclipse.jetty.server.Server - Started @4175ms
+00:38:28.158 [qtp17886264-24] ERROR org.jarvis.neo4j.client.CypherRestClient - MATCH (node:SnapshotBean) RETURN id(node), node
+00:38:30.770 [qtp17886264-18] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:SnapshotBean) WHERE id(node) = 197 RETURN id(node),node
+00:38:39.302 [qtp17886264-23] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:SnapshotBean) WHERE id(node) = 197 RETURN id(node),node
+00:38:39.317 [qtp17886264-23] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - CONTEXT org.jarvis.core.model.bean.tools.SnapshotBean {
+  "id" : "197",
+  "trigger" : null,
+  "timestamp" : null,
+  "href" : null,
+  "name" : "snapshot name",
+  "icon" : "list",
+  "json" : "{\n  \"BlockBean\": {},\n  \"CommandBean\": {\n    \"23\": {\n      \"body\": \"import groovy.json.*\\nimport groovyx.net.http.RESTClient\\nimport static groovyx.net.http.ContentType.*\\n\\n/**\\n * simple api call to simulate data\\n*/\\ndef hue = new RESTClient( 'http://jsonplaceholder.typicode.com' )\\ndef resp = hue.get( path: '/users/1' )\\n\\nif(resp.status == 200) {\\n    return resp.data\\n} else {\\n    return new JsonSlurper().parseText('{}')\\n}\\nreturn resp\",\n      \"icon\": \"whatshot\",\n      \"id\": \"23\",\n      \"name\": \"Json Sample Call (data)\",\n      \"type\": \"GROOVY\"\n    },\n    \"45\": {\n      \"body\": \"import groovy.json.*\\n\\n/**\\n * simple api call to simulate action\\n*/\\nreturn new JsonSlurper().parseText('{\\\"status\\\":true}')\",\n      \"icon\": \"whatshot\",\n      \"id\": \"45\",\n      \"name\": \"Json Sample Call (action)\",\n      \"type\": \"GROOVY\"\n    },\n    \"46\": {\n      \"body\": \"import groovy.json.*\\n\\n/**\\n * simple api call to simulate action\\n*/\\nreturn new JsonSlurper().parseText('{\\\"status\\\":false}')\",\n      \"icon\": \"whatshot\",\n      \"id\": \"46\",\n      \"name\": \"Json Sample Call (action)\",\n      \"type\": \"GROOVY\"\n    }\n  },\n  \"HREF\": {\n    \"20\": {\n      \"__from\": 39,\n      \"__to\": 23,\n      \"href\": \"HREF\",\n      \"name\": \"user\",\n      \"nature\": \"json\",\n      \"order\": \"3\",\n      \"type\": \"data\"\n    },\n    \"21\": {\n      \"__from\": 29,\n      \"__to\": 39\n    },\n    \"22\": {\n      \"__from\": 42,\n      \"__to\": 29\n    },\n    \"23\": {\n      \"__from\": 39,\n      \"__to\": 45,\n      \"href\": \"HREF\",\n      \"name\": \"always_true\",\n      \"nature\": \"json\",\n      \"order\": \"1\",\n      \"type\": \"action\"\n    },\n    \"24\": {\n      \"__from\": 39,\n      \"__to\": 46,\n      \"href\": \"HREF\",\n      \"name\": \"always_false\",\n      \"nature\": \"json\",\n      \"order\": \"2\",\n      \"type\": \"action\"\n    }\n  },\n  \"HREF_ELSE\": {},\n  \"HREF_IF\": {},\n  \"HREF_THEN\": {},\n  \"IotBean\": {\n    \"29\": {\n      \"icon\": \"touch_app\",\n      \"id\": \"29\",\n      \"name\": \"Device Json Mapper\",\n      \"parameters\": \"{\\\"instance0\\\":{}}\",\n      \"tagColor\": \"red\",\n      \"template\": \"<ul>\\n<li>{{iot.name}}</li>\\n<li>{{data.user.username}}</li>\\n<ul>\\n<md-button ng-click=\\\"execute(iot)\\\">{{iot.name}}<md-tooltip>{{data}}</md-tooltip></md-button>\",\n      \"visible\": true\n    }\n  },\n  \"ScenarioBean\": {},\n  \"ScriptPluginBean\": {\n    \"39\": {\n      \"active\": false,\n      \"icon\": \"lightbulb_outline\",\n      \"id\": \"39\",\n      \"name\": \"Json Command Mapper\",\n      \"type\": \"script\",\n      \"visible\": false\n    }\n  },\n  \"TriggerBean\": {},\n  \"ViewBean\": {\n    \"42\": {\n      \"icon\": \"list\",\n      \"id\": \"42\",\n      \"ishome\": true,\n      \"name\": \"Json Sample\",\n      \"url\": \"\"\n    }\n  }\n}"
+}
+00:38:39.318 [qtp17886264-23] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - INPUT   { }
+00:38:39.414 [qtp17886264-23] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find entities */ MATCH (node:BlockBean) return id(node),node
+00:38:39.419 [qtp17886264-23] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find entities */ MATCH (node:CommandBean) return id(node),node
+00:38:39.426 [qtp17886264-23] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find entities */ MATCH (node:IotBean) return id(node),node
+00:38:39.449 [qtp17886264-23] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find entities */ MATCH (node:ScenarioBean) return id(node),node
+00:38:39.454 [qtp17886264-23] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find entities */ MATCH (node:ScriptPluginBean) return id(node),node
+00:38:39.460 [qtp17886264-23] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find entities */ MATCH (node:TriggerBean) return id(node),node
+00:38:39.484 [qtp17886264-23] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find entities */ MATCH (node:ViewBean) return id(node),node
+00:38:39.491 [qtp17886264-23] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find entities */ MATCH (node:ConfigurationBean) return id(node),node
+00:38:39.544 [qtp17886264-23] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT ResourcePair [key=FILE_STREAM, value={
+  "BlockBean" : { },
+  "CommandBean" : {
+    "203" : {
+      "body" : "import groovy.json.*\nimport groovyx.net.http.RESTClient\nimport static groovyx.net.http.ContentType.*\n\n/**\n * simple api call to simulate data\n*/\ndef hue = new RESTClient( 'http://jsonplaceholder.typicode.com' )\ndef resp = hue.get( path: '/users/1' )\n\nif(resp.status == 200) {\n    return resp.data\n} else {\n    return new JsonSlurper().parseText('{}')\n}\nreturn resp",
+      "icon" : "whatshot",
+      "id" : "23",
+      "name" : "Json Sample Call (data)",
+      "type" : "GROOVY"
+    },
+    "204" : {
+      "body" : "import groovy.json.*\n\n/**\n * simple api call to simulate action\n*/\nreturn new JsonSlurper().parseText('{\"status\":true}')",
+      "icon" : "whatshot",
+      "id" : "45",
+      "name" : "Json Sample Call (action)",
+      "type" : "GROOVY"
+    },
+    "205" : {
+      "body" : "import groovy.json.*\n\n/**\n * simple api call to simulate action\n*/\nreturn new JsonSlurper().parseText('{\"status\":false}')",
+      "icon" : "whatshot",
+      "id" : "46",
+      "name" : "Json Sample Call (action)",
+      "type" : "GROOVY"
+    }
+  },
+  "ConfigurationBean" : { },
+  "HREF" : {
+    "107" : {
+      "__from" : 207,
+      "__to" : 203,
+      "href" : "HREF",
+      "name" : "user",
+      "nature" : "json",
+      "order" : "3",
+      "type" : "data"
+    },
+    "108" : {
+      "__from" : 206,
+      "__to" : 207
+    },
+    "109" : {
+      "__from" : 208,
+      "__to" : 206
+    },
+    "110" : {
+      "__from" : 207,
+      "__to" : 204,
+      "href" : "HREF",
+      "name" : "always_true",
+      "nature" : "json",
+      "order" : "1",
+      "type" : "action"
+    },
+    "111" : {
+      "__from" : 207,
+      "__to" : 205,
+      "href" : "HREF",
+      "name" : "always_false",
+      "nature" : "json",
+      "order" : "2",
+      "type" : "action"
+    }
+  },
+  "HREF_ELSE" : { },
+  "HREF_IF" : { },
+  "HREF_THEN" : { },
+  "IotBean" : {
+    "206" : {
+      "icon" : "touch_app",
+      "id" : "29",
+      "name" : "Device Json Mapper",
+      "parameters" : "{\"instance0\":{}}",
+      "tagColor" : "red",
+      "template" : "<ul>\n<li>{{iot.name}}</li>\n<li>{{data.user.username}}</li>\n<ul>\n<md-button ng-click=\"execute(iot)\">{{iot.name}}<md-tooltip>{{data}}</md-tooltip></md-button>",
+      "visible" : true
+    }
+  },
+  "ScenarioBean" : { },
+  "ScriptPluginBean" : {
+    "207" : {
+      "active" : false,
+      "icon" : "lightbulb_outline",
+      "id" : "39",
+      "name" : "Json Command Mapper",
+      "type" : "script",
+      "visible" : false
+    }
+  },
+  "TriggerBean" : { },
+  "ViewBean" : {
+    "208" : {
+      "icon" : "list",
+      "id" : "42",
+      "ishome" : true,
+      "name" : "Json Sample",
+      "url" : ""
+    }
+  }
+}]
+00:40:30.553 [main] INFO  org.jarvis.core.JarvisCoreServer - Starting JarvisCoreServer on kazoar-PC with PID 9884 (Y:\mars\git\jarvis\jarvis-core\jarvis-core-server\target\classes started by kazoar in Y:\mars\git\jarvis\jarvis-core\jarvis-core-server)
+00:40:30.555 [main] INFO  org.jarvis.core.JarvisCoreServer - No active profile set, falling back to default profiles: default
+00:40:30.894 [main] INFO  org.springframework.context.annotation.AnnotationConfigApplicationContext - Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@dd0d4b: startup date [Wed Apr 06 00:40:30 CEST 2016]; root of context hierarchy
+00:40:31.860 [main] INFO  org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+00:40:31.995 [main] INFO  org.ehcache.spi.ServiceLocator - All Services successfully started.
+00:40:31.998 [main] INFO  org.ehcache.EhcacheManager - Cache 'preConfigured' is getting created in EhcacheManager.
+00:40:32.003 [main] INFO  org.ehcache.spi.serialization.DefaultSerializationProvider - Serializer for <java.lang.String> : org.ehcache.internal.serialization.CompactJavaSerializer@1d5c1a0
+00:40:32.006 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.String> : org.ehcache.internal.copy.IdentityCopier@cbf1a
+00:40:32.007 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.Object> : org.ehcache.internal.copy.IdentityCopier@1e8b721
+00:40:32.104 [main] INFO  class org.ehcache.Ehcache-preConfigured - Initialize successful.
+00:40:32.105 [main] INFO  org.ehcache.EhcacheManager - Cache 'preConfigured' created in EhcacheManager.
+00:40:32.105 [main] INFO  org.ehcache.EhcacheManager - Initialize successful.
+00:40:32.106 [main] INFO  org.ehcache.EhcacheManager - Cache 'myCache' is getting created in EhcacheManager.
+00:40:32.106 [main] INFO  org.ehcache.spi.serialization.DefaultSerializationProvider - Serializer for <java.lang.String> : org.ehcache.internal.serialization.CompactJavaSerializer@c8295b
+00:40:32.106 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.String> : org.ehcache.internal.copy.IdentityCopier@11f7d26
+00:40:32.106 [main] INFO  org.ehcache.spi.copy.DefaultCopyProvider - Copier for <java.lang.Object> : org.ehcache.internal.copy.IdentityCopier@1b21474
+00:40:32.110 [main] INFO  class org.ehcache.Ehcache-myCache - Initialize successful.
+00:40:32.110 [main] INFO  org.ehcache.EhcacheManager - Cache 'myCache' created in EhcacheManager.
+00:40:33.058 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.user.dir = /mars/git/jarvis/jarvis-core/jarvis-core-server
+00:40:33.059 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.log.dir = /mars/git/jarvis/jarvis-core/jarvis-core-server
+00:40:33.059 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.server.url = http://0.0.0.0:8082/ui
+00:40:33.059 [main] INFO  org.jarvis.core.services.CoreServerDaemon - jarvis.neo4j.url = http://localhost:7474
+00:40:33.190 [Thread-4] INFO  org.eclipse.jetty.util.log - Logging initialized @4242ms
+00:40:33.404 [main] INFO  org.springframework.jmx.export.annotation.AnnotationMBeanExporter - Registering beans for JMX exposure on startup
+00:40:33.424 [main] INFO  org.jarvis.core.JarvisCoreServer - Started JarvisCoreServer in 3.268 seconds (JVM running for 4.479)
+00:40:33.427 [Thread-4] INFO  spark.webserver.JettySparkServer - == Spark has ignited ...
+00:40:33.427 [Thread-4] INFO  spark.webserver.JettySparkServer - >> Listening on 0.0.0.0:8082
+00:40:33.433 [Thread-4] INFO  org.eclipse.jetty.server.Server - jetty-9.3.2.v20150730
+00:40:33.504 [Thread-4] INFO  org.eclipse.jetty.server.handler.ContextHandler - Started o.e.j.s.ServletContextHandler@19e7160{/,null,AVAILABLE}
+00:40:33.532 [Thread-4] INFO  org.eclipse.jetty.server.ServerConnector - Started ServerConnector@14b34a1{HTTP/1.1,[http/1.1]}{0.0.0.0:8082}
+00:40:33.533 [Thread-4] INFO  org.eclipse.jetty.server.Server - Started @4588ms
+00:40:44.154 [qtp619137-20] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find one node */ MATCH (node:SnapshotBean) WHERE id(node) = 197 RETURN id(node),node
+00:40:44.693 [qtp619137-20] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - CONTEXT org.jarvis.core.model.bean.tools.SnapshotBean {
+  "id" : "197",
+  "trigger" : null,
+  "timestamp" : null,
+  "href" : null,
+  "name" : "snapshot name",
+  "icon" : "list",
+  "json" : "{\n  \"BlockBean\": {},\n  \"CommandBean\": {\n    \"23\": {\n      \"body\": \"import groovy.json.*\\nimport groovyx.net.http.RESTClient\\nimport static groovyx.net.http.ContentType.*\\n\\n/**\\n * simple api call to simulate data\\n*/\\ndef hue = new RESTClient( 'http://jsonplaceholder.typicode.com' )\\ndef resp = hue.get( path: '/users/1' )\\n\\nif(resp.status == 200) {\\n    return resp.data\\n} else {\\n    return new JsonSlurper().parseText('{}')\\n}\\nreturn resp\",\n      \"icon\": \"whatshot\",\n      \"id\": \"23\",\n      \"name\": \"Json Sample Call (data)\",\n      \"type\": \"GROOVY\"\n    },\n    \"45\": {\n      \"body\": \"import groovy.json.*\\n\\n/**\\n * simple api call to simulate action\\n*/\\nreturn new JsonSlurper().parseText('{\\\"status\\\":true}')\",\n      \"icon\": \"whatshot\",\n      \"id\": \"45\",\n      \"name\": \"Json Sample Call (action)\",\n      \"type\": \"GROOVY\"\n    },\n    \"46\": {\n      \"body\": \"import groovy.json.*\\n\\n/**\\n * simple api call to simulate action\\n*/\\nreturn new JsonSlurper().parseText('{\\\"status\\\":false}')\",\n      \"icon\": \"whatshot\",\n      \"id\": \"46\",\n      \"name\": \"Json Sample Call (action)\",\n      \"type\": \"GROOVY\"\n    }\n  },\n  \"HREF\": {\n    \"20\": {\n      \"__from\": 39,\n      \"__to\": 23,\n      \"href\": \"HREF\",\n      \"name\": \"user\",\n      \"nature\": \"json\",\n      \"order\": \"3\",\n      \"type\": \"data\"\n    },\n    \"21\": {\n      \"__from\": 29,\n      \"__to\": 39\n    },\n    \"22\": {\n      \"__from\": 42,\n      \"__to\": 29\n    },\n    \"23\": {\n      \"__from\": 39,\n      \"__to\": 45,\n      \"href\": \"HREF\",\n      \"name\": \"always_true\",\n      \"nature\": \"json\",\n      \"order\": \"1\",\n      \"type\": \"action\"\n    },\n    \"24\": {\n      \"__from\": 39,\n      \"__to\": 46,\n      \"href\": \"HREF\",\n      \"name\": \"always_false\",\n      \"nature\": \"json\",\n      \"order\": \"2\",\n      \"type\": \"action\"\n    }\n  },\n  \"HREF_ELSE\": {},\n  \"HREF_IF\": {},\n  \"HREF_THEN\": {},\n  \"IotBean\": {\n    \"29\": {\n      \"icon\": \"touch_app\",\n      \"id\": \"29\",\n      \"name\": \"Device Json Mapper\",\n      \"parameters\": \"{\\\"instance0\\\":{}}\",\n      \"tagColor\": \"red\",\n      \"template\": \"<ul>\\n<li>{{iot.name}}</li>\\n<li>{{data.user.username}}</li>\\n<ul>\\n<md-button ng-click=\\\"execute(iot)\\\">{{iot.name}}<md-tooltip>{{data}}</md-tooltip></md-button>\",\n      \"visible\": true\n    }\n  },\n  \"ScenarioBean\": {},\n  \"ScriptPluginBean\": {\n    \"39\": {\n      \"active\": false,\n      \"icon\": \"lightbulb_outline\",\n      \"id\": \"39\",\n      \"name\": \"Json Command Mapper\",\n      \"type\": \"script\",\n      \"visible\": false\n    }\n  },\n  \"TriggerBean\": {},\n  \"ViewBean\": {\n    \"42\": {\n      \"icon\": \"list\",\n      \"id\": \"42\",\n      \"ishome\": true,\n      \"name\": \"Json Sample\",\n      \"url\": \"\"\n    }\n  }\n}"
+}
+00:40:44.701 [qtp619137-20] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - INPUT   { }
+00:40:44.791 [qtp619137-20] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find entities */ MATCH (node:BlockBean) return id(node),node
+00:40:44.794 [qtp619137-20] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find entities */ MATCH (node:CommandBean) return id(node),node
+00:40:44.803 [qtp619137-20] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find entities */ MATCH (node:IotBean) return id(node),node
+00:40:44.810 [qtp619137-20] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find entities */ MATCH (node:ScenarioBean) return id(node),node
+00:40:44.818 [qtp619137-20] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find entities */ MATCH (node:ScriptPluginBean) return id(node),node
+00:40:44.827 [qtp619137-20] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find entities */ MATCH (node:TriggerBean) return id(node),node
+00:40:44.833 [qtp619137-20] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find entities */ MATCH (node:ViewBean) return id(node),node
+00:40:44.841 [qtp619137-20] ERROR org.jarvis.neo4j.client.CypherRestClient - /* find entities */ MATCH (node:ConfigBean) return id(node),node
+00:40:44.881 [qtp619137-20] INFO  org.jarvis.core.resources.api.ApiResources - SCRIPT - OUTPUT ResourcePair [key=FILE_STREAM, value={
+  "BlockBean" : { },
+  "CommandBean" : {
+    "203" : {
+      "body" : "import groovy.json.*\nimport groovyx.net.http.RESTClient\nimport static groovyx.net.http.ContentType.*\n\n/**\n * simple api call to simulate data\n*/\ndef hue = new RESTClient( 'http://jsonplaceholder.typicode.com' )\ndef resp = hue.get( path: '/users/1' )\n\nif(resp.status == 200) {\n    return resp.data\n} else {\n    return new JsonSlurper().parseText('{}')\n}\nreturn resp",
+      "icon" : "whatshot",
+      "id" : "23",
+      "name" : "Json Sample Call (data)",
+      "type" : "GROOVY"
+    },
+    "204" : {
+      "body" : "import groovy.json.*\n\n/**\n * simple api call to simulate action\n*/\nreturn new JsonSlurper().parseText('{\"status\":true}')",
+      "icon" : "whatshot",
+      "id" : "45",
+      "name" : "Json Sample Call (action)",
+      "type" : "GROOVY"
+    },
+    "205" : {
+      "body" : "import groovy.json.*\n\n/**\n * simple api call to simulate action\n*/\nreturn new JsonSlurper().parseText('{\"status\":false}')",
+      "icon" : "whatshot",
+      "id" : "46",
+      "name" : "Json Sample Call (action)",
+      "type" : "GROOVY"
+    }
+  },
+  "ConfigBean" : {
+    "209" : {
+      "active" : false,
+      "backgroundUrl" : "http://artroyalephotography.com/wp-content/uploads/2011/08/minimal-gray-to-white-gradient-wallpapers_33797_1920x1200-1024x640.jpg",
+      "name" : "default",
+      "opacity" : "1"
+    },
+    "210" : {
+      "active" : true,
+      "backgroundUrl" : "http://artroyalephotography.com/wp-content/uploads/2011/08/minimal-gray-to-white-gradient-wallpapers_33797_1920x1200-1024x640.jpg",
+      "id" : "210",
+      "name" : "default",
+      "opacity" : "1",
+      "tilesGtMd" : "16",
+      "tilesGtSm" : "10",
+      "tilesGtXs" : "8",
+      "tilesLg" : "20",
+      "tilesMd" : "12",
+      "tilesSm" : "8",
+      "tilesXs" : "3"
+    }
+  },
+  "HREF" : {
+    "107" : {
+      "__from" : 207,
+      "__to" : 203,
+      "href" : "HREF",
+      "name" : "user",
+      "nature" : "json",
+      "order" : "3",
+      "type" : "data"
+    },
+    "108" : {
+      "__from" : 206,
+      "__to" : 207
+    },
+    "109" : {
+      "__from" : 208,
+      "__to" : 206
+    },
+    "110" : {
+      "__from" : 207,
+      "__to" : 204,
+      "href" : "HREF",
+      "name" : "always_true",
+      "nature" : "json",
+      "order" : "1",
+      "type" : "action"
+    },
+    "111" : {
+      "__from" : 207,
+      "__to" : 205,
+      "href" : "HREF",
+      "name" : "always_false",
+      "nature" : "json",
+      "order" : "2",
+      "type" : "action"
+    }
+  },
+  "HREF_ELSE" : { },
+  "HREF_IF" : { },
+  "HREF_THEN" : { },
+  "IotBean" : {
+    "206" : {
+      "icon" : "touch_app",
+      "id" : "29",
+      "name" : "Device Json Mapper",
+      "parameters" : "{\"instance0\":{}}",
+      "tagColor" : "red",
+      "template" : "<ul>\n<li>{{iot.name}}</li>\n<li>{{data.user.username}}</li>\n<ul>\n<md-button ng-click=\"execute(iot)\">{{iot.name}}<md-tooltip>{{data}}</md-tooltip></md-button>",
+      "visible" : true
+    }
+  },
+  "ScenarioBean" : { },
+  "ScriptPluginBean" : {
+    "207" : {
+      "active" : false,
+      "icon" : "lightbulb_outline",
+      "id" : "39",
+      "name" : "Json Command Mapper",
+      "type" : "script",
+      "visible" : false
+    }
+  },
+  "TriggerBean" : { },
+  "ViewBean" : {
+    "208" : {
+      "icon" : "list",
+      "id" : "42",
+      "ishome" : true,
+      "name" : "Json Sample",
+      "url" : ""
+    }
+  }
+}]
