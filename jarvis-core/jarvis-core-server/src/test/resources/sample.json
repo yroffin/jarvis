@@ -25,23 +25,19 @@
   },
   "ConfigBean": {
     "209": {
-      "active": false,
-      "backgroundUrl": "http://artroyalephotography.com/wp-content/uploads/2011/08/minimal-gray-to-white-gradient-wallpapers_33797_1920x1200-1024x640.jpg",
-      "name": "default",
-      "opacity": "1"
-    },
-    "210": {
       "active": true,
       "backgroundUrl": "http://artroyalephotography.com/wp-content/uploads/2011/08/minimal-gray-to-white-gradient-wallpapers_33797_1920x1200-1024x640.jpg",
-      "id": "210",
+      "id": "209",
       "name": "default",
       "opacity": "1",
-      "tilesGtMd": "16",
-      "tilesGtSm": "10",
-      "tilesGtXs": "8",
-      "tilesLg": "20",
-      "tilesMd": "12",
-      "tilesSm": "8",
+      "tilesGtLg": "16",
+      "tilesGtMd": "10",
+      "tilesGtSm": "8",
+      "tilesGtXs": "6",
+      "tilesLg": "12",
+      "tilesMd": "8",
+      "tilesSm": "6",
+      "tilesXl": "20",
       "tilesXs": "3"
     }
   },

@@ -79,15 +79,13 @@ limitations under the License.
 <div>
     <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z4" md-component-id="left">
         <md-button ng-click="location('left', '/helper-iots');"><div layout="row"><i class="help-icons">touch_app</i><span flex></span><span>Connected object(s)</span></div></md-button>
-        <md-button ng-click="location('left', '/scenarios');"><div layout="row"><i class="help-icons">add</i><span flex></span><span>Scenario</span></div></md-button>
-        <md-button ng-click="location('left', '/blocks');"><div layout="row"><i class="help-icons">add</i><span flex></span><span>Block</span></div></md-button>
-        <md-button ng-click="location('left', '/events');"><div layout="row"><i class="help-icons">add</i><span flex></span><span>Events</span></div></md-button>
-        <md-button ng-click="location('left', '/triggers');"><div layout="row"><i class="help-icons">add</i><span flex></span><span>Triggers</span></div></md-button>
-        <md-button ng-click="location('left', '/views');"><div layout="row"><i class="help-icons">add</i><span flex></span><span>View(s)</span></div></md-button>
-        <md-button ng-click="location('left', '/snapshots');"><div layout="row"><i class="help-icons">add</i><span flex></span><span>Snapshot(s)</span></div></md-button>
-        <md-button ng-click="location('left', '/crons');"><div layout="row"><i class="help-icons">add</i><span flex></span><span>Crontab(s)</span></div></md-button>
-        <md-button ng-click="location('left', '/connectors');"><div layout="row"><i class="help-icons">add</i><span flex></span><span>Connector(s)</span></div></md-button>
-        <md-button ng-click="location('left', '/configurations');"><div layout="row"><i class="help-icons">add</i><span flex></span><span>Configuration(s)</span></div></md-button>
+        <md-button ng-click="location('left', '/scenarios');"><div layout="row"><i class="help-icons">list</i><span flex></span><span>Scenario</span></div></md-button>
+        <md-button ng-click="location('left', '/triggers');"><div layout="row"><i class="help-icons">settings_remote</i><span flex></span><span>Triggers</span></div></md-button>
+        <md-button ng-click="location('left', '/views');"><div layout="row"><i class="help-icons">library_books</i><span flex></span><span>View(s)</span></div></md-button>
+        <md-button ng-click="location('left', '/snapshots');"><div layout="row"><i class="help-icons">save</i><span flex></span><span>Snapshot(s)</span></div></md-button>
+        <md-button ng-click="location('left', '/crons');"><div layout="row"><i class="help-icons">av_timer</i><span flex></span><span>Crontab(s)</span></div></md-button>
+        <md-button ng-click="location('left', '/connectors');"><div layout="row"><i class="help-icons">cloud</i><span flex></span><span>Connector(s)</span></div></md-button>
+        <md-button ng-click="location('left', '/configurations');"><div layout="row"><i class="help-icons">widgets</i><span flex></span><span>Configuration(s)</span></div></md-button>
     </md-sidenav>
     <md-content ng-style="{'opacity': config.opacity}" ui-view flex class="md-padding">
     </md-content>
