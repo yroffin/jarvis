@@ -1,12 +1,12 @@
 package org.jarvis.core.profiler.element;
 
-import org.jarvis.core.profiler.model.DefaultSorterNode;
+import org.jarvis.core.profiler.model.DefaultNode;
 import org.jarvis.core.profiler.model.GenericNode;
 
 /**
- * Start node
+ * Call activity node
  */
-public class CallActivityNode extends DefaultSorterNode implements Comparable<GenericNode>, GenericNode {
+public class CallActivityNode extends DefaultNode implements Comparable<GenericNode>, GenericNode {
 
 	/**
 	 * @param name
@@ -21,5 +21,10 @@ public class CallActivityNode extends DefaultSorterNode implements Comparable<Ge
 	 */
 	public boolean isCall() {
 		return true;
+	}
+
+	@Override
+	public String getLongId() {
+		return "call#" + id;
 	}
 }

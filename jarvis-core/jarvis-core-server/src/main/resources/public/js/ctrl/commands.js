@@ -56,10 +56,18 @@ angular.module('JarvisApp.ctrl.commands', ['JarvisApp.services'])
      * @param command, the command to execute
      */
     $scope.execute = function(command) {
-    	$log.debug('commandCtrl::execute', command);
     	commandResourceService.command.task(command.id, 'execute', $scope.input, function(data) {
    	    	toastService.info('command ' + command.name + '#' + command.id + ' executed');
-   	    	$log.debug(data);
+   	    	$scope.output = angular.toJson(data, true);
+	    }, toastService.failure);
+    }
+    /**
+     * test this command
+     * @param command, the command to execute
+     */
+    $scope.test = function(command) {
+    	commandResourceService.command.task(command.id, 'test', $scope.input, function(data) {
+   	    	toastService.info('command ' + command.name + '#' + command.id + ' tested');
    	    	$scope.output = angular.toJson(data, true);
 	    }, toastService.failure);
     }

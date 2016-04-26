@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.GenericBean;
+import org.jarvis.core.services.neo4j.ApiNeo4Service;
 import org.jarvis.core.services.neo4j.Neo4jService;
 
 /**
@@ -42,8 +43,10 @@ public class ApiService<S extends GenericBean> extends Neo4jService<S> {
 
 	/**
 	 * default constructor
+	 * @param apiNeo4Service 
 	 */
-	public ApiService() {
+	public ApiService(ApiNeo4Service apiNeo4Service) {
+		super(apiNeo4Service);
 	}
 	
 	/**

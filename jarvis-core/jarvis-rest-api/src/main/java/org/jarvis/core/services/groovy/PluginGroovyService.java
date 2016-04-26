@@ -23,11 +23,11 @@ import java.util.Map.Entry;
 import javax.annotation.PostConstruct;
 
 import org.jarvis.core.exception.TechnicalException;
+import org.jarvis.core.services.PluginService;
 import org.jarvis.core.type.GenericMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
@@ -38,7 +38,7 @@ import groovy.lang.GroovyShell;
  * main daemon
  */
 @Component
-public class PluginGroovyService {
+public class PluginGroovyService implements PluginService {
 	protected Logger logger = LoggerFactory.getLogger(PluginGroovyService.class);
 
 	@Autowired
@@ -70,8 +70,20 @@ public class PluginGroovyService {
 	 * @return GenericBean
 	 * @throws TechnicalException 
 	 */
-	public GenericMap groovy(GenericMap command, GenericMap args) throws TechnicalException {
+	@Override
+	public GenericMap asObject(GenericMap command, GenericMap args) throws TechnicalException {
 		return groovyAsObject((String) command.get("body"), args);
+	}
+
+	/**
+	 * @param command
+	 * @param args 
+	 * @return GenericBean
+	 * @throws TechnicalException 
+	 */
+	@Override
+	public boolean asBoolean(GenericMap command, GenericMap args) throws TechnicalException {
+		return groovyAsBoolean((String) command.get("body"), args);
 	}
 
 	/**

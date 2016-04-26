@@ -1,19 +1,19 @@
 package org.jarvis.core.profiler.element;
 
-import org.jarvis.core.profiler.model.DefaultSorterNode;
+import org.jarvis.core.profiler.model.DefaultNode;
 import org.jarvis.core.profiler.model.GenericNode;
 
 /**
  * Start node
  */
-public class ActivityNode extends DefaultSorterNode implements Comparable<GenericNode>, GenericNode {
+public class ActivityNode extends DefaultNode implements Comparable<GenericNode>, GenericNode {
 
 	/**
 	 * @param name
-	 * @param descriptione 
+	 * @param description 
 	 */
-	public ActivityNode(String name, String descriptione) {
-		super(name, descriptione);
+	public ActivityNode(String name, String description) {
+		super(name, description);
 	}
 
 	/**
@@ -21,5 +21,10 @@ public class ActivityNode extends DefaultSorterNode implements Comparable<Generi
 	 */
 	public boolean isActivity() {
 		return true;
+	}
+
+	@Override
+	public String getLongId() {
+		return "activity#" + id;
 	}
 }

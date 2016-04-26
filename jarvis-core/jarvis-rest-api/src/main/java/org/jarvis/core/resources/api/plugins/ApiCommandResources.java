@@ -16,7 +16,6 @@
 
 package org.jarvis.core.resources.api.plugins;
 
-import java.io.IOException;
 import java.lang.reflect.Field;
 
 import org.jarvis.core.exception.TechnicalException;
@@ -67,8 +66,9 @@ public class ApiCommandResources extends ApiResources<CommandRest,CommandBean> {
 		GenericMap result = args;
 		switch(taskType) {
 			case EXECUTE:
-				result = execute(command, result);
-				break;
+				return new ResourcePair(ResultType.OBJECT, mapper.writeValueAsString(execute(command, result)));
+			case TEST:
+				return new ResourcePair(ResultType.BOOLEAN, mapper.writeValueAsString(test(command, result)));
 			default:
 				result = new GenericMap();
 		}
@@ -76,12 +76,11 @@ public class ApiCommandResources extends ApiResources<CommandRest,CommandBean> {
 	}
 
 	/**
-	 * execute this command
+	 * transform CommandBean to GenericMap
 	 * @param command
-	 * @param args
-	 * @return GenericMap
+	 * @return
 	 */
-	public GenericMap execute(CommandBean command, GenericMap args) {
+	private GenericMap extractCommand(CommandBean command) {
 		/**
 		 * convert command to lazy map
 		 */
@@ -93,21 +92,63 @@ public class ApiCommandResources extends ApiResources<CommandRest,CommandBean> {
 				throw new TechnicalException(e);
 			}
 		}
+		return converted;
+	}
+
+	/**
+	 * execute this command
+	 * @param command
+	 * @param args
+	 * @return boolean
+	 */
+	public boolean test(CommandBean command, GenericMap args) {
+		boolean result = false;
+		try {
+			switch(command.type) {
+				case COMMAND:
+					result = pluginShellService.asBoolean(extractCommand(command), args);
+					break;
+				case SHELL:
+					result = pluginShellService.asBoolean(extractCommand(command), args);
+					break;
+				case GROOVY:
+					result = pluginGroovyService.asBoolean(extractCommand(command), args);
+					break;
+				default:
+			}
+		} catch (TechnicalException e) {
+			throw new TechnicalException(e);
+		}
+		try {
+			logger.info("SCRIPT - OUTPUT  {}", mapper.writerWithDefaultPrettyPrinter().writeValueAsString(result));
+		} catch (JsonProcessingException e) {
+			throw new TechnicalException(e);
+		}
+    	return result;
+	}
+
+	/**
+	 * execute this command
+	 * @param command
+	 * @param args
+	 * @return GenericMap
+	 */
+	public GenericMap execute(CommandBean command, GenericMap args) {
 		GenericMap result = null;
 		try {
 			switch(command.type) {
 				case COMMAND:
-					result = pluginShellService.command(converted, args);
+					result = pluginShellService.asObject(extractCommand(command), args);
 					break;
 				case SHELL:
-					result = pluginShellService.shell(converted, args);
+					result = pluginShellService.asObject(extractCommand(command), args);
 					break;
 				case GROOVY:
-					result = pluginGroovyService.groovy(converted, args);
+					result = pluginGroovyService.asObject(extractCommand(command), args);
 					break;
 				default:
 			}
-		} catch (IOException | InterruptedException e) {
+		} catch (TechnicalException e) {
 			throw new TechnicalException(e);
 		}
 		try {

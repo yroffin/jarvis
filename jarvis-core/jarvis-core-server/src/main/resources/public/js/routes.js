@@ -40,6 +40,11 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
             controller: 'helperCtrl',
             templateUrl: '/ui/js/partials/helper/jarvis-commands.svg'
         })
+        .state('helper-scenarii', {
+            url: '/helper-scenarii',
+            controller: 'helperCtrl',
+            templateUrl: '/ui/js/partials/helper/jarvis-scenarii.svg'
+        })
         .state('events', {
             url: '/events',
             controller: 'eventsCtrl',

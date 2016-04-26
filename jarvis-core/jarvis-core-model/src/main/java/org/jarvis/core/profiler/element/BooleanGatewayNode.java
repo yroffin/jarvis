@@ -1,12 +1,12 @@
 package org.jarvis.core.profiler.element;
 
-import org.jarvis.core.profiler.model.DefaultSorterNode;
+import org.jarvis.core.profiler.model.DefaultNode;
 import org.jarvis.core.profiler.model.GenericNode;
 
 /**
- * Start node
+ * Gateway node
  */
-public class BooleanGatewayNode extends DefaultSorterNode implements Comparable<GenericNode>, GenericNode {
+public class BooleanGatewayNode extends DefaultNode implements Comparable<GenericNode>, GenericNode {
 
 	/**
 	 * @param name
@@ -21,5 +21,10 @@ public class BooleanGatewayNode extends DefaultSorterNode implements Comparable<
 	 */
 	public boolean isGateway() {
 		return true;
+	}
+
+	@Override
+	public String getLongId() {
+		return "gateway#" + id;
 	}
 }

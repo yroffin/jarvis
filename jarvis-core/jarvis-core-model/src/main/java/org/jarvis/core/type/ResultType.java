@@ -31,5 +31,13 @@ public enum ResultType {
 	/**
 	 * file stream
 	 */
-	FILE_STREAM
+	FILE_STREAM,
+	/**
+	 * array
+	 */
+	ARRAY,
+	/**
+	 * boolean
+	 */
+	BOOLEAN
 }

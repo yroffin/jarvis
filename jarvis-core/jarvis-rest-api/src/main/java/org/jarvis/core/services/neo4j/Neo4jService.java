@@ -61,7 +61,8 @@ public class Neo4jService<S extends GenericBean> {
 	protected ObjectMapper mapper = new ObjectMapper();
 	protected MapperFactory mapperFactory = null;
 
-	protected Neo4jService() {
+	protected Neo4jService(ApiNeo4Service apiNeo4Service) {
+		this.apiNeo4Service = apiNeo4Service;
 		mapperFactory = new DefaultMapperFactory.Builder()
 				.mapNulls(false)
 				.build();
@@ -86,13 +87,6 @@ public class Neo4jService<S extends GenericBean> {
 		
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		mapper.registerModule(new JodaModule());
-	}
-
-	/**
-	 * @param apiNeo4Service
-	 */
-	public void setApiNeo4Service(ApiNeo4Service apiNeo4Service) {
-		this.apiNeo4Service = apiNeo4Service;
 	}
 
 	/**

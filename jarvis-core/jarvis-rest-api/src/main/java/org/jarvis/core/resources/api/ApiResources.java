@@ -122,7 +122,7 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	/**
 	 * internal api service
 	 */
-	ApiService<S> apiService = new ApiService<S>();
+	ApiService<S> apiService;
 
 	/**
 	 * bean class
@@ -138,10 +138,9 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * spring init
 	 */
 	@PostConstruct
-	protected
-	void init() {
+	protected void init() {
 		super.init();
-		apiService.setApiNeo4Service(apiNeo4Service);
+		apiService = new ApiService<S>(apiNeo4Service);
 		apiService.setBeanClass(beanClass);
 	}
 
@@ -243,7 +242,8 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * @throws TechnicalNotFoundException 
 	 */
 	public S doGetByIdBean(String id) throws TechnicalNotFoundException {
-		return mapperFactory.getMapperFacade().map(apiService.getById(id), beanClass);
+		S bean = apiService.getById(id);
+		return mapperFactory.getMapperFacade().map(bean, beanClass);
 	}
 	
 	/**
@@ -432,14 +432,12 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
     				body,
     				TaskType.valueOf(request.queryParams(task).toUpperCase()));
     		/**
-    		 * task can return String or Object
-    		 * TODO
-    		 * return List
+    		 * task can return String, Object or list
     		 */
-    		if(GenericMap.class == result.getClass()) {
+    		if(GenericMap.class == result.getClass() || ArrayList.class == result.getClass()) {
     			return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(result);
     		} else {
-    			return (String) result;
+       			return (String) result;
     		}
     	} catch(TechnicalNotFoundException e) {
     		response.status(404);
@@ -513,6 +511,8 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 			switch(result.getKey()) {
 				case OBJECT:
 					return (GenericMap) mapper.readValue(result.getValue(), GenericMap.class);
+				case ARRAY:
+					return (List<?>) mapper.readValue(result.getValue(), List.class);
 				case FILE_STREAM:
 					response.type("application/octet-stream");
 					return result.getValue();

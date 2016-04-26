@@ -126,7 +126,7 @@ public class CoreWebsocket {
 			while (true) {
 				try {
 					broadcast("SystemThread", "1", SystemIndicator.factory());
-					Thread.sleep(1000);
+					Thread.sleep(10000);
 				} catch (InterruptedException e) {
 					logger.error("While sleeping {}", e);
 				}

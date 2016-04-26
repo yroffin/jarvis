@@ -1,10 +1,12 @@
 package org.jarvis.core.profiler.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 /**
  * generic node interface
  */
+@JsonPropertyOrder(alphabetic=true)
 public interface GenericNode {
 	/**
 	 * node type
@@ -50,10 +52,15 @@ public interface GenericNode {
 	 * @return int
 	 */
 	@JsonIgnore
-	int getSorter();
+	String getSorter();
 
 	/**
 	 * @return String
 	 */
 	String getDescription();
+
+	/**
+	 * @return String
+	 */
+	String getLongId();
 }

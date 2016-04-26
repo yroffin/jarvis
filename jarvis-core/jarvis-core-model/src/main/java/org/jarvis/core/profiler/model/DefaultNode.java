@@ -10,7 +10,7 @@ public abstract class DefaultNode implements Comparable<GenericNode>, GenericNod
 		return "DefaultNode [id=" + id + ", name=" + name + ", description=" + description + "]";
 	}
 
-	static protected int sequence;
+	static protected int sequence = 10;
 	protected String id;
 	protected String name;
 	protected String description;
@@ -41,10 +41,12 @@ public abstract class DefaultNode implements Comparable<GenericNode>, GenericNod
 	}
 
 	@Override
-	public abstract int getSorter();
+	public String getSorter() {
+		return id;
+	}
 
 	@Override
 	public int compareTo(GenericNode o) {
-		return (int) (getSorter() - o.getSorter());
+		return (int) (getSorter().compareTo(o.getSorter()));
 	}
 }

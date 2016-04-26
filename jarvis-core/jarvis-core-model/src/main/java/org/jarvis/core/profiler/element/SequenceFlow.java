@@ -4,7 +4,7 @@ import org.jarvis.core.profiler.model.DefaultFlow;
 import org.jarvis.core.profiler.model.GenericNode;
 
 /**
- * Start node
+ * Edge
  */
 public class SequenceFlow extends DefaultFlow implements Comparable<DefaultFlow>, GenericNode {
 
@@ -28,7 +28,12 @@ public class SequenceFlow extends DefaultFlow implements Comparable<DefaultFlow>
 	}
 
 	@Override
-	public int getSorter() {
-		return 0;
+	public String getSorter() {
+		return id;
+	}
+
+	@Override
+	public String getLongId() {
+		return "flow#" + id;
 	}
 }

@@ -18,6 +18,7 @@ package org.jarvis.core.resources.api.scenario;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.plugin.ScriptPluginBean;
@@ -25,7 +26,8 @@ import org.jarvis.core.model.bean.scenario.BlockBean;
 import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.model.rest.plugin.ScriptPluginRest;
 import org.jarvis.core.model.rest.scenario.BlockRest;
-import org.jarvis.core.profiler.TaskProfiler;
+import org.jarvis.core.profiler.DefaultProcessService;
+import org.jarvis.core.profiler.model.DefaultProcess;
 import org.jarvis.core.profiler.model.GenericNode;
 import org.jarvis.core.resources.api.ApiLinkedTwiceResources;
 import org.jarvis.core.resources.api.ResourcePair;
@@ -145,51 +147,66 @@ public class ApiBlockResources extends ApiLinkedTwiceResources<BlockRest,BlockBe
 	}
 
 	/**
-	 * @param taskProfiler 
-	 * @param level 
-	 * @param startNode 
-	 * @param bean
+	 * @param process 
+	 * @param currentBlock 
+	 * @param calls 
 	 * @return GenericMap
 	 * @throws TechnicalNotFoundException 
 	 */
-	public GenericNode render(TaskProfiler taskProfiler, int level, GenericNode startNode, BlockBean bean) throws TechnicalNotFoundException {
+	public Map<String, GenericEntity> render(DefaultProcess process, BlockBean currentBlock, Map<String, GenericEntity> calls) throws TechnicalNotFoundException {
+		/**
+		 * create start node
+		 */
+		GenericNode startNode = DefaultProcessService.addStartNode(process, currentBlock.name, "start#" + currentBlock.id);
+
 		/**
 		 * stop recursion
 		 */
-		List<GenericEntity> conditions = apiHrefBlockScriptPluginResources.findAllConditions(bean);
-		if(conditions.size() > 0 && level < 5) {
+		List<GenericEntity> conditions = apiHrefBlockScriptPluginResources.findAllConditions(currentBlock);
+		if(conditions.size() > 0) {
+			/**
+			 * find condition
+			 */
+			ScriptPluginRest conditionScript = apiScriptPluginResources.doGetById(conditions.get(0).id);
+			GenericNode pluginNode = DefaultProcessService.addActivity(process, conditionScript.name, "activity#" + conditionScript.id);
+			DefaultProcessService.addSequenceFlowSimple(process, startNode, pluginNode);
 			/**
 			 * gateway node
 			 */
-			GenericNode gatewayNode = taskProfiler.addBooleanGateway("test", "#TODO" + "#" + level);
-			taskProfiler.addSequenceFlowSimple("start->gateway", startNode, gatewayNode);
-			GenericNode end = taskProfiler.addEndNode("end", startNode.getDescription() + "#" + level);
+			GenericNode gatewayNode = DefaultProcessService.addBooleanGateway(process, currentBlock.expression, "gateway#" + currentBlock.id);
+			DefaultProcessService.addSequenceFlowSimple(process, pluginNode, gatewayNode);
+			/**
+			 * end node
+			 */
+			GenericNode end = DefaultProcessService.addEndNode(process, currentBlock.name, "end#" + currentBlock.id);
 			/**
 			 * then
 			 */
-			List<GenericEntity> pluginsThen = apiHrefBlockScriptPluginResources.findAllThen(bean);
-			List<GenericEntity> blocksThen = apiHrefBlockBlockResources.findAllThen(bean);
+			List<GenericEntity> pluginsThen = apiHrefBlockScriptPluginResources.findAllThen(currentBlock);
+			List<GenericEntity> blocksThen = apiHrefBlockBlockResources.findAllThen(currentBlock);
 			if(pluginsThen.size() > 0) {
 				/**
 				 * then plugin
 				 */
 				GenericNode pluginThenNode = null;
 				for(GenericEntity plugin : pluginsThen) {
-					pluginThenNode = taskProfiler.addActivty("#" + plugin.id, "#" + plugin.id);
-					taskProfiler.addSequenceFlowDecision("gateway-then->plugin", gatewayNode, pluginThenNode, true);
+					ScriptPluginRest pluginScript = apiScriptPluginResources.doGetById(plugin.id);
+					pluginThenNode = DefaultProcessService.addActivity(process, pluginScript.name, "activity#" + pluginScript.id);
+					DefaultProcessService.addSequenceFlowDecision(process, "gateway-then->plugin", gatewayNode, pluginThenNode, true);
 				}
 				/**
 				 * then block
 				 */
 				if(blocksThen.size()>0) {
 					for(GenericEntity block : blocksThen) {
-						GenericNode subStartNode = taskProfiler.addStartNode("start", block.id + "#" + (level+1));
-						GenericNode subEnd = render(taskProfiler, level+1, subStartNode, doGetByIdBean(block.id));
-						taskProfiler.addSequenceFlowSimple("plugin->start", pluginThenNode, subStartNode);
-						taskProfiler.addSequenceFlowSimple("subEnd->end", subEnd, end);
+						BlockRest blockBean = doGetById(block.id);
+						GenericNode subroutine = DefaultProcessService.addCallActivty(process, "call " + blockBean.name, "subroutine#" + block.id);
+						calls.put(block.id, block);
+						DefaultProcessService.addSequenceFlowSimple(process, pluginThenNode, subroutine);
+						DefaultProcessService.addSequenceFlowSimple(process, subroutine, end);
 					}
 				} else {
-					taskProfiler.addSequenceFlowSimple("plugin->end", pluginThenNode, end);
+					DefaultProcessService.addSequenceFlowSimple(process, pluginThenNode, end);
 				}
 			} else {
 				/**
@@ -197,39 +214,41 @@ public class ApiBlockResources extends ApiLinkedTwiceResources<BlockRest,BlockBe
 				 */
 				if(blocksThen.size()>0) {
 					for(GenericEntity block : blocksThen) {
-						GenericNode subStartNode = taskProfiler.addStartNode("start", block.id + "#" + (level+1));
-						GenericNode subEnd = render(taskProfiler, level+1, subStartNode, doGetByIdBean(block.id));
-						taskProfiler.addSequenceFlowDecision("gateway->block", gatewayNode, subStartNode, true);
-						taskProfiler.addSequenceFlowSimple("subEnd->end", subEnd, end);
+						GenericNode subroutine = DefaultProcessService.addCallActivty(process, block.id, "subroutine#" + block.id);
+						calls.put(block.id, block);
+						DefaultProcessService.addSequenceFlowDecision(process, "gateway-then->block", gatewayNode, subroutine, true);
+						DefaultProcessService.addSequenceFlowSimple(process, subroutine, end);
 					}
 				}
 			}
 			/**
 			 * else
 			 */
-			List<GenericEntity> pluginsElse = apiHrefBlockScriptPluginResources.findAllElse(bean);
-			List<GenericEntity> blocksElse = apiHrefBlockBlockResources.findAllElse(bean);
+			List<GenericEntity> pluginsElse = apiHrefBlockScriptPluginResources.findAllElse(currentBlock);
+			List<GenericEntity> blocksElse = apiHrefBlockBlockResources.findAllElse(currentBlock);
 			if(pluginsElse.size() > 0) {
 				/**
 				 * else plugin
 				 */
 				GenericNode pluginElseNode = null;
 				for(GenericEntity plugin : pluginsElse) {
-					pluginElseNode = taskProfiler.addActivty(plugin.id, "#" + plugin.id);
-					taskProfiler.addSequenceFlowDecision("gateway-else->plugin", gatewayNode, pluginElseNode, false);
+					ScriptPluginRest pluginScript = apiScriptPluginResources.doGetById(plugin.id);
+					pluginElseNode = DefaultProcessService.addActivity(process, pluginScript.name, "activity#" + pluginScript.id);
+					DefaultProcessService.addSequenceFlowDecision(process, "gateway-else->plugin", gatewayNode, pluginElseNode, false);
 				}
 				/**
 				 * else block
 				 */
 				if(blocksElse.size()>0) {
 					for(GenericEntity block : blocksElse) {
-						GenericNode subStartNode = taskProfiler.addStartNode("start", block.id + "#" + (level+1));
-						GenericNode subEnd = render(taskProfiler, level+1, subStartNode, doGetByIdBean(block.id));
-						taskProfiler.addSequenceFlowSimple("plugin->start", pluginElseNode, subStartNode);
-						taskProfiler.addSequenceFlowSimple("subEnd->end", subEnd, end);
+						BlockRest blockBean = doGetById(block.id);
+						GenericNode subroutine = DefaultProcessService.addCallActivty(process, "call " + blockBean.name, "subroutine#" + block.id);
+						calls.put(block.id, block);
+						DefaultProcessService.addSequenceFlowSimple(process, pluginElseNode, subroutine);
+						DefaultProcessService.addSequenceFlowSimple(process, subroutine, end);
 					}
 				} else {
-					taskProfiler.addSequenceFlowSimple("plugin->end", pluginElseNode, end);
+					DefaultProcessService.addSequenceFlowSimple(process, pluginElseNode, end);
 				}
 			} else {
 				/**
@@ -237,18 +256,24 @@ public class ApiBlockResources extends ApiLinkedTwiceResources<BlockRest,BlockBe
 				 */
 				if(blocksElse.size()>0) {
 					for(GenericEntity block : blocksElse) {
-						GenericNode subStartNode = taskProfiler.addStartNode("start", block.id + "#" + (level+1));
-						GenericNode subEnd = render(taskProfiler, level+1, subStartNode, doGetByIdBean(block.id));
-						taskProfiler.addSequenceFlowDecision("gateway->block", gatewayNode, subStartNode, false);
-						taskProfiler.addSequenceFlowSimple("subEnd->end", subEnd, end);
+						GenericNode subroutine = DefaultProcessService.addCallActivty(process, block.id, "subroutine#" + block.id);
+						calls.put(block.id, block);
+						DefaultProcessService.addSequenceFlowDecision(process, "gateway-else->block", gatewayNode, subroutine, true);
+						DefaultProcessService.addSequenceFlowSimple(process, subroutine, end);
 					}
 				}
 			}
-			return end;
+			/**
+			 * no then neither else
+			 */
+			if(pluginsThen.size() == 0 && pluginsElse.size() == 0) {
+				DefaultProcessService.addSequenceFlowSimple(process, pluginNode, end);
+			}
+			return calls;
 		} else {
-			GenericNode end = taskProfiler.addEndNode("end", startNode.getDescription() + "#" + level);
-			taskProfiler.addSequenceFlowSimple("subEnd->end", startNode, end);
-			return end;
+			GenericNode end = DefaultProcessService.addEndNode(process, currentBlock.name, "end#" + currentBlock.id);
+			DefaultProcessService.addSequenceFlowSimple(process, startNode, end);
+			return calls;
 		}
 	}
 }

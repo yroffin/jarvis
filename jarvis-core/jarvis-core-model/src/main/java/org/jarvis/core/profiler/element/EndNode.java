@@ -1,12 +1,12 @@
 package org.jarvis.core.profiler.element;
 
-import org.jarvis.core.profiler.model.DefaultSorterNode;
+import org.jarvis.core.profiler.model.DefaultNode;
 import org.jarvis.core.profiler.model.GenericNode;
 
 /**
- * Start node
+ * End node
  */
-public class EndNode extends DefaultSorterNode implements Comparable<GenericNode>, GenericNode {
+public class EndNode extends DefaultNode implements Comparable<GenericNode>, GenericNode {
 
 	/**
 	 * @param name
@@ -21,5 +21,10 @@ public class EndNode extends DefaultSorterNode implements Comparable<GenericNode
 	 */
 	public boolean isEnd() {
 		return true;
+	}
+
+	@Override
+	public String getLongId() {
+		return "end#" + id;
 	}
 }

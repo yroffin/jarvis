@@ -64,6 +64,6 @@ public class ApiHrefBlockScriptPluginResources extends ApiHrefMapper<BlockRest,S
 	 * @return List<GenericEntity>
 	 */
 	public List<GenericEntity> findAllElse(BlockBean bean) {
-		return super.findAll(mapperFactory.getMapperFacade().map(bean, BlockRest.class), HREF_THEN);
+		return super.findAll(mapperFactory.getMapperFacade().map(bean, BlockRest.class), HREF_ELSE);
 	}
 }

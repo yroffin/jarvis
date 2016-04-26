@@ -1,13 +1,16 @@
 package org.jarvis.core.profiler.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 /**
  * default node
  */
+@JsonPropertyOrder(alphabetic=true)
 public abstract class DefaultFlow implements Comparable<DefaultFlow>, GenericNode {
 
-	static protected int sequence;
+	static protected int sequence = 10;
+
 	protected String id;
 	protected String name;
 	protected GenericNode sourceRef;
@@ -68,11 +71,11 @@ public abstract class DefaultFlow implements Comparable<DefaultFlow>, GenericNod
 
 	@Override
 	@JsonIgnore
-	public abstract int getSorter();
+	public abstract String getSorter();
 
 	@Override
 	public int compareTo(DefaultFlow o) {
-		return (int) (getSorter() - o.getSorter());
+		return (int) (getSorter().compareTo(o.getSorter()));
 	}
 
 	/**

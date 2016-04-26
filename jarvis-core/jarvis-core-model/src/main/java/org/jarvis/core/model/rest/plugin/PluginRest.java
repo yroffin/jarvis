@@ -40,4 +40,10 @@ public class PluginRest extends GenericEntity {
 	 */
 	@JsonProperty("visible")
 	public boolean visible;
+	
+	@Override
+	public String toString() {
+		return "PluginRest [name=" + name + ", type=" + type + ", icon=" + icon + ", owner=" + owner + ", active="
+				+ active + ", visible=" + visible + "]";
+	}
 }

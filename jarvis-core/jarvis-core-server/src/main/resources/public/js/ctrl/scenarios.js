@@ -108,22 +108,23 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
     $scope.build = function(resource) {
     	var codes = [];
     	_.each(resource, function(graph) {
+    		$log.debug("graph", graph.stage);
         	var code = "";
 	    	_.each(graph.nodes, function(node) {
 	    		if(node.start) {
-	    			code += '#' + node.id + '=>start: ' + node.name + ':>'+node.description+'\n';
+	    			code += '#' + node.id + '=>start: ' + node.name + ':>'+node.longId+'\n';
 	    		}
 	    		if(node.end) {
-	    			code += '#' + node.id + '=>end: ' + node.name + ':>'+node.description+'\n';
+	    			code += '#' + node.id + '=>end: ' + node.name + ':>'+node.longId+'\n';
 	    		}
 	    		if(node.activity) {
-	    			code += '#' + node.id + '=>operation: ' + node.name + ':>'+node.description+'\n';
+	    			code += '#' + node.id + '=>operation: ' + node.name + ':>'+node.longId+'\n';
 	    		}
 	    		if(node.gateway) {
-	    			code += '#' + node.id + '=>condition: ' + node.name + ':>'+node.description+'\n';
+	    			code += '#' + node.id + '=>condition: ' + node.name + ':>'+node.longId+'\n';
 	    		}
 	    		if(node.call) {
-	    			code += '#' + node.id + '=>subroutine: ' + node.name + ':>'+node.description+'\n';
+	    			code += '#' + node.id + '=>subroutine: ' + node.name + ':>'+node.longId+'\n';
 	    		}
 	    	});
 	    	_.each(graph.edges, function(edge) {
@@ -137,22 +138,31 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
 	    			code += '#' + edge.sourceId + '->#' + edge.targetId + '\n';
 	    		}
 	    	});
-        	codes.push(code);
+        	codes.push({"stage":graph.stage, "code": code});
     	});
     	return codes;
     }
+    /**
+     * render each graph
+     */
     $scope.render = function(resources) {
 		$log.debug(resources);
     	$('#canvas').html('');
-    	_.each(resources, function(resource) {
-	    	var chart = flowchart.parse(resource);
-	        chart.drawSVG('canvas', {
+    	_.each(resources, function(result) {
+        	$('#canvas').append('<h4>'+result.stage+'</h4>');
+        	$('#canvas').append('<div id="canvas-'+result.stage+'"></div>');
+    	});
+    	_.each(resources, function(result) {
+    		$log.info("Render", result.stage);
+    		var stage = result.stage;
+ 	    	var chart = flowchart.parse(result.code);
+	        chart.drawSVG('canvas-'+result.stage, {
 	          // 'x': 30,
 	          // 'y': 50,
 	          'line-width': 3,
 	          'line-length': 50,
 	          'text-margin': 10,
-	          'font-size': 14,
+	          'font-size': 12,
 	          'font': 'normal',
 	          'font-family': 'Helvetica',
 	          'font-weight': 'normal',
@@ -166,12 +176,14 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
 	          'scale': 1,
 	          'symbols': {
 	            'start': {
-	              'font-color': 'red',
+	              'font-color': 'green',
 	              'element-color': 'green',
 	              'fill': 'yellow'
 	            },
 	            'end':{
-	              'class': 'end-element'
+	              'font-color': 'red',
+	              'element-color': 'red',
+	              'fill': 'yellow'
 	            }
 	          },
 	          'flowstate' : {
@@ -193,8 +205,8 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
     	if(scenario != undefined && scenario.id != undefined && scenario.id != '') {
     		scenarioResourceService.scenario.task(scenario.id, 'render', {}, function(data) {
        	    	$log.debug('[SCENARIO/render]', scenario, data);
-       	    	$scope.code = $scope.build(data);
-       	    	$scope.render($scope.code);
+       	    	$scope.codes = $scope.build(data);
+       	    	$scope.render($scope.codes);
     	    }, toastService.failure);
     	}
     }

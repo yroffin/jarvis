@@ -45,10 +45,9 @@ public abstract class ApiMapper {
 	protected static final String TASK = "task";
 
 	protected ObjectMapper mapper = new ObjectMapper();
-	protected MapperFactory mapperFactory = null;
+	protected MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
 
 	protected void init() {
-		mapperFactory = new DefaultMapperFactory.Builder().build();
 		mapperFactory.getConverterFactory().registerConverter(new PassThroughConverter(org.joda.time.DateTime.class));
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		mapper.registerModule(new JodaModule());

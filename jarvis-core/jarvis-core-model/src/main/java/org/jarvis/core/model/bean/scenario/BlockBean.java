@@ -21,6 +21,7 @@ public class BlockBean extends GenericBean {
 
 	@Override
 	public String toString() {
-		return "BlockBean [name=" + name + ", icon=" + icon + ", expression=" + expression + "]";
+		return "BlockBean [name=" + name + ", icon=" + icon + ", expression=" + expression + ", id=" + id + ", trigger="
+				+ trigger + ", timestamp=" + timestamp + ", href=" + href + "]";
 	}
 }

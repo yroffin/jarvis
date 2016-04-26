@@ -1,0 +1,175 @@
+[ {
+  "edges" : [ {
+    "bool" : false,
+    "description" : "sequence flow",
+    "id" : "10",
+    "longId" : "flow#10",
+    "name" : "start#10->activity#11",
+    "sourceId" : "10",
+    "targetId" : "11"
+  }, {
+    "bool" : false,
+    "description" : "sequence flow",
+    "id" : "11",
+    "longId" : "flow#11",
+    "name" : "activity#11->gateway#12",
+    "sourceId" : "11",
+    "targetId" : "12"
+  }, {
+    "bool" : true,
+    "description" : "sequence flow",
+    "id" : "12",
+    "longId" : "flow#12",
+    "name" : "gateway#12[gateway-then->plugin]activity#14",
+    "sourceId" : "12",
+    "targetId" : "14"
+  }, {
+    "bool" : false,
+    "description" : "sequence flow",
+    "id" : "13",
+    "longId" : "flow#13",
+    "name" : "activity#14->call#15",
+    "sourceId" : "14",
+    "targetId" : "15"
+  }, {
+    "bool" : false,
+    "description" : "sequence flow",
+    "id" : "14",
+    "longId" : "flow#14",
+    "name" : "call#15->end#13",
+    "sourceId" : "15",
+    "targetId" : "13"
+  } ],
+  "nodes" : {
+    "10" : {
+      "description" : "start#12000",
+      "id" : "10",
+      "longId" : "start#10",
+      "name" : null,
+      "start" : true
+    },
+    "11" : {
+      "activity" : true,
+      "description" : "activity#10000",
+      "id" : "11",
+      "longId" : "activity#11",
+      "name" : "test script"
+    },
+    "12" : {
+      "description" : "gateway#12000",
+      "gateway" : true,
+      "id" : "12",
+      "longId" : "gateway#12",
+      "name" : null
+    },
+    "13" : {
+      "description" : "end#12000",
+      "end" : true,
+      "id" : "13",
+      "longId" : "end#13",
+      "name" : null
+    },
+    "14" : {
+      "activity" : true,
+      "description" : "activity#10000",
+      "id" : "14",
+      "longId" : "activity#14",
+      "name" : "test script"
+    },
+    "15" : {
+      "call" : true,
+      "description" : "subroutine#10000",
+      "id" : "15",
+      "longId" : "call#15",
+      "name" : "call null"
+    }
+  },
+  "stage" : "main"
+}, {
+  "edges" : [ {
+    "bool" : false,
+    "description" : "sequence flow",
+    "id" : "15",
+    "longId" : "flow#15",
+    "name" : "start#16->activity#17",
+    "sourceId" : "16",
+    "targetId" : "17"
+  }, {
+    "bool" : false,
+    "description" : "sequence flow",
+    "id" : "16",
+    "longId" : "flow#16",
+    "name" : "activity#17->gateway#18",
+    "sourceId" : "17",
+    "targetId" : "18"
+  }, {
+    "bool" : true,
+    "description" : "sequence flow",
+    "id" : "17",
+    "longId" : "flow#17",
+    "name" : "gateway#18[gateway-then->plugin]activity#20",
+    "sourceId" : "18",
+    "targetId" : "20"
+  }, {
+    "bool" : false,
+    "description" : "sequence flow",
+    "id" : "18",
+    "longId" : "flow#18",
+    "name" : "activity#20->call#21",
+    "sourceId" : "20",
+    "targetId" : "21"
+  }, {
+    "bool" : false,
+    "description" : "sequence flow",
+    "id" : "19",
+    "longId" : "flow#19",
+    "name" : "call#21->end#19",
+    "sourceId" : "21",
+    "targetId" : "19"
+  } ],
+  "nodes" : {
+    "16" : {
+      "description" : "start#10000",
+      "id" : "16",
+      "longId" : "start#16",
+      "name" : null,
+      "start" : true
+    },
+    "17" : {
+      "activity" : true,
+      "description" : "activity#10000",
+      "id" : "17",
+      "longId" : "activity#17",
+      "name" : "test script"
+    },
+    "18" : {
+      "description" : "gateway#10000",
+      "gateway" : true,
+      "id" : "18",
+      "longId" : "gateway#18",
+      "name" : null
+    },
+    "19" : {
+      "description" : "end#10000",
+      "end" : true,
+      "id" : "19",
+      "longId" : "end#19",
+      "name" : null
+    },
+    "20" : {
+      "activity" : true,
+      "description" : "activity#10000",
+      "id" : "20",
+      "longId" : "activity#20",
+      "name" : "test script"
+    },
+    "21" : {
+      "call" : true,
+      "description" : "subroutine#10000",
+      "id" : "21",
+      "longId" : "call#21",
+      "name" : "call null"
+    }
+  },
+  "stage" : "level#1"
+} ]

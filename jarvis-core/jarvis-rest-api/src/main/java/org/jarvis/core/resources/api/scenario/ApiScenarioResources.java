@@ -16,6 +16,15 @@
 
 package org.jarvis.core.resources.api.scenario;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
 import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.scenario.BlockBean;
 import org.jarvis.core.model.bean.scenario.ScenarioBean;
@@ -24,8 +33,8 @@ import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.model.rest.scenario.BlockRest;
 import org.jarvis.core.model.rest.scenario.ScenarioRest;
 import org.jarvis.core.model.rest.scenario.TriggerRest;
-import org.jarvis.core.profiler.TaskProfiler;
-import org.jarvis.core.profiler.model.GenericNode;
+import org.jarvis.core.profiler.DefaultProcessService;
+import org.jarvis.core.profiler.model.DefaultProcess;
 import org.jarvis.core.resources.api.ApiLinkedTwiceResources;
 import org.jarvis.core.resources.api.ResourcePair;
 import org.jarvis.core.resources.api.href.ApiHrefScenarioBlockResources;
@@ -101,7 +110,7 @@ public class ApiScenarioResources extends ApiLinkedTwiceResources<ScenarioRest,S
 			case EXECUTE:
 				return new ResourcePair(ResultType.OBJECT, execute(bean, args, new GenericMap()));
 			case RENDER:
-				return new ResourcePair(ResultType.OBJECT, render(bean, args, new GenericMap()));
+				return new ResourcePair(ResultType.ARRAY, render(bean, args, new GenericMap()));
 			default:
 				result = new GenericMap();
 				return new ResourcePair(ResultType.OBJECT, mapper.writeValueAsString(result));
@@ -117,23 +126,46 @@ public class ApiScenarioResources extends ApiLinkedTwiceResources<ScenarioRest,S
 		return "";
 	}
 
-	private String render(ScenarioBean bean, GenericMap args, GenericMap genericMap) throws TechnicalNotFoundException {
-		StringBuilder sb = new StringBuilder();
-		sb.append("[");
+	private HashMap<String, GenericEntity> renderLevel(String stage, Collection<GenericEntity> entities, List<DefaultProcess> processes) throws TechnicalNotFoundException {
+		HashMap<String, GenericEntity> calls = new HashMap<String, GenericEntity>();
 		/**
-		 * start and end node
+		 * iterate on block entities
 		 */
-		int index = 0;
-		for(GenericEntity entity : sort(apiHrefScenarioBlockResources.findAll(bean), "order")) {
-			TaskProfiler taskProfiler = new TaskProfiler();
-			BlockRest block = apiBlockResources.doGetById(entity.id);
-			GenericNode startNode = taskProfiler.addStartNode("start", block.name + "#1");
-			apiBlockResources.render(taskProfiler, 1, startNode, mapperFactory.getMapperFacade().map(block, BlockBean.class));
-			if(index>0) sb.append(",");
-			sb.append(taskProfiler.toJson());
-			index++;
+		for(GenericEntity blockEntity : entities) {
+			DefaultProcess process = new DefaultProcess(stage);
+			processes.add(process);
+			BlockRest block = apiBlockResources.doGetById(blockEntity.id);
+			apiBlockResources.render(process, mapperFactory.getMapperFacade().map(block, BlockBean.class), calls);
 		}
-		sb.append("]");
-		return sb.toString();
+		return calls;
+	}
+
+	private String render(ScenarioBean bean, GenericMap args, GenericMap genericMap) throws TechnicalNotFoundException {
+		/**
+		 * compute first level, return is the sub block of n-1 level
+		 */
+		List<DefaultProcess> processes = new ArrayList<DefaultProcess>();
+		Map<String, GenericEntity> calls = renderLevel("main", sort(apiHrefScenarioBlockResources.findAll(bean), "order"), processes);
+		int level = 1;
+		Set<String> index = new HashSet<String>();
+		while(calls.size()>0) {
+			Map<String, GenericEntity> toRun = new HashMap<String, GenericEntity>();
+			for(Entry<String, GenericEntity> entity : calls.entrySet()) {
+				if(!index.contains(entity.getKey())) {
+					index.add(entity.getKey());
+					toRun.put(entity.getKey(), entity.getValue());
+				}
+			}
+			/**
+			 * render not known block
+			 */
+			calls = renderLevel("level#" + level, toRun.values(), processes);
+			level ++;
+			if(level > 10) {
+				logger.warn("To many levels {}", bean.id);
+				break;
+			}
+		}
+		return DefaultProcessService.toJson(processes);
 	}
 }
