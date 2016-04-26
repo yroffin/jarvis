@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jarvis.core.model.bean.GenericBean;
+import org.jarvis.core.model.bean.plugin.ScriptPluginBean;
 import org.jarvis.core.model.bean.scenario.ScenarioBean;
 import org.jarvis.core.model.rest.GenericEntity;
-import org.jarvis.core.model.rest.plugin.ScriptPluginRest;
 import org.jarvis.core.resources.api.ResourcePair;
 import org.jarvis.core.resources.api.href.ApiHrefBlockBlockResources;
 import org.jarvis.core.resources.api.href.ApiHrefBlockScriptPluginResources;
@@ -121,11 +121,11 @@ public class ApiBlockResourcesTest {
 		/**
 		 * get detail script
 		 */
-		Mockito.when(apiScriptPluginResources.doGetById("10000")).then(new Answer<ScriptPluginRest>() {
+		Mockito.when(apiScriptPluginResources.doGetByIdBean("10000")).then(new Answer<ScriptPluginBean>() {
 
 			@Override
-			public ScriptPluginRest answer(InvocationOnMock invocation) throws Throwable {
-				ScriptPluginRest result = new ScriptPluginRest();
+			public ScriptPluginBean answer(InvocationOnMock invocation) throws Throwable {
+				ScriptPluginBean result = new ScriptPluginBean();
 				result.id = "10000";
 				result.name = "test script";
 				return result;

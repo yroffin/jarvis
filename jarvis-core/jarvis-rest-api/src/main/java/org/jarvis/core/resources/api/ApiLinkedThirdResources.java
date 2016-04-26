@@ -19,7 +19,7 @@ import spark.Response;
 import spark.Route;
 
 /**
- * @author kazoar
+ * declare third level HREF API
  *
  * @param <T>
  * @param <S>
@@ -39,16 +39,24 @@ public abstract class ApiLinkedThirdResources<T extends GenericEntity, S extends
 		delete("/api/"+resource+"/:id/"+target+"/"+param, deleteThirdLink(api, apiHref, param, relation));
 	}
 
+	/**
+	 * find all links
+	 * @param api
+	 * @param apiHref
+	 * @param sortField
+	 * @param relation
+	 * @return
+	 */
 	protected Route getThirdLinks(ApiResources<T3,S3> api, ApiHrefMapper<T,T3> apiHref, String sortField, String relation) {
 		return new Route() {
 		    @SuppressWarnings("unchecked")
 			@Override
 			public Object handle(Request request, Response response) throws Exception {
 		    	try {
-		    		T master = doGetById(request.params(ID));
+		    		T master = doGetByIdRest(request.params(ID));
 		    		List<T3> result = new ArrayList<T3>();
 		    		for(GenericEntity link : sort(apiHref.findAll(master, findRelType(request,findRelType(request,relation))), sortField)) {
-		    			result.add((T3) fromLink(link, api.doGetById(link.id)));
+		    			result.add((T3) fromLink(link, api.doGetByIdRest(link.id)));
 		    		}
 			    	return mapper.writeValueAsString(result);
 		    	} catch(TechnicalNotFoundException e) {
@@ -59,16 +67,25 @@ public abstract class ApiLinkedThirdResources<T extends GenericEntity, S extends
 		};
 	}
 	
+	/**
+	 * create link
+	 * @param api
+	 * @param apiHref
+	 * @param param
+	 * @param href
+	 * @param relation
+	 * @return
+	 */
 	protected Route postThirdLink(ApiResources<T3,S3> api, ApiHrefMapper<T,T3> apiHref, String param, String href, String relation) {
 		return new Route() {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
 		    	try {
-		    		T master = doGetById(request.params(ID));
+		    		T master = doGetByIdRest(request.params(ID));
 			    	try {
-			    		T3 target = api.doGetById(request.params(param));
+			    		T3 target = api.doGetByIdRest(request.params(param));
 				    	GenericEntity link = apiHref.add(master, target, new GenericMap(request.body()), href, relation);
-				    	return mapper.writeValueAsString(fromLink(link, api.doGetById(link.id)));
+				    	return mapper.writeValueAsString(fromLink(link, api.doGetByIdRest(link.id)));
 			    	} catch(TechnicalNotFoundException e) {
 			    		response.status(404);
 			    		return "";
@@ -81,14 +98,22 @@ public abstract class ApiLinkedThirdResources<T extends GenericEntity, S extends
 		};
 	}
 	
+	/**
+	 * update link
+	 * @param api
+	 * @param apiHref
+	 * @param param
+	 * @param relation
+	 * @return
+	 */
 	protected Route putThirdLink(ApiResources<T3,S3> api, ApiHrefMapper<T,T3> apiHref, String param, String relation) {
 		return new Route() {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
 		    	try {
-		    		doGetById(request.params(ID));
+		    		doGetByIdRest(request.params(ID));
 			    	try {
-			    		api.doGetById(request.params(param));
+			    		api.doGetByIdRest(request.params(param));
 				    	GenericMap properties = apiHref.update(request.params(INSTANCE), new GenericMap(request.body()));
 				    	return mapper.writeValueAsString(properties);
 			    	} catch(TechnicalNotFoundException e) {
@@ -103,14 +128,22 @@ public abstract class ApiLinkedThirdResources<T extends GenericEntity, S extends
 		};
 	}
 	
+	/**
+	 * delete this link
+	 * @param api
+	 * @param apiHref
+	 * @param param
+	 * @param relation
+	 * @return
+	 */
 	protected Route deleteThirdLink(ApiResources<T3,S3> api, ApiHrefMapper<T,T3> apiHref, String param, String relation) {
 		return new Route() {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
 		    	try {
-		    		T master = doGetById(request.params(ID));
+		    		T master = doGetByIdRest(request.params(ID));
 			    	try {
-			    		T3 target = api.doGetById(request.params(param));
+			    		T3 target = api.doGetByIdRest(request.params(param));
 			    		apiHref.remove(master, target, request.queryParams(INSTANCE), findRelType(request,relation));
 			    	} catch(TechnicalNotFoundException e) {
 			    		response.status(404);

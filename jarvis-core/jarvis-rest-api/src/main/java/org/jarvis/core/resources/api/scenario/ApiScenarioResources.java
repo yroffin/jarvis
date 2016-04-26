@@ -117,15 +117,31 @@ public class ApiScenarioResources extends ApiLinkedTwiceResources<ScenarioRest,S
 		}
 	}
 
+	/**
+	 * execute this scenario
+	 * @param bean
+	 * @param args
+	 * @param genericMap
+	 * @return
+	 * @throws TechnicalNotFoundException
+	 */
 	private String execute(ScenarioBean bean, GenericMap args, GenericMap genericMap) throws TechnicalNotFoundException {
 		GenericMap result = args;
 		for(GenericEntity entity : sort(apiHrefScenarioBlockResources.findAll(bean), "order")) {
-			BlockRest block = apiBlockResources.doGetById(entity.id);
-			result = apiBlockResources.execute(new GenericMap(), mapperFactory.getMapperFacade().map(block, BlockBean.class), result);
+			BlockBean block = apiBlockResources.doGetByIdBean(entity.id);
+			result = apiBlockResources.execute(new GenericMap(), block, result);
 		}
 		return "";
 	}
 
+	/**
+	 * render this level
+	 * @param stage
+	 * @param entities
+	 * @param processes
+	 * @return
+	 * @throws TechnicalNotFoundException
+	 */
 	private HashMap<String, GenericEntity> renderLevel(String stage, Collection<GenericEntity> entities, List<DefaultProcess> processes) throws TechnicalNotFoundException {
 		HashMap<String, GenericEntity> calls = new HashMap<String, GenericEntity>();
 		/**
@@ -134,12 +150,20 @@ public class ApiScenarioResources extends ApiLinkedTwiceResources<ScenarioRest,S
 		for(GenericEntity blockEntity : entities) {
 			DefaultProcess process = new DefaultProcess(stage);
 			processes.add(process);
-			BlockRest block = apiBlockResources.doGetById(blockEntity.id);
-			apiBlockResources.render(process, mapperFactory.getMapperFacade().map(block, BlockBean.class), calls);
+			BlockBean block = apiBlockResources.doGetByIdBean(blockEntity.id);
+			apiBlockResources.render(process, block, calls);
 		}
 		return calls;
 	}
 
+	/**
+	 * render processes
+	 * @param bean
+	 * @param args
+	 * @param genericMap
+	 * @return
+	 * @throws TechnicalNotFoundException
+	 */
 	private String render(ScenarioBean bean, GenericMap args, GenericMap genericMap) throws TechnicalNotFoundException {
 		/**
 		 * compute first level, return is the sub block of n-1 level

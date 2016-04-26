@@ -91,7 +91,7 @@ public class ApiIotResources extends ApiLinkedThirdResources<IotRest,IotBean,Iot
 		get("/api/directives/html/iots/:id", new Route() {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
-		    	IotRest iot = doGetById(request.params(ID));
+		    	IotRest iot = doGetByIdRest(request.params(ID));
 		    	return iot.template;
 		    }
 		});
@@ -167,7 +167,7 @@ public class ApiIotResources extends ApiLinkedThirdResources<IotRest,IotBean,Iot
 				params.put(param.getKey(), param.getValue());
 			}
 			for(GenericEntity entity : sort(apiHrefIotScriptPluginResources.findAll(iotRest, HREF), "order")) {
-				ScriptPluginRest script = apiScriptPluginResources.doGetById(entity.id);
+				ScriptPluginRest script = apiScriptPluginResources.doGetByIdRest(entity.id);
 				if(render) {
 					logger.info("Before render params = {}, context = {}", params, result);
 					result = apiScriptPluginResources.render(script, params);

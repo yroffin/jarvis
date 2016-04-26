@@ -131,7 +131,7 @@ public class CoreEventDaemon {
 				for(GenericEntity link : apiHrefScenarioTriggerResources.findAll(sce)) {
 					try {
 						if(event.trigger.equals(link.id)) {
-							apiTriggerResources.doGetById(link.id);
+							apiTriggerResources.doGetByIdRest(link.id);
 							toExecute.add(sce);
 						}
 					} catch (TechnicalNotFoundException e) {

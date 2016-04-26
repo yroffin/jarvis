@@ -19,7 +19,7 @@ import spark.Response;
 import spark.Route;
 
 /**
- * @author kazoar
+ * declare second level HREF API
  *
  * @param <T>
  * @param <S>
@@ -30,6 +30,16 @@ import spark.Route;
  */
 public abstract class ApiLinkedTwiceResources<T extends GenericEntity, S extends GenericBean, T1 extends GenericEntity, S1 extends GenericBean, T2 extends GenericEntity, S2 extends GenericBean> extends ApiLinkedResources<T, S, T1, S1> {
 
+	/**
+	 * declare second level HREF API
+	 * @param resource
+	 * @param target
+	 * @param api
+	 * @param apiHref
+	 * @param param
+	 * @param sortKey
+	 * @param relation
+	 */
 	protected void declareSecond(String resource, String target, ApiResources<T2,S2> api, ApiHrefMapper<T,T2> apiHref, String param, String sortKey, String relation) {
 		get("/api/"+resource+"/:id/"+target+"", getSecondLinks(api, apiHref, sortKey, relation));
 		post("/api/"+resource+"/:id/"+target+"/"+param, postSecondLink(api, apiHref, param, target, relation));
@@ -37,16 +47,24 @@ public abstract class ApiLinkedTwiceResources<T extends GenericEntity, S extends
 		delete("/api/"+resource+"/:id/"+target+"/"+param, deleteSecondLink(api, apiHref, param, relation));
 	}
 
+	/**
+	 * find all links
+	 * @param api
+	 * @param apiHref
+	 * @param sortField
+	 * @param relation
+	 * @return
+	 */
 	protected Route getSecondLinks(ApiResources<T2,S2> api, ApiHrefMapper<T,T2> apiHref, String sortField, String relation) {
 		return new Route() {
 		    @SuppressWarnings("unchecked")
 			@Override
 			public Object handle(Request request, Response response) throws Exception {
 		    	try {
-		    		T master = doGetById(request.params(ID));
+		    		T master = doGetByIdRest(request.params(ID));
 		    		List<T2> result = new ArrayList<T2>();
 		    		for(GenericEntity link : sort(apiHref.findAll(master, findRelType(request,relation)), sortField)) {
-		    			result.add((T2) fromLink(link, api.doGetById(link.id)));
+		    			result.add((T2) fromLink(link, api.doGetByIdRest(link.id)));
 		    		}
 			    	return mapper.writeValueAsString(result);
 		    	} catch(TechnicalNotFoundException e) {
@@ -57,16 +75,25 @@ public abstract class ApiLinkedTwiceResources<T extends GenericEntity, S extends
 		};
 	}
 	
+	/**
+	 * create link
+	 * @param api
+	 * @param apiHref
+	 * @param param
+	 * @param href
+	 * @param relation
+	 * @return
+	 */
 	protected Route postSecondLink(ApiResources<T2,S2> api, ApiHrefMapper<T,T2> apiHref, String param, String href, String relation) {
 		return new Route() {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
 		    	try {
-		    		T master = doGetById(request.params(ID));
+		    		T master = doGetByIdRest(request.params(ID));
 			    	try {
-			    		T2 target = api.doGetById(request.params(param));
+			    		T2 target = api.doGetByIdRest(request.params(param));
 				    	GenericEntity link = apiHref.add(master, target, new GenericMap(request.body()), href, relation);
-				    	return mapper.writeValueAsString(fromLink(link, api.doGetById(link.id)));
+				    	return mapper.writeValueAsString(fromLink(link, api.doGetByIdRest(link.id)));
 			    	} catch(TechnicalNotFoundException e) {
 			    		response.status(404);
 			    		return "";
@@ -79,14 +106,22 @@ public abstract class ApiLinkedTwiceResources<T extends GenericEntity, S extends
 		};
 	}
 	
+	/**
+	 * update link
+	 * @param api
+	 * @param apiHref
+	 * @param param
+	 * @param relation
+	 * @return
+	 */
 	protected Route putSecondLink(ApiResources<T2,S2> api, ApiHrefMapper<T,T2> apiHref, String param, String relation) {
 		return new Route() {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
 		    	try {
-		    		doGetById(request.params(ID));
+		    		doGetByIdRest(request.params(ID));
 			    	try {
-			    		api.doGetById(request.params(param));
+			    		api.doGetByIdRest(request.params(param));
 				    	GenericMap properties = apiHref.update(request.params(INSTANCE), new GenericMap(request.body()));
 				    	return mapper.writeValueAsString(properties);
 			    	} catch(TechnicalNotFoundException e) {
@@ -101,14 +136,22 @@ public abstract class ApiLinkedTwiceResources<T extends GenericEntity, S extends
 		};
 	}
 	
+	/**
+	 * delete link
+	 * @param api
+	 * @param apiHref
+	 * @param param
+	 * @param relation
+	 * @return
+	 */
 	protected Route deleteSecondLink(ApiResources<T2,S2> api, ApiHrefMapper<T,T2> apiHref, String param, String relation) {
 		return new Route() {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
 		    	try {
-		    		T master = doGetById(request.params(ID));
+		    		T master = doGetByIdRest(request.params(ID));
 			    	try {
-			    		T2 target = api.doGetById(request.params(param));
+			    		T2 target = api.doGetByIdRest(request.params(param));
 			    		apiHref.remove(master, target, request.queryParams(INSTANCE), findRelType(request,relation));
 			    	} catch(TechnicalNotFoundException e) {
 			    		response.status(404);

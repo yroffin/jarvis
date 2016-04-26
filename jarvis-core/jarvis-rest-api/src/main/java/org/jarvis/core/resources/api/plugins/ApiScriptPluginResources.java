@@ -136,7 +136,7 @@ public class ApiScriptPluginResources extends ApiLinkedResources<ScriptPluginRes
 			/**
 			 * retrieve command to execute
 			 */
-			CommandRest command = apiCommandResources.doGetById(entity.id);
+			CommandRest command = apiCommandResources.doGetByIdRest(entity.id);
 			logger.info("Before render params = {}, context = {}", command, result);
 			result = apiCommandResources.execute(mapperFactory.getMapperFacade().map(command, CommandBean.class), result);
 			logger.info("After render params = {}, context = {}", command, result);

@@ -167,7 +167,7 @@ public class ApiBlockResources extends ApiLinkedTwiceResources<BlockRest,BlockBe
 			/**
 			 * find condition
 			 */
-			ScriptPluginRest conditionScript = apiScriptPluginResources.doGetById(conditions.get(0).id);
+			ScriptPluginBean conditionScript = apiScriptPluginResources.doGetByIdBean(conditions.get(0).id);
 			GenericNode pluginNode = DefaultProcessService.addActivity(process, conditionScript.name, "activity#" + conditionScript.id);
 			DefaultProcessService.addSequenceFlowSimple(process, startNode, pluginNode);
 			/**
@@ -190,7 +190,7 @@ public class ApiBlockResources extends ApiLinkedTwiceResources<BlockRest,BlockBe
 				 */
 				GenericNode pluginThenNode = null;
 				for(GenericEntity plugin : pluginsThen) {
-					ScriptPluginRest pluginScript = apiScriptPluginResources.doGetById(plugin.id);
+					ScriptPluginBean pluginScript = apiScriptPluginResources.doGetByIdBean(plugin.id);
 					pluginThenNode = DefaultProcessService.addActivity(process, pluginScript.name, "activity#" + pluginScript.id);
 					DefaultProcessService.addSequenceFlowDecision(process, "gateway-then->plugin", gatewayNode, pluginThenNode, true);
 				}
@@ -199,7 +199,7 @@ public class ApiBlockResources extends ApiLinkedTwiceResources<BlockRest,BlockBe
 				 */
 				if(blocksThen.size()>0) {
 					for(GenericEntity block : blocksThen) {
-						BlockRest blockBean = doGetById(block.id);
+						BlockBean blockBean = doGetByIdBean(block.id);
 						GenericNode subroutine = DefaultProcessService.addCallActivty(process, "call " + blockBean.name, "subroutine#" + block.id);
 						calls.put(block.id, block);
 						DefaultProcessService.addSequenceFlowSimple(process, pluginThenNode, subroutine);
@@ -232,7 +232,7 @@ public class ApiBlockResources extends ApiLinkedTwiceResources<BlockRest,BlockBe
 				 */
 				GenericNode pluginElseNode = null;
 				for(GenericEntity plugin : pluginsElse) {
-					ScriptPluginRest pluginScript = apiScriptPluginResources.doGetById(plugin.id);
+					ScriptPluginBean pluginScript = apiScriptPluginResources.doGetByIdBean(plugin.id);
 					pluginElseNode = DefaultProcessService.addActivity(process, pluginScript.name, "activity#" + pluginScript.id);
 					DefaultProcessService.addSequenceFlowDecision(process, "gateway-else->plugin", gatewayNode, pluginElseNode, false);
 				}
@@ -241,7 +241,7 @@ public class ApiBlockResources extends ApiLinkedTwiceResources<BlockRest,BlockBe
 				 */
 				if(blocksElse.size()>0) {
 					for(GenericEntity block : blocksElse) {
-						BlockRest blockBean = doGetById(block.id);
+						BlockBean blockBean = doGetByIdBean(block.id);
 						GenericNode subroutine = DefaultProcessService.addCallActivty(process, "call " + blockBean.name, "subroutine#" + block.id);
 						calls.put(block.id, block);
 						DefaultProcessService.addSequenceFlowSimple(process, pluginElseNode, subroutine);

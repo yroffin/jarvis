@@ -252,7 +252,7 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * @return Rest
 	 * @throws TechnicalNotFoundException 
 	 */
-	public T doGetById(String id) throws TechnicalNotFoundException {
+	public T doGetByIdRest(String id) throws TechnicalNotFoundException {
 		return mapperFactory.getMapperFacade().map(apiService.getById(id), restClass);
 	}
 
@@ -312,7 +312,7 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 */
 	public String doGetById(Request request, String id, Response response) throws Exception {
     	try {
-    		return mapper.writeValueAsString(doGetById(request.params(id)));
+    		return mapper.writeValueAsString(doGetByIdRest(request.params(id)));
     	} catch(TechnicalNotFoundException e) {
     		response.status(404);
     		return "";
