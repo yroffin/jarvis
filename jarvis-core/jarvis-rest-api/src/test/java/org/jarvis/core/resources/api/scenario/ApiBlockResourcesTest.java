@@ -16,6 +16,7 @@ import org.jarvis.core.resources.api.href.ApiHrefBlockScriptPluginResources;
 import org.jarvis.core.resources.api.href.ApiHrefScenarioBlockResources;
 import org.jarvis.core.resources.api.plugins.ApiScriptPluginResources;
 import org.jarvis.core.services.ApiService;
+import org.jarvis.core.services.groovy.PluginGroovyService;
 import org.jarvis.core.services.neo4j.ApiNeo4Service;
 import org.jarvis.core.test.JsonTestFactory;
 import org.jarvis.core.type.GenericMap;
@@ -60,6 +61,7 @@ public class ApiBlockResourcesTest {
 	ApiHrefBlockBlockResources apiHrefBlockBlockResources;
 	ApiService<?> apiService;
 	ApiNeo4Service apiNeo4Service;
+	PluginGroovyService pluginGroovyService;
 	
 	/**
 	 * @throws java.lang.Exception
@@ -67,6 +69,7 @@ public class ApiBlockResourcesTest {
 	@Before
 	public void setUp() throws Exception {
 		apiScenarioResources = new ApiScenarioResources();
+		pluginGroovyService = new PluginGroovyService();
 		apiHrefScenarioBlockResources = Mockito.mock(ApiHrefScenarioBlockResources.class);
 
 		/**
@@ -97,6 +100,7 @@ public class ApiBlockResourcesTest {
 		ReflectionTestUtils.setField(apiBlockResources, "apiHrefBlockScriptPluginResources", apiHrefBlockScriptPluginResources);
 		ReflectionTestUtils.setField(apiBlockResources, "apiScriptPluginResources", apiScriptPluginResources);
 		ReflectionTestUtils.setField(apiBlockResources, "apiHrefBlockBlockResources", apiHrefBlockBlockResources);
+		ReflectionTestUtils.setField(apiBlockResources, "pluginGroovyService", pluginGroovyService);
 
 		ReflectionTestUtils.setField(apiScenarioResources, "apiHrefScenarioBlockResources", apiHrefScenarioBlockResources);
 		ReflectionTestUtils.setField(apiScenarioResources, "apiBlockResources", apiBlockResources);
@@ -128,6 +132,19 @@ public class ApiBlockResourcesTest {
 				ScriptPluginBean result = new ScriptPluginBean();
 				result.id = "10000";
 				result.name = "test script";
+				return result;
+			}
+			
+		});
+
+		/**
+		 * execute
+		 */
+		Mockito.when(apiScriptPluginResources.doExecute(Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any())).then(new Answer<GenericMap>() {
+
+			@Override
+			public GenericMap answer(InvocationOnMock invocation) throws Throwable {
+				GenericMap result = new GenericMap();
 				return result;
 			}
 			
@@ -205,6 +222,18 @@ public class ApiBlockResourcesTest {
 	public void testCase1() throws Exception {
 		ScenarioBean scenario = new ScenarioBean();
 		ResourcePair result = apiScenarioResources.doRealTask(scenario, new GenericMap(), TaskType.RENDER);
+		String scenarioActual = result.getValue();
+		String scenarioExpected = JsonTestFactory.loadFromClasspath("case1-expected.json");
+		Assert.assertEquals(scenarioExpected, scenarioActual);
+	}
+
+	/**
+	 * @throws Exception 
+	 */
+	@Test
+	public void testCaseRun1() throws Exception {
+		ScenarioBean scenario = new ScenarioBean();
+		ResourcePair result = apiScenarioResources.doRealTask(scenario, new GenericMap(), TaskType.EXECUTE);
 		String scenarioActual = result.getValue();
 		String scenarioExpected = JsonTestFactory.loadFromClasspath("case1-expected.json");
 		Assert.assertEquals(scenarioExpected, scenarioActual);

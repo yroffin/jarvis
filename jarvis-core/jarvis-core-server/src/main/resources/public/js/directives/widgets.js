@@ -370,6 +370,15 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     }
   }
 })
+.directive('jarvisScenarioConsole', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/partials/scenarios/scenario/jarvis-scenario-console.html',
+    link: function(scope, element, attrs) {
+    	$log.debug('jarvis-scenario-console');
+    }
+  }
+})
 .directive('jarvisBlocks', function ($log, $stateParams) {
   return {
     restrict: 'E',

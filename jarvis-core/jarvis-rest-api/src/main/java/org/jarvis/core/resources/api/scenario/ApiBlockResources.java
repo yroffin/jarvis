@@ -17,9 +17,13 @@
 package org.jarvis.core.resources.api.scenario;
 
 
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.List;
 import java.util.Map;
 
+import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.plugin.ScriptPluginBean;
 import org.jarvis.core.model.bean.scenario.BlockBean;
@@ -89,7 +93,7 @@ public class ApiBlockResources extends ApiLinkedTwiceResources<BlockRest,BlockBe
 			case TEST:
 				return new ResourcePair(ResultType.OBJECT, test(bean, args, new GenericMap())+"");
 			case EXECUTE:
-				return new ResourcePair(ResultType.OBJECT, execute(new GenericMap(), bean, args)+"");
+				return new ResourcePair(ResultType.ARRAY, execute(new ArrayList<String>(), 0, bean, args)+"");
 			default:
 				result = new GenericMap();
 				return new ResourcePair(ResultType.OBJECT, mapper.writeValueAsString(result));
@@ -109,41 +113,51 @@ public class ApiBlockResources extends ApiLinkedTwiceResources<BlockRest,BlockBe
 	}
 
 	/**
-	 * @param stack 
+	 * execute this block (and subblock)
+	 * @param console 
+	 * @param level 
 	 * @param bean
 	 * @param args
 	 * @return GenericMap
 	 * @throws TechnicalNotFoundException 
 	 */
-	public GenericMap execute(GenericMap stack, BlockBean bean, GenericMap args) throws TechnicalNotFoundException {
+	public GenericMap execute(List<String> console, int level, BlockBean bean, GenericMap args) throws TechnicalNotFoundException {
 		/**
 		 * stop recursion
 		 */
-		if(stack.size() >= 8) {
-			return stack;
+		if(level >= 16) {
+			throw new TechnicalException("Stack overflow");
 		}
-		GenericMap result = new GenericMap();
 		for(GenericEntity cond : apiHrefBlockScriptPluginResources.findAllConditions(bean)) {
 			GenericMap exec = (GenericMap) apiScriptPluginResources.doExecute(null,cond.id, args, TaskType.EXECUTE);
-			if(pluginGroovyService.groovyAsBoolean(bean.expression, exec)) {
+			boolean evaluate = pluginGroovyService.groovyAsBoolean(bean.expression, exec);
+			logger.info("{} Block {} - Evaluate {} with context {} = {}", level, bean.id, bean.expression, exec, evaluate);
+			console.add(MessageFormat.format("{0} Block {1} - Evaluate {2} with context {3} = {4}", level, bean.id, bean.expression, exec, evaluate).toString());
+			if(evaluate) {
 				for(GenericEntity plugin : apiHrefBlockScriptPluginResources.findAllThen(bean)) {
-					GenericMap thn = (GenericMap) apiScriptPluginResources.doExecute(null,plugin.id, args, TaskType.EXECUTE);
+					GenericMap result = (GenericMap) apiScriptPluginResources.doExecute(null,plugin.id, args, TaskType.EXECUTE);
+					logger.info("{} Block {} - Then plugin {} = {}", level, bean.id, plugin.id, result);
+					console.add(MessageFormat.format("{0} Block {1} - Then plugin {2} = {3}", level, bean.id, plugin.id, result).toString());
 				}
 				for(GenericEntity subblock : apiHrefBlockBlockResources.findAllThen(bean)) {
-					stack.put("run#"+stack.size(), args);
-					GenericMap thn = (GenericMap) this.execute(stack, doGetByIdBean(subblock.id), args);
+					GenericMap result = (GenericMap) this.execute(console, level + 1, doGetByIdBean(subblock.id), args);
+					logger.info("{} Block {} - Then block {} = {}", level, bean.id, subblock.id, result);
+					console.add(MessageFormat.format("{0} Block {1} - Then block {2} = {3}", level, bean.id, subblock.id, result).toString());
 				}
 			} else {
 				for(GenericEntity plugin : apiHrefBlockScriptPluginResources.findAllElse(bean)) {
-					GenericMap els = (GenericMap) apiScriptPluginResources.doExecute(null,plugin.id, args, TaskType.EXECUTE);
+					GenericMap result = (GenericMap) apiScriptPluginResources.doExecute(null,plugin.id, args, TaskType.EXECUTE);
+					logger.info("{} Block {} - Else plugin {} = {}", level, bean.id, plugin.id, result);
+					console.add(MessageFormat.format("{0} Block {1} - Else plugin {2} = {3}", level, bean.id, plugin.id, result).toString());
 				}
 				for(GenericEntity subblock : apiHrefBlockBlockResources.findAllElse(bean)) {
-					stack.put("run#"+stack.size(), args);
-					GenericMap els = (GenericMap) this.execute(stack, doGetByIdBean(subblock.id), args);
+					GenericMap result = (GenericMap) this.execute(console, level + 1, doGetByIdBean(subblock.id), args);
+					logger.info("{} Block {} - Else block {} = {}", level, bean.id, subblock.id, result);
+					console.add(MessageFormat.format("{0} Block {1} - Else block {2} = {3}", level, bean.id, subblock.id, result).toString());
 				}
 			}
 		}
-		return result;
+		return args;
 	}
 
 	/**

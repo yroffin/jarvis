@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.scenario.BlockBean;
 import org.jarvis.core.model.bean.scenario.ScenarioBean;
@@ -45,6 +46,8 @@ import org.jarvis.core.type.ResultType;
 import org.jarvis.core.type.TaskType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import spark.Request;
 import spark.Response;
@@ -108,7 +111,7 @@ public class ApiScenarioResources extends ApiLinkedTwiceResources<ScenarioRest,S
 		GenericMap result;
 		switch(taskType) {
 			case EXECUTE:
-				return new ResourcePair(ResultType.OBJECT, execute(bean, args, new GenericMap()));
+				return new ResourcePair(ResultType.ARRAY, execute(bean, args, new GenericMap()));
 			case RENDER:
 				return new ResourcePair(ResultType.ARRAY, render(bean, args, new GenericMap()));
 			default:
@@ -126,12 +129,16 @@ public class ApiScenarioResources extends ApiLinkedTwiceResources<ScenarioRest,S
 	 * @throws TechnicalNotFoundException
 	 */
 	private String execute(ScenarioBean bean, GenericMap args, GenericMap genericMap) throws TechnicalNotFoundException {
-		GenericMap result = args;
+		List<String> console = new ArrayList<String>();
 		for(GenericEntity entity : sort(apiHrefScenarioBlockResources.findAll(bean), "order")) {
 			BlockBean block = apiBlockResources.doGetByIdBean(entity.id);
-			result = apiBlockResources.execute(new GenericMap(), block, result);
+			apiBlockResources.execute(console, 0, block, args);
 		}
-		return "";
+		try {
+			return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(console);
+		} catch (JsonProcessingException e) {
+			throw new TechnicalException(e);
+		}
 	}
 
 	/**

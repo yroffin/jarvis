@@ -218,6 +218,7 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
     	if(scenario != undefined && scenario.id != undefined && scenario.id != '') {
     		scenarioResourceService.scenario.task(scenario.id, 'execute', {}, function(data) {
        	    	$log.debug('[SCENARIO/execute]', scenario, data);
+       	    	$scope.console = data;
     	    }, toastService.failure);
     	}
     }
