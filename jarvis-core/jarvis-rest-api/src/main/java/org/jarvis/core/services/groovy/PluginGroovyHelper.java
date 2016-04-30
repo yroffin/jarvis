@@ -27,7 +27,7 @@ public class PluginGroovyHelper {
 	 * @throws TechnicalNotFoundException
 	 */
 	public RESTClient connectorByName(String name) throws URISyntaxException, TechnicalNotFoundException {
-		for(ConnectorRest connector : apiConnectorResources.doFindAll()) {
+		for(ConnectorRest connector : apiConnectorResources.doFindAllRest()) {
 			if(connector.name.equals(name)) {
 				return new RESTClient( connector.adress );
 			}

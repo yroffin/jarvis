@@ -87,6 +87,7 @@ limitations under the License.
         <md-button ng-click="location('left', '/crons');"><div layout="row"><i class="help-icons">av_timer</i><span flex></span><span>Crontab(s)</span></div></md-button>
         <md-button ng-click="location('left', '/connectors');"><div layout="row"><i class="help-icons">cloud</i><span flex></span><span>Connector(s)</span></div></md-button>
         <md-button ng-click="location('left', '/configurations');"><div layout="row"><i class="help-icons">widgets</i><span flex></span><span>Configuration(s)</span></div></md-button>
+        <md-button ng-click="location('left', '/properties');"><div layout="row"><i class="help-icons">widgets</i><span flex></span><span>Propriété(s)</span></div></md-button>
     </md-sidenav>
     <md-content ng-style="{'opacity': config.opacity}" ui-view flex class="md-padding">
     </md-content>
@@ -150,6 +151,7 @@ limitations under the License.
 <script src="js/services/command.js"></script>
 <script src="js/services/view.js"></script>
 <script src="js/services/configuration.js"></script>
+<script src="js/services/property.js"></script>
 <script src="js/services/snapshot.js"></script>
 <script src="js/services/cron.js"></script>
 <script src="js/services/iot.js"></script>
@@ -179,6 +181,7 @@ limitations under the License.
 <script src="js/ctrl/crons.js"></script>
 <script src="js/ctrl/home.js"></script>
 <script src="js/ctrl/configurations.js"></script>
+<script src="js/ctrl/properties.js"></script>
 <script src="js/ctrl/scenarios.js"></script>
 <script src="js/ctrl/blocks.js"></script>
 

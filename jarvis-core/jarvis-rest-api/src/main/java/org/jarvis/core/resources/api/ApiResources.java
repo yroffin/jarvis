@@ -227,10 +227,22 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * find all elements
 	 * @return List<Rest>
 	 */
-	public List<T> doFindAll() {
+	public List<T> doFindAllRest() {
 		List<T> result = new ArrayList<T>();
 		for(S item : apiService.findAll()) {
 			result.add(mapperFactory.getMapperFacade().map(item, restClass));
+		}
+		return result;
+	}
+
+	/**
+	 * find all elements
+	 * @return List<Rest>
+	 */
+	public List<S> doFindAllBean() {
+		List<S> result = new ArrayList<S>();
+		for(S item : apiService.findAll()) {
+			result.add(item);
 		}
 		return result;
 	}
@@ -299,7 +311,7 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * @throws Exception
 	 */
 	public String doFindAll(Request request, Response response) throws Exception {
-    	return mapper.writeValueAsString(doFindAll());
+    	return mapper.writeValueAsString(doFindAllRest());
     }
 
 	/**

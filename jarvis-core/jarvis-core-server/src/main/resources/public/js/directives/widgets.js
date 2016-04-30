@@ -271,6 +271,24 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     }
   }
 })
+.directive('jarvisProperties', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/partials/properties/jarvis-properties.html',
+    link: function(scope, element, attrs) {
+    	$log.debug('jarvis-properties');
+    }
+  }
+})
+.directive('jarvisProperty', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/partials/properties/property/jarvis-property-general.html',
+    link: function(scope, element, attrs) {
+    	$log.debug('jarvis-property');
+    }
+  }
+})
 .directive('jarvisConnectors', function ($log, $stateParams) {
   return {
     restrict: 'E',

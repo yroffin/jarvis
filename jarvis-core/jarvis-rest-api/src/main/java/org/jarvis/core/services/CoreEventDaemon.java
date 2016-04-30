@@ -27,7 +27,6 @@ import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.iot.EventBean;
 import org.jarvis.core.model.bean.scenario.ScenarioBean;
 import org.jarvis.core.model.rest.GenericEntity;
-import org.jarvis.core.model.rest.scenario.ScenarioRest;
 import org.jarvis.core.resources.api.href.ApiHrefScenarioBlockResources;
 import org.jarvis.core.resources.api.href.ApiHrefScenarioTriggerResources;
 import org.jarvis.core.resources.api.iot.ApiTriggerResources;
@@ -126,8 +125,7 @@ public class CoreEventDaemon {
 			/**
 			 * find any scenario with this trigger
 			 */
-			for(ScenarioRest scenario : apiScenarioResources.doFindAll()) {
-				ScenarioBean sce = mapperFactory.getMapperFacade().map(scenario, ScenarioBean.class);
+			for(ScenarioBean sce : apiScenarioResources.doFindAllBean()) {
 				for(GenericEntity link : apiHrefScenarioTriggerResources.findAll(sce)) {
 					try {
 						if(event.trigger.equals(link.id)) {

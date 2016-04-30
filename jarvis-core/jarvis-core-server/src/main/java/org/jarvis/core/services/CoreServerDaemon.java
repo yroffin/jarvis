@@ -22,6 +22,7 @@ import javax.annotation.PostConstruct;
 import org.jarvis.core.resources.CoreResources;
 import org.jarvis.core.resources.CoreWebsocket;
 import org.jarvis.core.resources.api.config.ApiConfigResources;
+import org.jarvis.core.resources.api.config.ApiPropertyResources;
 import org.jarvis.core.resources.api.connectors.ApiConnectorResources;
 import org.jarvis.core.resources.api.iot.ApiEventResources;
 import org.jarvis.core.resources.api.iot.ApiIotResources;
@@ -99,6 +100,9 @@ public class CoreServerDaemon {
 	@Autowired
 	ApiConnectorResources apiConnectorResources;
 
+	@Autowired
+	ApiPropertyResources apiPropertyResources;
+
 	/**
 	 * start component
 	 */
@@ -148,5 +152,6 @@ public class CoreServerDaemon {
 		apiToolResources.mount();
 		apiConnectorResources.mount();
 		apiConfigResources.mount();
+		apiPropertyResources.mount();
 	}
 }

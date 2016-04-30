@@ -1,0 +1,12 @@
+<div ng-init="load()" ng-cloak>
+	<md-toolbar>
+	  <div class="md-toolbar-tools" layout-align="center">
+	    <h1>{{'property.title' | translate}}</h1>
+	  </div>
+	  <md-fab-actions class="md-toolbar-tools">
+		<md-button aria-label="menu" class="md-icon-button" ng-click="new()"><md-icon md-font-icon="material-icons md-16">add</md-icon></md-button>
+	  </md-fab-actions>
+	</md-toolbar>
+	<br>
+	<jarvis-properties></jarvis-properties>
+</div>

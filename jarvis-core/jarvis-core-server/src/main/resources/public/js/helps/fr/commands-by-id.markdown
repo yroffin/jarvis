@@ -7,7 +7,7 @@
 | <i class="help-icons">delete</i>       | Supprimer la ressource    |
 | <i class="help-icons">save</i>         | Sauver la ressource       |
 | <i class="help-icons">play_arrow</i>   | Tester la commande        |
-| <i class="help-icons">loop</i>         | Effacer le résultat       |
+| <i class="help-icons">loop</i>         | Effacer le résultat et rafraichir l'entrée |
 
 ### Données
 
@@ -28,6 +28,10 @@ Note : seul le scripting groovy est disponible.
 #### Script
 
 - Script de la commande
+
+A noter
+- l'argument d'entrée est mapper sur une variable 'input'
+- les propriétés sont disponible dans le script (via leur clé)
 
 #### Résultat
 

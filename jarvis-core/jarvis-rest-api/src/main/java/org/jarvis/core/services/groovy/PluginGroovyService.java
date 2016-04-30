@@ -23,6 +23,8 @@ import java.util.Map.Entry;
 import javax.annotation.PostConstruct;
 
 import org.jarvis.core.exception.TechnicalException;
+import org.jarvis.core.model.bean.config.PropertyBean;
+import org.jarvis.core.resources.api.config.ApiPropertyResources;
 import org.jarvis.core.services.PluginService;
 import org.jarvis.core.type.GenericMap;
 import org.slf4j.Logger;
@@ -49,7 +51,8 @@ public class PluginGroovyService implements PluginService {
 
 	private Binding binding;
 
-	private GroovyShell script;
+	@Autowired
+	ApiPropertyResources apiPropertyResources;
 	
 	/**
 	 * init
@@ -57,11 +60,11 @@ public class PluginGroovyService implements PluginService {
 	@PostConstruct
 	public void init() {
 		binding = new Binding();
-		script = new GroovyShell(binding);
 		/**
 		 * declare helper in script
 		 */
 		binding.setVariable("helper", helper);
+		binding.setVariable("logger", logger);
 	}
 
 	/**
@@ -98,10 +101,17 @@ public class PluginGroovyService implements PluginService {
 	 * when some internal error 
 	 */
 	public GenericMap groovyAsObject(String command, GenericMap args) throws TechnicalException {
+		GroovyShell script = new GroovyShell(binding);
+
 		/**
 		 * store args in input bind field
+		 * and all properties
 		 */
-		binding.setVariable("input", args);
+		script.setVariable("input", args);
+		for(PropertyBean key : apiPropertyResources.doFindAllBean()) {
+			script.setVariable(key.key, key.value);
+		}
+
 		Object raw = script.evaluate(command);
 		Map<?,?> exec = null;
 		/**
@@ -142,11 +152,21 @@ public class PluginGroovyService implements PluginService {
 	 * when some internal error
 	 */
 	public boolean groovyAsBoolean(String command, GenericMap args) throws TechnicalException {
-		Binding binding = new Binding();
-		for(Entry<String, Object> entry : args.entrySet()) {
-			binding.setVariable(entry.getKey(), entry.getValue());
-		}
 		GroovyShell script = new GroovyShell(binding);
+
+		for(Entry<String, Object> entry : args.entrySet()) {
+			script.setVariable(entry.getKey(), entry.getValue());
+		}
+
+		/**
+		 * map args to input and all properties
+		 */
+		script.setVariable("input", args);
+		for(PropertyBean key : apiPropertyResources.doFindAllBean()) {
+			script.setVariable(key.key, key.value);
+		}
+
+
 		boolean result = (boolean) script.evaluate(command);
 		logger.warn("SCRIPT - BOOLEAN {}", result);
 		return result;
