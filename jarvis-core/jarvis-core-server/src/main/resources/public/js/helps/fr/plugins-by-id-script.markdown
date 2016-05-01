@@ -30,9 +30,9 @@ Un snapshot contient les champs suivants :
 - Identifiant : identifiant de l'association avec la commande
 - Instance : instance physique du lien
 - Ordre : ordre d'affichage
-- Nom : nom du plugin
-- Nature : 
-- Type : 
+- Nom : nom de la variable recevant l'execution de la commande
+- Nature : text, json ou xml
+- Type : data ou action
 - Script (en lecture seule)
 
 #### Résultat
