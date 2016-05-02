@@ -38,4 +38,9 @@ public class GenericBean {
 	 * generic href
 	 */
 	public String href;
+	/**
+	 * false when no security is used
+	 * true in other way (if true no data backup can be done except field name in {id, key})
+	 */
+	public boolean isSecured;
 }

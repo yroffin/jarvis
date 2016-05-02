@@ -49,6 +49,12 @@ public class GenericEntity {
 	@JsonProperty("href")
 	public String href;
 	/**
+	 * false when no security is used
+	 * true in other way (if true no data backup can be done except field name in {id, key})
+	 */
+	@JsonProperty("isSecured")
+	public boolean isSecured;
+	/**
 	 * instance of this resource (relationship)
 	 */
 	@JsonProperty("instance")

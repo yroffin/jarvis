@@ -105,6 +105,8 @@
     "view.iots"    		: "Mes iots",
     "view.ishome"    	: "Vue principale",
     "property.title"    : "Mes propriétés",
+    "property.sec.true" : "Pas de sauvegarde de la valeur (is secured)",
+    "property.sec.false": "Sauvegarde de la valeur (is not secured)",
     "property.general"  : "Général",
     "property.name"		: "Nom",
     "property.key"		: "Clé",

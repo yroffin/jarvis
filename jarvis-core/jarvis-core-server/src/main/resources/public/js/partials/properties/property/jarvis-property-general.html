@@ -11,4 +11,7 @@
 	  <label translate="property.value"></label>
 	  <input ng-model="property.value">
 	</md-input-container>
+	<md-switch ng-model="property.isSecured" aria-label="{{'property.sec.'+property.isSecured | translate}}">
+    	{{'property.sec.'+property.isSecured | translate}}
+	</md-switch>
 </div>

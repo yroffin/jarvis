@@ -2,6 +2,7 @@ package org.jarvis.core.resources.api.tools;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.exception.TechnicalHttpException;
@@ -99,11 +100,32 @@ public class ApiToolResources extends ApiResources<SnapshotRest,SnapshotBean> {
 	private String download(SnapshotBean bean, GenericMap args, GenericMap genericMap) {
 		try {
 			Map<String, Map<String, GenericMap>> nodes = apiNeo4Service.findAllNodes();
+			/**
+			 * each node must be secured according its security level
+			 */
+			for(Entry<String, Map<String, GenericMap>> entry : nodes.entrySet()) {
+				for(Entry<String, GenericMap> subEntry : entry.getValue().entrySet()) {
+					if(subEntry.getValue().get("isSecured") != null) {
+						if((boolean) subEntry.getValue().get("isSecured")) {
+							secure(entry.getKey(), subEntry.getValue());
+						}
+					}
+				}
+			}
 			return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(nodes);
 		} catch (TechnicalHttpException e) {
 			throw new TechnicalException(e);
 		} catch (JsonProcessingException e) {
 			throw new TechnicalException(e);
 		}
+	}
+
+	private void secure(String key, GenericMap value) {
+		/**
+		 * protect property
+		 */
+		if(key.equals("PropertyBean")) {
+			value.put("value", "N/A");
+		}		
 	}	
 }

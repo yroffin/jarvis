@@ -49,7 +49,7 @@ public class PluginGroovyService implements PluginService {
 	@Autowired
 	private PluginGroovyHelper helper;
 
-	private Binding binding;
+	private Binding binding = new Binding();
 
 	@Autowired
 	ApiPropertyResources apiPropertyResources;
@@ -59,7 +59,6 @@ public class PluginGroovyService implements PluginService {
 	 */
 	@PostConstruct
 	public void init() {
-		binding = new Binding();
 		/**
 		 * declare helper in script
 		 */
