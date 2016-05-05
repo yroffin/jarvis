@@ -49,8 +49,6 @@ public class PluginGroovyService implements PluginService {
 	@Autowired
 	private PluginGroovyHelper helper;
 
-	private Binding binding = new Binding();
-
 	@Autowired
 	ApiPropertyResources apiPropertyResources;
 	
@@ -59,11 +57,6 @@ public class PluginGroovyService implements PluginService {
 	 */
 	@PostConstruct
 	public void init() {
-		/**
-		 * declare helper in script
-		 */
-		binding.setVariable("helper", helper);
-		binding.setVariable("logger", logger);
 	}
 
 	/**
@@ -100,6 +93,13 @@ public class PluginGroovyService implements PluginService {
 	 * when some internal error 
 	 */
 	public GenericMap groovyAsObject(String command, GenericMap args) throws TechnicalException {
+		/**
+		 * declare helper in script
+		 */
+		Binding binding = new Binding();
+		binding.setVariable("helper", helper);
+		binding.setVariable("logger", logger);
+
 		GroovyShell script = new GroovyShell(binding);
 
 		/**
@@ -151,6 +151,13 @@ public class PluginGroovyService implements PluginService {
 	 * when some internal error
 	 */
 	public boolean groovyAsBoolean(String command, GenericMap args) throws TechnicalException {
+		/**
+		 * declare helper in script
+		 */
+		Binding binding = new Binding();
+		binding.setVariable("helper", helper);
+		binding.setVariable("logger", logger);
+
 		GroovyShell script = new GroovyShell(binding);
 
 		for(Entry<String, Object> entry : args.entrySet()) {
