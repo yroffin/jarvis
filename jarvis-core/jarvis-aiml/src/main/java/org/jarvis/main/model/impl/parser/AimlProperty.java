@@ -4,10 +4,17 @@ import java.util.Map.Entry;
 
 import org.jarvis.main.model.parser.IAimlProperty;
 
+/**
+ * AIML property
+ */
 public class AimlProperty implements Entry<String,String>, IAimlProperty {
 	private String key;
     private String value;
 
+    /**
+     * @param k
+     * @param v
+     */
     public AimlProperty(String k, String v) {
     	key = k;
     	value = v.substring(1,v.length()-1);

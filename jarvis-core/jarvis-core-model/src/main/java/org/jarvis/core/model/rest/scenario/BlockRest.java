@@ -37,6 +37,21 @@ public class BlockRest extends GenericEntity {
 	@JsonProperty("icon")
 	public String icon;
 	/**
+	 * testParameter
+	 */
+	@JsonProperty("testParameter")
+	public String testParameter;
+	/**
+	 * thenParameter
+	 */
+	@JsonProperty("thenParameter")
+	public String thenParameter;
+	/**
+	 * elseParameter
+	 */
+	@JsonProperty("elseParameter")
+	public String elseParameter;
+	/**
 	 * expression
 	 */
 	@JsonProperty("expression")

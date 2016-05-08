@@ -23,6 +23,9 @@ import org.jarvis.main.model.parser.IAimlCategory;
 import org.jarvis.main.model.parser.IAimlProperty;
 import org.jarvis.main.model.parser.IAimlTopic;
 
+/**
+ * AIML topic
+ */
 public class AimlTopic extends AimlElementContainer implements IAimlTopic {
 
 	private String name;
@@ -37,6 +40,9 @@ public class AimlTopic extends AimlElementContainer implements IAimlTopic {
 		super("topic");
 	}
 
+	/**
+	 * @param name
+	 */
 	public AimlTopic(String name) {
 		super("topic");
 		this.name = name;

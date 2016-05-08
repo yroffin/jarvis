@@ -1,0 +1,30 @@
+<md-toolbar>
+  <div class="md-toolbar-tools" layout-align="center">
+    <h1><br>{{command.name}}<md-tooltip>command#{{command.id}}</md-tooltip></h1>
+  </div>
+  <md-fab-actions class="md-toolbar-tools">
+  	<jarvis-default-menu-bar close="commands" ng-model="command"></jarvis-default-menu-bar>
+	<md-button aria-label="menu" class="md-icon-button" ng-click="execute(command)"><md-tooltip>{{'command.execute'|translate}}</md-tooltip><md-icon md-font-icon="material-icons md-16">play_arrow</md-icon></md-button>
+	<md-button aria-label="menu" class="md-icon-button" ng-click="test(command)"><md-tooltip>{{'command.test'|translate}}</md-tooltip><md-icon md-font-icon="material-icons md-16">play_arrow</md-icon></md-button>
+	<md-button aria-label="menu" class="md-icon-button" ng-click="pretty()"><md-tooltip>{{'command.pretty'|translate}}</md-tooltip><md-icon md-font-icon="material-icons md-16">loop</md-icon></md-button>
+  </md-fab-actions>
+</md-toolbar>
+<div layout="column" ng-init="load()" ng-cloak>
+	<md-tabs md-dynamic-height md-border-bottom>
+		<md-tab label="{{'command.general' | translate}}">
+			<md-content layout-padding>
+				<jarvis-command></jarvis-command>
+			</md-content>
+		</md-tab>
+		<md-tab label="{{'command.script' | translate}}">
+			<md-content>
+				<jarvis-command-script></jarvis-command-script>
+			</md-content>
+		</md-tab>
+		<md-tab label="{{'command.output' | translate}}">
+			<md-content>
+				<jarvis-command-output></jarvis-command-output>
+			</md-content>
+		</md-tab>
+	</md-tabs>
+</div>

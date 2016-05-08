@@ -29,13 +29,12 @@ import org.jarvis.core.model.rest.iot.IotRest;
 import org.jarvis.core.model.rest.plugin.ScriptPluginRest;
 import org.jarvis.core.model.rest.scenario.TriggerRest;
 import org.jarvis.core.resources.api.ApiLinkedThirdResources;
-import org.jarvis.core.resources.api.ResourcePair;
+import org.jarvis.core.resources.api.GenericValue;
 import org.jarvis.core.resources.api.href.ApiHrefIotResources;
 import org.jarvis.core.resources.api.href.ApiHrefIotScriptPluginResources;
 import org.jarvis.core.resources.api.href.ApiHrefIotTriggerResources;
 import org.jarvis.core.resources.api.plugins.ApiScriptPluginResources;
 import org.jarvis.core.type.GenericMap;
-import org.jarvis.core.type.ResultType;
 import org.jarvis.core.type.TaskType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -98,7 +97,7 @@ public class ApiIotResources extends ApiLinkedThirdResources<IotRest,IotBean,Iot
 	}
 
 	@Override
-	public ResourcePair doRealTask(IotBean iot, GenericMap args, TaskType taskType) throws Exception {
+	public GenericValue doRealTask(IotBean iot, GenericMap args, TaskType taskType) throws Exception {
 		GenericMap result;
 		switch(taskType) {
 			case RENDER:
@@ -110,7 +109,7 @@ public class ApiIotResources extends ApiLinkedThirdResources<IotRest,IotBean,Iot
 			default:
 				result = new GenericMap();
 		}
-		return new ResourcePair(ResultType.OBJECT, mapper.writeValueAsString(result));
+		return new GenericValue(mapper.writeValueAsString(result));
 	}
 
 	/**

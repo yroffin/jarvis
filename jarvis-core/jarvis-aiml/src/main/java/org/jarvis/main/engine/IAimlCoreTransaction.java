@@ -5,6 +5,9 @@ import java.util.List;
 import org.jarvis.main.model.parser.IAimlCategory;
 import org.jarvis.main.model.parser.IAimlResult;
 
+/**
+ * core tx
+ */
 public interface IAimlCoreTransaction {
 
 	/**
@@ -17,7 +20,7 @@ public interface IAimlCoreTransaction {
 	/**
 	 * retrieve messages
 	 * 
-	 * @return
+	 * @return List<String>
 	 */
 	List<String> getMessages();
 
@@ -38,7 +41,7 @@ public interface IAimlCoreTransaction {
 	/**
 	 * retrieve categories
 	 * 
-	 * @return
+	 * @return List<ICategoryStack>
 	 */
 	List<ICategoryStack> getCategories();
 }

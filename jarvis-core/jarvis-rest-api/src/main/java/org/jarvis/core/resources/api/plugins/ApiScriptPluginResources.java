@@ -23,11 +23,12 @@ import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.model.rest.plugin.CommandRest;
 import org.jarvis.core.model.rest.plugin.ScriptPluginRest;
 import org.jarvis.core.resources.api.ApiLinkedResources;
-import org.jarvis.core.resources.api.ResourcePair;
+import org.jarvis.core.resources.api.GenericValue;
 import org.jarvis.core.resources.api.href.ApiHrefPluginCommandResources;
 import org.jarvis.core.type.GenericMap;
-import org.jarvis.core.type.ResultType;
 import org.jarvis.core.type.TaskType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -36,7 +37,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class ApiScriptPluginResources extends ApiLinkedResources<ScriptPluginRest,ScriptPluginBean,CommandRest,CommandBean> {
-
+	protected Logger logger = LoggerFactory.getLogger(ApiScriptPluginResources.class);
+	
 	@Autowired
 	ApiCommandResources apiCommandResources;
 
@@ -67,7 +69,7 @@ public class ApiScriptPluginResources extends ApiLinkedResources<ScriptPluginRes
 	 * all script have two phase : a render (data) phase and an execute (action) phase
 	 */
 	@Override
-	public ResourcePair doRealTask(ScriptPluginBean bean, GenericMap args, TaskType taskType) throws Exception {
+	public GenericValue doRealTask(ScriptPluginBean bean, GenericMap args, TaskType taskType) throws Exception {
 		GenericMap result;
 		switch(taskType) {
 			case RENDER:
@@ -79,7 +81,7 @@ public class ApiScriptPluginResources extends ApiLinkedResources<ScriptPluginRes
 			default:
 				result = new GenericMap();
 		}
-		return new ResourcePair(ResultType.OBJECT, mapper.writeValueAsString(result));
+		return new GenericValue(mapper.writeValueAsString(result));
 	}
 
 	/**
@@ -127,11 +129,17 @@ public class ApiScriptPluginResources extends ApiLinkedResources<ScriptPluginRes
 			/**
 			 * ignore data in phase action
 			 */
-			if(entity.get("type") != null && entity.get("type").equals("data") && !render) continue;
+			if(entity.get("type") != null && entity.get("type").equals("data") && !render) {
+				logger.warn("Plugin {} cannot be executed, its a data");
+				continue;
+			}
 			/**
 			 * ignore action in phase data
 			 */
-			if(entity.get("type") != null && entity.get("type").equals("action") && render) continue;
+			if(entity.get("type") != null && entity.get("type").equals("action") && render) {
+				logger.warn("Plugin {} cannot be rendered, its ans action");
+				continue;
+			}
 			
 			/**
 			 * retrieve command to execute

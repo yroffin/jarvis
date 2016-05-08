@@ -3,8 +3,14 @@ package org.jarvis.main.model.impl.parser;
 import org.jarvis.main.model.parser.IAimlProperty;
 import org.jarvis.main.model.parser.IAimlXml;
 
+/**
+ * AIML xml extend
+ */
 public class AimlXmlImpl extends AimlElementContainer implements IAimlXml {
 
+	/**
+	 * constructor
+	 */
 	public AimlXmlImpl() {
 		super("xml");
 	}

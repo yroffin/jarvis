@@ -409,7 +409,7 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * @return String
 	 * @throws Exception
 	 */
-	public abstract ResourcePair doRealTask(S bean, GenericMap args, TaskType taskType) throws Exception;
+	public abstract GenericValue doRealTask(S bean, GenericMap args, TaskType taskType) throws Exception;
 
 	/**
 	 * create entity
@@ -444,9 +444,9 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
     				body,
     				TaskType.valueOf(request.queryParams(task).toUpperCase()));
     		/**
-    		 * task can return String, Object or list
+    		 * task can return String, Boolean, Object or list
     		 */
-    		if(GenericMap.class == result.getClass() || ArrayList.class == result.getClass()) {
+    		if(GenericMap.class == result.getClass() || ArrayList.class == result.getClass() || Boolean.class == result.getClass()) {
     			return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(result);
     		} else {
        			return (String) result;
@@ -500,7 +500,7 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 		if(!id.equals("*")) {
 			bean = apiService.getById(id);
 			try {
-				logger.info("SCRIPT - CONTEXT {} {}", beanClass.getName(), mapper.writerWithDefaultPrettyPrinter().writeValueAsString(bean));
+				logger.info("SCRIPT - CONTEXT {}\n{}", beanClass.getName(), mapper.writerWithDefaultPrettyPrinter().writeValueAsString(bean));
 			} catch (JsonProcessingException e) {
 				throw new TechnicalException(e);
 			}
@@ -508,31 +508,29 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 			logger.info("SCRIPT - CONTEXT {}", "*");
 		}
 		try {
-			logger.info("SCRIPT - INPUT   {}", mapper.writerWithDefaultPrettyPrinter().writeValueAsString(body));
+			logger.info("SCRIPT - INPUT\n{}", mapper.writerWithDefaultPrettyPrinter().writeValueAsString(body));
 		} catch (JsonProcessingException e) {
 			throw new TechnicalException(e);
 		}
-		ResourcePair result = null;
+		GenericValue result = null;
 		try {
 			result = doRealTask(bean, body, taskType);
 		} catch (Exception e) {
 			throw new TechnicalException(e);
 		}
-		logger.info("SCRIPT - OUTPUT {}", result);
-		try {
-			switch(result.getKey()) {
-				case OBJECT:
-					return (GenericMap) mapper.readValue(result.getValue(), GenericMap.class);
-				case ARRAY:
-					return (List<?>) mapper.readValue(result.getValue(), List.class);
-				case FILE_STREAM:
-					response.type("application/octet-stream");
-					return result.getValue();
-				default:
-					return result.getValue();
-			}
-		} catch (IOException e) {
-			throw new TechnicalException(e);
+		logger.info("SCRIPT - OUTPUT\n{}", result);
+		switch(result.getType()) {
+			case OBJECT:
+				return result.asObject();
+			case ARRAY:
+				return result.asList();
+			case BOOLEAN:
+				return result.asBoolean();
+			case FILE_STREAM:
+				response.type("application/octet-stream");
+				return result.asString();
+			default:
+				return result.asString();
 		}
 	}
 

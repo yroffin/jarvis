@@ -9,7 +9,7 @@ import org.jarvis.core.exception.TechnicalHttpException;
 import org.jarvis.core.model.bean.tools.SnapshotBean;
 import org.jarvis.core.model.rest.tools.SnapshotRest;
 import org.jarvis.core.resources.api.ApiResources;
-import org.jarvis.core.resources.api.ResourcePair;
+import org.jarvis.core.resources.api.GenericValue;
 import org.jarvis.core.type.GenericMap;
 import org.jarvis.core.type.ResultType;
 import org.jarvis.core.type.TaskType;
@@ -40,19 +40,19 @@ public class ApiToolResources extends ApiResources<SnapshotRest,SnapshotBean> {
 	}
 
 	@Override
-	public ResourcePair doRealTask(SnapshotBean bean, GenericMap args, TaskType taskType) throws Exception {
+	public GenericValue doRealTask(SnapshotBean bean, GenericMap args, TaskType taskType) throws Exception {
 		GenericMap result;
 		switch(taskType) {
 			case DOWNLOAD:
-				return new ResourcePair(ResultType.FILE_STREAM, download(bean, args, new GenericMap()));
+				return new GenericValue(ResultType.FILE_STREAM, download(bean, args, new GenericMap()));
 			case UPLOAD:
-				return new ResourcePair(ResultType.OBJECT, upload(bean, args, new GenericMap()));
+				return new GenericValue(upload(bean, args, new GenericMap()));
 			case RESTORE:
-				return new ResourcePair(ResultType.STRING, restore(bean, args, new GenericMap()));
+				return new GenericValue(restore(bean, args, new GenericMap()));
 			default:
 				result = new GenericMap();
 		}
-		return new ResourcePair(ResultType.OBJECT, mapper.writeValueAsString(result));
+		return new GenericValue(mapper.writeValueAsString(result));
 	}
 
 	/**

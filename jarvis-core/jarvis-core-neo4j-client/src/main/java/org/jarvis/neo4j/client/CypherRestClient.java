@@ -263,7 +263,7 @@ public class CypherRestClient extends AbstractJerseyClient {
 						if(field.getKey().startsWith("__")) continue;
 						properties.setProperty(field.getKey(), field.getValue());
 					}
-					logger.error("Restore {} => {} with {}", from, to, properties.toString());
+					logger.info("Restore {} => {} with {}", from, to, properties.toString());
 					try {
 						createRelationship(from, to, relation, properties);
 					} catch (TechnicalHttpException e) {
@@ -462,7 +462,7 @@ public class CypherRestClient extends AbstractJerseyClient {
 	 * 		the result
 	 */
 	public Result execute(String query, boolean isNode) {
-		logger.error(query);
+		logger.trace(query);
 		Result result = new Result();
 		for(Map<String, Object> map : query(query, isNode)) {
 			result.add(map);
@@ -478,7 +478,7 @@ public class CypherRestClient extends AbstractJerseyClient {
 	 * @return Result
 	 */
 	public Entities matchIdWithEntity(String query, String entity, boolean isNode) {
-		logger.error(query);
+		logger.trace(query);
 		Entities result = new Entities();
 		for(Map<String, Object> map : query(query, isNode)) {
 			Node n = (Node) map.get(entity);
@@ -496,7 +496,7 @@ public class CypherRestClient extends AbstractJerseyClient {
 	 * @return Result
 	 */
 	public Entities matchIdWithEntity(String query, String first, String second, boolean isNode) {
-		logger.error(query);
+		logger.trace(query);
 		Entities result = new Entities();
 		for(Map<String, Object> map : query(query, isNode)) {
 			Node n = (Node) map.get(first);

@@ -15,6 +15,18 @@ public class BlockBean extends GenericBean {
 	 */
 	public String icon;
 	/**
+	 * testParameter
+	 */
+	public String testParameter;
+	/**
+	 * thenParameter
+	 */
+	public String thenParameter;
+	/**
+	 * elseParameter
+	 */
+	public String elseParameter;
+	/**
 	 * expression
 	 */
 	public String expression;

@@ -21,7 +21,7 @@ import org.jarvis.core.model.bean.view.ViewBean;
 import org.jarvis.core.model.rest.iot.IotRest;
 import org.jarvis.core.model.rest.view.ViewRest;
 import org.jarvis.core.resources.api.ApiLinkedResources;
-import org.jarvis.core.resources.api.ResourcePair;
+import org.jarvis.core.resources.api.GenericValue;
 import org.jarvis.core.resources.api.href.ApiHrefViewResources;
 import org.jarvis.core.resources.api.iot.ApiIotResources;
 import org.jarvis.core.type.GenericMap;
@@ -62,7 +62,7 @@ public class ApiViewResources extends ApiLinkedResources<ViewRest,ViewBean,IotRe
 	}
 
 	@Override
-	public ResourcePair doRealTask(ViewBean bean, GenericMap args, TaskType taskType) throws Exception {
+	public GenericValue doRealTask(ViewBean bean, GenericMap args, TaskType taskType) throws Exception {
 		return null;
 	}
 }

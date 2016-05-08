@@ -19,7 +19,7 @@ package org.jarvis.core.resources.api.config;
 import org.jarvis.core.model.bean.config.ConfigBean;
 import org.jarvis.core.model.rest.config.ConfigRest;
 import org.jarvis.core.resources.api.ApiResources;
-import org.jarvis.core.resources.api.ResourcePair;
+import org.jarvis.core.resources.api.GenericValue;
 import org.jarvis.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
 import org.springframework.stereotype.Component;
@@ -47,7 +47,7 @@ public class ApiConfigResources extends ApiResources<ConfigRest,ConfigBean> {
 	}
 
 	@Override
-	public ResourcePair doRealTask(ConfigBean bean, GenericMap args, TaskType taskType) throws Exception {
+	public GenericValue doRealTask(ConfigBean bean, GenericMap args, TaskType taskType) throws Exception {
 		return null;
 	}
 }

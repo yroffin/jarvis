@@ -37,12 +37,11 @@ import org.jarvis.core.model.rest.scenario.TriggerRest;
 import org.jarvis.core.profiler.DefaultProcessService;
 import org.jarvis.core.profiler.model.DefaultProcess;
 import org.jarvis.core.resources.api.ApiLinkedTwiceResources;
-import org.jarvis.core.resources.api.ResourcePair;
+import org.jarvis.core.resources.api.GenericValue;
 import org.jarvis.core.resources.api.href.ApiHrefScenarioBlockResources;
 import org.jarvis.core.resources.api.href.ApiHrefScenarioTriggerResources;
 import org.jarvis.core.resources.api.iot.ApiTriggerResources;
 import org.jarvis.core.type.GenericMap;
-import org.jarvis.core.type.ResultType;
 import org.jarvis.core.type.TaskType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -107,16 +106,16 @@ public class ApiScenarioResources extends ApiLinkedTwiceResources<ScenarioRest,S
 	}
 
 	@Override
-	public ResourcePair doRealTask(ScenarioBean bean, GenericMap args, TaskType taskType) throws Exception {
+	public GenericValue doRealTask(ScenarioBean bean, GenericMap args, TaskType taskType) throws Exception {
 		GenericMap result;
 		switch(taskType) {
 			case EXECUTE:
-				return new ResourcePair(ResultType.ARRAY, execute(bean, args, new GenericMap()));
+				return new GenericValue(execute(bean, args, new GenericMap()));
 			case RENDER:
-				return new ResourcePair(ResultType.ARRAY, render(bean, args, new GenericMap()));
+				return new GenericValue(render(bean, args, new GenericMap()));
 			default:
 				result = new GenericMap();
-				return new ResourcePair(ResultType.OBJECT, mapper.writeValueAsString(result));
+				return new GenericValue(mapper.writeValueAsString(result));
 		}
 	}
 

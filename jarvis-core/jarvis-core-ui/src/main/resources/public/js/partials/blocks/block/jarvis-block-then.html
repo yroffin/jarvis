@@ -1,0 +1,51 @@
+<md-toolbar>
+  <md-fab-actions class="md-toolbar-tools">
+	<jarvis-pick-element ctrl="pickPluginDialogCtrl" tooltips="block.plugin.then" icon="playlist_add" callback="links.plugins.then.add"></jarvis-pick-element>
+	<jarvis-pick-element ctrl="pickBlockDialogCtrl" tooltips="block.block.then" icon="add_box" callback="links.blocks.then.add"></jarvis-pick-element>
+  </md-fab-actions>
+</md-toolbar>
+<br>
+<md-input-container>
+  <label translate="block.thenParameter"></label>
+  <input ng-model="block.thenParameter">
+</md-input-container>
+<div ng-repeat="plugin in plugins.then">
+	<div layout="row">
+		<md-input-container flex>
+			<label translate="block.plugin.then"></label>
+			<input ng-model="plugin.name" disabled>
+		</md-input-container>
+		<md-button aria-label="menu" class="md-icon-button" ng-click="links.plugins.then.drop(plugin)">
+		<md-icon md-font-icon="material-icons md-16">delete</md-icon></md-button>
+	</div>
+</div>
+<div ng-repeat="block in blocks.then">
+	<div layout="row">
+		<md-input-container flex>
+			<label translate="block.block.then"></label>
+			<input ng-model="block.name" disabled>
+		</md-input-container>
+		<md-button aria-label="menu" class="md-icon-button" ng-click="links.blocks.then.drop(block)">
+		<md-icon md-font-icon="material-icons md-16">delete</md-icon></md-button>
+	</div>
+</div>
+<div layout="column" ng-show="block.pluginThenId">
+	<md-input-container>
+	  <label translate="block.pluginId"></label>
+	  <input ng-model="block.pluginThenId" disabled>
+	</md-input-container>
+	<md-input-container ng-show="block.pluginThenId">
+	  <label translate="block.pluginName"></label>
+	  <input ng-model="block.pluginThenName" disabled>
+	</md-input-container>
+</div>
+<div layout="column" ng-show="block.blockThenId">
+	<md-input-container>
+	  <label translate="block.blockId"></label>
+	  <input ng-model="block.blockThenId" disabled>
+	</md-input-container>
+	<md-input-container ng-show="block.blockThenId">
+	  <label translate="block.blockName"></label>
+	  <input ng-model="block.blockThenName" disabled>
+	</md-input-container>
+</div>

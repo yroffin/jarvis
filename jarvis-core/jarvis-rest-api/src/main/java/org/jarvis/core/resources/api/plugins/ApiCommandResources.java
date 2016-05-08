@@ -22,11 +22,10 @@ import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.model.bean.plugin.CommandBean;
 import org.jarvis.core.model.rest.plugin.CommandRest;
 import org.jarvis.core.resources.api.ApiResources;
-import org.jarvis.core.resources.api.ResourcePair;
+import org.jarvis.core.resources.api.GenericValue;
 import org.jarvis.core.services.groovy.PluginGroovyService;
 import org.jarvis.core.services.shell.PluginShellService;
 import org.jarvis.core.type.GenericMap;
-import org.jarvis.core.type.ResultType;
 import org.jarvis.core.type.TaskType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -62,17 +61,17 @@ public class ApiCommandResources extends ApiResources<CommandRest,CommandBean> {
 	 * @throws Exception
 	 */
 	@Override
-	public ResourcePair doRealTask(CommandBean command, GenericMap args, TaskType taskType) throws Exception {
+	public GenericValue doRealTask(CommandBean command, GenericMap args, TaskType taskType) throws Exception {
 		GenericMap result = args;
 		switch(taskType) {
 			case EXECUTE:
-				return new ResourcePair(ResultType.OBJECT, mapper.writeValueAsString(execute(command, result)));
+				return new GenericValue(mapper.writeValueAsString(execute(command, result)));
 			case TEST:
-				return new ResourcePair(ResultType.BOOLEAN, mapper.writeValueAsString(test(command, result)));
+				return new GenericValue(mapper.writeValueAsString(test(command, result)));
 			default:
 				result = new GenericMap();
 		}
-    	return new ResourcePair(ResultType.OBJECT, mapper.writeValueAsString(result));
+    	return new GenericValue(mapper.writeValueAsString(result));
 	}
 
 	/**
@@ -104,6 +103,11 @@ public class ApiCommandResources extends ApiResources<CommandRest,CommandBean> {
 	public boolean test(CommandBean command, GenericMap args) {
 		boolean result = false;
 		try {
+			logger.info("COMMAND TEST - INPUT {}\n{}", command.type, mapper.writerWithDefaultPrettyPrinter().writeValueAsString(args));
+		} catch (JsonProcessingException e) {
+			throw new TechnicalException(e);
+		}
+		try {
 			switch(command.type) {
 				case COMMAND:
 					result = pluginShellService.asBoolean(extractCommand(command), args);
@@ -120,7 +124,7 @@ public class ApiCommandResources extends ApiResources<CommandRest,CommandBean> {
 			throw new TechnicalException(e);
 		}
 		try {
-			logger.info("SCRIPT - OUTPUT  {}", mapper.writerWithDefaultPrettyPrinter().writeValueAsString(result));
+			logger.info("COMMAND TEST - OUTPUT\n{}", mapper.writerWithDefaultPrettyPrinter().writeValueAsString(result));
 		} catch (JsonProcessingException e) {
 			throw new TechnicalException(e);
 		}
@@ -135,6 +139,11 @@ public class ApiCommandResources extends ApiResources<CommandRest,CommandBean> {
 	 */
 	public GenericMap execute(CommandBean command, GenericMap args) {
 		GenericMap result = null;
+		try {
+			logger.info("COMMAND - INPUT {}\n{}", command.type, mapper.writerWithDefaultPrettyPrinter().writeValueAsString(args));
+		} catch (JsonProcessingException e) {
+			throw new TechnicalException(e);
+		}
 		try {
 			switch(command.type) {
 				case COMMAND:
@@ -152,7 +161,7 @@ public class ApiCommandResources extends ApiResources<CommandRest,CommandBean> {
 			throw new TechnicalException(e);
 		}
 		try {
-			logger.info("SCRIPT - OUTPUT  {}", mapper.writerWithDefaultPrettyPrinter().writeValueAsString(result));
+			logger.info("COMMAND - OUTPUT\n{}", mapper.writerWithDefaultPrettyPrinter().writeValueAsString(result));
 		} catch (JsonProcessingException e) {
 			throw new TechnicalException(e);
 		}

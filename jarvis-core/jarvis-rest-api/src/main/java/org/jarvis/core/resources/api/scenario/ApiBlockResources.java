@@ -17,9 +17,9 @@
 package org.jarvis.core.resources.api.scenario;
 
 
+import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Formatter;
 import java.util.List;
 import java.util.Map;
 
@@ -34,13 +34,12 @@ import org.jarvis.core.profiler.DefaultProcessService;
 import org.jarvis.core.profiler.model.DefaultProcess;
 import org.jarvis.core.profiler.model.GenericNode;
 import org.jarvis.core.resources.api.ApiLinkedTwiceResources;
-import org.jarvis.core.resources.api.ResourcePair;
+import org.jarvis.core.resources.api.GenericValue;
 import org.jarvis.core.resources.api.href.ApiHrefBlockBlockResources;
 import org.jarvis.core.resources.api.href.ApiHrefBlockScriptPluginResources;
 import org.jarvis.core.resources.api.plugins.ApiScriptPluginResources;
 import org.jarvis.core.services.groovy.PluginGroovyService;
 import org.jarvis.core.type.GenericMap;
-import org.jarvis.core.type.ResultType;
 import org.jarvis.core.type.TaskType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -87,16 +86,48 @@ public class ApiBlockResources extends ApiLinkedTwiceResources<BlockRest,BlockBe
 	}
 
 	@Override
-	public ResourcePair doRealTask(BlockBean bean, GenericMap args, TaskType taskType) throws Exception {
+	public GenericValue doRealTask(BlockBean bean, GenericMap args, TaskType taskType) throws Exception {
 		GenericMap result;
 		switch(taskType) {
 			case TEST:
-				return new ResourcePair(ResultType.OBJECT, test(bean, args, new GenericMap())+"");
+			{
+				/**
+				 * in execute mode args are stored in parameter
+				 */
+				GenericMap testParameter = null;
+				try {
+					if(bean.testParameter != null) {
+						testParameter = mapper.readValue(bean.testParameter, GenericMap.class);
+					} else {
+						testParameter = new GenericMap();
+					}
+				} catch (IOException e) {
+					throw new TechnicalException(e);
+				}
+				Object testResult = test(bean, testParameter, new GenericMap());
+				return new GenericValue(testResult+"");
+			}
 			case EXECUTE:
-				return new ResourcePair(ResultType.ARRAY, execute(new ArrayList<String>(), 0, bean, args)+"");
+			{
+				/**
+				 * in execute mode args are stored in parameter
+				 */
+				GenericMap testParameter = null;
+				try {
+					if(bean.testParameter != null) {
+						testParameter = mapper.readValue(bean.testParameter, GenericMap.class);
+					} else {
+						testParameter = new GenericMap();
+					}
+				} catch (IOException e) {
+					throw new TechnicalException(e);
+				}
+				Object executeResult = execute(new ArrayList<String>(), 0, bean, testParameter);
+				return new GenericValue(executeResult+"");
+			}
 			default:
 				result = new GenericMap();
-				return new ResourcePair(ResultType.OBJECT, mapper.writeValueAsString(result));
+				return new GenericValue(mapper.writeValueAsString(result));
 		}
 	}
 
@@ -117,47 +148,83 @@ public class ApiBlockResources extends ApiLinkedTwiceResources<BlockRest,BlockBe
 	 * @param console 
 	 * @param level 
 	 * @param bean
-	 * @param args
+	 * @param testParameter
 	 * @return GenericMap
 	 * @throws TechnicalNotFoundException 
 	 */
-	public GenericMap execute(List<String> console, int level, BlockBean bean, GenericMap args) throws TechnicalNotFoundException {
+	public boolean execute(List<String> console, int level, BlockBean bean, GenericMap testParameter) throws TechnicalNotFoundException {
 		/**
 		 * stop recursion
 		 */
 		if(level >= 16) {
 			throw new TechnicalException("Stack overflow");
 		}
+
+		/**
+		 * iterate on conditions
+		 */
+		boolean result = true;
 		for(GenericEntity cond : apiHrefBlockScriptPluginResources.findAllConditions(bean)) {
-			GenericMap exec = (GenericMap) apiScriptPluginResources.doExecute(null,cond.id, args, TaskType.EXECUTE);
+			GenericMap exec = (GenericMap) apiScriptPluginResources.doExecute(null,cond.id, testParameter, TaskType.EXECUTE);
 			boolean evaluate = pluginGroovyService.groovyAsBoolean(bean.expression, exec);
 			logger.info("{} Block {} - Evaluate {} with context {} = {}", level, bean.id, bean.expression, exec, evaluate);
 			console.add(MessageFormat.format("{0} Block {1} - Evaluate {2} with context {3} = {4}", level, bean.id, bean.expression, exec, evaluate).toString());
+			result = result && evaluate;
 			if(evaluate) {
+				/**
+				 * then parameter
+				 */
+				GenericMap thenParameter = null;
+				try {
+					if(bean.thenParameter != null) {
+						thenParameter = mapper.readValue(bean.thenParameter, GenericMap.class);
+					} else {
+						thenParameter = new GenericMap();
+					}
+				} catch (IOException e) {
+					throw new TechnicalException(e);
+				}
+
 				for(GenericEntity plugin : apiHrefBlockScriptPluginResources.findAllThen(bean)) {
-					GenericMap result = (GenericMap) apiScriptPluginResources.doExecute(null,plugin.id, args, TaskType.EXECUTE);
-					logger.info("{} Block {} - Then plugin {} = {}", level, bean.id, plugin.id, result);
-					console.add(MessageFormat.format("{0} Block {1} - Then plugin {2} = {3}", level, bean.id, plugin.id, result).toString());
+					Object subResult = apiScriptPluginResources.doExecute(null,plugin.id, thenParameter, TaskType.EXECUTE);
+					logger.info("{} Block {} - Then plugin {} = {}", level, bean.id, plugin.id, subResult);
+					console.add(MessageFormat.format("{0} Block {1} - Then plugin {2} = {3}", level, bean.id, plugin.id, subResult).toString());
 				}
 				for(GenericEntity subblock : apiHrefBlockBlockResources.findAllThen(bean)) {
-					GenericMap result = (GenericMap) this.execute(console, level + 1, doGetByIdBean(subblock.id), args);
-					logger.info("{} Block {} - Then block {} = {}", level, bean.id, subblock.id, result);
-					console.add(MessageFormat.format("{0} Block {1} - Then block {2} = {3}", level, bean.id, subblock.id, result).toString());
+					boolean subResult = this.execute(console, level + 1, doGetByIdBean(subblock.id), thenParameter);
+					result = result && subResult;
+					logger.info("{} Block {} - Then block {} = {}", level, bean.id, subblock.id, subResult);
+					console.add(MessageFormat.format("{0} Block {1} - Then block {2} = {3}", level, bean.id, subblock.id, subResult).toString());
 				}
 			} else {
+				/**
+				 * else parameter
+				 */
+				GenericMap elseParameter = null;
+				try {
+					if(bean.elseParameter != null) {
+						elseParameter = mapper.readValue(bean.elseParameter, GenericMap.class);
+					} else {
+						elseParameter = new GenericMap();
+					}
+				} catch (IOException e) {
+					throw new TechnicalException(e);
+				}
+
 				for(GenericEntity plugin : apiHrefBlockScriptPluginResources.findAllElse(bean)) {
-					GenericMap result = (GenericMap) apiScriptPluginResources.doExecute(null,plugin.id, args, TaskType.EXECUTE);
-					logger.info("{} Block {} - Else plugin {} = {}", level, bean.id, plugin.id, result);
-					console.add(MessageFormat.format("{0} Block {1} - Else plugin {2} = {3}", level, bean.id, plugin.id, result).toString());
+					Object subResult = apiScriptPluginResources.doExecute(null,plugin.id, elseParameter, TaskType.EXECUTE);
+					logger.info("{} Block {} - Else plugin {} = {}", level, bean.id, plugin.id, subResult);
+					console.add(MessageFormat.format("{0} Block {1} - Else plugin {2} = {3}", level, bean.id, plugin.id, subResult).toString());
 				}
 				for(GenericEntity subblock : apiHrefBlockBlockResources.findAllElse(bean)) {
-					GenericMap result = (GenericMap) this.execute(console, level + 1, doGetByIdBean(subblock.id), args);
-					logger.info("{} Block {} - Else block {} = {}", level, bean.id, subblock.id, result);
-					console.add(MessageFormat.format("{0} Block {1} - Else block {2} = {3}", level, bean.id, subblock.id, result).toString());
+					boolean subResult = this.execute(console, level + 1, doGetByIdBean(subblock.id), elseParameter);
+					result = result && subResult;
+					logger.info("{} Block {} - Else block {} = {}", level, bean.id, subblock.id, subResult);
+					console.add(MessageFormat.format("{0} Block {1} - Else block {2} = {3}", level, bean.id, subblock.id, subResult).toString());
 				}
 			}
 		}
-		return args;
+		return result;
 	}
 
 	/**

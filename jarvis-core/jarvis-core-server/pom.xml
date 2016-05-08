@@ -29,6 +29,14 @@
 			<groupId>org.yroffin.com.jarvis</groupId>
 			<artifactId>jarvis-rest-api</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.yroffin.com.jarvis</groupId>
+			<artifactId>jarvis-core-ui</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.yroffin.com.jarvis</groupId>
+			<artifactId>jarvis-core-statistics</artifactId>
+		</dependency>
 		<!-- external dependencies -->
 		<dependency>
 			<groupId>us.monoid.web</groupId>

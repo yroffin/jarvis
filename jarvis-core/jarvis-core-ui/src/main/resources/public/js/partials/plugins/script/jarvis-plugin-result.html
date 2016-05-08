@@ -1,0 +1,13 @@
+<div layout="column">
+<h3 translate="plugin.inputa"></h3>
+<md-input-container>
+  <label translate="plugin.input"></label>
+  <textarea ng-model="editTestData"></textarea>
+</md-input-container>
+<span layout="row">
+	<md-button aria-label="menu" class="md-icon-button" ng-click="submit(editTestData)"><md-icon md-font-icon="material-icons md-16">save</md-icon></md-button>
+	<div hljs hljs-source="jsonTestData"></div>
+</span>
+<h3 translate="plugin.outputa"></h3>
+<div hljs hljs-source="output"></div>
+</div>

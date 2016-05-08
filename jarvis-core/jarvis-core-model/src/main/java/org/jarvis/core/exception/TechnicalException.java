@@ -40,6 +40,7 @@ public class TechnicalException extends RuntimeException {
 	 */
 	public TechnicalException(Exception e) {
 		super(e);
+		setStackTrace(e.getStackTrace());
 	}
 
 	/**

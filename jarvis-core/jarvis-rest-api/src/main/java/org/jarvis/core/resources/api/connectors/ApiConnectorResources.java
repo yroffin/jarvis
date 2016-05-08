@@ -29,9 +29,8 @@ import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.connector.ConnectorBean;
 import org.jarvis.core.model.rest.connector.ConnectorRest;
 import org.jarvis.core.resources.api.ApiResources;
-import org.jarvis.core.resources.api.ResourcePair;
+import org.jarvis.core.resources.api.GenericValue;
 import org.jarvis.core.type.GenericMap;
-import org.jarvis.core.type.ResultType;
 import org.jarvis.core.type.TaskType;
 import org.springframework.stereotype.Component;
 
@@ -63,7 +62,7 @@ public class ApiConnectorResources extends ApiResources<ConnectorRest,ConnectorB
 	}
 
 	@Override
-	public ResourcePair doRealTask(ConnectorBean bean, GenericMap args, TaskType taskType) throws Exception {
+	public GenericValue doRealTask(ConnectorBean bean, GenericMap args, TaskType taskType) throws Exception {
 		GenericMap result;
 		switch(taskType) {
 			case PING:
@@ -72,7 +71,7 @@ public class ApiConnectorResources extends ApiResources<ConnectorRest,ConnectorB
 			default:
 				result = new GenericMap();
 		}
-		return new ResourcePair(ResultType.OBJECT, mapper.writeValueAsString(result));
+		return new GenericValue(mapper.writeValueAsString(result));
 	}
 
 	private GenericMap ping(ConnectorBean bean, GenericMap args, GenericMap properties) throws TechnicalNotFoundException, TechnicalHttpException {

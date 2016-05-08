@@ -2,6 +2,9 @@ package org.jarvis.main.engine;
 
 import java.util.List;
 
+/**
+ * transaction
+ */
 public interface IAimlCoreTransactionMonitor {
 
 	/**
@@ -17,13 +20,13 @@ public interface IAimlCoreTransactionMonitor {
 
 	/**
 	 * retrieve current transaction
-	 * @return
+	 * @return IAimlCoreTransaction
 	 */
 	IAimlCoreTransaction getTransaction();
 
 	/**
 	 * retrieve all transactions
-	 * @return
+	 * @return List<IAimlCoreTransaction>
 	 */
 	List<IAimlCoreTransaction> getTransactions();
 }

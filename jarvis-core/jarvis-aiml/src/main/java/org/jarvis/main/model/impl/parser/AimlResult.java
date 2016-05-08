@@ -2,6 +2,9 @@ package org.jarvis.main.model.impl.parser;
 
 import org.jarvis.main.model.parser.IAimlResult;
 
+/**
+ * AIML result
+ */
 public class AimlResult implements IAimlResult {
 
 	private StringBuilder speech = new StringBuilder();

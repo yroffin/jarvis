@@ -10,7 +10,7 @@ import org.jarvis.core.model.bean.GenericBean;
 import org.jarvis.core.model.bean.plugin.ScriptPluginBean;
 import org.jarvis.core.model.bean.scenario.ScenarioBean;
 import org.jarvis.core.model.rest.GenericEntity;
-import org.jarvis.core.resources.api.ResourcePair;
+import org.jarvis.core.resources.api.GenericValue;
 import org.jarvis.core.resources.api.config.ApiPropertyResources;
 import org.jarvis.core.resources.api.href.ApiHrefBlockBlockResources;
 import org.jarvis.core.resources.api.href.ApiHrefBlockScriptPluginResources;
@@ -228,8 +228,8 @@ public class ApiBlockResourcesTest {
 	@Ignore
 	public void testCase1() throws Exception {
 		ScenarioBean scenario = new ScenarioBean();
-		ResourcePair result = apiScenarioResources.doRealTask(scenario, new GenericMap(), TaskType.RENDER);
-		String scenarioActual = result.getValue();
+		GenericValue result = apiScenarioResources.doRealTask(scenario, new GenericMap(), TaskType.RENDER);
+		String scenarioActual = result.asString();
 		String scenarioExpected = JsonTestFactory.loadFromClasspath("case1-expected.json");
 		Assert.assertEquals(scenarioExpected, scenarioActual);
 	}
@@ -241,8 +241,8 @@ public class ApiBlockResourcesTest {
 	@Ignore
 	public void testCaseRun1() throws Exception {
 		ScenarioBean scenario = new ScenarioBean();
-		ResourcePair result = apiScenarioResources.doRealTask(scenario, new GenericMap(), TaskType.EXECUTE);
-		String scenarioActual = result.getValue();
+		GenericValue result = apiScenarioResources.doRealTask(scenario, new GenericMap(), TaskType.EXECUTE);
+		String scenarioActual = result.asString();
 		String scenarioExpected = JsonTestFactory.loadFromClasspath("case1-expected.json");
 		Assert.assertEquals(scenarioExpected, scenarioActual);
 	}

@@ -34,14 +34,14 @@ public interface IAimlCoreEngine {
 	/**
 	 * retrieve transaction monitor
 	 * 
-	 * @return
+	 * @return IAimlCoreTransactionMonitor
 	 */
 	IAimlCoreTransactionMonitor getTransactionMonitor();
 
 	/**
 	 * the categories currently loaded
 	 * 
-	 * @return
+	 * @return List<IAimlCategory>
 	 */
 	public List<IAimlCategory> getCategories();
 
@@ -49,7 +49,7 @@ public interface IAimlCoreEngine {
 	 * bot properties
 	 * 
 	 * @param key
-	 * @return
+	 * @return Object
 	 */
 	public Object getBot(String key);
 
@@ -58,7 +58,7 @@ public interface IAimlCoreEngine {
 	 * 
 	 * @param key
 	 * @param value
-	 * @return
+	 * @return Object
 	 */
 	public Object setBot(String key, Object value);
 
@@ -66,7 +66,7 @@ public interface IAimlCoreEngine {
 	 * properties get
 	 * 
 	 * @param key
-	 * @return
+	 * @return Object
 	 */
 	public Object get(String key);
 
@@ -75,7 +75,7 @@ public interface IAimlCoreEngine {
 	 * 
 	 * @param key
 	 * @param value
-	 * @return
+	 * @return Object
 	 */
 	public Object set(String key, Object value);
 
@@ -83,12 +83,12 @@ public interface IAimlCoreEngine {
 	 * add a new file in system
 	 * 
 	 * @param resource
-	 * @return
 	 */
 	public void register(File resource);
 
 	/**
 	 * parse the resources
+	 * @throws AimlParsingError 
 	 */
 	public void parse() throws AimlParsingError;
 
@@ -96,7 +96,7 @@ public interface IAimlCoreEngine {
 	 * implement default bot behaviour
 	 * 
 	 * @param sentence
-	 * @return
+	 * @return List<IAimlHistory>
 	 * @throws AimlParsingError
 	 */
 	public List<IAimlHistory> ask(String sentence) throws AimlParsingError;
@@ -104,21 +104,21 @@ public interface IAimlCoreEngine {
 	/**
 	 * exchange history
 	 * 
-	 * @return
+	 * @return Stack<List<IAimlHistory>>
 	 */
 	public Stack<List<IAimlHistory>> getHistory();
 
 	/**
 	 * return that history (not last, but last last)
 	 * 
-	 * @return
+	 * @return IAimlHistory
 	 */
 	public IAimlHistory getThatHistory();
 
 	/**
 	 * return that history
 	 * 
-	 * @return
+	 * @return List<IAimlHistory>
 	 */
 	public List<IAimlHistory> getThatsHistory();
 
@@ -138,5 +138,8 @@ public interface IAimlCoreEngine {
 	 */
 	void setLastAnswer(IAimlResult reply) throws AimlParsingError;
 
+	/**
+	 * @return IAimlRepository
+	 */
 	IAimlRepository getAiml();
 }
