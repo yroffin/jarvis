@@ -16,6 +16,7 @@
 
 package org.jarvis.core.resources.api.scenario;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -131,7 +132,17 @@ public class ApiScenarioResources extends ApiLinkedTwiceResources<ScenarioRest,S
 		List<String> console = new ArrayList<String>();
 		for(GenericEntity entity : sort(apiHrefScenarioBlockResources.findAll(bean), "order")) {
 			BlockBean block = apiBlockResources.doGetByIdBean(entity.id);
-			apiBlockResources.execute(console, 0, block, args);
+			GenericMap testParameter = null;
+			try {
+				if(block.testParameter != null) {
+					testParameter = mapper.readValue(block.testParameter, GenericMap.class);
+				} else {
+					testParameter = new GenericMap();
+				}
+			} catch (IOException e) {
+				throw new TechnicalException(e);
+			}
+			apiBlockResources.execute(console, 0, block, testParameter);
 		}
 		try {
 			return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(console);
