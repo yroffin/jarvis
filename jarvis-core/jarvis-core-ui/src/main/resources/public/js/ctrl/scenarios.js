@@ -20,6 +20,7 @@
 
 angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
 .controller('scenariosCtrl', 
+		[ '$scope', '$log', 'genericScopeService', 'scenarioResourceService', 'toastService',
 	function($scope, $log, genericScopeService, scenarioResourceService, toastService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
@@ -39,8 +40,19 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
     			icon: "list"
     		}
 	);
-})
+}])
 .controller('scenarioCtrl',
+		[ '$scope',
+		  '$log',
+		  '$stateParams',
+		  '$mdDialog',
+		  'genericScopeService',
+		  'genericResourceService',
+		  'genericPickerService',
+		  'scenarioResourceService',
+		  'blockResourceService',
+		  'pluginResourceService',
+		  'toastService',
 	function(
 			$scope,
 			$log,
@@ -277,4 +289,4 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
 
 		$log.debug('scenario-ctrl', $scope.scenario);
     }
-})
+}])

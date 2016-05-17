@@ -20,6 +20,7 @@
 
 angular.module('JarvisApp.ctrl.triggers', ['JarvisApp.services'])
 .controller('triggersCtrl', 
+		[ '$scope', '$log', 'genericScopeService', 'triggerResourceService',
 		function($scope, $log, genericScopeService, triggerResourceService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
@@ -39,8 +40,9 @@ angular.module('JarvisApp.ctrl.triggers', ['JarvisApp.services'])
     			icon: "settings_remote"
     		}
 	);
-})
+}])
 .controller('triggerCtrl',
+		[ '$scope', '$log', '$stateParams', 'genericResourceService', 'genericScopeService', 'triggerResourceService', 'toastService',
 	function($scope, $log, $stateParams, genericResourceService, genericScopeService, triggerResourceService, toastService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
@@ -62,4 +64,4 @@ angular.module('JarvisApp.ctrl.triggers', ['JarvisApp.services'])
 	
 		$log.info('trigger-ctrl');
     }
-})
+}])

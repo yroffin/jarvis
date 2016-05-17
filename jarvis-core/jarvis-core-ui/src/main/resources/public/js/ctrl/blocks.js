@@ -20,7 +20,19 @@
 
 angular.module('JarvisApp.ctrl.blocks', ['JarvisApp.services'])
 .controller('blocksCtrl', 
-	function($scope, $log, genericScopeService, genericPickerService, blockResourceService, toastService){
+		[ '$scope',
+		  '$log',
+		  'genericScopeService',
+		  'genericPickerService',
+		  'blockResourceService',
+		  'toastService', 
+	function(
+			$scope,
+			$log,
+			genericScopeService,
+			genericPickerService,
+			blockResourceService,
+			toastService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
 	 */
@@ -40,8 +52,16 @@ angular.module('JarvisApp.ctrl.blocks', ['JarvisApp.services'])
     			parameter: "{}"
     		}
 	);
-})
+}])
 .controller('blockCtrl',
+	[ '$scope',
+	  '$log',
+	  '$stateParams',
+	  'genericScopeService',
+	  'genericResourceService',
+	  'genericPickerService',
+	  'blockResourceService',
+	  'toastService',
 	function(
 			$scope,
 			$log,
@@ -65,13 +85,13 @@ angular.module('JarvisApp.ctrl.blocks', ['JarvisApp.services'])
 	 */
 	$scope.links = {
 			plugins:{
-				if: {},
-				then: {},
-				else: {}
+				"if": {},
+				"then": {},
+				"else": {}
 			},
 			blocks:{
-				then: {},
-				else: {}
+				"then": {},
+				"else": {}
 			}
 	}
 	/**
@@ -198,4 +218,4 @@ angular.module('JarvisApp.ctrl.blocks', ['JarvisApp.services'])
 
     	$log.debug('block-ctrl', $scope.scenario);
     }
-})
+}])

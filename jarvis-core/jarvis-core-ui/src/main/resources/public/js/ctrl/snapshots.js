@@ -20,6 +20,7 @@
 
 angular.module('JarvisApp.ctrl.snapshots', ['JarvisApp.services'])
 .controller('snapshotsCtrl', 
+		[ '$scope', '$log', 'genericScopeService', 'snapshotResourceService',
 	function($scope, $log, genericScopeService, snapshotResourceService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
@@ -39,8 +40,9 @@ angular.module('JarvisApp.ctrl.snapshots', ['JarvisApp.services'])
     			icon: "list"
     		}
 	);
-})
+}])
 .controller('snapshotCtrl',
+		['$scope', '$log', '$stateParams', '$filter', '$http', 'genericResourceService', 'genericScopeService', 'snapshotResourceService', 'iotResourceService', 'toastService',
 	function($scope, $log, $stateParams, $filter, $http, genericResourceService, genericScopeService, snapshotResourceService, iotResourceService, toastService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
@@ -109,4 +111,4 @@ angular.module('JarvisApp.ctrl.snapshots', ['JarvisApp.services'])
 
 		$log.info('snapshot-ctrl', $scope.snapshots);
     }
-})
+}])

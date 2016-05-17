@@ -26,7 +26,6 @@ import org.ehcache.expiry.Expiry;
 import org.jarvis.core.resources.ResourceData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 /**
@@ -57,22 +56,22 @@ public class CoreEhcacheManager {
 
 			@Override
 			public Duration getExpiryForAccess(String arg0, Object arg1) {
-				return org.ehcache.expiry.Duration.ZERO;
+				return org.ehcache.expiry.Duration.FOREVER;
 			}
 
 			@Override
 			public Duration getExpiryForCreation(String arg0, Object arg1) {
-				return org.ehcache.expiry.Duration.ZERO;
+				return org.ehcache.expiry.Duration.FOREVER;
 			}
 
 			@Override
 			public Duration getExpiryForUpdate(String arg0, Object arg1, Object arg2) {
-				return org.ehcache.expiry.Duration.ZERO;
+				return org.ehcache.expiry.Duration.FOREVER;
 			}
 			
 		};
 		
-		cache = cacheManager.createCache("myCache",
+		cache = cacheManager.createCache("resources",
 				CacheConfigurationBuilder.newCacheConfigurationBuilder()
 				.withExpiry(expiry)
 				.buildConfig(String.class, Object.class));
@@ -92,7 +91,7 @@ public class CoreEhcacheManager {
 	 * @param key
 	 * @return boolean
 	 */
-	public boolean contain(String key) {
+	public boolean contains(String key) {
 		return cache.containsKey(key);
 	}
 

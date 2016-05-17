@@ -6,4 +6,41 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>jarvis-core-ui</artifactId>
+  
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>com.samaxes.maven</groupId>
+        <artifactId>minify-maven-plugin</artifactId>
+        <version>1.7.4</version>
+        <executions>
+          <execution>
+            <id>default-minify</id>
+            <phase>package</phase>
+            <configuration>
+              <charset>UTF-8</charset>
+              <cssSourceFiles>
+              </cssSourceFiles>
+              <jsSourceDir>../resources</jsSourceDir>
+              <jsSourceIncludes>
+                <jsSourceInclude>**/*.js</jsSourceInclude>
+              </jsSourceIncludes>
+              <jsSourceExcludes>
+                <jsSourceInclude>**/script.js</jsSourceInclude>
+                <jsSourceInclude>**/script.min.js</jsSourceInclude>
+              </jsSourceExcludes>
+              <jsFinalFile>../../src/main/resources/public/script.js</jsFinalFile>
+              <jsEngine>CLOSURE</jsEngine>
+              <closureLanguage>ECMASCRIPT5_STRICT</closureLanguage>
+              <closureAngularPass>true</closureAngularPass>
+            </configuration>
+            <goals>
+              <goal>minify</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+  
 </project>

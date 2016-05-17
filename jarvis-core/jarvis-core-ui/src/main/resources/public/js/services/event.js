@@ -19,9 +19,8 @@
 /* Services */
 
 angular.module('JarvisApp.services.event', [])
-	.factory('eventResourceService', function(genericResourceService) {
+	.factory('eventResourceService', [ 'genericResourceService', function(genericResourceService) {
 		return {
-			event: genericResourceService.crud(['events']),
+			event: genericResourceService.crud(['events'])
 		}
-	})
-;
+	}]);

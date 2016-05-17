@@ -21,8 +21,9 @@
 /**
  * viewResourceService
  */
-angular.module('JarvisApp.services.configuration', []).factory('configurationResourceService', function(genericResourceService) {
+angular.module('JarvisApp.services.configuration', []).factory('configurationResourceService', 
+		[ 'genericResourceService', function(genericResourceService) {
   return {
 	  configuration : genericResourceService.crud(['configurations'])
   }
-});
+}]);

@@ -20,6 +20,7 @@
 
 angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
 .controller('pluginsCtrl', 
+		[ '$scope', '$log', 'genericScopeService', 'pluginResourceService',
 	function($scope, $log, genericScopeService, pluginResourceService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
@@ -40,8 +41,9 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
        			type: "script"
     		}
 	);
-})
+}])
 .controller('pluginScriptCtrl',
+		[ '$scope', '$log', '$stateParams', 'genericResourceService', 'genericScopeService', 'genericPickerService', 'pluginResourceService', 'iotResourceService', 'commandResourceService', 'toastService',
 	function($scope, $log, $stateParams, genericResourceService, genericScopeService, genericPickerService, pluginResourceService, iotResourceService, commandResourceService, toastService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
@@ -165,4 +167,4 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
 
 		$log.info('script-ctrl');
     }
-})
+}])

@@ -20,7 +20,9 @@
 
 angular.module('JarvisApp.ctrl.views', ['JarvisApp.services'])
 .controller('viewsCtrl', 
+		[ '$scope', '$log', 'genericScopeService', 'viewResourceService',
 	function($scope, $log, genericScopeService, viewResourceService){
+    $log.info('viewsCtrl');
 	/**
 	 * declare generic scope resource (and inject it in scope)
 	 */
@@ -39,8 +41,9 @@ angular.module('JarvisApp.ctrl.views', ['JarvisApp.services'])
     			icon: "list"
     		}
 	);
-})
+}])
 .controller('viewCtrl',
+		[ '$scope, $log', '$stateParams', 'genericResourceService', 'genericScopeService', 'viewResourceService', 'iotResourceService', 'toastService',
 	function($scope, $log, $stateParams, genericResourceService, genericScopeService, viewResourceService, iotResourceService, toastService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
@@ -91,4 +94,4 @@ angular.module('JarvisApp.ctrl.views', ['JarvisApp.services'])
 
 		$log.info('view-ctrl', $scope.views);
     }
-})
+}])

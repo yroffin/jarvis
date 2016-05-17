@@ -21,8 +21,10 @@
 /**
  * commandResourceService
  */
-angular.module('JarvisApp.services.command', []).factory('commandResourceService', function(genericResourceService) {
+angular.module('JarvisApp.services.command', []).factory('commandResourceService', 
+		[ 'genericResourceService',
+		  function(genericResourceService) {
   return {
 	  	command: genericResourceService.crud(['commands'])
   }
-});
+}]);

@@ -18,7 +18,7 @@
 
 /* Cf. https://angular-md-color.com */
 
-angular.module('JarvisApp.theme', [ 'ngMaterial' ]).config(function ($mdThemingProvider) {
+angular.module('JarvisApp.theme', [ 'ngMaterial' ]).config([ '$mdThemingProvider', function ($mdThemingProvider) {
     var customPrimary = {
             '50': '#aaeafd',
             '100': '#92e4fc',
@@ -104,4 +104,4 @@ angular.module('JarvisApp.theme', [ 'ngMaterial' ]).config(function ($mdThemingP
            .accentPalette('customAccent')
            .warnPalette('customWarn')
            .backgroundPalette('customBackground')
-    });
+    }]);

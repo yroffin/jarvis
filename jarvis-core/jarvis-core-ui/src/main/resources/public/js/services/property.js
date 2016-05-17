@@ -21,8 +21,8 @@
 /**
  * viewResourceService
  */
-angular.module('JarvisApp.services.property', []).factory('propertyResourceService', function(genericResourceService) {
+angular.module('JarvisApp.services.property', []).factory('propertyResourceService', [ 'genericResourceService', function(genericResourceService) {
   return {
 	  property : genericResourceService.crud(['properties'])
   }
-});
+}]);

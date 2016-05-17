@@ -1,5 +1,7 @@
 package org.jarvis.core.resources;
 
+import java.util.Arrays;
+
 /**
  * resource
  */
@@ -56,7 +58,16 @@ public class ResourceData {
 	private String string;
 	private String contentType;
 	
+	/**
+	 * @return boolean
+	 */
 	public boolean isOctetStream() {
 		return binary != null;
+	}
+
+	@Override
+	public String toString() {
+		return "ResourceData [binary=" + Arrays.toString(binary) + ", string=" + string + ", contentType=" + contentType
+				+ "]";
 	}
 }

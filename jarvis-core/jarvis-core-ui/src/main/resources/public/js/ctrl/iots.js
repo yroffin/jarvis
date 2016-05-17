@@ -20,6 +20,7 @@
 
 angular.module('JarvisApp.ctrl.iots', ['JarvisApp.services'])
 .controller('iotsCtrl', 
+		[ '$scope', '$log', 'genericScopeService', 'iotResourceService',
 	function($scope, $log, genericScopeService, iotResourceService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
@@ -39,8 +40,9 @@ angular.module('JarvisApp.ctrl.iots', ['JarvisApp.services'])
     			icon: "list"
     		}
 	);
-})
+}])
 .controller('iotCtrl',
+		['$scope', '$log', '$state', '$stateParams', 'iotResourceService', 'pluginResourceService', 'genericScopeService', 'genericResourceService', 'toastService',
 	function($scope, $log, $state, $stateParams, iotResourceService, pluginResourceService, genericScopeService, genericResourceService, toastService){
 	$scope.getLink = function() {
 		return $scope.plugins;
@@ -135,4 +137,4 @@ angular.module('JarvisApp.ctrl.iots', ['JarvisApp.services'])
 	
 		$log.info('iot-ctrl');
 	}
-})
+}])

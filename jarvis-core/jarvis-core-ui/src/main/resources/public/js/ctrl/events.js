@@ -20,6 +20,7 @@
 
 angular.module('JarvisApp.ctrl.events', ['JarvisApp.services'])
 .controller('eventsCtrl', 
+		['$scope', '$log', 'genericScopeService', 'genericResourceService', 'eventResourceService',
 	function($scope, $log, genericScopeService, genericResourceService, eventResourceService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
@@ -39,5 +40,4 @@ angular.module('JarvisApp.ctrl.events', ['JarvisApp.services'])
 	 * some crud
 	 */
 	$scope.crud = genericResourceService.crud(['events']);
-})
-;
+}]);

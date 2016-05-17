@@ -20,6 +20,7 @@
 
 angular.module('JarvisApp.ctrl.configurations', ['JarvisApp.services'])
 .controller('configurationsCtrl', 
+		['$scope', '$log', 'genericScopeService', 'configurationResourceService',
 	function($scope, $log, genericScopeService, configurationResourceService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
@@ -40,8 +41,9 @@ angular.module('JarvisApp.ctrl.configurations', ['JarvisApp.services'])
     			backgroundUrl: "http://artroyalephotography.com/wp-content/uploads/2011/08/minimal-gray-to-white-gradient-wallpapers_33797_1920x1200-1024x640.jpg"
     		}
 	);
-})
+}])
 .controller('configurationCtrl',
+		['$scope', '$log', '$stateParams', '$mdDialog', 'genericResourceService', 'genericScopeService', 'configurationResourceService', 'toastService',
 	function($scope, $log, $stateParams, $mdDialog, genericResourceService, genericScopeService, configurationResourceService, toastService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
@@ -64,4 +66,4 @@ angular.module('JarvisApp.ctrl.configurations', ['JarvisApp.services'])
 
     	$log.info('configuration-ctrl', $scope.configurations);
     }
-})
+}])

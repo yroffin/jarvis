@@ -21,8 +21,8 @@
 /**
  * snapshotResourceService
  */
-angular.module('JarvisApp.services.snapshot', []).factory('snapshotResourceService', function(genericResourceService) {
+angular.module('JarvisApp.services.snapshot', []).factory('snapshotResourceService', [ 'genericResourceService', function(genericResourceService) {
   return {
 	  snapshot : genericResourceService.crud(['snapshots'])
   }
-});
+}]);

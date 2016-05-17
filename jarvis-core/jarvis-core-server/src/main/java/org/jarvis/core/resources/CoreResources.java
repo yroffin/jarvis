@@ -24,6 +24,7 @@ import java.io.InputStream;
 import javax.servlet.ServletOutputStream;
 
 import org.jarvis.core.services.cache.CoreEhcacheManager;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,10 +50,11 @@ public class CoreResources {
 	CoreEhcacheManager coreEhcacheManager;
 
 	ResourceData getData(String key) throws IOException {
-	    if(coreEhcacheManager.contain(key)) {
+	    if(coreEhcacheManager.contains(key)) {
 	    	logger.debug("Cached data {}", key);
 	    	return coreEhcacheManager.get(key);
 	    } else {
+	    	logger.debug("Un-cached data {}", key);
 	        InputStream inputStream = getClass().getResourceAsStream(key);
 	        if (inputStream != null) {
 		        ResourceData value = null;
@@ -111,7 +113,10 @@ public class CoreResources {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
 		        String path = request.pathInfo().replaceFirst("/ui/", "/public/");
+		        DateTime begin = new DateTime();
 		        ResourceData value = getData(path);
+		        DateTime end = new DateTime();
+		    	logger.debug("Loading time {} {}", request.pathInfo(), end.getMillis() - begin.getMillis());
 		        if(value != null) {
 	        		response.type(value.getContentType());
 		            response.status(200);

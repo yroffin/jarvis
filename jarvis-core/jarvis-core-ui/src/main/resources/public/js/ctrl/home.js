@@ -20,6 +20,7 @@
 
 angular.module('JarvisApp.ctrl.home', ['JarvisApp.services'])
 .controller('homeCtrl', 
+		['$scope', '$store', '$log', 'viewResourceService', 'iotResourceService', 'toastService',
 	function($scope, $store, $log, viewResourceService, iotResourceService, toastService){
     /**
      * swipe left
@@ -104,7 +105,8 @@ angular.module('JarvisApp.ctrl.home', ['JarvisApp.services'])
 	
 		$log.info('views-ctrl');
     }
-})
+}])
 .controller('helperCtrl', 
+		[ '$scope', '$store', '$log', 'viewResourceService', 'iotResourceService', 'toastService',
 	function($scope, $store, $log, viewResourceService, iotResourceService, toastService){
-})
+}])

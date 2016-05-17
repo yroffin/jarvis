@@ -22,7 +22,8 @@
  * blockResourceService
  */
 angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter'])
-  .factory('genericResourceService', function($log, Restangular, filterService, toastService) {
+  .factory('genericResourceService', [ '$log', 'Restangular', 'filterService', 'toastService', function($log, Restangular, filterService, toastService) {
+  $log.info('genericResourceService');
   var resources = {
         /**
 		 * find all elements
@@ -476,8 +477,8 @@ return {
 		  }
 	  }
   }
-  })
-  .factory('genericPickerService', function($log, $mdDialog, toastService) {
+  }])
+  .factory('genericPickerService', [ '$log', '$mdDialog', 'toastService', function($log, $mdDialog, toastService) {
 	  /**
 	   * pickers
 	   */
@@ -526,4 +527,4 @@ return {
 	  return {
 		  pickers : pickers
 	  }
-  });
+  }]);

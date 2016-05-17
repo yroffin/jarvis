@@ -25,7 +25,10 @@ var myAppServices = angular.module('JarvisApp.services', [ 'ngResource' ]);
 /**
  * toastService
  */
-myAppServices.factory('toastService', function($log, $mdToast) {
+myAppServices.factory('toastService', [ '$log', '$mdToast', function($log, $mdToast) {
+  var $log =  angular.injector(['ng']).get('$log');
+  $log.info('toastService', $mdToast);
+
   var toastServiceInstance;
   toastServiceInstance = {
 		toastPosition: {
@@ -60,12 +63,14 @@ myAppServices.factory('toastService', function($log, $mdToast) {
         }
   }
   return toastServiceInstance;
-});
+}]);
 
 /**
  * clientResourceService
  */
-myAppServices.factory('clientResourceService', function($q, $window, $rootScope, Restangular) {
+myAppServices.factory('clientResourceService', [ '$q', '$window', '$rootScope', 'Restangular', function($q, $window, $rootScope, Restangular) {
+  var $log =  angular.injector(['ng']).get('$log');
+  $log.info('clientResourceService', $q);
   return {
         findAll: function(callback,failure) {
         	// Restangular returns promises
@@ -76,12 +81,14 @@ myAppServices.factory('clientResourceService', function($q, $window, $rootScope,
         	});
         }
   }
-});
+}]);
 
 /**
  * crontabResourceService
  */
-myAppServices.factory('crontabResourceService', function($q, $window, $rootScope, Restangular) {
+myAppServices.factory('crontabResourceService', [ '$q', '$window', '$rootScope', 'Restangular', function($q, $window, $rootScope, Restangular) {
+  var $log =  angular.injector(['ng']).get('$log');
+  $log.info('crontabResourceService', $q);
   return {
         findAll: function(callback,failure) {
         	// Restangular returns promises
@@ -92,12 +99,14 @@ myAppServices.factory('crontabResourceService', function($q, $window, $rootScope
         	});
         }
   }
-});
+}]);
 
 /**
  * labelResourceService
  */
-myAppServices.factory('labelResourceService', function($q, $window, $rootScope, Restangular) {
+myAppServices.factory('labelResourceService', [ '$q', '$window', '$rootScope', 'Restangular', function($q, $window, $rootScope, Restangular) {
+  var $log =  angular.injector(['ng']).get('$log');
+  $log.info('labelResourceService', $q);
   return {
         findAll: function(callback,failure) {
         	// Restangular returns promises
@@ -108,5 +117,5 @@ myAppServices.factory('labelResourceService', function($q, $window, $rootScope, 
         	});
         }
   }
-});
+}]);
 

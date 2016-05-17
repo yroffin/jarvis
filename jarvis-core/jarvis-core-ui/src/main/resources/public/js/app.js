@@ -25,6 +25,7 @@ angular.module('JarvisApp', [
      'ngMdIcons',
      'ngSanitize',
      'restangular',
+     'angular-websocket',
      'ui.router',
      'ui.router.router',
      'pascalprecht.translate',

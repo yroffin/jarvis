@@ -21,8 +21,9 @@
 /**
  * connectorResourceService
  */
-angular.module('JarvisApp.services.connector', []).factory('connectorResourceService', function(genericResourceService) {
+angular.module('JarvisApp.services.connector', []).factory('connectorResourceService', 
+		[ 'genericResourceService', function(genericResourceService) {
   return {
 	  connector : genericResourceService.crud(['connectors'])
   }
-});
+}]);

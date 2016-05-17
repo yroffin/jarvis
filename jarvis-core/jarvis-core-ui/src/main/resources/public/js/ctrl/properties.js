@@ -20,6 +20,7 @@
 
 angular.module('JarvisApp.ctrl.properties', ['JarvisApp.services'])
 .controller('propertiesCtrl', 
+		[ '$scope', '$log', 'genericScopeService', 'propertyResourceService',
 	function($scope, $log, genericScopeService, propertyResourceService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
@@ -39,8 +40,9 @@ angular.module('JarvisApp.ctrl.properties', ['JarvisApp.services'])
     			value: "value"
     		}
 	);
-})
+}])
 .controller('propertyCtrl',
+		[ '$scope', '$log', '$stateParams', '$mdDialog', 'genericResourceService', 'genericScopeService', 'propertyResourceService', 'toastService',
 	function($scope, $log, $stateParams, $mdDialog, genericResourceService, genericScopeService, propertyResourceService, toastService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
@@ -63,4 +65,4 @@ angular.module('JarvisApp.ctrl.properties', ['JarvisApp.services'])
 
     	$log.info('property-ctrl', $scope.properties);
     }
-})
+}])

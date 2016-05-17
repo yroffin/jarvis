@@ -23,7 +23,7 @@ var myAppServices = angular.module('JarvisApp.services.filter', []);
 /**
  * filterService
  */
-myAppServices.factory('filterService', function(Restangular) {
+myAppServices.factory('filterService', [ 'Restangular', function(Restangular) {
   var base = {
 	  /**
 	   * strip restangular object from context
@@ -39,4 +39,4 @@ myAppServices.factory('filterService', function(Restangular) {
 	  }
   }
   return base;
-});
+}]);

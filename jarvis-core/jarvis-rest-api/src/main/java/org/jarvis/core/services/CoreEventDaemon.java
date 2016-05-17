@@ -18,6 +18,7 @@ package org.jarvis.core.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import javax.annotation.PostConstruct;
@@ -105,10 +106,21 @@ public class CoreEventDaemon {
 
 	private LinkedBlockingQueue<EventBean> linked = new LinkedBlockingQueue<EventBean>();
 
+	class InnerSunsetThread implements Runnable {
+
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+	
 	class InnerThread implements Runnable {
 
 		@Override
 		public void run() {
+			
 			EventBean event = null;
 			try {
 				while ((event  = linked.take()) != null) {
@@ -128,7 +140,7 @@ public class CoreEventDaemon {
 			for(ScenarioBean sce : apiScenarioResources.doFindAllBean()) {
 				for(GenericEntity link : apiHrefScenarioTriggerResources.findAll(sce)) {
 					try {
-						if(event.trigger.equals(link.id)) {
+						if(event.trigger != null && event.trigger.equals(link.id)) {
 							apiTriggerResources.doGetByIdRest(link.id);
 							toExecute.add(sce);
 						}

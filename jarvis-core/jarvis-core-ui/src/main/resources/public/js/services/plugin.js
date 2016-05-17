@@ -21,7 +21,9 @@
 /**
  * pluginResourceService
  */
-angular.module('JarvisApp.services.plugin', []).factory('pluginResourceService', function($log, Restangular, filterService, commandResourceService, genericResourceService) {
+angular.module('JarvisApp.services.plugin', []).factory('pluginResourceService', 
+		[ '$log', 'Restangular', 'filterService', 'commandResourceService', 'genericResourceService',
+		  function($log, Restangular, filterService, commandResourceService, genericResourceService) {
   var plugins = {
 	        /**
 			 * base services : findAll, delete, put and post
@@ -49,4 +51,4 @@ angular.module('JarvisApp.services.plugin', []).factory('pluginResourceService',
 	    scripts: genericResourceService.crud(['plugins','scripts']),
 	    commands : genericResourceService.links(['plugins','scripts'], ['commands'])
   }
-});
+}]);

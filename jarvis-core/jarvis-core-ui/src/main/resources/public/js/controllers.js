@@ -19,52 +19,88 @@
 /* Controllers */
 
 angular.module('JarvisApp.config',[])
-    .config(function($mdIconProvider) {
-	})
-	.config(['$translateProvider', 
-	    function($translateProvider){
-		  // Register a loader for the static files
-		  // So, the module will search missing translation tables under the specified urls.
-		  // Those urls are [prefix][langKey][suffix].
-		  $translateProvider.useStaticFilesLoader({
-		    prefix: 'js/l10n/',
-		    suffix: '.json'
-		  });
-		  // Tell the module what language to use by default
-		  $translateProvider.preferredLanguage('fr_FR');
-		  $translateProvider.useSanitizeValueStrategy(null);
+    .config(['$mdIconProvider', function($mdIconProvider) {
+		var $log =  angular.injector(['ng']).get('$log');
+		$log.info('$mdIconProvider', $mdIconProvider);
 	}])
-    .config(['RestangularProvider',
-        function(RestangularProvider) {
-    		RestangularProvider.setBaseUrl('/api');
-    		RestangularProvider.setDefaultHeaders({ 'content-type': 'application/json' });
-    		/**
-    		 * request interceptor
-    		 */
-    	    RestangularProvider.setFullRequestInterceptor(function(element, operation, route, url, headers, params, httpConfig) {
-    	      return {
-    	        element: element,
-    	        params: params,
-    	        headers: headers,
-    	        httpConfig: httpConfig
-    	      };
-    	    });
-    	    RestangularProvider.setResponseExtractor(function(response) {
-    	    	if(angular.isObject(response)) {
-    	    	  var newResponse = response;
-    	    	  newResponse.originalElement = response;
-    	    	  return newResponse
-    	    	} else {
-    	    		return response;
-    	    	}
-    	    });
+	.config(['$translateProvider', function($translateProvider){
+		var $log =  angular.injector(['ng']).get('$log');
+		$log.info('$translateProvider', $translateProvider);
+	  
+		// Register a loader for the static files
+		// So, the module will search missing translation tables under the specified urls.
+		// Those urls are [prefix][langKey][suffix].
+		$translateProvider.useStaticFilesLoader({
+			prefix: 'js/l10n/',
+			suffix: '.json'
+		});
+		// Tell the module what language to use by default
+		$translateProvider.preferredLanguage('fr_FR');
+		$translateProvider.useSanitizeValueStrategy(null);
+	}])
+    .config(['RestangularProvider', function(RestangularProvider) {
+		var $log =  angular.injector(['ng']).get('$log');
+		$log.info('RestangularProvider', RestangularProvider);
+		
+		RestangularProvider.setBaseUrl('/api');
+		RestangularProvider.setDefaultHeaders({ 'content-type': 'application/json' });
+		/**
+		 * request interceptor
+		 */
+	    RestangularProvider.setFullRequestInterceptor(function(element, operation, route, url, headers, params, httpConfig) {
+	      return {
+	        element: element,
+	        params: params,
+	        headers: headers,
+	        httpConfig: httpConfig
+	      };
+	    });
+	    RestangularProvider.setResponseExtractor(function(response) {
+	    	if(angular.isObject(response)) {
+	    	  var newResponse = response;
+	    	  newResponse.originalElement = response;
+	    	  return newResponse
+	    	} else {
+	    		return response;
+	    	}
+	    });
     }])
     /**
      * main controller
      */
     .controller('JarvisAppCtrl',
-    	function($scope, $log, $store, $http, $mdDialog, $mdSidenav, $mdMedia, $location, $state, genericPickerService, toastService, iotResourceService, eventResourceService, configurationResourceService){
-        /**
+    		['$scope',
+    		 '$log',
+    		 '$store',
+    		 '$http',
+    		 '$mdDialog',
+    		 '$mdSidenav',
+    		 '$mdMedia',
+    		 '$location',
+    		 '$state',
+    		 'genericPickerService',
+    		 'toastService',
+    		 'iotResourceService',
+    		 'eventResourceService',
+    		 'configurationResourceService',
+    	function(
+    			$scope,
+    			$log,
+    			$store,
+    			$http,
+    			$mdDialog,
+    			$mdSidenav,
+    			$mdMedia,
+    			$location,
+    			$state,
+    			genericPickerService,
+    			toastService,
+    			iotResourceService,
+    			eventResourceService,
+    			configurationResourceService){
+    	$log.info('JarvisAppCtrl');
+
+    	/**
          * initialize jarvis configuration
          */
         $scope.config = {};
@@ -264,9 +300,14 @@ angular.module('JarvisApp.config',[])
 	    			'graphDialogCtrl'
 	    	);
         }
-    })
+
+        $log.info('JarvisAppCtrl configured');
+    }])
 	.controller('graphDialogCtrl',
-		function($scope, $log, $mdDialog, genericResourceService, toastService, anchor) {
+			['$scope', '$log', '$mdDialog',
+		function($scope, $log, $mdDialog) {
+		$log.info('graphDialogCtrl');
+
 		$scope.hide = function() {
 		   $mdDialog.hide();
 		 };
@@ -276,9 +317,12 @@ angular.module('JarvisApp.config',[])
 		$scope.answer = function(answer) {
 		  $mdDialog.hide(answer);
 		};
-	})
+	}])
 	.controller('pickPluginDialogCtrl',
+			['$scope', '$log', '$mdDialog', 'genericResourceService', 'toastService',
 		function($scope, $log, $mdDialog, genericResourceService, toastService) {
+		$log.info('pickPluginDialogCtrl');
+
 		$scope.hide = function() {
 		   $mdDialog.hide();
 		 };
@@ -320,9 +364,12 @@ angular.module('JarvisApp.config',[])
 				},
 				toastService.failure
 		)
-	})
+	}])
 	.controller('pickIotDialogCtrl',
+			['$scope', '$log', '$mdDialog', 'genericResourceService', 'toastService',
 		function($scope, $log, $mdDialog, genericResourceService, toastService) {
+		$log.info('pickIotDialogCtrl');
+
 		$scope.hide = function() {
 		   $mdDialog.hide();
 		 };
@@ -364,9 +411,11 @@ angular.module('JarvisApp.config',[])
 				},
 				toastService.failure
 		)
-	})
+	}])
 	.controller('pickCommandDialogCtrl',
+			['$scope', '$log', '$mdDialog', 'genericResourceService', 'toastService',
 		function($scope, $log, $mdDialog, genericResourceService, toastService) {
+		$log.info('pickCommandDialogCtrl');
 		$scope.hide = function() {
 		   $mdDialog.hide();
 		 };
@@ -393,9 +442,11 @@ angular.module('JarvisApp.config',[])
 				},
 				toastService.failure
 		);
-	})
+	}])
 	.controller('pickTriggerDialogCtrl',
+			['$scope', '$log', '$mdDialog', 'genericResourceService', 'toastService',
 		function($scope, $log, $mdDialog, genericResourceService, toastService) {
+		$log.info('pickTriggerDialogCtrl');
 		$scope.hide = function() {
 		   $mdDialog.hide();
 		 };
@@ -422,9 +473,11 @@ angular.module('JarvisApp.config',[])
 				},
 				toastService.failure
 		);
-	})
+	}])
 	.controller('pickBlockDialogCtrl',
+			['$scope', '$log', '$mdDialog', 'genericResourceService', 'toastService',
 			function($scope, $log, $mdDialog, genericResourceService, toastService) {
+			$log.info('pickBlockDialogCtrl');
 			$scope.hide = function() {
 			   $mdDialog.hide();
 			 };
@@ -451,4 +504,4 @@ angular.module('JarvisApp.config',[])
 					},
 					toastService.failure
 			);
-	})
+	}])

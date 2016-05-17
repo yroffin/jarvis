@@ -19,9 +19,8 @@
 /* Services */
 
 angular.module('JarvisApp.services.trigger', [])
-	.factory('triggerResourceService', function(genericResourceService) {
+	.factory('triggerResourceService', [ 'genericResourceService', function(genericResourceService) {
 		return {
-			trigger: genericResourceService.crud(['triggers']),
+			trigger: genericResourceService.crud(['triggers'])
 		}
-	})
-;
+	}]);

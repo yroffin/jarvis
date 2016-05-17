@@ -21,8 +21,9 @@
 /**
  * cronResourceService
  */
-angular.module('JarvisApp.services.cron', []).factory('cronResourceService', function(genericResourceService) {
+angular.module('JarvisApp.services.cron', []).factory('cronResourceService', 
+		[ 'genericResourceService', function(genericResourceService) {
   return {
 	  cron : genericResourceService.crud(['crons'])
   }
-});
+}]);

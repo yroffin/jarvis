@@ -20,6 +20,7 @@
 
 angular.module('JarvisApp.ctrl.connectors', ['JarvisApp.services'])
 .controller('connectorsCtrl', 
+		['$scope', '$log', 'genericScopeService', 'connectorResourceService',
 	function($scope, $log, genericScopeService, connectorResourceService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
@@ -42,8 +43,9 @@ angular.module('JarvisApp.ctrl.connectors', ['JarvisApp.services'])
     			canAnswer: false
     		}
 	);
-})
+}])
 .controller('connectorCtrl',
+		['$scope', '$log', '$stateParams', '$mdDialog', 'genericResourceService', 'genericScopeService', 'connectorResourceService', 'toastService',
 	function($scope, $log, $stateParams, $mdDialog, genericResourceService, genericScopeService, connectorResourceService, toastService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
@@ -77,4 +79,4 @@ angular.module('JarvisApp.ctrl.connectors', ['JarvisApp.services'])
 
     	$log.info('connector-ctrl', $scope.connectors);
     }
-})
+}])

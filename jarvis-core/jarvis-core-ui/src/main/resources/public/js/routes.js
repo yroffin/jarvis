@@ -19,13 +19,17 @@
 /* Controllers */
 
 angular.module('JarvisApp.routes',['JarvisApp.config'])
-    .config(function($urlRouterProvider) {
+    .config( ['$urlRouterProvider', function($urlRouterProvider) {
+		var $log =  angular.injector(['ng']).get('$log');
+		$log.info('$urlRouterProvider', $urlRouterProvider);
         /**
          * default state
          */
         $urlRouterProvider.otherwise('/home');
-    })
-    .config(function($stateProvider) {
+    }])
+    .config(['$stateProvider', function($stateProvider) {
+		var $log =  angular.injector(['ng']).get('$log');
+		$log.info('$stateProvider', $stateProvider);
         /**
          * now set up the state
          */
@@ -171,4 +175,4 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
             templateUrl: '/ui/js/partials/blocks/block/page.html'
         })
         ;
-    })
+    }])

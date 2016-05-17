@@ -20,7 +20,7 @@
 
 angular.module('JarvisApp.websocket',['angular-websocket'])
     // WebSocket works as well
-    .factory('$store', function($log, $websocket, $window) {
+    .factory('$store', [ '$log', '$websocket', '$window', function($log, $websocket, $window) {
       $log.info("Websocket: ", $window.location);
       // Open a WebSocket connection
       var dataStream = $websocket('ws://'+$window.location.hostname+':'+$window.location.port+'/stream/');
@@ -52,4 +52,4 @@ angular.module('JarvisApp.websocket',['angular-websocket'])
       };
 
       return methods;
-    });
+    }]);

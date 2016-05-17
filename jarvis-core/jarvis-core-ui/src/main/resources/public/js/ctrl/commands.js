@@ -20,6 +20,7 @@
 
 angular.module('JarvisApp.ctrl.commands', ['JarvisApp.services'])
 .controller('commandsCtrl', 
+		[ '$scope', '$log', 'genericScopeService', 'commandResourceService',
 	function($scope, $log, genericScopeService, commandResourceService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
@@ -39,8 +40,9 @@ angular.module('JarvisApp.ctrl.commands', ['JarvisApp.services'])
     			icon: "list"
     		}
 	);
-})
+}])
 .controller('commandCtrl',
+		[ '$scope, $log, $stateParams, genericResourceService, genericScopeService, commandResourceService, toastService',
 	function($scope, $log, $stateParams, genericResourceService, genericScopeService, commandResourceService, toastService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
@@ -144,4 +146,4 @@ angular.module('JarvisApp.ctrl.commands', ['JarvisApp.services'])
 	
 		$log.info('command-ctrl');
     }
-})
+}])

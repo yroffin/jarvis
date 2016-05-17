@@ -115,6 +115,7 @@ public class CoreServerDaemon {
 		String iface = env.getProperty("jarvis.server.interface");
 		int port = Integer.parseInt(env.getProperty("jarvis.server.port"));
 		spark.Spark.ipAddress(iface);
+		spark.Spark.threadPool(8);
 
 		/**
 		 * port
@@ -153,5 +154,9 @@ public class CoreServerDaemon {
 		apiConnectorResources.mount();
 		apiConfigResources.mount();
 		apiPropertyResources.mount();
+
+		spark.Spark.after((request, response) -> {
+		    response.header("Content-Encoding", "gzip");
+		});
 	}
 }
