@@ -43,7 +43,7 @@ angular.module('JarvisApp.ctrl.views', ['JarvisApp.services'])
 	);
 }])
 .controller('viewCtrl',
-		[ '$scope, $log', '$stateParams', 'genericResourceService', 'genericScopeService', 'viewResourceService', 'iotResourceService', 'toastService',
+		[ '$scope', '$log', '$stateParams', 'genericResourceService', 'genericScopeService', 'viewResourceService', 'iotResourceService', 'toastService',
 	function($scope, $log, $stateParams, genericResourceService, genericScopeService, viewResourceService, iotResourceService, toastService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
