@@ -43,7 +43,7 @@ public class CoreWebsocket {
 	@Autowired
 	Environment env;
 
-	static protected ObjectMapper mapper = new ObjectMapper();
+	protected ObjectMapper mapper = new ObjectMapper();
 
 	/**
 	 * mount local resource
@@ -93,7 +93,7 @@ public class CoreWebsocket {
 	/**
 	 * internal runner to send data on web socket
 	 */
-	static class WebsocketThread implements Runnable {
+	class WebsocketThread implements Runnable {
 		WebsocketDataBean t = null;
 
 		@Override

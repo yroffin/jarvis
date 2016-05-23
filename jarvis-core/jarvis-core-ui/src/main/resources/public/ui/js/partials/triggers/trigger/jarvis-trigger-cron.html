@@ -1,0 +1,27 @@
+<div layout="column">
+	<md-switch ng-model="trigger.sunrise" aria-label="{{'trigger.sunrise' | translate}}">
+	   	{{'trigger.sunrise' | translate}}
+	</md-switch>
+	<md-switch ng-model="trigger.sunset" aria-label="{{'trigger.sunset' | translate}}">
+	   	{{'trigger.sunset' | translate}}
+	</md-switch>
+	<md-switch ng-model="trigger.second" aria-label="{{'trigger.second' | translate}}">
+	   	{{'trigger.second' | translate}}
+	</md-switch>
+	<md-switch ng-model="trigger.minute" aria-label="{{'trigger.minute' | translate}}">
+	   	{{'trigger.minute' | translate}}
+	</md-switch>
+	<md-switch ng-model="trigger.hour" aria-label="{{'trigger.hour' | translate}}">
+	   	{{'trigger.hour' | translate}}
+	</md-switch>
+	<md-switch ng-model="trigger.day" aria-label="{{'trigger.day' | translate}}">
+	   	{{'trigger.day' | translate}}
+	</md-switch>
+	<md-switch ng-model="trigger.custom" aria-label="{{'trigger.custom' | translate}}">
+	   	{{'trigger.custom' | translate}}
+	</md-switch>
+	<md-input-container>
+	  <label translate="trigger.crontab"></label>
+	  <input ng-model="trigger.crontab"></input>
+	</md-input-container>
+</div>

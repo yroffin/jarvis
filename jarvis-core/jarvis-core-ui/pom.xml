@@ -25,90 +25,90 @@
 			  <cssSourceDir>../resources</cssSourceDir>
 			  <cssSourceFiles>
 				<!-- AngularJS Material Design -->
-				<cssSourceFile>public/css/angular-material.min.css</cssSourceFile>
-				<cssSourceFile>public/css/angular-material.layouts.min.css</cssSourceFile>
-				<cssSourceFile>public/css/materials-icon.css</cssSourceFile>
+				<cssSourceFile>public/ui/css/angular-material.min.css</cssSourceFile>
+				<cssSourceFile>public/ui/css/angular-material.layouts.min.css</cssSourceFile>
+				<cssSourceFile>public/ui/css/materials-icon.css</cssSourceFile>
 			    <!-- Angular UI Tree -->
-				<cssSourceFile>public/css/angular-ui-tree.min.css</cssSourceFile>
+				<cssSourceFile>public/ui/css/angular-ui-tree.min.css</cssSourceFile>
 				<!-- Twitter bootstrap -->
-				<cssSourceFile>public/css/bootstrap.min.css</cssSourceFile>
-				<cssSourceFile>public/css/bootstrap-theme.min.css</cssSourceFile>
+				<cssSourceFile>public/ui/css/bootstrap.min.css</cssSourceFile>
+				<cssSourceFile>public/ui/css/bootstrap-theme.min.css</cssSourceFile>
 				<!-- highlight -->
-				<cssSourceFile>public/css/default.min.css</cssSourceFile>
+				<cssSourceFile>public/ui/css/default.min.css</cssSourceFile>
 				<!-- google font -->
-				<cssSourceFile>public/css/roboto.css</cssSourceFile>
+				<cssSourceFile>public/ui/css/roboto.css</cssSourceFile>
 			  </cssSourceFiles>
               <jsSourceDir>../resources</jsSourceDir>
               <jsSourceFiles>
 				<!-- libs -->
-              	<jsSourceFile>public/libs/jquery/2.2.0/jquery.min.js</jsSourceFile>
-                <jsSourceFile>public/libs/angularjs/1.4.9/angular.min.js</jsSourceFile>
-                <jsSourceFile>public/libs/angularjs/1.4.9/angular-route.min.js</jsSourceFile>
-                <jsSourceFile>public/libs/angularjs/1.4.9/angular-sanitize.min.js</jsSourceFile>
-                <jsSourceFile>public/libs/angularjs/1.4.9/angular-resource.min.js</jsSourceFile>
-                <jsSourceFile>public/libs/angularjs/1.4.9/angular-animate.min.js</jsSourceFile>
-                <jsSourceFile>public/libs/angularjs/1.4.9/angular-aria.min.js</jsSourceFile>
-                <jsSourceFile>public/libs/angularjs/1.4.9/angular-cookies.min.js</jsSourceFile>
-                <jsSourceFile>public/libs/lodash/3.10.1/lodash.min.js</jsSourceFile>
-                <jsSourceFile>public/libs/restangular/1.5.1/restangular.min.js</jsSourceFile>
-                <jsSourceFile>public/libs/angular-material/1.0.6/angular-material.min.js</jsSourceFile>
-                <jsSourceFile>public/libs/angular-material-icons/0.5.0/angular-material-icons.min.js</jsSourceFile>
-                <jsSourceFile>public/libs/angular-ui-router/0.2.15/angular-ui-router.js</jsSourceFile>
-                <jsSourceFile>public/libs/angular-ui-tree/2.12.0/angular-ui-tree.min.js</jsSourceFile>
-                <jsSourceFile>public/libs/angular-translate/2.8.1/angular-translate.min.js</jsSourceFile>
-                <jsSourceFile>public/libs/angular-translate/2.8.1/angular-translate-loader-static-files.min.js</jsSourceFile>
-                <jsSourceFile>public/libs/bootstrap/3.3.6/bootstrap.min.js</jsSourceFile>
-                <jsSourceFile>public/libs/highlight/9.0.0/highlight.min.js</jsSourceFile>
-                <jsSourceFile>public/libs/angular-highlightjs/0.5.1/angular-highlightjs.js</jsSourceFile>
-                <jsSourceFile>public/libs/raphael/2.1.2/raphael-min.js</jsSourceFile>
-                <jsSourceFile>public/libs/flowchart/latest/flowchart-latest.js</jsSourceFile>
-                <jsSourceFile>public/libs/angular-websocket/1.0.14/angular-websocket.min.js</jsSourceFile>
-                <jsSourceFile>public/libs/showdown/1.3.0/showdown.min.js</jsSourceFile>
-                <jsSourceFile>public/libs/gauge.min.js</jsSourceFile>
+              	<jsSourceFile>public/ui/libs/jquery/2.2.0/jquery.min.js</jsSourceFile>
+                <jsSourceFile>public/ui/libs/angularjs/1.4.9/angular.min.js</jsSourceFile>
+                <jsSourceFile>public/ui/libs/angularjs/1.4.9/angular-route.min.js</jsSourceFile>
+                <jsSourceFile>public/ui/libs/angularjs/1.4.9/angular-sanitize.min.js</jsSourceFile>
+                <jsSourceFile>public/ui/libs/angularjs/1.4.9/angular-resource.min.js</jsSourceFile>
+                <jsSourceFile>public/ui/libs/angularjs/1.4.9/angular-animate.min.js</jsSourceFile>
+                <jsSourceFile>public/ui/libs/angularjs/1.4.9/angular-aria.min.js</jsSourceFile>
+                <jsSourceFile>public/ui/libs/angularjs/1.4.9/angular-cookies.min.js</jsSourceFile>
+                <jsSourceFile>public/ui/libs/lodash/3.10.1/lodash.min.js</jsSourceFile>
+                <jsSourceFile>public/ui/libs/restangular/1.5.1/restangular.min.js</jsSourceFile>
+                <jsSourceFile>public/ui/libs/angular-material/1.0.6/angular-material.min.js</jsSourceFile>
+                <jsSourceFile>public/ui/libs/angular-material-icons/0.5.0/angular-material-icons.min.js</jsSourceFile>
+                <jsSourceFile>public/ui/libs/angular-ui-router/0.2.15/angular-ui-router.js</jsSourceFile>
+                <jsSourceFile>public/ui/libs/angular-ui-tree/2.12.0/angular-ui-tree.min.js</jsSourceFile>
+                <jsSourceFile>public/ui/libs/angular-translate/2.8.1/angular-translate.min.js</jsSourceFile>
+                <jsSourceFile>public/ui/libs/angular-translate/2.8.1/angular-translate-loader-static-files.min.js</jsSourceFile>
+                <jsSourceFile>public/ui/libs/bootstrap/3.3.6/bootstrap.min.js</jsSourceFile>
+                <jsSourceFile>public/ui/libs/highlight/9.0.0/highlight.min.js</jsSourceFile>
+                <jsSourceFile>public/ui/libs/angular-highlightjs/0.5.1/angular-highlightjs.js</jsSourceFile>
+                <jsSourceFile>public/ui/libs/raphael/2.1.2/raphael-min.js</jsSourceFile>
+                <jsSourceFile>public/ui/libs/flowchart/latest/flowchart-latest.js</jsSourceFile>
+                <jsSourceFile>public/ui/libs/angular-websocket/1.0.14/angular-websocket.min.js</jsSourceFile>
+                <jsSourceFile>public/ui/libs/showdown/1.3.0/showdown.min.js</jsSourceFile>
+                <jsSourceFile>public/ui/libs/gauge.min.js</jsSourceFile>
 				<!-- Application -->
-				<jsSourceFile>public/js/app.js</jsSourceFile>
+				<jsSourceFile>public/ui/js/app.js</jsSourceFile>
 				<!-- Services -->
-				<jsSourceFile>public/js/services.js</jsSourceFile>
-				<jsSourceFile>public/js/services/filter.js</jsSourceFile>
-				<jsSourceFile>public/js/services/generic.js</jsSourceFile>
-				<jsSourceFile>public/js/services/scope.js</jsSourceFile>
-				<jsSourceFile>public/js/services/plugin.js</jsSourceFile>
-				<jsSourceFile>public/js/services/command.js</jsSourceFile>
-				<jsSourceFile>public/js/services/view.js</jsSourceFile>
-				<jsSourceFile>public/js/services/configuration.js</jsSourceFile>
-				<jsSourceFile>public/js/services/property.js</jsSourceFile>
-				<jsSourceFile>public/js/services/snapshot.js</jsSourceFile>
-				<jsSourceFile>public/js/services/cron.js</jsSourceFile>
-				<jsSourceFile>public/js/services/iot.js</jsSourceFile>
-				<jsSourceFile>public/js/services/connector.js</jsSourceFile>
-				<jsSourceFile>public/js/services/event.js</jsSourceFile>
-				<jsSourceFile>public/js/services/trigger.js</jsSourceFile>
-				<jsSourceFile>public/js/services/scenario.js</jsSourceFile>
-				<jsSourceFile>public/js/services/block.js</jsSourceFile>
+				<jsSourceFile>public/ui/js/services.js</jsSourceFile>
+				<jsSourceFile>public/ui/js/services/filter.js</jsSourceFile>
+				<jsSourceFile>public/ui/js/services/generic.js</jsSourceFile>
+				<jsSourceFile>public/ui/js/services/scope.js</jsSourceFile>
+				<jsSourceFile>public/ui/js/services/plugin.js</jsSourceFile>
+				<jsSourceFile>public/ui/js/services/command.js</jsSourceFile>
+				<jsSourceFile>public/ui/js/services/view.js</jsSourceFile>
+				<jsSourceFile>public/ui/js/services/configuration.js</jsSourceFile>
+				<jsSourceFile>public/ui/js/services/property.js</jsSourceFile>
+				<jsSourceFile>public/ui/js/services/snapshot.js</jsSourceFile>
+				<jsSourceFile>public/ui/js/services/cron.js</jsSourceFile>
+				<jsSourceFile>public/ui/js/services/iot.js</jsSourceFile>
+				<jsSourceFile>public/ui/js/services/connector.js</jsSourceFile>
+				<jsSourceFile>public/ui/js/services/event.js</jsSourceFile>
+				<jsSourceFile>public/ui/js/services/trigger.js</jsSourceFile>
+				<jsSourceFile>public/ui/js/services/scenario.js</jsSourceFile>
+				<jsSourceFile>public/ui/js/services/block.js</jsSourceFile>
 				<!-- Main -->
-				<jsSourceFile>public/js/controllers.js</jsSourceFile>
-				<jsSourceFile>public/js/themes.js</jsSourceFile>
-				<jsSourceFile>public/js/websocket.js</jsSourceFile>
-				<jsSourceFile>public/js/routes.js</jsSourceFile>
-				<jsSourceFile>public/js/directives.js</jsSourceFile>
-				<jsSourceFile>public/js/filters.js</jsSourceFile>
+				<jsSourceFile>public/ui/js/controllers.js</jsSourceFile>
+				<jsSourceFile>public/ui/js/themes.js</jsSourceFile>
+				<jsSourceFile>public/ui/js/websocket.js</jsSourceFile>
+				<jsSourceFile>public/ui/js/routes.js</jsSourceFile>
+				<jsSourceFile>public/ui/js/directives.js</jsSourceFile>
+				<jsSourceFile>public/ui/js/filters.js</jsSourceFile>
 				<!-- Widgets -->
-				<jsSourceFile>public/js/directives/widgets.js</jsSourceFile>
+				<jsSourceFile>public/ui/js/directives/widgets.js</jsSourceFile>
 				<!-- Controllers -->
-				<jsSourceFile>public/js/ctrl/blocks.js</jsSourceFile>
-				<jsSourceFile>public/js/ctrl/iots.js</jsSourceFile>
-				<jsSourceFile>public/js/ctrl/events.js</jsSourceFile>
-				<jsSourceFile>public/js/ctrl/triggers.js</jsSourceFile>
-				<jsSourceFile>public/js/ctrl/plugins.js</jsSourceFile>
-				<jsSourceFile>public/js/ctrl/commands.js</jsSourceFile>
-				<jsSourceFile>public/js/ctrl/views.js</jsSourceFile>
-				<jsSourceFile>public/js/ctrl/connectors.js</jsSourceFile>
-				<jsSourceFile>public/js/ctrl/snapshots.js</jsSourceFile>
-				<jsSourceFile>public/js/ctrl/crons.js</jsSourceFile>
-				<jsSourceFile>public/js/ctrl/home.js</jsSourceFile>
-				<jsSourceFile>public/js/ctrl/configurations.js</jsSourceFile>
-				<jsSourceFile>public/js/ctrl/properties.js</jsSourceFile>
-				<jsSourceFile>public/js/ctrl/scenarios.js</jsSourceFile>
+				<jsSourceFile>public/ui/js/ctrl/blocks.js</jsSourceFile>
+				<jsSourceFile>public/ui/js/ctrl/iots.js</jsSourceFile>
+				<jsSourceFile>public/ui/js/ctrl/events.js</jsSourceFile>
+				<jsSourceFile>public/ui/js/ctrl/triggers.js</jsSourceFile>
+				<jsSourceFile>public/ui/js/ctrl/plugins.js</jsSourceFile>
+				<jsSourceFile>public/ui/js/ctrl/commands.js</jsSourceFile>
+				<jsSourceFile>public/ui/js/ctrl/views.js</jsSourceFile>
+				<jsSourceFile>public/ui/js/ctrl/connectors.js</jsSourceFile>
+				<jsSourceFile>public/ui/js/ctrl/snapshots.js</jsSourceFile>
+				<jsSourceFile>public/ui/js/ctrl/crons.js</jsSourceFile>
+				<jsSourceFile>public/ui/js/ctrl/home.js</jsSourceFile>
+				<jsSourceFile>public/ui/js/ctrl/configurations.js</jsSourceFile>
+				<jsSourceFile>public/ui/js/ctrl/properties.js</jsSourceFile>
+				<jsSourceFile>public/ui/js/ctrl/scenarios.js</jsSourceFile>
               </jsSourceFiles>
               <jsSourceExcludes>
                 <jsSourceInclude>**/script.js</jsSourceInclude>
@@ -118,8 +118,8 @@
               	<cssSourceExclude>**/style.css</cssSourceExclude>
               	<cssSourceExclude>**/style.min.css</cssSourceExclude>
               </cssSourceExcludes>
-              <jsFinalFile>../../src/main/resources/public/script.js</jsFinalFile>
-              <cssFinalFile>../../src/main/resources/public/css/style.css</cssFinalFile>
+              <jsFinalFile>../../src/main/resources/public/ui/script.js</jsFinalFile>
+              <cssFinalFile>../../src/main/resources/public/ui/css/style.css</cssFinalFile>
               <jsEngine>CLOSURE</jsEngine>
               <closureLanguage>ECMASCRIPT5</closureLanguage>
               <closureAngularPass>true</closureAngularPass>

@@ -190,6 +190,15 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     }
   }
 }])
+.directive('jarvisTriggerCron', [ '$log', '$stateParams', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/partials/triggers/trigger/jarvis-trigger-cron.html',
+    link: function(scope, element, attrs) {
+    	$log.debug('jarvis-trigger-cron');
+    }
+  }
+}])
 .directive('jarvisCommands', [ '$log', '$stateParams', function ($log, $stateParams) {
   return {
     restrict: 'E',
