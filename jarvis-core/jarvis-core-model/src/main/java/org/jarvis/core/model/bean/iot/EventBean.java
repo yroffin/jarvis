@@ -40,4 +40,9 @@ public class EventBean extends GenericBean {
 	 * number
 	 */
 	public int number;
+	
+	@Override
+	public String toString() {
+		return "EventBean [fired=" + fired + ", text=" + text + ", bool=" + bool + ", number=" + number + "]";
+	}
 }

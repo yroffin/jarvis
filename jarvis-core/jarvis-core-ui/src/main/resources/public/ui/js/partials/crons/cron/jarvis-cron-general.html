@@ -11,4 +11,8 @@
 	  <label translate="cron.cron"></label>
 	  <input ng-model="cron.cron">
 	</md-input-container>
+	<md-switch ng-model="cron.status" aria-label="{{cron.status | translate}}" disabled>
+		<label translate="cron.status"></label>
+    	{{cron.status | translate}}
+	</md-switch>
 </div>

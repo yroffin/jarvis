@@ -12,15 +12,21 @@ public interface ResourcePreListener<T> {
 	/**
 	 * @param request
 	 * @param response
-	 * @param t 
+	 * @param rest 
 	 */
-	void post(Request request, Response response, T t);
+	void post(Request request, Response response, T rest);
 
 	/**
 	 * @param request
 	 * @param response
-	 * @param t 
+	 * @param rest 
 	 */
-	void put(Request request, Response response, T t);
+	void put(Request request, Response response, T rest);
 
+	/**
+	 * @param request
+	 * @param response
+	 * @param rest 
+	 */
+	void get(Request request, Response response, T rest);
 }

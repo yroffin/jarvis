@@ -61,7 +61,6 @@ public class ApiEventResources extends ApiResources<EventRest,EventBean> {
 		@Override
 		public void put(Request request, Response response, EventBean t) {
 		}
-		
 	}
 
 	@Override

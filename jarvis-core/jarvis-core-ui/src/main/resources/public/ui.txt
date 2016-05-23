@@ -1,8 +1,9 @@
-public/ui;script.js
 public/ui;config.js
 public/ui;favicon.ico
 public/ui;index.html
+public/ui;index-static.html
 public/ui;script.min.js
+public/ui;script-libs.min.js
 public/ui/css;specific.css
 public/ui/css;style.min.css
 public/ui/js;app.js

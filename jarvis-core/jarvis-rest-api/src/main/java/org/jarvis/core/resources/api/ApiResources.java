@@ -86,6 +86,18 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 		postListeners.add(listener);
     }
 
+	/**
+	 * notify handler for get
+	 * @param request
+	 * @param response
+	 * @param r
+	 */
+	private void notifyGet(Request request, Response response, T r) {
+        for(ResourcePreListener<T> listener : preListeners){
+            listener.get(request,response,r);
+        }
+	}
+
 	private void notifyPost(Request request, Response response, S s) {
         for(ResourcePostListener<S> listener : postListeners){
             listener.post(request,response,s);
@@ -324,7 +336,9 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 */
 	public String doGetById(Request request, String id, Response response) throws Exception {
     	try {
-    		return mapper.writeValueAsString(doGetByIdRest(request.params(id)));
+    		T r = doGetByIdRest(request.params(id));
+    		notifyGet(request,response,r);
+    		return mapper.writeValueAsString(r);
     	} catch(TechnicalNotFoundException e) {
     		response.status(404);
     		return "";
@@ -516,6 +530,7 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 		try {
 			result = doRealTask(bean, body, taskType);
 		} catch (Exception e) {
+			logger.error("SCRIPT - ERROR\n", e);
 			throw new TechnicalException(e);
 		}
 		logger.info("SCRIPT - OUTPUT\n{}", result);

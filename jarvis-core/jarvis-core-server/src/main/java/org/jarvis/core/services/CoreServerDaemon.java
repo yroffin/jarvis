@@ -130,7 +130,11 @@ public class CoreServerDaemon {
 		/**
 		 * mount resources
 		 */
-		coreResources.mount();
+		if(System.getProperty("profile") != null && System.getProperty("profile").equals("dev")) {
+			coreResources.mountLocal();
+		} else {
+			coreResources.mountExternal();
+		}
 		
 		/**
 		 * mount plugin resources

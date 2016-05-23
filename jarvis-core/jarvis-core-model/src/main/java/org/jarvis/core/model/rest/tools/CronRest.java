@@ -41,4 +41,9 @@ public class CronRest extends GenericEntity {
 	 */
 	@JsonProperty("cron")
 	public String cron;
+	/**
+	 * status (computed)
+	 */
+	@JsonProperty("status")
+	public boolean status;
 }

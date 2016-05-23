@@ -51,5 +51,9 @@ public enum TaskType {
 	/**
 	 * ping
 	 */
-	PING
+	PING,
+	/**
+	 * toggle
+	 */
+	TOGGLE
 }

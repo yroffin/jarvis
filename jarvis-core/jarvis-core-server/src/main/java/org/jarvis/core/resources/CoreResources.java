@@ -16,43 +16,24 @@
 
 package org.jarvis.core.resources;
 
-import static spark.Spark.get;
-
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardCopyOption;
-import java.nio.file.attribute.BasicFileAttributes;
-
-import javax.servlet.ServletOutputStream;
 
 import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.services.cache.CoreEhcacheManager;
-import org.jarvis.runtime.DynamicURLClassLoader;
-import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
-import spark.Request;
-import spark.Response;
-import spark.Route;
 import spark.utils.IOUtils;
 
 /**
@@ -178,7 +159,15 @@ public class CoreResources {
 	/**
 	 * mount local resource
 	 */
-	public void mount() {
+	public void mountLocal() {
+		spark.Spark.staticFileLocation("public");
+		spark.Spark.staticFiles.expireTime(600);
+	}
+	
+	/**
+	 * mount local resource
+	 */
+	public void mountExternal() {
 		/**
 		 * mount resources
 		 */

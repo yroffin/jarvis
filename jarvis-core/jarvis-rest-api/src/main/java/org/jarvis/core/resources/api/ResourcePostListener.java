@@ -12,15 +12,14 @@ public interface ResourcePostListener<T> {
 	/**
 	 * @param request
 	 * @param response
-	 * @param t 
+	 * @param bean 
 	 */
-	void post(Request request, Response response, T t);
+	void post(Request request, Response response, T bean);
 
 	/**
 	 * @param request
 	 * @param response
-	 * @param t 
+	 * @param bean 
 	 */
-	void put(Request request, Response response, T t);
-
+	void put(Request request, Response response, T bean);
 }
