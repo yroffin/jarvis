@@ -36,44 +36,4 @@ public class TriggerRest extends GenericEntity {
 	 */
 	@JsonProperty("icon")
 	public String icon;
-	/**
-	 * sunset
-	 */
-	@JsonProperty("sunset")
-	public boolean sunset;
-	/**
-	 * sunrise
-	 */
-	@JsonProperty("sunrise")
-	public boolean sunrise;
-	/**
-	 * second
-	 */
-	@JsonProperty("second")
-	public boolean second;
-	/**
-	 * minute
-	 */
-	@JsonProperty("minute")
-	public boolean minute;
-	/**
-	 * hour
-	 */
-	@JsonProperty("hour")
-	public boolean hour;
-	/**
-	 * day
-	 */
-	@JsonProperty("day")
-	public boolean day;
-	/**
-	 * custom
-	 */
-	@JsonProperty("custom")
-	public boolean custom;
-	/**
-	 * crontab
-	 */
-	@JsonProperty("crontab")
-	public String crontab;
 }

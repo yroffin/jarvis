@@ -42,8 +42,8 @@ angular.module('JarvisApp.ctrl.triggers', ['JarvisApp.services'])
 	);
 }])
 .controller('triggerCtrl',
-		[ '$scope', '$log', '$stateParams', 'genericResourceService', 'genericScopeService', 'triggerResourceService', 'toastService',
-	function($scope, $log, $stateParams, genericResourceService, genericScopeService, triggerResourceService, toastService){
+		[ '$scope', '$log', '$stateParams', 'genericResourceService', 'genericScopeService', 'genericPickerService', 'triggerResourceService', 'toastService',
+	function($scope, $log, $stateParams, genericResourceService, genericScopeService, genericPickerService, triggerResourceService, toastService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
 	 */
@@ -52,6 +52,27 @@ angular.module('JarvisApp.ctrl.triggers', ['JarvisApp.services'])
 			'trigger', 
 			'triggers', 
 			triggerResourceService.trigger
+	);
+	/**
+	 * declare links
+	 */
+	$scope.links = {
+			crons: {}
+	}
+	/**
+	 * declare action links
+	 */
+	genericScopeService.scope.resourceLink(
+			function() {
+				return $scope.crons;
+			},
+			$scope.links.crons,
+			'cron',
+			'crons',
+			triggerResourceService.trigger, 
+			triggerResourceService.crons, 
+			{'order':'1'},
+			$stateParams.id
 	);
     /**
      * loading
@@ -62,6 +83,12 @@ angular.module('JarvisApp.ctrl.triggers', ['JarvisApp.services'])
 		 */
     	genericResourceService.scope.entity.get($stateParams.id, function(update) {$scope.trigger=update}, triggerResourceService.trigger);
 	
-		$log.info('trigger-ctrl');
+		/**
+		 * get all crontabs
+		 */
+    	$scope.crons = [];
+    	genericResourceService.scope.collections.findAll('crons', $stateParams.id, $scope.crons, triggerResourceService.crons);
+
+    	$log.info('trigger-ctrl');
     }
 }])

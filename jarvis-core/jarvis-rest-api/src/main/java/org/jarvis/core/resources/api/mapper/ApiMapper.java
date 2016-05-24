@@ -32,6 +32,7 @@ public abstract class ApiMapper {
 	protected static final String COMMAND = ":command";
 	protected static final String PLUGIN = ":plugin";
 	protected static final String TRIGGER = ":trigger";
+	protected static final String CRON = ":cron";
 	protected static final String ID = ":id";
 	protected static final String BLOCK = ":block";
 	protected static final String PARAM = ":param";

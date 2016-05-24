@@ -1,27 +1,21 @@
 <div layout="column">
-	<md-switch ng-model="trigger.sunrise" aria-label="{{'trigger.sunrise' | translate}}">
-	   	{{'trigger.sunrise' | translate}}
-	</md-switch>
-	<md-switch ng-model="trigger.sunset" aria-label="{{'trigger.sunset' | translate}}">
-	   	{{'trigger.sunset' | translate}}
-	</md-switch>
-	<md-switch ng-model="trigger.second" aria-label="{{'trigger.second' | translate}}">
-	   	{{'trigger.second' | translate}}
-	</md-switch>
-	<md-switch ng-model="trigger.minute" aria-label="{{'trigger.minute' | translate}}">
-	   	{{'trigger.minute' | translate}}
-	</md-switch>
-	<md-switch ng-model="trigger.hour" aria-label="{{'trigger.hour' | translate}}">
-	   	{{'trigger.hour' | translate}}
-	</md-switch>
-	<md-switch ng-model="trigger.day" aria-label="{{'trigger.day' | translate}}">
-	   	{{'trigger.day' | translate}}
-	</md-switch>
-	<md-switch ng-model="trigger.custom" aria-label="{{'trigger.custom' | translate}}">
-	   	{{'trigger.custom' | translate}}
-	</md-switch>
-	<md-input-container>
-	  <label translate="trigger.crontab"></label>
-	  <input ng-model="trigger.crontab"></input>
-	</md-input-container>
+     <div ng-repeat="cron in crons">
+     	 <div layout="row">
+			<md-button aria-label="menu" class="md-icon-button"><md-icon md-font-icon="material-icons md-16">{{cron.icon}}</md-icon></md-button>
+			<md-input-container>
+			  <label translate="cron.id"></label>
+			  <input ng-model="cron.id" disabled>
+			</md-input-container>
+			<md-input-container>
+			  <label translate="cron.order"></label>
+			  <input ng-model="cron.extended.order">
+			</md-input-container>
+			<md-button aria-label="menu" class="md-icon-button" ng-click="links.crons.update(cron)"><md-icon md-font-icon="material-icons md-16">save</md-icon></md-button>
+			<md-input-container flex>
+			  <label translate="cron.name"></label>
+			  <input ng-model="cron.name" disabled>
+			</md-input-container>
+			<md-button aria-label="menu" class="md-icon-button" ng-click="links.crons.drop(cron)"><md-icon md-font-icon="material-icons md-16">delete</md-icon></md-button>
+	     </div>
+     </div>
 </div>

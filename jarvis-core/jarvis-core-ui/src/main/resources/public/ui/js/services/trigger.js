@@ -21,6 +21,7 @@
 angular.module('JarvisApp.services.trigger', [])
 	.factory('triggerResourceService', [ 'genericResourceService', function(genericResourceService) {
 		return {
-			trigger: genericResourceService.crud(['triggers'])
+			trigger: genericResourceService.crud(['triggers']),
+			crons : genericResourceService.links(['triggers'], ['crons']),
 		}
 	}]);

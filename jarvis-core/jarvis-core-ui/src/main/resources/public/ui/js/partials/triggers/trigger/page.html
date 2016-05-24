@@ -7,6 +7,7 @@
 	<md-button aria-label="menu" class="md-icon-button" ng-click="duplicate(trigger)"><md-icon md-font-icon="material-icons md-16">content_copy</md-icon></md-button>
 	<md-button aria-label="menu" class="md-icon-button" ng-click="remove(trigger)"><md-icon md-font-icon="material-icons md-16">delete</md-icon></md-button>
 	<md-button aria-label="menu" class="md-icon-button" ng-click="save(trigger)"><md-icon md-font-icon="material-icons md-16">save</md-icon></md-button>
+	<jarvis-pick-element tooltips="pick.elt.crontab" ctrl="pickCronDialogCtrl" icon="local_offer" callback="links.crons.add"></jarvis-pick-element>
   </md-fab-actions>
 </md-toolbar>
 <div layout="column" ng-init="load()" ng-cloak>

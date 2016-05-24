@@ -17,14 +17,13 @@
 package org.jarvis.core.resources.api.iot;
 
 import org.jarvis.core.model.bean.scenario.TriggerBean;
+import org.jarvis.core.model.bean.tools.CronBean;
 import org.jarvis.core.model.rest.scenario.TriggerRest;
-import org.jarvis.core.resources.api.ApiResources;
+import org.jarvis.core.model.rest.tools.CronRest;
+import org.jarvis.core.resources.api.ApiLinkedResources;
 import org.jarvis.core.resources.api.GenericValue;
-import org.jarvis.core.resources.api.href.ApiHrefIotResources;
-import org.jarvis.core.resources.api.href.ApiHrefIotScriptPluginResources;
-import org.jarvis.core.resources.api.href.ApiHrefPluginCommandResources;
-import org.jarvis.core.resources.api.plugins.ApiCommandResources;
-import org.jarvis.core.resources.api.plugins.ApiScriptPluginResources;
+import org.jarvis.core.resources.api.href.ApiHrefTriggerCronResources;
+import org.jarvis.core.resources.api.tools.ApiCronResources;
 import org.jarvis.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,25 +33,13 @@ import org.springframework.stereotype.Component;
  * Trigger resource
  */
 @Component
-public class ApiTriggerResources extends ApiResources<TriggerRest,TriggerBean> {
+public class ApiTriggerResources extends ApiLinkedResources<TriggerRest,TriggerBean,CronRest,CronBean> {
 
 	@Autowired
-	ApiIotResources apiIotResources;
-
+	ApiCronResources apiCronResources;
+	
 	@Autowired
-	ApiHrefIotResources apiHrefIotResources;
-
-	@Autowired
-	ApiHrefIotScriptPluginResources apiHrefIotScriptPluginResources;
-
-	@Autowired
-	ApiScriptPluginResources apiScriptPluginResources;
-
-	@Autowired
-	ApiCommandResources apiCommandResources;
-
-	@Autowired
-	ApiHrefPluginCommandResources apiHrefPluginCommandResources;
+	ApiHrefTriggerCronResources apiHrefTriggerCronResources;
 
 	/**
 	 * constructor
@@ -68,6 +55,10 @@ public class ApiTriggerResources extends ApiResources<TriggerRest,TriggerBean> {
 		 * scripts
 		 */
 		declare(TRIGGER_RESOURCE);
+		/**
+		 * trigger -> cron
+		 */
+		declare(TRIGGER_RESOURCE, CRON_RESOURCE, apiCronResources, apiHrefTriggerCronResources, CRON, SORTKEY, HREF);
 	}
 
 	@Override
