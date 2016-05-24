@@ -102,6 +102,7 @@
     "cron.cron"    		: "Valeur du cron (Cf. CronTrigger)",
     "cron.status"    	: "Actif",
     "cron.toggle"  		: "Active / Desactive la crontab",
+    "cron.test"  		: "Test la crontab",
     "cron.id"  			: "Identifiant de la crontab",
     "cron.order" 		: "Ordre de la crontab",
     "snapshot.title"   	: "Mes snapshots",

@@ -43,6 +43,7 @@ public class EventBean extends GenericBean {
 	
 	@Override
 	public String toString() {
-		return "EventBean [fired=" + fired + ", text=" + text + ", bool=" + bool + ", number=" + number + "]";
+		return "EventBean [fired=" + fired + ", text=" + text + ", bool=" + bool + ", number=" + number + ", trigger="
+				+ trigger + "]";
 	}
 }

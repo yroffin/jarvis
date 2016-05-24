@@ -105,16 +105,6 @@ public class CoreEventDaemon {
 
 	private LinkedBlockingQueue<EventBean> linked = new LinkedBlockingQueue<EventBean>();
 
-	class InnerSunsetThread implements Runnable {
-
-		@Override
-		public void run() {
-			// TODO Auto-generated method stub
-			
-		}
-		
-	}
-	
 	class InnerThread implements Runnable {
 
 		@Override

@@ -63,6 +63,15 @@ angular.module('JarvisApp.ctrl.crons', ['JarvisApp.services'])
 	    }, toastService.failure);
     }
     /**
+     * test cron status
+     */
+    $scope.test = function(cron) {
+    	$log.info(cron);
+    	cronResourceService.cron.task(cron.id, 'test', {}, function(data) {
+   	    	toastService.info('crontab ' + crontab.name + '#' + crontab.id + ' toggled to ' + crontab.status);
+	    }, toastService.failure);
+    }
+    /**
      * load this controller
      */
     $scope.load = function() {

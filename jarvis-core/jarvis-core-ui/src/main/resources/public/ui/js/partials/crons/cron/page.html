@@ -5,6 +5,7 @@
   <md-fab-actions class="md-toolbar-tools">
   	<jarvis-default-menu-bar close="crons" ng-model="cron"></jarvis-default-menu-bar>
 	<md-button aria-label="menu" class="md-icon-button" ng-click="toggle(cron)"><md-tooltip>{{'cron.toggle'|translate}}</md-tooltip><md-icon md-font-icon="material-icons md-16">play_arrow</md-icon></md-button>
+	<md-button aria-label="test" class="md-icon-button" ng-click="test(cron)"><md-tooltip>{{'cron.test'|translate}}</md-tooltip><md-icon md-font-icon="material-icons md-16">autorenew</md-icon></md-button>
   </md-fab-actions>
 </md-toolbar>
 <div layout="column" ng-init="load()" ng-cloak>

@@ -5,16 +5,19 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ScheduledFuture;
 
 import org.jarvis.core.model.bean.iot.EventBean;
+import org.jarvis.core.model.bean.scenario.TriggerBean;
 import org.jarvis.core.model.bean.tools.CronBean;
 import org.jarvis.core.model.rest.tools.CronRest;
 import org.jarvis.core.resources.api.ApiResources;
 import org.jarvis.core.resources.api.GenericValue;
 import org.jarvis.core.resources.api.ResourcePreListener;
+import org.jarvis.core.resources.api.iot.ApiTriggerResources;
 import org.jarvis.core.services.CoreEventDaemon;
 import org.jarvis.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.Trigger;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Component;
@@ -74,6 +77,8 @@ public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 		switch(taskType) {
 			case TOGGLE:
 				return doToggle(bean);
+			case TEST:
+				return doTest(bean);
 			default:
 				result = new GenericMap();
 		}
@@ -103,6 +108,10 @@ public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 	 */
 	ConcurrentMap<String,ScheduledFuture<?>> scheduled = new ConcurrentHashMap<String,ScheduledFuture<?>>();
 	
+	public enum TRIGGER_TYPE {
+		SUNSET, SUNRISE
+	}
+	
 	/**
 	 * toggle cron
 	 * @param bean
@@ -121,20 +130,64 @@ public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 			/**
 			 * schedule this cron
 			 */
-			CronTrigger trigger = new CronTrigger(bean.cron);
-			ScheduledFuture<?> sch = jarvisThreadPoolTaskScheduler.schedule(new Runnable() {
+			Trigger trigger = null;
+			if(bean.cron.equals(TRIGGER_TYPE.SUNRISE.name())) {
+				/**
+				 * create periodic sunrise event generator
+				 */
+			} else {
+				if(bean.cron.equals(TRIGGER_TYPE.SUNSET.name())) {
+					/**
+					 * create periodic sunset event generator
+					 */
+				} else {
+					/**
+					 * crontab type
+					 */
+					trigger = new CronTrigger(bean.cron);
+					ScheduledFuture<?> sch = jarvisThreadPoolTaskScheduler.schedule(new Runnable() {
+						
+						@Override
+						public void run() {
+							fire(bean);
+						}
+						
+					}, trigger);
+					scheduled.put(bean.id, sch);
+				}
+			}
+			
+			return new GenericValue("true");
+		}
+	}
+
+	/**
+	 * test cron
+	 * @param bean
+	 * @return GenericValue
+	 */
+	private GenericValue doTest(CronBean bean) {
+		fire(bean);
+		return new GenericValue("{}");
+	}
+
+	@Autowired
+	ApiTriggerResources apiTriggerResources;
 	
-				@Override
-				public void run() {
+	/**
+	 * fire cron
+	 * @param bean
+	 */
+	private void fire(CronBean bean) {
+		for(TriggerBean trigger : apiTriggerResources.doFindAllBean()) {
+			for(CronBean cron : doFindAllBean()) {
+				if(cron.id.equals(bean.id)) {
 					EventBean event = new EventBean();
-					event.text = "crontab-" + bean.id;
+					event.text = bean.name;
+					event.trigger = trigger.id;
 					coreEventDaemon.post(event);
 				}
-				
-			}, trigger);
-			
-			scheduled.put(bean.id, sch);
-			return new GenericValue("true");
+			}
 		}
 	}
 }
