@@ -17,6 +17,7 @@
 package org.jarvis.core.model.bean.iot;
 
 import org.jarvis.core.model.bean.GenericBean;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
@@ -24,6 +25,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class EventBean extends GenericBean {
+	/**
+	 * resource trigger
+	 */
+	public String trigger;
 	/**
 	 * fired
 	 */
@@ -43,7 +48,7 @@ public class EventBean extends GenericBean {
 	
 	@Override
 	public String toString() {
-		return "EventBean [fired=" + fired + ", text=" + text + ", bool=" + bool + ", number=" + number + ", trigger="
-				+ trigger + "]";
+		return "EventBean [timestamp=" + timestamp + ", trigger=" + trigger + ", fired=" + fired + ", text=" + text
+				+ ", bool=" + bool + ", number=" + number + "]";
 	}
 }

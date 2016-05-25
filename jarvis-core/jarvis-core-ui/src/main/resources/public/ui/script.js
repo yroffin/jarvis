@@ -1281,7 +1281,8 @@ angular.module('JarvisApp.services.event', [])
 angular.module('JarvisApp.services.trigger', [])
 	.factory('triggerResourceService', [ 'genericResourceService', function(genericResourceService) {
 		return {
-			trigger: genericResourceService.crud(['triggers'])
+			trigger: genericResourceService.crud(['triggers']),
+			crons : genericResourceService.links(['triggers'], ['crons']),
 		}
 	}]);
 /* 
@@ -1819,6 +1820,37 @@ angular.module('JarvisApp.config',[])
 		     }
 	    ];
 		$scope.crud = genericResourceService.crud(['triggers']);
+		$scope.crud.findAll(
+				function(elements) {
+					_.each(elements, function(element) {
+						element.selectable = true;
+				    	$scope.elementsPicker[0].nodes.push(element);
+					});
+				},
+				toastService.failure
+		);
+	}])
+	.controller('pickCronDialogCtrl',
+			['$scope', '$log', '$mdDialog', 'genericResourceService', 'toastService',
+		function($scope, $log, $mdDialog, genericResourceService, toastService) {
+		$log.info('pickCronDialogCtrl');
+		$scope.hide = function() {
+		   $mdDialog.hide();
+		 };
+		$scope.cancel = function() {
+		  $mdDialog.cancel();
+		};
+		$scope.answer = function(answer) {
+		  $mdDialog.hide(answer);
+		};
+		$scope.elementsPicker = [
+		     {
+		    	 name:"Crontab objects",
+		    	 selectable : false,
+		    	 nodes:[]
+		     }
+	    ];
+		$scope.crud = genericResourceService.crud(['crons']);
 		$scope.crud.findAll(
 				function(elements) {
 					_.each(elements, function(element) {
@@ -3315,8 +3347,8 @@ angular.module('JarvisApp.ctrl.triggers', ['JarvisApp.services'])
 	);
 }])
 .controller('triggerCtrl',
-		[ '$scope', '$log', '$stateParams', 'genericResourceService', 'genericScopeService', 'triggerResourceService', 'toastService',
-	function($scope, $log, $stateParams, genericResourceService, genericScopeService, triggerResourceService, toastService){
+		[ '$scope', '$log', '$stateParams', 'genericResourceService', 'genericScopeService', 'genericPickerService', 'triggerResourceService', 'toastService',
+	function($scope, $log, $stateParams, genericResourceService, genericScopeService, genericPickerService, triggerResourceService, toastService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
 	 */
@@ -3325,6 +3357,27 @@ angular.module('JarvisApp.ctrl.triggers', ['JarvisApp.services'])
 			'trigger', 
 			'triggers', 
 			triggerResourceService.trigger
+	);
+	/**
+	 * declare links
+	 */
+	$scope.links = {
+			crons: {}
+	}
+	/**
+	 * declare action links
+	 */
+	genericScopeService.scope.resourceLink(
+			function() {
+				return $scope.crons;
+			},
+			$scope.links.crons,
+			'cron',
+			'crons',
+			triggerResourceService.trigger, 
+			triggerResourceService.crons, 
+			{'order':'1'},
+			$stateParams.id
 	);
     /**
      * loading
@@ -3335,7 +3388,13 @@ angular.module('JarvisApp.ctrl.triggers', ['JarvisApp.services'])
 		 */
     	genericResourceService.scope.entity.get($stateParams.id, function(update) {$scope.trigger=update}, triggerResourceService.trigger);
 	
-		$log.info('trigger-ctrl');
+		/**
+		 * get all crontabs
+		 */
+    	$scope.crons = [];
+    	genericResourceService.scope.collections.findAll('crons', $stateParams.id, $scope.crons, triggerResourceService.crons);
+
+    	$log.info('trigger-ctrl');
     }
 }])
 /* 
@@ -4005,6 +4064,24 @@ angular.module('JarvisApp.ctrl.crons', ['JarvisApp.services'])
 			'cron', 
 			'crons', 
 			cronResourceService.cron);
+    /**
+     * toggle cron status
+     */
+    $scope.toggle = function(cron) {
+    	$log.info(cron);
+    	cronResourceService.cron.task(cron.id, 'toggle', {}, function(data) {
+   	    	toastService.info('crontab ' + crontab.name + '#' + crontab.id + ' toggled to ' + crontab.status);
+	    }, toastService.failure);
+    }
+    /**
+     * test cron status
+     */
+    $scope.test = function(cron) {
+    	$log.info(cron);
+    	cronResourceService.cron.task(cron.id, 'test', {}, function(data) {
+   	    	toastService.info('crontab ' + crontab.name + '#' + crontab.id + ' toggled to ' + crontab.status);
+	    }, toastService.failure);
+    }
     /**
      * load this controller
      */

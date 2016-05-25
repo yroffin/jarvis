@@ -39,11 +39,6 @@ public class GenericEntity {
 	@JsonProperty("timestamp")
 	public DateTime timestamp;
 	/**
-	 * resource trigger
-	 */
-	@JsonProperty("trigger")
-	public String trigger;
-	/**
 	 * href of this resource
 	 */
 	@JsonProperty("href")
@@ -93,7 +88,8 @@ public class GenericEntity {
 
 	@Override
 	public String toString() {
-		return "GenericEntity [id=" + id + ", href=" + href + ", instance=" + instance + ", extended=" + extended + "]";
+		return "GenericEntity [id=" + id + ", href=" + href + ", isSecured=" + isSecured + ", instance=" + instance
+				+ ", extended=" + extended + "]";
 	}
 
 	/**

@@ -27,10 +27,6 @@ public class GenericBean {
 	 */
 	public String id;
 	/**
-	 * resource trigger
-	 */
-	public String trigger;
-	/**
 	 * timestamp
 	 */
 	public DateTime timestamp;

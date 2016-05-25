@@ -70,6 +70,9 @@ public class CoreEventDaemon {
 	@Autowired
 	ApiTriggerResources apiTriggerResources;
 
+	@Autowired
+	CoreStatistics coreStatistics;
+	
 	private InnerThread inner;
 	protected MapperFactory mapperFactory = null;
 
@@ -122,6 +125,11 @@ public class CoreEventDaemon {
 		}
 
 		private void handle(EventBean event) {
+			/**
+			 * store event in statistics
+			 */
+			coreStatistics.write(event);
+
 			List<ScenarioBean> toExecute = new ArrayList<ScenarioBean>();
 			/**
 			 * find any scenario with this trigger

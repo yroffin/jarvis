@@ -17,6 +17,7 @@
 package org.jarvis.core.model.rest.iot;
 
 import org.jarvis.core.model.rest.GenericEntity;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -25,6 +26,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class EventRest extends GenericEntity {
+	/**
+	 * resource trigger
+	 */
+	@JsonProperty("trigger")
+	public String trigger;
 	/**
 	 * fired
 	 */
@@ -45,4 +51,10 @@ public class EventRest extends GenericEntity {
 	 */
 	@JsonProperty("number")
 	public int number;
+
+	@Override
+	public String toString() {
+		return "EventRest [timestamp=" + timestamp + ", trigger=" + trigger + ", fired=" + fired + ", text=" + text
+				+ ", bool=" + bool + ", number=" + number + "]";
+	}
 }

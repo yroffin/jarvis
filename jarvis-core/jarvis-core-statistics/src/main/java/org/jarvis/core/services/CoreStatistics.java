@@ -25,7 +25,10 @@ import javax.ws.rs.core.Response;
 
 import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 import org.jarvis.core.exception.TechnicalException;
+import org.jarvis.core.model.bean.GenericBean;
+import org.jarvis.core.model.bean.iot.EventBean;
 import org.jarvis.core.model.rest.GenericEntity;
+import org.jarvis.core.model.rest.iot.EventRest;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +42,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
 
+import ma.glasnost.orika.MapperFactory;
+import ma.glasnost.orika.converter.builtin.PassThroughConverter;
+import ma.glasnost.orika.impl.DefaultMapperFactory;
+
 /**
  * main daemon
  */
@@ -47,7 +54,8 @@ public class CoreStatistics {
 	
 	protected static Logger logger = LoggerFactory.getLogger(CoreStatistics.class);
 	protected ObjectMapper mapper = new ObjectMapper();
-
+	protected MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
+	
 	@Autowired
 	Environment env;
 
@@ -77,8 +85,37 @@ public class CoreStatistics {
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		mapper.registerModule(new JodaModule());
 		mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+		
+		// Orika
+		mapperFactory.getConverterFactory().registerConverter(new PassThroughConverter(org.joda.time.DateTime.class));
 	}
 	
+	/**
+	 * @param bean 
+	 * @return String
+	 */
+	public String write(EventBean bean) {
+		EventRest d = mapperFactory.getMapperFacade().map(bean, EventRest.class);
+		return write(d, d.getClass().getPackage().getName(), d.getClass().getSimpleName());
+	}
+
+	/**
+	 * @param bean 
+	 * @return String
+	 */
+	public String write(GenericBean bean) {
+		GenericEntity d = mapperFactory.getMapperFacade().map(bean, GenericEntity.class);
+		return write(d, d.getClass().getPackage().getName(), d.getClass().getSimpleName());
+	}
+
+	/**
+	 * @param d
+	 * @return String
+	 */
+	public String write(GenericEntity d) {
+		return write(d, d.getClass().getPackage().getName(), d.getClass().getSimpleName());
+	}
+
 	/**
 	 * write this object to statistics
 	 * @param value
@@ -87,6 +124,17 @@ public class CoreStatistics {
 	 * @return String
 	 */
 	public String write(GenericEntity value, String index, String basename) {
+		/**
+		 * null url abort statistic store
+		 */
+		if(baseurl == null) {
+			logger.warn("[STATISTICS] no store for {}", value);
+			return "";
+		}
+		
+		/**
+		 * compute statistics
+		 */
 		if(value.timestamp == null) {
 			value.timestamp = new DateTime();
 		}
@@ -106,12 +154,6 @@ public class CoreStatistics {
 			throw new TechnicalException(e);
 		}
 		
-		try {
-			System.err.println(mapper.writeValueAsString(value));
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		/**
 		 * verify result
 		 */

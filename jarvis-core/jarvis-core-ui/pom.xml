@@ -22,6 +22,7 @@
               <cssSourceFiles>
               </cssSourceFiles>
               <verbose>true</verbose>
+			  <webappSourceDir>${basedir}/src/main/resources</webappSourceDir>
 			  <cssSourceDir>../resources</cssSourceDir>
 			  <cssSourceFiles>
 				<!-- AngularJS Material Design -->

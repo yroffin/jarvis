@@ -17,7 +17,7 @@
 package org.jarvis.core.model.bean.websocket;
 
 /**
- * simple shell for ocjet stored on web socket channel
+ * simple shell for object stored on web socket channel
  */
 public class WebsocketDataBean {
 	/**

@@ -33,7 +33,7 @@ public class BlockBean extends GenericBean {
 
 	@Override
 	public String toString() {
-		return "BlockBean [name=" + name + ", icon=" + icon + ", expression=" + expression + ", id=" + id + ", trigger="
-				+ trigger + ", timestamp=" + timestamp + ", href=" + href + "]";
+		return "BlockBean [name=" + name + ", icon=" + icon + ", testParameter=" + testParameter + ", thenParameter="
+				+ thenParameter + ", elseParameter=" + elseParameter + ", expression=" + expression + "]";
 	}
 }
