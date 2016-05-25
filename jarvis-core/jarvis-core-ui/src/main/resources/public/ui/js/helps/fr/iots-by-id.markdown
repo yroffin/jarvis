@@ -37,6 +37,15 @@ Un snapshot contient les champs suivants :
 - Rendu HTML (en lecture seule)
 - Rendu JSON (en lecture seule)
 
+### Template
+
+Dans le template de rendu utiliser la fonction javascript "execute" pour executer les actions liées
+à l'iot
+
+<code>
+&lt;md-button ng-click="execute(iot)"&gt;...&lt;/md-tooltip&gt;&lt;/md-button&gt
+</code>
+
 ### Données de démonstration
 
 Un [fichier de données](https://snap-ci.com/buildartifacts/green/52740/defaultPipeline/106/install/1/jarvis-core/jarvis-core-server/src/test/resources/sample.json?archived=true) de démonstration est disponible sur [github](https://github.com/yroffin/jarvis).
