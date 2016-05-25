@@ -30,14 +30,11 @@ Technology
 Roadmap
 -------
 
-- handle scenarii (started but not finished)
-- handle trigger and event
 - collecte and store statistics in graphdb
 - integrate swagger in project (auto documentation)
-- integrate graylog like tools
+- integrate graylog like tools (elastic search)
 - integrate lightify (Cf. https://github.com/arubenis/golightify/blob/master/http_json_server.go)
 - integrate rfxcom (better than fork unix binarie)
-- handle crontab
 - more tests ... for devops target
 
 Setup
