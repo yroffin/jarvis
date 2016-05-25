@@ -23,6 +23,7 @@
               </cssSourceFiles>
               <verbose>true</verbose>
 			  <webappSourceDir>${basedir}/src/main/resources</webappSourceDir>
+			  <webappTargetDir>${basedir}/src/main/resources</webappTargetDir>
 			  <cssSourceDir>../resources</cssSourceDir>
 			  <cssSourceFiles>
 				<!-- AngularJS Material Design -->
@@ -75,8 +76,8 @@
               	<cssSourceExclude>**/style.css</cssSourceExclude>
               	<cssSourceExclude>**/style.min.css</cssSourceExclude>
               </cssSourceExcludes>
-              <jsFinalFile>../../src/main/resources/public/ui/script-libs.js</jsFinalFile>
-              <cssFinalFile>../../src/main/resources/public/ui/css/style.css</cssFinalFile>
+              <jsFinalFile>public/ui/script-libs.js</jsFinalFile>
+              <cssFinalFile>public/ui/css/style.css</cssFinalFile>
               <jsEngine>CLOSURE</jsEngine>
               <closureLanguage>ECMASCRIPT5</closureLanguage>
               <closureAngularPass>true</closureAngularPass>
