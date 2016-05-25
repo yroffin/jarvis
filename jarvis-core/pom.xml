@@ -380,7 +380,6 @@
 
 	<modules>
 		<module>jarvis-aiml</module>
-		<module>jarvis-nodejs</module>
 		<module>jarvis-scripts</module>
 		<module>jarvis-common</module>
 		<module>jarvis-core-model</module>
