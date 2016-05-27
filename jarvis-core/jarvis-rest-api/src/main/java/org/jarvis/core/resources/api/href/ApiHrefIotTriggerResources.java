@@ -16,10 +16,13 @@
 
 package org.jarvis.core.resources.api.href;
 
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 
 import org.jarvis.core.model.bean.iot.IotBean;
 import org.jarvis.core.model.bean.scenario.TriggerBean;
+import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.model.rest.iot.IotRest;
 import org.jarvis.core.model.rest.scenario.TriggerRest;
 import org.jarvis.core.resources.api.mapper.ApiHrefMapper;
@@ -35,5 +38,14 @@ public class ApiHrefIotTriggerResources extends ApiHrefMapper<IotRest,TriggerRes
 	protected
 	void init() {
 		super.init(IotBean.class.getSimpleName(),TriggerBean.class.getSimpleName(),"triggers");
+	}
+
+	/**
+	 * find all by bean
+	 * @param bean 
+	 * @return List<GenericEntity>
+	 */
+	public List<GenericEntity> findAll(IotBean bean) {
+		return super.findAll(mapperFactory.getMapperFacade().map(bean, IotRest.class), HREF);
 	}
 }

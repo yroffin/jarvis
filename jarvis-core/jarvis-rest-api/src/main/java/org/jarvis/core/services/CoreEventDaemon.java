@@ -25,10 +25,13 @@ import javax.annotation.PostConstruct;
 import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.iot.EventBean;
+import org.jarvis.core.model.bean.iot.IotBean;
 import org.jarvis.core.model.bean.scenario.ScenarioBean;
 import org.jarvis.core.model.rest.GenericEntity;
+import org.jarvis.core.resources.api.href.ApiHrefIotTriggerResources;
 import org.jarvis.core.resources.api.href.ApiHrefScenarioBlockResources;
 import org.jarvis.core.resources.api.href.ApiHrefScenarioTriggerResources;
+import org.jarvis.core.resources.api.iot.ApiIotResources;
 import org.jarvis.core.resources.api.iot.ApiTriggerResources;
 import org.jarvis.core.resources.api.scenario.ApiBlockResources;
 import org.jarvis.core.resources.api.scenario.ApiScenarioResources;
@@ -55,6 +58,12 @@ public class CoreEventDaemon {
 	@Autowired
 	Environment env;
 	
+	@Autowired
+	ApiIotResources apiIotResources;
+	
+	@Autowired
+	ApiHrefIotTriggerResources apiHrefIotTriggerResources;
+
 	@Autowired
 	ApiScenarioResources apiScenarioResources;
 
@@ -136,7 +145,7 @@ public class CoreEventDaemon {
 				 */
 			}
 
-			List<ScenarioBean> toExecute = new ArrayList<ScenarioBean>();
+			List<ScenarioBean> scenarioToExecute = new ArrayList<ScenarioBean>();
 			/**
 			 * find any scenario with this trigger
 			 */
@@ -145,20 +154,49 @@ public class CoreEventDaemon {
 					try {
 						if(event.trigger != null && event.trigger.equals(link.id)) {
 							apiTriggerResources.doGetByIdRest(link.id);
-							toExecute.add(sce);
+							scenarioToExecute.add(sce);
 						}
 					} catch (TechnicalNotFoundException e) {
 						logger.warn(e.getMessage());
 					}
 				}
 			}
+
 			/**
 			 * execute it
 			 */
 			GenericMap body = new GenericMap();
-			for(ScenarioBean scenario : toExecute) {
+			for(ScenarioBean scenario : scenarioToExecute) {
 				try {
 					apiScenarioResources.doExecute(null,scenario.id, body, TaskType.EXECUTE);
+				} catch (TechnicalNotFoundException e) {
+					logger.warn(e.getMessage());
+				}
+			}
+
+			List<IotBean> iotToExecute = new ArrayList<IotBean>();
+			/**
+			 * find any scenario with this trigger
+			 */
+			for(IotBean iotBean : apiIotResources.doFindAllBean()) {
+				for(GenericEntity link : apiHrefIotTriggerResources.findAll(iotBean)) {
+					try {
+						if(event.trigger != null && event.trigger.equals(link.id)) {
+							apiTriggerResources.doGetByIdRest(link.id);
+							iotToExecute.add(iotBean);
+						}
+					} catch (TechnicalNotFoundException e) {
+						logger.warn(e.getMessage());
+					}
+				}
+			}
+
+			/**
+			 * execute it
+			 */
+			for(IotBean iot : iotToExecute) {
+				try {
+					apiIotResources.doExecute(null,iot.id, body, TaskType.RENDER);
 				} catch (TechnicalNotFoundException e) {
 					logger.warn(e.getMessage());
 				}

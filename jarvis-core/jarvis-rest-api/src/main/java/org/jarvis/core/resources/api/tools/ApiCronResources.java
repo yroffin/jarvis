@@ -8,10 +8,12 @@ import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.model.bean.iot.EventBean;
 import org.jarvis.core.model.bean.scenario.TriggerBean;
 import org.jarvis.core.model.bean.tools.CronBean;
+import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.model.rest.tools.CronRest;
 import org.jarvis.core.resources.api.ApiResources;
 import org.jarvis.core.resources.api.GenericValue;
 import org.jarvis.core.resources.api.ResourcePreListener;
+import org.jarvis.core.resources.api.href.ApiHrefTriggerCronResources;
 import org.jarvis.core.resources.api.iot.ApiTriggerResources;
 import org.jarvis.core.services.CoreEventDaemon;
 import org.jarvis.core.services.CoreSunsetSunrise;
@@ -245,13 +247,16 @@ public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 	@Autowired
 	ApiTriggerResources apiTriggerResources;
 	
+	@Autowired
+	ApiHrefTriggerCronResources apiHrefTriggerCronResources;
+	
 	/**
 	 * fire cron
 	 * @param bean
 	 */
 	private void fire(CronBean bean) {
 		for(TriggerBean trigger : apiTriggerResources.doFindAllBean()) {
-			for(CronBean cron : doFindAllBean()) {
+			for(GenericEntity cron : apiHrefTriggerCronResources.findAll(trigger)) {
 				if(cron.id.equals(bean.id)) {
 					EventBean event = new EventBean();
 					event.text = bean.name;
