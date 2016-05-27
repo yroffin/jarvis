@@ -1,30 +1,55 @@
 {
-  "BlockBean": {},
+  "BlockBean": {
+    "206": {
+      "expression": "noname.status == 1",
+      "icon": "list",
+      "id": "206",
+      "isSecured": false,
+      "name": "block name",
+      "testParameter": "{}"
+    }
+  },
   "CommandBean": {
-    "203": {
+    "193": {
       "body": "import groovy.json.*\nimport groovyx.net.http.RESTClient\nimport static groovyx.net.http.ContentType.*\n\n/**\n * simple api call to simulate data\n*/\ndef hue = new RESTClient( 'http://jsonplaceholder.typicode.com' )\ndef resp = hue.get( path: '/users/1' )\n\nif(resp.status == 200) {\n    return resp.data\n} else {\n    return new JsonSlurper().parseText('{}')\n}\nreturn resp",
       "icon": "whatshot",
       "id": "23",
       "name": "Json Sample Call (data)",
       "type": "GROOVY"
     },
-    "204": {
+    "194": {
       "body": "import groovy.json.*\n\n/**\n * simple api call to simulate action\n*/\nreturn new JsonSlurper().parseText('{\"status\":true}')",
       "icon": "whatshot",
       "id": "45",
       "name": "Json Sample Call (action)",
       "type": "GROOVY"
     },
-    "205": {
+    "195": {
       "body": "import groovy.json.*\n\n/**\n * simple api call to simulate action\n*/\nreturn new JsonSlurper().parseText('{\"status\":false}')",
       "icon": "whatshot",
       "id": "46",
       "name": "Json Sample Call (action)",
       "type": "GROOVY"
+    },
+    "203": {
+      "body": "import groovy.json.*\nimport org.joda.time.*\n\n/**\n * simple api call to simulate action\n*/\ndef now = DateTime.now().getSecondOfDay() % 2\nreturn new JsonSlurper().parseText('{\"status\":'+now+'}')",
+      "icon": "whatshot",
+      "id": "203",
+      "isSecured": false,
+      "name": "Simple script (boolean) : true when second is zero modulo 1",
+      "type": "GROOVY"
+    },
+    "207": {
+      "body": "logger.warn(\"Just a test {}\", input)",
+      "icon": "list",
+      "id": "207",
+      "isSecured": false,
+      "name": "Log a single output",
+      "type": "GROOVY"
     }
   },
   "ConfigBean": {
-    "209": {
+    "202": {
       "active": true,
       "backgroundUrl": "http://artroyalephotography.com/wp-content/uploads/2011/08/minimal-gray-to-white-gradient-wallpapers_33797_1920x1200-1024x640.jpg",
       "id": "209",
@@ -41,48 +66,120 @@
       "tilesXs": "3"
     }
   },
+  "ConnectorBean": {},
+  "CronBean": {
+    "199": {
+      "cron": "* * * * * *",
+      "icon": "list",
+      "id": "199",
+      "isSecured": false,
+      "name": "Toutes les minutes",
+      "triggerType": "CRONTAB"
+    },
+    "200": {
+      "cron": "* * * * *",
+      "icon": "list",
+      "id": "184",
+      "isSecured": false,
+      "latitude": "30",
+      "longitude": "30",
+      "name": "Sunset",
+      "triggerType": "SUNSET"
+    },
+    "201": {
+      "cron": "* * * * *",
+      "icon": "list",
+      "id": "185",
+      "isSecured": false,
+      "latitude": "30",
+      "longitude": "30",
+      "name": "Sunrise",
+      "triggerType": "SUNRISE"
+    }
+  },
+  "EventBean": {},
   "HREF": {
-    "107": {
-      "__from": 207,
-      "__to": 203,
+    "31": {
+      "__from": 197,
+      "__to": 193,
       "href": "HREF",
       "name": "user",
       "nature": "json",
       "order": "3",
       "type": "data"
     },
-    "108": {
-      "__from": 206,
-      "__to": 207
+    "32": {
+      "__from": 196,
+      "__to": 197
     },
-    "109": {
-      "__from": 208,
-      "__to": 206
+    "33": {
+      "__from": 198,
+      "__to": 196
     },
-    "110": {
-      "__from": 207,
-      "__to": 204,
+    "34": {
+      "__from": 197,
+      "__to": 194,
       "href": "HREF",
       "name": "always_true",
       "nature": "json",
       "order": "1",
       "type": "action"
     },
-    "111": {
-      "__from": 207,
-      "__to": 205,
+    "35": {
+      "__from": 197,
+      "__to": 195,
       "href": "HREF",
       "name": "always_false",
       "nature": "json",
       "order": "2",
       "type": "action"
+    },
+    "36": {
+      "__from": 205,
+      "__to": 203,
+      "href": "HREF",
+      "name": "noname",
+      "nature": "json",
+      "order": "1",
+      "type": "action"
+    },
+    "38": {
+      "__from": 208,
+      "__to": 207
+    },
+    "39": {
+      "__from": 209,
+      "__to": 206
+    },
+    "42": {
+      "__from": 210,
+      "__to": 199
+    },
+    "43": {
+      "__from": 209,
+      "__to": 210
     }
   },
-  "HREF_ELSE": {},
-  "HREF_IF": {},
-  "HREF_THEN": {},
+  "HREF_ELSE": {
+    "41": {
+      "__from": 206,
+      "__to": 208
+    }
+  },
+  "HREF_IF": {
+    "37": {
+      "__from": 206,
+      "__to": 205
+    }
+  },
+  "HREF_THEN": {
+    "40": {
+      "__from": 206,
+      "__to": 208
+    }
+  },
   "IotBean": {
-    "206": {
+    "196": {
       "icon": "touch_app",
       "id": "29",
       "name": "Device Json Mapper",
@@ -92,20 +189,53 @@
       "visible": true
     }
   },
-  "ScenarioBean": {},
+  "PropertyBean": {},
+  "ScenarioBean": {
+    "209": {
+      "icon": "list",
+      "id": "209",
+      "isSecured": false,
+      "name": "Jus a test"
+    }
+  },
   "ScriptPluginBean": {
-    "207": {
+    "197": {
       "active": false,
       "icon": "lightbulb_outline",
       "id": "39",
       "name": "Json Command Mapper",
       "type": "script",
       "visible": false
+    },
+    "205": {
+      "active": false,
+      "icon": "lightbulb_outline",
+      "id": "205",
+      "isSecured": false,
+      "name": "Retrieve a single integer in noname.status",
+      "type": "script",
+      "visible": false
+    },
+    "208": {
+      "active": false,
+      "icon": "list",
+      "id": "208",
+      "isSecured": false,
+      "name": "log it",
+      "type": "script",
+      "visible": false
     }
   },
-  "TriggerBean": {},
+  "TriggerBean": {
+    "210": {
+      "icon": "settings_remote",
+      "id": "210",
+      "isSecured": false,
+      "name": "trigger de test"
+    }
+  },
   "ViewBean": {
-    "208": {
+    "198": {
       "icon": "list",
       "id": "42",
       "ishome": true,

@@ -7,7 +7,23 @@
 	  <label translate="cron.icon"></label>
 	  <input ng-model="cron.icon">
 	</md-input-container>
-	<md-input-container>
+    <md-input-container>
+      <label translate="cron.triggerType"></label>
+      <md-select ng-model="cron.triggerType">
+        <md-option ng-repeat="type in [{'id':'SUNSET','value':'SUNSET'},{'id':'SUNRISE','value':'SUNRISE'},{'id':'CRONTAB','value':'CRONTAB'}]" value="{{type.id}}">
+          {{type.value | translate}}
+        </md-option>
+      </md-select>
+    </md-input-container>
+	<md-input-container ng-if="cron.triggerType == 'SUNSET' || cron.triggerType == 'SUNRISE'">
+	  <label translate="cron.latitude"></label>
+	  <input ng-model="cron.latitude">
+	</md-input-container>
+	<md-input-container ng-if="cron.triggerType == 'SUNSET' || cron.triggerType == 'SUNRISE'">
+	  <label translate="cron.longitude"></label>
+	  <input ng-model="cron.longitude">
+	</md-input-container>
+	<md-input-container ng-if="cron.triggerType == 'CRONTAB'">
 	  <label translate="cron.cron"></label>
 	  <input ng-model="cron.cron">
 	</md-input-container>

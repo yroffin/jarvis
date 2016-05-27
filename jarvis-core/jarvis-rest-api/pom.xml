@@ -31,6 +31,10 @@
 		</dependency>
 		<dependency>
 			<groupId>org.yroffin.com.jarvis</groupId>
+			<artifactId>jarvis-core-sun</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.yroffin.com.jarvis</groupId>
 			<artifactId>jarvis-test-tools</artifactId>
 		</dependency>
 		<!-- external dependencies -->

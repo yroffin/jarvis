@@ -31,6 +31,18 @@ public class CronBean extends GenericBean {
 	 */
 	public String icon;
 	/**
+	 * triggerType
+	 */
+	public String triggerType;
+	/**
+	 * latitude
+	 */
+	public String latitude;
+	/**
+	 * longitude
+	 */
+	public String longitude;
+	/**
 	 * cron
 	 */
 	public String cron;

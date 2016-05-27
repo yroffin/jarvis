@@ -17,6 +17,7 @@
 package org.jarvis.core.model.rest.tools;
 
 import org.jarvis.core.model.rest.GenericEntity;
+import org.jarvis.core.type.TriggerType;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -36,6 +37,21 @@ public class CronRest extends GenericEntity {
 	 */
 	@JsonProperty("icon")
 	public String icon;
+	/**
+	 * triggerType
+	 */
+	@JsonProperty("triggerType")
+	public TriggerType triggerType;
+	/**
+	 * latitude
+	 */
+	@JsonProperty("latitude")
+	public String latitude;
+	/**
+	 * longitude
+	 */
+	@JsonProperty("longitude")
+	public String longitude;
 	/**
 	 * cron
 	 */

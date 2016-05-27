@@ -50,6 +50,11 @@
 			</dependency>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
+				<artifactId>jarvis-core-sun</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
 				<artifactId>jarvis-rest-api</artifactId>
 				<version>${project.version}</version>
 			</dependency>

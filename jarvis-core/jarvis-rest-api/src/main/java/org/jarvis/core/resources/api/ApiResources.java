@@ -543,7 +543,7 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 				return result.asBoolean();
 			case FILE_STREAM:
 				response.type("application/octet-stream");
-				return result.asString();
+				return result.asFileStream();
 			default:
 				return result.asString();
 		}

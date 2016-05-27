@@ -128,7 +128,13 @@ public class CoreEventDaemon {
 			/**
 			 * store event in statistics
 			 */
-			coreStatistics.write(event);
+			try {
+				coreStatistics.write(event);
+			} catch(Exception e) {
+				/**
+				 * ignore any statistics report
+				 */
+			}
 
 			List<ScenarioBean> toExecute = new ArrayList<ScenarioBean>();
 			/**

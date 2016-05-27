@@ -97,6 +97,7 @@ public class GenericValue {
 	public GenericValue(ResultType type, String value) {
 		initialize(value);
 		this.type = type;
+		this.voString = value;
 	}
 
 	/**
@@ -142,6 +143,16 @@ public class GenericValue {
 	public String asString() {
 		if(type != ResultType.STRING) {
 			throw new TechnicalException("Internal error, must be a String");
+		}
+		return voString;
+	}
+
+	/**
+	 * @return String
+	 */
+	public String asFileStream() {
+		if(type != ResultType.FILE_STREAM) {
+			throw new TechnicalException("Internal error, must be a Stream");
 		}
 		return voString;
 	}

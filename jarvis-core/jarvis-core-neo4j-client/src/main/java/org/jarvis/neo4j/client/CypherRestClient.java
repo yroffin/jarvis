@@ -232,13 +232,19 @@ public class CypherRestClient extends AbstractJerseyClient {
 			execute("MATCH (node:"+resource+") DETACH DELETE node", true);
 			@SuppressWarnings("unchecked")
 			Map<String,LinkedHashMap<String,Object>> elements = (Map<String, LinkedHashMap<String,Object>>) repository.get(resource);
+			/**
+			 * continue if no element
+			 */
+			if(elements == null) {
+				continue;
+			}
 			for(Entry<String, LinkedHashMap<String,Object>> raw : elements.entrySet()) {
 				LinkedHashMap<String,Object> node = raw.getValue();
 				Node toCreate = new Node(node);
 				try {
 					Node created = createNode(resource, toCreate );
-					index.put((String) node.get("id"), created.getId());
-					logger.info("Index {} => {}", (String) node.get("id"), created.getId());
+					index.put((String) raw.getKey(), created.getId());
+					logger.info("Index {} => {}", (String) raw.getKey(), created.getId());
 				} catch (TechnicalHttpException | TechnicalNotFoundException e) {
 					throw new TechnicalException(e);
 				}
