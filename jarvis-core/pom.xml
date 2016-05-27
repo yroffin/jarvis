@@ -394,6 +394,7 @@
 		<module>jarvis-rest-api</module>
 		<module>jarvis-websocket</module>
 		<module>jarvis-core-server</module>
+		<module>jarvis-core-sun</module>
 		<module>jarvis-ehcache</module>
 		<module>jarvis-marytts</module>
 		<module>jarvis-marytts-voices</module>
