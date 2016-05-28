@@ -5,7 +5,6 @@ public/ui;index-static.html
 public/ui;script.min.js
 public/ui;script-libs.min.js
 public/ui/css;specific.css
-public/ui/css;style.min.css
 public/ui/js;app.js
 public/ui/js;controllers.js
 public/ui/js;directives.js

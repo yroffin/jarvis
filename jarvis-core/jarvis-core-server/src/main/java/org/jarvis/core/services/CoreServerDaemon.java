@@ -108,7 +108,13 @@ public class CoreServerDaemon {
 	 */
 	@PostConstruct
 	public void server() {
-		for(String key : ImmutableList.of("jarvis.user.dir", "jarvis.log.dir", "jarvis.server.url", "jarvis.neo4j.url")) {
+		for(String key : ImmutableList.of(
+				"jarvis.user.dir",
+				"jarvis.log.dir",
+				"jarvis.server.url",
+				"jarvis.neo4j.url",
+				"jarvis.elasticsearch.url",
+				"jarvis.sunset.sunrise.url")) {
 			logger.info("{} = {}", key, env.getProperty(key));
 		}
 		

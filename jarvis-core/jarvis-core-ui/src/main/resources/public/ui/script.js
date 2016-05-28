@@ -3611,7 +3611,7 @@ angular.module('JarvisApp.ctrl.commands', ['JarvisApp.services'])
 	);
 }])
 .controller('commandCtrl',
-		[ '$scope, $log, $stateParams, genericResourceService, genericScopeService, commandResourceService, toastService',
+		[ '$scope', '$log', '$stateParams', 'genericResourceService', 'genericScopeService', 'commandResourceService', 'toastService',
 	function($scope, $log, $stateParams, genericResourceService, genericScopeService, commandResourceService, toastService){
 	/**
 	 * declare generic scope resource (and inject it in scope)

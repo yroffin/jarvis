@@ -140,10 +140,14 @@ public class CoreResources {
              * then copy file
              */
             InputStream resource = this.getClass().getClassLoader().getResourceAsStream(directory + "/" + file);
-            Files.copy(resource, Paths.get(created.getAbsolutePath() + "/" + file),
-					StandardCopyOption.REPLACE_EXISTING);
-            
-            resource.close();
+            if(resource == null) {
+            	logger.error("No such resource {}", directory + "/" + file);
+            } else {
+	            Files.copy(resource, Paths.get(created.getAbsolutePath() + "/" + file),
+						StandardCopyOption.REPLACE_EXISTING);
+            	logger.info("Resource {} copied", directory + "/" + file);
+	            resource.close();
+            }
         }
         reader.close();
         list.close();
