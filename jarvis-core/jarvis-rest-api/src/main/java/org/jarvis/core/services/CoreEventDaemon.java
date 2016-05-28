@@ -196,7 +196,7 @@ public class CoreEventDaemon {
 			 */
 			for(IotBean iot : iotToExecute) {
 				try {
-					apiIotResources.doExecute(null,iot.id, body, TaskType.RENDER);
+					apiIotResources.doExecute(null,iot.id, body, TaskType.EXECUTE);
 				} catch (TechnicalNotFoundException e) {
 					logger.warn(e.getMessage());
 				}
