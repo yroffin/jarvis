@@ -29,6 +29,12 @@ Technology
 - Neo4j for database (graphdb)
 - Elastic Search to store data (event, ...)
 
+Security
+--------
+
+Oauth2 integration (pac4j)
+- Cf. https://accounts.google.com/.well-known/openid-configuration
+
 Roadmap
 -------
 
