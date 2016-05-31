@@ -25,18 +25,25 @@ Technology
 
 - angularjs / angularmd for ui
 - Spark + Spring Boot on server side
+- pac4j integration (security) (Cf. http://www.pac4j.org and https://github.com/pac4j/spark-pac4j)
 - Neo4j for database (graphdb)
 - Elastic Search to store data (event, ...)
+
+Security
+--------
+
+Oauth2 integration (pac4j)
+- Cf. https://accounts.google.com/.well-known/openid-configuration
 
 Roadmap
 -------
 
-- collecte and store statistics in graphdb
 - integrate store in client side for data lookup (threw websocket)
 - integrate swagger in project (auto documentation)
 - integrate lightify (Cf. https://github.com/arubenis/golightify/blob/master/http_json_server.go)
 - integrate rfxcom (better than fork unix binary ;))
   Cf. http://www.homautomation.org/2013/10/09/how-to-control-di-o-devices-with-a-raspberry
+- integrate pac4j
 - more tests ... for devops target
 
 Setup
