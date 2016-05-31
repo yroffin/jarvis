@@ -16,6 +16,9 @@
 
 package org.jarvis.core.resources.api.plugins;
 
+import java.io.IOException;
+import java.util.Map.Entry;
+
 import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.plugin.CommandBean;
 import org.jarvis.core.model.bean.plugin.ScriptPluginBean;
@@ -139,6 +142,20 @@ public class ApiScriptPluginResources extends ApiLinkedResources<ScriptPluginRes
 			if(entity.get("type") != null && entity.get("type").equals("action") && render) {
 				logger.warn("Plugin {} cannot be rendered, its ans action");
 				continue;
+			}
+			
+			/**
+			 * extract parameter
+			 */
+			if(entity.get("parameter") != null) {
+				try {
+					GenericMap map = mapper.readValue(entity.get("parameter").toString(), GenericMap.class);
+					for(Entry<String, Object> field : map.entrySet()) {
+						result.put(field.getKey(), field.getValue());
+					}
+				} catch (IOException e) {
+					logger.warn("While decoding {}", entity.get("parameter").toString());
+				}
 			}
 			
 			/**

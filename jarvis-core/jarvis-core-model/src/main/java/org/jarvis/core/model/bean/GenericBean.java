@@ -31,6 +31,10 @@ public class GenericBean {
 	 */
 	public DateTime timestamp;
 	/**
+	 * isLogged
+	 */
+	public boolean isLogged;
+	/**
 	 * generic href
 	 */
 	public String href;

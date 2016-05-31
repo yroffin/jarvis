@@ -29,6 +29,7 @@ import org.jarvis.core.model.bean.GenericBean;
 import org.jarvis.core.model.bean.iot.EventBean;
 import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.model.rest.iot.EventRest;
+import org.jarvis.core.type.GenericMap;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -123,6 +124,30 @@ public class CoreStatistics {
 	 * @param basename
 	 * @return String
 	 */
+	public String write(GenericMap value, String index, String basename) {
+		/**
+		 * null url abort statistic store
+		 */
+		if(baseurl == null) {
+			logger.warn("[STATISTICS] no store for {}", value);
+			return "";
+		}
+		
+		/**
+		 * compute statistics
+		 */
+		value.put("timestamp", new DateTime());
+
+		return sendEntity(value,index,basename);
+	}
+	
+	/**
+	 * write this object to statistics
+	 * @param value
+	 * @param index
+	 * @param basename
+	 * @return String
+	 */
 	public String write(GenericEntity value, String index, String basename) {
 		/**
 		 * null url abort statistic store
@@ -139,13 +164,24 @@ public class CoreStatistics {
 			value.timestamp = new DateTime();
 		}
 		
+		return sendEntity(value,index,basename);
+	}
+
+	/**
+	 * send entity
+	 * @param value
+	 * @param index
+	 * @param basename
+	 * @return
+	 */
+	private String sendEntity(Object value, String index, String basename) {
 		/**
 		 * build response
 		 */
 		Response entity;
 		try {
 			entity = client.target(baseurl)
-			        .path(index + "/" + basename)
+			        .path("jarvis-" + index + "/" + basename)
 			        .request(MediaType.APPLICATION_JSON)
 			        .accept(MediaType.APPLICATION_JSON)
 			        .acceptEncoding("charset=UTF-8")
@@ -161,6 +197,7 @@ public class CoreStatistics {
 			String result = entity.readEntity(String.class);
 			return result;
 		} else {
+			logger.warn("While sending stats {} {} {}", entity.getStatus(), index,  basename);
 			throw new TechnicalException(entity.getStatus() + ":" + index + "/" + value.getClass().getSimpleName());
 		}
 	}

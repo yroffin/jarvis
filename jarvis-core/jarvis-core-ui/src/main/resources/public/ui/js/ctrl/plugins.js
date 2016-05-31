@@ -75,8 +75,8 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
 			{
     			'order':'1',
     			'name':'noname',
-       			'nature':'info',
-       			'type':'json'
+       			'nature':'json',
+       			'type':'data'
 			},
 			$stateParams.id
 	);

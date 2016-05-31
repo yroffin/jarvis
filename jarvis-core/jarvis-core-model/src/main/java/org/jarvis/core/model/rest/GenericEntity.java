@@ -39,6 +39,11 @@ public class GenericEntity {
 	@JsonProperty("timestamp")
 	public DateTime timestamp;
 	/**
+	 * isLogged
+	 */
+	@JsonProperty("isLogged")
+	public boolean isLogged;
+	/**
 	 * href of this resource
 	 */
 	@JsonProperty("href")

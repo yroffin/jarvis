@@ -49,10 +49,6 @@ md-toast.md-failure-toast-theme {
 .material-icons.md-light { color: rgba(255, 255, 255, 1); }
 .material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
 
-md-toolbar {
-    border-radius: 8px;
-}
-
 md-card {
     border-radius: 10px;
 }

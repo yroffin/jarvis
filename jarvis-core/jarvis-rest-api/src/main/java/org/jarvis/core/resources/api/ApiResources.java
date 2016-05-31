@@ -41,6 +41,7 @@ import org.jarvis.core.model.bean.GenericBean;
 import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.resources.api.mapper.ApiMapper;
 import org.jarvis.core.services.ApiService;
+import org.jarvis.core.services.CoreStatistics;
 import org.jarvis.core.services.neo4j.ApiNeo4Service;
 import org.jarvis.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
@@ -498,6 +499,9 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 		}
 	}
 
+	@Autowired
+	CoreStatistics coreStatistics;
+
 	/**
 	 * @param response 
 	 * @param id
@@ -536,6 +540,18 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 		logger.info("SCRIPT - OUTPUT\n{}", result);
 		switch(result.getType()) {
 			case OBJECT:
+				/**
+				 * do statictics on object
+				 */
+				try {
+					if(bean.isLogged) {
+						coreStatistics.write(result.asObject(), restClass.getPackage().getName(), restClass.getSimpleName() + "." + id);
+					}
+				} catch(Exception e) {
+					/**
+					 * ignore any statistics report
+					 */
+				}
 				return result.asObject();
 			case ARRAY:
 				return result.asList();

@@ -179,6 +179,7 @@
     "script.cmd.inst"	: "Instance",
     "script.cmd.order"	: "Ordre",
     "script.cmd.name"	: "Nom de la variable",
+    "script.cmd.params"	: "Paramètres (json)",
     "script.cmd.nature"	: "Nature (text, json, xml)",
     "script.cmd.type"	: "Type (data, action)",
     "script.cmd.order.r": "Ordre obligatoire",
