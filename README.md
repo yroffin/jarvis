@@ -25,17 +25,18 @@ Technology
 
 - angularjs / angularmd for ui
 - Spark + Spring Boot on server side
+- pac4j integration (security) (Cf. http://www.pac4j.org and https://github.com/pac4j/spark-pac4j)
 - Neo4j for database (graphdb)
 - Elastic Search to store data (event, ...)
 
 Roadmap
 -------
 
-- collecte and store statistics in graphdb
 - integrate store in client side for data lookup (threw websocket)
 - integrate swagger in project (auto documentation)
 - integrate lightify (Cf. https://github.com/arubenis/golightify/blob/master/http_json_server.go)
 - integrate rfxcom (better than fork unix binary ;))
+- integrate pac4j
 - more tests ... for devops target
 
 Setup
