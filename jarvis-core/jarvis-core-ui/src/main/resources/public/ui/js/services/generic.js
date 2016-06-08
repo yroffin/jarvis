@@ -40,13 +40,13 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter'])
 				callback(results);
 			}
 			if(path.length == 1) {
-				Restangular.all(path[0]).getList().then(
+				Restangular.all('/api/'+path[0]).getList().then(
 						handler,
 						function(errors){
 							failure(errors);
 				});
 			} else {
-				Restangular.all(path[0]).all(path[1]).getList().then(
+				Restangular.all('/api/'+path[0]).all(path[1]).getList().then(
 						handler,
 						function(errors){
 							failure(errors);
@@ -66,9 +66,9 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter'])
 				if(callback != undefined) callback(filtered);
 			}
 			if(path.length == 1) {
-				Restangular.one(path[0], id).get().then(handler,function(errors){failure(errors);});
+				Restangular.one('/api/'+path[0], id).get().then(handler,function(errors){failure(errors);});
 			} else {
-				Restangular.all(path[0]).one(path[1], id).get().then(handler,function(errors){failure(errors);});
+				Restangular.all('/api/'+path[0]).one(path[1], id).get().then(handler,function(errors){failure(errors);});
 			}
 		},
         /**
@@ -84,9 +84,9 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter'])
 				if(callback != undefined) callback(filtered);
 			}
 			if(path.length == 1) {
-				Restangular.one(path[0], id).remove().then(handler,function(errors){failure(errors);});
+				Restangular.one('/api/'+path[0], id).remove().then(handler,function(errors){failure(errors);});
 			} else {
-				Restangular.all(path[0]).one(path[1], id).remove().then(handler,function(errors){failure(errors);});
+				Restangular.all('/api/'+path[0]).one(path[1], id).remove().then(handler,function(errors){failure(errors);});
 			}
 		},
         /**
@@ -102,9 +102,9 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter'])
 				if(callback != undefined) callback(filtered);
 			}
 			if(path.length == 1) {
-				Restangular.one(path[0], element.id).customPUT(element).then(handler,function(errors){failure(errors);});
+				Restangular.one('/api/'+path[0], element.id).customPUT(element).then(handler,function(errors){failure(errors);});
 			} else {
-				Restangular.all(path[0]).one(path[1], element.id).customPUT(element).then(handler,function(errors){failure(errors);});
+				Restangular.all('/api/'+path[0]).one(path[1], element.id).customPUT(element).then(handler,function(errors){failure(errors);});
 			}
 		},
         /**
@@ -120,9 +120,9 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter'])
 				if(callback != undefined) callback(filtered);
 			}
 			if(path.length == 1) {
-				Restangular.all(path[0]).post(element).then(handler,function(errors){failure(errors);});
+				Restangular.all('/api/'+path[0]).post(element).then(handler,function(errors){failure(errors);});
 			} else {
-				Restangular.all(path[0]).all(path[1]).post(element).then(handler,function(errors){failure(errors);});
+				Restangular.all('/api/'+path[0]).all(path[1]).post(element).then(handler,function(errors){failure(errors);});
 			}
 		},
         /**
@@ -137,9 +137,9 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter'])
 				if(callback != undefined) callback(filtered);
 			}
 			if(path.length == 1) {
-				Restangular.all(path[0]).one(id).customPOST(args,'', {'task':task}).then(handler,function(errors){failure(errors);});
+				Restangular.all('/api/'+path[0]).one(id).customPOST(args,'', {'task':task}).then(handler,function(errors){failure(errors);});
 			} else {
-				Restangular.all(path[0]).all(path[1]).one(id).customPOST(args,'', {'task':task}).then(handler,function(errors){failure(errors);});
+				Restangular.all('/api/'+path[0]).all(path[1]).one(id).customPOST(args,'', {'task':task}).then(handler,function(errors){failure(errors);});
 			}
 		}
   };
@@ -222,15 +222,15 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter'])
 				};
 				if(path.length == 1) {
 					if(api.length == 1) {
-						Restangular.one(api[0], id).all(path[0]).getList({'href':relation}).then(handler,function(errors){failure(errors);});
+						Restangular.one('/api/'+api[0], id).all(path[0]).getList({'href':relation}).then(handler,function(errors){failure(errors);});
 					} else {
-						Restangular.all(api[0]).one(api[1], id).all(path[0]).getList({'href':relation}).then(handler,function(errors){failure(errors);});
+						Restangular.all('/api/'+api[0]).one(api[1], id).all(path[0]).getList({'href':relation}).then(handler,function(errors){failure(errors);});
 					}
 				} else {
 					if(api.length == 1) {
-						Restangular.one(api[0], id).all(path[0]).all(path[1]).getList({'href':relation}).then(handler,function(errors){failure(errors);});
+						Restangular.one('/api/'+api[0], id).all(path[0]).all(path[1]).getList({'href':relation}).then(handler,function(errors){failure(errors);});
 					} else {
-						Restangular.all(api[0]).one(api[1], id).all(path[0]).all(path[1]).getList({'href':relation}).then(handler,function(errors){failure(errors);});
+						Restangular.all('/api/'+api[0]).one(api[1], id).all(path[0]).all(path[1]).getList({'href':relation}).then(handler,function(errors){failure(errors);});
 					}
 				}
 			},
@@ -248,15 +248,15 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter'])
 				}
 				if(path.length == 1) {
 					if(api.length == 1) {
-						Restangular.one(api[0], owner).one(path[0],child).customPOST(properties).then(handler,function(errors){failure(errors);});
+						Restangular.one('/api/'+api[0], owner).one(path[0],child).customPOST(properties).then(handler,function(errors){failure(errors);});
 					} else {
-						Restangular.all(api[0]).one(api[1], owner).one(path[0],child).customPOST(properties).then(handler,function(errors){failure(errors);});
+						Restangular.all('/api/'+api[0]).one(api[1], owner).one(path[0],child).customPOST(properties).then(handler,function(errors){failure(errors);});
 					}
 				} else {
 					if(api.length == 1) {
-						Restangular.one(api[0], owner).all(path[0]).one(path[1],child).customPOST(properties).then(handler,function(errors){failure(errors);});
+						Restangular.one('/api/'+api[0], owner).all(path[0]).one(path[1],child).customPOST(properties).then(handler,function(errors){failure(errors);});
 					} else {
-						Restangular.all(api[0]).one(api[1], owner).all(path[0]).one(path[1],child).customPOST(properties).then(handler,function(errors){failure(errors);});
+						Restangular.all('/api/'+api[0]).one(api[1], owner).all(path[0]).one(path[1],child).customPOST(properties).then(handler,function(errors){failure(errors);});
 					}
 				}
 	        },
@@ -278,15 +278,15 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter'])
 				p.href = relation;
 				if(path.length == 1) {
 					if(api.length == 1) {
-						Restangular.one(api[0], owner).one(path[0],child).one(instance).customPUT(p).then(handler,function(errors){failure(errors);});
+						Restangular.one('/api/'+api[0], owner).one(path[0],child).one(instance).customPUT(p).then(handler,function(errors){failure(errors);});
 					} else {
-						Restangular.all(api[0]).one(api[1], owner).one(path[0],child).one(instance).customPUT(p).then(handler,function(errors){failure(errors);});
+						Restangular.all('/api/'+api[0]).one(api[1], owner).one(path[0],child).one(instance).customPUT(p).then(handler,function(errors){failure(errors);});
 					}
 				} else {
 					if(api.length == 1) {
-						Restangular.one(api[0], owner).all(path[0]).one(path[1],child).one(instance).customPUT(p).then(handler,function(errors){failure(errors);});
+						Restangular.one('/api/'+api[0], owner).all(path[0]).one(path[1],child).one(instance).customPUT(p).then(handler,function(errors){failure(errors);});
 					} else {
-						Restangular.all(api[0]).one(api[1], owner).all(path[0]).one(path[1],child).one(instance).customPUT(p).then(handler,function(errors){failure(errors);});
+						Restangular.all('/api/'+api[0]).one(api[1], owner).all(path[0]).one(path[1],child).one(instance).customPUT(p).then(handler,function(errors){failure(errors);});
 					}
 				}
 	        },
@@ -301,15 +301,15 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter'])
 				};
 				if(path.length == 1) {
 					if(api.length == 1) {
-						Restangular.one(api[0], owner).one(path[0], child).remove({'instance':instance, 'href':relation}).then(handler,function(errors){failure(errors);});
+						Restangular.one('/api/'+api[0], owner).one(path[0], child).remove({'instance':instance, 'href':relation}).then(handler,function(errors){failure(errors);});
 					} else {
-						Restangular.all(api[0]).one(api[1], owner).one(path[0], child).remove({'instance':instance, 'href':relation}).then(handler,function(errors){failure(errors);});
+						Restangular.all('/api/'+api[0]).one(api[1], owner).one(path[0], child).remove({'instance':instance, 'href':relation}).then(handler,function(errors){failure(errors);});
 					}
 				} else {
 					if(api.length == 1) {
-						Restangular.one(api[0], owner).all(path[0]).one(path[1], child).remove({'instance':instance, 'href':relation}).then(handler,function(errors){failure(errors);});
+						Restangular.one('/api/'+api[0], owner).all(path[0]).one(path[1], child).remove({'instance':instance, 'href':relation}).then(handler,function(errors){failure(errors);});
 					} else {
-						Restangular.all(api[0]).one(api[1], owner).all(path[0]).one(path[1], child).remove({'instance':instance, 'href':relation}).then(handler,function(errors){failure(errors);});
+						Restangular.all('/api/'+api[0]).one(api[1], owner).all(path[0]).one(path[1], child).remove({'instance':instance, 'href':relation}).then(handler,function(errors){failure(errors);});
 					}
 				}
 			}

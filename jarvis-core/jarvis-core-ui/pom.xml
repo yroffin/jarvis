@@ -29,7 +29,6 @@
 				<!-- AngularJS Material Design -->
 				<cssSourceFile>angular-material.min.css</cssSourceFile>
 				<cssSourceFile>angular-material.layouts.min.css</cssSourceFile>
-				<cssSourceFile>materials-icon.css</cssSourceFile>
 			    <!-- Angular UI Tree -->
 				<cssSourceFile>angular-ui-tree.min.css</cssSourceFile>
 				<!-- Twitter bootstrap -->

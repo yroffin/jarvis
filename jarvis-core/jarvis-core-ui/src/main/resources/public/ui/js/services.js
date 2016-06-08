@@ -102,20 +102,47 @@ myAppServices.factory('crontabResourceService', [ '$q', '$window', '$rootScope',
 }]);
 
 /**
- * labelResourceService
+ * crontabResourceService
  */
-myAppServices.factory('labelResourceService', [ '$q', '$window', '$rootScope', 'Restangular', function($q, $window, $rootScope, Restangular) {
-  var $log =  angular.injector(['ng']).get('$log');
-  $log.info('labelResourceService', $q);
-  return {
-        findAll: function(callback,failure) {
-        	// Restangular returns promises
-        	Restangular.all('labels').getList().then(function(labels) {
-        	  callback(labels);
-        	},function(errors){
-        		failure(errors);
-        	});
-        }
-  }
-}]);
-
+myAppServices.factory('oauth2ResourceService', 
+		[
+		 '$rootScope',
+		 '$window',
+		 'Restangular',
+		 function(
+				 $rootScope,
+				 $window,
+				 Restangular
+				 ) {
+		  var $log =  angular.injector(['ng']).get('$log');
+		  return {
+			  	/**
+			  	 * me service retrieve current user identity
+			  	 */
+		        me: function(callback, failure) {
+		        	Restangular.setDefaultHeaders ({
+		        		'JarvisAuthToken' : $rootScope.accessToken
+		        	}); 
+		        	Restangular.one('/api/profile/me').get().then(
+		        		function(profile) {
+			        		callback(profile);
+			        	},function(errors){
+			        		failure(errors);
+			        	}
+			        );
+		        },
+			  	/**
+			  	 * retrieve oauth2 identity
+			  	 */
+		        config: function(args, callback, failure) {
+		        	Restangular.one('oauth2').get(args).then(
+		        		function(profile) {
+			        		callback(profile);
+			        	},function(errors){
+			        		failure(errors);
+			        	}
+			        );
+		        }
+		  }
+		}
+]);

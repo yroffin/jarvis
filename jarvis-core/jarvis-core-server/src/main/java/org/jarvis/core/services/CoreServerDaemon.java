@@ -19,6 +19,7 @@ package org.jarvis.core.services;
 
 import javax.annotation.PostConstruct;
 
+import org.jarvis.core.model.bean.config.Oauth2Config;
 import org.jarvis.core.resources.CoreResources;
 import org.jarvis.core.resources.CoreWebsocket;
 import org.jarvis.core.resources.api.config.ApiConfigResources;
@@ -34,6 +35,12 @@ import org.jarvis.core.resources.api.scenario.ApiScenarioResources;
 import org.jarvis.core.resources.api.tools.ApiCronResources;
 import org.jarvis.core.resources.api.tools.ApiToolResources;
 import org.jarvis.core.resources.api.views.ApiViewResources;
+import org.jarvis.core.security.JarvisCoreClient;
+import org.jarvis.core.security.JarvisTokenValidationFilter;
+import org.pac4j.core.client.Clients;
+import org.pac4j.core.config.Config;
+import org.pac4j.core.profile.UserProfile;
+import org.pac4j.sparkjava.DefaultHttpActionAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +49,12 @@ import org.springframework.context.annotation.PropertySources;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import jersey.repackaged.com.google.common.collect.ImmutableList;
+import spark.Request;
+import spark.Response;
+import spark.Route;
 
 /**
  * main daemon
@@ -103,11 +115,14 @@ public class CoreServerDaemon {
 	@Autowired
 	ApiPropertyResources apiPropertyResources;
 
+	protected ObjectMapper mapper = new ObjectMapper();
+	
 	/**
 	 * start component
 	 */
 	@PostConstruct
 	public void server() {
+		
 		for(String key : ImmutableList.of(
 				"jarvis.user.dir",
 				"jarvis.log.dir",
@@ -141,6 +156,52 @@ public class CoreServerDaemon {
 		} else {
 			coreResources.mountExternal();
 		}
+		
+		/**
+		 * build security config
+		 */
+		final Clients clients = new Clients(new JarvisCoreClient());
+		final Config config = new Config(clients);
+		config.setHttpActionAdapter(new DefaultHttpActionAdapter());
+		
+		/**
+		 * all api must be validated with token
+		 */
+		spark.Spark.before("/api/*", new JarvisTokenValidationFilter(config, "JarvisCoreClient", "securityHeaders,csrfToken"));
+		
+		/**
+		 * ident api
+		 */
+		spark.Spark.get("/api/profile/me", new Route() {
+		    @Override
+			public Object handle(Request request, Response response) throws Exception {
+		    	UserProfile userProfile = request.session().attribute("pac4jUserProfile");
+				return userProfile;
+		    }
+		});
+
+		/**
+		 * retrieve oauth2 client and identity
+		 */
+		spark.Spark.get("/oauth2", new Route() {
+		    @Override
+			public Object handle(Request request, Response response) throws Exception {
+		    	Oauth2Config oauth2Config = new Oauth2Config();
+		    	if(request.queryParamsValues("client")[0].equals("google")) {
+			    	oauth2Config.type = "google";
+			    	oauth2Config.redirect = request.queryParamsValues("oauth2_redirect_uri")[0];
+			    	oauth2Config.key = "496771647466-n6vr65opveivju6m3iio7al9ma5m6pdr.apps.googleusercontent.com";
+			    	oauth2Config.url = "https://accounts.google.com/o/oauth2/auth?scope=email&client_id="+oauth2Config.key+"&response_type=token&redirect_uri="+oauth2Config.redirect;
+		    	}
+		    	if(request.queryParamsValues("client")[0].equals("facebook")) {
+			    	oauth2Config.type = "facebook";
+			    	oauth2Config.redirect = request.queryParamsValues("oauth2_redirect_uri")[0];
+			    	oauth2Config.key = "975239199260629";
+			    	oauth2Config.url = "https://www.facebook.com/dialog/oauth?scope=email&client_id="+oauth2Config.key+"&response_type=token&redirect_uri="+oauth2Config.redirect;
+		    	}
+				return mapper.writeValueAsString(oauth2Config);
+		    }
+		});
 		
 		/**
 		 * mount plugin resources

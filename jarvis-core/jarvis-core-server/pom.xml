@@ -39,6 +39,10 @@
 		</dependency>
 		<!-- external dependencies -->
 		<dependency>
+		    <groupId>org.pac4j</groupId>
+		    <artifactId>spark-pac4j</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>us.monoid.web</groupId>
 			<artifactId>resty</artifactId>
 		</dependency>

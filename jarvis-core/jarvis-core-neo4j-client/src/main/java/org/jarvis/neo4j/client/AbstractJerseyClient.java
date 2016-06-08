@@ -49,9 +49,11 @@ public class AbstractJerseyClient {
 		
 		// create HTTP Client
 		this.client = ClientBuilder.newClient();
-		HttpAuthenticationFeature feature = HttpAuthenticationFeature.basic(user, password);
-		client.register(feature);
-
+		// register auth feature if user is not null
+		if(user != null) {
+			HttpAuthenticationFeature feature = HttpAuthenticationFeature.basic(user, password);
+			client.register(feature);
+		}
 		// Mapper
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		mapper.registerModule(new JodaModule());

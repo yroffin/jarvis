@@ -39,22 +39,24 @@ angular.module('JarvisApp.config',[])
 		$translateProvider.useSanitizeValueStrategy(null);
 	}])
     .config(['RestangularProvider', function(RestangularProvider) {
-		var $log =  angular.injector(['ng']).get('$log');
-		$log.info('RestangularProvider', RestangularProvider);
-		
-		RestangularProvider.setBaseUrl('/api');
-		RestangularProvider.setDefaultHeaders({ 'content-type': 'application/json' });
+		RestangularProvider.setDefaultHeaders({
+			'content-type': 'application/json'
+		});
+
 		/**
 		 * request interceptor
 		 */
 	    RestangularProvider.setFullRequestInterceptor(function(element, operation, route, url, headers, params, httpConfig) {
-	      return {
-	        element: element,
-	        params: params,
-	        headers: headers,
-	        httpConfig: httpConfig
-	      };
+			return {
+			  element: element,
+			  params: params,
+			  headers: headers,
+			  httpConfig: httpConfig
+			};
 	    });
+		/**
+		 * answer interceptor
+		 */
 	    RestangularProvider.setResponseExtractor(function(response) {
 	    	if(angular.isObject(response)) {
 	    	  var newResponse = response;
@@ -69,7 +71,8 @@ angular.module('JarvisApp.config',[])
      * main controller
      */
     .controller('JarvisAppCtrl',
-    		['$scope',
+    		['$rootScope',
+    		 '$scope',
     		 '$log',
     		 '$store',
     		 '$http',
@@ -77,13 +80,16 @@ angular.module('JarvisApp.config',[])
     		 '$mdSidenav',
     		 '$mdMedia',
     		 '$location',
+    		 '$window',
     		 '$state',
     		 'genericPickerService',
     		 'toastService',
     		 'iotResourceService',
     		 'eventResourceService',
     		 'configurationResourceService',
+    		 'oauth2ResourceService',
     	function(
+    			$rootScope,
     			$scope,
     			$log,
     			$store,
@@ -92,56 +98,14 @@ angular.module('JarvisApp.config',[])
     			$mdSidenav,
     			$mdMedia,
     			$location,
+    			$window,
     			$state,
     			genericPickerService,
     			toastService,
     			iotResourceService,
     			eventResourceService,
-    			configurationResourceService){
-    	$log.info('JarvisAppCtrl');
-
-    	/**
-         * initialize jarvis configuration
-         */
-        $scope.config = {};
-        
-        $scope.media = $mdMedia('xs');
-        $scope.$watch(function() { return $mdMedia('xs'); }, function(media) {
-            if(media) $scope.media = 'xs';
-        });
-        $scope.$watch(function() { return $mdMedia('gt-xs'); }, function(media) {
-            if(media) $scope.media = 'gt-xs';
-        });
-        $scope.$watch(function() { return $mdMedia('sm'); }, function(media) {
-            if(media) $scope.media = 'sm';
-        });
-        $scope.$watch(function() { return $mdMedia('gt-sm'); }, function(media) {
-            if(media) $scope.media = 'gt-sm';
-        });
-        $scope.$watch(function() { return $mdMedia('md'); }, function(media) {
-            if(media) $scope.media = 'md';
-        });
-        $scope.$watch(function() { return $mdMedia('gt-md'); }, function(media) {
-            if(media) $scope.media = 'gt-md';
-        });
-        $scope.$watch(function() { return $mdMedia('lg'); }, function(media) {
-            if(media) $scope.media = 'lg';
-        });
-        $scope.$watch(function() { return $mdMedia('gt-lg'); }, function(media) {
-            if(media) $scope.media = 'gt-lg';
-        });
-        $scope.$watch(function() { return $mdMedia('xl'); }, function(media) {
-            if(media) $scope.media = 'xl';
-        });
-        $scope.$watch(function() { return $mdMedia('print'); }, function(media) {
-            if(media) $scope.media = 'print';
-        });
-
-        /**
-         * highlight JS
-         */
-        hljs.initHighlightingOnLoad();
-        
+    			configurationResourceService,
+    			oauth2ResourceService){
         /**
          * default value
          */
@@ -163,11 +127,6 @@ angular.module('JarvisApp.config',[])
             	}
     	    }, toastService.failure);
         }
-
-        /**
-         * load it once
-         */
-        $scope.loadSettings();
 
         /**
          * save settings
@@ -301,8 +260,144 @@ angular.module('JarvisApp.config',[])
 	    	);
         }
 
-        $log.info('JarvisAppCtrl configured');
+        /**
+         * bootstrap this controller
+         */
+    	$scope.boot = function() {
+        	$log.info('JarvisAppCtrl');
+
+            /**
+             * initialize jarvis configuration
+             */
+            $scope.config = {};
+
+            $scope.media = $mdMedia('xs');
+            $scope.$watch(function() { return $mdMedia('xs'); }, function(media) {
+                if(media) $scope.media = 'xs';
+            });
+            $scope.$watch(function() { return $mdMedia('gt-xs'); }, function(media) {
+                if(media) $scope.media = 'gt-xs';
+            });
+            $scope.$watch(function() { return $mdMedia('sm'); }, function(media) {
+                if(media) $scope.media = 'sm';
+            });
+            $scope.$watch(function() { return $mdMedia('gt-sm'); }, function(media) {
+                if(media) $scope.media = 'gt-sm';
+            });
+            $scope.$watch(function() { return $mdMedia('md'); }, function(media) {
+                if(media) $scope.media = 'md';
+            });
+            $scope.$watch(function() { return $mdMedia('gt-md'); }, function(media) {
+                if(media) $scope.media = 'gt-md';
+            });
+            $scope.$watch(function() { return $mdMedia('lg'); }, function(media) {
+                if(media) $scope.media = 'lg';
+            });
+            $scope.$watch(function() { return $mdMedia('gt-lg'); }, function(media) {
+                if(media) $scope.media = 'gt-lg';
+            });
+            $scope.$watch(function() { return $mdMedia('xl'); }, function(media) {
+                if(media) $scope.media = 'xl';
+            });
+            $scope.$watch(function() { return $mdMedia('print'); }, function(media) {
+                if(media) $scope.media = 'print';
+            });
+
+            /**
+             * highlight JS
+             */
+            hljs.initHighlightingOnLoad();
+
+            /**
+             * load when ctrl init is done
+             */
+            $scope.loadSettings();
+
+            $log.info('JarvisAppCtrl configured');
+    	}
+    	
+        /**
+         * login to google oauth2 mechanism
+         */
+        $scope.login = function() {
+    		// Appending dialog to document.body to cover sidenav in docs app
+        	$mdDialog.show({
+        	      controller: 'oauth2DialogCtrl',
+        	      templateUrl: '/ui/js/partials/dialog/oauth2Dialog.tmpl.html',
+        	      parent: angular.element(document.body),
+        	      clickOutsideToClose:true,
+        	      fullscreen: false
+        	})
+        }
+
+        /**
+    	 * check profile
+    	 */
+        $scope.checkProfile = function() {
+	        $log.info('Profile checking ', $rootScope.accessToken);
+	        if($rootScope.accessToken === undefined) {
+	        	$log.warn('no token');
+    			$scope.login();
+	        } else {
+	        	oauth2ResourceService.me(
+	    	    	function(data) {
+	    	        	$log.info('profile', data);
+	    		    },
+	    		    function(error) {
+	    	        	$log.warn('no profile', error);
+	        			$scope.login();
+	    		    }
+	    	    );
+	        }
+        }
     }])
+	.controller('extractTokenCtrl',
+			['$scope', '$log', '$location', '$rootScope', '$state',
+		function($scope, $log, $location, $rootScope, $state) {
+        	$log.warn('extractTokenCtrl', $state);
+        	var hash = $location.path().substr(1);
+        	var splitted = hash.split('&');
+        	var params = {};
+        	for (var i = 0; i < splitted.length; i++) {
+            	var param  = splitted[i].split('=');
+            	var key    = param[0];
+            	var value  = param[1];
+            	params[key] = value;
+        		if(key === 'access_token') {
+	        		$log.info('retrieve token', params);
+        			$rootScope.accessToken=params.access_token;
+        		}
+        	}
+        	$scope.checkProfile();
+        	$scope.boot();
+        	$location.path("/home");
+        	$log.warn('extractTokenCtrl - done', $state);
+	}])
+	.controller('oauth2DialogCtrl',
+			['$scope', '$window', '$log', '$mdDialog', 'oauth2ResourceService', function($scope, $window, $log, $mdDialog, oauth2ResourceService) {
+		$scope.hide = function() {
+		   $mdDialog.hide();
+		 };
+		$scope.cancel = function() {
+		  $mdDialog.cancel();
+		};
+		$scope.answer = function(answer) {
+			oauth2ResourceService.config(
+				{
+					"client": answer.client,
+					"oauth2_redirect_uri": $window.location.href.split('#')[0]
+				},
+		    	function(data) {
+			        $log.info('JarvisAppCtrl configured with', data);
+			        $window.location.href = data.url;
+			    },
+			    function(error) {
+		        	$log.warn('no oauth2 configuration', error);
+			    }
+			);
+			$mdDialog.hide();
+		};
+	}])
 	.controller('graphDialogCtrl',
 			['$scope', '$log', '$mdDialog',
 		function($scope, $log, $mdDialog) {

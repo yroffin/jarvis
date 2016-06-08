@@ -28,6 +28,7 @@ limitations under the License.
     <link rel="stylesheet" href="style.min.css">
 
     <!-- specific css -->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="css/specific.css">
     <!-- Just for external configuration -->
     <script src="config.js"></script>
@@ -35,11 +36,10 @@ limitations under the License.
 <body
 	ng-controller="JarvisAppCtrl as ctrl"
 	ng-style="{'background-image': 'url('+config.backgroundUrl+')', 'background-color': '#000000', 'background-position': 'center', 'background-size': 'cover'}"
-	ng-init="ctrl.load()"
 	ng-cloak
 >
 
-<md-toolbar layout="row">
+<md-toolbar ng-show="accessToken" layout="row" ng-cloak>
     <div class="md-toolbar-tools">
         <md-button ng-click="toggleSidenav('left')" hide-md-gt-sm class="md-icon-button">
         	<md-icon md-font-icon="material-icons md-24">menu</md-icon>
@@ -57,13 +57,13 @@ limitations under the License.
     </div>
 </md-toolbar>
 
-<div>
+<div ng-show="accessToken" ng-cloak>
     <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z4" md-component-id="right">
     	<div ng-bind-html="help.content"></div>
     </md-sidenav>
 </div>
 
-<div>
+<div ng-show="accessToken" ng-cloak>
     <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z4" md-component-id="left">
         <md-button ng-click="location('left', '/helper-iots');"><div layout="row"><i class="help-icons">touch_app</i><span flex></span><span>Connected object(s)</span></div></md-button>
         <md-button ng-click="location('left', '/helper-scenarii');"><div layout="row"><i class="help-icons">list</i><span flex></span><span>Scenario</span></div></md-button>

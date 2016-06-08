@@ -20,20 +20,21 @@
 
 angular.module('JarvisApp.routes',['JarvisApp.config'])
     .config( ['$urlRouterProvider', function($urlRouterProvider) {
-		var $log =  angular.injector(['ng']).get('$log');
-		$log.info('$urlRouterProvider', $urlRouterProvider);
         /**
          * default state
          */
         $urlRouterProvider.otherwise('/home');
     }])
     .config(['$stateProvider', function($stateProvider) {
-		var $log =  angular.injector(['ng']).get('$log');
-		$log.info('$stateProvider', $stateProvider);
         /**
          * now set up the state
          */
         $stateProvider
+        .state('token_access', {
+            url: '/access_token=:accesToken',
+            controller: 'extractTokenCtrl',
+            template: ''
+        })
         .state('home', {
             url: '/home',
             controller: 'homeCtrl',

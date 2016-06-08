@@ -20,8 +20,8 @@
 
 angular.module('JarvisApp.ctrl.home', ['JarvisApp.services'])
 .controller('homeCtrl', 
-		['$scope', '$store', '$log', 'viewResourceService', 'iotResourceService', 'toastService',
-	function($scope, $store, $log, viewResourceService, iotResourceService, toastService){
+		['$scope', '$rootScope', '$store', '$log', 'viewResourceService', 'iotResourceService', 'toastService', 'oauth2ResourceService',
+	function($scope, $rootScope, $store, $log, viewResourceService, iotResourceService, toastService, oauth2ResourceService){
     /**
      * swipe left
      */
@@ -58,6 +58,8 @@ angular.module('JarvisApp.ctrl.home', ['JarvisApp.services'])
      * load this controller
      */
     $scope.load = function() {
+    	$scope.checkProfile();
+
     	$scope.store = $store;
     	$scope.views = [];
     	$scope.tabIndex = -1;
@@ -103,7 +105,7 @@ angular.module('JarvisApp.ctrl.home', ['JarvisApp.services'])
 	        }
 	    }, toastService.failure);
 	
-		$log.info('views-ctrl');
+		$log.info('home-ctrl');
     }
 }])
 .controller('helperCtrl', 
