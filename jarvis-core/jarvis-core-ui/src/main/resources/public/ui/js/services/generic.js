@@ -23,7 +23,6 @@
  */
 angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter'])
   .factory('genericResourceService', [ '$log', 'Restangular', 'filterService', 'toastService', function($log, Restangular, filterService, toastService) {
-  $log.info('genericResourceService');
   var resources = {
         /**
 		 * find all elements

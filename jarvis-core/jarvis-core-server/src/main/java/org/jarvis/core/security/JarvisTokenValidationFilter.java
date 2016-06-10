@@ -39,15 +39,22 @@ public class JarvisTokenValidationFilter implements Filter {
     protected ClientFinder clientFinder = new DefaultClientFinder();
     protected AuthorizationChecker authorizationChecker = new DefaultAuthorizationChecker();
 
+    /**
+     * all ip to exclude from oauth2
+     */
+	private String[] excludes;
+
 	/**
 	 * @param config 
 	 * @param clientName 
 	 * @param authorizerName 
+	 * @param excludes 
 	 */
-    public JarvisTokenValidationFilter(final Config config, final String clientName, final String authorizerName) {
+    public JarvisTokenValidationFilter(final Config config, final String clientName, final String authorizerName, String[] excludes) {
         this.config = config;
         this.clientName = clientName;
         this.authorizerName = authorizerName;
+        this.excludes = excludes;
     }
 
 	@Override
@@ -56,7 +63,19 @@ public class JarvisTokenValidationFilter implements Filter {
         final WebContext context = new SparkWebContext(request, response, config.getSessionStore());
         CommonHelper.assertNotNull("config.httpActionAdapter", config.getHttpActionAdapter());
 
-        logger.debug("url: {}", context.getFullRequestURL());
+        /**
+         * no protection on excluded ips
+         */
+        for(String exclude : excludes) {
+        	if(request.ip().matches(exclude)) {
+                logger.warn("unprotected: {}", context.getFullRequestURL());
+                response.header("Jarvis-Oauth2-Disabled", "true");
+                return;
+        	}
+        }
+
+        response.header("Jarvis-Oauth2-Disabled", "false");
+        logger.info("url: {}", context.getFullRequestURL());
 
         final Clients configClients = config.getClients();
         CommonHelper.assertNotNull("configClients", configClients);

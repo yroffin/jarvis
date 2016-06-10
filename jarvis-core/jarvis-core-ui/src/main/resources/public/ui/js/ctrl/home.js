@@ -58,8 +58,6 @@ angular.module('JarvisApp.ctrl.home', ['JarvisApp.services'])
      * load this controller
      */
     $scope.load = function() {
-    	$scope.checkProfile();
-
     	$scope.store = $store;
     	$scope.views = [];
     	$scope.tabIndex = -1;

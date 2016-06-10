@@ -136,8 +136,8 @@ public class CoreServerDaemon {
 		String iface = env.getProperty("jarvis.server.interface");
 		int port = Integer.parseInt(env.getProperty("jarvis.server.port"));
 		spark.Spark.ipAddress(iface);
-		spark.Spark.threadPool(8);
-
+		spark.Spark.threadPool(Integer.parseInt(env.getProperty("jarvis.server.pool.thread","8")));
+		
 		/**
 		 * port
 		 */
@@ -167,7 +167,8 @@ public class CoreServerDaemon {
 		/**
 		 * all api must be validated with token
 		 */
-		spark.Spark.before("/api/*", new JarvisTokenValidationFilter(config, "JarvisCoreClient", "securityHeaders,csrfToken"));
+		final String[] excludes = env.getProperty("jarvis.oauth2.excludes","").split(",");
+		spark.Spark.before("/api/*", new JarvisTokenValidationFilter(config, "JarvisCoreClient", "securityHeaders,csrfToken", excludes));
 		
 		/**
 		 * ident api
@@ -175,8 +176,17 @@ public class CoreServerDaemon {
 		spark.Spark.get("/api/profile/me", new Route() {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
-		    	UserProfile userProfile = request.session().attribute("pac4jUserProfile");
-				return userProfile;
+		    	/**
+		    	 * in exclude mode return a fake profile
+		    	 */
+		        for(String exclude : excludes) {
+		        	if(request.ip().matches(exclude)) {
+		                return "{\"attributes\":{\"email\":\"-\"}}";
+		        	}
+		        }
+
+		        UserProfile userProfile = request.session().attribute("pac4jUserProfile");
+				return mapper.writeValueAsString(userProfile);
 		    }
 		});
 
@@ -184,19 +194,19 @@ public class CoreServerDaemon {
 		 * retrieve oauth2 client and identity
 		 */
 		spark.Spark.get("/oauth2", new Route() {
-		    @Override
+			@Override
 			public Object handle(Request request, Response response) throws Exception {
 		    	Oauth2Config oauth2Config = new Oauth2Config();
 		    	if(request.queryParamsValues("client")[0].equals("google")) {
 			    	oauth2Config.type = "google";
 			    	oauth2Config.redirect = request.queryParamsValues("oauth2_redirect_uri")[0];
-			    	oauth2Config.key = "496771647466-n6vr65opveivju6m3iio7al9ma5m6pdr.apps.googleusercontent.com";
+			    	oauth2Config.key = env.getProperty("jarvis.oauth2.google");
 			    	oauth2Config.url = "https://accounts.google.com/o/oauth2/auth?scope=email&client_id="+oauth2Config.key+"&response_type=token&redirect_uri="+oauth2Config.redirect;
 		    	}
 		    	if(request.queryParamsValues("client")[0].equals("facebook")) {
 			    	oauth2Config.type = "facebook";
 			    	oauth2Config.redirect = request.queryParamsValues("oauth2_redirect_uri")[0];
-			    	oauth2Config.key = "975239199260629";
+			    	oauth2Config.key = env.getProperty("jarvis.oauth2.facebook");
 			    	oauth2Config.url = "https://www.facebook.com/dialog/oauth?scope=email&client_id="+oauth2Config.key+"&response_type=token&redirect_uri="+oauth2Config.redirect;
 		    	}
 				return mapper.writeValueAsString(oauth2Config);

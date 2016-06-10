@@ -180,23 +180,50 @@ myAppServices.factory('crontabResourceService', [ '$q', '$window', '$rootScope',
 }]);
 
 /**
- * labelResourceService
+ * crontabResourceService
  */
-myAppServices.factory('labelResourceService', [ '$q', '$window', '$rootScope', 'Restangular', function($q, $window, $rootScope, Restangular) {
-  var $log =  angular.injector(['ng']).get('$log');
-  $log.info('labelResourceService', $q);
-  return {
-        findAll: function(callback,failure) {
-        	// Restangular returns promises
-        	Restangular.all('labels').getList().then(function(labels) {
-        	  callback(labels);
-        	},function(errors){
-        		failure(errors);
-        	});
-        }
-  }
-}]);
-
+myAppServices.factory('oauth2ResourceService', 
+		[
+		 '$rootScope',
+		 '$window',
+		 'Restangular',
+		 function(
+				 $rootScope,
+				 $window,
+				 Restangular
+				 ) {
+		  var $log =  angular.injector(['ng']).get('$log');
+		  return {
+			  	/**
+			  	 * me service retrieve current user identity
+			  	 */
+		        me: function(callback, failure) {
+		        	Restangular.setDefaultHeaders ({
+		        		'JarvisAuthToken' : $rootScope.accessToken
+		        	}); 
+		        	Restangular.one('/api/profile/me').get().then(
+		        		function(profile) {
+			        		callback(profile);
+			        	},function(errors){
+			        		failure(errors);
+			        	}
+			        );
+		        },
+			  	/**
+			  	 * retrieve oauth2 identity
+			  	 */
+		        config: function(args, callback, failure) {
+		        	Restangular.one('oauth2').get(args).then(
+		        		function(profile) {
+			        		callback(profile);
+			        	},function(errors){
+			        		failure(errors);
+			        	}
+			        );
+		        }
+		  }
+		}
+]);
 /* 
  * Copyright 2014 Yannick Roffin.
  *
@@ -281,13 +308,13 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter'])
 				callback(results);
 			}
 			if(path.length == 1) {
-				Restangular.all(path[0]).getList().then(
+				Restangular.all('/api/'+path[0]).getList().then(
 						handler,
 						function(errors){
 							failure(errors);
 				});
 			} else {
-				Restangular.all(path[0]).all(path[1]).getList().then(
+				Restangular.all('/api/'+path[0]).all(path[1]).getList().then(
 						handler,
 						function(errors){
 							failure(errors);
@@ -307,9 +334,9 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter'])
 				if(callback != undefined) callback(filtered);
 			}
 			if(path.length == 1) {
-				Restangular.one(path[0], id).get().then(handler,function(errors){failure(errors);});
+				Restangular.one('/api/'+path[0], id).get().then(handler,function(errors){failure(errors);});
 			} else {
-				Restangular.all(path[0]).one(path[1], id).get().then(handler,function(errors){failure(errors);});
+				Restangular.all('/api/'+path[0]).one(path[1], id).get().then(handler,function(errors){failure(errors);});
 			}
 		},
         /**
@@ -325,9 +352,9 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter'])
 				if(callback != undefined) callback(filtered);
 			}
 			if(path.length == 1) {
-				Restangular.one(path[0], id).remove().then(handler,function(errors){failure(errors);});
+				Restangular.one('/api/'+path[0], id).remove().then(handler,function(errors){failure(errors);});
 			} else {
-				Restangular.all(path[0]).one(path[1], id).remove().then(handler,function(errors){failure(errors);});
+				Restangular.all('/api/'+path[0]).one(path[1], id).remove().then(handler,function(errors){failure(errors);});
 			}
 		},
         /**
@@ -343,9 +370,9 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter'])
 				if(callback != undefined) callback(filtered);
 			}
 			if(path.length == 1) {
-				Restangular.one(path[0], element.id).customPUT(element).then(handler,function(errors){failure(errors);});
+				Restangular.one('/api/'+path[0], element.id).customPUT(element).then(handler,function(errors){failure(errors);});
 			} else {
-				Restangular.all(path[0]).one(path[1], element.id).customPUT(element).then(handler,function(errors){failure(errors);});
+				Restangular.all('/api/'+path[0]).one(path[1], element.id).customPUT(element).then(handler,function(errors){failure(errors);});
 			}
 		},
         /**
@@ -361,9 +388,9 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter'])
 				if(callback != undefined) callback(filtered);
 			}
 			if(path.length == 1) {
-				Restangular.all(path[0]).post(element).then(handler,function(errors){failure(errors);});
+				Restangular.all('/api/'+path[0]).post(element).then(handler,function(errors){failure(errors);});
 			} else {
-				Restangular.all(path[0]).all(path[1]).post(element).then(handler,function(errors){failure(errors);});
+				Restangular.all('/api/'+path[0]).all(path[1]).post(element).then(handler,function(errors){failure(errors);});
 			}
 		},
         /**
@@ -378,9 +405,9 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter'])
 				if(callback != undefined) callback(filtered);
 			}
 			if(path.length == 1) {
-				Restangular.all(path[0]).one(id).customPOST(args,'', {'task':task}).then(handler,function(errors){failure(errors);});
+				Restangular.all('/api/'+path[0]).one(id).customPOST(args,'', {'task':task}).then(handler,function(errors){failure(errors);});
 			} else {
-				Restangular.all(path[0]).all(path[1]).one(id).customPOST(args,'', {'task':task}).then(handler,function(errors){failure(errors);});
+				Restangular.all('/api/'+path[0]).all(path[1]).one(id).customPOST(args,'', {'task':task}).then(handler,function(errors){failure(errors);});
 			}
 		}
   };
@@ -463,15 +490,15 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter'])
 				};
 				if(path.length == 1) {
 					if(api.length == 1) {
-						Restangular.one(api[0], id).all(path[0]).getList({'href':relation}).then(handler,function(errors){failure(errors);});
+						Restangular.one('/api/'+api[0], id).all(path[0]).getList({'href':relation}).then(handler,function(errors){failure(errors);});
 					} else {
-						Restangular.all(api[0]).one(api[1], id).all(path[0]).getList({'href':relation}).then(handler,function(errors){failure(errors);});
+						Restangular.all('/api/'+api[0]).one(api[1], id).all(path[0]).getList({'href':relation}).then(handler,function(errors){failure(errors);});
 					}
 				} else {
 					if(api.length == 1) {
-						Restangular.one(api[0], id).all(path[0]).all(path[1]).getList({'href':relation}).then(handler,function(errors){failure(errors);});
+						Restangular.one('/api/'+api[0], id).all(path[0]).all(path[1]).getList({'href':relation}).then(handler,function(errors){failure(errors);});
 					} else {
-						Restangular.all(api[0]).one(api[1], id).all(path[0]).all(path[1]).getList({'href':relation}).then(handler,function(errors){failure(errors);});
+						Restangular.all('/api/'+api[0]).one(api[1], id).all(path[0]).all(path[1]).getList({'href':relation}).then(handler,function(errors){failure(errors);});
 					}
 				}
 			},
@@ -489,15 +516,15 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter'])
 				}
 				if(path.length == 1) {
 					if(api.length == 1) {
-						Restangular.one(api[0], owner).one(path[0],child).customPOST(properties).then(handler,function(errors){failure(errors);});
+						Restangular.one('/api/'+api[0], owner).one(path[0],child).customPOST(properties).then(handler,function(errors){failure(errors);});
 					} else {
-						Restangular.all(api[0]).one(api[1], owner).one(path[0],child).customPOST(properties).then(handler,function(errors){failure(errors);});
+						Restangular.all('/api/'+api[0]).one(api[1], owner).one(path[0],child).customPOST(properties).then(handler,function(errors){failure(errors);});
 					}
 				} else {
 					if(api.length == 1) {
-						Restangular.one(api[0], owner).all(path[0]).one(path[1],child).customPOST(properties).then(handler,function(errors){failure(errors);});
+						Restangular.one('/api/'+api[0], owner).all(path[0]).one(path[1],child).customPOST(properties).then(handler,function(errors){failure(errors);});
 					} else {
-						Restangular.all(api[0]).one(api[1], owner).all(path[0]).one(path[1],child).customPOST(properties).then(handler,function(errors){failure(errors);});
+						Restangular.all('/api/'+api[0]).one(api[1], owner).all(path[0]).one(path[1],child).customPOST(properties).then(handler,function(errors){failure(errors);});
 					}
 				}
 	        },
@@ -519,15 +546,15 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter'])
 				p.href = relation;
 				if(path.length == 1) {
 					if(api.length == 1) {
-						Restangular.one(api[0], owner).one(path[0],child).one(instance).customPUT(p).then(handler,function(errors){failure(errors);});
+						Restangular.one('/api/'+api[0], owner).one(path[0],child).one(instance).customPUT(p).then(handler,function(errors){failure(errors);});
 					} else {
-						Restangular.all(api[0]).one(api[1], owner).one(path[0],child).one(instance).customPUT(p).then(handler,function(errors){failure(errors);});
+						Restangular.all('/api/'+api[0]).one(api[1], owner).one(path[0],child).one(instance).customPUT(p).then(handler,function(errors){failure(errors);});
 					}
 				} else {
 					if(api.length == 1) {
-						Restangular.one(api[0], owner).all(path[0]).one(path[1],child).one(instance).customPUT(p).then(handler,function(errors){failure(errors);});
+						Restangular.one('/api/'+api[0], owner).all(path[0]).one(path[1],child).one(instance).customPUT(p).then(handler,function(errors){failure(errors);});
 					} else {
-						Restangular.all(api[0]).one(api[1], owner).all(path[0]).one(path[1],child).one(instance).customPUT(p).then(handler,function(errors){failure(errors);});
+						Restangular.all('/api/'+api[0]).one(api[1], owner).all(path[0]).one(path[1],child).one(instance).customPUT(p).then(handler,function(errors){failure(errors);});
 					}
 				}
 	        },
@@ -542,15 +569,15 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter'])
 				};
 				if(path.length == 1) {
 					if(api.length == 1) {
-						Restangular.one(api[0], owner).one(path[0], child).remove({'instance':instance, 'href':relation}).then(handler,function(errors){failure(errors);});
+						Restangular.one('/api/'+api[0], owner).one(path[0], child).remove({'instance':instance, 'href':relation}).then(handler,function(errors){failure(errors);});
 					} else {
-						Restangular.all(api[0]).one(api[1], owner).one(path[0], child).remove({'instance':instance, 'href':relation}).then(handler,function(errors){failure(errors);});
+						Restangular.all('/api/'+api[0]).one(api[1], owner).one(path[0], child).remove({'instance':instance, 'href':relation}).then(handler,function(errors){failure(errors);});
 					}
 				} else {
 					if(api.length == 1) {
-						Restangular.one(api[0], owner).all(path[0]).one(path[1], child).remove({'instance':instance, 'href':relation}).then(handler,function(errors){failure(errors);});
+						Restangular.one('/api/'+api[0], owner).all(path[0]).one(path[1], child).remove({'instance':instance, 'href':relation}).then(handler,function(errors){failure(errors);});
 					} else {
-						Restangular.all(api[0]).one(api[1], owner).all(path[0]).one(path[1], child).remove({'instance':instance, 'href':relation}).then(handler,function(errors){failure(errors);});
+						Restangular.all('/api/'+api[0]).one(api[1], owner).all(path[0]).one(path[1], child).remove({'instance':instance, 'href':relation}).then(handler,function(errors){failure(errors);});
 					}
 				}
 			}
@@ -1395,22 +1422,24 @@ angular.module('JarvisApp.config',[])
 		$translateProvider.useSanitizeValueStrategy(null);
 	}])
     .config(['RestangularProvider', function(RestangularProvider) {
-		var $log =  angular.injector(['ng']).get('$log');
-		$log.info('RestangularProvider', RestangularProvider);
-		
-		RestangularProvider.setBaseUrl('/api');
-		RestangularProvider.setDefaultHeaders({ 'content-type': 'application/json' });
+		RestangularProvider.setDefaultHeaders({
+			'content-type': 'application/json'
+		});
+
 		/**
 		 * request interceptor
 		 */
 	    RestangularProvider.setFullRequestInterceptor(function(element, operation, route, url, headers, params, httpConfig) {
-	      return {
-	        element: element,
-	        params: params,
-	        headers: headers,
-	        httpConfig: httpConfig
-	      };
+			return {
+			  element: element,
+			  params: params,
+			  headers: headers,
+			  httpConfig: httpConfig
+			};
 	    });
+		/**
+		 * answer interceptor
+		 */
 	    RestangularProvider.setResponseExtractor(function(response) {
 	    	if(angular.isObject(response)) {
 	    	  var newResponse = response;
@@ -1425,7 +1454,8 @@ angular.module('JarvisApp.config',[])
      * main controller
      */
     .controller('JarvisAppCtrl',
-    		['$scope',
+    		['$rootScope',
+    		 '$scope',
     		 '$log',
     		 '$store',
     		 '$http',
@@ -1433,13 +1463,16 @@ angular.module('JarvisApp.config',[])
     		 '$mdSidenav',
     		 '$mdMedia',
     		 '$location',
+    		 '$window',
     		 '$state',
     		 'genericPickerService',
     		 'toastService',
     		 'iotResourceService',
     		 'eventResourceService',
     		 'configurationResourceService',
+    		 'oauth2ResourceService',
     	function(
+    			$rootScope,
     			$scope,
     			$log,
     			$store,
@@ -1448,56 +1481,14 @@ angular.module('JarvisApp.config',[])
     			$mdSidenav,
     			$mdMedia,
     			$location,
+    			$window,
     			$state,
     			genericPickerService,
     			toastService,
     			iotResourceService,
     			eventResourceService,
-    			configurationResourceService){
-    	$log.info('JarvisAppCtrl');
-
-    	/**
-         * initialize jarvis configuration
-         */
-        $scope.config = {};
-        
-        $scope.media = $mdMedia('xs');
-        $scope.$watch(function() { return $mdMedia('xs'); }, function(media) {
-            if(media) $scope.media = 'xs';
-        });
-        $scope.$watch(function() { return $mdMedia('gt-xs'); }, function(media) {
-            if(media) $scope.media = 'gt-xs';
-        });
-        $scope.$watch(function() { return $mdMedia('sm'); }, function(media) {
-            if(media) $scope.media = 'sm';
-        });
-        $scope.$watch(function() { return $mdMedia('gt-sm'); }, function(media) {
-            if(media) $scope.media = 'gt-sm';
-        });
-        $scope.$watch(function() { return $mdMedia('md'); }, function(media) {
-            if(media) $scope.media = 'md';
-        });
-        $scope.$watch(function() { return $mdMedia('gt-md'); }, function(media) {
-            if(media) $scope.media = 'gt-md';
-        });
-        $scope.$watch(function() { return $mdMedia('lg'); }, function(media) {
-            if(media) $scope.media = 'lg';
-        });
-        $scope.$watch(function() { return $mdMedia('gt-lg'); }, function(media) {
-            if(media) $scope.media = 'gt-lg';
-        });
-        $scope.$watch(function() { return $mdMedia('xl'); }, function(media) {
-            if(media) $scope.media = 'xl';
-        });
-        $scope.$watch(function() { return $mdMedia('print'); }, function(media) {
-            if(media) $scope.media = 'print';
-        });
-
-        /**
-         * highlight JS
-         */
-        hljs.initHighlightingOnLoad();
-        
+    			configurationResourceService,
+    			oauth2ResourceService){
         /**
          * default value
          */
@@ -1519,11 +1510,6 @@ angular.module('JarvisApp.config',[])
             	}
     	    }, toastService.failure);
         }
-
-        /**
-         * load it once
-         */
-        $scope.loadSettings();
 
         /**
          * save settings
@@ -1657,8 +1643,144 @@ angular.module('JarvisApp.config',[])
 	    	);
         }
 
-        $log.info('JarvisAppCtrl configured');
+        /**
+         * bootstrap this controller
+         */
+    	$scope.boot = function() {
+        	$log.info('JarvisAppCtrl');
+
+            /**
+             * initialize jarvis configuration
+             */
+            $scope.config = {};
+
+            $scope.media = $mdMedia('xs');
+            $scope.$watch(function() { return $mdMedia('xs'); }, function(media) {
+                if(media) $scope.media = 'xs';
+            });
+            $scope.$watch(function() { return $mdMedia('gt-xs'); }, function(media) {
+                if(media) $scope.media = 'gt-xs';
+            });
+            $scope.$watch(function() { return $mdMedia('sm'); }, function(media) {
+                if(media) $scope.media = 'sm';
+            });
+            $scope.$watch(function() { return $mdMedia('gt-sm'); }, function(media) {
+                if(media) $scope.media = 'gt-sm';
+            });
+            $scope.$watch(function() { return $mdMedia('md'); }, function(media) {
+                if(media) $scope.media = 'md';
+            });
+            $scope.$watch(function() { return $mdMedia('gt-md'); }, function(media) {
+                if(media) $scope.media = 'gt-md';
+            });
+            $scope.$watch(function() { return $mdMedia('lg'); }, function(media) {
+                if(media) $scope.media = 'lg';
+            });
+            $scope.$watch(function() { return $mdMedia('gt-lg'); }, function(media) {
+                if(media) $scope.media = 'gt-lg';
+            });
+            $scope.$watch(function() { return $mdMedia('xl'); }, function(media) {
+                if(media) $scope.media = 'xl';
+            });
+            $scope.$watch(function() { return $mdMedia('print'); }, function(media) {
+                if(media) $scope.media = 'print';
+            });
+
+            /**
+             * highlight JS
+             */
+            hljs.initHighlightingOnLoad();
+
+            /**
+             * load when ctrl init is done
+             */
+            $scope.loadSettings();
+
+            $log.info('JarvisAppCtrl configured');
+    	}
+    	
+        /**
+         * login to google oauth2 mechanism
+         */
+        $scope.login = function() {
+    		// Appending dialog to document.body to cover sidenav in docs app
+        	$mdDialog.show({
+        	      controller: 'oauth2DialogCtrl',
+        	      templateUrl: '/ui/js/partials/dialog/oauth2Dialog.tmpl.html',
+        	      parent: angular.element(document.body),
+        	      clickOutsideToClose:true,
+        	      fullscreen: false
+        	})
+        }
+
+        /**
+    	 * check profile
+    	 */
+        $scope.checkProfile = function() {
+	        $log.info('Profile checking ', $rootScope.accessToken);
+	        if($rootScope.accessToken === undefined) {
+	        	$log.warn('no token');
+    			$scope.login();
+	        } else {
+	        	oauth2ResourceService.me(
+	    	    	function(data) {
+	    	        	$log.info('profile', data);
+	    		    },
+	    		    function(error) {
+	    	        	$log.warn('no profile', error);
+	        			$scope.login();
+	    		    }
+	    	    );
+	        }
+        }
     }])
+	.controller('extractTokenCtrl',
+			['$scope', '$log', '$location', '$rootScope', '$state',
+		function($scope, $log, $location, $rootScope, $state) {
+        	$log.warn('extractTokenCtrl', $state);
+        	var hash = $location.path().substr(1);
+        	var splitted = hash.split('&');
+        	var params = {};
+        	for (var i = 0; i < splitted.length; i++) {
+            	var param  = splitted[i].split('=');
+            	var key    = param[0];
+            	var value  = param[1];
+            	params[key] = value;
+        		if(key === 'access_token') {
+	        		$log.info('retrieve token', params);
+        			$rootScope.accessToken=params.access_token;
+        		}
+        	}
+        	$scope.checkProfile();
+        	$scope.boot();
+        	$location.path("/home");
+        	$log.warn('extractTokenCtrl - done', $state);
+	}])
+	.controller('oauth2DialogCtrl',
+			['$scope', '$window', '$log', '$mdDialog', 'oauth2ResourceService', function($scope, $window, $log, $mdDialog, oauth2ResourceService) {
+		$scope.hide = function() {
+		   $mdDialog.hide();
+		 };
+		$scope.cancel = function() {
+		  $mdDialog.cancel();
+		};
+		$scope.answer = function(answer) {
+			oauth2ResourceService.config(
+				{
+					"client": answer.client,
+					"oauth2_redirect_uri": $window.location.href.split('#')[0]
+				},
+		    	function(data) {
+			        $log.info('JarvisAppCtrl configured with', data);
+			        $window.location.href = data.url;
+			    },
+			    function(error) {
+		        	$log.warn('no oauth2 configuration', error);
+			    }
+			);
+			$mdDialog.hide();
+		};
+	}])
 	.controller('graphDialogCtrl',
 			['$scope', '$log', '$mdDialog',
 		function($scope, $log, $mdDialog) {
@@ -2075,20 +2197,21 @@ angular.module('JarvisApp.websocket',['angular-websocket'])
 
 angular.module('JarvisApp.routes',['JarvisApp.config'])
     .config( ['$urlRouterProvider', function($urlRouterProvider) {
-		var $log =  angular.injector(['ng']).get('$log');
-		$log.info('$urlRouterProvider', $urlRouterProvider);
         /**
          * default state
          */
         $urlRouterProvider.otherwise('/home');
     }])
     .config(['$stateProvider', function($stateProvider) {
-		var $log =  angular.injector(['ng']).get('$log');
-		$log.info('$stateProvider', $stateProvider);
         /**
          * now set up the state
          */
         $stateProvider
+        .state('token_access', {
+            url: '/access_token=:accesToken',
+            controller: 'extractTokenCtrl',
+            template: ''
+        })
         .state('home', {
             url: '/home',
             controller: 'homeCtrl',
@@ -3474,8 +3597,8 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
 			{
     			'order':'1',
     			'name':'noname',
-       			'nature':'info',
-       			'type':'json'
+       			'nature':'json',
+       			'type':'data'
 			},
 			$stateParams.id
 	);
@@ -4117,8 +4240,8 @@ angular.module('JarvisApp.ctrl.crons', ['JarvisApp.services'])
 
 angular.module('JarvisApp.ctrl.home', ['JarvisApp.services'])
 .controller('homeCtrl', 
-		['$scope', '$store', '$log', 'viewResourceService', 'iotResourceService', 'toastService',
-	function($scope, $store, $log, viewResourceService, iotResourceService, toastService){
+		['$scope', '$rootScope', '$store', '$log', 'viewResourceService', 'iotResourceService', 'toastService', 'oauth2ResourceService',
+	function($scope, $rootScope, $store, $log, viewResourceService, iotResourceService, toastService, oauth2ResourceService){
     /**
      * swipe left
      */
@@ -4155,6 +4278,8 @@ angular.module('JarvisApp.ctrl.home', ['JarvisApp.services'])
      * load this controller
      */
     $scope.load = function() {
+    	$scope.checkProfile();
+
     	$scope.store = $store;
     	$scope.views = [];
     	$scope.tabIndex = -1;
@@ -4200,7 +4325,7 @@ angular.module('JarvisApp.ctrl.home', ['JarvisApp.services'])
 	        }
 	    }, toastService.failure);
 	
-		$log.info('views-ctrl');
+		$log.info('home-ctrl');
     }
 }])
 .controller('helperCtrl', 

@@ -55,6 +55,7 @@ public class Oauth2ApiClient extends AbstractJerseyClient {
 				if(body.get("email_verified") != null && body.get("email_verified").equals("true")) {
 					JarvisCoreProfile profile = new JarvisCoreProfile();
 					profile.addAttribute("email", body.get("email"));
+					profile.addAttribute("token", tokenKey);
 					return profile;
 				}
 				/**
@@ -63,6 +64,7 @@ public class Oauth2ApiClient extends AbstractJerseyClient {
 				if(body.get("name") != null) {
 					JarvisCoreProfile profile = new JarvisCoreProfile();
 					profile.addAttribute("name", body.get("name"));
+					profile.addAttribute("token", tokenKey);
 					return profile;
 				}
 			} catch (IOException e) {

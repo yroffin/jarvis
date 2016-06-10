@@ -1,4 +1,4 @@
-<div ng-init="load()" ng-cloak md-swipe-left="onSwipeLeft()" md-swipe-right="onSwipeRight()">
+<div ng-if="profile" ng-init="load()" ng-cloak md-swipe-left="onSwipeLeft()" md-swipe-right="onSwipeRight()">
   	<h3 translate="home.title"></h3>
 	<md-tabs md-dynamic-height md-border-bottom>
 		<md-tab label="{{view.name}}" ng-repeat="view in views" md-on-select="selectTab(view, $index)" md-active="activeTab(view, $index)">

@@ -34,17 +34,16 @@ limitations under the License.
     <script src="config.js"></script>
 </head>
 <body
-	ng-controller="JarvisAppCtrl as ctrl"
+	ng-controller="JarvisAppCtrl"
 	ng-style="{'background-image': 'url('+config.backgroundUrl+')', 'background-color': '#000000', 'background-position': 'center', 'background-size': 'cover'}"
-	ng-cloak
 >
 
-<md-toolbar ng-show="accessToken" layout="row" ng-cloak>
+<md-toolbar ng-if="profile" layout="row" ng-cloak>
     <div class="md-toolbar-tools">
         <md-button ng-click="toggleSidenav('left')" hide-md-gt-sm class="md-icon-button">
         	<md-icon md-font-icon="material-icons md-24">menu</md-icon>
         </md-button>
-        <h1 ng-click="go('home')">Jarvis</h1>
+        <h1 ng-click="go('home')">Jarvis ({{profile.attributes['email']}})</h1>
        	<span flex></span>
        	<canvas width="100" height="40" id="gauge" jarvis-gauge></canvas>
         <md-button ng-click="helper($event)" class="md-icon-button">
@@ -57,13 +56,13 @@ limitations under the License.
     </div>
 </md-toolbar>
 
-<div ng-show="accessToken" ng-cloak>
+<div ng-show="profile" ng-cloak>
     <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z4" md-component-id="right">
     	<div ng-bind-html="help.content"></div>
     </md-sidenav>
 </div>
 
-<div ng-show="accessToken" ng-cloak>
+<div ng-show="profile" ng-cloak>
     <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z4" md-component-id="left">
         <md-button ng-click="location('left', '/helper-iots');"><div layout="row"><i class="help-icons">touch_app</i><span flex></span><span>Connected object(s)</span></div></md-button>
         <md-button ng-click="location('left', '/helper-scenarii');"><div layout="row"><i class="help-icons">list</i><span flex></span><span>Scenario</span></div></md-button>

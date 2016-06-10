@@ -107,11 +107,17 @@ myAppServices.factory('crontabResourceService', [ '$q', '$window', '$rootScope',
 myAppServices.factory('oauth2ResourceService', 
 		[
 		 '$rootScope',
+		 '$log',
 		 '$window',
+		 '$mdDialog',
+		 '$location',
 		 'Restangular',
 		 function(
 				 $rootScope,
+				 $log,
 				 $window,
+				 $mdDialog,
+				 $location,
 				 Restangular
 				 ) {
 		  var $log =  angular.injector(['ng']).get('$log');
@@ -119,9 +125,10 @@ myAppServices.factory('oauth2ResourceService',
 			  	/**
 			  	 * me service retrieve current user identity
 			  	 */
-		        me: function(callback, failure) {
+		        me: function(token, callback, failure) {
+		        	$log.info("Fix JarvisAuthToken to", token);
 		        	Restangular.setDefaultHeaders ({
-		        		'JarvisAuthToken' : $rootScope.accessToken
+		        		'JarvisAuthToken' : token
 		        	}); 
 		        	Restangular.one('/api/profile/me').get().then(
 		        		function(profile) {
@@ -142,6 +149,40 @@ myAppServices.factory('oauth2ResourceService',
 			        		failure(errors);
 			        	}
 			        );
+		        },
+			  	/**
+			  	 * connect
+			  	 */
+		        connect: function($scope, token) {
+			        $log.info('connect with', token);
+		        	var self = this;
+		        	self.me(
+		        		token,
+	        			function(data) {
+	        				$log.info('profile', data);
+	        				$mdDialog.hide();
+	        				$rootScope.profile = data;
+		    	        	$scope.boot();
+		    	    		$log.info('Switch to home');
+		    	        	$location.path("/home");
+	        			},
+	        			function(failure) {
+	        				$log.warn('no profile');
+	        				self.login();
+	        			}
+		        	);
+		        },
+			  	/**
+			  	 * login
+			  	 */
+		        login: function() {
+		        	$mdDialog.show({
+		        	      controller: 'oauth2DialogCtrl',
+		        	      templateUrl: '/ui/js/partials/dialog/oauth2Dialog.tmpl.html',
+		        	      parent: angular.element(document.body),
+		        	      clickOutsideToClose:false,
+		        	      fullscreen: false
+		        	});
 		        }
 		  }
 		}

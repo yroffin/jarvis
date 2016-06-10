@@ -19,25 +19,6 @@
 /* Controllers */
 
 angular.module('JarvisApp.config',[])
-    .config(['$mdIconProvider', function($mdIconProvider) {
-		var $log =  angular.injector(['ng']).get('$log');
-		$log.info('$mdIconProvider', $mdIconProvider);
-	}])
-	.config(['$translateProvider', function($translateProvider){
-		var $log =  angular.injector(['ng']).get('$log');
-		$log.info('$translateProvider', $translateProvider);
-	  
-		// Register a loader for the static files
-		// So, the module will search missing translation tables under the specified urls.
-		// Those urls are [prefix][langKey][suffix].
-		$translateProvider.useStaticFilesLoader({
-			prefix: 'js/l10n/',
-			suffix: '.json'
-		});
-		// Tell the module what language to use by default
-		$translateProvider.preferredLanguage('fr_FR');
-		$translateProvider.useSanitizeValueStrategy(null);
-	}])
     .config(['RestangularProvider', function(RestangularProvider) {
 		RestangularProvider.setDefaultHeaders({
 			'content-type': 'application/json'
@@ -67,6 +48,20 @@ angular.module('JarvisApp.config',[])
 	    	}
 	    });
     }])
+    .config(['$mdIconProvider', function($mdIconProvider) {
+	}])
+	.config(['$translateProvider', function($translateProvider){
+		// Register a loader for the static files
+		// So, the module will search missing translation tables under the specified urls.
+		// Those urls are [prefix][langKey][suffix].
+		$translateProvider.useStaticFilesLoader({
+			prefix: 'js/l10n/',
+			suffix: '.json'
+		});
+		// Tell the module what language to use by default
+		$translateProvider.preferredLanguage('fr_FR');
+		$translateProvider.useSanitizeValueStrategy(null);
+	}])
     /**
      * main controller
      */
@@ -315,45 +310,14 @@ angular.module('JarvisApp.config',[])
 
             $log.info('JarvisAppCtrl configured');
     	}
-    	
-        /**
-         * login to google oauth2 mechanism
-         */
-        $scope.login = function() {
-    		// Appending dialog to document.body to cover sidenav in docs app
-        	$mdDialog.show({
-        	      controller: 'oauth2DialogCtrl',
-        	      templateUrl: '/ui/js/partials/dialog/oauth2Dialog.tmpl.html',
-        	      parent: angular.element(document.body),
-        	      clickOutsideToClose:true,
-        	      fullscreen: false
-        	})
-        }
-
-        /**
-    	 * check profile
+    	/**
+    	 * try to connect
     	 */
-        $scope.checkProfile = function() {
-	        $log.info('Profile checking ', $rootScope.accessToken);
-	        if($rootScope.accessToken === undefined) {
-	        	$log.warn('no token');
-    			$scope.login();
-	        } else {
-	        	oauth2ResourceService.me(
-	    	    	function(data) {
-	    	        	$log.info('profile', data);
-	    		    },
-	    		    function(error) {
-	    	        	$log.warn('no profile', error);
-	        			$scope.login();
-	    		    }
-	    	    );
-	        }
-        }
+    	oauth2ResourceService.connect($scope);
     }])
 	.controller('extractTokenCtrl',
-			['$scope', '$log', '$location', '$rootScope', '$state',
-		function($scope, $log, $location, $rootScope, $state) {
+			['$scope', '$log', '$location', '$rootScope', '$state', 'oauth2ResourceService',
+		function($scope, $log, $location, $rootScope, $state, oauth2ResourceService) {
         	$log.warn('extractTokenCtrl', $state);
         	var hash = $location.path().substr(1);
         	var splitted = hash.split('&');
@@ -364,14 +328,12 @@ angular.module('JarvisApp.config',[])
             	var value  = param[1];
             	params[key] = value;
         		if(key === 'access_token') {
-	        		$log.info('retrieve token', params);
-        			$rootScope.accessToken=params.access_token;
+	            	/**
+	            	 * try to connect
+	            	 */
+	            	oauth2ResourceService.connect($scope, params.access_token);
         		}
         	}
-        	$scope.checkProfile();
-        	$scope.boot();
-        	$location.path("/home");
-        	$log.warn('extractTokenCtrl - done', $state);
 	}])
 	.controller('oauth2DialogCtrl',
 			['$scope', '$window', '$log', '$mdDialog', 'oauth2ResourceService', function($scope, $window, $log, $mdDialog, oauth2ResourceService) {
