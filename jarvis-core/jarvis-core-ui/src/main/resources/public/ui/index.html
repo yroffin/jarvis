@@ -34,17 +34,16 @@ limitations under the License.
     <script src="config.js"></script>
 </head>
 <body
-	ng-controller="JarvisAppCtrl as ctrl"
+	ng-controller="JarvisAppCtrl"
 	ng-style="{'background-image': 'url('+config.backgroundUrl+')', 'background-color': '#000000', 'background-position': 'center', 'background-size': 'cover'}"
-	ng-cloak
 >
 
-<md-toolbar ng-show="profile" layout="row" ng-cloak>
+<md-toolbar ng-if="profile" layout="row" ng-cloak>
     <div class="md-toolbar-tools">
         <md-button ng-click="toggleSidenav('left')" hide-md-gt-sm class="md-icon-button">
         	<md-icon md-font-icon="material-icons md-24">menu</md-icon>
         </md-button>
-        <h1 ng-click="go('home')">Jarvis</h1>
+        <h1 ng-click="go('home')">Jarvis ({{profile.attributes['email']}})</h1>
        	<span flex></span>
        	<canvas width="100" height="40" id="gauge" jarvis-gauge></canvas>
         <md-button ng-click="helper($event)" class="md-icon-button">
