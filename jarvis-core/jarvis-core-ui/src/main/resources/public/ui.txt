@@ -73,6 +73,7 @@ public/ui/js/partials/dialog;graphDialog.tmpl.html
 public/ui/js/partials/dialog;labels.tmpl.html
 public/ui/js/partials/dialog;nodesDialog.tmpl.html
 public/ui/js/partials/dialog;settingsDialog.tmpl.html
+public/ui/js/partials/dialog;oauth2Dialog.tmpl.html
 public/ui/js/partials/events;jarvis-events.html
 public/ui/js/partials/events;page.html
 public/ui/js/partials/helper;jarvis-commands.svg
