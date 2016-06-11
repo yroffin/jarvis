@@ -27,8 +27,10 @@ import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.model.bean.GenericBean;
 import org.jarvis.core.model.bean.iot.EventBean;
+import org.jarvis.core.model.bean.plugin.CommandBean;
 import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.model.rest.iot.EventRest;
+import org.jarvis.core.model.rest.plugin.CommandRest;
 import org.jarvis.core.type.GenericMap;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -93,28 +95,57 @@ public class CoreStatistics {
 	
 	/**
 	 * @param bean 
-	 * @return String
 	 */
-	public String write(EventBean bean) {
-		EventRest d = mapperFactory.getMapperFacade().map(bean, EventRest.class);
-		return write(d, d.getClass().getPackage().getName(), d.getClass().getSimpleName());
+	public void write(EventBean bean) {
+		try {
+			EventRest d = mapperFactory.getMapperFacade().map(bean, EventRest.class);
+			GenericMap statistics = new GenericMap();
+			statistics.put("entity", d);
+			write(statistics, d.getClass().getPackage().getName() + "." + d.getClass().getSimpleName(), d.id);
+		} catch(Exception e) {
+			/**
+			 * ignore any statistics report
+			 */
+		}
 	}
 
 	/**
 	 * @param bean 
-	 * @return String
+	 * @param result 
+	 * @param args 
 	 */
-	public String write(GenericBean bean) {
+	public void write(CommandBean bean, GenericMap args, GenericMap result) {
+		try {
+			CommandRest d = mapperFactory.getMapperFacade().map(bean, CommandRest.class);
+			GenericMap statistics = new GenericMap();
+			statistics.put("entity", d.name);
+			statistics.put("args", args);
+			statistics.put("result", result);
+			write(statistics, d.getClass().getPackage().getName()+ "." + d.getClass().getSimpleName(), d.id);
+		} catch(Exception e) {
+			/**
+			 * ignore any statistics report
+			 */
+		}
+	}
+
+	/**
+	 * @param bean 
+	 */
+	public void write(GenericBean bean) {
 		GenericEntity d = mapperFactory.getMapperFacade().map(bean, GenericEntity.class);
-		return write(d, d.getClass().getPackage().getName(), d.getClass().getSimpleName());
+		GenericMap statistics = new GenericMap();
+		statistics.put("entity", d);
+		write(statistics, d.getClass().getPackage().getName() + "." + d.getClass().getSimpleName(), d.id);
 	}
 
 	/**
 	 * @param d
-	 * @return String
 	 */
-	public String write(GenericEntity d) {
-		return write(d, d.getClass().getPackage().getName(), d.getClass().getSimpleName());
+	public void write(GenericEntity d) {
+		GenericMap statistics = new GenericMap();
+		statistics.put("entity", d);
+		write(statistics, d.getClass().getPackage().getName() + "." + d.getClass().getSimpleName(), d.id);
 	}
 
 	/**
@@ -122,15 +153,13 @@ public class CoreStatistics {
 	 * @param value
 	 * @param index
 	 * @param basename
-	 * @return String
 	 */
-	public String write(GenericMap value, String index, String basename) {
+	public void write(GenericMap value, String index, String basename) {
 		/**
 		 * null url abort statistic store
 		 */
 		if(baseurl == null) {
 			logger.warn("[STATISTICS] no store for {}", value);
-			return "";
 		}
 		
 		/**
@@ -138,33 +167,7 @@ public class CoreStatistics {
 		 */
 		value.put("timestamp", new DateTime());
 
-		return sendEntity(value,index,basename);
-	}
-	
-	/**
-	 * write this object to statistics
-	 * @param value
-	 * @param index
-	 * @param basename
-	 * @return String
-	 */
-	public String write(GenericEntity value, String index, String basename) {
-		/**
-		 * null url abort statistic store
-		 */
-		if(baseurl == null) {
-			logger.warn("[STATISTICS] no store for {}", value);
-			return "";
-		}
-		
-		/**
-		 * compute statistics
-		 */
-		if(value.timestamp == null) {
-			value.timestamp = new DateTime();
-		}
-		
-		return sendEntity(value,index,basename);
+		sendEntity(value,index,basename);
 	}
 
 	/**
@@ -172,16 +175,15 @@ public class CoreStatistics {
 	 * @param value
 	 * @param index
 	 * @param basename
-	 * @return
 	 */
-	private String sendEntity(Object value, String index, String basename) {
+	private void sendEntity(Object value, String index, String basename) {
 		/**
 		 * build response
 		 */
 		Response entity;
 		try {
 			entity = client.target(baseurl)
-			        .path("jarvis-" + index + "/" + basename)
+			        .path("jarvis-" + index.toLowerCase() + "/" + basename)
 			        .request(MediaType.APPLICATION_JSON)
 			        .accept(MediaType.APPLICATION_JSON)
 			        .acceptEncoding("charset=UTF-8")
@@ -193,11 +195,15 @@ public class CoreStatistics {
 		/**
 		 * verify result
 		 */
-		if(entity.getStatus() == 201) {
-			String result = entity.readEntity(String.class);
-			return result;
-		} else {
+		if(entity.getStatus() != 201) {
 			logger.warn("While sending stats {} {} {}", entity.getStatus(), index,  basename);
+			try {
+				logger.warn("Entity {}", entity.toString());
+				logger.warn("Body {}", mapper.writeValueAsString(value));
+				logger.warn("Response {}", entity.readEntity(String.class));
+			} catch (JsonProcessingException e) {
+				throw new TechnicalException(entity.getStatus() + ":" + index + "/" + value.getClass().getSimpleName());
+			}
 			throw new TechnicalException(entity.getStatus() + ":" + index + "/" + value.getClass().getSimpleName());
 		}
 	}

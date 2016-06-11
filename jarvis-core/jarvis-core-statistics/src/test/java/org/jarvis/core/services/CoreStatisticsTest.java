@@ -4,6 +4,7 @@
 package org.jarvis.core.services;
 
 import org.jarvis.core.model.rest.GenericEntity;
+import org.jarvis.core.type.GenericMap;
 import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -83,7 +84,9 @@ public class CoreStatisticsTest {
 		
 		for(int i = 0;i<100;i++) {
 			myData d = new myData();
-			statistics.write(d, d.getClass().getPackage().getName(), d.getClass().getSimpleName());
+			GenericMap stat = new GenericMap();
+			stat.put("entity", d.id);
+			statistics.write(stat, d.getClass().getPackage().getName(), d.getClass().getSimpleName());
 		}
 	}
 

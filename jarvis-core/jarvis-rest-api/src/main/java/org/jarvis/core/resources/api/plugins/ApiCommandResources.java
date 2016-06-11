@@ -23,6 +23,7 @@ import org.jarvis.core.model.bean.plugin.CommandBean;
 import org.jarvis.core.model.rest.plugin.CommandRest;
 import org.jarvis.core.resources.api.ApiResources;
 import org.jarvis.core.resources.api.GenericValue;
+import org.jarvis.core.services.CoreStatistics;
 import org.jarvis.core.services.groovy.PluginGroovyService;
 import org.jarvis.core.services.shell.PluginShellService;
 import org.jarvis.core.type.GenericMap;
@@ -131,6 +132,9 @@ public class ApiCommandResources extends ApiResources<CommandRest,CommandBean> {
     	return result;
 	}
 
+	@Autowired
+	CoreStatistics coreStatistics;
+
 	/**
 	 * execute this command
 	 * @param command
@@ -161,6 +165,10 @@ public class ApiCommandResources extends ApiResources<CommandRest,CommandBean> {
 			throw new TechnicalException(e);
 		}
 		try {
+			/**
+			 * store command execution in statistics
+			 */
+			coreStatistics.write(command, args, result);
 			logger.info("COMMAND - OUTPUT\n{}", mapper.writerWithDefaultPrettyPrinter().writeValueAsString(result));
 		} catch (JsonProcessingException e) {
 			throw new TechnicalException(e);

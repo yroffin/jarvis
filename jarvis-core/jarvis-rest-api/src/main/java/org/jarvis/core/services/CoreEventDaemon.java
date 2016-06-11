@@ -135,15 +135,9 @@ public class CoreEventDaemon {
 
 		private void handle(EventBean event) {
 			/**
-			 * store event in statistics
+			 * store event in stats
 			 */
-			try {
-				coreStatistics.write(event);
-			} catch(Exception e) {
-				/**
-				 * ignore any statistics report
-				 */
-			}
+			coreStatistics.write(event);
 
 			List<ScenarioBean> scenarioToExecute = new ArrayList<ScenarioBean>();
 			/**
