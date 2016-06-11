@@ -35,6 +35,7 @@ import org.jarvis.core.resources.api.scenario.ApiScenarioResources;
 import org.jarvis.core.resources.api.tools.ApiCronResources;
 import org.jarvis.core.resources.api.tools.ApiToolResources;
 import org.jarvis.core.resources.api.views.ApiViewResources;
+import org.jarvis.core.security.JarvisAuthorizerUsers;
 import org.jarvis.core.security.JarvisCoreClient;
 import org.jarvis.core.security.JarvisTokenValidationFilter;
 import org.pac4j.core.client.Clients;
@@ -162,13 +163,15 @@ public class CoreServerDaemon {
 		 */
 		final Clients clients = new Clients(new JarvisCoreClient());
 		final Config config = new Config(clients);
+		final String[] users = env.getProperty("jarvis.oauth2.users","empty").split(",");
+		config.addAuthorizer("usersCheck", new JarvisAuthorizerUsers(users));
 		config.setHttpActionAdapter(new DefaultHttpActionAdapter());
 		
 		/**
 		 * all api must be validated with token
 		 */
 		final String[] excludes = env.getProperty("jarvis.oauth2.excludes","").split(",");
-		spark.Spark.before("/api/*", new JarvisTokenValidationFilter(config, "JarvisCoreClient", "securityHeaders,csrfToken", excludes));
+		spark.Spark.before("/api/*", new JarvisTokenValidationFilter(config, "JarvisCoreClient", "securityHeaders,csrfToken,usersCheck", excludes));
 		
 		/**
 		 * ident api

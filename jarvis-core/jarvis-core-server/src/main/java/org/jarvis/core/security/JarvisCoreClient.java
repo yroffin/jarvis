@@ -22,6 +22,7 @@ public class JarvisCoreClient extends DirectClient<JarvisCoreCredentials, Jarvis
 	public JarvisCoreCredentials getCredentials(WebContext context) throws RequiresHttpAction {
 		JarvisCoreCredentials credentials = new JarvisCoreCredentials();
 		credentials.setClientName("JarvisCoreClient");
+		setAuthorizationGenerator(new JarvisAuthorization());
 		return credentials;
 	}
 
