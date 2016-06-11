@@ -259,12 +259,16 @@ angular.module('JarvisApp.config',[])
          * bootstrap this controller
          */
     	$scope.boot = function() {
-        	$log.info('JarvisAppCtrl');
-
             /**
              * initialize jarvis configuration
              */
             $scope.config = {};
+            $scope.version = {
+            		angular: angular.version,
+            		angularmd: window.ngMaterial
+            };
+
+            $log.info('JarvisAppCtrl',$scope.version);
 
             $scope.media = $mdMedia('xs');
             $scope.$watch(function() { return $mdMedia('xs'); }, function(media) {

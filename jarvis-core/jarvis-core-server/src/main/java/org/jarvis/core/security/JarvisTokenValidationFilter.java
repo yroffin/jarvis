@@ -57,6 +57,7 @@ public class JarvisTokenValidationFilter implements Filter {
         this.excludes = excludes;
     }
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void handle(Request request, Response response) throws Exception {
         CommonHelper.assertNotNull("config", config);
@@ -80,7 +81,8 @@ public class JarvisTokenValidationFilter implements Filter {
         final Clients configClients = config.getClients();
         CommonHelper.assertNotNull("configClients", configClients);
         logger.debug("clientName: {}", clientName);
-        final List<Client> currentClients = clientFinder.find(configClients, context, this.clientName);
+        @SuppressWarnings("rawtypes")
+		final List<Client> currentClients = clientFinder.find(configClients, context, this.clientName);
         logger.debug("currentClients: {}", currentClients);
 
         final boolean useSession = true;
@@ -115,7 +117,7 @@ public class JarvisTokenValidationFilter implements Filter {
         if (profile != null) {
             logger.debug("authorizerName: {}", authorizerName);
             if (authorizationChecker.isAuthorized(context, profile, authorizerName, config.getAuthorizers())) {
-                logger.info("authenticated and authorized -> grant access to {}", context.getFullRequestURL());
+                logger.info("authenticated and authorized -> grant access to {} for {}", context.getFullRequestURL(), request.ip());
             } else {
                 logger.warn("forbidden");
                 forbidden(context, currentClients, profile);
@@ -125,11 +127,13 @@ public class JarvisTokenValidationFilter implements Filter {
         }
 	}
 	
-    protected void forbidden(final WebContext context, final List<Client> currentClients, final UserProfile profile) {
+    @SuppressWarnings("rawtypes")
+	protected void forbidden(final WebContext context, final List<Client> currentClients, final UserProfile profile) {
         config.getHttpActionAdapter().adapt(HttpConstants.FORBIDDEN, context);
     }
 
-    protected void unauthorized(final WebContext context, final List<Client> currentClients) {
+    @SuppressWarnings("rawtypes")
+	protected void unauthorized(final WebContext context, final List<Client> currentClients) {
         config.getHttpActionAdapter().adapt(HttpConstants.UNAUTHORIZED, context);
     }
 }

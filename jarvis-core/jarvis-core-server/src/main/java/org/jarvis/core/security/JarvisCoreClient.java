@@ -1,12 +1,9 @@
 package org.jarvis.core.security;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.jarvis.core.exception.TechnicalHttpException;
-import org.jarvis.neo4j.client.AbstractJerseyClient;
 import org.pac4j.core.client.BaseClient;
 import org.pac4j.core.client.ClientType;
 import org.pac4j.core.client.DirectClient;
