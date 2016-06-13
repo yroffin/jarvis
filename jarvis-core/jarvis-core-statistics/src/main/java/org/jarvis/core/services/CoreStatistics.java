@@ -23,6 +23,7 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.model.bean.GenericBean;
@@ -77,8 +78,17 @@ public class CoreStatistics {
 		this.user = env.getProperty("jarvis.elasticsearch.user");
 		this.password = env.getProperty("jarvis.elasticsearch.password");
 		
-		// create HTTP Client
+		/**
+		 * create HTTP Client
+		 */
 		this.client = ClientBuilder.newClient();
+		
+		/**
+		 * fix timeout
+		 */
+	    client.property(ClientProperties.CONNECT_TIMEOUT, Integer.parseInt(env.getProperty("jarvis.elasticsearch.timeout.connect","2")));
+	    client.property(ClientProperties.READ_TIMEOUT,    Integer.parseInt(env.getProperty("jarvis.elasticsearch.timeout.read","2")));
+
 		if(user != null) {
 			HttpAuthenticationFeature feature = HttpAuthenticationFeature.basic(user, password);
 			client.register(feature);

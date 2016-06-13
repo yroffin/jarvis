@@ -19,7 +19,6 @@ package org.jarvis.core.model.bean.iot;
 import org.jarvis.core.model.bean.GenericBean;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * IOT object
