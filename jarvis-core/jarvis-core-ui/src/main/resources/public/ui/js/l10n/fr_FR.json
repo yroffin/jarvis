@@ -108,6 +108,8 @@
     "cron.test"  		: "Test la crontab",
     "cron.id"  			: "Identifiant de la crontab",
     "cron.order" 		: "Ordre de la crontab",
+    "crons.start" 		: "Démarre toutes les crontabs",
+    "crons.stop" 		: "Stop toutes les crontabs",
     "snapshot.title"   	: "Mes snapshots",
     "snapshot.general" 	: "Général",
     "snapshot.download" : "Télécharger cette configuration",

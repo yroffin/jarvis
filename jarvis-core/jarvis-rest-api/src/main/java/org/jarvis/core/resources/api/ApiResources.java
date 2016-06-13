@@ -88,6 +88,18 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
     }
 
 	/**
+	 * notifier
+	 * @param request
+	 * @param response
+	 * @param r
+	 */
+	private void notifyFindAll(Request request, Response response, List<T> r) {
+        for(ResourcePreListener<T> listener : preListeners){
+            listener.findAll(request,response,r);
+        }
+	}
+
+	/**
 	 * notify handler for get
 	 * @param request
 	 * @param response
@@ -99,6 +111,12 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
         }
 	}
 
+	/**
+	 * post
+	 * @param request
+	 * @param response
+	 * @param s
+	 */
 	private void notifyPost(Request request, Response response, S s) {
         for(ResourcePostListener<S> listener : postListeners){
             listener.post(request,response,s);
@@ -324,7 +342,9 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * @throws Exception
 	 */
 	public String doFindAll(Request request, Response response) throws Exception {
-    	return mapper.writeValueAsString(doFindAllRest());
+		List<T> r = doFindAllRest();
+		notifyFindAll(request,response,r);
+    	return mapper.writeValueAsString(r);
     }
 
 	/**

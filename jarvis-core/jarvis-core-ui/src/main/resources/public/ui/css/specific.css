@@ -9,6 +9,10 @@ body {
 	font-family: 'Roboto';
 }
 
+md-content {
+	min-height: 100%;
+}
+	
 .help-icons {
     font-family: "Material Icons";
     font-weight: normal;
@@ -49,10 +53,3 @@ md-toast.md-failure-toast-theme {
 .material-icons.md-light { color: rgba(255, 255, 255, 1); }
 .material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
 
-md-card {
-    border-radius: 10px;
-}
-
-md-card md-card-title {
-    padding: 0px 0px 0px;
-}

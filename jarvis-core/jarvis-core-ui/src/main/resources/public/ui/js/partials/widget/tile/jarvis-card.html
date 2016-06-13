@@ -1,16 +1,13 @@
-<md-card>
-  <md-card-title>
-    <md-card-title-media ng-click="go(state,{id:element.id})">
-      <div class="md-media-sm card-media"><md-icon md-font-icon="material-icons md-64">{{element.icon}}</md-icon></div>
-      <md-tooltip>{{element.name}}</md-tooltip>
-    </md-card-title-media>
-    <md-card-title-text>
-      <span class="md-subhead">{{element.name | limitTo : 10 : 0}}...</span>
-      <span class="md-subhead">#{{element.id}}</span>
-    </md-card-title-text>
-  </md-card-title>
-  <md-card-actions layout="row" layout-align="end center">
-    <md-button><md-icon md-font-icon="material-icons md-16" ng-click="go(state,{id:element.id})">mode_edit</md-icon><md-tooltip>{{'action.edit' | translate}}</md-tooltip></md-button>
-    <md-button><md-icon md-font-icon="material-icons md-16" ng-click="remove(element)">delete</md-icon><md-tooltip>{{'action.remove' | translate}}</md-tooltip></md-button>
-  </md-card-actions>
-</md-card>
+<md-grid-tile-header>
+	<h3>{{element.name | limitTo : 20 : 0}}... (#{{element.id}})</h3>
+	<md-tooltip>{{element.name}}</md-tooltip>
+</md-grid-tile-header>
+<div layout="row">
+	<md-icon ng-if="element.status === undefined || element.status === true" md-font-icon="material-icons md-64">{{element.icon}}</md-icon>
+	<md-icon ng-if="element.status === false" md-font-icon="material-icons md-64">block</md-icon>
+	<md-tooltip>#{{element.id}}</md-tooltip>
+</div>
+<md-grid-tile-footer>
+	<md-icon md-font-icon="material-icons" ng-click="go(state,{id:element.id})"><md-tooltip>{{'action.edit' | translate}}</md-tooltip>mode_edit</md-icon>
+	<md-icon md-font-icon="material-icons" ng-click="remove(element)"><md-tooltip>{{'action.remove' | translate}}</md-tooltip>delete</md-icon>
+</md-grid-tile-footer>

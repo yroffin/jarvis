@@ -225,6 +225,7 @@ public class CoreResources {
 	        }
 	    });
 
-		spark.Spark.staticFiles.expireTime(600);
+		// jarvis.server.static.expireTime
+		spark.Spark.staticFiles.expireTime(1);
 	}
 }

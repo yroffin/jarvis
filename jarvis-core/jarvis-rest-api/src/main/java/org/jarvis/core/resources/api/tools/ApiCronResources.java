@@ -46,15 +46,7 @@ public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 		setBeanClass(CronBean.class);
 	}
 
-	class ResourceListenerImpl implements ResourcePreListener<CronRest> {
-
-		@Override
-		public void post(Request request, Response response, CronRest rest) {
-		}
-
-		@Override
-		public void put(Request request, Response response, CronRest rest) {
-		}
+	class ResourceListenerImpl extends ResourcePreListener<CronRest> {
 
 		@Override
 		public void get(Request request, Response response, CronRest rest) {
@@ -83,9 +75,9 @@ public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 		GenericMap result;
 		switch(taskType) {
 			case TOGGLE:
-				return doToggle(bean);
+				return doToggle(bean, args);
 			case TEST:
-				return doTest(bean);
+				return doTest(bean, args);
 			default:
 				result = new GenericMap();
 		}
@@ -121,45 +113,62 @@ public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 	/**
 	 * toggle cron
 	 * @param bean
+	 * @param args 
 	 * @return GenericValue
 	 */
-	private synchronized GenericValue doToggle(CronBean bean) {
-		if(scheduled.containsKey(bean.id)) {
-			/**
-			 * unschedule this cron
-			 */
-			ScheduledFuture<?> sch = scheduled.get(bean.id);
-			sch.cancel(false);
-			scheduled.remove(bean.id, sch);
-			return new GenericValue("false");
+	private synchronized GenericValue doToggle(CronBean bean, GenericMap args) {
+		boolean target = !scheduled.containsKey(bean.id);
+		/**
+		 * if target is null compute it with crontab status
+		 */
+		if(args.get("target") == null) {
+			target = !scheduled.containsKey(bean.id);
 		} else {
-			if(bean.triggerType.toUpperCase().equals(TriggerType.SUNRISE.name())) {
+			target = args.get("target").equals(true);
+		}
+		if(scheduled.containsKey(bean.id)) {
+			if(target == false) {
 				/**
-				 * create periodic sunrise event generator
+				 * unschedule this cron
 				 */
-				sunriseTrigger(bean);
+				ScheduledFuture<?> sch = scheduled.get(bean.id);
+				sch.cancel(false);
+				scheduled.remove(bean.id, sch);
+				return new GenericValue("false");
 			} else {
-				if(bean.triggerType.toUpperCase().equals(TriggerType.SUNSET.name())) {
-					/**
-					 * create periodic sunset event generator
-					 */
-					sunsetTrigger(bean);
-				} else {
-					/**
-					 * crontab
-					 */
-					if(bean.triggerType.toUpperCase().equals(TriggerType.CRONTAB.name())) {
-						/**
-						 * crontab type
-						 */
-						crontabTrigger(bean);
-					} else {
-						logger.warn("No existing trigger type {}", bean.triggerType);
-					}
-				}
+				return new GenericValue("true");
 			}
-			
-			return new GenericValue("true");
+		} else {
+			if(target == true) {
+				if(bean.triggerType.toUpperCase().equals(TriggerType.SUNRISE.name())) {
+					/**
+					 * create periodic sunrise event generator
+					 */
+					sunriseTrigger(bean);
+				} else {
+					if(bean.triggerType.toUpperCase().equals(TriggerType.SUNSET.name())) {
+						/**
+						 * create periodic sunset event generator
+						 */
+						sunsetTrigger(bean);
+					} else {
+						/**
+						 * crontab
+						 */
+						if(bean.triggerType.toUpperCase().equals(TriggerType.CRONTAB.name())) {
+							/**
+							 * crontab type
+							 */
+							crontabTrigger(bean);
+						} else {
+							logger.warn("No existing trigger type {}", bean.triggerType);
+						}
+					}
+				}	
+				return new GenericValue("true");
+			} else {
+				return new GenericValue("false");
+			}
 		}
 	}
 
@@ -239,7 +248,7 @@ public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 	 * @param bean
 	 * @return GenericValue
 	 */
-	private GenericValue doTest(CronBean bean) {
+	private GenericValue doTest(CronBean bean, GenericMap args) {
 		fire(bean);
 		return new GenericValue("{}");
 	}

@@ -3,11 +3,9 @@
   <input type="text" ng-model="searchText">
 </md-input-container>
 <md-grid-list
-      md-cols="3" md-cols-sm="3" md-cols-md="6" md-cols-gt-md="12"
-      md-row-height-gt-md="128px" md-row-height="128px"
-      md-gutter="4px" md-gutter-gt-sm="4px" >
+      md-cols="3" md-cols-sm="6" md-cols-md="9" md-cols-gt-md="18" md-row-height="128px" md-gutter="6px" >
   <md-grid-tile
-      md-rowspan="1" md-colspan="2" md-colspan-sm="1" ng-repeat="config in configurations | filter:searchText">
+      md-whiteframe="6" md-rowspan="1" md-colspan="1" ng-repeat="config in configurations | filter:searchText">
       <jarvis-card element="config" state="'configurations-by-id'"></jarvis-card>
   </md-grid-tile>
 </md-grid-list>

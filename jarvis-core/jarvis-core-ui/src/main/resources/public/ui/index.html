@@ -74,8 +74,11 @@ limitations under the License.
         <md-button ng-click="location('left', '/configurations');"><div layout="row"><i class="help-icons">widgets</i><span flex></span><span>Configuration(s)</span></div></md-button>
         <md-button ng-click="location('left', '/properties');"><div layout="row"><i class="help-icons">widgets</i><span flex></span><span>Propriété(s)</span></div></md-button>
     </md-sidenav>
-    <md-content ng-style="{'opacity': config.opacity}" ui-view flex class="md-padding">
-    </md-content>
+</div>
+
+<div ng-show="profile" ng-cloak>
+	<md-content ng-style="{'height': 'auto'; 'opacity': config.opacity}" ui-view flex layout-padding>
+	</md-content>
 </div>
 
 <script src="script-libs.min.js"></script>
