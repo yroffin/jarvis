@@ -125,7 +125,7 @@ public class CoreEventDaemon {
 			EventBean event = null;
 			try {
 				while ((event  = linked.take()) != null) {
-					logger.error("[EVENT] {}", event.toString());
+					logger.warn("[EVENT] {}/{}", event.toString(), linked.size());
 					handle(event);
 				}
 			} catch (InterruptedException e) {

@@ -25,6 +25,8 @@
 			md-row-height="1:1"
 			md-gutter="8px">
 			<md-grid-tile
+				md-whiteframe="8"
+				ng-click="execute(iot)"
 				ng-repeat="iot in view.iots" 
 				ng-style="{'background': iot.tagColor, 'opacity': iot.tagOpacity}"
 				md-colspan="{{defaultValue(iot.colSpan,1)}}" 

@@ -3,8 +3,8 @@
 	<md-tooltip>{{element.name}}</md-tooltip>
 </md-grid-tile-header>
 <div layout="row">
-	<md-icon ng-if="element.status === undefined || element.status === true" md-font-icon="material-icons md-64">{{element.icon}}</md-icon>
-	<md-icon ng-if="element.status === false" md-font-icon="material-icons md-64">block</md-icon>
+	<md-icon ng-click="go(state,{id:element.id})" ng-if="element.status === undefined || element.status === true" md-font-icon="material-icons md-64">{{element.icon}}</md-icon>
+	<md-icon ng-click="go(state,{id:element.id})" ng-if="element.status === false" md-font-icon="material-icons md-64">block</md-icon>
 	<md-tooltip>#{{element.id}}</md-tooltip>
 </div>
 <md-grid-tile-footer>
