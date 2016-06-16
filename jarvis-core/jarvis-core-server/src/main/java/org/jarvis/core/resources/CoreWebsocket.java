@@ -86,8 +86,8 @@ public class CoreWebsocket {
 		queue.offer(new WebsocketDataBean(instance, data));
 	}
 
-	static Thread system = null;
-	static Thread runner = null;
+	Thread system = null;
+	Thread runner = null;
 	static LinkedBlockingQueue<WebsocketDataBean> queue = new LinkedBlockingQueue<WebsocketDataBean>();
 
 	/**

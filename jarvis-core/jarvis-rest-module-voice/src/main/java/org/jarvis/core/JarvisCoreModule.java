@@ -38,6 +38,10 @@ import org.springframework.context.annotation.FilterType;
 public class JarvisCoreModule {
 	protected static String normalizedPath = JarvisStatic.normalizedPath;
 
+	private JarvisCoreModule() {
+		
+	}
+
 	/**
 	 * main entry
 	 * 
