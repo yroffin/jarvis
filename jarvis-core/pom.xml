@@ -478,6 +478,9 @@
 								<goals>
 									<goal>check</goal>
 								</goals>
+								<configuration>
+									<format>xml</format>
+								</configuration>
 							</execution>
 						</executions>
 					</plugin>
