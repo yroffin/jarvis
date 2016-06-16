@@ -3,7 +3,7 @@
   <input type="text" ng-model="searchText">
 </md-input-container>
 <md-grid-list
-      md-cols="3" md-cols-sm="6" md-cols-md="9" md-cols-gt-md="18" md-row-height="128px" md-gutter="6px" >
+      md-cols="3" md-cols-sm="6" md-cols-md="9" md-cols-gt-md="12" md-row-height="128px" md-gutter="6px" >
   <md-grid-tile
        md-whiteframe="6" md-rowspan="1" md-colspan="1" ng-repeat="command in commands | filter:searchText">
       <jarvis-card element="command" state="'commands-by-id'"></jarvis-card>

@@ -19,6 +19,7 @@
 /* Cf. https://angular-md-color.com */
 
 angular.module('JarvisApp.theme', [ 'ngMaterial' ]).config([ '$mdThemingProvider', function ($mdThemingProvider) {
+	$mdThemingProvider.alwaysWatchTheme(true);
     var customPrimary = {
             '50': '#aaeafd',
             '100': '#92e4fc',
