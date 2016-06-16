@@ -44,6 +44,6 @@ public class JarvisCoreModule {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		SpringApplication.run(JarvisCoreModule.class, args);
+		SpringApplication.run(JarvisCoreModule.class, args).close();
 	}
 }

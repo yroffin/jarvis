@@ -104,16 +104,19 @@ public class JarvisAimlEngine extends JarvisConnectorImpl implements JarvisConne
 					+ "] in resources paths");
 		}
 		byte[] b = new byte[is.available()];
-		is.read(b);
-		List<String> res = new ArrayList<String>();
+		int read = is.read(b);
+		if (read == -1) {
+			throw new IOException("Unable to read [" + resources
+					+ "] in resources paths");
+		}
+		List<String> res = new ArrayList<>();
 		for (String resource : new String(b).replace("\r", "").split("\n")) {
 			if (resource.trim().length() > 0) {
 				logger.warn("Read resource : " + resource);
 				res.add(resource);
 			}
 		}
-		IAimlCoreEngine core = new AimlCoreEngineImpl(res);
-		return core;
+		return new AimlCoreEngineImpl(res);
 	}
 
 	/**
