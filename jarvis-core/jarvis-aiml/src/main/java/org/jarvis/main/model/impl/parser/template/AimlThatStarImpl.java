@@ -30,12 +30,19 @@ import org.jarvis.main.model.transform.ITransformedItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * that context
+ *
+ */
 public class AimlThatStarImpl extends AimlElementContainer implements
 		IAimlThatStar {
 
 	protected Logger logger = LoggerFactory.getLogger(AimlThatStarImpl.class);
 	private final IAimlThat thatElement;
 
+	/**
+	 * @param that
+	 */
 	public AimlThatStarImpl(IAimlThat that) {
 		super("thatstar");
 		this.thatElement = that;
@@ -65,14 +72,14 @@ public class AimlThatStarImpl extends AimlElementContainer implements
 		List<ITransformedItem> list = null;
 		try {
 			list = thatElement.getTransforms(thatElement.getTopic());
+			List<String> local = that.getTransformedAnswer().star(list.get(0),
+					new ArrayList<String>());
+			if (local.size() > 0 && index < local.size()) {
+				render.append(local.get(index));
+			}
 		} catch (AimlParsingError e) {
 			e.printStackTrace();
 			logger.warn(e.getMessage());
-		}
-		List<String> local = that.getTransformedAnswer().star(list.get(0),
-				new ArrayList<String>());
-		if (local.size() > 0 && index < local.size()) {
-			render.append(local.get(index));
 		}
 		return render;
 	}

@@ -18,8 +18,15 @@ package org.jarvis.main.model.impl.parser.template;
 import org.jarvis.main.model.impl.parser.AimlElementContainer;
 import org.jarvis.main.model.parser.template.IAimlGossip;
 
+/**
+ * gossip
+ *
+ */
 public class AimlGossipImpl extends AimlElementContainer implements IAimlGossip {
 
+	/**
+	 * constructor
+	 */
 	public AimlGossipImpl() {
 		super("gossip");
 	}

@@ -49,6 +49,10 @@ import org.jarvis.main.parser.AimlParserImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @core engine
+ *
+ */
 public class AimlCoreEngineImpl implements IAimlCoreEngine {
 
 	protected Logger logger = LoggerFactory.getLogger(AimlCoreEngineImpl.class);
@@ -225,10 +229,10 @@ public class AimlCoreEngineImpl implements IAimlCoreEngine {
 			File output = null;
 			try {
 				output = debug.store();
+				logger.info("Html debug stored in " + output.getAbsolutePath());
 			} catch (IOException e) {
 				logger.error("Error, while debugging {}", e);
 			}
-			logger.info("Html debug stored in " + output.getAbsolutePath());
 		}
 
 		/**

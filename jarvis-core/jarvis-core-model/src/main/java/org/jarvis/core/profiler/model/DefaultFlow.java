@@ -74,6 +74,11 @@ public abstract class DefaultFlow implements Comparable<DefaultFlow>, GenericNod
 	public abstract String getSorter();
 
 	@Override
+	public boolean equals(Object obj) {
+		return super.equals(obj);
+	}
+
+	@Override
 	public int compareTo(DefaultFlow o) {
 		return (int) (getSorter().compareTo(o.getSorter()));
 	}
