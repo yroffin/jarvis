@@ -41,10 +41,10 @@ public abstract class DefaultNode implements Comparable<GenericNode>, GenericNod
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		return super.equals(obj);
+	public int compareTo(GenericNode o) {
+		return (int) (getSorter().compareTo(o.getSorter()));
 	}
-	
+
 	@Override
 	public String toString() {
 		return "DefaultNode [id=" + id + ", name=" + name + ", description=" + description + "]";
