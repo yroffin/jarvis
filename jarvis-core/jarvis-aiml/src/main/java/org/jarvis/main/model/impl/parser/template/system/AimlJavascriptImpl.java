@@ -12,11 +12,17 @@ import org.jarvis.main.model.parser.template.system.IAimlJavascript;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Javascript interpreter
+ */
 public class AimlJavascriptImpl extends AimlElementContainer implements
 		IAimlJavascript {
 
 	protected Logger logger = LoggerFactory.getLogger(AimlJavascriptImpl.class);
 
+	/**
+	 * constructor
+	 */
 	public AimlJavascriptImpl() {
 		super("javascript");
 	}

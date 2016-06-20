@@ -15,6 +15,9 @@ import org.jarvis.main.model.parser.IAimlTopic;
 import org.jarvis.main.model.parser.history.IAimlHistory;
 import org.jarvis.main.model.transform.ITransformedItem;
 
+/**
+ * container
+ */
 public abstract class AimlElementContainer implements IAimlElement {
 	protected List<IAimlProperty> props = new ArrayList<IAimlProperty>();
 	protected List<IAimlElement> elements = new ArrayList<IAimlElement>();
@@ -23,6 +26,9 @@ public abstract class AimlElementContainer implements IAimlElement {
 	protected String tag;
 	private List<ITransformedItem> cache = null;
 
+	/**
+	 * @param tag
+	 */
 	public AimlElementContainer(String tag) {
 		this.tag = tag;
 	}
