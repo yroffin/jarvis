@@ -70,7 +70,7 @@ public class CoreSunsetSunrise extends AbstractJerseyClient {
 	public long getNextSunrise(String lat, String lng) {
 		SunApiRest time = get(lat, lng);
 		Seconds seconds = Seconds.secondsBetween(DateTime.now(), time.sunrise);
-		return seconds.getSeconds() * 1000;
+		return seconds.getSeconds() * 1000L;
 	}
 
 	/**
@@ -82,7 +82,7 @@ public class CoreSunsetSunrise extends AbstractJerseyClient {
 	public long getNextSunset(String lat, String lng) {
 		SunApiRest time = get(lat, lng);
 		Seconds seconds = Seconds.secondsBetween(DateTime.now(), time.sunset);
-		return seconds.getSeconds() * 1000;
+		return seconds.getSeconds() * 1000L;
 	}
 	
 	/**

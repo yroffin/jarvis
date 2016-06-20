@@ -83,12 +83,13 @@ public class CoreWebsocket {
 	 *            object itself
 	 */
 	public static void broadcast(String sender, String instance, Object data) {
+		logger.debug("Sender {}", sender);
 		queue.offer(new WebsocketDataBean(instance, data));
 	}
 
 	Thread system = null;
 	Thread runner = null;
-	static LinkedBlockingQueue<WebsocketDataBean> queue = new LinkedBlockingQueue<WebsocketDataBean>();
+	static LinkedBlockingQueue<WebsocketDataBean> queue = new LinkedBlockingQueue<>();
 
 	/**
 	 * internal runner to send data on web socket
@@ -98,19 +99,26 @@ public class CoreWebsocket {
 
 		@Override
 		public void run() {
-			while (true) {
+			boolean cont = true;
+			while (cont) {
 				try {
 					t = queue.take();
 				} catch (InterruptedException e) {
 					logger.error("While taking {}", e);
+					cont = false;
 				}
-				StreamWebSocketHandler.getSessionmap().keySet().stream().filter(Session::isOpen).forEach(session -> {
-					try {
-						session.getRemote().sendString(mapper.writeValueAsString(t));
-					} catch (Exception e) {
-						logger.error("While broadcast {} {}", t, e);
-					}
-				});
+				if(cont) {
+					/**
+					 * broadcast
+					 */
+					StreamWebSocketHandler.getSessionmap().keySet().stream().filter(Session::isOpen).forEach(session -> {
+						try {
+							session.getRemote().sendString(mapper.writeValueAsString(t));
+						} catch (Exception e) {
+							logger.error("While broadcast {} {}", t, e);
+						}
+					});
+				}
 			}
 		}
 	}
@@ -122,13 +130,15 @@ public class CoreWebsocket {
 		
 		@Override
 		public void run() {
+			boolean cont = true;
 			SystemIndicator.init();
-			while (true) {
+			while (cont) {
 				try {
 					broadcast("SystemThread", "1", SystemIndicator.factory());
 					Thread.sleep(10000);
 				} catch (InterruptedException e) {
 					logger.error("While sleeping {}", e);
+					cont = false;
 				}
 			}
 		}

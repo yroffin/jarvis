@@ -36,7 +36,7 @@ public class StreamWebSocketHandler {
 	@OnWebSocketConnect
 	public void onConnect(Session user) throws TechnicalException {
 		try {
-			String sessionId = "websocket-session-" + nextSessionNumber++;
+			String sessionId = "websocket-session-" + StreamWebSocketHandler.nextSessionNumber++;
 			getSessionmap().put(user, sessionId);
 			logger.info("onConnect {}", getSessionmap().get(user));
 		} catch(Exception e) {
