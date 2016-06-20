@@ -19,11 +19,15 @@ package org.jarvis.runtime;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * simple capture stream
  */
 public class CaptureStream extends Thread implements Runnable {
 
+	protected Logger logger = LoggerFactory.getLogger(CaptureStream.class);
 	private StringBuilder streamData = new StringBuilder();
 	private InputStream stream;
 
@@ -48,7 +52,7 @@ public class CaptureStream extends Thread implements Runnable {
 				} while (chunk >= 0);
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error("Error {}", e);
 		}
 
 	}

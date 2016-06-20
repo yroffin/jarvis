@@ -32,6 +32,9 @@ import org.antlr.v4.runtime.misc.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * listener
+ */
 public class DiagnosticErrorListenerImpl extends DiagnosticErrorListener {
 	protected Logger logger = LoggerFactory
 			.getLogger(DiagnosticErrorListener.class);
@@ -42,33 +45,48 @@ public class DiagnosticErrorListenerImpl extends DiagnosticErrorListener {
 
 	private String text;
 
-	private String readFile(int line) {
-		try {
-			BufferedReader reader = new BufferedReader(new FileReader(document));
-			String data = null;
-
-			for (int i = 0; (data = reader.readLine()) != null; i++) {
-				if ((i + 1) == line) {
-					reader.close();
-					return data;
-				}
-			}
-			reader.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return "N/A";
-	}
-
+	/**
+	 * @param parser
+	 * @param document
+	 */
 	public DiagnosticErrorListenerImpl(IAimlParser parser, File document) {
 		this.document = document;
 		this.parser = parser;
 	}
 
+	/**
+	 * @param parser
+	 * @param text
+	 */
 	public DiagnosticErrorListenerImpl(IAimlParser parser, String text) {
 		this.document = null;
 		this.text = text;
 		this.parser = parser;
+	}
+
+	/**
+	 * read file
+	 * @param line
+	 * @return
+	 */
+	private String readFile(int line) {
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(document));
+			String data;
+
+			int i = 0;
+			for (;(data = reader.readLine()) != null;) {
+				if ((i + 1) == line) {
+					reader.close();
+					return data;
+				}
+				i++;
+			}
+			reader.close();
+		} catch (IOException e) {
+			logger.error("Error {}", e);
+		}
+		return "N/A";
 	}
 
 	@Override
