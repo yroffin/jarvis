@@ -476,9 +476,9 @@ public class CypherRestClient extends AbstractJerseyClient {
 	 * @return Result
 	 * 		the result
 	 */
-	public Result execute(String query, boolean isNode) {
+	public Entities execute(String query, boolean isNode) {
 		logger.trace(query);
-		Result result = new Result();
+		Entities result = new Entities();
 		for(Map<String, Object> map : query(query, isNode)) {
 			result.add(map);
 		}

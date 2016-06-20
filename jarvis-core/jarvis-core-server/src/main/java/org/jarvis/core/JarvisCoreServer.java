@@ -45,6 +45,6 @@ public class JarvisCoreServer {
 		/**
 		 * start application
 		 */
-		SpringApplication.run(JarvisCoreServer.class, args).close();
+		SpringApplication.run(JarvisCoreServer.class, args);
 	}
 }
