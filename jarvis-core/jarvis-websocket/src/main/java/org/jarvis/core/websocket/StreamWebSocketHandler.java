@@ -8,6 +8,7 @@ import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketMessage;
 import org.eclipse.jetty.websocket.api.annotations.WebSocket;
+import org.jarvis.core.exception.TechnicalException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,20 +24,25 @@ public class StreamWebSocketHandler {
 	/**
 	 * internal sessions map
 	 */
-	public static Map<Session, String> sessionMap = new ConcurrentHashMap<>();
-	static int nextSessionNumber = 1; // Assign to session for next connecting session
+	private final static Map<Session, String> sessionMap = new ConcurrentHashMap<>();
+	protected static int nextSessionNumber = 1; // Assign to session for next connecting session
 
 	/**
 	 * handle new session
 	 * 
 	 * @param user
-	 * @throws Exception
+	 * @throws TechnicalException 
 	 */
 	@OnWebSocketConnect
-	public void onConnect(Session user) throws Exception {
-		String sessionId = "websocket-session-" + nextSessionNumber++;
-		sessionMap.put(user, sessionId);
-		logger.info("onConnect {}", sessionMap.get(user));
+	public static void onConnect(Session user) throws TechnicalException {
+		try {
+			String sessionId = "websocket-session-" + nextSessionNumber++;
+			getSessionmap().put(user, sessionId);
+			logger.info("onConnect {}", getSessionmap().get(user));
+		} catch(Exception e) {
+			logger.error("onConnect {}", e);
+			throw new TechnicalException(e);
+		}
 	}
 
 	/**
@@ -48,8 +54,8 @@ public class StreamWebSocketHandler {
 	 */
 	@OnWebSocketClose
 	public void onClose(Session user, int statusCode, String reason) {
-		sessionMap.remove(user);
-		logger.info("onClose {} {} {}", sessionMap.get(user), statusCode, reason);
+		getSessionmap().remove(user);
+		logger.info("onClose {} {} {}", getSessionmap().get(user), statusCode, reason);
 	}
 
 	/**
@@ -60,7 +66,11 @@ public class StreamWebSocketHandler {
 	 */
 	@OnWebSocketMessage
 	public void onMessage(Session user, String message) {
-		logger.info("onMessage {} {}", sessionMap.get(user), message);
+		logger.info("onMessage {} {}", getSessionmap().get(user), message);
+	}
+
+	public static Map<Session, String> getSessionmap() {
+		return sessionMap;
 	}
 
 }

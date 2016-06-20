@@ -104,7 +104,7 @@ public class CoreWebsocket {
 				} catch (InterruptedException e) {
 					logger.error("While taking {}", e);
 				}
-				StreamWebSocketHandler.sessionMap.keySet().stream().filter(Session::isOpen).forEach(session -> {
+				StreamWebSocketHandler.getSessionmap().keySet().stream().filter(Session::isOpen).forEach(session -> {
 					try {
 						session.getRemote().sendString(mapper.writeValueAsString(t));
 					} catch (Exception e) {
