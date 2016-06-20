@@ -103,7 +103,7 @@ public class CoreResources {
 	/**
 	 * work dir
 	 */
-	public static File resources = null;
+	private static File resources = null;
 	
 	/**
 	 * mount local resource
@@ -112,7 +112,40 @@ public class CoreResources {
 		spark.Spark.staticFileLocation("public");
 		spark.Spark.staticFiles.expireTime(600);
 	}
-	
+
+	/**
+	 * deltree
+	 * @param dir
+	 * @throws Exception
+	 */
+	private static void deltree(File dir) throws Exception {
+
+        // check to make sure that the given dir isn't a symlink
+        // the comparison of absolute path and canonical path
+        // catches this
+
+        //        if (dir.getCanonicalPath().equals(dir.getAbsolutePath())) {
+        // (costin) It will not work if /home/costin is symlink to
+        // /da0/home/costin ( taz for example )
+        String[] list = dir.list();
+        for (int i = 0; i < list.length; i++) {
+            String s = list[i];
+            File f = new File(dir, s);
+            if (f.isDirectory()) {
+            	deltree(f);
+            } else {
+                if (!f.delete()) {
+                    throw new Exception("Unable to delete file "
+                                             + f.getAbsolutePath());
+                }
+            }
+        }
+        if (!dir.delete()) {
+            throw new Exception("Unable to delete directory "
+                                     + dir.getAbsolutePath());
+        }
+    }
+
 	/**
 	 * mount local resource
 	 */
@@ -131,34 +164,6 @@ public class CoreResources {
 		}
 		
 		Runtime.getRuntime().addShutdownHook(new Thread() {
-			private void deltree(File dir) throws Exception {
-
-		        // check to make sure that the given dir isn't a symlink
-		        // the comparison of absolute path and canonical path
-		        // catches this
-
-		        //        if (dir.getCanonicalPath().equals(dir.getAbsolutePath())) {
-		        // (costin) It will not work if /home/costin is symlink to
-		        // /da0/home/costin ( taz for example )
-		        String[] list = dir.list();
-		        for (int i = 0; i < list.length; i++) {
-		            String s = list[i];
-		            File f = new File(dir, s);
-		            if (f.isDirectory()) {
-		            	deltree(f);
-		            } else {
-		                if (!f.delete()) {
-		                    throw new Exception("Unable to delete file "
-		                                             + f.getAbsolutePath());
-		                }
-		            }
-		        }
-		        if (!dir.delete()) {
-		            throw new Exception("Unable to delete directory "
-		                                     + dir.getAbsolutePath());
-		        }
-		    }
-			
 	        @Override
 	        public void run() {
 	        	logger.warn("Delete resource {}", resources.getAbsolutePath());

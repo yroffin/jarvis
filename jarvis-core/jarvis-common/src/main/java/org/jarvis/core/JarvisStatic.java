@@ -26,8 +26,11 @@ public class JarvisStatic {
 	/**
 	 * static CWD of this system
 	 */
-	public static String normalizedPath = getNormalizedPath();
+	public final static String normalizedPath = getNormalizedPath();
 	
+	private JarvisStatic() {
+	}
+
 	private static String getNormalizedPath() {
 		/**
 		 * set normalized path in properties
