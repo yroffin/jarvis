@@ -50,7 +50,7 @@ public class ApiEventResources extends ApiResources<EventRest,EventBean> {
 	class ResourceListenerImpl implements ResourcePostListener<EventBean> {
 
 		@Override
-		public void post(Request request, Response response, EventBean event) {
+		public void post(Request request, Response response, EventBean event) throws InterruptedException {
 			if(request.params(ASYNC) != null && request.params(ASYNC).equals("true")) {
 				coreEventDaemon.post(event);
 			} else {

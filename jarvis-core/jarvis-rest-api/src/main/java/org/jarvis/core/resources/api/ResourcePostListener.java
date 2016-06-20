@@ -13,8 +13,9 @@ public interface ResourcePostListener<T> {
 	 * @param request
 	 * @param response
 	 * @param bean 
+	 * @throws InterruptedException 
 	 */
-	void post(Request request, Response response, T bean);
+	void post(Request request, Response response, T bean) throws InterruptedException;
 
 	/**
 	 * @param request

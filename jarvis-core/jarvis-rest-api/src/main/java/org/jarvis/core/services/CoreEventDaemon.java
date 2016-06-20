@@ -22,7 +22,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import javax.annotation.PostConstruct;
 
-import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.iot.EventBean;
 import org.jarvis.core.model.bean.iot.IotBean;
@@ -99,12 +98,14 @@ public class CoreEventDaemon {
 	
 	/**
 	 * @param event
+	 * @throws InterruptedException 
 	 */
-	public void post(EventBean event) {
+	public void post(EventBean event) throws InterruptedException {
 		try {
 			linked.put(event);
 		} catch (InterruptedException e) {
-			throw new TechnicalException(e);
+			logger.warn("Exception {}", e);
+			throw e;
 		}
 	}
 

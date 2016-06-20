@@ -182,7 +182,11 @@ public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 			
 			@Override
 			public void run() {
-				fire(bean);
+				try {
+					fire(bean);
+				} catch (InterruptedException e) {
+					Thread.currentThread().interrupt();
+				}
 			}
 			
 		}, trigger);
@@ -209,7 +213,11 @@ public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 				} catch (InterruptedException e) {
 					throw new TechnicalException(e);
 				}
-				fire(bean);
+				try {
+					fire(bean);
+				} catch (InterruptedException e) {
+					Thread.currentThread().interrupt();
+				}
 			}
 			
 		}, trigger);
@@ -236,7 +244,11 @@ public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 				} catch (InterruptedException e) {
 					throw new TechnicalException(e);
 				}
-				fire(bean);
+				try {
+					fire(bean);
+				} catch (InterruptedException e) {
+					Thread.currentThread().interrupt();
+				}
 			}
 			
 		}, trigger);
@@ -247,8 +259,9 @@ public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 	 * test cron
 	 * @param bean
 	 * @return GenericValue
+	 * @throws InterruptedException 
 	 */
-	private GenericValue doTest(CronBean bean, GenericMap args) {
+	private GenericValue doTest(CronBean bean, GenericMap args) throws InterruptedException {
 		fire(bean);
 		return new GenericValue("{}");
 	}
@@ -262,8 +275,9 @@ public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 	/**
 	 * fire cron
 	 * @param bean
+	 * @throws InterruptedException 
 	 */
-	private void fire(CronBean bean) {
+	private void fire(CronBean bean) throws InterruptedException {
 		for(TriggerBean trigger : apiTriggerResources.doFindAllBean()) {
 			for(GenericEntity cron : apiHrefTriggerCronResources.findAll(trigger)) {
 				if(cron.id.equals(bean.id)) {

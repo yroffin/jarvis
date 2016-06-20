@@ -116,8 +116,9 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * @param request
 	 * @param response
 	 * @param s
+	 * @throws InterruptedException 
 	 */
-	private void notifyPost(Request request, Response response, S s) {
+	private void notifyPost(Request request, Response response, S s) throws InterruptedException {
         for(ResourcePostListener<S> listener : postListeners){
             listener.post(request,response,s);
         }
