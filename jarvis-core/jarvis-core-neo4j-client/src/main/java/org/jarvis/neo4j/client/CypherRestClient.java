@@ -63,8 +63,8 @@ public class CypherRestClient extends AbstractJerseyClient {
 				baseurl,
 				user,
 				password,
-				"60",
-				"60");
+				"2000",
+				"2000");
 	}
 
 	/**

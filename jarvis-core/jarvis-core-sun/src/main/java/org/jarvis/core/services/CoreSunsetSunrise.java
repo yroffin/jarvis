@@ -57,8 +57,8 @@ public class CoreSunsetSunrise extends AbstractJerseyClient {
 				env.getProperty("jarvis.sunset.sunrise.url"),
 				env.getProperty("jarvis.sunset.sunrise.user"),
 				env.getProperty("jarvis.sunset.sunrise.password"),
-				env.getProperty("jarvis.sunset.sunrise.timeout.connect","2"),
-				env.getProperty("jarvis.sunset.sunrise.timeout.read","2"));
+				env.getProperty("jarvis.sunset.sunrise.timeout.connect","2000"),
+				env.getProperty("jarvis.sunset.sunrise.timeout.read","2000"));
 	}
 	
 	/**

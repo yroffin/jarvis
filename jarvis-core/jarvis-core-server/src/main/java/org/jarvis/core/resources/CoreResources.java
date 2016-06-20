@@ -34,8 +34,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
-import spark.utils.IOUtils;
-
 /**
  * core resources (ui, ...)
  */
@@ -48,59 +46,6 @@ public class CoreResources {
 
 	@Autowired
 	CoreEhcacheManager coreEhcacheManager;
-
-	ResourceData getData(String key) throws IOException {
-		if (coreEhcacheManager.contains(key)) {
-			logger.debug("Cached data {}", key);
-			return coreEhcacheManager.get(key);
-		} else {
-			logger.debug("Un-cached data {}", key);
-			InputStream inputStream = getClass().getResourceAsStream(key);
-			if (inputStream != null) {
-				ResourceData value = null;
-				if (key.endsWith(".html")) {
-					value = new ResourceData(IOUtils.toString(inputStream));
-					value.setContentType("text/html; charset=utf-8");
-				}
-				if (key.endsWith(".markdown")) {
-					value = new ResourceData(IOUtils.toString(inputStream));
-					value.setContentType("text/html; charset=utf-8");
-				}
-				if (key.endsWith(".css")) {
-					value = new ResourceData(IOUtils.toString(inputStream));
-					value.setContentType("text/css; charset=utf-8");
-				}
-				if (key.endsWith(".js")) {
-					value = new ResourceData(IOUtils.toString(inputStream));
-					value.setContentType("application/javascript; charset=utf-8");
-				}
-				if (key.endsWith(".json")) {
-					value = new ResourceData(IOUtils.toString(inputStream));
-					value.setContentType("text/html; charset=utf-8");
-				}
-				if (key.endsWith(".svg")) {
-					value = new ResourceData(IOUtils.toString(inputStream));
-					value.setContentType("text/html; charset=utf-8");
-				}
-				if (key.endsWith(".ico")) {
-					value = new ResourceData(IOUtils.toString(inputStream));
-					value.setContentType("image/x-icon");
-				}
-				if (key.endsWith(".png")) {
-					value = new ResourceData(IOUtils.toByteArray(inputStream));
-					value.setContentType("image/x-png");
-				}
-				if (key.endsWith(".jpg")) {
-					value = new ResourceData(IOUtils.toByteArray(inputStream));
-					value.setContentType("image/x-jpg");
-				}
-				inputStream.close();
-				return coreEhcacheManager.put(key, value);
-			} else {
-				return null;
-			}
-		}
-	}
 
 	/**
 	 * create resource from classpath

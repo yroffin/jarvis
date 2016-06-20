@@ -32,8 +32,8 @@ public class Oauth2ApiClient extends AbstractJerseyClient {
 				baseurl,
 				null,
 				null,
-				"2",
-				"2");
+				"2000",
+				"2000");
 
 		this.token = token;
 		this.path = path;

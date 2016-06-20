@@ -35,9 +35,6 @@ public class JarvisCoreServer {
 	protected static String normalizedPath = JarvisStatic.normalizedPath;
 	protected static Logger logger = LoggerFactory.getLogger(JarvisCoreServer.class);
 
-	private JarvisCoreServer() {
-	}
-	
 	/**
 	 * main entry
 	 * 

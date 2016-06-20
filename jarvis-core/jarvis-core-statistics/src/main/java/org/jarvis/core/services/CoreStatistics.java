@@ -67,8 +67,8 @@ public class CoreStatistics extends AbstractJerseyClient {
 				env.getProperty("jarvis.elasticsearch.url"),
 				env.getProperty("jarvis.elasticsearch.user"),
 				env.getProperty("jarvis.elasticsearch.password"),
-				env.getProperty("jarvis.elasticsearch.timeout.connect","2"),
-				env.getProperty("jarvis.elasticsearch.timeout.read","2"));
+				env.getProperty("jarvis.elasticsearch.timeout.connect","2000"),
+				env.getProperty("jarvis.elasticsearch.timeout.read","2000"));
 		
 		// Orika
 		mapperFactory.getConverterFactory().registerConverter(new PassThroughConverter(org.joda.time.DateTime.class));
