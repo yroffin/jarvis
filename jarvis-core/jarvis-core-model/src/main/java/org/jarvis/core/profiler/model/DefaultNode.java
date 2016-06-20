@@ -10,11 +10,6 @@ public abstract class DefaultNode implements Comparable<GenericNode>, GenericNod
 	protected String name;
 	protected String description;
 
-	@Override
-	public String toString() {
-		return "DefaultNode [id=" + id + ", name=" + name + ", description=" + description + "]";
-	}
-
 	/**
 	 * @param name
 	 * @param description 
@@ -51,12 +46,7 @@ public abstract class DefaultNode implements Comparable<GenericNode>, GenericNod
 	}
 	
 	@Override
-	public int hashCode() {
-		return super.hashCode();
-	}
-
-	@Override
-	public int compareTo(GenericNode o) {
-		return (getSorter().compareTo(o.getSorter()));
+	public String toString() {
+		return "DefaultNode [id=" + id + ", name=" + name + ", description=" + description + "]";
 	}
 }

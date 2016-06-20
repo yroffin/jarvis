@@ -70,18 +70,8 @@ public abstract class DefaultFlow implements Comparable<DefaultFlow>, GenericNod
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		return super.equals(obj);
-	}
-	
-	@Override
-	public int hashCode() {
-		return super.hashCode();
-	}
-
-	@Override
 	public int compareTo(DefaultFlow o) {
-		return (getSorter().compareTo(o.getSorter()));
+		return getSorter().compareTo(o.getSorter());
 	}
 
 	/**

@@ -30,7 +30,7 @@ import com.fasterxml.jackson.datatype.joda.JodaModule;
 /**
  * abstract client
  */
-public class AbstractJerseyClient {
+public abstract class AbstractJerseyClient {
 
 	protected String baseurl;
 	protected String user;
@@ -41,12 +41,6 @@ public class AbstractJerseyClient {
 	
 	protected ObjectMapper mapper = new ObjectMapper();
 	
-	/**
-	 * constructor
-	 */
-	public AbstractJerseyClient() {		
-	}
-
 	/**
 	 * @param baseurl
 	 * @param user 
@@ -64,8 +58,8 @@ public class AbstractJerseyClient {
 		this.client = ClientBuilder.newClient();
 
 		// Fix timeout
-	    client.property(ClientProperties.CONNECT_TIMEOUT, Integer.parseInt(connect));
-	    client.property(ClientProperties.READ_TIMEOUT,    Integer.parseInt(read));
+		client.property(ClientProperties.CONNECT_TIMEOUT, Integer.parseInt(connect));
+		client.property(ClientProperties.READ_TIMEOUT,    Integer.parseInt(read));
 
 		// register auth feature if user is not null
 		if(user != null) {

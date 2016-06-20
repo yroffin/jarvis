@@ -38,6 +38,20 @@ import spark.Response;
 @Component
 public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 
+	@Autowired
+	ThreadPoolTaskScheduler jarvisThreadPoolTaskScheduler;
+	
+	@Autowired
+	CoreEventDaemon coreEventDaemon;
+
+	@Autowired
+	CoreSunsetSunrise coreSunsetSunrise;
+	
+	/**
+	 * internal cron registry
+	 */
+	ConcurrentMap<String,ScheduledFuture<?>> scheduled = new ConcurrentHashMap<>();
+	
 	/**
 	 * constructor
 	 */
@@ -96,27 +110,13 @@ public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 		return scheduler;
 	}
 	
-	@Autowired
-	ThreadPoolTaskScheduler jarvisThreadPoolTaskScheduler;
-	
-	@Autowired
-	CoreEventDaemon coreEventDaemon;
-
-	@Autowired
-	CoreSunsetSunrise coreSunsetSunrise;
-	
 	/**
-	 * internal cron registry
-	 */
-	ConcurrentMap<String,ScheduledFuture<?>> scheduled = new ConcurrentHashMap<String,ScheduledFuture<?>>();
-	
-	/**
-	 * toggle cron
+	 * find target
 	 * @param bean
-	 * @param args 
-	 * @return GenericValue
+	 * @param args
+	 * @return boolean
 	 */
-	private synchronized GenericValue doToggle(CronBean bean, GenericMap args) {
+	private boolean findTarget(CronBean bean, GenericMap args) {
 		boolean target = !scheduled.containsKey(bean.id);
 		/**
 		 * if target is null compute it with crontab status
@@ -126,18 +126,43 @@ public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 		} else {
 			target = args.get("target").equals(true);
 		}
+		return target;
+	}
+
+	/**
+	 * compute result
+	 * @param bean
+	 * @param target
+	 * @return GenericValue
+	 */
+	private GenericValue compute(CronBean bean, boolean target) {
+		if(target == false) {
+			/**
+			 * unschedule this cron
+			 */
+			ScheduledFuture<?> sch = scheduled.get(bean.id);
+			sch.cancel(false);
+			scheduled.remove(bean.id, sch);
+			return new GenericValue("false");
+		} else {
+			return new GenericValue("true");
+		}
+	}
+
+	/**
+	 * toggle cron
+	 * @param bean
+	 * @param args 
+	 * @return GenericValue
+	 */
+	private synchronized GenericValue doToggle(CronBean bean, GenericMap args) {
+		/**
+		 * find target
+		 */
+		boolean target = findTarget(bean, args);
+		
 		if(scheduled.containsKey(bean.id)) {
-			if(target == false) {
-				/**
-				 * unschedule this cron
-				 */
-				ScheduledFuture<?> sch = scheduled.get(bean.id);
-				sch.cancel(false);
-				scheduled.remove(bean.id, sch);
-				return new GenericValue("false");
-			} else {
-				return new GenericValue("true");
-			}
+			return compute(bean, target);
 		} else {
 			if(target == true) {
 				if(bean.triggerType.toUpperCase().equals(TriggerType.SUNRISE.name())) {
