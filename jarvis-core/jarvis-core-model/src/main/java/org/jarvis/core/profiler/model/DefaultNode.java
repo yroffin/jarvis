@@ -5,22 +5,22 @@ package org.jarvis.core.profiler.model;
  */
 public abstract class DefaultNode implements Comparable<GenericNode>, GenericNode {
 
+	protected static int sequence = 10;
+	protected String id;
+	protected String name;
+	protected String description;
+
 	@Override
 	public String toString() {
 		return "DefaultNode [id=" + id + ", name=" + name + ", description=" + description + "]";
 	}
-
-	static protected int sequence = 10;
-	protected String id;
-	protected String name;
-	protected String description;
 
 	/**
 	 * @param name
 	 * @param description 
 	 */
 	public DefaultNode(String name, String description) {
-		this.id = (sequence++)+"";
+		this.id = Integer.toString(sequence++);
 		this.name = name;
 		this.description = description;
 	}
@@ -46,7 +46,17 @@ public abstract class DefaultNode implements Comparable<GenericNode>, GenericNod
 	}
 
 	@Override
+	public boolean equals(Object obj) {
+		return super.equals(obj);
+	}
+	
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
+
+	@Override
 	public int compareTo(GenericNode o) {
-		return (int) (getSorter().compareTo(o.getSorter()));
+		return (getSorter().compareTo(o.getSorter()));
 	}
 }

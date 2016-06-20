@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonPropertyOrder(alphabetic=true)
 public abstract class DefaultFlow implements Comparable<DefaultFlow>, GenericNode {
 
-	static protected int sequence = 10;
+	protected static int sequence = 10;
 
 	protected String id;
 	protected String name;
@@ -23,7 +23,7 @@ public abstract class DefaultFlow implements Comparable<DefaultFlow>, GenericNod
 	 * @param source 
 	 */
 	public DefaultFlow(String name, GenericNode source, GenericNode target) {
-		this.id = (sequence++)+"";
+		this.id = Integer.toString(sequence++);
 		this.name = name;
 		this.sourceRef = source;
 		this.targetRef = target;
@@ -36,7 +36,7 @@ public abstract class DefaultFlow implements Comparable<DefaultFlow>, GenericNod
 	 * @param b
 	 */
 	public DefaultFlow(String name, GenericNode source, GenericNode target, boolean b) {
-		this.id = (sequence++)+"";
+		this.id = Integer.toString(sequence++);
 		this.name = name;
 		this.sourceRef = source;
 		this.targetRef = target;
@@ -70,17 +70,18 @@ public abstract class DefaultFlow implements Comparable<DefaultFlow>, GenericNod
 	}
 
 	@Override
-	@JsonIgnore
-	public abstract String getSorter();
-
-	@Override
 	public boolean equals(Object obj) {
 		return super.equals(obj);
+	}
+	
+	@Override
+	public int hashCode() {
+		return super.hashCode();
 	}
 
 	@Override
 	public int compareTo(DefaultFlow o) {
-		return (int) (getSorter().compareTo(o.getSorter()));
+		return (getSorter().compareTo(o.getSorter()));
 	}
 
 	/**

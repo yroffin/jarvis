@@ -35,6 +35,9 @@ public class JarvisCoreServer {
 	protected static String normalizedPath = JarvisStatic.normalizedPath;
 	protected static Logger logger = LoggerFactory.getLogger(JarvisCoreServer.class);
 
+	private JarvisCoreServer() {
+	}
+	
 	/**
 	 * main entry
 	 * 
@@ -45,6 +48,6 @@ public class JarvisCoreServer {
 		/**
 		 * start application
 		 */
-		SpringApplication.run(JarvisCoreServer.class, args);
+		SpringApplication.run(JarvisCoreServer.class, args).close();
 	}
 }
