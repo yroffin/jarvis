@@ -29,6 +29,7 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.jarvis.core.AbstractJerseyClient;
 import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.exception.TechnicalHttpException;
 import org.jarvis.core.exception.TechnicalNotFoundException;
@@ -55,7 +56,15 @@ public class CypherRestClient extends AbstractJerseyClient {
 	 * @param password 
 	 */
 	public CypherRestClient(String baseurl, String user, String password) {
-		super(baseurl, user, password);
+		/**
+		 * initialize
+		 */
+		initialize(
+				baseurl,
+				user,
+				password,
+				"60",
+				"60");
 	}
 
 	/**

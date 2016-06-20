@@ -6,9 +6,9 @@ import java.util.Map;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.jarvis.core.AbstractJerseyClient;
 import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.exception.TechnicalHttpException;
-import org.jarvis.neo4j.client.AbstractJerseyClient;
 
 /**
  * simple oauth2 api client
@@ -25,7 +25,16 @@ public class Oauth2ApiClient extends AbstractJerseyClient {
 	 * @param path 
 	 */
 	public Oauth2ApiClient(String baseurl, String token, String path) {
-		super(baseurl, null, null);
+		/**
+		 * initialize
+		 */
+		initialize(
+				baseurl,
+				null,
+				null,
+				"2",
+				"2");
+
 		this.token = token;
 		this.path = path;
 	}

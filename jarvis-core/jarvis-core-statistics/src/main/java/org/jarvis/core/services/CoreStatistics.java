@@ -17,14 +17,11 @@
 package org.jarvis.core.services;
 
 import javax.annotation.PostConstruct;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.glassfish.jersey.client.ClientProperties;
-import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
+import org.jarvis.core.AbstractJerseyClient;
 import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.model.bean.GenericBean;
 import org.jarvis.core.model.bean.iot.EventBean;
@@ -41,10 +38,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.joda.JodaModule;
 
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.converter.builtin.PassThroughConverter;
@@ -54,50 +47,28 @@ import ma.glasnost.orika.impl.DefaultMapperFactory;
  * main daemon
  */
 @Component
-public class CoreStatistics {
+public class CoreStatistics extends AbstractJerseyClient {
 	
 	protected static Logger logger = LoggerFactory.getLogger(CoreStatistics.class);
-	protected ObjectMapper mapper = new ObjectMapper();
 	protected MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
 	
 	@Autowired
 	Environment env;
 
-	protected String baseurl;
-	protected String user;
-	protected String password;
-	protected Client client;
-	
 	/**
 	 * start component
 	 */
 	@PostConstruct
 	public void init() {
-		// store Base URL
-		this.baseurl = env.getProperty("jarvis.elasticsearch.url");
-		this.user = env.getProperty("jarvis.elasticsearch.user");
-		this.password = env.getProperty("jarvis.elasticsearch.password");
-		
 		/**
-		 * create HTTP Client
+		 * initialize
 		 */
-		this.client = ClientBuilder.newClient();
-		
-		/**
-		 * fix timeout
-		 */
-	    client.property(ClientProperties.CONNECT_TIMEOUT, Integer.parseInt(env.getProperty("jarvis.elasticsearch.timeout.connect","2")));
-	    client.property(ClientProperties.READ_TIMEOUT,    Integer.parseInt(env.getProperty("jarvis.elasticsearch.timeout.read","2")));
-
-		if(user != null) {
-			HttpAuthenticationFeature feature = HttpAuthenticationFeature.basic(user, password);
-			client.register(feature);
-		}
-		
-		// Mapper
-		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		mapper.registerModule(new JodaModule());
-		mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+		initialize(
+				env.getProperty("jarvis.elasticsearch.url"),
+				env.getProperty("jarvis.elasticsearch.user"),
+				env.getProperty("jarvis.elasticsearch.password"),
+				env.getProperty("jarvis.elasticsearch.timeout.connect","2"),
+				env.getProperty("jarvis.elasticsearch.timeout.read","2"));
 		
 		// Orika
 		mapperFactory.getConverterFactory().registerConverter(new PassThroughConverter(org.joda.time.DateTime.class));

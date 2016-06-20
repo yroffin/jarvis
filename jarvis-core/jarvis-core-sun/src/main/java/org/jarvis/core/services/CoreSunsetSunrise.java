@@ -25,6 +25,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
+import org.jarvis.core.AbstractJerseyClient;
 import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.model.rest.sun.SunApiRest;
 import org.jarvis.core.model.rest.sun.SunApiResultRest;
@@ -45,40 +46,27 @@ import com.fasterxml.jackson.datatype.joda.JodaModule;
  * main daemon
  */
 @Component
-public class CoreSunsetSunrise {
+public class CoreSunsetSunrise extends AbstractJerseyClient {
 	
 	protected static Logger logger = LoggerFactory.getLogger(CoreSunsetSunrise.class);
-	protected ObjectMapper mapper = new ObjectMapper();
 
 	@Autowired
 	Environment env;
 
-	protected String baseurl;
-	protected String user;
-	protected String password;
-	protected Client client;
-	
 	/**
 	 * start component
 	 */
 	@PostConstruct
 	public void init() {
-		// store Base URL
-		this.baseurl = env.getProperty("jarvis.sunset.sunrise.url");
-		this.user = env.getProperty("jarvis.sunset.sunrise.user");
-		this.password = env.getProperty("jarvis.sunset.sunrise.password");
-		
-		// create HTTP Client
-		this.client = ClientBuilder.newClient();
-		if(user != null) {
-			HttpAuthenticationFeature feature = HttpAuthenticationFeature.basic(user, password);
-			client.register(feature);
-		}
-		
-		// Mapper
-		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		mapper.registerModule(new JodaModule());
-		mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+		/**
+		 * initialize
+		 */
+		initialize(
+				env.getProperty("jarvis.sunset.sunrise.url"),
+				env.getProperty("jarvis.sunset.sunrise.user"),
+				env.getProperty("jarvis.sunset.sunrise.password"),
+				env.getProperty("jarvis.sunset.sunrise.timeout.connect","2"),
+				env.getProperty("jarvis.sunset.sunrise.timeout.read","2"));
 	}
 	
 	/**

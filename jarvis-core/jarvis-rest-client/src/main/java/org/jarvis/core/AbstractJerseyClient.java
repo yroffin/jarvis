@@ -13,15 +13,18 @@
  *  See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-package org.jarvis.neo4j.client;
+
+package org.jarvis.core;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 
+import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
 
 /**
@@ -33,29 +36,46 @@ public class AbstractJerseyClient {
 	protected String user;
 	protected String password;
 	protected Client client;
+	protected String connect;
+	protected String read;
 	
 	protected ObjectMapper mapper = new ObjectMapper();
 	
+	/**
+	 * constructor
+	 */
+	public AbstractJerseyClient() {		
+	}
+
 	/**
 	 * @param baseurl
 	 * @param user 
 	 * @param password 
 	 */
-	public AbstractJerseyClient(String baseurl, String user, String password) {
+	protected void initialize(String baseurl, String user, String password, String connect, String read) {
 		// store Base URL
 		this.baseurl = baseurl;
 		this.user = user;
 		this.password = password;
+		this.connect = connect;
+		this.read = read;
 		
 		// create HTTP Client
 		this.client = ClientBuilder.newClient();
+
+		// Fix timeout
+	    client.property(ClientProperties.CONNECT_TIMEOUT, Integer.parseInt(connect));
+	    client.property(ClientProperties.READ_TIMEOUT,    Integer.parseInt(read));
+
 		// register auth feature if user is not null
 		if(user != null) {
 			HttpAuthenticationFeature feature = HttpAuthenticationFeature.basic(user, password);
 			client.register(feature);
 		}
+		
 		// Mapper
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		mapper.registerModule(new JodaModule());
+		mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 	}
 }

@@ -57,6 +57,11 @@
 			</dependency>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
+				<artifactId>jarvis-rest-client</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
 				<artifactId>jarvis-rest-api</artifactId>
 				<version>${project.version}</version>
 			</dependency>
@@ -418,6 +423,7 @@
 		<module>jarvis-test-tools</module>
 		<module>jarvis-core-statistics</module>
 		<module>jarvis-core-ui</module>
+		<module>jarvis-rest-client</module>
 	</modules>
 
 	<repositories>
