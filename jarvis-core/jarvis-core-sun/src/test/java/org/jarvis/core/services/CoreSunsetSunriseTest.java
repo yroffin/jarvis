@@ -51,6 +51,22 @@ public class CoreSunsetSunriseTest {
 			}
 			
 		});
+		Mockito.when(environment.getProperty("jarvis.sunset.sunrise.timeout.connect","2000")).then(new Answer<String>() {
+
+			@Override
+			public String answer(InvocationOnMock invocation) throws Throwable {
+				return "2000";
+			}
+			
+		});
+		Mockito.when(environment.getProperty("jarvis.sunset.sunrise.timeout.read", "2000")).then(new Answer<String>() {
+
+			@Override
+			public String answer(InvocationOnMock invocation) throws Throwable {
+				return "2000";
+			}
+			
+		});
 	}
 
 	/**
