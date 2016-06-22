@@ -478,9 +478,8 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
-					<sonar.host.url>
-					http://192.168.1.26:9000
-				</sonar.host.url>
+				<sonar.host.url>http://192.168.1.26:9000</sonar.host.url>
+				<sonar.sources>src,src/main/resources</sonar.sources>
 			</properties>
 		</profile>
 		<profile>
