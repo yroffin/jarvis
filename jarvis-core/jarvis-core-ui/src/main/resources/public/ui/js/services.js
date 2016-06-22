@@ -106,13 +106,6 @@ myAppServices.factory('$store', [ '$log', '$rootScope', function($log, $rootScop
 	    	}	        
 	      };
 
-  /**
-   * any scope can access to store
-   */
-  $rootScope.store = function(classname, instance, def) {
-		return methods.get;
-  }
-
   return methods;
 }]);
 

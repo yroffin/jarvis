@@ -68,7 +68,7 @@ public class CoreWebsocket {
 		mapper.registerModule(new JodaModule());
 	
 		SystemIndicator.init();
-		Trigger trigger = new CronTrigger("* * * * * *");
+		Trigger trigger = new CronTrigger("0,10,20,30,40,50 * * * * *");
 		ScheduledFuture<?> sch = jarvisThreadPoolStatisticsScheduler.schedule(new Runnable() {
 			
 			@Override

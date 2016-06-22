@@ -542,14 +542,12 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
 		$scope.gauge.animationSpeed = 10; // set animation speed (32 is default value)
 		$scope.gauge.set(0); // set actual value
 		
-		// for the $watch
-		$scope.systemIndicator = function() {
-			return $store.get('SystemIndicator','1',0);
-		}
-		
-		$scope.$watch($scope.systemIndicator, function(newValue, oldValue, scope) {
-			$scope.gauge.set(newValue.processCpuLoad*1000);
-		});
+		$scope.$watch(
+			function() {
+				return $store.get('SystemIndicator','1',0).systemCpuLoad * 100;
+			}, function(newValue, oldValue, scope) {
+				$scope.gauge.set(newValue);
+			});
     }]
   }
 }])

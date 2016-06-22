@@ -260,6 +260,16 @@ angular.module('JarvisApp.config',[])
         }
 
         /**
+         * store access
+         */
+        $scope.$watch(
+        	function(classname, instance, def) {
+	    		return $store.collection;
+	        }, function(newValue, oldValue, scope) {
+				$scope.store = newValue;
+			});
+        
+        /**
          * bootstrap this controller
          */
     	$scope.boot = function() {
