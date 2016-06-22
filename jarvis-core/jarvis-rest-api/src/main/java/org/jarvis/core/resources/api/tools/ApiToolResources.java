@@ -40,7 +40,7 @@ public class ApiToolResources extends ApiResources<SnapshotRest,SnapshotBean> {
 	}
 
 	@Override
-	public GenericValue doRealTask(SnapshotBean bean, GenericMap args, TaskType taskType) throws Exception {
+	public GenericValue doRealTask(SnapshotBean bean, GenericMap args, TaskType taskType) throws TechnicalException {
 		GenericMap result;
 		switch(taskType) {
 			case DOWNLOAD:
@@ -52,7 +52,7 @@ public class ApiToolResources extends ApiResources<SnapshotRest,SnapshotBean> {
 			default:
 				result = new GenericMap();
 		}
-		return new GenericValue(mapper.writeValueAsString(result));
+		return new GenericValue(result);
 	}
 
 	/**

@@ -7,6 +7,7 @@ import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.type.GenericMap;
 import org.jarvis.core.type.ResultType;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
@@ -101,6 +102,17 @@ public class GenericValue {
 	}
 
 	/**
+	 * @param result
+	 */
+	public GenericValue(GenericMap result) {
+		try {
+			initialize(mapper.writeValueAsString(result));
+		} catch (JsonProcessingException e) {
+			throw new TechnicalException(e);
+		}
+	}
+
+	/**
 	 * @return ResultType
 	 */
 	public ResultType getType() {
@@ -162,5 +174,4 @@ public class GenericValue {
 		return "GenericValue [type=" + type + ", voBoolean=" + voBoolean + ", voObject=" + voObject + ", voList="
 				+ voList + ", voString=" + voString + "]";
 	}
-	
 }

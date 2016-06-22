@@ -34,6 +34,8 @@ import org.jarvis.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 /**
  * View resource
  */
@@ -62,16 +64,21 @@ public class ApiConnectorResources extends ApiResources<ConnectorRest,ConnectorB
 	}
 
 	@Override
-	public GenericValue doRealTask(ConnectorBean bean, GenericMap args, TaskType taskType) throws Exception {
+	public GenericValue doRealTask(ConnectorBean bean, GenericMap args, TaskType taskType) throws TechnicalException {
 		GenericMap result;
 		switch(taskType) {
 			case PING:
+			try {
 				result = ping(bean, args, new GenericMap());
+			} catch (TechnicalNotFoundException | TechnicalHttpException e) {
+				logger.error("Error {}", e);
+				throw new TechnicalException(e);
+			}
 				break;
 			default:
 				result = new GenericMap();
 		}
-		return new GenericValue(mapper.writeValueAsString(result));
+		return new GenericValue(result);
 	}
 
 	private GenericMap ping(ConnectorBean bean, GenericMap args, GenericMap properties) throws TechnicalNotFoundException, TechnicalHttpException {

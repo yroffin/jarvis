@@ -82,6 +82,7 @@ public class CoreEventDaemon {
 	CoreStatistics coreStatistics;
 	
 	private InnerThread inner;
+	private LinkedBlockingQueue<EventBean> linked = new LinkedBlockingQueue<>();
 	protected MapperFactory mapperFactory = null;
 
 	/**
@@ -116,8 +117,6 @@ public class CoreEventDaemon {
 		inner.handle(event);
 	}
 
-	private LinkedBlockingQueue<EventBean> linked = new LinkedBlockingQueue<EventBean>();
-
 	class InnerThread implements Runnable {
 
 		@Override
@@ -131,6 +130,7 @@ public class CoreEventDaemon {
 				}
 			} catch (InterruptedException e) {
 				logger.error("{}", e);
+				Thread.currentThread().interrupt();
 			}
 		}
 
@@ -140,6 +140,35 @@ public class CoreEventDaemon {
 			 */
 			coreStatistics.write(event);
 
+			/**
+			 * execute it
+			 */
+			for(ScenarioBean scenario : scenarioToExecute(event)) {
+				try {
+					apiScenarioResources.doExecute(null,scenario.id, new GenericMap(), TaskType.EXECUTE);
+				} catch (TechnicalNotFoundException e) {
+					logger.warn(e.getMessage());
+				}
+			}
+
+			/**
+			 * execute it
+			 */
+			for(IotBean iot : iotToExecute(event)) {
+				try {
+					apiIotResources.doExecute(null,iot.id, new GenericMap(), TaskType.EXECUTE);
+				} catch (TechnicalNotFoundException e) {
+					logger.warn(e.getMessage());
+				}
+			}
+		}
+
+		/**
+		 * find scenario
+		 * @param event
+		 * @return
+		 */
+		private List<ScenarioBean> scenarioToExecute(EventBean event) {
 			List<ScenarioBean> scenarioToExecute = new ArrayList<ScenarioBean>();
 			/**
 			 * find any scenario with this trigger
@@ -156,19 +185,15 @@ public class CoreEventDaemon {
 					}
 				}
 			}
+			return scenarioToExecute;
+		}
 
-			/**
-			 * execute it
-			 */
-			GenericMap body = new GenericMap();
-			for(ScenarioBean scenario : scenarioToExecute) {
-				try {
-					apiScenarioResources.doExecute(null,scenario.id, body, TaskType.EXECUTE);
-				} catch (TechnicalNotFoundException e) {
-					logger.warn(e.getMessage());
-				}
-			}
-
+		/**
+		 * find iot
+		 * @param event
+		 * @return
+		 */
+		private List<IotBean> iotToExecute(EventBean event) {
 			List<IotBean> iotToExecute = new ArrayList<IotBean>();
 			/**
 			 * find any scenario with this trigger
@@ -185,17 +210,7 @@ public class CoreEventDaemon {
 					}
 				}
 			}
-
-			/**
-			 * execute it
-			 */
-			for(IotBean iot : iotToExecute) {
-				try {
-					apiIotResources.doExecute(null,iot.id, body, TaskType.EXECUTE);
-				} catch (TechnicalNotFoundException e) {
-					logger.warn(e.getMessage());
-				}
-			}
+			return iotToExecute;
 		}
 		
 	}

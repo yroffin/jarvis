@@ -16,6 +16,7 @@
 
 package org.jarvis.core.resources.api.iot;
 
+import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.model.bean.iot.EventBean;
 import org.jarvis.core.model.rest.iot.EventRest;
 import org.jarvis.core.resources.api.ApiResources;
@@ -76,7 +77,7 @@ public class ApiEventResources extends ApiResources<EventRest,EventBean> {
 	}
 
 	@Override
-	public GenericValue doRealTask(EventBean Event, GenericMap args, TaskType taskType) throws Exception {
+	public GenericValue doRealTask(EventBean Event, GenericMap args, TaskType taskType) throws TechnicalException {
 		return null;
 	}
 }

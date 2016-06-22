@@ -16,6 +16,7 @@
 
 package org.jarvis.core.resources.api.iot;
 
+import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.model.bean.scenario.TriggerBean;
 import org.jarvis.core.model.bean.tools.CronBean;
 import org.jarvis.core.model.rest.scenario.TriggerRest;
@@ -62,7 +63,7 @@ public class ApiTriggerResources extends ApiLinkedResources<TriggerRest,TriggerB
 	}
 
 	@Override
-	public GenericValue doRealTask(TriggerBean trigger, GenericMap args, TaskType taskType) throws Exception {
+	public GenericValue doRealTask(TriggerBean trigger, GenericMap args, TaskType taskType) throws TechnicalException {
 		return null;
 	}
 }

@@ -19,6 +19,7 @@ package org.jarvis.core.resources.api.plugins;
 import java.io.IOException;
 import java.util.Map.Entry;
 
+import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.plugin.CommandBean;
 import org.jarvis.core.model.bean.plugin.ScriptPluginBean;
@@ -34,6 +35,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 /**
  * script plugin resource
@@ -72,19 +75,29 @@ public class ApiScriptPluginResources extends ApiLinkedResources<ScriptPluginRes
 	 * all script have two phase : a render (data) phase and an execute (action) phase
 	 */
 	@Override
-	public GenericValue doRealTask(ScriptPluginBean bean, GenericMap args, TaskType taskType) throws Exception {
+	public GenericValue doRealTask(ScriptPluginBean bean, GenericMap args, TaskType taskType) throws TechnicalException {
 		GenericMap result;
 		switch(taskType) {
 			case RENDER:
-				result = renderOrExecute(bean, args, new GenericMap(), true);
+				try {
+					result = renderOrExecute(bean, args, new GenericMap(), true);
+				} catch (TechnicalNotFoundException e) {
+					logger.error("Error {}", e);
+					throw new TechnicalException(e);
+				}
 				break;
 			case EXECUTE:
-				result = renderOrExecute(bean, args, new GenericMap(), false);
+				try {
+					result = renderOrExecute(bean, args, new GenericMap(), false);
+				} catch (TechnicalNotFoundException e) {
+					logger.error("Error {}", e);
+					throw new TechnicalException(e);
+				}
 				break;
 			default:
 				result = new GenericMap();
 		}
-		return new GenericValue(mapper.writeValueAsString(result));
+		return new GenericValue(result);
 	}
 
 	/**

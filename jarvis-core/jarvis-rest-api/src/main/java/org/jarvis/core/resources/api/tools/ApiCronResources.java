@@ -84,17 +84,22 @@ public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 	}
 
 	@Override
-	public GenericValue doRealTask(CronBean bean, GenericMap args, TaskType taskType) throws Exception {
+	public GenericValue doRealTask(CronBean bean, GenericMap args, TaskType taskType) throws TechnicalException {
 		GenericMap result;
 		switch(taskType) {
 			case TOGGLE:
 				return doToggle(bean, args);
 			case TEST:
-				return doTest(bean, args);
+				try {
+					return doTest(bean);
+				} catch (InterruptedException e) {
+					logger.error("Error {}", e);
+					throw new TechnicalException(e);
+				}
 			default:
 				result = new GenericMap();
 		}
-		return new GenericValue(mapper.writeValueAsString(result));
+		return new GenericValue(result);
 	}
 
 	/**
@@ -104,7 +109,7 @@ public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 	 * @return boolean
 	 */
 	private boolean findTarget(CronBean bean, GenericMap args) {
-		boolean target = !scheduled.containsKey(bean.id);
+		boolean target;
 		/**
 		 * if target is null compute it with crontab status
 		 */
@@ -152,13 +157,13 @@ public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 			return compute(bean, target);
 		} else {
 			if(target == true) {
-				if(bean.triggerType.toUpperCase().equals(TriggerType.SUNRISE.name())) {
+				if(bean.triggerType.equalsIgnoreCase(TriggerType.SUNRISE.name())) {
 					/**
 					 * create periodic sunrise event generator
 					 */
 					sunriseTrigger(bean);
 				} else {
-					if(bean.triggerType.toUpperCase().equals(TriggerType.SUNSET.name())) {
+					if(bean.triggerType.equalsIgnoreCase(TriggerType.SUNSET.name())) {
 						/**
 						 * create periodic sunset event generator
 						 */
@@ -167,7 +172,7 @@ public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 						/**
 						 * crontab
 						 */
-						if(bean.triggerType.toUpperCase().equals(TriggerType.CRONTAB.name())) {
+						if(bean.triggerType.equalsIgnoreCase(TriggerType.CRONTAB.name())) {
 							/**
 							 * crontab type
 							 */
@@ -223,7 +228,7 @@ public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 				try {
 					Thread.sleep(millis);
 				} catch (InterruptedException e) {
-					throw new TechnicalException(e);
+					Thread.currentThread().interrupt();
 				}
 				try {
 					fire(bean);
@@ -273,7 +278,7 @@ public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 	 * @return GenericValue
 	 * @throws InterruptedException 
 	 */
-	private GenericValue doTest(CronBean bean, GenericMap args) throws InterruptedException {
+	private GenericValue doTest(CronBean bean) throws InterruptedException {
 		fire(bean);
 		return new GenericValue("{}");
 	}

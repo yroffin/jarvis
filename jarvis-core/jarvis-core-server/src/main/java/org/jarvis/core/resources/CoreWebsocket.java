@@ -52,6 +52,9 @@ public class CoreWebsocket {
 	@Autowired
 	ThreadPoolTaskScheduler jarvisThreadPoolStatisticsScheduler;
 
+	private Thread runner = null;
+	private static LinkedBlockingQueue<WebsocketDataBean> queue = new LinkedBlockingQueue<>();
+
 	/**
 	 * mount local resource
 	 */
@@ -101,10 +104,6 @@ public class CoreWebsocket {
 		queue.offer(new WebsocketDataBean(instance, data));
 	}
 
-	Thread system = null;
-	Thread runner = null;
-	static LinkedBlockingQueue<WebsocketDataBean> queue = new LinkedBlockingQueue<>();
-
 	/**
 	 * internal runner to send data on web socket
 	 */
@@ -119,20 +118,18 @@ public class CoreWebsocket {
 					t = queue.take();
 				} catch (InterruptedException e) {
 					logger.error("While taking {}", e);
-					cont = false;
+					Thread.currentThread().interrupt();
 				}
-				if(cont) {
-					/**
-					 * broadcast
-					 */
-					StreamWebSocketHandler.getSessionmap().keySet().stream().filter(Session::isOpen).forEach(session -> {
-						try {
-							session.getRemote().sendString(mapper.writeValueAsString(t));
-						} catch (Exception e) {
-							logger.error("While broadcast {} {}", t, e);
-						}
-					});
-				}
+				/**
+				 * broadcast
+				 */
+				StreamWebSocketHandler.getSessionmap().keySet().stream().filter(Session::isOpen).forEach(session -> {
+					try {
+						session.getRemote().sendString(mapper.writeValueAsString(t));
+					} catch (Exception e) {
+						logger.error("While broadcast {} {}", t, e);
+					}
+				});
 			}
 		}
 	}

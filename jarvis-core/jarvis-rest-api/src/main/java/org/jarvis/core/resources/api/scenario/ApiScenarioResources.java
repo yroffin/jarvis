@@ -107,16 +107,24 @@ public class ApiScenarioResources extends ApiLinkedTwiceResources<ScenarioRest,S
 	}
 
 	@Override
-	public GenericValue doRealTask(ScenarioBean bean, GenericMap args, TaskType taskType) throws Exception {
-		GenericMap result;
+	public GenericValue doRealTask(ScenarioBean bean, GenericMap args, TaskType taskType) throws TechnicalException {
 		switch(taskType) {
 			case EXECUTE:
-				return new GenericValue(execute(bean, args, new GenericMap()));
+				try {
+					return new GenericValue(execute(bean, args, new GenericMap()));
+				} catch (TechnicalNotFoundException e) {
+					logger.error("Error {}", e);
+					throw new TechnicalException(e);
+				}
 			case RENDER:
-				return new GenericValue(render(bean, args, new GenericMap()));
+				try {
+					return new GenericValue(render(bean, args, new GenericMap()));
+				} catch (TechnicalNotFoundException e) {
+					logger.error("Error {}", e);
+					throw new TechnicalException(e);
+				}
 			default:
-				result = new GenericMap();
-				return new GenericValue(mapper.writeValueAsString(result));
+				return new GenericValue(new GenericMap());
 		}
 	}
 

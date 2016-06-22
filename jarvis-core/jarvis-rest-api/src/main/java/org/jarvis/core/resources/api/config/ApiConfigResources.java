@@ -16,6 +16,7 @@
 
 package org.jarvis.core.resources.api.config;
 
+import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.model.bean.config.ConfigBean;
 import org.jarvis.core.model.rest.config.ConfigRest;
 import org.jarvis.core.resources.api.ApiResources;
@@ -47,7 +48,7 @@ public class ApiConfigResources extends ApiResources<ConfigRest,ConfigBean> {
 	}
 
 	@Override
-	public GenericValue doRealTask(ConfigBean bean, GenericMap args, TaskType taskType) throws Exception {
+	public GenericValue doRealTask(ConfigBean bean, GenericMap args, TaskType taskType) throws TechnicalException {
 		return null;
 	}
 }

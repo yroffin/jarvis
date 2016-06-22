@@ -16,6 +16,7 @@
 
 package org.jarvis.core.resources.api.views;
 
+import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.model.bean.iot.IotBean;
 import org.jarvis.core.model.bean.view.ViewBean;
 import org.jarvis.core.model.rest.iot.IotRest;
@@ -62,7 +63,7 @@ public class ApiViewResources extends ApiLinkedResources<ViewRest,ViewBean,IotRe
 	}
 
 	@Override
-	public GenericValue doRealTask(ViewBean bean, GenericMap args, TaskType taskType) throws Exception {
+	public GenericValue doRealTask(ViewBean bean, GenericMap args, TaskType taskType) throws TechnicalException {
 		return null;
 	}
 }

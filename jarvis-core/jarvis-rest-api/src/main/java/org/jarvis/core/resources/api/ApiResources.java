@@ -68,8 +68,8 @@ import spark.utils.IOUtils;
 public abstract class ApiResources<T extends GenericEntity,S extends GenericBean> extends ApiMapper {
 	protected Logger logger = LoggerFactory.getLogger(ApiResources.class);
 
-	private List<ResourcePreListener<T>> preListeners = new ArrayList<ResourcePreListener<T>>();
-	private List<ResourcePostListener<S>> postListeners = new ArrayList<ResourcePostListener<S>>();
+	private List<ResourcePreListener<T>> preListeners = new ArrayList<>();
+	private List<ResourcePostListener<S>> postListeners = new ArrayList<>();
 	
 	/**
 	 * add new listener
@@ -170,9 +170,10 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * spring init
 	 */
 	@PostConstruct
+	@Override
 	protected void init() {
 		super.init();
-		apiService = new ApiService<S>(apiNeo4Service);
+		apiService = new ApiService<>(apiNeo4Service);
 		apiService.setBeanClass(beanClass);
 	}
 
@@ -260,7 +261,7 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * @return List<Rest>
 	 */
 	public List<T> doFindAllRest() {
-		List<T> result = new ArrayList<T>();
+		List<T> result = new ArrayList<>();
 		for(S item : apiService.findAll()) {
 			result.add(mapperFactory.getMapperFacade().map(item, restClass));
 		}
@@ -272,7 +273,7 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * @return List<Rest>
 	 */
 	public List<S> doFindAllBean() {
-		List<S> result = new ArrayList<S>();
+		List<S> result = new ArrayList<>();
 		for(S item : apiService.findAll()) {
 			result.add(item);
 		}
@@ -443,9 +444,9 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * @param args
 	 * @param taskType
 	 * @return String
-	 * @throws Exception
+	 * @throws TechnicalException 
 	 */
-	public abstract GenericValue doRealTask(S bean, GenericMap args, TaskType taskType) throws Exception;
+	public abstract GenericValue doRealTask(S bean, GenericMap args, TaskType taskType) throws TechnicalException;
 
 	/**
 	 * create entity

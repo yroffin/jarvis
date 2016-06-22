@@ -59,20 +59,29 @@ public class ApiCommandResources extends ApiResources<CommandRest,CommandBean> {
 	 * @param args
 	 * @param taskType
 	 * @return String
-	 * @throws Exception
 	 */
 	@Override
-	public GenericValue doRealTask(CommandBean command, GenericMap args, TaskType taskType) throws Exception {
+	public GenericValue doRealTask(CommandBean command, GenericMap args, TaskType taskType) throws TechnicalException {
 		GenericMap result = args;
 		switch(taskType) {
 			case EXECUTE:
-				return new GenericValue(mapper.writeValueAsString(execute(command, result)));
+				try {
+					return new GenericValue(mapper.writeValueAsString(execute(command, result)));
+				} catch (JsonProcessingException e) {
+					logger.error("Error {}", e);
+					throw new TechnicalException(e);
+				}
 			case TEST:
-				return new GenericValue(mapper.writeValueAsString(test(command, result)));
+				try {
+					return new GenericValue(mapper.writeValueAsString(test(command, result)));
+				} catch (JsonProcessingException e) {
+					logger.error("Error {}", e);
+					throw new TechnicalException(e);
+				}
 			default:
 				result = new GenericMap();
 		}
-    	return new GenericValue(mapper.writeValueAsString(result));
+		return new GenericValue(result);
 	}
 
 	/**

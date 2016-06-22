@@ -21,6 +21,7 @@ import static spark.Spark.get;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.model.bean.iot.IotBean;
 import org.jarvis.core.model.bean.plugin.ScriptPluginBean;
 import org.jarvis.core.model.bean.scenario.TriggerBean;
@@ -97,19 +98,29 @@ public class ApiIotResources extends ApiLinkedThirdResources<IotRest,IotBean,Iot
 	}
 
 	@Override
-	public GenericValue doRealTask(IotBean iot, GenericMap args, TaskType taskType) throws Exception {
+	public GenericValue doRealTask(IotBean iot, GenericMap args, TaskType taskType) throws TechnicalException {
 		GenericMap result;
 		switch(taskType) {
 			case RENDER:
-				result = render(iot, args);
+				try {
+					result = render(iot, args);
+				} catch (Exception e) {
+					logger.error("Error {}", e);
+					throw new TechnicalException(e);
+				}
 				break;
 			case EXECUTE:
-				result = execute(iot, args);
+				try {
+					result = execute(iot, args);
+				} catch (Exception e) {
+					logger.error("Error {}", e);
+					throw new TechnicalException(e);
+				}
 				break;
 			default:
 				result = new GenericMap();
 		}
-		return new GenericValue(mapper.writeValueAsString(result));
+		return new GenericValue(result);
 	}
 
 	/**

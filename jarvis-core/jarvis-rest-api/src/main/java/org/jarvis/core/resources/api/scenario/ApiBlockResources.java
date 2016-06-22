@@ -86,8 +86,7 @@ public class ApiBlockResources extends ApiLinkedTwiceResources<BlockRest,BlockBe
 	}
 
 	@Override
-	public GenericValue doRealTask(BlockBean bean, GenericMap args, TaskType taskType) throws Exception {
-		GenericMap result;
+	public GenericValue doRealTask(BlockBean bean, GenericMap args, TaskType taskType) throws TechnicalException {
 		switch(taskType) {
 			case TEST:
 			{
@@ -104,7 +103,13 @@ public class ApiBlockResources extends ApiLinkedTwiceResources<BlockRest,BlockBe
 				} catch (IOException e) {
 					throw new TechnicalException(e);
 				}
-				Object testResult = test(bean, testParameter, new GenericMap());
+				Object testResult;
+				try {
+					testResult = test(bean, testParameter, new GenericMap());
+				} catch (TechnicalNotFoundException e) {
+					logger.error("Error {}", e);
+					throw new TechnicalException(e);
+				}
 				return new GenericValue(testResult+"");
 			}
 			case EXECUTE:
@@ -122,12 +127,17 @@ public class ApiBlockResources extends ApiLinkedTwiceResources<BlockRest,BlockBe
 				} catch (IOException e) {
 					throw new TechnicalException(e);
 				}
-				Object executeResult = execute(new ArrayList<String>(), 0, bean, testParameter);
+				Object executeResult;
+				try {
+					executeResult = execute(new ArrayList<String>(), 0, bean, testParameter);
+				} catch (TechnicalNotFoundException e) {
+					logger.error("Error {}", e);
+					throw new TechnicalException(e);
+				}
 				return new GenericValue(executeResult+"");
 			}
 			default:
-				result = new GenericMap();
-				return new GenericValue(mapper.writeValueAsString(result));
+				return new GenericValue(new GenericMap());
 		}
 	}
 
