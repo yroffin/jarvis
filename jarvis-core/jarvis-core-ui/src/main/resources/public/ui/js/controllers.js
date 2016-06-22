@@ -119,6 +119,8 @@ angular.module('JarvisApp.config',[])
             	var config = _.find(data, 'active');
             	if(config) {
                     $scope.config = config;
+            	} else {
+            		toastService.failure('No default settings');
             	}
     	    }, toastService.failure);
         }

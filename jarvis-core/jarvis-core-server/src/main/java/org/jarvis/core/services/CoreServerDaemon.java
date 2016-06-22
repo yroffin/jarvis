@@ -156,6 +156,7 @@ public class CoreServerDaemon {
 			coreResources.mountLocal();
 		} else {
 			coreResources.mountExternal();
+			spark.Spark.staticFiles.expireTime(1);
 		}
 		
 		/**
