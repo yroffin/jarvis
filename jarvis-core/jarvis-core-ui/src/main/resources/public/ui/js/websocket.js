@@ -20,35 +20,18 @@
 
 angular.module('JarvisApp.websocket',['angular-websocket'])
     // WebSocket works as well
-    .factory('$store', [ '$log', '$websocket', '$window', function($log, $websocket, $window) {
-      $log.info("Websocket: ", $window.location);
+    .factory('$notification', [ '$store', '$log', '$websocket', '$window', function($store, $log, $websocket, $window) {
+      $log.info("$notification", $window.location);
       // Open a WebSocket connection
       var dataStream = $websocket('ws://'+$window.location.hostname+':'+$window.location.port+'/stream/');
 
-      var upsert = function (arr, key, newval) {
-    	    var match = _.find(arr, key);
-    	    if(match){
-    	        var index = _.indexOf(arr, _.find(arr, key));
-    	        arr[key] = newval;
-    	    } else {
-    	        arr.push(newval);
-    	    }
-      };
-
-      var collection = {};
       dataStream.onMessage(function(message) {
     	var entity = JSON.parse(message.data);
-    	if(collection[entity.classname] === undefined) {
-    		collection[entity.classname] = {};
-    	}
-        collection[entity.classname][entity.instance] = entity.data;
+    	$store.push(entity.classname, entity.instance, entity.data);
       });
 
       var methods = {
-        collection: collection,
-        get: function() {
-          dataStream.send(JSON.stringify({ action: 'get' }));
-        }
+    	dataStream: dataStream
       };
 
       return methods;

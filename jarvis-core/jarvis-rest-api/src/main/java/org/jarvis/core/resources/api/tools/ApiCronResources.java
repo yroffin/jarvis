@@ -39,7 +39,7 @@ import spark.Response;
 public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 
 	@Autowired
-	ThreadPoolTaskScheduler jarvisThreadPoolTaskScheduler;
+	CoreThreadPoolTaskScheduler jarvisThreadPoolTaskScheduler;
 	
 	@Autowired
 	CoreEventDaemon coreEventDaemon;
@@ -98,18 +98,6 @@ public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 		return new GenericValue(mapper.writeValueAsString(result));
 	}
 
-	/**
-	 * @return ThreadPoolTaskScheduler
-	 */
-	@Bean
-	public ThreadPoolTaskScheduler jarvisThreadPoolTaskScheduler() {
-		ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
-		scheduler.setThreadNamePrefix("jarvis-job-");
-		scheduler.setPoolSize(Runtime.getRuntime().availableProcessors());
-		scheduler.setRemoveOnCancelPolicy(true);
-		return scheduler;
-	}
-	
 	/**
 	 * find target
 	 * @param bean

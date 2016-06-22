@@ -516,7 +516,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     }
   }
 }])
-.directive('jarvisGauge', [ '$log', '$store', function ($log, $store) {
+.directive('jarvisGauge', [ '$log', '$store', '$notification', function ($log, $store, $notification) {
   return {
     restrict: 'AC',
     controller: [ '$scope', '$element', '$attrs', function($scope, $element, $attrs) {
@@ -544,10 +544,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
 		
 		// for the $watch
 		$scope.systemIndicator = function() {
-			if($store.collection == undefined) return 0;
-			if($store.collection['SystemIndicator'] == undefined) return 0;
-			if($store.collection['SystemIndicator']['1'] == undefined) return 0;
-			return $store.collection['SystemIndicator']['1'];
+			return $store.get('SystemIndicator','1',0);
 		}
 		
 		$scope.$watch($scope.systemIndicator, function(newValue, oldValue, scope) {

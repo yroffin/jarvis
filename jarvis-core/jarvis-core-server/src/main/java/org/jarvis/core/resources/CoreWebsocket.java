@@ -19,6 +19,7 @@ package org.jarvis.core.resources;
 import static spark.Spark.webSocket;
 
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ScheduledFuture;
 
 import org.eclipse.jetty.websocket.api.Session;
 import org.jarvis.core.model.bean.websocket.WebsocketDataBean;
@@ -27,6 +28,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.scheduling.Trigger;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
+import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -45,6 +49,9 @@ public class CoreWebsocket {
 
 	protected ObjectMapper mapper = new ObjectMapper();
 
+	@Autowired
+	ThreadPoolTaskScheduler jarvisThreadPoolStatisticsScheduler;
+
 	/**
 	 * mount local resource
 	 */
@@ -60,16 +67,23 @@ public class CoreWebsocket {
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		mapper.registerModule(new JodaModule());
 	
+		SystemIndicator.init();
+		Trigger trigger = new CronTrigger("* * * * * *");
+		ScheduledFuture<?> sch = jarvisThreadPoolStatisticsScheduler.schedule(new Runnable() {
+			
+			@Override
+			public void run() {
+				broadcast("SystemThread", "1", SystemIndicator.factory());
+			}
+			
+		}, trigger);
+		logger.info("Statistics {}", sch);
+
 		/**
 		 * internal runner
 		 */
 		runner = new Thread(new WebsocketThread());
 		runner.start();;
-		/**
-		 * system runner
-		 */
-		system = new Thread(new SystemThread());
-		system.start();;
 	}
 
 	/**
@@ -118,27 +132,6 @@ public class CoreWebsocket {
 							logger.error("While broadcast {} {}", t, e);
 						}
 					});
-				}
-			}
-		}
-	}
-
-	/**
-	 * internal runner to send data on web socket
-	 */
-	static class SystemThread implements Runnable {
-		
-		@Override
-		public void run() {
-			boolean cont = true;
-			SystemIndicator.init();
-			while (cont) {
-				try {
-					broadcast("SystemThread", "1", SystemIndicator.factory());
-					Thread.sleep(10000);
-				} catch (InterruptedException e) {
-					logger.error("While sleeping {}", e);
-					cont = false;
 				}
 			}
 		}

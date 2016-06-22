@@ -66,39 +66,54 @@ myAppServices.factory('toastService', [ '$log', '$mdToast', function($log, $mdTo
 }]);
 
 /**
- * clientResourceService
+ * $store service
  */
-myAppServices.factory('clientResourceService', [ '$q', '$window', '$rootScope', 'Restangular', function($q, $window, $rootScope, Restangular) {
-  var $log =  angular.injector(['ng']).get('$log');
-  $log.info('clientResourceService', $q);
-  return {
-        findAll: function(callback,failure) {
-        	// Restangular returns promises
-        	Restangular.all('clients').getList().then(function(clients) {
-        		callback(clients);
-        	},function(errors){
-        		failure(errors);
-        	});
-        }
-  }
-}]);
+myAppServices.factory('$store', [ '$log', '$rootScope', function($log, $rootScope) {
+  $log.info("$store");
 
-/**
- * crontabResourceService
- */
-myAppServices.factory('crontabResourceService', [ '$q', '$window', '$rootScope', 'Restangular', function($q, $window, $rootScope, Restangular) {
-  var $log =  angular.injector(['ng']).get('$log');
-  $log.info('crontabResourceService', $q);
-  return {
-        findAll: function(callback,failure) {
-        	// Restangular returns promises
-        	Restangular.all('crontabs').getList().then(function(crontabs) {
-        	  callback(crontabs);
-        	},function(errors){
-        		failure(errors);
-        	});
-        }
+  /**
+   * collection the main store var
+   * all pushed data ae stored in this object
+   */
+  var collection = {};
+  
+  var methods = {
+	        collection: collection,
+	        /**
+	         * pus data in store, data must be a plain object
+	         */
+	        push: function(classname, instance, data) {
+	        	/**
+	        	 * create classname map if does not exist
+	        	 */
+	        	if(collection[classname] === undefined) {
+	        		collection[classname] = {};
+	        	}
+	        	/**
+	        	 * store new data
+	        	 */
+	        	$log.info("$store", classname, instance, data);
+	            collection[classname][instance] = data;
+	        },
+	        /**
+	         * retrieve value
+	         */
+	    	get: function(classname, instance, def) {
+	    		if(collection == undefined) return def;
+	    		if(collection[classname] == undefined) return def;
+	    		if(collection[classname][instance] == undefined) return def;
+	    		return collection[classname][instance];
+	    	}	        
+	      };
+
+  /**
+   * any scope can access to store
+   */
+  $rootScope.store = function(classname, instance, def) {
+		return methods.get;
   }
+
+  return methods;
 }]);
 
 /**
