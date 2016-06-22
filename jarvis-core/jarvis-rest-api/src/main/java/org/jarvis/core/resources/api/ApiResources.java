@@ -205,7 +205,7 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	protected Route getResources() {
 		return new Route() {
 		    @Override
-			public Object handle(Request request, Response response) throws Exception {
+			public Object handle(Request request, Response response) {
 		    	return doFindAll(request, response);
 		    }
 		};
@@ -214,7 +214,7 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	protected Route getResource() {
 		return new Route() {
 		    @Override
-			public Object handle(Request request, Response response) throws Exception {
+			public Object handle(Request request, Response response) {
 		    	return doGetById(request, ID, response);
 		    }
 		};
@@ -223,7 +223,7 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	protected Route postResource() {
 		return new Route() {
 		    @Override
-			public Object handle(Request request, Response response) throws Exception {
+			public Object handle(Request request, Response response) throws InterruptedException {
 		    	return doCreate(request, response, restClass);
 		    }
 		};
@@ -232,7 +232,7 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	protected Route taskResource() {
 		return new Route() {
 		    @Override
-			public Object handle(Request request, Response response) throws Exception {
+			public Object handle(Request request, Response response) throws TechnicalNotFoundException {
 		    	return doTask(request, ID, TASK, response, restClass);
 		    }
 		};
@@ -241,7 +241,7 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	protected Route putResource() {
 		return new Route() {
 		    @Override
-			public Object handle(Request request, Response response) throws Exception {
+			public Object handle(Request request, Response response) {
 		    	return doUpdate(request, ID, response, restClass);
 		    }
 		};
@@ -250,7 +250,7 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	protected Route deleteResource() {
 		return new Route() {
 		    @Override
-			public Object handle(Request request, Response response) throws Exception {
+			public Object handle(Request request, Response response) {
 		    	return doDelete(request, ID, response, restClass);
 		    }
 		};
@@ -341,12 +341,17 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * @param request
 	 * @param response
 	 * @return String
-	 * @throws Exception
+	 * @throws TechnicalException 
 	 */
-	public String doFindAll(Request request, Response response) throws Exception {
+	public String doFindAll(Request request, Response response) {
 		List<T> r = doFindAllRest();
 		notifyFindAll(request,response,r);
-    	return mapper.writeValueAsString(r);
+    	try {
+			return mapper.writeValueAsString(r);
+		} catch (JsonProcessingException e) {
+			logger.error("Error {} while parsing {}", r);
+			throw new TechnicalException(e);
+		}
     }
 
 	/**
@@ -355,13 +360,18 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * @param id
 	 * @param response
 	 * @return String
-	 * @throws Exception
+	 * @throws TechnicalException 
 	 */
-	public String doGetById(Request request, String id, Response response) throws Exception {
+	public String doGetById(Request request, String id, Response response) {
     	try {
     		T r = doGetByIdRest(request.params(id));
     		notifyGet(request,response,r);
-    		return mapper.writeValueAsString(r);
+    		try {
+				return mapper.writeValueAsString(r);
+			} catch (JsonProcessingException e) {
+				logger.error("Error {} while parsing {}", r);
+				throw new TechnicalException(e);
+			}
     	} catch(TechnicalNotFoundException e) {
     		response.status(404);
     		return "";
@@ -374,18 +384,34 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * @param response
 	 * @param klass
 	 * @return String
-	 * @throws Exception
+	 * @throws InterruptedException 
+	 * @throws TechnicalException 
 	 */
-	public String doCreate(Request request, Response response, Class<T> klass) throws Exception {
+	public String doCreate(Request request, Response response, Class<T> klass) throws InterruptedException {
     	if(request.contentType() == null || !request.contentType().contains("application/json")) {
     		response.status(403);
     		return "";
     	}
-		T k = mapper.readValue(request.body(), klass);
+		T k;
+		try {
+			k = mapper.readValue(request.body(), klass);
+		} catch (IOException e) {
+			logger.error("Error {} while parsing {}", request.body());
+			throw new TechnicalException(e);
+		}
 		notifyPrePost(request,response,k);
 		T r = doCreate(k);
-		notifyPost(request,response,mapperFactory.getMapperFacade().map(r, beanClass));
-    	return mapper.writeValueAsString(r);
+		try {
+			notifyPost(request,response,mapperFactory.getMapperFacade().map(r, beanClass));
+		} catch (InterruptedException e) {
+			throw e;
+		}
+    	try {
+			return mapper.writeValueAsString(r);
+		} catch (JsonProcessingException e) {
+			logger.error("Error {} while parsing {}", r);
+			throw new TechnicalException(e);
+		}
     }
 
 	/**
@@ -395,19 +421,30 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * @param response
 	 * @param klass
 	 * @return String
-	 * @throws Exception
+	 * @throws TechnicalException 
 	 */
-	public String doUpdate(Request request, String id, Response response, Class<T> klass) throws Exception {
+	public String doUpdate(Request request, String id, Response response, Class<T> klass) {
     	if(request.contentType() == null || !request.contentType().contains("application/json")) {
     		response.status(403);
     		return "";
     	}
     	try {
-			T k = mapper.readValue(request.body(), klass);
+			T k;
+			try {
+				k = mapper.readValue(request.body(), klass);
+			} catch (IOException e) {
+				logger.error("Error {} while parsing {}", request.body());
+				throw new TechnicalException(e);
+			}
 			notifyPrePut(request,response,k);
 			T r = doUpdate(request.params(id), k);
 			notifyPut(request,response,mapperFactory.getMapperFacade().map(r, beanClass));
-	    	return mapper.writeValueAsString(r);
+	    	try {
+				return mapper.writeValueAsString(r);
+			} catch (JsonProcessingException e) {
+				logger.error("Error {} while parsing {}", r);
+				throw new TechnicalException(e);
+			}
     	} catch(TechnicalNotFoundException e) {
     		response.status(404);
     		return "";
@@ -421,15 +458,15 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * @param response
 	 * @param klass
 	 * @return String
-	 * @throws Exception
+	 * @throws TechnicalException
 	 */
-	public String doDelete(Request request, String id, Response response, Class<T> klass) throws Exception {
+	public String doDelete(Request request, String id, Response response, Class<T> klass) {
     	if(request.contentType() == null || !request.contentType().contains("application/json")) {
     		response.status(403);
     		return "";
     	}
     	try {
-        	return mapper.writeValueAsString(doDelete(request.params(id)));
+			return writeValueAsString(doDelete(request.params(id)));
     	} catch(TechnicalNotFoundException e) {
     		response.status(404);
     		return "";
@@ -446,7 +483,7 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * @return String
 	 * @throws TechnicalException 
 	 */
-	public abstract GenericValue doRealTask(S bean, GenericMap args, TaskType taskType) throws TechnicalException;
+	public abstract GenericValue doRealTask(S bean, GenericMap args, TaskType taskType);
 
 	/**
 	 * create entity
@@ -456,6 +493,7 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * @param response
 	 * @param klass
 	 * @return String
+	 * @throws TechnicalException 
 	 * @throws TechnicalNotFoundException 
 	 */
 	public String doTask(Request request, String id, String task, Response response, Class<T> klass) throws TechnicalNotFoundException {
@@ -627,5 +665,14 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 			rest.put(property.getKey(), property.getValue());
 		}
 		return rest;
+	}
+	
+	protected String writeValueAsString(Object value) {
+		try {
+			return mapper.writeValueAsString(value);
+		} catch (JsonProcessingException e) {
+			logger.error("Error {} while parsing {}", e, value);
+			throw new TechnicalException(e);
+		}
 	}
 }

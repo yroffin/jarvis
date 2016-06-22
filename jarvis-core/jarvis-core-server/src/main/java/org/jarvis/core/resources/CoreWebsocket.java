@@ -112,8 +112,7 @@ public class CoreWebsocket {
 
 		@Override
 		public void run() {
-			boolean cont = true;
-			while (cont) {
+			while (true) {
 				try {
 					t = queue.take();
 				} catch (InterruptedException e) {
