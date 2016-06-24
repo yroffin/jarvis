@@ -144,39 +144,47 @@ myAppServices.factory('toastService', [ '$log', '$mdToast', function($log, $mdTo
 }]);
 
 /**
- * clientResourceService
+ * $store service
  */
-myAppServices.factory('clientResourceService', [ '$q', '$window', '$rootScope', 'Restangular', function($q, $window, $rootScope, Restangular) {
-  var $log =  angular.injector(['ng']).get('$log');
-  $log.info('clientResourceService', $q);
-  return {
-        findAll: function(callback,failure) {
-        	// Restangular returns promises
-        	Restangular.all('clients').getList().then(function(clients) {
-        		callback(clients);
-        	},function(errors){
-        		failure(errors);
-        	});
-        }
-  }
-}]);
+myAppServices.factory('$store', [ '$log', '$rootScope', function($log, $rootScope) {
+  $log.info("$store");
 
-/**
- * crontabResourceService
- */
-myAppServices.factory('crontabResourceService', [ '$q', '$window', '$rootScope', 'Restangular', function($q, $window, $rootScope, Restangular) {
-  var $log =  angular.injector(['ng']).get('$log');
-  $log.info('crontabResourceService', $q);
-  return {
-        findAll: function(callback,failure) {
-        	// Restangular returns promises
-        	Restangular.all('crontabs').getList().then(function(crontabs) {
-        	  callback(crontabs);
-        	},function(errors){
-        		failure(errors);
-        	});
-        }
-  }
+  /**
+   * collection the main store var
+   * all pushed data ae stored in this object
+   */
+  var collection = {};
+  
+  var methods = {
+	        collection: collection,
+	        /**
+	         * pus data in store, data must be a plain object
+	         */
+	        push: function(classname, instance, data) {
+	        	/**
+	        	 * create classname map if does not exist
+	        	 */
+	        	if(collection[classname] === undefined) {
+	        		collection[classname] = {};
+	        	}
+	        	/**
+	        	 * store new data
+	        	 */
+	        	$log.info("$store", classname, instance, data);
+	            collection[classname][instance] = data;
+	        },
+	        /**
+	         * retrieve value
+	         */
+	    	get: function(classname, instance, def) {
+	    		if(collection == undefined) return def;
+	    		if(collection[classname] == undefined) return def;
+	    		if(collection[classname][instance] == undefined) return def;
+	    		return collection[classname][instance];
+	    	}	        
+	      };
+
+  return methods;
 }]);
 
 /**
@@ -1493,6 +1501,7 @@ angular.module('JarvisApp.config',[])
     		 '$scope',
     		 '$log',
     		 '$store',
+    		 '$notification',
     		 '$http',
     		 '$mdDialog',
     		 '$mdSidenav',
@@ -1511,6 +1520,7 @@ angular.module('JarvisApp.config',[])
     			$scope,
     			$log,
     			$store,
+    			$notification,
     			$http,
     			$mdDialog,
     			$mdSidenav,
@@ -1542,6 +1552,8 @@ angular.module('JarvisApp.config',[])
             	var config = _.find(data, 'active');
             	if(config) {
                     $scope.config = config;
+            	} else {
+            		toastService.failure('No default settings');
             	}
     	    }, toastService.failure);
         }
@@ -1679,15 +1691,29 @@ angular.module('JarvisApp.config',[])
         }
 
         /**
+         * store access
+         */
+        $scope.$watch(
+        	function(classname, instance, def) {
+	    		return $store.collection;
+	        }, function(newValue, oldValue, scope) {
+				$scope.store = newValue;
+			});
+        
+        /**
          * bootstrap this controller
          */
     	$scope.boot = function() {
-        	$log.info('JarvisAppCtrl');
-
             /**
              * initialize jarvis configuration
              */
             $scope.config = {};
+            $scope.version = {
+            		angular: angular.version,
+            		angularmd: window.ngMaterial
+            };
+
+            $log.info('JarvisAppCtrl',$scope.version);
 
             $scope.media = $mdMedia('xs');
             $scope.$watch(function() { return $mdMedia('xs'); }, function(media) {
@@ -2037,6 +2063,7 @@ angular.module('JarvisApp.config',[])
 /* Cf. https://angular-md-color.com */
 
 angular.module('JarvisApp.theme', [ 'ngMaterial' ]).config([ '$mdThemingProvider', function ($mdThemingProvider) {
+	$mdThemingProvider.alwaysWatchTheme(true);
     var customPrimary = {
             '50': '#aaeafd',
             '100': '#92e4fc',
@@ -2144,35 +2171,18 @@ angular.module('JarvisApp.theme', [ 'ngMaterial' ]).config([ '$mdThemingProvider
 
 angular.module('JarvisApp.websocket',['angular-websocket'])
     // WebSocket works as well
-    .factory('$store', [ '$log', '$websocket', '$window', function($log, $websocket, $window) {
-      $log.info("Websocket: ", $window.location);
+    .factory('$notification', [ '$store', '$log', '$websocket', '$window', function($store, $log, $websocket, $window) {
+      $log.info("$notification", $window.location);
       // Open a WebSocket connection
       var dataStream = $websocket('ws://'+$window.location.hostname+':'+$window.location.port+'/stream/');
 
-      var upsert = function (arr, key, newval) {
-    	    var match = _.find(arr, key);
-    	    if(match){
-    	        var index = _.indexOf(arr, _.find(arr, key));
-    	        arr[key] = newval;
-    	    } else {
-    	        arr.push(newval);
-    	    }
-      };
-
-      var collection = {};
       dataStream.onMessage(function(message) {
     	var entity = JSON.parse(message.data);
-    	if(collection[entity.classname] === undefined) {
-    		collection[entity.classname] = {};
-    	}
-        collection[entity.classname][entity.instance] = entity.data;
+    	$store.push(entity.classname, entity.instance, entity.data);
       });
 
       var methods = {
-        collection: collection,
-        get: function() {
-          dataStream.send(JSON.stringify({ action: 'get' }));
-        }
+    	dataStream: dataStream
       };
 
       return methods;
@@ -2985,7 +2995,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     }
   }
 }])
-.directive('jarvisGauge', [ '$log', '$store', function ($log, $store) {
+.directive('jarvisGauge', [ '$log', '$store', '$notification', function ($log, $store, $notification) {
   return {
     restrict: 'AC',
     controller: [ '$scope', '$element', '$attrs', function($scope, $element, $attrs) {
@@ -3011,17 +3021,12 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
 		$scope.gauge.animationSpeed = 10; // set animation speed (32 is default value)
 		$scope.gauge.set(0); // set actual value
 		
-		// for the $watch
-		$scope.systemIndicator = function() {
-			if($store.collection == undefined) return 0;
-			if($store.collection['SystemIndicator'] == undefined) return 0;
-			if($store.collection['SystemIndicator']['1'] == undefined) return 0;
-			return $store.collection['SystemIndicator']['1'];
-		}
-		
-		$scope.$watch($scope.systemIndicator, function(newValue, oldValue, scope) {
-			$scope.gauge.set(newValue.processCpuLoad*1000);
-		});
+		$scope.$watch(
+			function() {
+				return $store.get('SystemIndicator','1',0).systemCpuLoad * 100;
+			}, function(newValue, oldValue, scope) {
+				$scope.gauge.set(newValue);
+			});
     }]
   }
 }])
@@ -4156,8 +4161,8 @@ angular.module('JarvisApp.ctrl.snapshots', ['JarvisApp.services'])
 
 angular.module('JarvisApp.ctrl.crons', ['JarvisApp.services'])
 .controller('cronsCtrl', 
-		['$scope', '$log', 'genericScopeService', 'cronResourceService',
-	function($scope, $log, genericScopeService, cronResourceService){
+		['$scope', '$log', 'genericScopeService', 'cronResourceService', 'toastService',
+	function($scope, $log, genericScopeService, cronResourceService, toastService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
 	 */
@@ -4177,6 +4182,32 @@ angular.module('JarvisApp.ctrl.crons', ['JarvisApp.services'])
     			cron: "* * * * *"
     		}
 	);
+    /**
+     * start all crontab
+     */
+    $scope.start = function() {
+    	/**
+    	 * iterate on each cron
+    	 */
+    	_.each($scope.crons, function(cron) {
+	    	cronResourceService.cron.task(cron.id, 'toggle', {target:true}, function(data) {
+	   	    	toastService.info('crontab ' + crontab.name + '#' + crontab.id + ' toggled to ' + crontab.status);
+		    }, toastService.failure);
+    	});
+    }
+    /**
+     * stop all crontab
+     */
+    $scope.stop = function() {
+    	/**
+    	 * iterate on each cron
+    	 */
+    	_.each($scope.crons, function(cron) {
+	    	cronResourceService.cron.task(cron.id, 'toggle', {target:false}, function(data) {
+	   	    	toastService.info('crontab ' + crontab.name + '#' + crontab.id + ' toggled to ' + crontab.status);
+		    }, toastService.failure);
+    	});
+    }
 }])
 .controller('cronCtrl',
 		['$scope', '$log', '$stateParams', '$filter', '$http', 'genericResourceService', 'genericScopeService', 'cronResourceService', 'deviceResourceService', 'toastService',

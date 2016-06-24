@@ -50,6 +50,7 @@
                 <jsSourceFile>angularjs/1.5.6/angular-aria.min.js</jsSourceFile>
                 <jsSourceFile>angularjs/1.5.6/angular-cookies.min.js</jsSourceFile>
                 <jsSourceFile>lodash/3.10.1/lodash.min.js</jsSourceFile>
+                <jsSourceFile>paperjs/v0.9.25/paper-full.min.js</jsSourceFile>
                 <jsSourceFile>restangular/1.5.1/restangular.min.js</jsSourceFile>
                 <jsSourceFile>angular-material/1.1.0-rc.5/angular-material.min.js</jsSourceFile>
                 <jsSourceFile>angular-material-icons/0.5.0/angular-material-icons.min.js</jsSourceFile>
