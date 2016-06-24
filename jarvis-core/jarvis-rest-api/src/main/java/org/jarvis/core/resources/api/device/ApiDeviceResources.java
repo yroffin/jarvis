@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package org.jarvis.core.resources.api.iot;
+package org.jarvis.core.resources.api.device;
 
 import static spark.Spark.get;
 
@@ -22,18 +22,18 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.jarvis.core.exception.TechnicalException;
-import org.jarvis.core.model.bean.iot.IotBean;
+import org.jarvis.core.model.bean.device.DeviceBean;
 import org.jarvis.core.model.bean.plugin.ScriptPluginBean;
 import org.jarvis.core.model.bean.scenario.TriggerBean;
 import org.jarvis.core.model.rest.GenericEntity;
-import org.jarvis.core.model.rest.iot.IotRest;
+import org.jarvis.core.model.rest.device.DeviceRest;
 import org.jarvis.core.model.rest.plugin.ScriptPluginRest;
 import org.jarvis.core.model.rest.scenario.TriggerRest;
 import org.jarvis.core.resources.api.ApiLinkedThirdResources;
 import org.jarvis.core.resources.api.GenericValue;
-import org.jarvis.core.resources.api.href.ApiHrefIotResources;
-import org.jarvis.core.resources.api.href.ApiHrefIotScriptPluginResources;
-import org.jarvis.core.resources.api.href.ApiHrefIotTriggerResources;
+import org.jarvis.core.resources.api.href.ApiHrefDeviceResources;
+import org.jarvis.core.resources.api.href.ApiHrefDeviceScriptPluginResources;
+import org.jarvis.core.resources.api.href.ApiHrefDeviceTriggerResources;
 import org.jarvis.core.resources.api.plugins.ApiScriptPluginResources;
 import org.jarvis.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
@@ -45,22 +45,22 @@ import spark.Response;
 import spark.Route;
 
 /**
- * IOT resource
+ * device resource
  */
 @Component
-public class ApiIotResources extends ApiLinkedThirdResources<IotRest,IotBean,IotRest,IotBean,ScriptPluginRest,ScriptPluginBean,TriggerRest,TriggerBean> {
+public class ApiDeviceResources extends ApiLinkedThirdResources<DeviceRest,DeviceBean,DeviceRest,DeviceBean,ScriptPluginRest,ScriptPluginBean,TriggerRest,TriggerBean> {
 
 	@Autowired
-	ApiHrefIotResources apiHrefIotResources;
+	ApiHrefDeviceResources apiHrefDeviceResources;
 
 	@Autowired
-	ApiHrefIotScriptPluginResources apiHrefIotScriptPluginResources;
+	ApiHrefDeviceScriptPluginResources apiHrefDeviceScriptPluginResources;
 
 	@Autowired
 	ApiScriptPluginResources apiScriptPluginResources;
 
 	@Autowired
-	ApiHrefIotTriggerResources apiHrefIotTriggerResources;
+	ApiHrefDeviceTriggerResources apiHrefDeviceTriggerResources;
 
 	@Autowired
 	ApiTriggerResources apiTriggerResources;
@@ -68,9 +68,9 @@ public class ApiIotResources extends ApiLinkedThirdResources<IotRest,IotBean,Iot
 	/**
 	 * constructor
 	 */
-	public ApiIotResources() {
-		setRestClass(IotRest.class);
-		setBeanClass(IotBean.class);
+	public ApiDeviceResources() {
+		setRestClass(DeviceRest.class);
+		setBeanClass(DeviceBean.class);
 	}
 
 	@Override
@@ -78,32 +78,32 @@ public class ApiIotResources extends ApiLinkedThirdResources<IotRest,IotBean,Iot
 		/**
 		 * scripts
 		 */
-		declare(IOT_RESOURCE);
+		declare(DEVICE_RESOURCE);
 		/**
 		 * scripts -> commands
 		 */
-		declare(IOT_RESOURCE, IOT_RESOURCE, this, apiHrefIotResources, IOT, SORTKEY, HREF);
-		declareSecond(IOT_RESOURCE, SCRIPT_RESOURCE, apiScriptPluginResources, apiHrefIotScriptPluginResources, PLUGIN, SORTKEY, HREF);
-		declareThird(IOT_RESOURCE, TRIGGER_RESOURCE, apiTriggerResources, apiHrefIotTriggerResources, TRIGGER, SORTKEY, HREF);
+		declare(DEVICE_RESOURCE, DEVICE_RESOURCE, this, apiHrefDeviceResources, DEVICE, SORTKEY, HREF);
+		declareSecond(DEVICE_RESOURCE, SCRIPT_RESOURCE, apiScriptPluginResources, apiHrefDeviceScriptPluginResources, PLUGIN, SORTKEY, HREF);
+		declareThird(DEVICE_RESOURCE, TRIGGER_RESOURCE, apiTriggerResources, apiHrefDeviceTriggerResources, TRIGGER, SORTKEY, HREF);
 		/**
-		 * iot html generator
+		 * device html generator
 		 */
-		get("/api/directives/html/iots/:id", new Route() {
+		get("/api/directives/html/devices/:id", new Route() {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
-		    	IotRest iot = doGetByIdRest(request.params(ID));
-		    	return iot.template;
+		    	DeviceRest device = doGetByIdRest(request.params(ID));
+		    	return device.template;
 		    }
 		});
 	}
 
 	@Override
-	public GenericValue doRealTask(IotBean iot, GenericMap args, TaskType taskType) throws TechnicalException {
+	public GenericValue doRealTask(DeviceBean device, GenericMap args, TaskType taskType) throws TechnicalException {
 		GenericMap result;
 		switch(taskType) {
 			case RENDER:
 				try {
-					result = render(iot, args);
+					result = render(device, args);
 				} catch (Exception e) {
 					logger.error("Error {}", e);
 					throw new TechnicalException(e);
@@ -111,7 +111,7 @@ public class ApiIotResources extends ApiLinkedThirdResources<IotRest,IotBean,Iot
 				break;
 			case EXECUTE:
 				try {
-					result = execute(iot, args);
+					result = execute(device, args);
 				} catch (Exception e) {
 					logger.error("Error {}", e);
 					throw new TechnicalException(e);
@@ -125,49 +125,49 @@ public class ApiIotResources extends ApiLinkedThirdResources<IotRest,IotBean,Iot
 
 	/**
 	 * render this connected object
-	 * @param iot
+	 * @param device
 	 * @param args
 	 * @return GenericMap
 	 * @throws Exception
 	 */
-	public GenericMap render(IotBean iot, GenericMap args) throws Exception {
-		return renderOrExecute(iot, args, true);
+	public GenericMap render(DeviceBean device, GenericMap args) throws Exception {
+		return renderOrExecute(device, args, true);
 	}
 
 	/**
 	 * execute action on this connected object
-	 * @param iot
+	 * @param device
 	 * @param args
 	 * @return GenericMap
 	 * @throws Exception
 	 */
-	public GenericMap execute(IotBean iot, GenericMap args) throws Exception {
-		return renderOrExecute(iot, args, false);
+	public GenericMap execute(DeviceBean device, GenericMap args) throws Exception {
+		return renderOrExecute(device, args, false);
 	}
 
 	/**
 	 * genric method for render and execute
-	 * @param iot
+	 * @param device
 	 * @param args
 	 * @param render
 	 * @return GenericMap
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
-	private GenericMap renderOrExecute(IotBean iot, GenericMap args, boolean render) throws Exception {
+	private GenericMap renderOrExecute(DeviceBean device, GenericMap args, boolean render) throws Exception {
 		GenericMap result = args;
 		/**
 		 * read parameters and fix a default value
 		 * if parameters is null
 		 */
 		GenericMap parameters = null;
-		if(iot.parameters != null) {
-			parameters = mapper.readValue(iot.parameters, GenericMap.class);
+		if(device.parameters != null) {
+			parameters = mapper.readValue(device.parameters, GenericMap.class);
 		} else {
 			parameters = new GenericMap();
 			parameters.put("default", new GenericMap());
 		}
-		IotRest iotRest = mapperFactory.getMapperFacade().map(iot, IotRest.class);
+		DeviceRest deviceRest = mapperFactory.getMapperFacade().map(device, DeviceRest.class);
 		/**
 		 * iterate on each entity and execute them as a pipeline
 		 */
@@ -176,7 +176,7 @@ public class ApiIotResources extends ApiLinkedThirdResources<IotRest,IotBean,Iot
 			for(Entry<String, Object> param : ((Map<String,Object>) entry.getValue()).entrySet()) {
 				params.put(param.getKey(), param.getValue());
 			}
-			for(GenericEntity entity : sort(apiHrefIotScriptPluginResources.findAll(iotRest, HREF), "order")) {
+			for(GenericEntity entity : sort(apiHrefDeviceScriptPluginResources.findAll(deviceRest, HREF), "order")) {
 				ScriptPluginRest script = apiScriptPluginResources.doGetByIdRest(entity.id);
 				if(render) {
 					logger.info("Before render params = {}, context = {}", params, result);

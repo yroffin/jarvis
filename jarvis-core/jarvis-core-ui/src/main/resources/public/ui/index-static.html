@@ -64,7 +64,7 @@ limitations under the License.
 
 <div ng-show="profile" ng-cloak>
     <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z4" md-component-id="left">
-        <md-button ng-click="location('left', '/helper-iots');"><div layout="row"><i class="help-icons">touch_app</i><span flex></span><span>Connected object(s)</span></div></md-button>
+        <md-button ng-click="location('left', '/helper-devices');"><div layout="row"><i class="help-icons">touch_app</i><span flex></span><span>Connected object(s)</span></div></md-button>
         <md-button ng-click="location('left', '/helper-scenarii');"><div layout="row"><i class="help-icons">list</i><span flex></span><span>Scenario</span></div></md-button>
         <md-button ng-click="location('left', '/triggers');"><div layout="row"><i class="help-icons">settings_remote</i><span flex></span><span>Triggers</span></div></md-button>
         <md-button ng-click="location('left', '/views');"><div layout="row"><i class="help-icons">library_books</i><span flex></span><span>View(s)</span></div></md-button>
@@ -98,7 +98,7 @@ limitations under the License.
 <script src="js/services/property.js"></script>
 <script src="js/services/snapshot.js"></script>
 <script src="js/services/cron.js"></script>
-<script src="js/services/iot.js"></script>
+<script src="js/services/device.js"></script>
 <script src="js/services/connector.js"></script>
 <script src="js/services/event.js"></script>
 <script src="js/services/trigger.js"></script>
@@ -114,7 +114,7 @@ limitations under the License.
 <!-- Widgets -->
 <script src="js/directives/widgets.js"></script>
 <!-- Controllers -->
-<script src="js/ctrl/iots.js"></script>
+<script src="js/ctrl/devices.js"></script>
 <script src="js/ctrl/events.js"></script>
 <script src="js/ctrl/triggers.js"></script>
 <script src="js/ctrl/plugins.js"></script>

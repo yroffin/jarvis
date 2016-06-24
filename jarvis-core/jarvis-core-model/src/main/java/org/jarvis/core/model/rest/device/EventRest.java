@@ -14,41 +14,47 @@
  *   limitations under the License.
  */
 
-package org.jarvis.core.model.bean.iot;
+package org.jarvis.core.model.rest.device;
 
-import org.jarvis.core.model.bean.GenericBean;
+import org.jarvis.core.model.rest.GenericEntity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Event object
+ * device object
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class EventBean extends GenericBean {
+public class EventRest extends GenericEntity {
 	/**
 	 * resource trigger
 	 */
+	@JsonProperty("trigger")
 	public String trigger;
 	/**
 	 * fired
 	 */
+	@JsonProperty("fired")
 	public boolean fired;
 	/**
 	 * text
 	 */
+	@JsonProperty("text")
 	public String text;
 	/**
 	 * bool
 	 */
+	@JsonProperty("bool")
 	public boolean bool;
 	/**
 	 * number
 	 */
+	@JsonProperty("number")
 	public int number;
-	
+
 	@Override
 	public String toString() {
-		return "EventBean [timestamp=" + timestamp + ", trigger=" + trigger + ", fired=" + fired + ", text=" + text
+		return "EventRest [timestamp=" + timestamp + ", trigger=" + trigger + ", fired=" + fired + ", text=" + text
 				+ ", bool=" + bool + ", number=" + number + "]";
 	}
 }

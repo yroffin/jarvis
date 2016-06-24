@@ -5,7 +5,7 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ScheduledFuture;
 
 import org.jarvis.core.exception.TechnicalException;
-import org.jarvis.core.model.bean.iot.EventBean;
+import org.jarvis.core.model.bean.device.EventBean;
 import org.jarvis.core.model.bean.scenario.TriggerBean;
 import org.jarvis.core.model.bean.tools.CronBean;
 import org.jarvis.core.model.rest.GenericEntity;
@@ -13,8 +13,8 @@ import org.jarvis.core.model.rest.tools.CronRest;
 import org.jarvis.core.resources.api.ApiResources;
 import org.jarvis.core.resources.api.GenericValue;
 import org.jarvis.core.resources.api.ResourcePreListener;
+import org.jarvis.core.resources.api.device.ApiTriggerResources;
 import org.jarvis.core.resources.api.href.ApiHrefTriggerCronResources;
-import org.jarvis.core.resources.api.iot.ApiTriggerResources;
 import org.jarvis.core.services.CoreEventDaemon;
 import org.jarvis.core.services.CoreSunsetSunrise;
 import org.jarvis.core.services.CoreThreadPoolTaskScheduler;

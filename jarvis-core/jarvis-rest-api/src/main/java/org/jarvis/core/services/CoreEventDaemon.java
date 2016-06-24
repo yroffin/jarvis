@@ -23,15 +23,15 @@ import java.util.concurrent.LinkedBlockingQueue;
 import javax.annotation.PostConstruct;
 
 import org.jarvis.core.exception.TechnicalNotFoundException;
-import org.jarvis.core.model.bean.iot.EventBean;
-import org.jarvis.core.model.bean.iot.IotBean;
+import org.jarvis.core.model.bean.device.EventBean;
+import org.jarvis.core.model.bean.device.DeviceBean;
 import org.jarvis.core.model.bean.scenario.ScenarioBean;
 import org.jarvis.core.model.rest.GenericEntity;
-import org.jarvis.core.resources.api.href.ApiHrefIotTriggerResources;
+import org.jarvis.core.resources.api.device.ApiDeviceResources;
+import org.jarvis.core.resources.api.device.ApiTriggerResources;
+import org.jarvis.core.resources.api.href.ApiHrefDeviceTriggerResources;
 import org.jarvis.core.resources.api.href.ApiHrefScenarioBlockResources;
 import org.jarvis.core.resources.api.href.ApiHrefScenarioTriggerResources;
-import org.jarvis.core.resources.api.iot.ApiIotResources;
-import org.jarvis.core.resources.api.iot.ApiTriggerResources;
 import org.jarvis.core.resources.api.scenario.ApiBlockResources;
 import org.jarvis.core.resources.api.scenario.ApiScenarioResources;
 import org.jarvis.core.type.GenericMap;
@@ -58,10 +58,10 @@ public class CoreEventDaemon {
 	Environment env;
 	
 	@Autowired
-	ApiIotResources apiIotResources;
+	ApiDeviceResources apiDeviceResources;
 	
 	@Autowired
-	ApiHrefIotTriggerResources apiHrefIotTriggerResources;
+	ApiHrefDeviceTriggerResources apiHrefDeviceTriggerResources;
 
 	@Autowired
 	ApiScenarioResources apiScenarioResources;
@@ -154,9 +154,9 @@ public class CoreEventDaemon {
 			/**
 			 * execute it
 			 */
-			for(IotBean iot : iotToExecute(event)) {
+			for(DeviceBean device : deviceToExecute(event)) {
 				try {
-					apiIotResources.doExecute(null,iot.id, new GenericMap(), TaskType.EXECUTE);
+					apiDeviceResources.doExecute(null,device.id, new GenericMap(), TaskType.EXECUTE);
 				} catch (TechnicalNotFoundException e) {
 					logger.warn(e.getMessage());
 				}
@@ -189,28 +189,28 @@ public class CoreEventDaemon {
 		}
 
 		/**
-		 * find iot
+		 * find device
 		 * @param event
 		 * @return
 		 */
-		private List<IotBean> iotToExecute(EventBean event) {
-			List<IotBean> iotToExecute = new ArrayList<IotBean>();
+		private List<DeviceBean> deviceToExecute(EventBean event) {
+			List<DeviceBean> deviceToExecute = new ArrayList<DeviceBean>();
 			/**
 			 * find any scenario with this trigger
 			 */
-			for(IotBean iotBean : apiIotResources.doFindAllBean()) {
-				for(GenericEntity link : apiHrefIotTriggerResources.findAll(iotBean)) {
+			for(DeviceBean deviceBean : apiDeviceResources.doFindAllBean()) {
+				for(GenericEntity link : apiHrefDeviceTriggerResources.findAll(deviceBean)) {
 					try {
 						if(event.trigger != null && event.trigger.equals(link.id)) {
 							apiTriggerResources.doGetByIdRest(link.id);
-							iotToExecute.add(iotBean);
+							deviceToExecute.add(deviceBean);
 						}
 					} catch (TechnicalNotFoundException e) {
 						logger.warn(e.getMessage());
 					}
 				}
 			}
-			return iotToExecute;
+			return deviceToExecute;
 		}
 		
 	}

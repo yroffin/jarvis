@@ -69,8 +69,8 @@ angular.module('JarvisApp.ctrl.crons', ['JarvisApp.services'])
     }
 }])
 .controller('cronCtrl',
-		['$scope', '$log', '$stateParams', '$filter', '$http', 'genericResourceService', 'genericScopeService', 'cronResourceService', 'iotResourceService', 'toastService',
-	function($scope, $log, $stateParams, $filter, $http, genericResourceService, genericScopeService, cronResourceService, iotResourceService, toastService){
+		['$scope', '$log', '$stateParams', '$filter', '$http', 'genericResourceService', 'genericScopeService', 'cronResourceService', 'deviceResourceService', 'toastService',
+	function($scope, $log, $stateParams, $filter, $http, genericResourceService, genericScopeService, cronResourceService, deviceResourceService, toastService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
 	 */

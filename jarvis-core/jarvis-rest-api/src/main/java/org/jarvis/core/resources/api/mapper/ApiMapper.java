@@ -21,13 +21,13 @@ public abstract class ApiMapper {
 	protected static final String CONFIG_RESOURCE = "configurations";
 	protected static final String PROPERTY_RESOURCE = "properties";
 	protected static final String CONNECTOR_RESOURCE = "connectors";
-	protected static final String IOT_RESOURCE = "iots";
+	protected static final String DEVICE_RESOURCE = "devices";
 	protected static final String EVENT_RESOURCE = "events";
 	protected static final String TRIGGER_RESOURCE = "triggers";
 	protected static final String SNAPSHOT_RESOURCE = "snapshots";
 	protected static final String CRON_RESOURCE = "crons";
 
-	protected static final String IOT = ":iot";
+	protected static final String DEVICE = ":device";
 	protected static final String CONNEXION = ":connexion";
 	protected static final String COMMAND = ":command";
 	protected static final String PLUGIN = ":plugin";

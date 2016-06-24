@@ -479,7 +479,8 @@
 			</activation>
 			<properties>
 				<sonar.host.url>http://192.168.1.26:9000</sonar.host.url>
-				<sonar.sources>src,src/main/resources</sonar.sources>
+				<sonar.sources>src</sonar.sources>
+				<sonar.exclusions>**/script-libs.js,**/script.js</sonar.exclusions>
 			</properties>
 		</profile>
 		<profile>

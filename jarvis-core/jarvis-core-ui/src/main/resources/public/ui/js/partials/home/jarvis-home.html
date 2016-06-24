@@ -26,17 +26,17 @@
 			md-gutter="8px">
 			<md-grid-tile
 				md-whiteframe="8"
-				ng-click="execute(iot)"
-				ng-repeat="iot in view.iots" 
-				ng-style="{'background': iot.tagColor, 'opacity': iot.tagOpacity}"
-				md-colspan="{{defaultValue(iot.colSpan,1)}}" 
-				md-rowspan="{{defaultValue(iot.rowSpan,1)}}"
+				ng-click="execute(device)"
+				ng-repeat="device in view.devices" 
+				ng-style="{'background': device.tagColor, 'opacity': device.tagOpacity}"
+				md-colspan="{{defaultValue(device.colSpan,1)}}" 
+				md-rowspan="{{defaultValue(device.rowSpan,1)}}"
 				md-colspan-xs="1"
                 md-rowspan-xs="1"
                 md-colspan-sm="1"
                 md-rowspan-sm="1"
 			>
-				<jarvis-inline-template data="iot.render" id="iot.id"></jarvis-inline-template>
+				<jarvis-inline-template data="device.render" id="device.id"></jarvis-inline-template>
 			</md-grid-tile>
 		</md-grid-list>
 	</div>

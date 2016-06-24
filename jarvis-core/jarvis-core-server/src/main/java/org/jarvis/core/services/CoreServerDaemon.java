@@ -25,9 +25,9 @@ import org.jarvis.core.resources.CoreWebsocket;
 import org.jarvis.core.resources.api.config.ApiConfigResources;
 import org.jarvis.core.resources.api.config.ApiPropertyResources;
 import org.jarvis.core.resources.api.connectors.ApiConnectorResources;
-import org.jarvis.core.resources.api.iot.ApiEventResources;
-import org.jarvis.core.resources.api.iot.ApiIotResources;
-import org.jarvis.core.resources.api.iot.ApiTriggerResources;
+import org.jarvis.core.resources.api.device.ApiDeviceResources;
+import org.jarvis.core.resources.api.device.ApiEventResources;
+import org.jarvis.core.resources.api.device.ApiTriggerResources;
 import org.jarvis.core.resources.api.plugins.ApiCommandResources;
 import org.jarvis.core.resources.api.plugins.ApiScriptPluginResources;
 import org.jarvis.core.resources.api.scenario.ApiBlockResources;
@@ -84,7 +84,7 @@ public class CoreServerDaemon {
 	ApiBlockResources apiBlockResources;
 
 	@Autowired
-	ApiIotResources apiIotResources;
+	ApiDeviceResources apiDeviceResources;
 
 	@Autowired
 	ApiViewResources apiViewResources;
@@ -222,7 +222,7 @@ public class CoreServerDaemon {
 		 */
 		apiScenarioResources.mount();
 		apiBlockResources.mount();
-		apiIotResources.mount();
+		apiDeviceResources.mount();
 		apiViewResources.mount();
 		/**
 		 * mount plugin resources

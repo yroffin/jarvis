@@ -14,59 +14,41 @@
  *   limitations under the License.
  */
 
-package org.jarvis.core.model.bean.iot;
+package org.jarvis.core.model.bean.device;
 
 import org.jarvis.core.model.bean.GenericBean;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
- * IOT object
+ * Event object
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class IotBean extends GenericBean {
+public class EventBean extends GenericBean {
 	/**
-	 * name of this iot
+	 * resource trigger
 	 */
-	public String name;
+	public String trigger;
 	/**
-	 * parameters
+	 * fired
 	 */
-	public String parameters;
+	public boolean fired;
 	/**
-	 * owner of this iot
+	 * text
 	 */
-	public String owner;
+	public String text;
 	/**
-	 * visible
+	 * bool
 	 */
-	public boolean visible;
+	public boolean bool;
 	/**
-	 * icon of this iot
+	 * number
 	 */
-	public String icon;
-	/**
-	 * tag color
-	 */
-	public String tagColor;
-	/**
-	 * tag opacity
-	 */
-	public String tagOpacity;
-	/**
-	 * tag text color
-	 */
-	public String tagTextColor;
-	/**
-	 * rowSpan
-	 */
-	public String rowSpan;
-	/**
-	 * colSpan
-	 */
-	public String colSpan;
-	/**
-	 * template
-	 */
-	public String template;
+	public int number;
+	
+	@Override
+	public String toString() {
+		return "EventBean [timestamp=" + timestamp + ", trigger=" + trigger + ", fired=" + fired + ", text=" + text
+				+ ", bool=" + bool + ", number=" + number + "]";
+	}
 }

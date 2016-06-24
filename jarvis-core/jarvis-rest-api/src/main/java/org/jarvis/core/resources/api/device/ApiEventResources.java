@@ -14,11 +14,11 @@
  *   limitations under the License.
  */
 
-package org.jarvis.core.resources.api.iot;
+package org.jarvis.core.resources.api.device;
 
 import org.jarvis.core.exception.TechnicalException;
-import org.jarvis.core.model.bean.iot.EventBean;
-import org.jarvis.core.model.rest.iot.EventRest;
+import org.jarvis.core.model.bean.device.EventBean;
+import org.jarvis.core.model.rest.device.EventRest;
 import org.jarvis.core.resources.api.ApiResources;
 import org.jarvis.core.resources.api.GenericValue;
 import org.jarvis.core.resources.api.ResourcePostListener;

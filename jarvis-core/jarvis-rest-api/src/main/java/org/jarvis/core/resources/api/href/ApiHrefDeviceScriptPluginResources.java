@@ -18,9 +18,9 @@ package org.jarvis.core.resources.api.href;
 
 import javax.annotation.PostConstruct;
 
-import org.jarvis.core.model.bean.iot.IotBean;
+import org.jarvis.core.model.bean.device.DeviceBean;
 import org.jarvis.core.model.bean.plugin.ScriptPluginBean;
-import org.jarvis.core.model.rest.iot.IotRest;
+import org.jarvis.core.model.rest.device.DeviceRest;
 import org.jarvis.core.model.rest.plugin.ScriptPluginRest;
 import org.jarvis.core.resources.api.mapper.ApiHrefMapper;
 import org.springframework.stereotype.Component;
@@ -29,11 +29,11 @@ import org.springframework.stereotype.Component;
  * HREF handler
  */
 @Component
-public class ApiHrefIotScriptPluginResources extends ApiHrefMapper<IotRest,ScriptPluginRest> {
+public class ApiHrefDeviceScriptPluginResources extends ApiHrefMapper<DeviceRest,ScriptPluginRest> {
 
 	@PostConstruct
 	protected
 	void init() {
-		super.init(IotBean.class.getSimpleName(),ScriptPluginBean.class.getSimpleName(),"plugins");
+		super.init(DeviceBean.class.getSimpleName(),ScriptPluginBean.class.getSimpleName(),"plugins");
 	}
 }

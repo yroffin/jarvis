@@ -21,17 +21,17 @@
 					<th></th>
 					<th></th>
 					<th>#</th>
-					<th translate="iot.icon">Icon</th>
-					<th translate="iot.name">Name</th>
+					<th translate="device.icon">Icon</th>
+					<th translate="device.name">Name</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="iot in iots">
-					<td><md-icon md-font-icon="material-icons md-16" ng-click="links.iots.drop(iot)">delete</md-icon></td>
-					<td><md-icon md-font-icon="material-icons md-16" ng-click="links.iots.execute(iot)">loop</md-icon></td>
-					<td>{{iot.id}}</th>
-					<td><md-icon md-font-icon="material-icons md-16">{{iot.icon}}</md-icon></th>
-					<td>{{iot.name}}</th>
+				<tr ng-repeat="device in devices">
+					<td><md-icon md-font-icon="material-icons md-16" ng-click="links.devices.drop(device)">delete</md-icon></td>
+					<td><md-icon md-font-icon="material-icons md-16" ng-click="links.devices.execute(device)">loop</md-icon></td>
+					<td>{{device.id}}</th>
+					<td><md-icon md-font-icon="material-icons md-16">{{device.icon}}</md-icon></th>
+					<td>{{device.name}}</th>
 				</tr>
 			</tbody>
 		</table>

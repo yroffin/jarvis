@@ -52,7 +52,7 @@ angular.module('JarvisApp', [
      'JarvisApp.services.configuration',
      'JarvisApp.services.property',
      'JarvisApp.services.connector',
-     'JarvisApp.services.iot',
+     'JarvisApp.services.device',
      'JarvisApp.services.event',
      'JarvisApp.services.trigger',
      'JarvisApp.services.block',
@@ -63,7 +63,7 @@ angular.module('JarvisApp', [
       */
      'JarvisApp.ctrl.plugins',
      'JarvisApp.ctrl.commands',
-     'JarvisApp.ctrl.iots',
+     'JarvisApp.ctrl.devices',
      'JarvisApp.ctrl.events',
      'JarvisApp.ctrl.triggers',
      'JarvisApp.ctrl.snapshots',

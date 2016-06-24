@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package org.jarvis.core.resources.api.iot;
+package org.jarvis.core.resources.api.device;
 
 import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.model.bean.scenario.TriggerBean;

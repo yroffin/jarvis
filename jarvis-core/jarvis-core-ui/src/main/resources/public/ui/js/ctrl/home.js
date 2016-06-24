@@ -20,8 +20,8 @@
 
 angular.module('JarvisApp.ctrl.home', ['JarvisApp.services'])
 .controller('homeCtrl', 
-		['$scope', '$rootScope', '$store', '$log', 'viewResourceService', 'iotResourceService', 'toastService', 'oauth2ResourceService',
-	function($scope, $rootScope, $store, $log, viewResourceService, iotResourceService, toastService, oauth2ResourceService){
+		['$scope', '$rootScope', '$store', '$log', 'viewResourceService', 'deviceResourceService', 'toastService', 'oauth2ResourceService',
+	function($scope, $rootScope, $store, $log, viewResourceService, deviceResourceService, toastService, oauth2ResourceService){
     /**
      * swipe left
      */
@@ -80,18 +80,18 @@ angular.module('JarvisApp.ctrl.home', ['JarvisApp.services'])
 	    	
 	    	_.forEach(arr, function(view) {
 	    		$log.info('loading view', view);
-	    		viewResourceService.iots.findAll(view.id, function(data) {
-	    			view.iots = data;
-	    			var done = _.after(view.iots.length, function() {
-	    				$log.debug('Linked iots to view', view.iots);
+	    		viewResourceService.devices.findAll(view.id, function(data) {
+	    			view.devices = data;
+	    			var done = _.after(view.devices.length, function() {
+	    				$log.debug('Linked devices to view', view.devices);
 	    			});
-	    			_.forEach(view.iots, function(iot){
+	    			_.forEach(view.devices, function(device){
 	    				/**
 	    				 * render each view
 	    				 */
-	    		      	iotResourceService.iot.task(iot.id, 'render', {}, function(data) {
-	    		      		iot.render = data;
-	    		      		done(iot);
+	    		      	deviceResourceService.device.task(device.id, 'render', {}, function(data) {
+	    		      		device.render = data;
+	    		      		done(device);
 	    		      	}, toastService.failure);
 	    			});
 	    	    }, toastService.failure);
@@ -107,6 +107,6 @@ angular.module('JarvisApp.ctrl.home', ['JarvisApp.services'])
     }
 }])
 .controller('helperCtrl', 
-		[ '$scope', '$store', '$log', 'viewResourceService', 'iotResourceService', 'toastService',
-	function($scope, $store, $log, viewResourceService, iotResourceService, toastService){
+		[ '$scope', '$store', '$log', 'viewResourceService', 'deviceResourceService', 'toastService',
+	function($scope, $store, $log, viewResourceService, deviceResourceService, toastService){
 }])

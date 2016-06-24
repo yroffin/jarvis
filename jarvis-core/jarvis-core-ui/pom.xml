@@ -113,7 +113,7 @@
 				<jsSourceFile>services/property.js</jsSourceFile>
 				<jsSourceFile>services/snapshot.js</jsSourceFile>
 				<jsSourceFile>services/cron.js</jsSourceFile>
-				<jsSourceFile>services/iot.js</jsSourceFile>
+				<jsSourceFile>services/device.js</jsSourceFile>
 				<jsSourceFile>services/connector.js</jsSourceFile>
 				<jsSourceFile>services/event.js</jsSourceFile>
 				<jsSourceFile>services/trigger.js</jsSourceFile>
@@ -130,7 +130,7 @@
 				<jsSourceFile>directives/widgets.js</jsSourceFile>
 				<!-- Controllers -->
 				<jsSourceFile>ctrl/blocks.js</jsSourceFile>
-				<jsSourceFile>ctrl/iots.js</jsSourceFile>
+				<jsSourceFile>ctrl/devices.js</jsSourceFile>
 				<jsSourceFile>ctrl/events.js</jsSourceFile>
 				<jsSourceFile>ctrl/triggers.js</jsSourceFile>
 				<jsSourceFile>ctrl/plugins.js</jsSourceFile>

@@ -52,7 +52,7 @@ angular.module('JarvisApp', [
      'JarvisApp.services.configuration',
      'JarvisApp.services.property',
      'JarvisApp.services.connector',
-     'JarvisApp.services.iot',
+     'JarvisApp.services.device',
      'JarvisApp.services.event',
      'JarvisApp.services.trigger',
      'JarvisApp.services.block',
@@ -63,7 +63,7 @@ angular.module('JarvisApp', [
       */
      'JarvisApp.ctrl.plugins',
      'JarvisApp.ctrl.commands',
-     'JarvisApp.ctrl.iots',
+     'JarvisApp.ctrl.devices',
      'JarvisApp.ctrl.events',
      'JarvisApp.ctrl.triggers',
      'JarvisApp.ctrl.snapshots',
@@ -1124,7 +1124,7 @@ angular.module('JarvisApp.services.command', []).factory('commandResourceService
 angular.module('JarvisApp.services.view', []).factory('viewResourceService', [ 'genericResourceService', function(genericResourceService) {
   return {
 	  view : genericResourceService.crud(['views']),
-	  iots : genericResourceService.links(['views'], ['iots'])
+	  devices : genericResourceService.links(['views'], ['devices'])
   }
 }]);
 /* 
@@ -1261,13 +1261,13 @@ angular.module('JarvisApp.services.cron', []).factory('cronResourceService',
 
 /* Services */
 
-angular.module('JarvisApp.services.iot', [])
-	.factory('iotResourceService', [ 'genericResourceService', function(genericResourceService) {
+angular.module('JarvisApp.services.device', [])
+	.factory('deviceResourceService', [ 'genericResourceService', function(genericResourceService) {
 		return {
-			iot: genericResourceService.crud(['iots']),
-			plugins : genericResourceService.links(['iots'], ['plugins','scripts']),
-			iots : genericResourceService.links(['iots'], ['iots']),
-			triggers : genericResourceService.links(['iots'], ['triggers'])
+			device: genericResourceService.crud(['devices']),
+			plugins : genericResourceService.links(['devices'], ['plugins','scripts']),
+			devices : genericResourceService.links(['devices'], ['devices']),
+			triggers : genericResourceService.links(['devices'], ['triggers'])
 		}
 	}]);
 /* 
@@ -1406,8 +1406,8 @@ angular.module('JarvisApp.services.scenario', []).factory('scenarioResourceServi
  * blockResourceService
  */
 angular.module('JarvisApp.services.block', []).factory('blockResourceService',
-		[ '$log', 'Restangular', 'genericResourceService', 'iotResourceService', 'filterService',
-		function($log, Restangular, genericResourceService, iotResourceService, filterService) {
+		[ '$log', 'Restangular', 'genericResourceService', 'deviceResourceService', 'filterService',
+		function($log, Restangular, genericResourceService, deviceResourceService, filterService) {
   return {
 	    block: genericResourceService.crud(['blocks']),
 	    plugins: {
@@ -1502,7 +1502,7 @@ angular.module('JarvisApp.config',[])
     		 '$state',
     		 'genericPickerService',
     		 'toastService',
-    		 'iotResourceService',
+    		 'deviceResourceService',
     		 'eventResourceService',
     		 'configurationResourceService',
     		 'oauth2ResourceService',
@@ -1520,7 +1520,7 @@ angular.module('JarvisApp.config',[])
     			$state,
     			genericPickerService,
     			toastService,
-    			iotResourceService,
+    			deviceResourceService,
     			eventResourceService,
     			configurationResourceService,
     			oauth2ResourceService){
@@ -1634,14 +1634,14 @@ angular.module('JarvisApp.config',[])
 
         /**
          * send an event
-         * @param iot
+         * @param device
          * @param value
          */
-        $scope.emit = function(iot, value) {
-        	$log.debug('JarvisAppCtrl::emit', iot, value, iot.trigger);
+        $scope.emit = function(device, value) {
+        	$log.debug('JarvisAppCtrl::emit', device, value, device.trigger);
         	eventResourceService.event.post( 
         			{
-        				trigger:iot.trigger,
+        				trigger:device.trigger,
 		        		timestamp: (new Date()).toISOString(),
 		        		fired: true,
 		        		number:value
@@ -1652,11 +1652,11 @@ angular.module('JarvisApp.config',[])
         };
 
         /**
-    	 * on server side execute all action on this iot
-    	 * @param iot
+    	 * on server side execute all action on this device
+    	 * @param device
     	 */
-    	$scope.execute = function(iot) {
-    	 	iotResourceService.iot.task(iot.id, 'execute', {}, function(data) {
+    	$scope.execute = function(device) {
+    	 	deviceResourceService.device.task(device.id, 'execute', {}, function(data) {
     	 		$log.debug('JarvisAppCtrl::execute', data);
     	 	    $scope.renderdata = data;
     	    }, toastService.failure);
@@ -1824,8 +1824,8 @@ angular.module('JarvisApp.config',[])
 		    	 nodes:[]
 		     }
 	    ];
-		$scope.crudIot = genericResourceService.crud(['iots']);
-		$scope.crudIot.findAll(
+		$scope.crudDevice = genericResourceService.crud(['devices']);
+		$scope.crudDevice.findAll(
 				function(elements) {
 					_.each(elements, function(element) {
 						element.selectable = false;
@@ -1845,10 +1845,10 @@ angular.module('JarvisApp.config',[])
 				toastService.failure
 		)
 	}])
-	.controller('pickIotDialogCtrl',
+	.controller('pickDeviceDialogCtrl',
 			['$scope', '$log', '$mdDialog', 'genericResourceService', 'toastService',
 		function($scope, $log, $mdDialog, genericResourceService, toastService) {
-		$log.info('pickIotDialogCtrl');
+		$log.info('pickDeviceDialogCtrl');
 
 		$scope.hide = function() {
 		   $mdDialog.hide();
@@ -1871,8 +1871,8 @@ angular.module('JarvisApp.config',[])
 		    	 nodes:[]
 		     }
 	    ];
-		$scope.crudIot = genericResourceService.crud(['iots']);
-		$scope.crudIot.findAll(
+		$scope.crudDevice = genericResourceService.crud(['devices']);
+		$scope.crudDevice.findAll(
 				function(elements) {
 					_.each(elements, function(element) {
 						element.selectable = true;
@@ -2219,8 +2219,8 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
             controller: 'homeCtrl',
             templateUrl: '/ui/js/partials/home/page.html'
         })
-        .state('helper-iots', {
-            url: '/helper-iots',
+        .state('helper-devices', {
+            url: '/helper-devices',
             controller: 'helperCtrl',
             templateUrl: '/ui/js/partials/helper/jarvis-commands.svg'
         })
@@ -2244,15 +2244,15 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
             controller: 'triggerCtrl',
             templateUrl: '/ui/js/partials/triggers/trigger/page.html'
         })
-        .state('iots', {
-            url: '/iots',
-            controller: 'iotsCtrl',
-            templateUrl: '/ui/js/partials/iots/page.html'
+        .state('devices', {
+            url: '/devices',
+            controller: 'devicesCtrl',
+            templateUrl: '/ui/js/partials/devices/page.html'
         })
-        .state('iots-by-id', {
-            url: '/iots/:id?tab',
-            controller: 'iotCtrl',
-            templateUrl: '/ui/js/partials/iots/iot/page.html'
+        .state('devices-by-id', {
+            url: '/devices/:id?tab',
+            controller: 'deviceCtrl',
+            templateUrl: '/ui/js/partials/devices/device/page.html'
         })
         .state('plugins', {
             url: '/plugins',
@@ -2596,39 +2596,39 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
 	    }
 	  }
 }])
-.directive('jarvisIots', [ '$log', '$stateParams', function ($log, $stateParams) {
+.directive('jarvisDevices', [ '$log', '$stateParams', function ($log, $stateParams) {
   return {
     restrict: 'E',
-    templateUrl: '/ui/js/partials/iots/jarvis-iots.html',
+    templateUrl: '/ui/js/partials/devices/jarvis-devices.html',
     link: function(scope, element, attrs) {
-    	$log.debug('jarvis-iots');
+    	$log.debug('jarvis-devices');
     }
   }
 }])
-.directive('jarvisIot', [ '$log', '$stateParams', function ($log, $stateParams) {
+.directive('jarvisDevice', [ '$log', '$stateParams', function ($log, $stateParams) {
   return {
     restrict: 'E',
-    templateUrl: '/ui/js/partials/iots/iot/jarvis-iot-general.html',
+    templateUrl: '/ui/js/partials/devices/device/jarvis-device-general.html',
     link: function(scope, element, attrs) {
-    	$log.debug('jarvis-iot-general');
+    	$log.debug('jarvis-device-general');
     }
   }
 }])
-.directive('jarvisIotPlugin', [ '$log', '$stateParams', function ($log, $stateParams) {
+.directive('jarvisDevicePlugin', [ '$log', '$stateParams', function ($log, $stateParams) {
   return {
     restrict: 'E',
-    templateUrl: '/ui/js/partials/iots/iot/jarvis-iot-plugin.html',
+    templateUrl: '/ui/js/partials/devices/device/jarvis-device-plugin.html',
     link: function(scope, element, attrs) {
-    	$log.debug('jarvis-iot-plugin');
+    	$log.debug('jarvis-device-plugin');
     }
   }
 }])
-.directive('jarvisIotRender', [ '$log', '$stateParams', function ($log, $stateParams) {
+.directive('jarvisDeviceRender', [ '$log', '$stateParams', function ($log, $stateParams) {
   return {
     restrict: 'E',
-    templateUrl: '/ui/js/partials/iots/iot/jarvis-iot-render.html',
+    templateUrl: '/ui/js/partials/devices/device/jarvis-device-render.html',
     link: function(scope, element, attrs) {
-    	$log.debug('jarvis-iot-render');
+    	$log.debug('jarvis-device-render');
     }
   }
 }])
@@ -2637,7 +2637,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     restrict: 'E',
     templateUrl: '/ui/js/partials/events/jarvis-events.html',
     link: function(scope, element, attrs) {
-    	$log.debug('jarvis-iots');
+    	$log.debug('jarvis-devices');
     }
   }
 }])
@@ -2980,7 +2980,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     		 * update scope
     		 */
         	scope.data = $parse(attrs.data)(scope);
-            return '/api/directives/html/iots/'+$parse(attrs.id)(scope);
+            return '/api/directives/html/devices/'+$parse(attrs.id)(scope);
         }
     }
   }
@@ -3266,32 +3266,32 @@ angular.module('JarvisApp.ctrl.blocks', ['JarvisApp.services'])
 
 /* Ctrls */
 
-angular.module('JarvisApp.ctrl.iots', ['JarvisApp.services'])
-.controller('iotsCtrl', 
-		[ '$scope', '$log', 'genericScopeService', 'iotResourceService',
-	function($scope, $log, genericScopeService, iotResourceService){
+angular.module('JarvisApp.ctrl.devices', ['JarvisApp.services'])
+.controller('devicesCtrl', 
+		[ '$scope', '$log', 'genericScopeService', 'deviceResourceService',
+	function($scope, $log, genericScopeService, deviceResourceService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
 	 */
 	genericScopeService.scope.resources(
 			function(entities) {
-				$scope.iots = entities;
+				$scope.devices = entities;
 			},
 			function() {
-				return $scope.iots;
+				return $scope.devices;
 			},
 			$scope, 
-			'iots', 
-			iotResourceService.iot,
+			'devices', 
+			deviceResourceService.device,
 			{
     			name: "object name",
     			icon: "list"
     		}
 	);
 }])
-.controller('iotCtrl',
-		['$scope', '$log', '$state', '$stateParams', 'iotResourceService', 'pluginResourceService', 'genericScopeService', 'genericResourceService', 'toastService',
-	function($scope, $log, $state, $stateParams, iotResourceService, pluginResourceService, genericScopeService, genericResourceService, toastService){
+.controller('deviceCtrl',
+		['$scope', '$log', '$state', '$stateParams', 'deviceResourceService', 'pluginResourceService', 'genericScopeService', 'genericResourceService', 'toastService',
+	function($scope, $log, $state, $stateParams, deviceResourceService, pluginResourceService, genericScopeService, genericResourceService, toastService){
 	$scope.getLink = function() {
 		return $scope.plugins;
 	}
@@ -3300,9 +3300,9 @@ angular.module('JarvisApp.ctrl.iots', ['JarvisApp.services'])
 	 */
 	genericScopeService.scope.resource(
 			$scope, 
-			'iot', 
-			'iots', 
-			iotResourceService.iot
+			'device', 
+			'devices', 
+			deviceResourceService.device
 	);
 	/**
 	 * declare links
@@ -3310,7 +3310,7 @@ angular.module('JarvisApp.ctrl.iots', ['JarvisApp.services'])
 	$scope.links = {
 			plugins: {},
 			triggers: {},
-			iots: {}
+			devices: {}
 	}
 	/**
 	 * declare action links
@@ -3320,10 +3320,10 @@ angular.module('JarvisApp.ctrl.iots', ['JarvisApp.services'])
 				return $scope.plugins;
 			},
 			$scope.links.plugins,
-			'iot',
-			'iots',
-			iotResourceService.iot, 
-			iotResourceService.plugins, 
+			'device',
+			'devices',
+			deviceResourceService.device, 
+			deviceResourceService.plugins, 
 			{'order':'1'},
 			$stateParams.id
 	);
@@ -3332,32 +3332,32 @@ angular.module('JarvisApp.ctrl.iots', ['JarvisApp.services'])
 				return $scope.triggers;
 			},
 			$scope.links.triggers,
-			'iot',
-			'iots',
-			iotResourceService.iot, 
-			iotResourceService.triggers, 
+			'device',
+			'devices',
+			deviceResourceService.device, 
+			deviceResourceService.triggers, 
 			{'order':'1'},
 			$stateParams.id
 	);
 	genericScopeService.scope.resourceLink(
 			function() {
-				return $scope.iots;
+				return $scope.devices;
 			},
-			$scope.links.iots,
-			'iot',
-			'iots',
-			iotResourceService.iot, 
-			iotResourceService.iots, 
+			$scope.links.devices,
+			'device',
+			'devices',
+			deviceResourceService.device, 
+			deviceResourceService.devices, 
 			{'order':'1'},
 			$stateParams.id
 	);
     /**
-	 * render this iot, assume no args by default
-	 * @param iot, the iot to render
+	 * render this device, assume no args by default
+	 * @param device, the device to render
 	 */
-	$scope.render = function(iot) {
-	 	iotResourceService.iot.task(iot.id, 'render', {}, function(data) {
-	 		$log.debug('iotCtrl::render', data);
+	$scope.render = function(device) {
+	 	deviceResourceService.device.task(device.id, 'render', {}, function(data) {
+	 		$log.debug('deviceCtrl::render', data);
 	 	    $scope.renderdata = data;
 	 	    $scope.output = angular.toJson(data, true);
 	    }, toastService.failure);
@@ -3369,21 +3369,21 @@ angular.module('JarvisApp.ctrl.iots', ['JarvisApp.services'])
   		$scope.activeTab = $stateParams.tab;
 	 
 		/**
-		 * get current iot
+		 * get current device
 		 */
-    	genericResourceService.scope.entity.get($stateParams.id, function(update) {$scope.iot=update}, iotResourceService.iot);
+    	genericResourceService.scope.entity.get($stateParams.id, function(update) {$scope.device=update}, deviceResourceService.device);
 	
 		/**
 		 * get all plugins
 		 */
     	$scope.plugins = [];
-    	genericResourceService.scope.collections.findAll('plugins', $stateParams.id, $scope.plugins, iotResourceService.plugins);
-    	$scope.iots = [];
-    	genericResourceService.scope.collections.findAll('iots', $stateParams.id, $scope.iots, iotResourceService.iots);
+    	genericResourceService.scope.collections.findAll('plugins', $stateParams.id, $scope.plugins, deviceResourceService.plugins);
+    	$scope.devices = [];
+    	genericResourceService.scope.collections.findAll('devices', $stateParams.id, $scope.devices, deviceResourceService.devices);
     	$scope.triggers = [];
-    	genericResourceService.scope.collections.findAll('triggers', $stateParams.id, $scope.triggers, iotResourceService.triggers);
+    	genericResourceService.scope.collections.findAll('triggers', $stateParams.id, $scope.triggers, deviceResourceService.triggers);
 	
-		$log.info('iot-ctrl');
+		$log.info('device-ctrl');
 	}
 }])
 /* 
@@ -3567,8 +3567,8 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
 	);
 }])
 .controller('pluginScriptCtrl',
-		[ '$scope', '$log', '$stateParams', 'genericResourceService', 'genericScopeService', 'genericPickerService', 'pluginResourceService', 'iotResourceService', 'commandResourceService', 'toastService',
-	function($scope, $log, $stateParams, genericResourceService, genericScopeService, genericPickerService, pluginResourceService, iotResourceService, commandResourceService, toastService){
+		[ '$scope', '$log', '$stateParams', 'genericResourceService', 'genericScopeService', 'genericPickerService', 'pluginResourceService', 'deviceResourceService', 'commandResourceService', 'toastService',
+	function($scope, $log, $stateParams, genericResourceService, genericScopeService, genericPickerService, pluginResourceService, deviceResourceService, commandResourceService, toastService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
 	 */
@@ -3686,8 +3686,8 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
 		/**
 		 * find all owner
 		 */
-    	$scope.combo.owners = [{id: undefined, name: "iot.empty"}];
-    	genericResourceService.scope.combo.findAll('owner', $scope.combo.owners, iotResourceService.iot);
+    	$scope.combo.owners = [{id: undefined, name: "device.empty"}];
+    	genericResourceService.scope.combo.findAll('owner', $scope.combo.owners, deviceResourceService.device);
 
 		$log.info('script-ctrl');
     }
@@ -3886,8 +3886,8 @@ angular.module('JarvisApp.ctrl.views', ['JarvisApp.services'])
 	);
 }])
 .controller('viewCtrl',
-		[ '$scope', '$log', '$stateParams', 'genericResourceService', 'genericScopeService', 'viewResourceService', 'iotResourceService', 'toastService',
-	function($scope, $log, $stateParams, genericResourceService, genericScopeService, viewResourceService, iotResourceService, toastService){
+		[ '$scope', '$log', '$stateParams', 'genericResourceService', 'genericScopeService', 'viewResourceService', 'deviceResourceService', 'toastService',
+	function($scope, $log, $stateParams, genericResourceService, genericScopeService, viewResourceService, deviceResourceService, toastService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
 	 */
@@ -3900,20 +3900,20 @@ angular.module('JarvisApp.ctrl.views', ['JarvisApp.services'])
 	 * declare links
 	 */
 	$scope.links = {
-			iots: {}
+			devices: {}
 	};
 	/**
 	 * declare generic scope resource link (and inject it in scope)
 	 */
 	genericScopeService.scope.resourceLink(
 			function() {
-				return $scope.iots;
+				return $scope.devices;
 			},
-			$scope.links.iots, 
+			$scope.links.devices, 
 			'view', 
 			'views', 
 			viewResourceService.view, 
-			viewResourceService.iots, 
+			viewResourceService.devices, 
 			{
     			'order':'1'
 			},
@@ -3932,8 +3932,8 @@ angular.module('JarvisApp.ctrl.views', ['JarvisApp.services'])
 		/**
 		 * get all views
 		 */
-		$scope.iots = [];
-    	genericResourceService.scope.collections.findAll('iots', $stateParams.id, $scope.iots, viewResourceService.iots);
+		$scope.devices = [];
+    	genericResourceService.scope.collections.findAll('devices', $stateParams.id, $scope.devices, viewResourceService.devices);
 
 		$log.info('view-ctrl', $scope.views);
     }
@@ -4064,8 +4064,8 @@ angular.module('JarvisApp.ctrl.snapshots', ['JarvisApp.services'])
 	);
 }])
 .controller('snapshotCtrl',
-		['$scope', '$log', '$stateParams', '$filter', '$http', 'genericResourceService', 'genericScopeService', 'snapshotResourceService', 'iotResourceService', 'toastService',
-	function($scope, $log, $stateParams, $filter, $http, genericResourceService, genericScopeService, snapshotResourceService, iotResourceService, toastService){
+		['$scope', '$log', '$stateParams', '$filter', '$http', 'genericResourceService', 'genericScopeService', 'snapshotResourceService', 'deviceResourceService', 'toastService',
+	function($scope, $log, $stateParams, $filter, $http, genericResourceService, genericScopeService, snapshotResourceService, deviceResourceService, toastService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
 	 */
@@ -4179,8 +4179,8 @@ angular.module('JarvisApp.ctrl.crons', ['JarvisApp.services'])
 	);
 }])
 .controller('cronCtrl',
-		['$scope', '$log', '$stateParams', '$filter', '$http', 'genericResourceService', 'genericScopeService', 'cronResourceService', 'iotResourceService', 'toastService',
-	function($scope, $log, $stateParams, $filter, $http, genericResourceService, genericScopeService, cronResourceService, iotResourceService, toastService){
+		['$scope', '$log', '$stateParams', '$filter', '$http', 'genericResourceService', 'genericScopeService', 'cronResourceService', 'deviceResourceService', 'toastService',
+	function($scope, $log, $stateParams, $filter, $http, genericResourceService, genericScopeService, cronResourceService, deviceResourceService, toastService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
 	 */
@@ -4242,8 +4242,8 @@ angular.module('JarvisApp.ctrl.crons', ['JarvisApp.services'])
 
 angular.module('JarvisApp.ctrl.home', ['JarvisApp.services'])
 .controller('homeCtrl', 
-		['$scope', '$rootScope', '$store', '$log', 'viewResourceService', 'iotResourceService', 'toastService', 'oauth2ResourceService',
-	function($scope, $rootScope, $store, $log, viewResourceService, iotResourceService, toastService, oauth2ResourceService){
+		['$scope', '$rootScope', '$store', '$log', 'viewResourceService', 'deviceResourceService', 'toastService', 'oauth2ResourceService',
+	function($scope, $rootScope, $store, $log, viewResourceService, deviceResourceService, toastService, oauth2ResourceService){
     /**
      * swipe left
      */
@@ -4302,18 +4302,18 @@ angular.module('JarvisApp.ctrl.home', ['JarvisApp.services'])
 	    	
 	    	_.forEach(arr, function(view) {
 	    		$log.info('loading view', view);
-	    		viewResourceService.iots.findAll(view.id, function(data) {
-	    			view.iots = data;
-	    			var done = _.after(view.iots.length, function() {
-	    				$log.debug('Linked iots to view', view.iots);
+	    		viewResourceService.devices.findAll(view.id, function(data) {
+	    			view.devices = data;
+	    			var done = _.after(view.devices.length, function() {
+	    				$log.debug('Linked devices to view', view.devices);
 	    			});
-	    			_.forEach(view.iots, function(iot){
+	    			_.forEach(view.devices, function(device){
 	    				/**
 	    				 * render each view
 	    				 */
-	    		      	iotResourceService.iot.task(iot.id, 'render', {}, function(data) {
-	    		      		iot.render = data;
-	    		      		done(iot);
+	    		      	deviceResourceService.device.task(device.id, 'render', {}, function(data) {
+	    		      		device.render = data;
+	    		      		done(device);
 	    		      	}, toastService.failure);
 	    			});
 	    	    }, toastService.failure);
@@ -4329,8 +4329,8 @@ angular.module('JarvisApp.ctrl.home', ['JarvisApp.services'])
     }
 }])
 .controller('helperCtrl', 
-		[ '$scope', '$store', '$log', 'viewResourceService', 'iotResourceService', 'toastService',
-	function($scope, $store, $log, viewResourceService, iotResourceService, toastService){
+		[ '$scope', '$store', '$log', 'viewResourceService', 'deviceResourceService', 'toastService',
+	function($scope, $store, $log, viewResourceService, deviceResourceService, toastService){
 }])
 /* 
  * Copyright 2014 Yannick Roffin.

@@ -24,6 +24,6 @@
 angular.module('JarvisApp.services.view', []).factory('viewResourceService', [ 'genericResourceService', function(genericResourceService) {
   return {
 	  view : genericResourceService.crud(['views']),
-	  iots : genericResourceService.links(['views'], ['iots'])
+	  devices : genericResourceService.links(['views'], ['devices'])
   }
 }]);

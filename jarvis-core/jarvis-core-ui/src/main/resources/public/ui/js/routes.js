@@ -40,8 +40,8 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
             controller: 'homeCtrl',
             templateUrl: '/ui/js/partials/home/page.html'
         })
-        .state('helper-iots', {
-            url: '/helper-iots',
+        .state('helper-devices', {
+            url: '/helper-devices',
             controller: 'helperCtrl',
             templateUrl: '/ui/js/partials/helper/jarvis-commands.svg'
         })
@@ -65,15 +65,15 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
             controller: 'triggerCtrl',
             templateUrl: '/ui/js/partials/triggers/trigger/page.html'
         })
-        .state('iots', {
-            url: '/iots',
-            controller: 'iotsCtrl',
-            templateUrl: '/ui/js/partials/iots/page.html'
+        .state('devices', {
+            url: '/devices',
+            controller: 'devicesCtrl',
+            templateUrl: '/ui/js/partials/devices/page.html'
         })
-        .state('iots-by-id', {
-            url: '/iots/:id?tab',
-            controller: 'iotCtrl',
-            templateUrl: '/ui/js/partials/iots/iot/page.html'
+        .state('devices-by-id', {
+            url: '/devices/:id?tab',
+            controller: 'deviceCtrl',
+            templateUrl: '/ui/js/partials/devices/device/page.html'
         })
         .state('plugins', {
             url: '/plugins',

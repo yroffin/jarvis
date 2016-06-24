@@ -20,10 +20,10 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
-import org.jarvis.core.model.bean.iot.IotBean;
+import org.jarvis.core.model.bean.device.DeviceBean;
 import org.jarvis.core.model.bean.scenario.TriggerBean;
 import org.jarvis.core.model.rest.GenericEntity;
-import org.jarvis.core.model.rest.iot.IotRest;
+import org.jarvis.core.model.rest.device.DeviceRest;
 import org.jarvis.core.model.rest.scenario.TriggerRest;
 import org.jarvis.core.resources.api.mapper.ApiHrefMapper;
 import org.springframework.stereotype.Component;
@@ -32,12 +32,12 @@ import org.springframework.stereotype.Component;
  * HREF handler
  */
 @Component
-public class ApiHrefIotTriggerResources extends ApiHrefMapper<IotRest,TriggerRest> {
+public class ApiHrefDeviceTriggerResources extends ApiHrefMapper<DeviceRest,TriggerRest> {
 
 	@PostConstruct
 	protected
 	void init() {
-		super.init(IotBean.class.getSimpleName(),TriggerBean.class.getSimpleName(),"triggers");
+		super.init(DeviceBean.class.getSimpleName(),TriggerBean.class.getSimpleName(),"triggers");
 	}
 
 	/**
@@ -45,7 +45,7 @@ public class ApiHrefIotTriggerResources extends ApiHrefMapper<IotRest,TriggerRes
 	 * @param bean 
 	 * @return List<GenericEntity>
 	 */
-	public List<GenericEntity> findAll(IotBean bean) {
-		return super.findAll(mapperFactory.getMapperFacade().map(bean, IotRest.class), HREF);
+	public List<GenericEntity> findAll(DeviceBean bean) {
+		return super.findAll(mapperFactory.getMapperFacade().map(bean, DeviceRest.class), HREF);
 	}
 }

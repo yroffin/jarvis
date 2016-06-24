@@ -17,14 +17,14 @@
 package org.jarvis.core.resources.api.views;
 
 import org.jarvis.core.exception.TechnicalException;
-import org.jarvis.core.model.bean.iot.IotBean;
+import org.jarvis.core.model.bean.device.DeviceBean;
 import org.jarvis.core.model.bean.view.ViewBean;
-import org.jarvis.core.model.rest.iot.IotRest;
+import org.jarvis.core.model.rest.device.DeviceRest;
 import org.jarvis.core.model.rest.view.ViewRest;
 import org.jarvis.core.resources.api.ApiLinkedResources;
 import org.jarvis.core.resources.api.GenericValue;
+import org.jarvis.core.resources.api.device.ApiDeviceResources;
 import org.jarvis.core.resources.api.href.ApiHrefViewResources;
-import org.jarvis.core.resources.api.iot.ApiIotResources;
 import org.jarvis.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +34,10 @@ import org.springframework.stereotype.Component;
  * View resource
  */
 @Component
-public class ApiViewResources extends ApiLinkedResources<ViewRest,ViewBean,IotRest,IotBean> {
+public class ApiViewResources extends ApiLinkedResources<ViewRest,ViewBean,DeviceRest,DeviceBean> {
 
 	@Autowired
-	ApiIotResources apiIotResources;
+	ApiDeviceResources apiDeviceResources;
 
 	@Autowired
 	ApiHrefViewResources apiHrefViewResources;
@@ -57,9 +57,9 @@ public class ApiViewResources extends ApiLinkedResources<ViewRest,ViewBean,IotRe
 		 */
 		declare(VIEW_RESOURCE);
 		/**
-		 * views -> iots
+		 * views -> devices
 		 */
-		declare(VIEW_RESOURCE, IOT_RESOURCE, apiIotResources, apiHrefViewResources, IOT, SORTKEY, HREF);
+		declare(VIEW_RESOURCE, DEVICE_RESOURCE, apiDeviceResources, apiHrefViewResources, DEVICE, SORTKEY, HREF);
 	}
 
 	@Override

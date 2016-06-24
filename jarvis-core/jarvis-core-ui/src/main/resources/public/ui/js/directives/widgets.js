@@ -127,39 +127,39 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
 	    }
 	  }
 }])
-.directive('jarvisIots', [ '$log', '$stateParams', function ($log, $stateParams) {
+.directive('jarvisDevices', [ '$log', '$stateParams', function ($log, $stateParams) {
   return {
     restrict: 'E',
-    templateUrl: '/ui/js/partials/iots/jarvis-iots.html',
+    templateUrl: '/ui/js/partials/devices/jarvis-devices.html',
     link: function(scope, element, attrs) {
-    	$log.debug('jarvis-iots');
+    	$log.debug('jarvis-devices');
     }
   }
 }])
-.directive('jarvisIot', [ '$log', '$stateParams', function ($log, $stateParams) {
+.directive('jarvisDevice', [ '$log', '$stateParams', function ($log, $stateParams) {
   return {
     restrict: 'E',
-    templateUrl: '/ui/js/partials/iots/iot/jarvis-iot-general.html',
+    templateUrl: '/ui/js/partials/devices/device/jarvis-device-general.html',
     link: function(scope, element, attrs) {
-    	$log.debug('jarvis-iot-general');
+    	$log.debug('jarvis-device-general');
     }
   }
 }])
-.directive('jarvisIotPlugin', [ '$log', '$stateParams', function ($log, $stateParams) {
+.directive('jarvisDevicePlugin', [ '$log', '$stateParams', function ($log, $stateParams) {
   return {
     restrict: 'E',
-    templateUrl: '/ui/js/partials/iots/iot/jarvis-iot-plugin.html',
+    templateUrl: '/ui/js/partials/devices/device/jarvis-device-plugin.html',
     link: function(scope, element, attrs) {
-    	$log.debug('jarvis-iot-plugin');
+    	$log.debug('jarvis-device-plugin');
     }
   }
 }])
-.directive('jarvisIotRender', [ '$log', '$stateParams', function ($log, $stateParams) {
+.directive('jarvisDeviceRender', [ '$log', '$stateParams', function ($log, $stateParams) {
   return {
     restrict: 'E',
-    templateUrl: '/ui/js/partials/iots/iot/jarvis-iot-render.html',
+    templateUrl: '/ui/js/partials/devices/device/jarvis-device-render.html',
     link: function(scope, element, attrs) {
-    	$log.debug('jarvis-iot-render');
+    	$log.debug('jarvis-device-render');
     }
   }
 }])
@@ -168,7 +168,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     restrict: 'E',
     templateUrl: '/ui/js/partials/events/jarvis-events.html',
     link: function(scope, element, attrs) {
-    	$log.debug('jarvis-iots');
+    	$log.debug('jarvis-devices');
     }
   }
 }])
@@ -511,7 +511,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     		 * update scope
     		 */
         	scope.data = $parse(attrs.data)(scope);
-            return '/api/directives/html/iots/'+$parse(attrs.id)(scope);
+            return '/api/directives/html/devices/'+$parse(attrs.id)(scope);
         }
     }
   }

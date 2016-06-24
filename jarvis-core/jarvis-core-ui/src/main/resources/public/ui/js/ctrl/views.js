@@ -43,8 +43,8 @@ angular.module('JarvisApp.ctrl.views', ['JarvisApp.services'])
 	);
 }])
 .controller('viewCtrl',
-		[ '$scope', '$log', '$stateParams', 'genericResourceService', 'genericScopeService', 'viewResourceService', 'iotResourceService', 'toastService',
-	function($scope, $log, $stateParams, genericResourceService, genericScopeService, viewResourceService, iotResourceService, toastService){
+		[ '$scope', '$log', '$stateParams', 'genericResourceService', 'genericScopeService', 'viewResourceService', 'deviceResourceService', 'toastService',
+	function($scope, $log, $stateParams, genericResourceService, genericScopeService, viewResourceService, deviceResourceService, toastService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
 	 */
@@ -57,20 +57,20 @@ angular.module('JarvisApp.ctrl.views', ['JarvisApp.services'])
 	 * declare links
 	 */
 	$scope.links = {
-			iots: {}
+			devices: {}
 	};
 	/**
 	 * declare generic scope resource link (and inject it in scope)
 	 */
 	genericScopeService.scope.resourceLink(
 			function() {
-				return $scope.iots;
+				return $scope.devices;
 			},
-			$scope.links.iots, 
+			$scope.links.devices, 
 			'view', 
 			'views', 
 			viewResourceService.view, 
-			viewResourceService.iots, 
+			viewResourceService.devices, 
 			{
     			'order':'1'
 			},
@@ -89,8 +89,8 @@ angular.module('JarvisApp.ctrl.views', ['JarvisApp.services'])
 		/**
 		 * get all views
 		 */
-		$scope.iots = [];
-    	genericResourceService.scope.collections.findAll('iots', $stateParams.id, $scope.iots, viewResourceService.iots);
+		$scope.devices = [];
+    	genericResourceService.scope.collections.findAll('devices', $stateParams.id, $scope.devices, viewResourceService.devices);
 
 		$log.info('view-ctrl', $scope.views);
     }

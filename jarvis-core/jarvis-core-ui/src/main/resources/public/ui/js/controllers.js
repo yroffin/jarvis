@@ -80,7 +80,7 @@ angular.module('JarvisApp.config',[])
     		 '$state',
     		 'genericPickerService',
     		 'toastService',
-    		 'iotResourceService',
+    		 'deviceResourceService',
     		 'eventResourceService',
     		 'configurationResourceService',
     		 'oauth2ResourceService',
@@ -99,7 +99,7 @@ angular.module('JarvisApp.config',[])
     			$state,
     			genericPickerService,
     			toastService,
-    			iotResourceService,
+    			deviceResourceService,
     			eventResourceService,
     			configurationResourceService,
     			oauth2ResourceService){
@@ -215,14 +215,14 @@ angular.module('JarvisApp.config',[])
 
         /**
          * send an event
-         * @param iot
+         * @param device
          * @param value
          */
-        $scope.emit = function(iot, value) {
-        	$log.debug('JarvisAppCtrl::emit', iot, value, iot.trigger);
+        $scope.emit = function(device, value) {
+        	$log.debug('JarvisAppCtrl::emit', device, value, device.trigger);
         	eventResourceService.event.post( 
         			{
-        				trigger:iot.trigger,
+        				trigger:device.trigger,
 		        		timestamp: (new Date()).toISOString(),
 		        		fired: true,
 		        		number:value
@@ -233,11 +233,11 @@ angular.module('JarvisApp.config',[])
         };
 
         /**
-    	 * on server side execute all action on this iot
-    	 * @param iot
+    	 * on server side execute all action on this device
+    	 * @param device
     	 */
-    	$scope.execute = function(iot) {
-    	 	iotResourceService.iot.task(iot.id, 'execute', {}, function(data) {
+    	$scope.execute = function(device) {
+    	 	deviceResourceService.device.task(device.id, 'execute', {}, function(data) {
     	 		$log.debug('JarvisAppCtrl::execute', data);
     	 	    $scope.renderdata = data;
     	    }, toastService.failure);
@@ -419,8 +419,8 @@ angular.module('JarvisApp.config',[])
 		    	 nodes:[]
 		     }
 	    ];
-		$scope.crudIot = genericResourceService.crud(['iots']);
-		$scope.crudIot.findAll(
+		$scope.crudDevice = genericResourceService.crud(['devices']);
+		$scope.crudDevice.findAll(
 				function(elements) {
 					_.each(elements, function(element) {
 						element.selectable = false;
@@ -440,10 +440,10 @@ angular.module('JarvisApp.config',[])
 				toastService.failure
 		)
 	}])
-	.controller('pickIotDialogCtrl',
+	.controller('pickDeviceDialogCtrl',
 			['$scope', '$log', '$mdDialog', 'genericResourceService', 'toastService',
 		function($scope, $log, $mdDialog, genericResourceService, toastService) {
-		$log.info('pickIotDialogCtrl');
+		$log.info('pickDeviceDialogCtrl');
 
 		$scope.hide = function() {
 		   $mdDialog.hide();
@@ -466,8 +466,8 @@ angular.module('JarvisApp.config',[])
 		    	 nodes:[]
 		     }
 	    ];
-		$scope.crudIot = genericResourceService.crud(['iots']);
-		$scope.crudIot.findAll(
+		$scope.crudDevice = genericResourceService.crud(['devices']);
+		$scope.crudDevice.findAll(
 				function(elements) {
 					_.each(elements, function(element) {
 						element.selectable = true;

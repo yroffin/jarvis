@@ -14,71 +14,59 @@
  *   limitations under the License.
  */
 
-package org.jarvis.core.model.rest.iot;
+package org.jarvis.core.model.bean.device;
 
-import org.jarvis.core.model.rest.GenericEntity;
+import org.jarvis.core.model.bean.GenericBean;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * IOT object
+ * device object
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class IotRest extends GenericEntity {
+public class DeviceBean extends GenericBean {
 	/**
-	 * name of this iot
+	 * name of this device
 	 */
-	@JsonProperty("name")
 	public String name;
 	/**
 	 * parameters
 	 */
-	@JsonProperty("parameters")
 	public String parameters;
 	/**
-	 * owner of this iot
+	 * owner of this device
 	 */
-	@JsonProperty("owner")
 	public String owner;
 	/**
 	 * visible
 	 */
-	@JsonProperty("visible")
 	public boolean visible;
 	/**
-	 * icon of this iot
+	 * icon of this device
 	 */
-	@JsonProperty("icon")
 	public String icon;
 	/**
 	 * tag color
 	 */
-	@JsonProperty("tagColor")
 	public String tagColor;
 	/**
 	 * tag opacity
 	 */
-	@JsonProperty("tagOpacity")
 	public String tagOpacity;
 	/**
 	 * tag text color
 	 */
-	@JsonProperty("tagTextColor")
 	public String tagTextColor;
 	/**
 	 * rowSpan
 	 */
-	@JsonProperty("rowSpan")
 	public String rowSpan;
 	/**
 	 * colSpan
 	 */
-	@JsonProperty("colSpan")
 	public String colSpan;
 	/**
 	 * template
 	 */
-	@JsonProperty("template")
 	public String template;
 }

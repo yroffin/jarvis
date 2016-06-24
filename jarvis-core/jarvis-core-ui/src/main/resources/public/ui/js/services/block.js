@@ -22,8 +22,8 @@
  * blockResourceService
  */
 angular.module('JarvisApp.services.block', []).factory('blockResourceService',
-		[ '$log', 'Restangular', 'genericResourceService', 'iotResourceService', 'filterService',
-		function($log, Restangular, genericResourceService, iotResourceService, filterService) {
+		[ '$log', 'Restangular', 'genericResourceService', 'deviceResourceService', 'filterService',
+		function($log, Restangular, genericResourceService, deviceResourceService, filterService) {
   return {
 	    block: genericResourceService.crud(['blocks']),
 	    plugins: {

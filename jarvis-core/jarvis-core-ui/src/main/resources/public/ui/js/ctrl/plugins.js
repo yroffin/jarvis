@@ -43,8 +43,8 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
 	);
 }])
 .controller('pluginScriptCtrl',
-		[ '$scope', '$log', '$stateParams', 'genericResourceService', 'genericScopeService', 'genericPickerService', 'pluginResourceService', 'iotResourceService', 'commandResourceService', 'toastService',
-	function($scope, $log, $stateParams, genericResourceService, genericScopeService, genericPickerService, pluginResourceService, iotResourceService, commandResourceService, toastService){
+		[ '$scope', '$log', '$stateParams', 'genericResourceService', 'genericScopeService', 'genericPickerService', 'pluginResourceService', 'deviceResourceService', 'commandResourceService', 'toastService',
+	function($scope, $log, $stateParams, genericResourceService, genericScopeService, genericPickerService, pluginResourceService, deviceResourceService, commandResourceService, toastService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
 	 */
@@ -162,8 +162,8 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
 		/**
 		 * find all owner
 		 */
-    	$scope.combo.owners = [{id: undefined, name: "iot.empty"}];
-    	genericResourceService.scope.combo.findAll('owner', $scope.combo.owners, iotResourceService.iot);
+    	$scope.combo.owners = [{id: undefined, name: "device.empty"}];
+    	genericResourceService.scope.combo.findAll('owner', $scope.combo.owners, deviceResourceService.device);
 
 		$log.info('script-ctrl');
     }

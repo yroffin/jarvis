@@ -10,7 +10,7 @@
 	<md-button aria-label="menu" class="md-icon-button" ng-click="render(script)"><md-tooltip>{{'plugin.display'|translate}}</md-tooltip><md-icon md-font-icon="material-icons md-16">input</md-icon></md-button>
 	<md-button aria-label="menu" class="md-icon-button" ng-click="clear()"><md-tooltip>{{'plugin.clearargs'|translate}}</md-tooltip><md-icon md-font-icon="material-icons md-16">loop</md-icon></md-button>
 	<jarvis-pick-element ctrl="pickCommandDialogCtrl" icon="playlist_add" callback="links.commands.add" tooltips="pick.elt.cmd"></jarvis-pick-element>
-	<jarvis-pick-element ctrl="pickIotDialogCtrl" icon="local_offer" callback="setOwner" tooltips="pick.elt.owner"></jarvis-pick-element>
+	<jarvis-pick-element ctrl="pickDeviceDialogCtrl" icon="local_offer" callback="setOwner" tooltips="pick.elt.owner"></jarvis-pick-element>
   </md-fab-actions>
 </md-toolbar>
 <div layout="column" ng-init="load()" ng-cloak>
