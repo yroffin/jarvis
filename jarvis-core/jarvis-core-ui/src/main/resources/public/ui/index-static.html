@@ -64,6 +64,7 @@ limitations under the License.
 
 <div ng-show="profile" ng-cloak>
     <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z4" md-component-id="left">
+        <md-button ng-click="location('left', '/navigator');"><div layout="row"><i class="help-icons">content_paste</i><span flex></span><span>Navigator</span></div></md-button>
         <md-button ng-click="location('left', '/helper-devices');"><div layout="row"><i class="help-icons">touch_app</i><span flex></span><span>Connected object(s)</span></div></md-button>
         <md-button ng-click="location('left', '/helper-scenarii');"><div layout="row"><i class="help-icons">list</i><span flex></span><span>Scenario</span></div></md-button>
         <md-button ng-click="location('left', '/triggers');"><div layout="row"><i class="help-icons">settings_remote</i><span flex></span><span>Triggers</span></div></md-button>
@@ -80,6 +81,8 @@ limitations under the License.
 	<md-content ng-style="{'height': 'auto', 'opacity': config.opacity}" ui-view flex layout-padding>
 	</md-content>
 </div>
+
+<md-content></md-content>
 
 <script src="script-libs.min.js"></script>
 
@@ -113,6 +116,7 @@ limitations under the License.
 <script src="js/filters.js"></script>
 <!-- Widgets -->
 <script src="js/directives/widgets.js"></script>
+<script src="js/directives/navigator/jarvis-widget-navigator.js"></script>
 <!-- Controllers -->
 <script src="js/ctrl/devices.js"></script>
 <script src="js/ctrl/events.js"></script>

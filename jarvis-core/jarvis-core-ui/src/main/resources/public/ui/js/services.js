@@ -171,8 +171,6 @@ myAppServices.factory('oauth2ResourceService',
 	        				$mdDialog.hide();
 	        				$rootScope.profile = data;
 		    	        	$scope.boot();
-		    	    		$log.info('Switch to home');
-		    	        	$location.path("/home");
 	        			},
 	        			function(failure) {
 	        				$log.warn('no profile');

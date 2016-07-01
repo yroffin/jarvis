@@ -58,6 +58,7 @@ angular.module('JarvisApp', [
      'JarvisApp.services.block',
      'JarvisApp.directives',
      'JarvisApp.directives.widgets',
+     'jarvis.directives.paperjs',
      /**
       * controllers
       */
@@ -249,8 +250,6 @@ myAppServices.factory('oauth2ResourceService',
 	        				$mdDialog.hide();
 	        				$rootScope.profile = data;
 		    	        	$scope.boot();
-		    	    		$log.info('Switch to home');
-		    	        	$location.path("/home");
 	        			},
 	        			function(failure) {
 	        				$log.warn('no profile');
@@ -1781,6 +1780,7 @@ angular.module('JarvisApp.config',[])
 	            	 * try to connect
 	            	 */
 	            	oauth2ResourceService.connect($scope, params.access_token);
+    	        	$location.path("/home");
         		}
         	}
 	}])
@@ -2228,6 +2228,10 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
             url: '/home',
             controller: 'homeCtrl',
             templateUrl: '/ui/js/partials/home/page.html'
+        })
+        .state('navigator', {
+            url: '/navigator',
+            template: '<div jarvis-widget-navigator></div>'
         })
         .state('helper-devices', {
             url: '/helper-devices',

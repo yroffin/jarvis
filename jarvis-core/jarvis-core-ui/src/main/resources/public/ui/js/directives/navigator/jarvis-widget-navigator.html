@@ -1,0 +1,32 @@
+<!--  -->
+<!--  Copyright 2014 Yannick Roffin. -->
+<!--  -->
+<!--  Licensed under the Apache License, Version 2.0 (the "License"); -->
+<!--  you may not use this file except in compliance with the License. -->
+<!--  You may obtain a copy of the License at -->
+<!--  -->
+<!--       http://www.apache.org/licenses/LICENSE-2.0 -->
+<!--  -->
+<!--  Unless required by applicable law or agreed to in writing, software -->
+<!--  distributed under the License is distributed on an "AS IS" BASIS, -->
+<!--  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. -->
+<!--  See the License for the specific language governing permissions and -->
+<!--  limitations under the License. -->
+<!--  -->
+<script type="text/ng-template" id="nodes_renderer_html">
+<div data-nodrag ui-tree-handle><md-tooltip>{{node.desc}}</md-tooltip>
+	<md-icon ng-show="!node.selectable" md-font-icon="material-icons md-16">block</md-icon>
+	<md-icon ng-show="node.selectable" md-font-icon="material-icons md-16" ng-click="answer(node)">check</md-icon>
+	<md-icon md-font-icon="material-icons md-16">{{node.icon}}</md-icon>
+  	{{node.name}}
+</div>
+<ol ui-tree-nodes="" ng-model="node.nodes">
+  <li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer_html'">
+  </li>
+</ol>
+</script>
+<div data-nodrop-enabled ui-tree>
+  <ol ui-tree-nodes="" ng-model="elementsPicker" id="tree-root">
+    <li ng-repeat="node in elementsPicker" ui-tree-node ng-include="'nodes_renderer_html'"></li>
+  </ol>
+</div>

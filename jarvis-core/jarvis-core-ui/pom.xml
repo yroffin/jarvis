@@ -50,7 +50,6 @@
                 <jsSourceFile>angularjs/1.5.6/angular-aria.min.js</jsSourceFile>
                 <jsSourceFile>angularjs/1.5.6/angular-cookies.min.js</jsSourceFile>
                 <jsSourceFile>lodash/3.10.1/lodash.min.js</jsSourceFile>
-                <jsSourceFile>paperjs/v0.9.25/paper-full.min.js</jsSourceFile>
                 <jsSourceFile>restangular/1.5.1/restangular.min.js</jsSourceFile>
                 <jsSourceFile>angular-material/1.1.0-rc.5/angular-material.min.js</jsSourceFile>
                 <jsSourceFile>angular-material-icons/0.5.0/angular-material-icons.min.js</jsSourceFile>
@@ -61,7 +60,7 @@
                 <jsSourceFile>bootstrap/3.3.6/bootstrap.min.js</jsSourceFile>
                 <jsSourceFile>highlight/9.0.0/highlight.min.js</jsSourceFile>
                 <jsSourceFile>angular-highlightjs/0.5.1/angular-highlightjs.js</jsSourceFile>
-                <jsSourceFile>raphael/2.1.2/raphael-min.js</jsSourceFile>
+                <jsSourceFile>paperjs/v0.9.25/dist/paper-full.min.js</jsSourceFile>
                 <jsSourceFile>flowchart/latest/flowchart-latest.js</jsSourceFile>
                 <jsSourceFile>angular-websocket/1.0.14/angular-websocket.min.js</jsSourceFile>
                 <jsSourceFile>showdown/1.3.0/showdown.min.js</jsSourceFile>

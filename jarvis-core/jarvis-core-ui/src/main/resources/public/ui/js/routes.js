@@ -40,6 +40,10 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
             controller: 'homeCtrl',
             templateUrl: '/ui/js/partials/home/page.html'
         })
+        .state('navigator', {
+            url: '/navigator',
+            template: '<div jarvis-widget-navigator></div>'
+        })
         .state('helper-devices', {
             url: '/helper-devices',
             controller: 'helperCtrl',

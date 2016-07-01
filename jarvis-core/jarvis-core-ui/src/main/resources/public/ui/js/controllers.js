@@ -350,6 +350,7 @@ angular.module('JarvisApp.config',[])
 	            	 * try to connect
 	            	 */
 	            	oauth2ResourceService.connect($scope, params.access_token);
+    	        	$location.path("/home");
         		}
         	}
 	}])
