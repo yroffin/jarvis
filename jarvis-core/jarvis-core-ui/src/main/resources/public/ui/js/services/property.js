@@ -19,7 +19,7 @@
 /* Services */
 
 /**
- * viewResourceService
+ * propertyResourceService
  */
 angular.module('JarvisApp.services.property', []).factory('propertyResourceService', [ 'genericResourceService', function(genericResourceService) {
   return {
