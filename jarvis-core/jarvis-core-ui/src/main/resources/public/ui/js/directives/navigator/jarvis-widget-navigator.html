@@ -13,20 +13,29 @@
 <!--  See the License for the specific language governing permissions and -->
 <!--  limitations under the License. -->
 <!--  -->
-<script type="text/ng-template" id="nodes_renderer_html">
-<div data-nodrag ui-tree-handle><md-tooltip>{{node.desc}}</md-tooltip>
-	<md-icon ng-show="!node.selectable" md-font-icon="material-icons md-16">block</md-icon>
-	<md-icon ng-show="node.selectable" md-font-icon="material-icons md-16" ng-click="answer(node)">check</md-icon>
-	<md-icon md-font-icon="material-icons md-16">{{node.icon}}</md-icon>
-  	{{node.name}}
-</div>
-<ol ui-tree-nodes="" ng-model="node.nodes">
-  <li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer_html'">
-  </li>
-</ol>
-</script>
-<div data-nodrop-enabled ui-tree>
-  <ol ui-tree-nodes="" ng-model="elementsPicker" id="tree-root">
-    <li ng-repeat="node in elementsPicker" ui-tree-node ng-include="'nodes_renderer_html'"></li>
-  </ol>
+<md-input-container>
+  <label translate="filter"></label>
+  <input type="text" ng-model="searchText">
+</md-input-container>
+<div ng-repeat="res in elementsPicker[0].nodes">
+<table class="table table-striped table-bordered table-hover table-condensed">
+	<caption>{{res.name}}</caption>
+	<thead>
+		<tr>
+			<th>Shortcut</th>
+			<th>Name</th>
+			<th>Description</th>
+			<th>Complement</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="element in res.nodes | filter:searchText">
+			<td ng-show="!element.selectable"><md-icon md-font-icon="material-icons md-16">block</md-icon></td>
+			<td ng-show="element.selectable"><md-icon md-font-icon="material-icons md-16" ng-click="answer(element)">{{element.icon}}</md-icon></td>
+			<td>{{element.name}}</td>
+			<td>{{element.desc}}</td>
+			<td><div hljs hljs-source="element.ext"></div></td>
+		</tr>
+	</tbody>
+</table>
 </div>

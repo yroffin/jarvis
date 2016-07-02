@@ -103,7 +103,16 @@ angular.module('JarvisApp.config',[])
     			eventResourceService,
     			configurationResourceService,
     			oauth2ResourceService){
-        /**
+        $scope.isJson = 
+			function isJson(str) {
+			    try {
+			        JSON.parse(str);
+			    } catch (e) {
+			        return false;
+			    }
+			    return true;
+			};
+    	/**
          * default value
          */
         $scope.defaultValue = function(value, def) {

@@ -20,11 +20,13 @@ angular.module('jarvis.directives.paperjs', ['JarvisApp.services'])
 .factory('jarvisWidgetNavigatorService', [
 			'$q',
 			'$location',
+			'commandResourceService',
 			'pluginResourceService',
 			'deviceResourceService',
 	function(
 			$q,
 			$location,
+			commandResourceService,
 			pluginResourceService,
 			deviceResourceService) {
 	return {
@@ -37,13 +39,16 @@ angular.module('jarvis.directives.paperjs', ['JarvisApp.services'])
 	    	deviceResourceService.device.findAll(function(devices) {
 				_.each(devices, function(device) {
 					deviceResourceService.plugins.findAll(device.id,function(plugins) {
-						device.nodes = plugins;
+						device.desc = "";
+						_.each(plugins, function(plugin) {
+							device.desc += plugin.name;
+						});
 			    	});
 					device.selectable = true;
 					device.callback = function(node) {
 						 $location.path("/devices/" + node.id);
 			    	}
-					device.desc = device.parameters;
+					device.ext = angular.toJson(angular.fromJson(device.parameters),true);
 				});
 	    		deferred.resolve(devices);
 	    	});
@@ -58,7 +63,10 @@ angular.module('jarvis.directives.paperjs', ['JarvisApp.services'])
 			pluginResourceService.scripts.findAll(function(plugins) {
 				_.each(plugins, function(plugin) {
 					pluginResourceService.commands.findAll(plugin.id,function(commands) {
-						plugin.nodes = commands;
+						plugin.desc = "";
+						_.each(commands, function(command) {
+							plugin.desc += command.name;
+						});
 			    	});
 					plugin.selectable = true;
 					plugin.callback = function(node) {
@@ -66,6 +74,24 @@ angular.module('jarvis.directives.paperjs', ['JarvisApp.services'])
 			    	}
 				});
 				deferred.resolve(plugins);
+	    	});
+	    	return deferred.promise;
+		},
+		/**
+		 * find all commands
+		 */
+		commands: function() {
+			var deferred = $q.defer();
+			var devices = [];
+			commandResourceService.command.findAll(function(commands) {
+				_.each(commands, function(command) {
+					command.ext = command.body;
+					command.selectable = true;
+					command.callback = function(node) {
+						 $location.path("/commands/" + node.id);
+			    	}
+				});
+				deferred.resolve(commands);
 	    	});
 	    	return deferred.promise;
 		}
@@ -100,6 +126,15 @@ angular.module('jarvis.directives.paperjs', ['JarvisApp.services'])
 						 },
 				    	 nodes:[
 				    	 ]
+				     },
+		   		     {
+				    	 name:"Commandes",
+				    	 selectable : false,
+						 callback : function(node) {
+							 $location.path("/commands");
+						 },
+				    	 nodes:[
+				    	 ]
 				     }
 		    	 ]
 		     }
@@ -121,6 +156,12 @@ angular.module('jarvis.directives.paperjs', ['JarvisApp.services'])
 		 */
     	jarvisWidgetNavigatorService.plugins().then(function(plugins){
     		scope.elementsPicker[0].nodes[1].nodes = plugins;
+    	});
+		/**
+		 * load commands
+		 */
+    	jarvisWidgetNavigatorService.commands().then(function(commands){
+    		scope.elementsPicker[0].nodes[2].nodes = commands;
     	});
     }
   }
