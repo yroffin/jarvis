@@ -112,12 +112,14 @@ public class CoreWebsocket {
 
 		@Override
 		public void run() {
-			while (true) {
+			boolean cont = true;
+			while (cont) {
 				try {
 					t = queue.take();
 				} catch (InterruptedException e) {
 					logger.error("While taking {}", e);
 					Thread.currentThread().interrupt();
+					cont = false;
 				}
 				/**
 				 * broadcast

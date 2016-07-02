@@ -7,6 +7,11 @@
   </parent>
   <artifactId>jarvis-core-ui</artifactId>
   
+  <properties>
+	<sonar.sources>src/main/resources/public/ui/js</sonar.sources>
+	<sonar.exclusions>**/script-libs.js,**/script.js</sonar.exclusions>
+  </properties>
+ 
   <build>
     <plugins>
       <plugin>

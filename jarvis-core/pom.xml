@@ -408,7 +408,6 @@
 
 	<modules>
 		<module>jarvis-aiml</module>
-		<module>jarvis-scripts</module>
 		<module>jarvis-common</module>
 		<module>jarvis-core-model</module>
 		<module>jarvis-core-neo4j-client</module>
@@ -479,8 +478,9 @@
 			</activation>
 			<properties>
 				<sonar.host.url>http://192.168.1.26:9000</sonar.host.url>
-				<sonar.sources>src</sonar.sources>
+				<sonar.sources>src/main/java</sonar.sources>
 				<sonar.exclusions>**/script-libs.js,**/script.js</sonar.exclusions>
+				<sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
 			</properties>
 		</profile>
 		<profile>
