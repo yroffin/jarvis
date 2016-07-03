@@ -58,7 +58,7 @@ angular.module('JarvisApp', [
      'JarvisApp.services.block',
      'JarvisApp.directives',
      'JarvisApp.directives.widgets',
-     'jarvis.directives.paperjs',
+     'jarvis.directives.navigator',
      /**
       * controllers
       */

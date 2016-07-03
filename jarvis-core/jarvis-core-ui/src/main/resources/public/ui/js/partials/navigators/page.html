@@ -1,0 +1,9 @@
+<div ng-cloak>
+	<md-tabs md-dynamic-height md-border-bottom>
+		<md-tab ng-repeat="panel in resources" label="{{panel | translate}}" md-active="activeTab==$index">
+			<md-content layout-padding>
+				<jarvis-widget-navigator resource="{{panel}}"></jarvis-widget-navigator>
+			</md-content>
+		</md-tab>
+	</md-tabs>
+</div>

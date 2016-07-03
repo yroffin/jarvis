@@ -40,19 +40,29 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
             controller: 'homeCtrl',
             templateUrl: '/ui/js/partials/home/page.html'
         })
-        .state('navigator', {
-            url: '/navigator',
-            template: '<div jarvis-widget-navigator></div>'
-        })
         .state('helper-devices', {
             url: '/helper-devices',
-            controller: 'helperCtrl',
-            templateUrl: '/ui/js/partials/helper/jarvis-commands.svg'
+            params: {
+            	resources: ['crons','triggers','devices','plugins','commands']
+            },
+            controller: 'jarvisWidgetNavigatorCtrl',
+            templateUrl: '/ui/js/partials/navigators/page.html'
         })
         .state('helper-scenarii', {
             url: '/helper-scenarii',
-            controller: 'helperCtrl',
-            templateUrl: '/ui/js/partials/helper/jarvis-scenarii.svg'
+            params: {
+            	resources: ['triggers','crons','scenarios','blocks','plugins']
+            },
+            controller: 'jarvisWidgetNavigatorCtrl',
+            templateUrl: '/ui/js/partials/navigators/page.html'
+        })
+        .state('helper-system', {
+            url: '/helper-system',
+            params: {
+            	resources: ['configurations','properties','connectors','views']
+            },
+            controller: 'jarvisWidgetNavigatorCtrl',
+            templateUrl: '/ui/js/partials/navigators/page.html'
         })
         .state('events', {
             url: '/events',

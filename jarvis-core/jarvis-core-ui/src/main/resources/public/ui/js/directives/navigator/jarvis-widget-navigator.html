@@ -19,7 +19,7 @@
 </md-input-container>
 <div ng-repeat="res in elements | orderBy: '+title'">
 <table class="table table-striped table-bordered table-hover table-condensed">
-	<caption>{{res.name}}</caption>
+	<caption>{{res.name}}<md-icon md-font-icon="material-icons md-16" ng-click="answer(res)">list</md-icon></caption>
 	<thead>
 		<tr>
 			<th>Shortcut</th>

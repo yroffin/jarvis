@@ -16,7 +16,14 @@
 
 /* Directives */
 
-angular.module('jarvis.directives.paperjs', ['JarvisApp.services'])
+angular.module('jarvis.directives.navigator', ['JarvisApp.services'])
+.controller('jarvisWidgetNavigatorCtrl', 
+		[ '$scope', '$log', '$stateParams', function($scope, $log, $stateParams){
+		$scope.resources = $stateParams.resources;
+		$scope.answer = function(element) {
+			element.callback(element);
+		}
+}])
 .factory('jarvisWidgetNavigatorService', [
 			'$q',
 			'$location',
@@ -261,166 +268,62 @@ angular.module('jarvis.directives.paperjs', ['JarvisApp.services'])
              '$log', '$location', '$stateParams', 'jarvisWidgetNavigatorService',
              function ($log, $location, $stateParams, jarvisWidgetNavigatorService) {
   return {
-    restrict: 'A',
+    restrict: 'E',
     templateUrl: '/ui/js/directives/navigator/jarvis-widget-navigator.html',
     link: function(scope, element, attrs) {
 		scope.elements = [];
 		/**
 		 * load devices
 		 */
-    	jarvisWidgetNavigatorService.devices().then(function(result){
-    		scope.elements.push({
-		    	 name:result.title,
-		    	 selectable : true,
-				 callback : function(node) {
-					 $location.path(result.route);
-				 },
-		    	 nodes:result.elements
-		     });
-    	});
-		/**
-		 * load plugins
-		 */
-    	jarvisWidgetNavigatorService.plugins().then(function(result){
-    		scope.elements.push({
-		    	 name:result.title,
-		    	 selectable : true,
-				 callback : function(node) {
-					 $location.path(result.route);
-				 },
-		    	 nodes:result.elements
-		     });
-    	});
-		/**
-		 * load commands
-		 */
-    	jarvisWidgetNavigatorService.commands().then(function(result){
-    		scope.elements.push({
-		    	 name:result.title,
-		    	 selectable : true,
-				 callback : function(node) {
-					 $location.path(result.route);
-				 },
-		    	 nodes:result.elements
-		     });
-    	});
-		/**
-		 * load snapshots
-		 */
-    	jarvisWidgetNavigatorService.snapshots().then(function(result){
-    		scope.elements.push({
-		    	 name:result.title,
-		    	 selectable : true,
-				 callback : function(node) {
-					 $location.path(result.route);
-				 },
-		    	 nodes:result.elements
-		     });
-    	});
-		/**
-		 * load blocks
-		 */
-    	jarvisWidgetNavigatorService.blocks().then(function(result){
-    		scope.elements.push({
-		    	 name:result.title,
-		    	 selectable : true,
-				 callback : function(node) {
-					 $location.path(result.route);
-				 },
-		    	 nodes:result.elements
-		     });
-    	});
-		/**
-		 * load configurations
-		 */
-    	jarvisWidgetNavigatorService.configurations().then(function(result){
-    		scope.elements.push({
-		    	 name:result.title,
-		    	 selectable : true,
-				 callback : function(node) {
-					 $location.path(result.route);
-				 },
-		    	 nodes:result.elements
-		     });
-    	});
-		/**
-		 * load properties
-		 */
-    	jarvisWidgetNavigatorService.properties().then(function(result){
-    		scope.elements.push({
-		    	 name:result.title,
-		    	 selectable : true,
-				 callback : function(node) {
-					 $location.path(result.route);
-				 },
-		    	 nodes:result.elements
-		     });
-    	});
-		/**
-		 * load views
-		 */
-    	jarvisWidgetNavigatorService.views().then(function(result){
-    		scope.elements.push({
-		    	 name:result.title,
-		    	 selectable : true,
-				 callback : function(node) {
-					 $location.path(result.route);
-				 },
-		    	 nodes:result.elements
-		     });
-    	});
-		/**
-		 * load triggers
-		 */
-    	jarvisWidgetNavigatorService.triggers().then(function(result){
-    		scope.elements.push({
-		    	 name:result.title,
-		    	 selectable : true,
-				 callback : function(node) {
-					 $location.path(result.route);
-				 },
-		    	 nodes:result.elements
-		     });
-    	});
-		/**
-		 * load scenarios
-		 */
-    	jarvisWidgetNavigatorService.scenarios().then(function(result){
-    		scope.elements.push({
-		    	 name:result.title,
-		    	 selectable : true,
-				 callback : function(node) {
-					 $location.path(result.route);
-				 },
-		    	 nodes:result.elements
-		     });
-    	});
-		/**
-		 * load crons
-		 */
-    	jarvisWidgetNavigatorService.crons().then(function(result){
-    		scope.elements.push({
-		    	 name:result.title,
-		    	 selectable : true,
-				 callback : function(node) {
-					 $location.path(result.route);
-				 },
-		    	 nodes:result.elements
-		     });
-    	});
-		/**
-		 * load connectors
-		 */
-    	jarvisWidgetNavigatorService.connectors().then(function(result){
-    		scope.elements.push({
-		    	 name:result.title,
-		    	 selectable : true,
-				 callback : function(node) {
-					 $location.path(result.route);
-				 },
-		    	 nodes:result.elements
-		     });
-    	});
+		var promise = null;
+		if(attrs['resource'] === 'devices') {
+			promise = jarvisWidgetNavigatorService.devices();
+		}
+		if(attrs['resource'] === 'plugins') {
+			promise = jarvisWidgetNavigatorService.plugins();
+		}
+		if(attrs['resource'] === 'commands') {
+			promise = jarvisWidgetNavigatorService.commands();
+		}
+		if(attrs['resource'] === 'snapshots') {
+			promise = jarvisWidgetNavigatorService.snapshots();
+		}
+		if(attrs['resource'] === 'blocks') {
+			promise = jarvisWidgetNavigatorService.blocks();
+		}
+		if(attrs['resource'] === 'configurations') {
+			promise = jarvisWidgetNavigatorService.configurations();
+		}
+		if(attrs['resource'] === 'properties') {
+			promise = jarvisWidgetNavigatorService.properties();
+		}
+		if(attrs['resource'] === 'views') {
+			promise = jarvisWidgetNavigatorService.views();
+		}
+		if(attrs['resource'] === 'triggers') {
+			promise = jarvisWidgetNavigatorService.triggers();
+		}
+		if(attrs['resource'] === 'scenarios') {
+			promise = jarvisWidgetNavigatorService.scenarios();
+		}
+		if(attrs['resource'] === 'crons') {
+			promise = jarvisWidgetNavigatorService.crons();
+		}
+		if(attrs['resource'] === 'connectors') {
+			promise = jarvisWidgetNavigatorService.connectors();
+		}
+		if(promise != null) {
+			promise.then(function(result){
+	    		scope.elements.push({
+			    	 name:result.title,
+			    	 selectable : true,
+					 callback : function(node) {
+						 $location.path(result.route);
+					 },
+			    	 nodes:result.elements
+			     });
+	    	});
+		}
     }
   }
 }])
