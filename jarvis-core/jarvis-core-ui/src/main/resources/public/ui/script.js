@@ -44,7 +44,6 @@ angular.module('JarvisApp', [
      'JarvisApp.services.generic',
      'JarvisApp.services.scope',
      'JarvisApp.services.plugin',
-     'JarvisApp.services.command',
      'JarvisApp.services.scenario',
      'JarvisApp.services.snapshot',
      'JarvisApp.services.cron',
@@ -59,11 +58,11 @@ angular.module('JarvisApp', [
      'JarvisApp.directives',
      'JarvisApp.directives.widgets',
      'jarvis.directives.navigator',
+     'jarvis.directives.command',
      /**
       * controllers
       */
      'JarvisApp.ctrl.plugins',
-     'JarvisApp.ctrl.commands',
      'JarvisApp.ctrl.devices',
      'JarvisApp.ctrl.events',
      'JarvisApp.ctrl.triggers',
@@ -1045,8 +1044,8 @@ angular.module('JarvisApp.services.scope', ['JarvisApp.services.generic']).facto
  * pluginResourceService
  */
 angular.module('JarvisApp.services.plugin', []).factory('pluginResourceService', 
-		[ '$log', 'Restangular', 'filterService', 'commandResourceService', 'genericResourceService',
-		  function($log, Restangular, filterService, commandResourceService, genericResourceService) {
+		[ '$log', 'Restangular', 'filterService', 'jarvisWidgetCommandService', 'genericResourceService',
+		  function($log, Restangular, filterService, jarvisWidgetCommandService, genericResourceService) {
   var plugins = {
 	        /**
 			 * base services : findAll, delete, put and post
@@ -1073,36 +1072,6 @@ angular.module('JarvisApp.services.plugin', []).factory('pluginResourceService',
 	    plugins: plugins,
 	    scripts: genericResourceService.crud(['plugins','scripts']),
 	    commands : genericResourceService.links(['plugins','scripts'], ['commands'])
-  }
-}]);
-/* 
- * Copyright 2014 Yannick Roffin.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-'use strict';
-
-/* Services */
-
-/**
- * commandResourceService
- */
-angular.module('JarvisApp.services.command', []).factory('commandResourceService', 
-		[ 'genericResourceService',
-		  function(genericResourceService) {
-  return {
-	  	command: genericResourceService.crud(['commands'])
   }
 }]);
 /* 
@@ -1155,7 +1124,7 @@ angular.module('JarvisApp.services.view', []).factory('viewResourceService', [ '
 /* Services */
 
 /**
- * viewResourceService
+ * configurationResourceService
  */
 angular.module('JarvisApp.services.configuration', []).factory('configurationResourceService', 
 		[ 'genericResourceService', function(genericResourceService) {
@@ -1184,7 +1153,7 @@ angular.module('JarvisApp.services.configuration', []).factory('configurationRes
 /* Services */
 
 /**
- * viewResourceService
+ * propertyResourceService
  */
 angular.module('JarvisApp.services.property', []).factory('propertyResourceService', [ 'genericResourceService', function(genericResourceService) {
   return {
@@ -1533,7 +1502,16 @@ angular.module('JarvisApp.config',[])
     			eventResourceService,
     			configurationResourceService,
     			oauth2ResourceService){
-        /**
+        $scope.isJson = 
+			function isJson(str) {
+			    try {
+			        JSON.parse(str);
+			    } catch (e) {
+			        return false;
+			    }
+			    return true;
+			};
+    	/**
          * default value
          */
         $scope.defaultValue = function(value, def) {
@@ -2229,19 +2207,29 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
             controller: 'homeCtrl',
             templateUrl: '/ui/js/partials/home/page.html'
         })
-        .state('navigator', {
-            url: '/navigator',
-            template: '<div jarvis-widget-navigator></div>'
-        })
         .state('helper-devices', {
             url: '/helper-devices',
-            controller: 'helperCtrl',
-            templateUrl: '/ui/js/partials/helper/jarvis-commands.svg'
+            params: {
+            	resources: ['crons','triggers','devices','plugins','commands']
+            },
+            controller: 'jarvisWidgetNavigatorCtrl',
+            templateUrl: '/ui/js/partials/navigators/page.html'
         })
         .state('helper-scenarii', {
             url: '/helper-scenarii',
-            controller: 'helperCtrl',
-            templateUrl: '/ui/js/partials/helper/jarvis-scenarii.svg'
+            params: {
+            	resources: ['triggers','crons','scenarios','blocks','plugins']
+            },
+            controller: 'jarvisWidgetNavigatorCtrl',
+            templateUrl: '/ui/js/partials/navigators/page.html'
+        })
+        .state('helper-system', {
+            url: '/helper-system',
+            params: {
+            	resources: ['configurations','properties','connectors','views']
+            },
+            controller: 'jarvisWidgetNavigatorCtrl',
+            templateUrl: '/ui/js/partials/navigators/page.html'
         })
         .state('events', {
             url: '/events',
@@ -2281,12 +2269,12 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
         .state('commands', {
             url: '/commands',
             controller: 'commandsCtrl',
-            templateUrl: '/ui/js/partials/commands/page.html'
+            template: '<jarvis-widget-commands></jarvis-widget-commands>'
         })
         .state('commands-by-id', {
             url: '/commands/:id',
             controller: 'commandCtrl',
-            templateUrl: '/ui/js/partials/commands/command/page.html'
+            template: '<jarvis-widget-command></jarvis-widget-command>'
         })
         .state('views', {
             url: '/views',
@@ -2682,51 +2670,6 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     }
   }
 }])
-.directive('jarvisCommands', [ '$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/commands/jarvis-commands.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-commands');
-    }
-  }
-}])
-.directive('jarvisCommand', [ '$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/commands/command/jarvis-command-general.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-command');
-    }
-  }
-}])
-.directive('jarvisCommandInput', [ '$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/commands/command/jarvis-command-input.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-command-input');
-    }
-  }
-}])
-.directive('jarvisCommandScript', [ '$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/commands/command/jarvis-command-script.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-command-script');
-    }
-  }
-}])
-.directive('jarvisCommandOutput', [ '$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/commands/command/jarvis-command-output.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-command-output');
-    }
-  }
-}])
 .directive('jarvisViews', [ '$log', '$stateParams', function ($log, $stateParams) {
   return {
     restrict: 'E',
@@ -3032,6 +2975,560 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
 				$scope.gauge.set(newValue);
 			});
     }]
+  }
+}])
+/* 
+ * Copyright 2014 Yannick Roffin.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/* Directives */
+
+angular.module('jarvis.directives.command', ['JarvisApp.services'])
+.controller('commandsCtrl', 
+		[ '$scope', '$log', 'genericScopeService', 'jarvisWidgetCommandService',
+	function($scope, $log, genericScopeService, jarvisWidgetCommandService){
+	/**
+	 * declare generic scope resource (and inject it in scope)
+	 */
+	genericScopeService.scope.resources(
+			function(entities) {
+				$scope.commands = entities;
+			},
+			function() {
+				return $scope.commands;
+			},
+			$scope, 
+			'commands', 
+			jarvisWidgetCommandService.command,
+			{
+    			name: "command name",
+    			icon: "list"
+    		}
+	);
+}])
+.controller('commandCtrl',
+		[ '$scope', '$log', '$stateParams', 'genericResourceService', 'genericScopeService', 'jarvisWidgetCommandService', 'toastService',
+	function($scope, $log, $stateParams, genericResourceService, genericScopeService, jarvisWidgetCommandService, toastService){
+	/**
+	 * declare generic scope resource (and inject it in scope)
+	 */
+	genericScopeService.scope.resource(
+			$scope, 
+			'command', 
+			'commands', 
+			jarvisWidgetCommandService.command
+	);
+    /**
+     * execute this command
+     * @param command, the command to execute
+     */
+    $scope.execute = function(command) {
+    	jarvisWidgetCommandService.command.task(command.id, 'execute', $scope.rawTestData, function(data) {
+   	    	toastService.info('command ' + command.name + '#' + command.id + ' executed');
+   	    	$scope.output = angular.toJson(data, true);
+	    }, toastService.failure);
+    }
+    /**
+     * test this command
+     * @param command, the command to execute
+     */
+    $scope.test = function(command) {
+    	jarvisWidgetCommandService.command.task(command.id, 'test', $scope.rawTestData, function(data) {
+   	    	toastService.info('command ' + command.name + '#' + command.id + ' tested');
+   	    	$scope.output = angular.toJson(data, true);
+	    }, toastService.failure);
+    }
+    /**
+     * transform command
+     */
+    $scope.pretty = function() {
+    	$log.debug('pretty', $scope.rawinput);
+    	$scope.jsonTestData = angular.toJson($scope.rawTestData, true);
+    }
+    /**
+     * fix params
+     */
+    $scope.submit = function() {
+    	$scope.rawTestData = angular.fromJson($scope.editTestData);
+    	$scope.jsonTestData = angular.toJson($scope.rawTestData, true);
+    }
+    /**
+     * clear params
+     */
+    $scope.clear = function() {
+    	$scope.rawTestData = {"default":"todo"};
+    	$scope.editTestData = angular.toJson($scope.rawTestData, true);
+    	$scope.jsonTestData = angular.toJson($scope.rawTestData, true);
+    	$scope.rawoutput = {};
+    	$scope.output = angular.toJson({}, true);
+    }
+    /**
+     * loading
+     */
+    $scope.load = function() {
+	    /**
+	     * init part
+	     */
+		$scope.combo = {
+				visibles: jarvisWidgetCommandService.bool,
+				types: jarvisWidgetCommandService.types
+		}
+		/**
+		 * input test
+		 */
+		$scope.clear();
+		/**
+		 * get current command
+		 */
+		$scope.commands = [];
+    	genericResourceService.scope.entity.get($stateParams.id, function(update) {$scope.command=update}, jarvisWidgetCommandService.command);
+	
+		$log.info('command-ctrl');
+    }
+}])
+.factory('jarvisWidgetCommandService', [ 'genericResourceService', function( genericResourceService) {
+	return {
+	  	command: genericResourceService.crud(['commands']),
+	  	bool: [
+           	   {
+           		   id: true,
+           		   value:'common.true'
+           	   },
+           	   {
+           		   id: false,
+           		   value:'common.false'
+           	   }
+        ],
+	  	types: [
+           	   {
+          		   id: 'SHELL',
+          		   value:'command.shell'
+          	   },
+          	   {
+          		   id: 'COMMAND',
+          		   value:'command.single'
+          	   },
+          	   {
+          		   id: 'GROOVY',
+          		   value:'command.groovy'
+          	   },
+          	   {
+          		   id: 'SSH',
+          		   value:'command.ssh'
+          	   },
+          	   {
+          		   id: 'ZWAY',
+          		   value:'command.zway'
+          	   }
+        ]
+	}
+}])
+/**
+ * commands
+ */
+.directive('jarvisWidgetCommands', [ '$log', '$stateParams', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/directives/command/jarvis-widget-commands.html',
+    link: function(scope, element, attrs) {
+    }
+  }
+}])
+.directive('jarvisCommands', [ '$log', '$stateParams', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/directives/command/partials/jarvis-commands.html',
+    link: function(scope, element, attrs) {
+    }
+  }
+}])
+/**
+ * command
+ */
+.directive('jarvisWidgetCommand', [ '$log', '$stateParams', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/directives/command/jarvis-widget-command.html',
+    link: function(scope, element, attrs) {
+    }
+  }
+}])
+.directive('jarvisCommand', [ '$log', '$stateParams', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/directives/command/partials/jarvis-command-general.html',
+    link: function(scope, element, attrs) {
+    	$log.debug('jarvis-command');
+    }
+  }
+}])
+.directive('jarvisCommandInput', [ '$log', '$stateParams', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/directives/command/partials/jarvis-command-input.html',
+    link: function(scope, element, attrs) {
+    	$log.debug('jarvis-command-input');
+    }
+  }
+}])
+.directive('jarvisCommandScript', [ '$log', '$stateParams', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/directives/command/partials/jarvis-command-script.html',
+    link: function(scope, element, attrs) {
+    	$log.debug('jarvis-command-script');
+    }
+  }
+}])
+.directive('jarvisCommandOutput', [ '$log', '$stateParams', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/directives/command/partials/jarvis-command-output.html',
+    link: function(scope, element, attrs) {
+    	$log.debug('jarvis-command-output');
+    }
+  }
+}])
+
+/* 
+ * Copyright 2014 Yannick Roffin.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/* Directives */
+
+angular.module('jarvis.directives.navigator', ['JarvisApp.services'])
+.controller('jarvisWidgetNavigatorCtrl', 
+		[ '$scope', '$log', '$stateParams', function($scope, $log, $stateParams){
+		$scope.resources = $stateParams.resources;
+		$scope.answer = function(element) {
+			element.callback(element);
+		}
+}])
+.factory('jarvisWidgetNavigatorService', [
+			'$q',
+			'$location',
+			'snapshotResourceService',
+			'blockResourceService',
+			'configurationResourceService',
+			'propertyResourceService',
+			'viewResourceService',
+			'triggerResourceService',
+			'scenarioResourceService',
+			'cronResourceService',
+			'connectorResourceService',
+			'jarvisWidgetCommandService',
+			'pluginResourceService',
+			'deviceResourceService',
+	function(
+			$q,
+			$location,
+			snapshotResourceService,
+			blockResourceService,
+			configurationResourceService,
+			propertyResourceService,
+			viewResourceService,
+			triggerResourceService,
+			scenarioResourceService,
+			cronResourceService,
+			connectorResourceService,
+			jarvisWidgetCommandService,
+			pluginResourceService,
+			deviceResourceService) {
+	return {
+		/**
+		 * find all devices
+		 */
+		devices: function() {
+			var deferred = $q.defer();
+			var devices = [];
+	    	deviceResourceService.device.findAll(function(devices) {
+				_.each(devices, function(device) {
+					deviceResourceService.plugins.findAll(device.id,function(plugins) {
+						device.desc = "";
+						_.each(plugins, function(plugin) {
+							device.desc += plugin.name;
+						});
+			    	});
+					device.selectable = true;
+					device.callback = function(node) {
+						 $location.path("/devices/" + node.id);
+			    	}
+					device.ext = angular.toJson(angular.fromJson(device.parameters),true);
+				});
+	    		deferred.resolve({elements: devices, title: "Devices", route: "/devices"});
+	    	});
+	    	return deferred.promise;
+		},
+		/**
+		 * find all plugins
+		 */
+		plugins: function() {
+			var deferred = $q.defer();
+			pluginResourceService.scripts.findAll(function(plugins) {
+				_.each(plugins, function(plugin) {
+					pluginResourceService.commands.findAll(plugin.id,function(commands) {
+						plugin.desc = "";
+						_.each(commands, function(command) {
+							plugin.desc += command.name;
+						});
+			    	});
+					plugin.selectable = true;
+					plugin.callback = function(node) {
+						 $location.path("/plugins/scripts/" + node.id);
+			    	}
+				});
+	    		deferred.resolve({elements: plugins, title: "Plugins", route: "/plugins"});
+	    	});
+	    	return deferred.promise;
+		},
+		/**
+		 * find all commands
+		 */
+		commands: function() {
+			var deferred = $q.defer();
+			jarvisWidgetCommandService.command.findAll(function(commands) {
+				_.each(commands, function(command) {
+					command.ext = command.body;
+					command.selectable = true;
+					command.callback = function(node) {
+						 $location.path("/commands/" + node.id);
+			    	}
+				});
+	    		deferred.resolve({elements: commands, title: "Commands", route: "/commands"});
+	    	});
+	    	return deferred.promise;
+		},
+		/**
+		 * find all snapshots
+		 */
+		snapshots: function() {
+			var deferred = $q.defer();
+			snapshotResourceService.snapshot.findAll(function(snapshots) {
+				_.each(snapshots, function(snapshot) {
+					snapshot.selectable = true;
+					snapshot.callback = function(node) {
+						 $location.path("/snapshots/" + node.id);
+			    	}
+				});
+	    		deferred.resolve({elements: snapshots, title: "Snapshots", route: "/snapshots"});
+	    	});
+	    	return deferred.promise;
+		},
+		/**
+		 * find all blocks
+		 */
+		blocks: function() {
+			var deferred = $q.defer();
+			blockResourceService.block.findAll(function(blocks) {
+				_.each(blocks, function(block) {
+					block.selectable = true;
+					block.callback = function(node) {
+						 $location.path("/blocks/" + node.id);
+			    	}
+				});
+	    		deferred.resolve({elements: blocks, title: "Blocks", route: "/blocks"});
+	    	});
+	    	return deferred.promise;
+		},
+		/**
+		 * find all configurations
+		 */
+		configurations: function() {
+			var deferred = $q.defer();
+			configurationResourceService.configuration.findAll(function(configurations) {
+				_.each(configurations, function(configuration) {
+					configuration.selectable = true;
+					configuration.callback = function(node) {
+						 $location.path("/configurations/" + node.id);
+			    	}
+				});
+	    		deferred.resolve({elements: configurations, title: "Configurations", route: "/configurations"});
+	    	});
+	    	return deferred.promise;
+		},
+		/**
+		 * find all properties
+		 */
+		properties: function() {
+			var deferred = $q.defer();
+			propertyResourceService.property.findAll(function(properties) {
+				_.each(properties, function(property) {
+					property.selectable = true;
+					property.callback = function(node) {
+						 $location.path("/properties/" + node.id);
+			    	}
+				});
+	    		deferred.resolve({elements: properties, title: "Properties", route: "/properties"});
+	    	});
+	    	return deferred.promise;
+		},
+		/**
+		 * find all views
+		 */
+		views: function() {
+			var deferred = $q.defer();
+			viewResourceService.view.findAll(function(views) {
+				_.each(views, function(view) {
+					view.selectable = true;
+					view.callback = function(node) {
+						 $location.path("/views/" + node.id);
+			    	}
+				});
+	    		deferred.resolve({elements: views, title: "Views", route: "/views"});
+	    	});
+	    	return deferred.promise;
+		},
+		/**
+		 * find all views
+		 */
+		triggers: function() {
+			var deferred = $q.defer();
+			triggerResourceService.trigger.findAll(function(triggers) {
+				_.each(triggers, function(trigger) {
+					trigger.selectable = true;
+					trigger.callback = function(node) {
+						 $location.path("/triggers/" + node.id);
+			    	}
+				});
+	    		deferred.resolve({elements: triggers, title: "Triggers", route: "/triggers"});
+	    	});
+	    	return deferred.promise;
+		},
+		/**
+		 * find all views
+		 */
+		scenarios: function() {
+			var deferred = $q.defer();
+			scenarioResourceService.scenario.findAll(function(scenarios) {
+				_.each(scenarios, function(scenario) {
+					scenario.selectable = true;
+					scenario.callback = function(node) {
+						 $location.path("/scenarios/" + node.id);
+			    	}
+				});
+	    		deferred.resolve({elements: scenarios, title: "Scenarios", route: "/scenarios"});
+	    	});
+	    	return deferred.promise;
+		},
+		/**
+		 * find all crons
+		 */
+		crons: function() {
+			var deferred = $q.defer();
+			cronResourceService.cron.findAll(function(crons) {
+				_.each(crons, function(cron) {
+					cron.selectable = true;
+					cron.callback = function(node) {
+						 $location.path("/crons/" + node.id);
+			    	}
+				});
+	    		deferred.resolve({elements: crons, title: "Crontab", route: "/crons"});
+	    	});
+	    	return deferred.promise;
+		},
+		/**
+		 * find all crons
+		 */
+		connectors: function() {
+			var deferred = $q.defer();
+			connectorResourceService.connector.findAll(function(connectors) {
+				_.each(connectors, function(connector) {
+					connector.selectable = true;
+					connector.callback = function(node) {
+						 $location.path("/connectors/" + node.id);
+			    	}
+				});
+	    		deferred.resolve({elements: connectors, title: "Connectors", route: "/connectors"});
+	    	});
+	    	return deferred.promise;
+		}
+	}
+}])
+.directive('jarvisWidgetNavigator', [
+             '$log', '$location', '$stateParams', 'jarvisWidgetNavigatorService',
+             function ($log, $location, $stateParams, jarvisWidgetNavigatorService) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/directives/navigator/jarvis-widget-navigator.html',
+    link: function(scope, element, attrs) {
+		scope.elements = [];
+		/**
+		 * load devices
+		 */
+		var promise = null;
+		if(attrs['resource'] === 'devices') {
+			promise = jarvisWidgetNavigatorService.devices();
+		}
+		if(attrs['resource'] === 'plugins') {
+			promise = jarvisWidgetNavigatorService.plugins();
+		}
+		if(attrs['resource'] === 'commands') {
+			promise = jarvisWidgetNavigatorService.commands();
+		}
+		if(attrs['resource'] === 'snapshots') {
+			promise = jarvisWidgetNavigatorService.snapshots();
+		}
+		if(attrs['resource'] === 'blocks') {
+			promise = jarvisWidgetNavigatorService.blocks();
+		}
+		if(attrs['resource'] === 'configurations') {
+			promise = jarvisWidgetNavigatorService.configurations();
+		}
+		if(attrs['resource'] === 'properties') {
+			promise = jarvisWidgetNavigatorService.properties();
+		}
+		if(attrs['resource'] === 'views') {
+			promise = jarvisWidgetNavigatorService.views();
+		}
+		if(attrs['resource'] === 'triggers') {
+			promise = jarvisWidgetNavigatorService.triggers();
+		}
+		if(attrs['resource'] === 'scenarios') {
+			promise = jarvisWidgetNavigatorService.scenarios();
+		}
+		if(attrs['resource'] === 'crons') {
+			promise = jarvisWidgetNavigatorService.crons();
+		}
+		if(attrs['resource'] === 'connectors') {
+			promise = jarvisWidgetNavigatorService.connectors();
+		}
+		if(promise != null) {
+			promise.then(function(result){
+	    		scope.elements.push({
+			    	 name:result.title,
+			    	 selectable : true,
+					 callback : function(node) {
+						 $location.path(result.route);
+					 },
+			    	 nodes:result.elements
+			     });
+	    	});
+		}
+    }
   }
 }])
 /* 
@@ -3576,8 +4073,8 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
 	);
 }])
 .controller('pluginScriptCtrl',
-		[ '$scope', '$log', '$stateParams', 'genericResourceService', 'genericScopeService', 'genericPickerService', 'pluginResourceService', 'deviceResourceService', 'commandResourceService', 'toastService',
-	function($scope, $log, $stateParams, genericResourceService, genericScopeService, genericPickerService, pluginResourceService, deviceResourceService, commandResourceService, toastService){
+		[ '$scope', '$log', '$stateParams', 'genericResourceService', 'genericScopeService', 'genericPickerService', 'pluginResourceService', 'deviceResourceService', 'jarvisWidgetCommandService', 'toastService',
+	function($scope, $log, $stateParams, genericResourceService, genericScopeService, genericPickerService, pluginResourceService, deviceResourceService, jarvisWidgetCommandService, toastService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
 	 */
@@ -3699,155 +4196,6 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
     	genericResourceService.scope.combo.findAll('owner', $scope.combo.owners, deviceResourceService.device);
 
 		$log.info('script-ctrl');
-    }
-}])
-/* 
- * Copyright 2014 Yannick Roffin.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-'use strict';
-
-/* Ctrls */
-
-angular.module('JarvisApp.ctrl.commands', ['JarvisApp.services'])
-.controller('commandsCtrl', 
-		[ '$scope', '$log', 'genericScopeService', 'commandResourceService',
-	function($scope, $log, genericScopeService, commandResourceService){
-	/**
-	 * declare generic scope resource (and inject it in scope)
-	 */
-	genericScopeService.scope.resources(
-			function(entities) {
-				$scope.commands = entities;
-			},
-			function() {
-				return $scope.commands;
-			},
-			$scope, 
-			'commands', 
-			commandResourceService.command,
-			{
-    			name: "command name",
-    			icon: "list"
-    		}
-	);
-}])
-.controller('commandCtrl',
-		[ '$scope', '$log', '$stateParams', 'genericResourceService', 'genericScopeService', 'commandResourceService', 'toastService',
-	function($scope, $log, $stateParams, genericResourceService, genericScopeService, commandResourceService, toastService){
-	/**
-	 * declare generic scope resource (and inject it in scope)
-	 */
-	genericScopeService.scope.resource(
-			$scope, 
-			'command', 
-			'commands', 
-			commandResourceService.command
-	);
-    /**
-     * execute this command
-     * @param command, the command to execute
-     */
-    $scope.execute = function(command) {
-    	commandResourceService.command.task(command.id, 'execute', $scope.rawTestData, function(data) {
-   	    	toastService.info('command ' + command.name + '#' + command.id + ' executed');
-   	    	$scope.output = angular.toJson(data, true);
-	    }, toastService.failure);
-    }
-    /**
-     * test this command
-     * @param command, the command to execute
-     */
-    $scope.test = function(command) {
-    	commandResourceService.command.task(command.id, 'test', $scope.rawTestData, function(data) {
-   	    	toastService.info('command ' + command.name + '#' + command.id + ' tested');
-   	    	$scope.output = angular.toJson(data, true);
-	    }, toastService.failure);
-    }
-    /**
-     * transform command
-     */
-    $scope.pretty = function() {
-    	$log.debug('pretty', $scope.rawinput);
-    	$scope.jsonTestData = angular.toJson($scope.rawTestData, true);
-    }
-    /**
-     * fix params
-     */
-    $scope.submit = function() {
-    	$scope.rawTestData = angular.fromJson($scope.editTestData);
-    	$scope.jsonTestData = angular.toJson($scope.rawTestData, true);
-    }
-    /**
-     * clear params
-     */
-    $scope.clear = function() {
-    	$scope.rawTestData = {"default":"todo"};
-    	$scope.editTestData = angular.toJson($scope.rawTestData, true);
-    	$scope.jsonTestData = angular.toJson($scope.rawTestData, true);
-    	$scope.rawoutput = {};
-    	$scope.output = angular.toJson({}, true);
-    }
-    /**
-     * loading
-     */
-    $scope.load = function() {
-	    /**
-	     * init part
-	     */
-		$scope.combo = {
-				visibles: [
-		               	   {
-		               		   id: true,
-		               		   value:'common.true'
-		               	   },
-		               	   {
-		               		   id: false,
-		               		   value:'common.false'
-		               	   }
-		       ],
-		       types: [
-		              	   {
-		              		   id: 'SHELL',
-		              		   value:'command.shell'
-		              	   },
-		              	   {
-		              		   id: 'COMMAND',
-		              		   value:'command.single'
-		              	   },
-		              	   {
-		              		   id: 'GROOVY',
-		              		   value:'command.groovy'
-		              	   },
-		              	   {
-		              		   id: 'SSH',
-		              		   value:'command.ssh'
-		              	   }
-		      ]
-		}
-		/**
-		 * input test
-		 */
-		$scope.clear();
-		/**
-		 * get current command
-		 */
-		$scope.commands = [];
-    	genericResourceService.scope.entity.get($stateParams.id, function(update) {$scope.command=update}, commandResourceService.command);
-	
-		$log.info('command-ctrl');
     }
 }])
 /* 
