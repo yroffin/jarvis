@@ -2019,7 +2019,7 @@ angular.module('JarvisApp.config',['JarvisApp.directives.files'])
 					},
 					toastService.failure
 			);
-	}])
+	}]);
 /* 
  * Copyright 2014 Yannick Roffin.
  *
@@ -2384,7 +2384,7 @@ angular.module('JarvisApp.directives.files', [])
         elm.text(version);
       };
     })
-	.directive('fileModel', function ($parse, $log) {
+	.directive('fileModel', ['$parse','$log', function ($parse, $log) {
 	    return {
 	        restrict: 'A',
 	        link: function(scope, element, attrs) {
@@ -2398,14 +2398,12 @@ angular.module('JarvisApp.directives.files', [])
 	            });
 	        }
 	    };
-	})
-	.directive('fileSelect', function ($window, $log) {
+	}])
+	.directive('fileSelect', ['$window','$log', function ($window, $log) {
 	    return {
 	        restrict: 'A',
 	        require: 'ngModel',
 	        link: function (scope, el, attr, ctrl) {
-	        	$log.debug('fileSelect');
-	        	
 	            var fileReader = new $window.FileReader();
 	
 	            fileReader.onload = function () {
@@ -2448,7 +2446,7 @@ angular.module('JarvisApp.directives.files', [])
 	            });
 	        }
 	    };
-	});
+	}]);
 /* 
  * Copyright 2014 Yannick Roffin.
  *
@@ -2982,7 +2980,7 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
 			});
     }]
   }
-}])
+}]);
 /* 
  * Copyright 2014 Yannick Roffin.
  *
@@ -3206,7 +3204,7 @@ angular.module('jarvis.directives.command', ['JarvisApp.services'])
     	$log.debug('jarvis-command-output');
     }
   }
-}])
+}]);
 
 /* 
  * Copyright 2014 Yannick Roffin.
@@ -3536,7 +3534,7 @@ angular.module('jarvis.directives.navigator', ['JarvisApp.services'])
 		}
     }
   }
-}])
+}]);
 /* 
  * Copyright 2014 Yannick Roffin.
  *
@@ -3757,7 +3755,7 @@ angular.module('JarvisApp.ctrl.blocks', ['JarvisApp.services'])
 
     	$log.debug('block-ctrl', $scope.scenario);
     }
-}])
+}]);
 /* 
  * Copyright 2014 Yannick Roffin.
  *
@@ -3897,7 +3895,7 @@ angular.module('JarvisApp.ctrl.devices', ['JarvisApp.services'])
 	
 		$log.info('device-ctrl');
 	}
-}])
+}]);
 /* 
  * Copyright 2014 Yannick Roffin.
  *
@@ -4033,7 +4031,7 @@ angular.module('JarvisApp.ctrl.triggers', ['JarvisApp.services'])
 
     	$log.info('trigger-ctrl');
     }
-}])
+}]);
 /* 
  * Copyright 2014 Yannick Roffin.
  *
@@ -4203,7 +4201,7 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
 
 		$log.info('script-ctrl');
     }
-}])
+}]);
 /* 
  * Copyright 2014 Yannick Roffin.
  *
@@ -4300,7 +4298,7 @@ angular.module('JarvisApp.ctrl.views', ['JarvisApp.services'])
 
 		$log.info('view-ctrl', $scope.views);
     }
-}])
+}]);
 /* 
  * Copyright 2014 Yannick Roffin.
  *
@@ -4382,7 +4380,7 @@ angular.module('JarvisApp.ctrl.connectors', ['JarvisApp.services'])
 
     	$log.info('connector-ctrl', $scope.connectors);
     }
-}])
+}]);
 /* 
  * Copyright 2014 Yannick Roffin.
  *
@@ -4496,7 +4494,7 @@ angular.module('JarvisApp.ctrl.snapshots', ['JarvisApp.services','JarvisApp.dire
 
 		$log.info('snapshot-ctrl', $scope.snapshots);
     }
-}])
+}]);
 /* 
  * Copyright 2014 Yannick Roffin.
  *
@@ -4608,7 +4606,7 @@ angular.module('JarvisApp.ctrl.crons', ['JarvisApp.services'])
 
 		$log.info('cron-ctrl', $scope.crons);
     }
-}])
+}]);
 /* 
  * Copyright 2014 Yannick Roffin.
  *
@@ -4720,7 +4718,7 @@ angular.module('JarvisApp.ctrl.home', ['JarvisApp.services'])
 .controller('helperCtrl', 
 		[ '$scope', '$store', '$log', 'viewResourceService', 'deviceResourceService', 'toastService',
 	function($scope, $store, $log, viewResourceService, deviceResourceService, toastService){
-}])
+}]);
 /* 
  * Copyright 2014 Yannick Roffin.
  *
@@ -4789,7 +4787,7 @@ angular.module('JarvisApp.ctrl.configurations', ['JarvisApp.services'])
 
     	$log.info('configuration-ctrl', $scope.configurations);
     }
-}])
+}]);
 /* 
  * Copyright 2014 Yannick Roffin.
  *
@@ -4857,7 +4855,7 @@ angular.module('JarvisApp.ctrl.properties', ['JarvisApp.services'])
 
     	$log.info('property-ctrl', $scope.properties);
     }
-}])
+}]);
 /* 
  * Copyright 2014 Yannick Roffin.
  *
@@ -5149,4 +5147,4 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
 
 		$log.debug('scenario-ctrl', $scope.scenario);
     }
-}])
+}]);

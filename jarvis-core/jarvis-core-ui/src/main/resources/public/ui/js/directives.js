@@ -24,7 +24,7 @@ angular.module('JarvisApp.directives.files', [])
         elm.text(version);
       };
     })
-	.directive('fileModel', function ($parse, $log) {
+	.directive('fileModel', ['$parse','$log', function ($parse, $log) {
 	    return {
 	        restrict: 'A',
 	        link: function(scope, element, attrs) {
@@ -38,14 +38,12 @@ angular.module('JarvisApp.directives.files', [])
 	            });
 	        }
 	    };
-	})
-	.directive('fileSelect', function ($window, $log) {
+	}])
+	.directive('fileSelect', ['$window','$log', function ($window, $log) {
 	    return {
 	        restrict: 'A',
 	        require: 'ngModel',
 	        link: function (scope, el, attr, ctrl) {
-	        	$log.debug('fileSelect');
-	        	
 	            var fileReader = new $window.FileReader();
 	
 	            fileReader.onload = function () {
@@ -88,4 +86,4 @@ angular.module('JarvisApp.directives.files', [])
 	            });
 	        }
 	    };
-	});
+	}]);
