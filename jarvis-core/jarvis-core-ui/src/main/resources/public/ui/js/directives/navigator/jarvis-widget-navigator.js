@@ -269,7 +269,7 @@ angular.module('jarvis.directives.navigator', ['JarvisApp.services'])
              function ($log, $location, $stateParams, jarvisWidgetNavigatorService) {
   return {
     restrict: 'E',
-    templateUrl: '/ui/js/directives/navigator/jarvis-widget-navigator.html',
+    templateUrl: '/ui/js/directives/navigator/partials/jarvis-navigator.html',
     link: function(scope, element, attrs) {
 		scope.elements = [];
 		/**

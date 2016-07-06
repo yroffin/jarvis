@@ -46,7 +46,7 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
             	resources: ['crons','triggers','devices','plugins','commands']
             },
             controller: 'jarvisWidgetNavigatorCtrl',
-            templateUrl: '/ui/js/partials/navigators/page.html'
+            templateUrl: '/ui/js/directives/navigator/jarvis-widget-navigator.html'
         })
         .state('helper-scenarii', {
             url: '/helper-scenarii',
@@ -54,7 +54,7 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
             	resources: ['triggers','crons','scenarios','blocks','plugins']
             },
             controller: 'jarvisWidgetNavigatorCtrl',
-            templateUrl: '/ui/js/partials/navigators/page.html'
+            templateUrl: '/ui/js/directives/navigator/jarvis-widget-navigator.html'
         })
         .state('helper-system', {
             url: '/helper-system',
@@ -62,7 +62,7 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
             	resources: ['configurations','properties','connectors','views']
             },
             controller: 'jarvisWidgetNavigatorCtrl',
-            templateUrl: '/ui/js/partials/navigators/page.html'
+            templateUrl: '/ui/js/directives/navigator/jarvis-widget-navigator.html'
         })
         .state('events', {
             url: '/events',

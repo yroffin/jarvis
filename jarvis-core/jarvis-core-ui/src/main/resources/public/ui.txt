@@ -30,6 +30,7 @@ public/ui/js/ctrl;triggers.js
 public/ui/js/ctrl;views.js
 public/ui/js/directives;widgets.js
 public/ui/js/directives/navigator;jarvis-widget-navigator.html
+public/ui/js/directives/navigator/partials;jarvis-navigator.html
 public/ui/js/directives/command;jarvis-widget-command.html
 public/ui/js/directives/command;jarvis-widget-commands.html
 public/ui/js/directives/command/partials;jarvis-command-general.html
