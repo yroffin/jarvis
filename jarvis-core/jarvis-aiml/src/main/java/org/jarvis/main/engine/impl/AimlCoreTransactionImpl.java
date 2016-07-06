@@ -11,6 +11,9 @@ import org.jarvis.main.engine.ICategoryStack;
 import org.jarvis.main.model.parser.IAimlCategory;
 import org.jarvis.main.model.parser.IAimlResult;
 
+/**
+ * core transaction
+ */
 public class AimlCoreTransactionImpl implements IAimlCoreTransaction {
 
 	List<String> messages = new ArrayList<String>();

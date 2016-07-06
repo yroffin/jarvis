@@ -22,8 +22,8 @@
  * pluginResourceService
  */
 angular.module('JarvisApp.services.plugin', []).factory('pluginResourceService', 
-		[ '$log', 'Restangular', 'filterService', 'commandResourceService', 'genericResourceService',
-		  function($log, Restangular, filterService, commandResourceService, genericResourceService) {
+		[ '$log', 'Restangular', 'filterService', 'jarvisWidgetCommandService', 'genericResourceService',
+		  function($log, Restangular, filterService, jarvisWidgetCommandService, genericResourceService) {
   var plugins = {
 	        /**
 			 * base services : findAll, delete, put and post

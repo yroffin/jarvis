@@ -4,12 +4,21 @@ import org.jarvis.main.engine.ICategoryStack;
 import org.jarvis.main.model.parser.IAimlCategory;
 import org.jarvis.main.model.parser.IAimlResult;
 
+/**
+ * call stack for categoy building
+ */
 public class AimlCategoryStackImpl implements ICategoryStack {
 
 	int level = 0;
 	IAimlCategory category = null;
 	IAimlResult result;
 
+	/**
+	 * constructor
+	 * @param level
+	 * @param category
+	 * @param result
+	 */
 	public AimlCategoryStackImpl(int level, IAimlCategory category,
 			IAimlResult result) {
 		this.level = level;

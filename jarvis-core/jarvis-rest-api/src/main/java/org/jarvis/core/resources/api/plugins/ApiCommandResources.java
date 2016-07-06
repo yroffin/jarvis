@@ -26,6 +26,7 @@ import org.jarvis.core.resources.api.GenericValue;
 import org.jarvis.core.services.CoreStatistics;
 import org.jarvis.core.services.groovy.PluginGroovyService;
 import org.jarvis.core.services.shell.PluginShellService;
+import org.jarvis.core.services.zway.PluginZWayService;
 import org.jarvis.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,9 @@ public class ApiCommandResources extends ApiResources<CommandRest,CommandBean> {
 
 	@Autowired
 	PluginGroovyService pluginGroovyService;
+
+	@Autowired
+	PluginZWayService pluginZWayService;
 
 	/**
 	 * execute task on command
@@ -128,6 +132,9 @@ public class ApiCommandResources extends ApiResources<CommandRest,CommandBean> {
 				case GROOVY:
 					result = pluginGroovyService.asBoolean(extractCommand(command), args);
 					break;
+				case ZWAY:
+					result = pluginZWayService.asBoolean(extractCommand(command), args);
+					break;
 				default:
 			}
 		} catch (TechnicalException e) {
@@ -167,6 +174,9 @@ public class ApiCommandResources extends ApiResources<CommandRest,CommandBean> {
 					break;
 				case GROOVY:
 					result = pluginGroovyService.asObject(extractCommand(command), args);
+					break;
+				case ZWAY:
+					result = pluginZWayService.asObject(extractCommand(command), args);
 					break;
 				default:
 			}

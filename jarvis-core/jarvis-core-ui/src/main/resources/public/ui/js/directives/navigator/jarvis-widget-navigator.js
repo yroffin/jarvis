@@ -36,7 +36,7 @@ angular.module('jarvis.directives.navigator', ['JarvisApp.services'])
 			'scenarioResourceService',
 			'cronResourceService',
 			'connectorResourceService',
-			'commandResourceService',
+			'jarvisWidgetCommandService',
 			'pluginResourceService',
 			'deviceResourceService',
 	function(
@@ -51,7 +51,7 @@ angular.module('jarvis.directives.navigator', ['JarvisApp.services'])
 			scenarioResourceService,
 			cronResourceService,
 			connectorResourceService,
-			commandResourceService,
+			jarvisWidgetCommandService,
 			pluginResourceService,
 			deviceResourceService) {
 	return {
@@ -106,7 +106,7 @@ angular.module('jarvis.directives.navigator', ['JarvisApp.services'])
 		 */
 		commands: function() {
 			var deferred = $q.defer();
-			commandResourceService.command.findAll(function(commands) {
+			jarvisWidgetCommandService.command.findAll(function(commands) {
 				_.each(commands, function(command) {
 					command.ext = command.body;
 					command.selectable = true;

@@ -18,6 +18,7 @@ package org.jarvis.core;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
 
 import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
@@ -71,5 +72,19 @@ public abstract class AbstractJerseyClient {
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		mapper.registerModule(new JodaModule());
 		mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+	}
+
+	/**
+	 * @return String
+	 */
+	public String getBaseurl() {
+		return baseurl;
+	}
+
+	/**
+	 * @return WebTarget
+	 */
+	public WebTarget target() {
+		return client.target(getBaseurl());
 	}
 }

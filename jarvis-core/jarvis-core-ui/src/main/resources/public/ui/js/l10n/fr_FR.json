@@ -210,6 +210,7 @@
     "command.single" 	: "Ligne de commande",
     "command.groovy" 	: "Groovy script",
     "command.ssh" 		: "Remote SSH",
+    "command.zway" 		: "commande ZWay locale",
     "command.body" 		: "Corps de la commande",
     "command.empty" 	: "Vide",
     "owner.empty" 		: "Vide",

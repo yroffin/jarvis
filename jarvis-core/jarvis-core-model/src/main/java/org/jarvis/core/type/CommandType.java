@@ -31,5 +31,9 @@ public enum CommandType {
 	/**
 	 * groovy script
 	 */
-	GROOVY,
+	GROOVY, 
+	/**
+	 * ZWAY
+	 */
+	ZWAY
 }

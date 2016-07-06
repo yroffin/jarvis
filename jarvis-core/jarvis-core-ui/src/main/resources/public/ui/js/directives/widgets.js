@@ -199,51 +199,6 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     }
   }
 }])
-.directive('jarvisCommands', [ '$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/commands/jarvis-commands.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-commands');
-    }
-  }
-}])
-.directive('jarvisCommand', [ '$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/commands/command/jarvis-command-general.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-command');
-    }
-  }
-}])
-.directive('jarvisCommandInput', [ '$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/commands/command/jarvis-command-input.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-command-input');
-    }
-  }
-}])
-.directive('jarvisCommandScript', [ '$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/commands/command/jarvis-command-script.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-command-script');
-    }
-  }
-}])
-.directive('jarvisCommandOutput', [ '$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/commands/command/jarvis-command-output.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-command-output');
-    }
-  }
-}])
 .directive('jarvisViews', [ '$log', '$stateParams', function ($log, $stateParams) {
   return {
     restrict: 'E',

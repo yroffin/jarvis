@@ -66,6 +66,13 @@ public class GenericEntity {
 	private GenericMap extended = new GenericMap();
 	
 	/**
+	 * @return GenericMap
+	 */
+	public GenericMap getExtended() {
+		return extended;
+	}
+
+	/**
 	 * has custom field
 	 * @return boolean
 	 */

@@ -102,12 +102,12 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
         .state('commands', {
             url: '/commands',
             controller: 'commandsCtrl',
-            templateUrl: '/ui/js/partials/commands/page.html'
+            template: '<jarvis-widget-commands></jarvis-widget-commands>'
         })
         .state('commands-by-id', {
             url: '/commands/:id',
             controller: 'commandCtrl',
-            templateUrl: '/ui/js/partials/commands/command/page.html'
+            template: '<jarvis-widget-command></jarvis-widget-command>'
         })
         .state('views', {
             url: '/views',

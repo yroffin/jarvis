@@ -43,8 +43,8 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
 	);
 }])
 .controller('pluginScriptCtrl',
-		[ '$scope', '$log', '$stateParams', 'genericResourceService', 'genericScopeService', 'genericPickerService', 'pluginResourceService', 'deviceResourceService', 'commandResourceService', 'toastService',
-	function($scope, $log, $stateParams, genericResourceService, genericScopeService, genericPickerService, pluginResourceService, deviceResourceService, commandResourceService, toastService){
+		[ '$scope', '$log', '$stateParams', 'genericResourceService', 'genericScopeService', 'genericPickerService', 'pluginResourceService', 'deviceResourceService', 'jarvisWidgetCommandService', 'toastService',
+	function($scope, $log, $stateParams, genericResourceService, genericScopeService, genericPickerService, pluginResourceService, deviceResourceService, jarvisWidgetCommandService, toastService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
 	 */

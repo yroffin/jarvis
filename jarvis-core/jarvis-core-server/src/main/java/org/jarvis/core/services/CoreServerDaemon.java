@@ -30,6 +30,7 @@ import org.jarvis.core.resources.api.device.ApiEventResources;
 import org.jarvis.core.resources.api.device.ApiTriggerResources;
 import org.jarvis.core.resources.api.plugins.ApiCommandResources;
 import org.jarvis.core.resources.api.plugins.ApiScriptPluginResources;
+import org.jarvis.core.resources.api.plugins.ApiZwayPluginResources;
 import org.jarvis.core.resources.api.scenario.ApiBlockResources;
 import org.jarvis.core.resources.api.scenario.ApiScenarioResources;
 import org.jarvis.core.resources.api.tools.ApiCronResources;
@@ -79,6 +80,9 @@ public class CoreServerDaemon {
 
 	@Autowired
 	ApiScenarioResources apiScenarioResources;
+	
+	@Autowired
+	ApiZwayPluginResources apiZwayPluginResources;
 
 	@Autowired
 	ApiBlockResources apiBlockResources;
@@ -217,6 +221,11 @@ public class CoreServerDaemon {
 		    }
 		});
 		
+		/**
+		 * zway resource
+		 */
+		apiZwayPluginResources.mount();
+
 		/**
 		 * mount plugin resources
 		 */

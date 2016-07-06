@@ -72,6 +72,11 @@
 			</dependency>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
+				<artifactId>jarvis-rest-api-zway</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
 				<artifactId>jarvis-rest-module</artifactId>
 				<version>${project.version}</version>
 			</dependency>
@@ -428,6 +433,7 @@
 		<module>jarvis-core-statistics</module>
 		<module>jarvis-core-ui</module>
 		<module>jarvis-rest-client</module>
+		<module>jarvis-rest-api-zway</module>
 	</modules>
 
 	<repositories>
