@@ -289,4 +289,4 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
 
 		$log.debug('scenario-ctrl', $scope.scenario);
     }
-}])
+}]);

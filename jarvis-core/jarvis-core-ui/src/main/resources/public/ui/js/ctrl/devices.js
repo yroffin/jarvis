@@ -137,4 +137,4 @@ angular.module('JarvisApp.ctrl.devices', ['JarvisApp.services'])
 	
 		$log.info('device-ctrl');
 	}
-}])
+}]);

@@ -109,4 +109,4 @@ angular.module('JarvisApp.ctrl.home', ['JarvisApp.services'])
 .controller('helperCtrl', 
 		[ '$scope', '$store', '$log', 'viewResourceService', 'deviceResourceService', 'toastService',
 	function($scope, $store, $log, viewResourceService, deviceResourceService, toastService){
-}])
+}]);

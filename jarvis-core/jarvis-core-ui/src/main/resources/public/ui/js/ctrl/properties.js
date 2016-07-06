@@ -65,4 +65,4 @@ angular.module('JarvisApp.ctrl.properties', ['JarvisApp.services'])
 
     	$log.info('property-ctrl', $scope.properties);
     }
-}])
+}]);

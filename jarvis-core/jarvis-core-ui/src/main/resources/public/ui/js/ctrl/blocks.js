@@ -218,4 +218,4 @@ angular.module('JarvisApp.ctrl.blocks', ['JarvisApp.services'])
 
     	$log.debug('block-ctrl', $scope.scenario);
     }
-}])
+}]);

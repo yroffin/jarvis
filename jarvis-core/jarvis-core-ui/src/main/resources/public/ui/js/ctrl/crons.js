@@ -109,4 +109,4 @@ angular.module('JarvisApp.ctrl.crons', ['JarvisApp.services'])
 
 		$log.info('cron-ctrl', $scope.crons);
     }
-}])
+}]);

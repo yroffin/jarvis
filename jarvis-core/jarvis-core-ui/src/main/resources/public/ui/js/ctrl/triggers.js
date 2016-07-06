@@ -91,4 +91,4 @@ angular.module('JarvisApp.ctrl.triggers', ['JarvisApp.services'])
 
     	$log.info('trigger-ctrl');
     }
-}])
+}]);

@@ -505,4 +505,4 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
 			});
     }]
   }
-}])
+}]);

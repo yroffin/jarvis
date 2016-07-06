@@ -94,4 +94,4 @@ angular.module('JarvisApp.ctrl.views', ['JarvisApp.services'])
 
 		$log.info('view-ctrl', $scope.views);
     }
-}])
+}]);

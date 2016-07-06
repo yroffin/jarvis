@@ -111,4 +111,4 @@ angular.module('JarvisApp.ctrl.snapshots', ['JarvisApp.services','JarvisApp.dire
 
 		$log.info('snapshot-ctrl', $scope.snapshots);
     }
-}])
+}]);

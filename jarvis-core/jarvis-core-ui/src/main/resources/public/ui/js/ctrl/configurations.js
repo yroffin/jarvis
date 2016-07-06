@@ -66,4 +66,4 @@ angular.module('JarvisApp.ctrl.configurations', ['JarvisApp.services'])
 
     	$log.info('configuration-ctrl', $scope.configurations);
     }
-}])
+}]);

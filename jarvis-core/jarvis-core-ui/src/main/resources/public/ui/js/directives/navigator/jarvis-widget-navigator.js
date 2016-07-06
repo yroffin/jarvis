@@ -326,4 +326,4 @@ angular.module('jarvis.directives.navigator', ['JarvisApp.services'])
 		}
     }
   }
-}])
+}]);

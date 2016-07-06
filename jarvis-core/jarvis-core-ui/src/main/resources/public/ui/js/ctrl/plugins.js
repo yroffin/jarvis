@@ -167,4 +167,4 @@ angular.module('JarvisApp.ctrl.plugins', ['JarvisApp.services'])
 
 		$log.info('script-ctrl');
     }
-}])
+}]);

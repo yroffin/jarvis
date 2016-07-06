@@ -221,5 +221,5 @@ angular.module('jarvis.directives.command', ['JarvisApp.services'])
     	$log.debug('jarvis-command-output');
     }
   }
-}])
+}]);
 

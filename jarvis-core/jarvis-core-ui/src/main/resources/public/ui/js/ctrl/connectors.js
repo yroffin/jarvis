@@ -79,4 +79,4 @@ angular.module('JarvisApp.ctrl.connectors', ['JarvisApp.services'])
 
     	$log.info('connector-ctrl', $scope.connectors);
     }
-}])
+}]);

@@ -620,4 +620,4 @@ angular.module('JarvisApp.config',['JarvisApp.directives.files'])
 					},
 					toastService.failure
 			);
-	}])
+	}]);
