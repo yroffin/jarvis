@@ -18,7 +18,7 @@
 
 /* Ctrls */
 
-angular.module('JarvisApp.ctrl.snapshots', ['JarvisApp.services'])
+angular.module('JarvisApp.ctrl.snapshots', ['JarvisApp.services','JarvisApp.directives.files'])
 .controller('snapshotsCtrl', 
 		[ '$scope', '$log', 'genericScopeService', 'snapshotResourceService',
 	function($scope, $log, genericScopeService, snapshotResourceService){

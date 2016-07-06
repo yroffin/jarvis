@@ -55,7 +55,7 @@ angular.module('JarvisApp', [
      'JarvisApp.services.event',
      'JarvisApp.services.trigger',
      'JarvisApp.services.block',
-     'JarvisApp.directives',
+     'JarvisApp.directives.files',
      'JarvisApp.directives.widgets',
      'jarvis.directives.navigator',
      'jarvis.directives.command',
@@ -1417,7 +1417,7 @@ angular.module('JarvisApp.services.block', []).factory('blockResourceService',
 
 /* Controllers */
 
-angular.module('JarvisApp.config',[])
+angular.module('JarvisApp.config',['JarvisApp.directives.files'])
     .config(['RestangularProvider', function(RestangularProvider) {
 		RestangularProvider.setDefaultHeaders({
 			'content-type': 'application/json'
@@ -2357,7 +2357,7 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
             templateUrl: '/ui/js/partials/blocks/block/page.html'
         })
         ;
-    }])
+    }]);
 /* 
  * Copyright 2014 Yannick Roffin.
  *
@@ -2378,7 +2378,7 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
 
 /* Directives */
 
-angular.module('JarvisApp.directives', [])
+angular.module('JarvisApp.directives.files', [])
     .directive('appVersion', function(version) {
       return function(scope, elm, attrs) {
         elm.text(version);
@@ -2404,10 +2404,14 @@ angular.module('JarvisApp.directives', [])
 	        restrict: 'A',
 	        require: 'ngModel',
 	        link: function (scope, el, attr, ctrl) {
+	        	$log.debug('fileSelect');
+	        	
 	            var fileReader = new $window.FileReader();
 	
 	            fileReader.onload = function () {
-	            	var base64 = fileReader.result.substr(fileReader.result.lastIndexOf(",")+1);
+		        	$log.info('fileSelect.onload');
+
+		        	var base64 = fileReader.result.substr(fileReader.result.lastIndexOf(",")+1);
 	            	$log.debug("result:",fileReader.result)
 	            	$log.debug("result base64 value:",base64)
 	                ctrl.$setViewValue(atob(base64));
@@ -2432,7 +2436,9 @@ angular.module('JarvisApp.directives', [])
 	            var fileType = attr['fileSelect'];
 	
 	            el.bind('change', function (e) {
-	                var fileName = e.target.files[0];
+		        	$log.info('fileSelect.change');
+
+		        	var fileName = e.target.files[0];
 	
 	                if (fileType === '' || fileType === 'text') {
 	                    fileReader.readAsText(fileName, 'UTF-8');
@@ -4397,7 +4403,7 @@ angular.module('JarvisApp.ctrl.connectors', ['JarvisApp.services'])
 
 /* Ctrls */
 
-angular.module('JarvisApp.ctrl.snapshots', ['JarvisApp.services'])
+angular.module('JarvisApp.ctrl.snapshots', ['JarvisApp.services','JarvisApp.directives.files'])
 .controller('snapshotsCtrl', 
 		[ '$scope', '$log', 'genericScopeService', 'snapshotResourceService',
 	function($scope, $log, genericScopeService, snapshotResourceService){

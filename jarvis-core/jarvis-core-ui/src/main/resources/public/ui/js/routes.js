@@ -190,4 +190,4 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
             templateUrl: '/ui/js/partials/blocks/block/page.html'
         })
         ;
-    }])
+    }]);

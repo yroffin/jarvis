@@ -18,7 +18,7 @@
 
 /* Controllers */
 
-angular.module('JarvisApp.config',[])
+angular.module('JarvisApp.config',['JarvisApp.directives.files'])
     .config(['RestangularProvider', function(RestangularProvider) {
 		RestangularProvider.setDefaultHeaders({
 			'content-type': 'application/json'

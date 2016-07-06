@@ -18,7 +18,7 @@
 
 /* Directives */
 
-angular.module('JarvisApp.directives', [])
+angular.module('JarvisApp.directives.files', [])
     .directive('appVersion', function(version) {
       return function(scope, elm, attrs) {
         elm.text(version);
@@ -44,10 +44,14 @@ angular.module('JarvisApp.directives', [])
 	        restrict: 'A',
 	        require: 'ngModel',
 	        link: function (scope, el, attr, ctrl) {
+	        	$log.debug('fileSelect');
+	        	
 	            var fileReader = new $window.FileReader();
 	
 	            fileReader.onload = function () {
-	            	var base64 = fileReader.result.substr(fileReader.result.lastIndexOf(",")+1);
+		        	$log.info('fileSelect.onload');
+
+		        	var base64 = fileReader.result.substr(fileReader.result.lastIndexOf(",")+1);
 	            	$log.debug("result:",fileReader.result)
 	            	$log.debug("result base64 value:",base64)
 	                ctrl.$setViewValue(atob(base64));
@@ -72,7 +76,9 @@ angular.module('JarvisApp.directives', [])
 	            var fileType = attr['fileSelect'];
 	
 	            el.bind('change', function (e) {
-	                var fileName = e.target.files[0];
+		        	$log.info('fileSelect.change');
+
+		        	var fileName = e.target.files[0];
 	
 	                if (fileType === '' || fileType === 'text') {
 	                    fileReader.readAsText(fileName, 'UTF-8');

@@ -55,7 +55,7 @@ angular.module('JarvisApp', [
      'JarvisApp.services.event',
      'JarvisApp.services.trigger',
      'JarvisApp.services.block',
-     'JarvisApp.directives',
+     'JarvisApp.directives.files',
      'JarvisApp.directives.widgets',
      'jarvis.directives.navigator',
      'jarvis.directives.command',
