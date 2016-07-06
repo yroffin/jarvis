@@ -112,7 +112,6 @@
 				<jsSourceFile>services/generic.js</jsSourceFile>
 				<jsSourceFile>services/scope.js</jsSourceFile>
 				<jsSourceFile>services/plugin.js</jsSourceFile>
-				<jsSourceFile>services/command.js</jsSourceFile>
 				<jsSourceFile>services/view.js</jsSourceFile>
 				<jsSourceFile>services/configuration.js</jsSourceFile>
 				<jsSourceFile>services/property.js</jsSourceFile>
