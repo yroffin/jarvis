@@ -20,9 +20,14 @@ import java.lang.reflect.Field;
 
 import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.model.bean.plugin.CommandBean;
+import org.jarvis.core.model.bean.tools.NotificationBean;
+import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.model.rest.plugin.CommandRest;
-import org.jarvis.core.resources.api.ApiResources;
+import org.jarvis.core.model.rest.tools.NotificationRest;
+import org.jarvis.core.resources.api.ApiLinkedResources;
 import org.jarvis.core.resources.api.GenericValue;
+import org.jarvis.core.resources.api.href.ApiHrefCommandNotificationResources;
+import org.jarvis.core.resources.api.tools.ApiNotificationResources;
 import org.jarvis.core.services.CoreStatistics;
 import org.jarvis.core.services.groovy.PluginGroovyService;
 import org.jarvis.core.services.shell.PluginShellService;
@@ -38,7 +43,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
  * Commande resources
  */
 @Component
-public class ApiCommandResources extends ApiResources<CommandRest,CommandBean> {
+public class ApiCommandResources extends ApiLinkedResources<CommandRest,CommandBean,NotificationRest,NotificationBean> {
 
 	/**
 	 * constructor
@@ -52,10 +57,28 @@ public class ApiCommandResources extends ApiResources<CommandRest,CommandBean> {
 	PluginShellService pluginShellService;
 
 	@Autowired
+	ApiNotificationResources apiNotificationResources;
+
+	@Autowired
+	ApiHrefCommandNotificationResources apiHrefCommandNotificationResources;
+
+	@Autowired
 	PluginGroovyService pluginGroovyService;
 
 	@Autowired
 	PluginZWayService pluginZWayService;
+	
+	@Override
+	public void mount() {
+		/**
+		 * commands
+		 */
+		declare(COMMAND_RESOURCE);
+		/**
+		 * scripts -> commands
+		 */
+		declare(COMMAND_RESOURCE, NOTIFICATION_RESOURCE, apiNotificationResources, apiHrefCommandNotificationResources, NOTIFICATION, SORTKEY, HREF);
+	}
 
 	/**
 	 * execute task on command
@@ -183,23 +206,25 @@ public class ApiCommandResources extends ApiResources<CommandRest,CommandBean> {
 		} catch (TechnicalException e) {
 			throw new TechnicalException(e);
 		}
+		/**
+		 * iterate on each notification
+		 */
+		GenericMap payload = new GenericMap();
+		payload.put("text", "Notification de commande");
+		for(NotificationBean notification : apiHrefCommandNotificationResources.findAll(command)) {
+			payload.put("title", command.name);
+			payload.put("subtext", args + "");
+			apiNotificationResources.doNotification(notification, payload);
+		}
+		/**
+		 * store command execution in statistics
+		 */
 		try {
-			/**
-			 * store command execution in statistics
-			 */
 			coreStatistics.write(command, args, result);
 			logger.info("COMMAND - OUTPUT\n{}", mapper.writerWithDefaultPrettyPrinter().writeValueAsString(result));
 		} catch (JsonProcessingException e) {
 			throw new TechnicalException(e);
 		}
     	return result;
-	}
-	
-	@Override
-	public void mount() {
-		/**
-		 * commands
-		 */
-		declare(COMMAND_RESOURCE);
 	}
 }

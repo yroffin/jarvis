@@ -27,6 +27,7 @@ import org.jarvis.core.exception.TechnicalHttpException;
 import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.GenericBean;
 import org.jarvis.core.type.CommandType;
+import org.jarvis.core.type.NotificationType;
 import org.jarvis.core.type.ParamType;
 import org.jarvis.neo4j.client.Entities;
 import org.jarvis.neo4j.client.Node;
@@ -85,6 +86,22 @@ public class Neo4jService<S extends GenericBean> {
 			)
 			.register();
 		
+		/**
+		 * custom mapper for NotificationType
+		 */
+		mapperFactory
+			.classMap(Object.class, NotificationType.class)
+			.byDefault()
+			.customize(
+					   new CustomMapper<Object, NotificationType>() {
+						   @Override
+						   public void mapAtoB(Object a, NotificationType b, MappingContext context) {
+						         b = NotificationType.valueOf((String) a);
+						   }
+				       }
+				)
+			.register();
+		
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		mapper.registerModule(new JodaModule());
 	}
@@ -106,6 +123,9 @@ public class Neo4jService<S extends GenericBean> {
 		}
 		if(field.getType() == org.jarvis.core.type.CommandType.class) {
 			return ParamType.COMMAND;
+		}
+		if(field.getType() == org.jarvis.core.type.NotificationType.class) {
+			return ParamType.NOTIFICATION;
 		}
 		return ParamType.STRING;
 	}
@@ -311,6 +331,9 @@ public class Neo4jService<S extends GenericBean> {
 							break;
 						case COMMAND:
 							field.set(target, CommandType.valueOf(node.getProperty(field.getName()).toString().toUpperCase()));
+							break;
+						case NOTIFICATION:
+							field.set(target, NotificationType.valueOf(node.getProperty(field.getName()).toString().toUpperCase()));
 							break;
 						default:
 							break;

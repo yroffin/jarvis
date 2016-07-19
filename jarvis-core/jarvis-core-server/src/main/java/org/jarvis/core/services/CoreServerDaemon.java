@@ -34,6 +34,7 @@ import org.jarvis.core.resources.api.plugins.ApiZwayPluginResources;
 import org.jarvis.core.resources.api.scenario.ApiBlockResources;
 import org.jarvis.core.resources.api.scenario.ApiScenarioResources;
 import org.jarvis.core.resources.api.tools.ApiCronResources;
+import org.jarvis.core.resources.api.tools.ApiNotificationResources;
 import org.jarvis.core.resources.api.tools.ApiToolResources;
 import org.jarvis.core.resources.api.views.ApiViewResources;
 import org.jarvis.core.security.JarvisAuthorizerUsers;
@@ -107,6 +108,9 @@ public class CoreServerDaemon {
 
 	@Autowired
 	ApiTriggerResources apiTriggerResources;
+
+	@Autowired
+	ApiNotificationResources apiNotificationResources;
 
 	@Autowired
 	ApiToolResources apiToolResources;
@@ -240,6 +244,7 @@ public class CoreServerDaemon {
 		apiCommandResources.mount();
 		apiEventResources.mount();
 		apiTriggerResources.mount();
+		apiNotificationResources.mount();
 		/**
 		 * tools
 		 */

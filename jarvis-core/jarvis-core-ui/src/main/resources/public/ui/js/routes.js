@@ -59,7 +59,7 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
         .state('helper-system', {
             url: '/helper-system',
             params: {
-            	resources: ['configurations','properties','connectors','views']
+            	resources: ['configurations','notifications','properties','connectors','views']
             },
             controller: 'jarvisWidgetNavigatorCtrl',
             templateUrl: '/ui/js/directives/navigator/jarvis-widget-navigator.html'
@@ -72,12 +72,22 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
         .state('triggers', {
             url: '/triggers',
             controller: 'triggersCtrl',
-            templateUrl: '/ui/js/partials/triggers/page.html'
+            templateUrl: '/ui/js/directives/trigger/jarvis-widget-triggers.html'
         })
         .state('triggers-by-id', {
             url: '/triggers/:id?tab',
             controller: 'triggerCtrl',
-            templateUrl: '/ui/js/partials/triggers/trigger/page.html'
+            templateUrl: '/ui/js/directives/trigger/jarvis-widget-trigger.html'
+        })
+        .state('notifications', {
+            url: '/notifications',
+            controller: 'notificationsCtrl',
+            templateUrl: '/ui/js/directives/notification/jarvis-widget-notifications.html'
+        })
+        .state('notifications-by-id', {
+            url: '/notifications/:id?tab',
+            controller: 'notificationCtrl',
+            templateUrl: '/ui/js/directives/notification/jarvis-widget-notification.html'
         })
         .state('devices', {
             url: '/devices',
@@ -122,12 +132,12 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
         .state('configurations', {
             url: '/configurations',
             controller: 'configurationsCtrl',
-            templateUrl: '/ui/js/partials/configurations/page.html'
+            templateUrl: '/ui/js/directives/configuration/jarvis-widget-configurations.html'
         })
         .state('configurations-by-id', {
             url: '/configurations/:id',
             controller: 'configurationCtrl',
-            templateUrl: '/ui/js/partials/configurations/configuration/page.html'
+            templateUrl: '/ui/js/directives/configuration/jarvis-widget-configuration.html'
         })
         .state('properties', {
             url: '/properties',

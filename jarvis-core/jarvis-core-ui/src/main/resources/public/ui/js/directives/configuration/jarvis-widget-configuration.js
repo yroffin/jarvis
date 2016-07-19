@@ -18,9 +18,9 @@
 
 /* Ctrls */
 
-angular.module('JarvisApp.ctrl.configurations', ['JarvisApp.services'])
+angular.module('jarvis.directives.configuration', ['JarvisApp.services'])
 .controller('configurationsCtrl', 
-		['$scope', '$log', 'genericScopeService', 'configurationResourceService',
+		['$scope', '$log', 'genericScopeService', 'jarvisWidgetConfigurationService',
 	function($scope, $log, genericScopeService, configurationResourceService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
@@ -43,7 +43,7 @@ angular.module('JarvisApp.ctrl.configurations', ['JarvisApp.services'])
 	);
 }])
 .controller('configurationCtrl',
-		['$scope', '$log', '$stateParams', '$mdDialog', 'genericResourceService', 'genericScopeService', 'configurationResourceService', 'toastService',
+		['$scope', '$log', '$stateParams', '$mdDialog', 'genericResourceService', 'genericScopeService', 'jarvisWidgetConfigurationService', 'toastService',
 	function($scope, $log, $stateParams, $mdDialog, genericResourceService, genericScopeService, configurationResourceService, toastService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
@@ -66,4 +66,43 @@ angular.module('JarvisApp.ctrl.configurations', ['JarvisApp.services'])
 
     	$log.info('configuration-ctrl', $scope.configurations);
     }
+}])
+.factory('jarvisWidgetConfigurationService', [ 'genericResourceService', function( genericResourceService) {
+	return {
+	  configuration : genericResourceService.crud(['configurations'])
+	}
+}])
+.directive('jarvisWidgetConfigurations', [ '$log', '$stateParams', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/directives/configuration/jarvis-widget-configurations.html',
+    link: function(scope, element, attrs) {
+    }
+  }
+}])
+.directive('jarvisConfigurations', [ '$log', '$stateParams', function ($log, $stateParams) {
+	  return {
+	    restrict: 'E',
+	    templateUrl: '/ui/js/directives/configuration/partials/jarvis-configurations.html',
+	    link: function(scope, element, attrs) {
+	    	$log.debug('jarvis-configurations');
+	    }
+	  }
+}])
+.directive('jarvisWidgetConfiguration', [ '$log', '$stateParams', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/directives/configuration/jarvis-widget-configuration.html',
+    link: function(scope, element, attrs) {
+    }
+  }
+}])
+.directive('jarvisConfiguration', [ '$log', '$stateParams', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/directives/configuration/partials/jarvis-configuration-general.html',
+    link: function(scope, element, attrs) {
+    	$log.debug('jarvis-configuration');
+    }
+  }
 }]);

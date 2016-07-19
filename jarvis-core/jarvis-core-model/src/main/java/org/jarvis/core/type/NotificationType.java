@@ -1,5 +1,5 @@
 /**
- *  Copyright 2015 Yannick Roffin
+ *  Copyright 2016 Yannick Roffin
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -17,35 +17,15 @@
 package org.jarvis.core.type;
 
 /**
- * types markers
+ * command type
  */
-public enum ParamType {
+public enum NotificationType {
 	/**
-	 * 
+	 * slack notification
 	 */
-	STRING, 
+	SLACK, 
 	/**
-	 * 
+	 * mail notification
 	 */
-	INT, 
-	/**
-	 * 
-	 */
-	DATETIME, 
-	/**
-	 * 
-	 */
-	FLOAT, 
-	/**
-	 * 
-	 */
-	PARAM, 
-	/**
-	 * 
-	 */
-	COMMAND,
-	/**
-	 * 
-	 */
-	NOTIFICATION
+	MAIL
 }

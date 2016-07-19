@@ -41,7 +41,7 @@ angular.module('jarvis.directives.command', ['JarvisApp.services'])
 }])
 .controller('commandCtrl',
 		[ '$scope', '$log', '$stateParams', 'genericResourceService', 'genericScopeService', 'jarvisWidgetCommandService', 'toastService',
-	function($scope, $log, $stateParams, genericResourceService, genericScopeService, jarvisWidgetCommandService, toastService){
+	function($scope, $log, $stateParams, genericResourceService, genericScopeService, jarvisCommandService, toastService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
 	 */
@@ -49,7 +49,28 @@ angular.module('jarvis.directives.command', ['JarvisApp.services'])
 			$scope, 
 			'command', 
 			'commands', 
-			jarvisWidgetCommandService.command
+			jarvisCommandService.command
+	);
+	/**
+	 * declare links
+	 */
+	$scope.links = {
+			notifications: {}
+	}
+	/**
+	 * declare action links
+	 */
+	genericScopeService.scope.resourceLink(
+			function() {
+				return $scope.notifications;
+			},
+			$scope.links.notifications,
+			'notification',
+			'notifications',
+			jarvisCommandService.command, 
+			jarvisCommandService.notifications, 
+			{'order':'1'},
+			$stateParams.id
 	);
     /**
      * execute this command
@@ -103,8 +124,8 @@ angular.module('jarvis.directives.command', ['JarvisApp.services'])
 	     * init part
 	     */
 		$scope.combo = {
-				visibles: jarvisWidgetCommandService.bool,
-				types: jarvisWidgetCommandService.types
+				visibles: jarvisCommandService.bool,
+				types: jarvisCommandService.types
 		}
 		/**
 		 * input test
@@ -114,14 +135,21 @@ angular.module('jarvis.directives.command', ['JarvisApp.services'])
 		 * get current command
 		 */
 		$scope.commands = [];
-    	genericResourceService.scope.entity.get($stateParams.id, function(update) {$scope.command=update}, jarvisWidgetCommandService.command);
+    	genericResourceService.scope.entity.get($stateParams.id, function(update) {$scope.command=update}, jarvisCommandService.command);
 	
+		/**
+		 * get all crontabs
+		 */
+    	$scope.notifications = [];
+    	genericResourceService.scope.collections.findAll('notifications', $stateParams.id, $scope.notifications, jarvisCommandService.notifications);
+
 		$log.info('command-ctrl');
     }
 }])
 .factory('jarvisWidgetCommandService', [ 'genericResourceService', function( genericResourceService) {
 	return {
 	  	command: genericResourceService.crud(['commands']),
+	  	notifications : genericResourceService.links(['commands'], ['notifications']),
 	  	bool: [
            	   {
            		   id: true,
@@ -192,6 +220,15 @@ angular.module('jarvis.directives.command', ['JarvisApp.services'])
     templateUrl: '/ui/js/directives/command/partials/jarvis-command-general.html',
     link: function(scope, element, attrs) {
     	$log.debug('jarvis-command');
+    }
+  }
+}])
+.directive('jarvisCommandNotification', [ '$log', '$stateParams', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/directives/command/partials/jarvis-command-notification.html',
+    link: function(scope, element, attrs) {
+    	$log.debug('jarvis-command-notification');
     }
   }
 }])

@@ -172,33 +172,6 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     }
   }
 }])
-.directive('jarvisTriggers', [ '$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/triggers/jarvis-triggers.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-triggers');
-    }
-  }
-}])
-.directive('jarvisTrigger', [ '$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/triggers/trigger/jarvis-trigger-general.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-trigger');
-    }
-  }
-}])
-.directive('jarvisTriggerCron', [ '$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/triggers/trigger/jarvis-trigger-cron.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-trigger-cron');
-    }
-  }
-}])
 .directive('jarvisViews', [ '$log', '$stateParams', function ($log, $stateParams) {
   return {
     restrict: 'E',
@@ -214,24 +187,6 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     templateUrl: '/ui/js/partials/views/view/jarvis-view-general.html',
     link: function(scope, element, attrs) {
     	$log.debug('jarvis-view');
-    }
-  }
-}])
-.directive('jarvisConfigurations', [ '$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/configurations/jarvis-configurations.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-configurations');
-    }
-  }
-}])
-.directive('jarvisConfiguration', [ '$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/configurations/configuration/jarvis-configuration-general.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-configuration');
     }
   }
 }])

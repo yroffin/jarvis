@@ -18,9 +18,9 @@
 
 /* Ctrls */
 
-angular.module('JarvisApp.ctrl.triggers', ['JarvisApp.services'])
+angular.module('jarvis.directives.trigger', ['JarvisApp.services'])
 .controller('triggersCtrl', 
-		[ '$scope', '$log', 'genericScopeService', 'triggerResourceService',
+		[ '$scope', '$log', 'genericScopeService', 'jarvisWidgetTriggerService',
 		function($scope, $log, genericScopeService, triggerResourceService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
@@ -42,7 +42,7 @@ angular.module('JarvisApp.ctrl.triggers', ['JarvisApp.services'])
 	);
 }])
 .controller('triggerCtrl',
-		[ '$scope', '$log', '$stateParams', 'genericResourceService', 'genericScopeService', 'genericPickerService', 'triggerResourceService', 'toastService',
+		[ '$scope', '$log', '$stateParams', 'genericResourceService', 'genericScopeService', 'genericPickerService', 'jarvisWidgetTriggerService', 'toastService',
 	function($scope, $log, $stateParams, genericResourceService, genericScopeService, genericPickerService, triggerResourceService, toastService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
@@ -91,4 +91,37 @@ angular.module('JarvisApp.ctrl.triggers', ['JarvisApp.services'])
 
     	$log.info('trigger-ctrl');
     }
+}])
+.factory('jarvisWidgetTriggerService', [ 'genericResourceService', function( genericResourceService) {
+	return {
+		trigger: genericResourceService.crud(['triggers']),
+		crons : genericResourceService.links(['triggers'], ['crons']),
+	}
+}])
+.directive('jarvisTriggers', [ '$log', '$stateParams', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/directives/trigger/partials/jarvis-triggers.html',
+    link: function(scope, element, attrs) {
+    	$log.debug('jarvis-triggers');
+    }
+  }
+}])
+.directive('jarvisTrigger', [ '$log', '$stateParams', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/directives/trigger/partials/jarvis-trigger-general.html',
+    link: function(scope, element, attrs) {
+    	$log.debug('jarvis-trigger');
+    }
+  }
+}])
+.directive('jarvisTriggerCron', [ '$log', '$stateParams', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/directives/trigger/partials/jarvis-trigger-cron.html',
+    link: function(scope, element, attrs) {
+    	$log.debug('jarvis-trigger-cron');
+    }
+  }
 }]);

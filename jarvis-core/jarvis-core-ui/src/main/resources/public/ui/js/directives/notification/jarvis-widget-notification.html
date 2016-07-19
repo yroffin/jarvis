@@ -1,0 +1,26 @@
+<md-toolbar>
+  <div class="md-toolbar-tools" layout-align="center">
+    <h1><br>{{notification.name}}<md-tooltip>notification#{{notification.id}}</md-tooltip></h1>
+  </div>
+  <md-fab-actions class="md-toolbar-tools">
+	<md-button aria-label="menu" class="md-icon-button" ng-click="go('notifications')"><md-icon md-font-icon="material-icons md-16">clear</md-icon></md-button>
+	<md-button aria-label="menu" class="md-icon-button" ng-click="duplicate(notification)"><md-icon md-font-icon="material-icons md-16">content_copy</md-icon></md-button>
+	<md-button aria-label="menu" class="md-icon-button" ng-click="remove(notification)"><md-icon md-font-icon="material-icons md-16">delete</md-icon></md-button>
+	<md-button aria-label="menu" class="md-icon-button" ng-click="save(notification)"><md-icon md-font-icon="material-icons md-16">save</md-icon></md-button>
+	<md-button aria-label="menu" class="md-icon-button" ng-click="test(notification, text, title, subtext)"><md-icon md-font-icon="material-icons md-16">play_arrow</md-icon></md-button>
+  </md-fab-actions>
+</md-toolbar>
+<div layout="column" ng-init="load()" ng-cloak>
+	<md-tabs md-dynamic-height md-border-bottom>
+		<md-tab label="{{'notification.general' | translate}}">
+			<md-content layout-padding>
+				<jarvis-notification></jarvis-notification>
+			</md-content>
+		</md-tab>
+		<md-tab label="{{'notification.test' | translate}}">
+			<md-content layout-padding>
+				<jarvis-notification-test></jarvis-notification-test>
+			</md-content>
+		</md-tab>
+	</md-tabs>
+</div>

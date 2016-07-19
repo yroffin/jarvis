@@ -36,7 +36,7 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter'])
             		results.push(filterService.plain(element));
                 });
 				$log.debug("[FIND]",path, results);
-				callback(results);
+				if(callback) callback(results);
 			}
 			if(path.length == 1) {
 				Restangular.all('/api/'+path[0]).getList().then(

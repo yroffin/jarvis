@@ -14,38 +14,32 @@
  *   limitations under the License.
  */
 
-package org.jarvis.core.type;
+package org.jarvis.core.model.rest.tools;
+
+import org.jarvis.core.model.rest.GenericEntity;
+import org.jarvis.core.type.NotificationType;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * types markers
+ * configuration snapshot object
  */
-public enum ParamType {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class NotificationRest extends GenericEntity {
 	/**
-	 * 
+	 * name
 	 */
-	STRING, 
+	@JsonProperty("name")
+	public String name;
 	/**
-	 * 
+	 * icon
 	 */
-	INT, 
+	@JsonProperty("icon")
+	public String icon;
 	/**
-	 * 
+	 * type
 	 */
-	DATETIME, 
-	/**
-	 * 
-	 */
-	FLOAT, 
-	/**
-	 * 
-	 */
-	PARAM, 
-	/**
-	 * 
-	 */
-	COMMAND,
-	/**
-	 * 
-	 */
-	NOTIFICATION
+	@JsonProperty("type")
+	public NotificationType type;
 }

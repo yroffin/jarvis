@@ -1,4 +1,4 @@
-package org.jarvis.core.services.groovy;
+package org.jarvis.core.services.helper;
 
 import java.net.URISyntaxException;
 
@@ -14,7 +14,7 @@ import groovyx.net.http.RESTClient;
  * groovy script helper
  */
 @Component
-public class PluginGroovyHelper {
+public class PluginConnectorHelper {
 	@Autowired
 	ApiConnectorResources apiConnectorResources;
 	

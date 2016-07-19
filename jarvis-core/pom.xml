@@ -77,6 +77,11 @@
 			</dependency>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
+				<artifactId>jarvis-rest-api-slack</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
 				<artifactId>jarvis-rest-module</artifactId>
 				<version>${project.version}</version>
 			</dependency>
@@ -434,6 +439,7 @@
 		<module>jarvis-core-ui</module>
 		<module>jarvis-rest-client</module>
 		<module>jarvis-rest-api-zway</module>
+		<module>jarvis-rest-api-slack</module>
 	</modules>
 
 	<repositories>

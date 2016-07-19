@@ -28,6 +28,7 @@ angular.module('JarvisApp.config',['JarvisApp.directives.files'])
 		 * request interceptor
 		 */
 	    RestangularProvider.setFullRequestInterceptor(function(element, operation, route, url, headers, params, httpConfig) {
+	    	headers['content-type'] = 'application/json';
 			return {
 			  element: element,
 			  params: params,
@@ -82,7 +83,7 @@ angular.module('JarvisApp.config',['JarvisApp.directives.files'])
     		 'toastService',
     		 'deviceResourceService',
     		 'eventResourceService',
-    		 'configurationResourceService',
+    		 'jarvisWidgetConfigurationService',
     		 'oauth2ResourceService',
     	function(
     			$rootScope,
@@ -549,6 +550,37 @@ angular.module('JarvisApp.config',['JarvisApp.directives.files'])
 		     }
 	    ];
 		$scope.crud = genericResourceService.crud(['triggers']);
+		$scope.crud.findAll(
+				function(elements) {
+					_.each(elements, function(element) {
+						element.selectable = true;
+				    	$scope.elementsPicker[0].nodes.push(element);
+					});
+				},
+				toastService.failure
+		);
+	}])
+	.controller('pickNotificationDialogCtrl',
+			['$scope', '$log', '$mdDialog', 'genericResourceService', 'toastService',
+		function($scope, $log, $mdDialog, genericResourceService, toastService) {
+		$log.info('pickNotificationDialogCtrl');
+		$scope.hide = function() {
+		   $mdDialog.hide();
+		 };
+		$scope.cancel = function() {
+		  $mdDialog.cancel();
+		};
+		$scope.answer = function(answer) {
+		  $mdDialog.hide(answer);
+		};
+		$scope.elementsPicker = [
+		     {
+		    	 name:"Notifications",
+		    	 selectable : false,
+		    	 nodes:[]
+		     }
+	    ];
+		$scope.crud = genericResourceService.crud(['notifications']);
 		$scope.crud.findAll(
 				function(elements) {
 					_.each(elements, function(element) {

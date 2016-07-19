@@ -26,10 +26,12 @@ public abstract class ApiMapper {
 	protected static final String TRIGGER_RESOURCE = "triggers";
 	protected static final String SNAPSHOT_RESOURCE = "snapshots";
 	protected static final String CRON_RESOURCE = "crons";
+	protected static final String NOTIFICATION_RESOURCE = "notifications";
 
 	protected static final String DEVICE = ":device";
 	protected static final String CONNEXION = ":connexion";
 	protected static final String COMMAND = ":command";
+	protected static final String NOTIFICATION = ":notification";
 	protected static final String PLUGIN = ":plugin";
 	protected static final String TRIGGER = ":trigger";
 	protected static final String CRON = ":cron";

@@ -7,6 +7,7 @@
 	<md-button aria-label="menu" class="md-icon-button" ng-click="execute(command)"><md-tooltip>{{'command.execute'|translate}}</md-tooltip><md-icon md-font-icon="material-icons md-16">play_arrow</md-icon></md-button>
 	<md-button aria-label="menu" class="md-icon-button" ng-click="test(command)"><md-tooltip>{{'command.test'|translate}}</md-tooltip><md-icon md-font-icon="material-icons md-16">play_arrow</md-icon></md-button>
 	<md-button aria-label="menu" class="md-icon-button" ng-click="pretty()"><md-tooltip>{{'command.pretty'|translate}}</md-tooltip><md-icon md-font-icon="material-icons md-16">loop</md-icon></md-button>
+	<jarvis-pick-element ctrl="pickNotificationDialogCtrl" icon="playlist_add" callback="links.notifications.add" tooltips="pick.elt.notif"></jarvis-pick-element>
   </md-fab-actions>
 </md-toolbar>
 <div layout="column" ng-init="load()" ng-cloak>
@@ -14,6 +15,11 @@
 		<md-tab label="{{'command.general' | translate}}">
 			<md-content layout-padding>
 				<jarvis-command></jarvis-command>
+			</md-content>
+		</md-tab>
+		<md-tab label="{{'command.notification' | translate}}">
+			<md-content>
+				<jarvis-command-notification></jarvis-command-notification>
 			</md-content>
 		</md-tab>
 		<md-tab label="{{'command.script' | translate}}">

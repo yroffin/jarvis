@@ -25,7 +25,7 @@ angular.module('JarvisApp.services.scope', ['JarvisApp.services.generic']).facto
 		[ '$log', '$filter', 'genericResourceService', 'genericPickerService', 'toastService', function($log, $filter, genericResourceService, genericPickerService, toastService) {
   var scope = {
 	  resources : function(setEntities, getEntities, scope, resource, service, init) {
-	    	$log.debug("inject default resources scope", resource);
+	    	$log.debug("inject default resources scope", resource, init);
 		    /**
 		     * Cf. genericResourceService
 		     */
@@ -82,7 +82,7 @@ angular.module('JarvisApp.services.scope', ['JarvisApp.services.generic']).facto
 		    	setEntities([]);
 		    	service.findAll(function(data) {
 		    		setEntities(data);
-					$log.debug(resource+'-ctrl', data);
+					$log.debug(resource+'-ctrl', data, callback);
 					if(callback) {
 						callback();
 					}
