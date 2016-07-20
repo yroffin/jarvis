@@ -48,28 +48,30 @@ angular.module('JarvisApp', [
      'JarvisApp.services.snapshot',
      'JarvisApp.services.cron',
      'JarvisApp.services.view',
-     'JarvisApp.services.configuration',
      'JarvisApp.services.property',
      'JarvisApp.services.connector',
      'JarvisApp.services.device',
      'JarvisApp.services.event',
-     'JarvisApp.services.trigger',
      'JarvisApp.services.block',
      'JarvisApp.directives.files',
      'JarvisApp.directives.widgets',
+     /**
+      * directives
+      */
      'jarvis.directives.navigator',
      'jarvis.directives.command',
+     'jarvis.directives.trigger',
+     'jarvis.directives.configuration',
+     'jarvis.directives.notification',
      /**
       * controllers
       */
      'JarvisApp.ctrl.plugins',
      'JarvisApp.ctrl.devices',
      'JarvisApp.ctrl.events',
-     'JarvisApp.ctrl.triggers',
      'JarvisApp.ctrl.snapshots',
      'JarvisApp.ctrl.crons',
      'JarvisApp.ctrl.views',
-     'JarvisApp.ctrl.configurations',
      'JarvisApp.ctrl.properties',
      'JarvisApp.ctrl.connectors',
      'JarvisApp.ctrl.scenarios',
@@ -351,7 +353,7 @@ angular.module('JarvisApp.services.generic', ['JarvisApp.services.filter'])
             		results.push(filterService.plain(element));
                 });
 				$log.debug("[FIND]",path, results);
-				callback(results);
+				if(callback) callback(results);
 			}
 			if(path.length == 1) {
 				Restangular.all('/api/'+path[0]).getList().then(
@@ -869,7 +871,7 @@ angular.module('JarvisApp.services.scope', ['JarvisApp.services.generic']).facto
 		[ '$log', '$filter', 'genericResourceService', 'genericPickerService', 'toastService', function($log, $filter, genericResourceService, genericPickerService, toastService) {
   var scope = {
 	  resources : function(setEntities, getEntities, scope, resource, service, init) {
-	    	$log.debug("inject default resources scope", resource);
+	    	$log.debug("inject default resources scope", resource, init);
 		    /**
 		     * Cf. genericResourceService
 		     */
@@ -926,7 +928,7 @@ angular.module('JarvisApp.services.scope', ['JarvisApp.services.generic']).facto
 		    	setEntities([]);
 		    	service.findAll(function(data) {
 		    		setEntities(data);
-					$log.debug(resource+'-ctrl', data);
+					$log.debug(resource+'-ctrl', data, callback);
 					if(callback) {
 						callback();
 					}
@@ -1124,35 +1126,6 @@ angular.module('JarvisApp.services.view', []).factory('viewResourceService', [ '
 /* Services */
 
 /**
- * configurationResourceService
- */
-angular.module('JarvisApp.services.configuration', []).factory('configurationResourceService', 
-		[ 'genericResourceService', function(genericResourceService) {
-  return {
-	  configuration : genericResourceService.crud(['configurations'])
-  }
-}]);
-/* 
- * Copyright 2014 Yannick Roffin.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-'use strict';
-
-/* Services */
-
-/**
  * propertyResourceService
  */
 angular.module('JarvisApp.services.property', []).factory('propertyResourceService', [ 'genericResourceService', function(genericResourceService) {
@@ -1321,33 +1294,6 @@ angular.module('JarvisApp.services.event', [])
 
 /* Services */
 
-angular.module('JarvisApp.services.trigger', [])
-	.factory('triggerResourceService', [ 'genericResourceService', function(genericResourceService) {
-		return {
-			trigger: genericResourceService.crud(['triggers']),
-			crons : genericResourceService.links(['triggers'], ['crons']),
-		}
-	}]);
-/* 
- * Copyright 2014 Yannick Roffin.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-'use strict';
-
-/* Services */
-
 /**
  * scenarioResourceService
  */
@@ -1427,6 +1373,7 @@ angular.module('JarvisApp.config',['JarvisApp.directives.files'])
 		 * request interceptor
 		 */
 	    RestangularProvider.setFullRequestInterceptor(function(element, operation, route, url, headers, params, httpConfig) {
+	    	headers['content-type'] = 'application/json';
 			return {
 			  element: element,
 			  params: params,
@@ -1481,7 +1428,7 @@ angular.module('JarvisApp.config',['JarvisApp.directives.files'])
     		 'toastService',
     		 'deviceResourceService',
     		 'eventResourceService',
-    		 'configurationResourceService',
+    		 'jarvisWidgetConfigurationService',
     		 'oauth2ResourceService',
     	function(
     			$rootScope,
@@ -1958,6 +1905,37 @@ angular.module('JarvisApp.config',['JarvisApp.directives.files'])
 				toastService.failure
 		);
 	}])
+	.controller('pickNotificationDialogCtrl',
+			['$scope', '$log', '$mdDialog', 'genericResourceService', 'toastService',
+		function($scope, $log, $mdDialog, genericResourceService, toastService) {
+		$log.info('pickNotificationDialogCtrl');
+		$scope.hide = function() {
+		   $mdDialog.hide();
+		 };
+		$scope.cancel = function() {
+		  $mdDialog.cancel();
+		};
+		$scope.answer = function(answer) {
+		  $mdDialog.hide(answer);
+		};
+		$scope.elementsPicker = [
+		     {
+		    	 name:"Notifications",
+		    	 selectable : false,
+		    	 nodes:[]
+		     }
+	    ];
+		$scope.crud = genericResourceService.crud(['notifications']);
+		$scope.crud.findAll(
+				function(elements) {
+					_.each(elements, function(element) {
+						element.selectable = true;
+				    	$scope.elementsPicker[0].nodes.push(element);
+					});
+				},
+				toastService.failure
+		);
+	}])
 	.controller('pickCronDialogCtrl',
 			['$scope', '$log', '$mdDialog', 'genericResourceService', 'toastService',
 		function($scope, $log, $mdDialog, genericResourceService, toastService) {
@@ -2226,7 +2204,7 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
         .state('helper-system', {
             url: '/helper-system',
             params: {
-            	resources: ['configurations','properties','connectors','views']
+            	resources: ['configurations','notifications','properties','connectors','views']
             },
             controller: 'jarvisWidgetNavigatorCtrl',
             templateUrl: '/ui/js/directives/navigator/jarvis-widget-navigator.html'
@@ -2239,12 +2217,22 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
         .state('triggers', {
             url: '/triggers',
             controller: 'triggersCtrl',
-            templateUrl: '/ui/js/partials/triggers/page.html'
+            templateUrl: '/ui/js/directives/trigger/jarvis-widget-triggers.html'
         })
         .state('triggers-by-id', {
             url: '/triggers/:id?tab',
             controller: 'triggerCtrl',
-            templateUrl: '/ui/js/partials/triggers/trigger/page.html'
+            templateUrl: '/ui/js/directives/trigger/jarvis-widget-trigger.html'
+        })
+        .state('notifications', {
+            url: '/notifications',
+            controller: 'notificationsCtrl',
+            templateUrl: '/ui/js/directives/notification/jarvis-widget-notifications.html'
+        })
+        .state('notifications-by-id', {
+            url: '/notifications/:id?tab',
+            controller: 'notificationCtrl',
+            templateUrl: '/ui/js/directives/notification/jarvis-widget-notification.html'
         })
         .state('devices', {
             url: '/devices',
@@ -2289,12 +2277,12 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
         .state('configurations', {
             url: '/configurations',
             controller: 'configurationsCtrl',
-            templateUrl: '/ui/js/partials/configurations/page.html'
+            templateUrl: '/ui/js/directives/configuration/jarvis-widget-configurations.html'
         })
         .state('configurations-by-id', {
             url: '/configurations/:id',
             controller: 'configurationCtrl',
-            templateUrl: '/ui/js/partials/configurations/configuration/page.html'
+            templateUrl: '/ui/js/directives/configuration/jarvis-widget-configuration.html'
         })
         .state('properties', {
             url: '/properties',
@@ -2647,33 +2635,6 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     }
   }
 }])
-.directive('jarvisTriggers', [ '$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/triggers/jarvis-triggers.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-triggers');
-    }
-  }
-}])
-.directive('jarvisTrigger', [ '$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/triggers/trigger/jarvis-trigger-general.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-trigger');
-    }
-  }
-}])
-.directive('jarvisTriggerCron', [ '$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/triggers/trigger/jarvis-trigger-cron.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-trigger-cron');
-    }
-  }
-}])
 .directive('jarvisViews', [ '$log', '$stateParams', function ($log, $stateParams) {
   return {
     restrict: 'E',
@@ -2689,24 +2650,6 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     templateUrl: '/ui/js/partials/views/view/jarvis-view-general.html',
     link: function(scope, element, attrs) {
     	$log.debug('jarvis-view');
-    }
-  }
-}])
-.directive('jarvisConfigurations', [ '$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/configurations/jarvis-configurations.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-configurations');
-    }
-  }
-}])
-.directive('jarvisConfiguration', [ '$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/configurations/configuration/jarvis-configuration-general.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-configuration');
     }
   }
 }])
@@ -3024,7 +2967,7 @@ angular.module('jarvis.directives.command', ['JarvisApp.services'])
 }])
 .controller('commandCtrl',
 		[ '$scope', '$log', '$stateParams', 'genericResourceService', 'genericScopeService', 'jarvisWidgetCommandService', 'toastService',
-	function($scope, $log, $stateParams, genericResourceService, genericScopeService, jarvisWidgetCommandService, toastService){
+	function($scope, $log, $stateParams, genericResourceService, genericScopeService, jarvisCommandService, toastService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
 	 */
@@ -3032,7 +2975,28 @@ angular.module('jarvis.directives.command', ['JarvisApp.services'])
 			$scope, 
 			'command', 
 			'commands', 
-			jarvisWidgetCommandService.command
+			jarvisCommandService.command
+	);
+	/**
+	 * declare links
+	 */
+	$scope.links = {
+			notifications: {}
+	}
+	/**
+	 * declare action links
+	 */
+	genericScopeService.scope.resourceLink(
+			function() {
+				return $scope.notifications;
+			},
+			$scope.links.notifications,
+			'notification',
+			'notifications',
+			jarvisCommandService.command, 
+			jarvisCommandService.notifications, 
+			{'order':'1'},
+			$stateParams.id
 	);
     /**
      * execute this command
@@ -3086,8 +3050,8 @@ angular.module('jarvis.directives.command', ['JarvisApp.services'])
 	     * init part
 	     */
 		$scope.combo = {
-				visibles: jarvisWidgetCommandService.bool,
-				types: jarvisWidgetCommandService.types
+				visibles: jarvisCommandService.bool,
+				types: jarvisCommandService.types
 		}
 		/**
 		 * input test
@@ -3097,14 +3061,21 @@ angular.module('jarvis.directives.command', ['JarvisApp.services'])
 		 * get current command
 		 */
 		$scope.commands = [];
-    	genericResourceService.scope.entity.get($stateParams.id, function(update) {$scope.command=update}, jarvisWidgetCommandService.command);
+    	genericResourceService.scope.entity.get($stateParams.id, function(update) {$scope.command=update}, jarvisCommandService.command);
 	
+		/**
+		 * get all crontabs
+		 */
+    	$scope.notifications = [];
+    	genericResourceService.scope.collections.findAll('notifications', $stateParams.id, $scope.notifications, jarvisCommandService.notifications);
+
 		$log.info('command-ctrl');
     }
 }])
 .factory('jarvisWidgetCommandService', [ 'genericResourceService', function( genericResourceService) {
 	return {
 	  	command: genericResourceService.crud(['commands']),
+	  	notifications : genericResourceService.links(['commands'], ['notifications']),
 	  	bool: [
            	   {
            		   id: true,
@@ -3178,6 +3149,15 @@ angular.module('jarvis.directives.command', ['JarvisApp.services'])
     }
   }
 }])
+.directive('jarvisCommandNotification', [ '$log', '$stateParams', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/directives/command/partials/jarvis-command-notification.html',
+    link: function(scope, element, attrs) {
+    	$log.debug('jarvis-command-notification');
+    }
+  }
+}])
 .directive('jarvisCommandInput', [ '$log', '$stateParams', function ($log, $stateParams) {
   return {
     restrict: 'E',
@@ -3237,10 +3217,10 @@ angular.module('jarvis.directives.navigator', ['JarvisApp.services'])
 			'$location',
 			'snapshotResourceService',
 			'blockResourceService',
-			'configurationResourceService',
+			'jarvisWidgetConfigurationService',
 			'propertyResourceService',
 			'viewResourceService',
-			'triggerResourceService',
+			'jarvisWidgetTriggerService',
 			'scenarioResourceService',
 			'cronResourceService',
 			'connectorResourceService',
@@ -3532,6 +3512,358 @@ angular.module('jarvis.directives.navigator', ['JarvisApp.services'])
 			     });
 	    	});
 		}
+    }
+  }
+}]);
+/* 
+ * Copyright 2014 Yannick Roffin.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+/* Ctrls */
+
+angular.module('jarvis.directives.configuration', ['JarvisApp.services'])
+.controller('configurationsCtrl', 
+		['$scope', '$log', 'genericScopeService', 'jarvisWidgetConfigurationService',
+	function($scope, $log, genericScopeService, configurationResourceService){
+	/**
+	 * declare generic scope resource (and inject it in scope)
+	 */
+	genericScopeService.scope.resources(
+			function(entities) {
+				$scope.configurations = entities;
+			},
+			function() {
+				return $scope.configurations;
+			},
+			$scope, 
+			'configurations', 
+			configurationResourceService.configuration,
+			{
+    			name: "default",
+    			opacity: "1",
+    			backgroundUrl: "http://artroyalephotography.com/wp-content/uploads/2011/08/minimal-gray-to-white-gradient-wallpapers_33797_1920x1200-1024x640.jpg"
+    		}
+	);
+}])
+.controller('configurationCtrl',
+		['$scope', '$log', '$stateParams', '$mdDialog', 'genericResourceService', 'genericScopeService', 'jarvisWidgetConfigurationService', 'toastService',
+	function($scope, $log, $stateParams, $mdDialog, genericResourceService, genericScopeService, configurationResourceService, toastService){
+	/**
+	 * declare generic scope resource (and inject it in scope)
+	 */
+	genericScopeService.scope.resource(
+			$scope, 
+			'configuration', 
+			'configurations', 
+			configurationResourceService.configuration);
+    /**
+     * load this controller
+     */
+    $scope.load = function() {
+		/**
+		 * get current configuration
+		 */
+    	genericResourceService.scope.entity.get($stateParams.id, function(update) {
+    		$scope.config=update;
+    	}, configurationResourceService.configuration);
+
+    	$log.info('configuration-ctrl', $scope.configurations);
+    }
+}])
+.factory('jarvisWidgetConfigurationService', [ 'genericResourceService', function( genericResourceService) {
+	return {
+	  configuration : genericResourceService.crud(['configurations'])
+	}
+}])
+.directive('jarvisWidgetConfigurations', [ '$log', '$stateParams', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/directives/configuration/jarvis-widget-configurations.html',
+    link: function(scope, element, attrs) {
+    }
+  }
+}])
+.directive('jarvisConfigurations', [ '$log', '$stateParams', function ($log, $stateParams) {
+	  return {
+	    restrict: 'E',
+	    templateUrl: '/ui/js/directives/configuration/partials/jarvis-configurations.html',
+	    link: function(scope, element, attrs) {
+	    	$log.debug('jarvis-configurations');
+	    }
+	  }
+}])
+.directive('jarvisWidgetConfiguration', [ '$log', '$stateParams', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/directives/configuration/jarvis-widget-configuration.html',
+    link: function(scope, element, attrs) {
+    }
+  }
+}])
+.directive('jarvisConfiguration', [ '$log', '$stateParams', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/directives/configuration/partials/jarvis-configuration-general.html',
+    link: function(scope, element, attrs) {
+    	$log.debug('jarvis-configuration');
+    }
+  }
+}]);
+/* 
+ * Copyright 2014 Yannick Roffin.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+/* Ctrls */
+
+angular.module('jarvis.directives.trigger', ['JarvisApp.services'])
+.controller('triggersCtrl', 
+		[ '$scope', '$log', 'genericScopeService', 'jarvisWidgetTriggerService',
+		function($scope, $log, genericScopeService, triggerResourceService){
+	/**
+	 * declare generic scope resource (and inject it in scope)
+	 */
+	genericScopeService.scope.resources(
+			function(entities) {
+				$scope.triggers = entities;
+			},
+			function() {
+				return $scope.triggers;
+			},
+			$scope, 
+			'triggers', 
+			triggerResourceService.trigger,
+			{
+    			name: "trigger name",
+    			icon: "settings_remote"
+    		}
+	);
+}])
+.controller('triggerCtrl',
+		[ '$scope', '$log', '$stateParams', 'genericResourceService', 'genericScopeService', 'genericPickerService', 'jarvisWidgetTriggerService', 'toastService',
+	function($scope, $log, $stateParams, genericResourceService, genericScopeService, genericPickerService, triggerResourceService, toastService){
+	/**
+	 * declare generic scope resource (and inject it in scope)
+	 */
+	genericScopeService.scope.resource(
+			$scope, 
+			'trigger', 
+			'triggers', 
+			triggerResourceService.trigger
+	);
+	/**
+	 * declare links
+	 */
+	$scope.links = {
+			crons: {}
+	}
+	/**
+	 * declare action links
+	 */
+	genericScopeService.scope.resourceLink(
+			function() {
+				return $scope.crons;
+			},
+			$scope.links.crons,
+			'cron',
+			'crons',
+			triggerResourceService.trigger, 
+			triggerResourceService.crons, 
+			{'order':'1'},
+			$stateParams.id
+	);
+    /**
+     * loading
+     */
+    $scope.load = function() {
+		/**
+		 * get current trigger
+		 */
+    	genericResourceService.scope.entity.get($stateParams.id, function(update) {$scope.trigger=update}, triggerResourceService.trigger);
+	
+		/**
+		 * get all crontabs
+		 */
+    	$scope.crons = [];
+    	genericResourceService.scope.collections.findAll('crons', $stateParams.id, $scope.crons, triggerResourceService.crons);
+
+    	$log.info('trigger-ctrl');
+    }
+}])
+.factory('jarvisWidgetTriggerService', [ 'genericResourceService', function( genericResourceService) {
+	return {
+		trigger: genericResourceService.crud(['triggers']),
+		crons : genericResourceService.links(['triggers'], ['crons']),
+	}
+}])
+.directive('jarvisTriggers', [ '$log', '$stateParams', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/directives/trigger/partials/jarvis-triggers.html',
+    link: function(scope, element, attrs) {
+    	$log.debug('jarvis-triggers');
+    }
+  }
+}])
+.directive('jarvisTrigger', [ '$log', '$stateParams', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/directives/trigger/partials/jarvis-trigger-general.html',
+    link: function(scope, element, attrs) {
+    	$log.debug('jarvis-trigger');
+    }
+  }
+}])
+.directive('jarvisTriggerCron', [ '$log', '$stateParams', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/directives/trigger/partials/jarvis-trigger-cron.html',
+    link: function(scope, element, attrs) {
+    	$log.debug('jarvis-trigger-cron');
+    }
+  }
+}]);
+/* 
+ * Copyright 2014 Yannick Roffin.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+/* Ctrls */
+
+angular.module('jarvis.directives.notification', ['JarvisApp.services'])
+.controller('notificationsCtrl', 
+		[ '$scope', '$log', 'genericScopeService', 'jarvisWidgetNotificationService',
+		function($scope, $log, genericScopeService, notificationResourceService){
+	/**
+	 * declare generic scope resource (and inject it in scope)
+	 */
+	genericScopeService.scope.resources(
+			function(entities) {
+				$scope.notifications = entities;
+			},
+			function() {
+				return $scope.notifications;
+			},
+			$scope, 
+			'notifications', 
+			notificationResourceService.notification,
+			{
+    			name: "notification name",
+    			icon: "settings_remote"
+    		}
+	);
+}])
+.controller('notificationCtrl',
+		[ '$scope', '$log', '$stateParams', 'genericResourceService', 'genericScopeService', 'genericPickerService', 'jarvisWidgetNotificationService', 'toastService',
+	function($scope, $log, $stateParams, genericResourceService, genericScopeService, genericPickerService, notificationResourceService, toastService){
+	/**
+	 * declare generic scope resource (and inject it in scope)
+	 */
+	genericScopeService.scope.resource(
+			$scope, 
+			'notification', 
+			'notifications', 
+			notificationResourceService.notification
+	);
+    /**
+     * sending a simple test
+     */
+    $scope.test = function(notification, text, title, subtext) {
+    	notificationResourceService.notification.task(notification.id, 'test', {'text': text, 'title': title, 'subtext': subtext}, function(data) {
+   	    	toastService.info('notification ' + notification.name + '#' + notification.id + ' tested');
+	    }, toastService.failure);
+    }
+    /**
+     * loading
+     */
+    $scope.load = function() {
+		$scope.combo = {
+				types: notificationResourceService.types
+		}
+
+		/**
+		 * get current notification
+		 */
+    	genericResourceService.scope.entity.get($stateParams.id, function(update) {$scope.notification=update}, notificationResourceService.notification);
+    	$log.info('notification-ctrl');
+    }
+}])
+.factory('jarvisWidgetNotificationService', [ 'genericResourceService', function( genericResourceService) {
+	return {
+		notification: genericResourceService.crud(['notifications']),
+	  	types: [
+	           	   {
+	          		   id: 'SLACK',
+	          		   value:'notification.slack'
+	          	   },
+	          	   {
+	          		   id: 'MAIL',
+	          		   value:'notification.mail'
+	          	   }
+	        ]
+	}
+}])
+.directive('jarvisNotifications', [ '$log', '$stateParams', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/directives/notification/partials/jarvis-notifications.html',
+    link: function(scope, element, attrs) {
+    }
+  }
+}])
+.directive('jarvisNotification', [ '$log', '$stateParams', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/directives/notification/partials/jarvis-notification-general.html',
+    link: function(scope, element, attrs) {
+    }
+  }
+}])
+.directive('jarvisNotificationTest', [ '$log', '$stateParams', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/directives/notification/partials/jarvis-notification-test.html',
+    link: function(scope, element, attrs) {
     }
   }
 }]);
@@ -3939,100 +4271,6 @@ angular.module('JarvisApp.ctrl.events', ['JarvisApp.services'])
 	 */
 	$scope.crud = genericResourceService.crud(['events']);
 }]);/* 
- * Copyright 2014 Yannick Roffin.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-'use strict';
-
-/* Ctrls */
-
-angular.module('JarvisApp.ctrl.triggers', ['JarvisApp.services'])
-.controller('triggersCtrl', 
-		[ '$scope', '$log', 'genericScopeService', 'triggerResourceService',
-		function($scope, $log, genericScopeService, triggerResourceService){
-	/**
-	 * declare generic scope resource (and inject it in scope)
-	 */
-	genericScopeService.scope.resources(
-			function(entities) {
-				$scope.triggers = entities;
-			},
-			function() {
-				return $scope.triggers;
-			},
-			$scope, 
-			'triggers', 
-			triggerResourceService.trigger,
-			{
-    			name: "trigger name",
-    			icon: "settings_remote"
-    		}
-	);
-}])
-.controller('triggerCtrl',
-		[ '$scope', '$log', '$stateParams', 'genericResourceService', 'genericScopeService', 'genericPickerService', 'triggerResourceService', 'toastService',
-	function($scope, $log, $stateParams, genericResourceService, genericScopeService, genericPickerService, triggerResourceService, toastService){
-	/**
-	 * declare generic scope resource (and inject it in scope)
-	 */
-	genericScopeService.scope.resource(
-			$scope, 
-			'trigger', 
-			'triggers', 
-			triggerResourceService.trigger
-	);
-	/**
-	 * declare links
-	 */
-	$scope.links = {
-			crons: {}
-	}
-	/**
-	 * declare action links
-	 */
-	genericScopeService.scope.resourceLink(
-			function() {
-				return $scope.crons;
-			},
-			$scope.links.crons,
-			'cron',
-			'crons',
-			triggerResourceService.trigger, 
-			triggerResourceService.crons, 
-			{'order':'1'},
-			$stateParams.id
-	);
-    /**
-     * loading
-     */
-    $scope.load = function() {
-		/**
-		 * get current trigger
-		 */
-    	genericResourceService.scope.entity.get($stateParams.id, function(update) {$scope.trigger=update}, triggerResourceService.trigger);
-	
-		/**
-		 * get all crontabs
-		 */
-    	$scope.crons = [];
-    	genericResourceService.scope.collections.findAll('crons', $stateParams.id, $scope.crons, triggerResourceService.crons);
-
-    	$log.info('trigger-ctrl');
-    }
-}]);
-/* 
  * Copyright 2014 Yannick Roffin.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -4718,75 +4956,6 @@ angular.module('JarvisApp.ctrl.home', ['JarvisApp.services'])
 .controller('helperCtrl', 
 		[ '$scope', '$store', '$log', 'viewResourceService', 'deviceResourceService', 'toastService',
 	function($scope, $store, $log, viewResourceService, deviceResourceService, toastService){
-}]);
-/* 
- * Copyright 2014 Yannick Roffin.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-'use strict';
-
-/* Ctrls */
-
-angular.module('JarvisApp.ctrl.configurations', ['JarvisApp.services'])
-.controller('configurationsCtrl', 
-		['$scope', '$log', 'genericScopeService', 'configurationResourceService',
-	function($scope, $log, genericScopeService, configurationResourceService){
-	/**
-	 * declare generic scope resource (and inject it in scope)
-	 */
-	genericScopeService.scope.resources(
-			function(entities) {
-				$scope.configurations = entities;
-			},
-			function() {
-				return $scope.configurations;
-			},
-			$scope, 
-			'configurations', 
-			configurationResourceService.configuration,
-			{
-    			name: "default",
-    			opacity: "1",
-    			backgroundUrl: "http://artroyalephotography.com/wp-content/uploads/2011/08/minimal-gray-to-white-gradient-wallpapers_33797_1920x1200-1024x640.jpg"
-    		}
-	);
-}])
-.controller('configurationCtrl',
-		['$scope', '$log', '$stateParams', '$mdDialog', 'genericResourceService', 'genericScopeService', 'configurationResourceService', 'toastService',
-	function($scope, $log, $stateParams, $mdDialog, genericResourceService, genericScopeService, configurationResourceService, toastService){
-	/**
-	 * declare generic scope resource (and inject it in scope)
-	 */
-	genericScopeService.scope.resource(
-			$scope, 
-			'configuration', 
-			'configurations', 
-			configurationResourceService.configuration);
-    /**
-     * load this controller
-     */
-    $scope.load = function() {
-		/**
-		 * get current configuration
-		 */
-    	genericResourceService.scope.entity.get($stateParams.id, function(update) {
-    		$scope.config=update;
-    	}, configurationResourceService.configuration);
-
-    	$log.info('configuration-ctrl', $scope.configurations);
-    }
 }]);
 /* 
  * Copyright 2014 Yannick Roffin.
