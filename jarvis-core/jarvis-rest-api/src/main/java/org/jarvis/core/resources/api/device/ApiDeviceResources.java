@@ -180,11 +180,11 @@ public class ApiDeviceResources extends ApiLinkedThirdResources<DeviceRest,Devic
 				ScriptPluginRest script = apiScriptPluginResources.doGetByIdRest(entity.id);
 				if(render) {
 					logger.info("Before render params = {}, context = {}", params, result);
-					result = apiScriptPluginResources.render(script, params);
+					result = apiScriptPluginResources.render(device, mapperFactory.getMapperFacade().map(script, ScriptPluginBean.class), params);
 					logger.info("After render params = {}, context = {}", params, result);
 				} else {
 					logger.info("Before execute params = {}, context = {}", params, result);
-					result = apiScriptPluginResources.execute(script, params);
+					result = apiScriptPluginResources.execute(device, mapperFactory.getMapperFacade().map(script, ScriptPluginBean.class), params);
 					logger.info("After execute params = {}, context = {}", params, result);
 				}
 			}

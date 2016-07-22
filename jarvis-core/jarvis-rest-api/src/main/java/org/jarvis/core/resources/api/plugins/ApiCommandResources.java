@@ -19,9 +19,10 @@ package org.jarvis.core.resources.api.plugins;
 import java.lang.reflect.Field;
 
 import org.jarvis.core.exception.TechnicalException;
+import org.jarvis.core.model.bean.device.DeviceBean;
 import org.jarvis.core.model.bean.plugin.CommandBean;
+import org.jarvis.core.model.bean.plugin.PluginBean;
 import org.jarvis.core.model.bean.tools.NotificationBean;
-import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.model.rest.plugin.CommandRest;
 import org.jarvis.core.model.rest.tools.NotificationRest;
 import org.jarvis.core.resources.api.ApiLinkedResources;
@@ -181,6 +182,18 @@ public class ApiCommandResources extends ApiLinkedResources<CommandRest,CommandB
 	 * @return GenericMap
 	 */
 	public GenericMap execute(CommandBean command, GenericMap args) {
+		return  execute(null, null, command, args);
+	}
+
+	/**
+	 * execute this command
+	 * @param device 
+	 * @param plugin 
+	 * @param command
+	 * @param args
+	 * @return GenericMap
+	 */
+	public GenericMap execute(DeviceBean device, PluginBean plugin, CommandBean command, GenericMap args) {
 		GenericMap result = null;
 		try {
 			logger.info("COMMAND - INPUT {}\n{}", command.type, mapper.writerWithDefaultPrettyPrinter().writeValueAsString(args));
@@ -209,11 +222,25 @@ public class ApiCommandResources extends ApiLinkedResources<CommandRest,CommandB
 		/**
 		 * iterate on each notification
 		 */
-		GenericMap payload = new GenericMap();
-		payload.put("text", "Notification de commande");
+		PayloadBean payload = new PayloadBean();
 		for(NotificationBean notification : apiHrefCommandNotificationResources.findAll(command)) {
-			payload.put("title", command.name);
-			payload.put("subtext", args + "");
+			payload.text = "Notification de commande";
+			if(device != null) {
+				PayloadBeanAttachement e = new PayloadBeanAttachement();
+				e.title = device.name;
+				e.text = device.parameters;
+				payload.attachments.add(e);
+			}
+			if(plugin != null) {
+				PayloadBeanAttachement e = new PayloadBeanAttachement();
+				e.title = plugin.name;
+				e.text = "";
+				payload.attachments.add(e);
+			}
+			PayloadBeanAttachement e = new PayloadBeanAttachement();
+			e.title = command.name;
+			e.text = args + "";
+			payload.attachments.add(e);
 			apiNotificationResources.doNotification(notification, payload);
 		}
 		/**

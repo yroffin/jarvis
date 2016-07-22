@@ -20,6 +20,7 @@ import javax.annotation.PostConstruct;
 
 import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.resources.api.config.ApiPropertyResources;
+import org.jarvis.core.resources.api.plugins.PayloadBean;
 import org.jarvis.core.resources.api.plugins.SlackJerseyClient;
 import org.jarvis.core.services.PluginService;
 import org.jarvis.core.type.GenericMap;
@@ -33,7 +34,7 @@ import org.springframework.stereotype.Component;
  * main daemon
  */
 @Component
-public class PluginSlackService implements PluginService {
+public class PluginSlackService extends PluginService {
 	protected Logger logger = LoggerFactory.getLogger(PluginSlackService.class);
 
 	@Autowired
@@ -64,15 +65,9 @@ public class PluginSlackService implements PluginService {
 	 * @throws TechnicalException 
 	 */
 	@Override
-	public GenericMap asObject(GenericMap notification, GenericMap args) throws TechnicalException {
-		String text = (String) args.get("text");
-		if(text == null) text = "";
-		String title = (String) args.get("title");
-		if(title == null) title = "";
-		String subtext = (String) args.get("subtext");
-		if(subtext == null) subtext = "";
-		slackJerseyClient.call(env.getProperty("jarvis.slack.api",""), text, title, subtext);
-		return args;
+	public GenericMap asObject(GenericMap notification, PayloadBean args) throws TechnicalException {
+		slackJerseyClient.call(env.getProperty("jarvis.slack.api",""), args);
+		return notification;
 	}
 
 	/**

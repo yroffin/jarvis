@@ -7,6 +7,8 @@ import org.jarvis.core.model.bean.tools.NotificationBean;
 import org.jarvis.core.model.rest.tools.NotificationRest;
 import org.jarvis.core.resources.api.ApiResources;
 import org.jarvis.core.resources.api.GenericValue;
+import org.jarvis.core.resources.api.plugins.PayloadBean;
+import org.jarvis.core.resources.api.plugins.PayloadBeanAttachement;
 import org.jarvis.core.services.slack.PluginSlackService;
 import org.jarvis.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
@@ -63,7 +65,7 @@ public class ApiNotificationResources extends ApiResources<NotificationRest,Noti
 	 * @param args
 	 * @return GenericValue
 	 */
-	public GenericValue doNotification(NotificationBean bean, GenericMap args) {
+	public GenericValue doNotification(NotificationBean bean, PayloadBean args) {
 		GenericMap result = null;
 		switch(bean.type) {
 			case SLACK:
@@ -101,13 +103,19 @@ public class ApiNotificationResources extends ApiResources<NotificationRest,Noti
 	}
 
 	/**
-	 * test cron
+	 * test this notification
 	 * @param bean
 	 * @param args 
 	 * @return GenericValue
 	 * @throws InterruptedException 
 	 */
 	private GenericValue doTest(NotificationBean bean, GenericMap args) throws InterruptedException {
-		return doNotification(bean, args);
+		PayloadBean payload = new PayloadBean();
+		payload.text = (String) args.get("text");
+		PayloadBeanAttachement e = new PayloadBeanAttachement();
+		e.title = (String) args.get("title");
+		e.text = (String) args.get("subtext");
+		payload.attachments.add(e);
+		return doNotification(bean, payload);
 	}
 }

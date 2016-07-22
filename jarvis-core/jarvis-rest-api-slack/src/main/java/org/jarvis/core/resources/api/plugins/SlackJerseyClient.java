@@ -36,31 +36,21 @@ public class SlackJerseyClient extends AbstractJerseyClient {
 	/**
 	 * call slack api
 	 * @param uri 
-	 * @param text 
-	 * @param title 
-	 * @param subtext 
+	 * @param payload 
 	 * @return String
 	 */
-	public PayloadBean call(String uri, String text, String title, String subtext) {
+	public PayloadBean call(String uri, PayloadBean payload) {
 		/**
 		 * build response
 		 */
 		javax.ws.rs.core.Response entity;
-		PayloadBean value = new PayloadBean();
-		value.text = text;
-		if(title != null) {
-			value.attachments = new PayloadBeanAttachement[1];
-			value.attachments[0] = new PayloadBeanAttachement();
-			value.attachments[0].title = title;
-			value.attachments[0].text = subtext;
-		}
 		try {
 			entity = this.target()
 			        .path(uri)
 			        .request(MediaType.APPLICATION_JSON)
 			        .accept(MediaType.APPLICATION_JSON)
 			        .acceptEncoding("charset=UTF-8")
-			        .post(Entity.entity(mapper.writeValueAsString(value),MediaType.APPLICATION_JSON));
+			        .post(Entity.entity(mapper.writeValueAsString(payload),MediaType.APPLICATION_JSON));
 		} catch (JsonProcessingException e) {
 			throw new TechnicalException(e);
 		}
@@ -69,7 +59,7 @@ public class SlackJerseyClient extends AbstractJerseyClient {
 		 * verify result
 		 */
 		if(entity.getStatus() == 200) {
-			return value;
+			return payload;
 		} else {
 			throw new TechnicalException(entity.getStatus() + ":/json");
 		}

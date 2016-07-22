@@ -19,7 +19,6 @@ package org.jarvis.core.services.shell;
 import java.io.IOException;
 import java.util.TreeMap;
 
-import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.services.PluginService;
 import org.jarvis.core.type.GenericMap;
 import org.jarvis.runtime.ProcessExec;
@@ -31,7 +30,7 @@ import org.springframework.stereotype.Component;
  * main daemon
  */
 @Component
-public class PluginShellService implements PluginService {
+public class PluginShellService extends PluginService {
 
 	@Autowired
 	Environment env;
@@ -58,17 +57,5 @@ public class PluginShellService implements PluginService {
 	public GenericMap shell(GenericMap command, GenericMap args) throws IOException, InterruptedException {
 		String result = ProcessExec.execute((String) command.get("body"));
 		return (GenericMap) new TreeMap<String,Object>();
-	}
-
-	@Override
-	public boolean asBoolean(GenericMap extractCommand, GenericMap args) throws TechnicalException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public GenericMap asObject(GenericMap command, GenericMap args) throws TechnicalException {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

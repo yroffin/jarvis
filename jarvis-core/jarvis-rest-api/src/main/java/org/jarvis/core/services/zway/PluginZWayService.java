@@ -34,7 +34,7 @@ import org.springframework.stereotype.Component;
  * main daemon
  */
 @Component
-public class PluginZWayService implements PluginService {
+public class PluginZWayService extends PluginService {
 	protected Logger logger = LoggerFactory.getLogger(PluginZWayService.class);
 
 	@Autowired

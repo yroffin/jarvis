@@ -21,6 +21,7 @@ import java.util.Map.Entry;
 
 import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.exception.TechnicalNotFoundException;
+import org.jarvis.core.model.bean.device.DeviceBean;
 import org.jarvis.core.model.bean.plugin.CommandBean;
 import org.jarvis.core.model.bean.plugin.ScriptPluginBean;
 import org.jarvis.core.model.rest.GenericEntity;
@@ -78,7 +79,7 @@ public class ApiScriptPluginResources extends ApiLinkedResources<ScriptPluginRes
 		switch(taskType) {
 			case RENDER:
 				try {
-					result = renderOrExecute(bean, args, new GenericMap(), true);
+					result = renderOrExecute(null, bean, args, new GenericMap(), true);
 				} catch (TechnicalNotFoundException e) {
 					logger.error("Error {}", e);
 					throw new TechnicalException(e);
@@ -86,7 +87,7 @@ public class ApiScriptPluginResources extends ApiLinkedResources<ScriptPluginRes
 				break;
 			case EXECUTE:
 				try {
-					result = renderOrExecute(bean, args, new GenericMap(), false);
+					result = renderOrExecute(null, bean, args, new GenericMap(), false);
 				} catch (TechnicalNotFoundException e) {
 					logger.error("Error {}", e);
 					throw new TechnicalException(e);
@@ -100,7 +101,8 @@ public class ApiScriptPluginResources extends ApiLinkedResources<ScriptPluginRes
 
 	/**
 	 * render all data command of this script as a pipeline
-	 * @param script
+	 * @param device 
+	 * @param plugin
 	 * 		the script to render
 	 * @param args
 	 * 		arguments for this script
@@ -109,13 +111,14 @@ public class ApiScriptPluginResources extends ApiLinkedResources<ScriptPluginRes
 	 * @throws TechnicalNotFoundException
 	 * 		if not found 
 	 */
-	public GenericMap render(ScriptPluginRest script, GenericMap args) throws TechnicalNotFoundException {
-		return renderOrExecute(mapperFactory.getMapperFacade().map(script, ScriptPluginBean.class), args, new GenericMap(), true);
+	public GenericMap render(DeviceBean device, ScriptPluginBean plugin, GenericMap args) throws TechnicalNotFoundException {
+		return renderOrExecute(device, plugin, args, new GenericMap(), true);
 	}
 
 	/**
 	 * execute all action command of this script as a pipeline
-	 * @param script
+	 * @param device 
+	 * @param plugin
 	 * 		the script to render
 	 * @param args
 	 * 		arguments for this script
@@ -124,8 +127,8 @@ public class ApiScriptPluginResources extends ApiLinkedResources<ScriptPluginRes
 	 * @throws TechnicalNotFoundException
 	 * 		if not found 
 	 */
-	public GenericMap execute(ScriptPluginRest script, GenericMap args) throws TechnicalNotFoundException {
-		return renderOrExecute(mapperFactory.getMapperFacade().map(script, ScriptPluginBean.class), args, new GenericMap(), false);
+	public GenericMap execute(DeviceBean device, ScriptPluginBean plugin, GenericMap args) throws TechnicalNotFoundException {
+		return renderOrExecute(device, plugin, args, new GenericMap(), false);
 	}
 
 	/**
@@ -136,10 +139,10 @@ public class ApiScriptPluginResources extends ApiLinkedResources<ScriptPluginRes
 	 * @return GenericMap
 	 * @throws TechnicalNotFoundException 
 	 */
-	private GenericMap renderOrExecute(ScriptPluginBean script, GenericMap args, GenericMap output, boolean render) throws TechnicalNotFoundException {
+	private GenericMap renderOrExecute(DeviceBean device, ScriptPluginBean plugin, GenericMap args, GenericMap output, boolean render) throws TechnicalNotFoundException {
 		GenericMap result = args;
 		int index = 0;
-		for(GenericEntity entity : sort(apiHrefPluginCommandResources.findAll(script), "order")) {
+		for(GenericEntity entity : sort(apiHrefPluginCommandResources.findAll(plugin), "order")) {
 			/**
 			 * ignore data in phase action
 			 */
@@ -174,7 +177,7 @@ public class ApiScriptPluginResources extends ApiLinkedResources<ScriptPluginRes
 			 */
 			CommandRest command = apiCommandResources.doGetByIdRest(entity.id);
 			logger.info("Before render params = {}, context = {}", command, result);
-			result = apiCommandResources.execute(mapperFactory.getMapperFacade().map(command, CommandBean.class), result);
+			result = apiCommandResources.execute(device, plugin, mapperFactory.getMapperFacade().map(command, CommandBean.class), result);
 			logger.info("After render params = {}, context = {}", command, result);
 
 			/**

@@ -41,7 +41,7 @@ import groovy.lang.GroovyShell;
  * main daemon
  */
 @Component
-public class PluginGroovyService implements PluginService {
+public class PluginGroovyService extends PluginService {
 	protected Logger logger = LoggerFactory.getLogger(PluginGroovyService.class);
 
 	@Autowired
