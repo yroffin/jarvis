@@ -29,6 +29,13 @@ Technology
 - Neo4j for database (graphdb)
 - Elastic Search to store data (event, ...)
 
+
+NFC-RC522
+---------
+
+Usefull article for RASPBERRY PI 3 rev 1.2
+- https://www.raspberrypi.org/forums/viewtopic.php?f=37&t=147291
+
 Security
 --------
 
