@@ -1,8 +1,7 @@
 package main
 
 import (
-    // log "github.com/YoungPioneers/blog4go"
-    "org/jarvis/routes"
+	"org/jarvis/routes"
 )
 
 /**

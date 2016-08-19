@@ -1,7 +1,7 @@
 package routes
 
-import "net/http"
-import "org/jarvis/routes/devices"
+import devices "org/jarvis/routes/devices"
+import http "net/http"
 
 type MyRoutesHandler struct{}
 
@@ -13,6 +13,6 @@ func (mh MyRoutesHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
  */
 func Init(base string) {
 	mx := http.NewServeMux()
-	mx.Handle(base + "/test", devices.Get(http.Handler(&MyRoutesHandler{})))
+	mx.Handle(base+"/test", devices.Get(http.Handler(&MyRoutesHandler{})))
 	http.ListenAndServe(":8080", mx)
 }
