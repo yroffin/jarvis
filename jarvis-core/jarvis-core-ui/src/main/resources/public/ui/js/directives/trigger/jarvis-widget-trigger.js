@@ -75,6 +75,14 @@ angular.module('jarvis.directives.trigger', ['JarvisApp.services'])
 			$stateParams.id
 	);
     /**
+     * execute this trigger
+     */
+    $scope.execute = function(trigger) {
+    	triggerResourceService.trigger.task(trigger.id, 'execute',  {}, function(data) {
+   	    	toastService.info('trigger ' + trigger.name + '#' + trigger.id + ' executed');
+	    }, toastService.failure);
+    }
+    /**
      * loading
      */
     $scope.load = function() {

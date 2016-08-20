@@ -17,6 +17,7 @@
 package org.jarvis.core.resources.api.device;
 
 import org.jarvis.core.exception.TechnicalException;
+import org.jarvis.core.model.bean.device.EventBean;
 import org.jarvis.core.model.bean.scenario.TriggerBean;
 import org.jarvis.core.model.bean.tools.CronBean;
 import org.jarvis.core.model.rest.scenario.TriggerRest;
@@ -25,10 +26,13 @@ import org.jarvis.core.resources.api.ApiLinkedResources;
 import org.jarvis.core.resources.api.GenericValue;
 import org.jarvis.core.resources.api.href.ApiHrefTriggerCronResources;
 import org.jarvis.core.resources.api.tools.ApiCronResources;
+import org.jarvis.core.services.CoreEventDaemon;
 import org.jarvis.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 /**
  * Trigger resource
@@ -41,6 +45,9 @@ public class ApiTriggerResources extends ApiLinkedResources<TriggerRest,TriggerB
 	
 	@Autowired
 	ApiHrefTriggerCronResources apiHrefTriggerCronResources;
+
+	@Autowired
+	CoreEventDaemon coreEventDaemon;
 
 	/**
 	 * constructor
@@ -64,6 +71,36 @@ public class ApiTriggerResources extends ApiLinkedResources<TriggerRest,TriggerB
 
 	@Override
 	public GenericValue doRealTask(TriggerBean trigger, GenericMap args, TaskType taskType) throws TechnicalException {
-		return null;
+		GenericMap result = args;
+		switch(taskType) {
+			case EXECUTE:
+				try {
+					return new GenericValue(mapper.writeValueAsString(execute(trigger, result)));
+				} catch (JsonProcessingException e) {
+					logger.error("Error {}", e);
+					throw new TechnicalException(e);
+				}
+			default:
+				result = new GenericMap();
+		}
+		return new GenericValue(result);
+	}
+
+	/**
+	 * execute this trigger
+	 * @param trigger
+	 * @param args
+	 * @return
+	 */
+	private GenericMap execute(TriggerBean trigger, GenericMap args) {
+		EventBean event = new EventBean();
+		event.text = trigger.name;
+		event.trigger = trigger.id;
+		try {
+			coreEventDaemon.post(event);
+		} catch (InterruptedException e) {
+			logger.warn("Error {}", e);
+		}
+		return args;
 	}
 }

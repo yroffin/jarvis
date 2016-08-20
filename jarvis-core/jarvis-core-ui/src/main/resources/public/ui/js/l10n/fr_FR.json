@@ -78,6 +78,7 @@
     "pick.elt.owner"	: "Séléctionner un propriétaire",
     "pick.elt.crontab"	: "Séléctionner une crontab",
     "trigger.status"	: "Action",
+    "trigger.execute"	: "Executer",
     "plugin.display"	: "Simuler la phase de rendu",
     "plugin.input"		: "Donnée de test (argument du plugin sous forme JSON)",
     "plugin.inputa"		: "Entrée",
