@@ -135,6 +135,7 @@
 				<jsSourceFile>directives/configuration/jarvis-widget-configuration.js</jsSourceFile>
 				<jsSourceFile>directives/trigger/jarvis-widget-trigger.js</jsSourceFile>
 				<jsSourceFile>directives/notification/jarvis-widget-notification.js</jsSourceFile>
+				<jsSourceFile>directives/connector/jarvis-widget-connector.js</jsSourceFile>
 				<!-- Controllers -->
 				<jsSourceFile>ctrl/blocks.js</jsSourceFile>
 				<jsSourceFile>ctrl/devices.js</jsSourceFile>
