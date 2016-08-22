@@ -152,12 +152,12 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
         .state('connectors', {
             url: '/connectors',
             controller: 'connectorsCtrl',
-            templateUrl: '/ui/js/partials/connectors/page.html'
+            template: '<jarvis-widget-connectors></jarvis-widget-connectors>'
         })
         .state('connectors-by-id', {
             url: '/connectors/:id',
             controller: 'connectorCtrl',
-            templateUrl: '/ui/js/partials/connectors/connector/page.html'
+            template: '<jarvis-widget-connector></jarvis-widget-connector>'
         })
         .state('snapshots', {
             url: '/snapshots',

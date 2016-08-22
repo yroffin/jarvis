@@ -190,6 +190,37 @@ public class Neo4jService<S extends GenericBean> {
 	}
 
 	/**
+	 * find all node by attribute value
+	 * @param klass
+	 * @param field 
+	 * @param value 
+	 * @return List<T>
+	 */
+	public List<S> findByAttribute(Class<S> klass, String field, String value) {
+		String classname = klass.getSimpleName();
+		List<S> resultset = new ArrayList<S>();
+		/**
+		 * cypher query
+		 */
+		try (Transaction ignored = apiNeo4Service.beginTx();
+				Entities result = apiNeo4Service.matchIdWithEntity("MATCH (node:"+classname+") WHERE node."+field+" = '"+value+"' RETURN id(node), node", "node", null, true)) {
+			while (result.hasNext()) {
+				resultset.add(instance(klass, result.next(), "node"));
+			}
+		} catch (InstantiationException e) {
+			logger.error("Exception", e);
+			throw new TechnicalException(e);
+		} catch (IllegalAccessException e) {
+			logger.error("Exception", e);
+			throw new TechnicalException(e);
+		} catch (Exception e) {
+			logger.error("Exception", e);
+			throw new TechnicalException(e);
+		}
+		return resultset;
+	}
+
+	/**
 	 * get by id
 	 * @param klass
 	 * @param id

@@ -98,6 +98,23 @@ public class CoreEventDaemon {
 	}
 	
 	/**
+	 * @param id 
+	 * @param name 
+	 * @throws InterruptedException 
+	 */
+	public void post(String id, String name) throws InterruptedException {
+		EventBean event = new EventBean();
+		event.text = name;
+		event.trigger = id;
+		try {
+			post(event);
+		} catch (InterruptedException e) {
+			logger.warn("Error {}", e);
+			throw e;
+		}
+	}
+
+	/**
 	 * @param event
 	 * @throws InterruptedException 
 	 */

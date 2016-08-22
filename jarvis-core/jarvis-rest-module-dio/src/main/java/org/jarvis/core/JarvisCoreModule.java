@@ -17,6 +17,7 @@ package org.jarvis.core;
 
 import org.jarvis.core.module.JarvisDioEngine;
 import org.jarvis.core.services.CoreRestDaemon;
+import org.jarvis.core.services.ModuleThreadPoolTaskScheduler;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
@@ -33,15 +34,12 @@ import org.springframework.context.annotation.FilterType;
 	    useDefaultFilters = false,
 	    includeFilters = {
 	        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = JarvisDioEngine.class),
+	        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = ModuleThreadPoolTaskScheduler.class),
 	        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = CoreRestDaemon.class)
 })
 public class JarvisCoreModule {
 	protected static String normalizedPath = JarvisStatic.normalizedPath;
 
-	private JarvisCoreModule() {
-		
-	}
-	
 	/**
 	 * main entry
 	 * 

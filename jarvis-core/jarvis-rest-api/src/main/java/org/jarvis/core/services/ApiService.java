@@ -50,6 +50,16 @@ public class ApiService<S extends GenericBean> extends Neo4jService<S> {
 	}
 	
 	/**
+	 * find all by attribute
+	 * @param field 
+	 * @param value 
+	 * @return List<Bean>
+	 */
+	public List<S> findByAttribute(String field, String value) {
+		return super.findByAttribute(beanClass, field, value);
+	}
+
+	/**
 	 * find all
 	 * @return List<Bean>
 	 */

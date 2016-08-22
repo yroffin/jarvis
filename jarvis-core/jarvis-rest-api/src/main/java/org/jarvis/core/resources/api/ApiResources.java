@@ -39,7 +39,6 @@ import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.GenericBean;
 import org.jarvis.core.model.rest.GenericEntity;
-import org.jarvis.core.resources.api.mapper.ApiMapper;
 import org.jarvis.core.services.ApiService;
 import org.jarvis.core.services.CoreStatistics;
 import org.jarvis.core.services.neo4j.ApiNeo4Service;
@@ -65,7 +64,7 @@ import spark.utils.IOUtils;
  * @param <T>
  * @param <S>
  */
-public abstract class ApiResources<T extends GenericEntity,S extends GenericBean> extends ApiMapper {
+public abstract class ApiResources<T extends GenericEntity,S extends GenericBean> extends ApiGenericResources {
 	protected Logger logger = LoggerFactory.getLogger(ApiResources.class);
 
 	private List<ResourcePreListener<T>> preListeners = new ArrayList<>();
@@ -270,6 +269,34 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 
 	/**
 	 * find all elements
+	 * @param field 
+	 * @param value 
+	 * @return List<Rest>
+	 */
+	public List<T> doFindByAttributeRest(String field, String value) {
+		List<T> result = new ArrayList<>();
+		for(S item : apiService.findByAttribute(field, value)) {
+			result.add(mapperFactory.getMapperFacade().map(item, restClass));
+		}
+		return result;
+	}
+
+	/**
+	 * find all elements
+	 * @param field 
+	 * @param value 
+	 * @return List<Rest>
+	 */
+	public List<S> doFindByAttributeBean(String field, String value) {
+		List<S> result = new ArrayList<>();
+		for(S item : apiService.findByAttribute(field, value)) {
+			result.add(item);
+		}
+		return result;
+	}
+
+	/**
+	 * find all elements
 	 * @return List<Rest>
 	 */
 	public List<S> doFindAllBean() {
@@ -312,6 +339,15 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	}
 	
 	/**
+	 * create new entity
+	 * @param b 
+	 * @return Rest
+	 */
+	public S doCreate(S b) {
+		return apiService.create(b);
+	}
+	
+	/**
 	 * delete by id
 	 * @param id
 	 * @return Rest
@@ -334,6 +370,17 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 		return mapperFactory.getMapperFacade().map(
 				apiService.update(id, mapperFactory.getMapperFacade().map(r, beanClass)), 
 				restClass);
+	}
+
+	/**
+	 * update entity
+	 * @param id
+	 * @param s 
+	 * @return Rest
+	 * @throws TechnicalNotFoundException 
+	 */
+	public S doUpdate(String id, S s) throws TechnicalNotFoundException {
+		return apiService.update(id, s);
 	}
 
 	/**
@@ -486,6 +533,19 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	public abstract GenericValue doRealTask(S bean, GenericMap args, TaskType taskType);
 
 	/**
+	 * execute real task on all resources, all task must be overridden in each
+	 * resources
+	 * 
+	 * @param args
+	 * @param taskType
+	 * @return String
+	 * @throws TechnicalException 
+	 */
+	public GenericValue doRealTask(GenericMap args, TaskType taskType) {
+		return null;
+	}
+
+	/**
 	 * create entity
 	 * @param request
 	 * @param id 
@@ -504,6 +564,10 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
     	} else {
 	    	if(request.contentType() == null || !request.contentType().contains("application/json")) {
 	    		response.status(403);
+	    		return "";
+	    	}
+	    	if(request.queryParams(task) == null) {
+	    		response.status(405);
 	    		return "";
 	    	}
 	    	try {
@@ -578,26 +642,36 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 		if(!id.equals("*")) {
 			bean = apiService.getById(id);
 			try {
-				logger.info("SCRIPT - CONTEXT {}\n{}", beanClass.getName(), mapper.writerWithDefaultPrettyPrinter().writeValueAsString(bean));
+				logger.info("TASK - CONTEXT {}\n{}", beanClass.getName(), mapper.writerWithDefaultPrettyPrinter().writeValueAsString(bean));
 			} catch (JsonProcessingException e) {
 				throw new TechnicalException(e);
 			}
 		} else {
-			logger.info("SCRIPT - CONTEXT {}", "*");
+			logger.info("TASK - CONTEXT {}", "*");
 		}
 		try {
-			logger.info("SCRIPT - INPUT\n{}", mapper.writerWithDefaultPrettyPrinter().writeValueAsString(body));
+			logger.info("TASK - INPUT\n{}", mapper.writerWithDefaultPrettyPrinter().writeValueAsString(body));
 		} catch (JsonProcessingException e) {
 			throw new TechnicalException(e);
 		}
 		GenericValue result = null;
 		try {
-			result = doRealTask(bean, body, taskType);
+			if(bean == null) {
+				/**
+				 * no bean apply on all resources
+				 */
+				result = doRealTask(body, taskType);
+			} else {
+				/**
+				 * task on single resource
+				 */
+				result = doRealTask(bean, body, taskType);
+			}
 		} catch (Exception e) {
-			logger.error("SCRIPT - ERROR\n", e);
+			logger.error("TASK - ERROR\n", e);
 			throw new TechnicalException(e);
 		}
-		logger.info("SCRIPT - OUTPUT\n{}", result);
+		logger.info("TASK - OUTPUT\n{}", result);
 		switch(result.getType()) {
 			case OBJECT:
 				/**

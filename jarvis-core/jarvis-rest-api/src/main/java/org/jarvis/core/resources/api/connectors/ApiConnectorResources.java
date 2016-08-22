@@ -17,6 +17,7 @@
 package org.jarvis.core.resources.api.connectors;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -62,6 +63,82 @@ public class ApiConnectorResources extends ApiResources<ConnectorRest,ConnectorB
 	}
 
 	@Override
+	public GenericValue doRealTask(GenericMap args, TaskType taskType) throws TechnicalException {
+		GenericMap result;
+		switch(taskType) {
+			case REGISTER:
+				result = register(args);
+				break;
+			default:
+				result = new GenericMap();
+		}
+		return new GenericValue(result);
+	}
+
+	/**
+	 * connectors registration is based on its name
+	 * if exist update it, else create it
+	 * @param args
+	 * @return
+	 */
+	private GenericMap register(GenericMap args) {
+		/**
+		 * name is not mandatory
+		 */
+		String value = (String) args.get("name");
+		if(value == null) {
+			throw new TechnicalException("No name");
+		}
+		/**
+		 * iterate on elements
+		 */
+		List<ConnectorBean> beans = doFindByAttributeBean("name", (String) args.get("name"));
+		ConnectorBean bean = new ConnectorBean();
+		if(beans.size() > 0) {
+			/**
+			 * found
+			 */
+			bean.name = (String) copy(args.get("name"), beans.get(0).name);
+			bean.adress = (String) copy(args.get("adress"), beans.get(0).adress);
+			bean.icon = (String) copy(args.get("icon"), beans.get(0).icon);
+			bean.canAnswer = (boolean) copy(args.get("canAnswer"), beans.get(0).canAnswer);
+			bean.isRenderer = (boolean) copy(args.get("isRenderer"), beans.get(0).isRenderer);
+			bean.isSensor = (boolean) copy(args.get("isSensor"), beans.get(0).isSensor);
+			try {
+				doUpdate(beans.get(0).id, bean);
+			} catch (TechnicalNotFoundException e) {
+				logger.warn("No such entity {}", beans.get(0));
+			}
+		} else {
+			/**
+			 * not found
+			 */
+			bean.name = (String) copy(args.get("name"), "default");
+			bean.adress = (String) copy(args.get("adress"), "http://localhost:80");
+			bean.icon = (String) copy(args.get("icon"), "settings_input_antenna");
+			bean.canAnswer = (boolean) copy(args.get("canAnswer"), false);
+			bean.isRenderer = (boolean) copy(args.get("isRenderer"), false);
+			bean.isSensor = (boolean) copy(args.get("isSensor"), false);
+			doCreate(bean);
+		}
+		return args;
+	}
+
+	/**
+	 * copy value
+	 * @param value
+	 * @param defaut
+	 * @return
+	 */
+	private Object copy(Object value, Object defaut) {
+		if(value != null) {
+			return value;
+		} else {
+			return defaut;
+		}
+	}
+
+	@Override
 	public GenericValue doRealTask(ConnectorBean bean, GenericMap args, TaskType taskType) throws TechnicalException {
 		GenericMap result;
 		switch(taskType) {
@@ -84,6 +161,7 @@ public class ApiConnectorResources extends ApiResources<ConnectorRest,ConnectorB
 		 * build call
 		 */
 		Response entity = client.target(bean.adress)
+		        .path("/api/config")
 	            .request(MediaType.APPLICATION_JSON)
 	            .accept(MediaType.APPLICATION_JSON)
 	            .acceptEncoding("charset=UTF-8")

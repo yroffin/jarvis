@@ -69,6 +69,7 @@ limitations under the License.
         <md-button ng-click="location('left', '/helper-system');"><div layout="row"><i class="help-icons">settings_remote</i><span flex></span><span>System</span></div></md-button>
         <md-button ng-click="location('left', '/snapshots');"><div layout="row"><i class="help-icons">save</i><span flex></span><span>Snapshot(s)</span></div></md-button>
         <md-button ng-click="location('left', '/crons');"><div layout="row"><i class="help-icons">av_timer</i><span flex></span><span>Crontab(s)</span></div></md-button>
+        <md-button ng-click="location('left', '/connectors');"><div layout="row"><i class="help-icons">widgets</i><span flex></span><span>Connecteur(s)</span></div></md-button>
         <md-button ng-click="location('left', '/configurations');"><div layout="row"><i class="help-icons">widgets</i><span flex></span><span>Configuration(s)</span></div></md-button>
         <md-button ng-click="location('left', '/properties');"><div layout="row"><i class="help-icons">widgets</i><span flex></span><span>Propriété(s)</span></div></md-button>
     </md-sidenav>
@@ -97,7 +98,6 @@ limitations under the License.
 <script src="js/services/snapshot.js"></script>
 <script src="js/services/cron.js"></script>
 <script src="js/services/device.js"></script>
-<script src="js/services/connector.js"></script>
 <script src="js/services/event.js"></script>
 <script src="js/services/scenario.js"></script>
 <script src="js/services/block.js"></script>
@@ -115,12 +115,12 @@ limitations under the License.
 <script src="js/directives/configuration/jarvis-widget-configuration.js"></script>
 <script src="js/directives/trigger/jarvis-widget-trigger.js"></script>
 <script src="js/directives/notification/jarvis-widget-notification.js"></script>
+<script src="js/directives/connector/jarvis-widget-connector.js"></script>
 <!-- Controllers -->
 <script src="js/ctrl/devices.js"></script>
 <script src="js/ctrl/events.js"></script>
 <script src="js/ctrl/plugins.js"></script>
 <script src="js/ctrl/views.js"></script>
-<script src="js/ctrl/connectors.js"></script>
 <script src="js/ctrl/snapshots.js"></script>
 <script src="js/ctrl/crons.js"></script>
 <script src="js/ctrl/home.js"></script>

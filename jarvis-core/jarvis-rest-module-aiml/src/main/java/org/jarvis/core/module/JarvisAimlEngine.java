@@ -38,6 +38,7 @@ import org.jarvis.rest.services.impl.JarvisModuleException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 /**
@@ -47,6 +48,9 @@ import org.springframework.stereotype.Component;
 public class JarvisAimlEngine extends JarvisConnectorImpl implements JarvisConnector {
 
 	protected Logger logger = LoggerFactory.getLogger(JarvisAimlEngine.class);
+
+	@Autowired
+	Environment env;
 
 	@Autowired
 	CoreRestDaemon daemon;
@@ -64,6 +68,8 @@ public class JarvisAimlEngine extends JarvisConnectorImpl implements JarvisConne
 	 */
 	@PostConstruct
 	public void init() throws AimlParsingError, IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		super.init(env);
+
 		renderer = true;
 		sensor = true;
 		canAnswer = true;

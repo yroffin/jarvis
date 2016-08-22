@@ -31,6 +31,7 @@ import org.jarvis.rest.services.impl.JarvisModuleException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import marytts.LocalMaryInterface;
@@ -46,6 +47,9 @@ import marytts.util.data.audio.AudioPlayer;
 public class JarvisVoiceEngine extends JarvisConnectorImpl implements JarvisConnector {
 
 	@Autowired
+	Environment env;
+
+	@Autowired
 	CoreRestDaemon daemon;
 
 	protected Logger logger = LoggerFactory.getLogger(JarvisVoiceEngine.class);
@@ -57,6 +61,8 @@ public class JarvisVoiceEngine extends JarvisConnectorImpl implements JarvisConn
 	 */
 	@PostConstruct
 	public void init() {
+		super.init(env);
+
 		renderer = true;
 		sensor = true;
 		canAnswer = true;

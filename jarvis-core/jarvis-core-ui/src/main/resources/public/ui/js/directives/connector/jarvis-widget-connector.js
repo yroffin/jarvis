@@ -18,9 +18,9 @@
 
 /* Ctrls */
 
-angular.module('JarvisApp.ctrl.connectors', ['JarvisApp.services'])
+angular.module('jarvis.directives.connector', ['JarvisApp.services'])
 .controller('connectorsCtrl', 
-		['$scope', '$log', 'genericScopeService', 'connectorResourceService',
+		['$scope', '$log', 'genericScopeService', 'jarvisWidgetConnectorService',
 	function($scope, $log, genericScopeService, connectorResourceService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
@@ -45,7 +45,7 @@ angular.module('JarvisApp.ctrl.connectors', ['JarvisApp.services'])
 	);
 }])
 .controller('connectorCtrl',
-		['$scope', '$log', '$stateParams', '$mdDialog', 'genericResourceService', 'genericScopeService', 'connectorResourceService', 'toastService',
+		['$scope', '$log', '$stateParams', '$mdDialog', 'genericResourceService', 'genericScopeService', 'jarvisWidgetConnectorService', 'toastService',
 	function($scope, $log, $stateParams, $mdDialog, genericResourceService, genericScopeService, connectorResourceService, toastService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
@@ -64,7 +64,7 @@ angular.module('JarvisApp.ctrl.connectors', ['JarvisApp.services'])
     		 * check data for ping result
     		 */
     		$scope.status = angular.toJson(data, true);
-    	});
+    	}, toastService.failure);
     }
     /**
      * load this controller
@@ -79,4 +79,47 @@ angular.module('JarvisApp.ctrl.connectors', ['JarvisApp.services'])
 
     	$log.info('connector-ctrl', $scope.connectors);
     }
+}])
+.factory('jarvisWidgetConnectorService', [ 'genericResourceService', function( genericResourceService) {
+	return {
+		connector: genericResourceService.crud(['connectors'])
+	}
+}])
+/**
+ * commands
+ */
+.directive('jarvisWidgetConnectors', [ '$log', '$stateParams', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/directives/connector/jarvis-widget-connectors.html',
+    link: function(scope, element, attrs) {
+    }
+  }
+}])
+.directive('jarvisConnectors', [ '$log', '$stateParams', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/directives/connector/partials/jarvis-connectors.html',
+    link: function(scope, element, attrs) {
+    }
+  }
+}])
+/**
+ * command
+ */
+.directive('jarvisWidgetConnector', [ '$log', '$stateParams', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/directives/connector/jarvis-widget-connector.html',
+    link: function(scope, element, attrs) {
+    }
+  }
+}])
+.directive('jarvisConnectorGeneral', [ '$log', '$stateParams', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/directives/connector/partials/jarvis-connector-general.html',
+    link: function(scope, element, attrs) {
+    }
+  }
 }]);

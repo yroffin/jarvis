@@ -30,6 +30,7 @@ import org.jarvis.runtime.ProcessExec;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 /**
@@ -37,6 +38,9 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class JarvisExecEngine extends JarvisConnectorImpl implements JarvisConnector {
+
+	@Autowired
+	Environment env;
 
 	@Autowired
 	CoreRestDaemon daemon;
@@ -48,6 +52,8 @@ public class JarvisExecEngine extends JarvisConnectorImpl implements JarvisConne
 	 */
 	@PostConstruct
 	public void init() {
+		super.init(env);
+
 		renderer = true;
 		sensor = true;
 		canAnswer = true;

@@ -30,6 +30,7 @@ import org.jarvis.rest.services.impl.JarvisModuleException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 /**
@@ -37,6 +38,9 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class JarvisDioEngine extends JarvisConnectorImpl implements JarvisConnector {
+
+	@Autowired
+	Environment env;
 
 	@Autowired
 	CoreRestDaemon daemon;
@@ -49,6 +53,14 @@ public class JarvisDioEngine extends JarvisConnectorImpl implements JarvisConnec
 	 */
 	@PostConstruct
 	public void init() {
+		/**
+		 * init default value
+		 */
+		super.init(env);
+		
+		/**
+		 * is a renderer
+		 */
 		renderer = true;
 		
 		/**
@@ -56,6 +68,11 @@ public class JarvisDioEngine extends JarvisConnectorImpl implements JarvisConnec
 		 */
 		dioHelper = new DioHelper();
 		
+		/**
+		 * notify
+		 */
+		daemon.notify(this);
+
 		/**
 		 * register api
 		 */

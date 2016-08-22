@@ -17,7 +17,6 @@
 package org.jarvis.core.resources.api.device;
 
 import org.jarvis.core.exception.TechnicalException;
-import org.jarvis.core.model.bean.device.EventBean;
 import org.jarvis.core.model.bean.scenario.TriggerBean;
 import org.jarvis.core.model.bean.tools.CronBean;
 import org.jarvis.core.model.rest.scenario.TriggerRest;
@@ -93,13 +92,11 @@ public class ApiTriggerResources extends ApiLinkedResources<TriggerRest,TriggerB
 	 * @return
 	 */
 	private GenericMap execute(TriggerBean trigger, GenericMap args) {
-		EventBean event = new EventBean();
-		event.text = trigger.name;
-		event.trigger = trigger.id;
 		try {
-			coreEventDaemon.post(event);
+			coreEventDaemon.post(trigger.id, trigger.name);
 		} catch (InterruptedException e) {
 			logger.warn("Error {}", e);
+			Thread.currentThread().interrupt();
 		}
 		return args;
 	}

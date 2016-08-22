@@ -5,7 +5,6 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ScheduledFuture;
 
 import org.jarvis.core.exception.TechnicalException;
-import org.jarvis.core.model.bean.device.EventBean;
 import org.jarvis.core.model.bean.scenario.TriggerBean;
 import org.jarvis.core.model.bean.tools.CronBean;
 import org.jarvis.core.model.rest.GenericEntity;
@@ -298,10 +297,7 @@ public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 		for(TriggerBean trigger : apiTriggerResources.doFindAllBean()) {
 			for(GenericEntity cron : apiHrefTriggerCronResources.findAll(trigger)) {
 				if(cron.id.equals(bean.id)) {
-					EventBean event = new EventBean();
-					event.text = bean.name;
-					event.trigger = trigger.id;
-					coreEventDaemon.post(event);
+					coreEventDaemon.post(trigger.id, bean.name);
 				}
 			}
 		}

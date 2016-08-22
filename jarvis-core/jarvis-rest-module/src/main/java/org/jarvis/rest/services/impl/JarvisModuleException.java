@@ -18,13 +18,22 @@ package org.jarvis.rest.services.impl;
 
 import java.io.IOException;
 
+/**
+ * module exception
+ */
 @SuppressWarnings("serial")
 public class JarvisModuleException extends Exception {
 
+	/**
+	 * @param e
+	 */
 	public JarvisModuleException(IOException e) {
 		super(e);
 	}
 
+	/**
+	 * @param e
+	 */
 	public JarvisModuleException(Exception e) {
 		super(e);
 	}
