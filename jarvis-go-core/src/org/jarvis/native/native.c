@@ -18,8 +18,6 @@ typedef char* string;
 #define true 1
 #define false 0
 
-int setuid(int uid);
-
 int pin;
 bool bit2[26] = { };              // 26 bit Identifiant emetteur
 bool bit2Interruptor[4] = { };
@@ -88,7 +86,8 @@ void sendBit(bool b) {
 //Calcul le nombre 2^chiffre indiqué, fonction utilisé par itob pour la conversion decimal/binaire
 unsigned long power2(int power) {
 	unsigned long integer = 1;
-	for (int i = 0; i < power; i++) {
+	int i;
+	for (i = 0; i < power; i++) {
 		integer *= 2;
 	}
 	return integer;
@@ -97,7 +96,8 @@ unsigned long power2(int power) {
 //Convertis un nombre en binaire, nécessite le nombre, et le nombre de bits souhaité en sortie (ici 26)
 // Stocke le résultat dans le tableau global "bit2"
 void itob(unsigned long integer, int length) {
-	for (int i = 0; i < length; i++) {
+	int i;
+	for (i = 0; i < length; i++) {
 		if ((integer / power2(length - 1 - i)) == 1) {
 			integer -= power2(length - 1 - i);
 			bit2[i] = 1;
@@ -107,7 +107,8 @@ void itob(unsigned long integer, int length) {
 }
 
 void itobInterruptor(unsigned long integer, int length) {
-	for (int i = 0; i < length; i++) {
+	int i;
+	for (i = 0; i < length; i++) {
 		if ((integer / power2(length - 1 - i)) == 1) {
 			integer -= power2(length - 1 - i);
 			bit2Interruptor[i] = 1;
@@ -212,7 +213,8 @@ int dioOn(int pin, int sender, int interruptor) {
 	itob(sender, 26);
 	itobInterruptor(interruptor, 4);
 
-	for (int i = 0; i < 5; i++) {
+	int i;
+	for (i = 0; i < 5; i++) {
 		transmit(true);            // envoyer ON
 		delay(10);           // attendre 10 ms (sinon le socket nous ignore)
 	}
@@ -232,7 +234,8 @@ int dioOff(int pin, int sender, int interruptor) {
 	itobInterruptor(interruptor, 4);
 
 	info("envois du signal OFF");
-	for (int i = 0; i < 5; i++) {
+	int i;
+	for (i = 0; i < 5; i++) {
 		transmit(false);           // envoyer OFF
 		delay(10);           // attendre 10 ms (sinon le socket nous ignore)
 	}

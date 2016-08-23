@@ -1,5 +1,6 @@
 package native
 
+// #cgo LDFLAGS: -lwiringPi
 // #include "native.h"
 import "C"
 
