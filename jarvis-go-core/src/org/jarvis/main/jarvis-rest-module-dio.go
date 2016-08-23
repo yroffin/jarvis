@@ -1,7 +1,7 @@
 package main
 
 import (
-	"org/jarvis/routes"
+	routes "org/jarvis/routes"
 )
 
 /**
