@@ -5,12 +5,16 @@ import http "net/http"
 import "encoding/json"
 import "io/ioutil"
 import "fmt"
-import "log"
+
+import (
+	log "github.com/Sirupsen/logrus"
+	logger "org/jarvis/logger"
+)
 
 type DioResource struct {
 	Pin        int  `json:"pin"`
 	Sender     int  `json:"sender"`
-	Interuptor int  `json:"interuptor"`
+	Interuptor int  `json:"interruptor"`
 	On         bool `json:"on"`
 }
 
@@ -36,7 +40,13 @@ func PostHandler(next http.Handler) http.Handler {
 			/**
 			 * nominal case
 			 */
-			log.Println("[DIO] " + string(fmt.Sprintf("%#v", m)))
+			logger.NewLogger().WithFields(log.Fields{
+				"pin":         m.Pin,
+				"sender":      m.Sender,
+				"interruptor": m.Interuptor,
+				"on":          m.On,
+			}).Info("DIO")
+
 			if m.On {
 				native.DioOn(m.Pin, m.Sender, m.Interuptor)
 			} else {

@@ -1,3 +1,5 @@
 /.settings/
 /bin/*
 /bin/
+/info.log
+/module.log

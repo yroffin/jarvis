@@ -7,6 +7,10 @@
 #include <stdlib.h>
 #include <sched.h>
 
+#ifndef WIRINGPI
+int  setuid      		(int uid);
+#endif
+
 /*
  Par Idleman (idleman@idleman.fr - http://blog.idleman.fr)
  Licence : CC by sa
@@ -24,29 +28,6 @@ bool bit2Interruptor[4] = { };
 int interruptor;
 int sender;
 string onoff;
-
-#define QUIET
-
-void info(string a) {
-#ifndef QUIET
-	fprintf(stderr, "[INFO] %s\n", a);
-	fflush(stderr);
-#endif
-}
-
-void infoi(string a, int v) {
-#ifndef QUIET
-	fprintf(stderr, "[INFO] %s - %d\n", a, v);
-	fflush(stderr);
-#endif
-}
-
-void debug(string a) {
-#ifndef QUIET
-	fprintf(stderr, "[DEBUG] %s\n", a);
-	fflush(stderr);
-#endif
-}
 
 void scheduler_realtime() {
 
@@ -173,6 +154,9 @@ void transmit(int blnOn) {
 
 }
 
+/**
+ * init libray
+ */
 int initWiringPi() {
 
 	if (setuid(0)) {
@@ -181,24 +165,20 @@ int initWiringPi() {
 
 	}
 
-	info("Demarrage du programme");
-
 	/**
 	 * abort init if no wiringPiSetup ok
 	 */
 	if (wiringPiSetup() == -1) {
-		info("Librairie Wiring PI introuvable, veuillez lier cette librairie...");
 		return -1;
 	}
 
 	return 0;
 }
 
+/**
+ * send on
+ */
 int dioOn(int pin, int sender, int interruptor) {
-
-	infoi("envois du signal ON / pin", pin);
-	infoi("envois du signal ON / sender", sender);
-	infoi("envois du signal ON / interuptor", interruptor);
 
 	scheduler_realtime();
 
@@ -215,32 +195,41 @@ int dioOn(int pin, int sender, int interruptor) {
 
 	int i;
 	for (i = 0; i < 5; i++) {
-		transmit(true);            // envoyer ON
-		delay(10);           // attendre 10 ms (sinon le socket nous ignore)
+		transmit(true);
+		delay(10);
 	}
 
 	scheduler_standard();
 
-	info("fin du programme");    // execution terminée.
-
 	return 0;
 }
 
+/**
+ * send off
+ */
 int dioOff(int pin, int sender, int interruptor) {
 
 	scheduler_realtime();
 
-	itob(sender, 26); // convertion du code de l'emetteur (ici 8217034) en code binaire
+	/**
+	 * fix pin mode in output mode
+	 */
+	pinMode(pin, OUTPUT);
+
+	/**
+	 * convert sender and interruptor to binary
+	 */
+	itob(sender, 26);
 	itobInterruptor(interruptor, 4);
 
-	info("envois du signal OFF");
 	int i;
 	for (i = 0; i < 5; i++) {
-		transmit(false);           // envoyer OFF
-		delay(10);           // attendre 10 ms (sinon le socket nous ignore)
+		/**
+		 * send off
+		 */
+		transmit(false);
+		delay(10);
 	}
-
-	info("fin du programme");    // execution terminée.
 
 	scheduler_standard();
 
