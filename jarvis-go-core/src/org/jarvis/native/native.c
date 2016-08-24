@@ -7,10 +7,6 @@
 #include <stdlib.h>
 #include <sched.h>
 
-#ifndef WIRINGPI
-int  setuid      		(int uid);
-#endif
-
 /*
  Par Idleman (idleman@idleman.fr - http://blog.idleman.fr)
  Licence : CC by sa
