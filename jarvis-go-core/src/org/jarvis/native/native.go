@@ -1,7 +1,7 @@
 package native
 
 // #ifdef WIRINGPI
-// #cgo amd64 386 LDFLAGS:
+// #cgo amd64 386 CFLAGS: -DMOCK
 // #else
 // #cgo arm LDFLAGS: -lwiringPi
 // void  delay             	(unsigned int howLong) {}

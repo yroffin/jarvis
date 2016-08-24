@@ -150,6 +150,10 @@ void transmit(int blnOn) {
 
 }
 
+#ifdef MOCK
+extern int setuid(int);
+#endif
+
 /**
  * init libray
  */
