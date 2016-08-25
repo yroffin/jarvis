@@ -1,5 +1,7 @@
 package devices
 
+import model "org/jarvis/model/dio"
+
 import native "org/jarvis/native"
 import http "net/http"
 import "encoding/json"
@@ -10,13 +12,6 @@ import (
 	log "github.com/Sirupsen/logrus"
 	logger "org/jarvis/logger"
 )
-
-type DioResource struct {
-	Pin        int  `json:"pin"`
-	Sender     int  `json:"sender"`
-	Interuptor int  `json:"interruptor"`
-	On         bool `json:"on"`
-}
 
 func PostHandler(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
@@ -31,7 +26,7 @@ func PostHandler(next http.Handler) http.Handler {
 		/**
 		 * decode json
 		 */
-		var m DioResource
+		var m model.DioResource
 		err = json.Unmarshal(body, &m)
 		if err != nil {
 			http.Error(w, fmt.Sprintf("%#v", m), 400)
