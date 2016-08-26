@@ -4,7 +4,7 @@ go:
 jdk:
   - oraclejdk8
 before_install:
-  - gimme 1.4
+  - gimme 1.6
 install:
   - which go
   - cd jarvis-go-core
