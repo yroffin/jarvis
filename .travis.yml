@@ -5,6 +5,7 @@ jdk:
   - oraclejdk8
 before_install:
 install:
+  - which go
   - cd jarvis-go-core
   - go version
   - make
