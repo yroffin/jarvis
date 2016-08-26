@@ -7,14 +7,20 @@ jdk:
 before_install:
 install:
   - cd jarvis-go-core
+  - go version
   - make
   - cd jarvis-core
+  - java -version
   - mvn -q install
 deploy:
   provider: releases
   api_key: "6c61a2e653ace0088dbef7880be74c90742cdc22"
+  file: "jarvis-core/jarvis-core-server/src/test/resources/sample.json"
   file: "jarvis-core/jarvis-core-server/target/jarvis-core-server-0.0.1-SNAPSHOT.jar"
   file: "jarvis-core/jarvis-rest-module-dio/target/jarvis-rest-module-dio-0.0.1-SNAPSHOT.jar"
+  file: "jarvis-core/jarvis-rest-module-voice/target/jarvis-rest-module-voice-0.0.1-SNAPSHOT.jar"
+  file: "jarvis-core/jarvis-rest-module-exec/target/jarvis-rest-module-exec-0.0.1-SNAPSHOT.jar"
+  file: "jarvis-core/jarvis-rest-module-aiml/target/jarvis-rest-module-aiml-0.0.1-SNAPSHOT.jar"
   skip_cleanup: true
   on:
     tags: false
