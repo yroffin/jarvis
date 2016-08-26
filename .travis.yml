@@ -1,3 +1,11 @@
+language: go
+go:
+  - 1.6
+  - tip
+before_install:
+  - cd jarvis-go-core
+install:
+  - make
 language: java
 jdk:
   - oraclejdk8
@@ -5,13 +13,10 @@ before_install:
   - cd jarvis-core
 install:
   - mvn -q install
-before_install:
-  - cd jarvis-go-core
-install:
-  - make
 deploy:
   provider: releases
   api_key: "ed7d3d0a68b9f1fd53fcbb2c9f2632210f73d1c7"
+  file: "jarvis-core/jarvis-core-server/target/jarvis-core-server-0.0.1-SNAPSHOT.jar"
   file: "jarvis-core/jarvis-core-server/target/jarvis-core-server-0.0.1-SNAPSHOT.jar"
   skip_cleanup: true
   on:
