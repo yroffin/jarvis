@@ -13,7 +13,7 @@ install:
   - make
   - cd jarvis-core
   - java -version
-  - mvn -q install
+  - echo mvn -q install
 deploy:
   provider: releases
   api_key: "6c61a2e653ace0088dbef7880be74c90742cdc22"
