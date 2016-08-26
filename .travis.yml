@@ -4,8 +4,6 @@ go:
 jdk:
   - oraclejdk8
 before_install:
-  - curl -sL -o ~/bin/gimme https://raw.githubusercontent.com/travis-ci/gimme/master/gimme
-  - chmod +x ~/bin/gimme
 install:
   - cd jarvis-go-core
   - go version
