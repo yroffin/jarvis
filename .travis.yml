@@ -1,7 +1,6 @@
 language: go java
 go:
   - 1.6
-  - tip
 jdk:
   - oraclejdk8
 before_install:
