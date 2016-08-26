@@ -1,23 +1,20 @@
-language: go
+language: go java
 go:
   - 1.6
   - tip
-before_install:
-  - cd jarvis-go-core
-install:
-  - make
-language: java
 jdk:
   - oraclejdk8
 before_install:
-  - cd jarvis-core
 install:
+  - cd jarvis-go-core
+  - make
+  - cd jarvis-core
   - mvn -q install
 deploy:
   provider: releases
   api_key: "6c61a2e653ace0088dbef7880be74c90742cdc22"
   file: "jarvis-core/jarvis-core-server/target/jarvis-core-server-0.0.1-SNAPSHOT.jar"
-  file: "jarvis-core/jarvis-core-server/target/jarvis-core-server-0.0.1-SNAPSHOT.jar"
+  file: "jarvis-core/jarvis-rest-module-dio/target/jarvis-rest-module-dio-0.0.1-SNAPSHOT.jar"
   skip_cleanup: true
   on:
     tags: false
