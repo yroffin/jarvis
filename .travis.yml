@@ -1,4 +1,6 @@
 language: go java
+env:
+    - GIMME_OS=linux GIMME_ARCH=arm
 go:
   - 1.6.0
 jdk:
