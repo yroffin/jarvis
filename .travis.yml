@@ -5,3 +5,10 @@ before_install:
   - cd jarvis-core
 install:
   - mvn install
+deploy:
+  provider: releases
+  api_key: "ed7d3d0a68b9f1fd53fcbb2c9f2632210f73d1c7"
+  file: "jarvis-core/jarvis-core-server/target/jarvis-core-server-0.0.1-SNAPSHOT.jar"
+  skip_cleanup: true
+  on:
+    tags: true
