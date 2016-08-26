@@ -117,7 +117,6 @@
 				<jsSourceFile>services/snapshot.js</jsSourceFile>
 				<jsSourceFile>services/cron.js</jsSourceFile>
 				<jsSourceFile>services/device.js</jsSourceFile>
-				<jsSourceFile>services/connector.js</jsSourceFile>
 				<jsSourceFile>services/event.js</jsSourceFile>
 				<jsSourceFile>services/scenario.js</jsSourceFile>
 				<jsSourceFile>services/block.js</jsSourceFile>
@@ -142,7 +141,6 @@
 				<jsSourceFile>ctrl/events.js</jsSourceFile>
 				<jsSourceFile>ctrl/plugins.js</jsSourceFile>
 				<jsSourceFile>ctrl/views.js</jsSourceFile>
-				<jsSourceFile>ctrl/connectors.js</jsSourceFile>
 				<jsSourceFile>ctrl/snapshots.js</jsSourceFile>
 				<jsSourceFile>ctrl/crons.js</jsSourceFile>
 				<jsSourceFile>ctrl/home.js</jsSourceFile>
