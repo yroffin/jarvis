@@ -76,7 +76,7 @@ public class AimlCoreEngineSraiTest {
 		
 		for(IAimlCoreTransaction tx : engine.getTransactionMonitor().getTransactions()) {
 			for(ICategoryStack category : tx.getCategories()) {
-				System.err.println(category);
+				// System.err.println(category);
 			}
 		}
 	}

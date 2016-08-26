@@ -33,13 +33,13 @@ public class AimlParserImplTest {
 	@Test
 	public void testSimpleLoad() throws AimlParsingError {
 		IAimlRepository result = AimlParserImpl.parse(new File("src/test/aiml/default.aiml"));
-		System.err.println(""+result);
+		// System.err.println(""+result);
 	}
 
 	@Test
 	public void testAnotherSimpleLoad() throws AimlParsingError, IOException {
 		IAimlRepository result = AimlParserImpl.parse(new File("src/test/aiml/french_aiml_publish/atomique_ed.aiml"));
-		System.err.println(""+result);
+		// System.err.println(""+result);
 		assertEquals(
 				"",
 				FileUtils.readFileToString(new File("src/test/resources/files/atomique_ed.aiml")),
