@@ -15,7 +15,7 @@ install:
   - mvn -q install
 deploy:
   provider: releases
-  api_key: "ed7d3d0a68b9f1fd53fcbb2c9f2632210f73d1c7"
+  api_key: "6c61a2e653ace0088dbef7880be74c90742cdc22"
   file: "jarvis-core/jarvis-core-server/target/jarvis-core-server-0.0.1-SNAPSHOT.jar"
   file: "jarvis-core/jarvis-core-server/target/jarvis-core-server-0.0.1-SNAPSHOT.jar"
   skip_cleanup: true
