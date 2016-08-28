@@ -5,12 +5,16 @@ go:
   - 1.6.0
 jdk:
   - oraclejdk8
+cache:
+  directories:
+    - $GOPATH/src
+    - $GOPATH/pkg
 before_install:
   - gimme 1.6
 install:
   - source ~/.gimme/envs/go1.6.env
   - which go
-  - godep
+  - go get -u -v $(go list -f '{{join .Imports "\n"}}' ./... | sort | uniq)
   - exit 1
   - cd jarvis-go-core
   - go version
