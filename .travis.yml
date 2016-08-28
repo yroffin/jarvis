@@ -1,6 +1,6 @@
 language: go java
 env:
-  - GIMME_OS=linux GIMME_ARCH=amd64 GOPATH=~/import
+  - GIMME_OS=linux GIMME_ARCH=arm GOARM=6 GOPATH=~/import
 go:
   - 1.6
 jdk:
