@@ -8,7 +8,7 @@ jdk:
 before_install:
   - gimme 1.6
 install:
-  - source ~/.gimme/envs/go1.6.src.env
+  - source ~/.gimme/envs/go1.6.env
   - which go
   - godep
   - exit 1
