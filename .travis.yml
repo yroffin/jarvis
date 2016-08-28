@@ -15,7 +15,7 @@ install:
   - source ~/.gimme/envs/go1.6.env
   - which go
   - go get -u -v $(go list -f '{{join .Imports "\n"}}' ./... | sort | uniq | grep -v "org/jarvis" | grep -v "C")
-  - GOPATH=~/import:~/ GOOS=linux GOARCH=amd64 CFLAGS=-DWIRINGPI go install -v -gcflags "-N -l" ./...
+  - GOPATH=~/import:~/jarvis-go-core GOOS=linux GOARCH=amd64 CFLAGS=-DWIRINGPI go install -v -gcflags "-N -l" ./...
   - exit 1
   - cd jarvis-go-core
   - go version
