@@ -1,14 +1,14 @@
 language: go java
 env:
   - GIMME_OS=linux GIMME_ARCH=amd64
+  - GOPATH=~/import
 go:
   - 1.6.0
 jdk:
   - oraclejdk8
 cache:
   directories:
-    - $GOPATH/src
-    - $GOPATH/pkg
+    - ~/import
 before_install:
   - gimme 1.6
 install:
