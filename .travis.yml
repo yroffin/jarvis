@@ -9,7 +9,7 @@ cache:
   directories:
     - ~/import
 before_install:
-  - gimme 1.6
+  - gimme auto
 install:
   - source /home/travis/.gimme/envs/go1.6.env
   - which go
