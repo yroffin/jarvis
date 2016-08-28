@@ -11,7 +11,6 @@ cache:
 before_install:
   - gimme 1.6
 install:
-  - ls -lrt /usr/bin/qemu-arm-static
   - source ~/.gimme/envs/go1.6.env
   - which go
   - go version
