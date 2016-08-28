@@ -11,7 +11,7 @@ cache:
 before_install:
   - gimme 1.6
 install:
-  - source ~/.gimme/envs/go1.6.env
+  - source ${GIMME_ENV}
   - which go
   - go version
   - go get -u github.com/golang/lint/golint
