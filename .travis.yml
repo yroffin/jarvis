@@ -15,6 +15,7 @@ install:
   - source ~/.gimme/envs/go1.6.env
   - which go
   - go version
+  - go get -u github.com/golang/lint/golint
   - go get -u $(go list -f '{{join .Imports "\n"}}' ./... | sort | uniq | grep -v "org/jarvis" | grep -v "C")
   - cd jarvis-go-core
   - GOPATH=~/import:${PWD} GOOS=linux GOARCH=arm CFLAGS=-DWIRINGPI go install -v -gcflags "-N -l" ./...
