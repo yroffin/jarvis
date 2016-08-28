@@ -12,5 +12,5 @@ bin/main: always
 	GOPATH=${PWD}/tmp go get -v golang.org/x/text/transform
 	GOPATH=${PWD}/tmp go get -v golang.org/x/crypto/ssh/terminal
 	GOPATH=${PWD}/tmp:${PWD} GOOS=linux GOARCH=arm go build
-	GOPATH=${PWD}/tmp:${PWD} GOOS=linux GOARCH=arm CFLAGS=-DWIRINGPI go install -v -gcflags "-N -l" ./...
-	mv bin/main bin/jarvis-rest-module-dio
+	#GOPATH=${PWD}/tmp:${PWD} GOOS=linux GOARCH=arm CFLAGS=-DWIRINGPI go install -v -gcflags "-N -l" ./...
+	#mv bin/main bin/jarvis-rest-module-dio
