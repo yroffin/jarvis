@@ -1,6 +1,7 @@
 language: go java
 env:
     - GIMME_OS=linux GIMME_ARCH=arm
+	- 
 go:
   - 1.6.0
 jdk:
@@ -18,7 +19,7 @@ install:
   - echo mvn -q install
 deploy:
   provider: releases
-  api_key: "6c61a2e653ace0088dbef7880be74c90742cdc22"
+  api_key: "$GITHUB_OAUTH2_KEY"
   file: "jarvis-core/jarvis-core-server/src/test/resources/sample.json"
   file: "jarvis-core/jarvis-core-server/target/jarvis-core-server-0.0.1-SNAPSHOT.jar"
   file: "jarvis-core/jarvis-rest-module-dio/target/jarvis-rest-module-dio-0.0.1-SNAPSHOT.jar"
