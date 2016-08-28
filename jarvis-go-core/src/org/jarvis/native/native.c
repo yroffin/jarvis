@@ -150,7 +150,7 @@ void transmit(int blnOn) {
 
 }
 
-#ifdef MOCK
+#ifdef SIMULE_SETUID
 extern int setuid(int);
 #endif
 
