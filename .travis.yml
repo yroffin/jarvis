@@ -17,7 +17,7 @@ install:
   - go get -u $(go list -f '{{join .Imports "\n"}}' ./... | sort | uniq | grep -v "org/jarvis" | grep -v "C")
   - cd jarvis-go-core
   - GOPATH=~/import:${PWD} GOOS=linux GOARCH=arm GOARM=6 CGO_ENABLED=0 CFLAGS=-DWIRINGPI go install -installsuffix cgo ./...
-  - ls -lrt bin
+  - find bin
   - exit 1
   - cd jarvis-go-core
   - go version
