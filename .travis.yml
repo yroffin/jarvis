@@ -20,12 +20,11 @@ install:
   - find bin
   - file bin/linux_arm/main
   - ldd bin/linux_arm/main | echo ldd
-  - exit 0
-  - cd jarvis-go-core
-  - go version
-  - make
-  - cd jarvis-core
-  - java -version
+  - echo cd jarvis-go-core
+  - echo go version
+  - echo make
+  - echo cd jarvis-core
+  - echo java -version
   - echo mvn -q install
 deploy:
   provider: releases
