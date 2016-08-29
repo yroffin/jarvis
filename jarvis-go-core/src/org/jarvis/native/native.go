@@ -14,7 +14,7 @@ package native
 // int  setuid      		(int uid) {return 0;}
 // #endif
 // #include "native.h"
-import "C"
+//import "C"
 
 func InitWiringPi() int {
 	return int(0)

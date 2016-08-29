@@ -1,6 +1,5 @@
 package routes
 
-import native "org/jarvis/native"
 import devices "org/jarvis/routes/devices"
 import http "net/http"
 import fmt "fmt"
@@ -21,7 +20,7 @@ func Init(base string) {
 	/**
 	 * init wiringPi library
 	 */
-	native.InitWiringPi()
+	//native.InitWiringPi()
 
 	fmt.Printf("ListenAndServe on %s\n", base+"/dio")
 	http.ListenAndServe(":8080", mx)

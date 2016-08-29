@@ -2,7 +2,6 @@ package devices
 
 import model "org/jarvis/model/dio"
 
-import native "org/jarvis/native"
 import http "net/http"
 import "encoding/json"
 import "io/ioutil"
@@ -43,9 +42,9 @@ func PostHandler(next http.Handler) http.Handler {
 			}).Info("DIO")
 
 			if m.On {
-				native.DioOn(m.Pin, m.Sender, m.Interuptor)
+				//native.DioOn(m.Pin, m.Sender, m.Interuptor)
 			} else {
-				native.DioOff(m.Pin, m.Sender, m.Interuptor)
+				//native.DioOff(m.Pin, m.Sender, m.Interuptor)
 			}
 			w.Header().Set("Content-Type", "application/json")
 			w.Write([]byte(body))
