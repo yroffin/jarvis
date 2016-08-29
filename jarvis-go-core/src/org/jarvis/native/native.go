@@ -2,6 +2,13 @@ package syscall
 
 // #cgo amd64 386 CFLAGS: -DMOCK
 // #cgo arm LDFLAGS:
+// #include <sched.h>
+// void scheduler_realtime() {
+// struct sched_param p;
+// p.sched_priority = sched_get_priority_max(SCHED_RR);
+// if(sched_setscheduler(0, SCHED_RR, &p) == -1) {
+// }
+//}
 // #ifdef WIRINGPI
 // #else
 // void  delay             	(unsigned int howLong) {}
@@ -29,11 +36,7 @@ func InitWiringPi() int {
 }
 
 func scheduler_realtime() {
-	//C.struct sched_param p;
-	//p.sched_priority = sched_get_priority_max(SCHED_RR);
-	//if sys.Set.sched_setscheduler(0, SCHED_RR, &p) == -1 {
-	//	perror("Failed to switch to realtime scheduler.")
-	//}
+	C.scheduler_realtime()
 }
 
 func scheduler_standard() {
