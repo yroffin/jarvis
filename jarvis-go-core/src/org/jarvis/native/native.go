@@ -17,6 +17,19 @@ package native
 import "C"
 
 func InitWiringPi() int {
+	return int(0)
+}
+
+func DioOn(pin int, sender int, interruptor int) int {
+	return int(0)
+}
+
+func DioOff(pin int, sender int, interruptor int) int {
+	return int(0)
+}
+
+/*
+func InitWiringPi() int {
 	return int(C.initWiringPi())
 }
 
@@ -27,3 +40,4 @@ func DioOn(pin int, sender int, interruptor int) int {
 func DioOff(pin int, sender int, interruptor int) int {
 	return int(C.dioOff(C.int(pin), C.int(sender), C.int(interruptor)))
 }
+*/
