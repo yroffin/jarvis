@@ -22,6 +22,9 @@ package syscall
 // int  setuid      		(int uid) {return 0;}
 // #endif
 /*
+// Par Idleman (idleman@idleman.fr - http://blog.idleman.fr)
+// Licence : CC by sa
+// Toutes question sur le blog ou par mail, possibilité de m'envoyer des bières via le blog
 #include <sys/types.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -29,6 +32,7 @@ package syscall
 #include <time.h>
 #include <stdlib.h>
 #include <sched.h>
+// Scheduler REALTIME
 void scheduler_realtime() {
 
 	struct sched_param p;
@@ -37,6 +41,7 @@ void scheduler_realtime() {
 		perror("Failed to switch to realtime scheduler.");
 	}
 }
+// Scheduler STD
 void scheduler_standard() {
 
 	struct sched_param p;
@@ -45,7 +50,7 @@ void scheduler_standard() {
 		perror("Failed to switch to normal scheduler.");
 	}
 }
-//Calcul le nombre 2^chiffre indiqué, fonction utilisé par itob pour la conversion decimal/binaire
+// Calcul le nombre 2^chiffre indiqué, fonction utilisé par itob pour la conversion decimal/binaire
 unsigned long power2(int power) {
 	unsigned long integer = 1;
 	int i;
@@ -66,6 +71,7 @@ void itob(unsigned long integer, int bit2[26], int length) {
 			bit2[i] = 0;
 	}
 }
+// Convert
 void itobInterruptor(unsigned long integer, int bit2Interruptor[4], int length) {
 	int i;
 	for (i = 0; i < length; i++) {
@@ -76,9 +82,9 @@ void itobInterruptor(unsigned long integer, int bit2Interruptor[4], int length) 
 			bit2Interruptor[i] = 0;
 	}
 }
-//Envois d'une pulsation (passage de l'etat haut a l'etat bas)
-//1 = 310µs haut puis 1340µs bas
-//0 = 310µs haut puis 310µs bas
+// Envois d'une pulsation (passage de l'etat haut a l'etat bas)
+// 1 = 310µs haut puis 1340µs bas
+// 0 = 310µs haut puis 310µs bas
 void sendBit(int pin, int b) {
 	if (b) {
 		digitalWrite(pin, 1);
@@ -92,8 +98,8 @@ void sendBit(int pin, int b) {
 		delayMicroseconds(310);   //275 orinally, but tweaked.
 	}
 }
-//Envoie d'une paire de pulsation radio qui definissent 1 bit réel : 0 =01 et 1 =10
-//c'est le codage de manchester qui necessite ce petit bouzin, ceci permet entre autres de dissocier les données des parasites
+// Envoie d'une paire de pulsation radio qui definissent 1 bit réel : 0 =01 et 1 =10
+// c'est le codage de manchester qui necessite ce petit bouzin, ceci permet entre autres de dissocier les données des parasites
 void sendPair(int pin, int b) {
 	if (b) {
 		sendBit(pin, 1);
@@ -103,8 +109,8 @@ void sendPair(int pin, int b) {
 		sendBit(pin, 0);
 	}
 }
-//Fonction d'envois du signal
-//recoit en parametre un booleen définissant l'arret ou la marche du matos (true = on, false = off)
+// Fonction d'envois du signal
+// recoit en parametre un booleen définissant l'arret ou la marche du matos (true = on, false = off)
 void transmit(int pin, int bit2[26], int bit2Interruptor[4], int blnOn) {
 	int i;
 
@@ -146,6 +152,7 @@ void transmit(int pin, int bit2[26], int bit2Interruptor[4], int blnOn) {
 	digitalWrite(pin, 0); // verrou 2 de 2675µs pour signaler la fermeture du signal
 
 }
+// Send ON
 int dioOn(int pin, int sender, int interruptor) {
 	int bit2[26];
 	int bit2Interruptor[4];
@@ -166,6 +173,7 @@ int dioOn(int pin, int sender, int interruptor) {
 
 	return 0;
 }
+// Send OFF
 int dioOff(int pin, int sender, int interruptor) {
 	int bit2[26];
 	int bit2Interruptor[4];
@@ -186,12 +194,12 @@ int dioOff(int pin, int sender, int interruptor) {
 
 	return 0;
 }
+// Init wiringPi library
 int initWiringPi() {
 
 	if (setuid(0)) {
-		perror("setuid");
+		perror("Failed to call setuid.");
 		return 1;
-
 	}
 
 	if (wiringPiSetup() == -1) {
