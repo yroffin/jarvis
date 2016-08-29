@@ -10,6 +10,10 @@ cache:
     - ~/import
 before_install:
   - gimme 1.6
+# whitelist
+branches:
+  only:
+    - test
 install:
   - source /home/travis/.gimme/envs/go1.6.env
   - which go
