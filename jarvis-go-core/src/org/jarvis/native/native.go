@@ -1,9 +1,9 @@
 package syscall
 
-// #ifdef WIRINGPI
 // #cgo amd64 386 CFLAGS: -DMOCK
-// #else
 // #cgo arm LDFLAGS:
+// #ifdef WIRINGPI
+// #else
 // void  delay             	(unsigned int howLong) {}
 // void  delayMicroseconds 	(unsigned int howLong) {}
 // unsigned int millis      (void) {}
