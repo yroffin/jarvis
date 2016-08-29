@@ -15,8 +15,33 @@ package syscall
 // #endif
 import "C"
 
+//import sys "golang.org/x/sys/unix"
+
+/**
+ * init the wiringPi library
+ */
 func InitWiringPi() int {
-	return int(C.wiringPiSetup())
+	if int(C.wiringPiSetup()) == -1 {
+		return -1
+	} else {
+		return 0
+	}
+}
+
+func scheduler_realtime() {
+	//C.struct sched_param p;
+	//p.sched_priority = sched_get_priority_max(SCHED_RR);
+	//if sys.Set.sched_setscheduler(0, SCHED_RR, &p) == -1 {
+	//	perror("Failed to switch to realtime scheduler.")
+	//}
+}
+
+func scheduler_standard() {
+	//struct sched_param p;
+	//p.sched_priority = 0;
+	// if sys.sched_setscheduler(0, SCHED_OTHER, &p) == -1 {
+	//	perror("Failed to switch to normal scheduler.")
+	//}
 }
 
 func DioOn(pin int, sender int, interruptor int) int {
