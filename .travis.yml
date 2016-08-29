@@ -1,6 +1,6 @@
 language: go java
 env:
-  - GIMME_OS=linux GIMME_ARCH=i386 GOPATH=~/import
+  - GIMME_OS=linux GIMME_ARCH=amd64 GOPATH=~/import
 go:
   - 1.6
 jdk:
@@ -9,14 +9,14 @@ cache:
   directories:
     - ~/import
 before_install:
-  - gimme auto
+  - gimme 1.6
 install:
   - source /home/travis/.gimme/envs/go1.6.env
   - which go
   - go version
   - go get -u $(go list -f '{{join .Imports "\n"}}' ./... | sort | uniq | grep -v "org/jarvis" | grep -v "C")
   - cd jarvis-go-core
-  - GOPATH=~/import:${PWD} GOOS=linux GOARCH=arm GOARM=6 CGO_ENABLED=1 CFLAGS=-DWIRINGPI go install -v -gcflags "-N -l" ./...
+  - GOPATH=~/import:${PWD} GOOS=linux GOARCH=arm GOARM=6 CGO_ENABLED=1 CFLAGS=-DWIRINGPI go build -installsuffix cgo ./...
   - exit 1
   - cd jarvis-go-core
   - go version
