@@ -7,7 +7,7 @@ jdk:
   - oraclejdk8
 before_install:
   - gimme 1.6
-  - echo $PATH
+  - which rake
 install:
   - source /home/travis/.gimme/envs/go1.6.env
   - which go
