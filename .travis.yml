@@ -28,6 +28,7 @@ install:
   - echo mvn -q install
 deploy:
   provider: releases
+  overwrite: true
   api_key: "$GITHUB_OAUTH2_KEY"
   file:
   - "jarvis-go-core/bin/linux_arm/main"
@@ -40,3 +41,4 @@ deploy:
   skip_cleanup: true
   on:
     tags: true
+after_deploy: echo "deploiement terminé"
