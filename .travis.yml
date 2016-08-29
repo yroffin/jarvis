@@ -18,6 +18,8 @@ install:
   - cd jarvis-go-core
   - GOPATH=~/import:${PWD} GOOS=linux GOARCH=arm GOARM=6 CGO_ENABLED=0 CFLAGS=-DWIRINGPI go install -installsuffix cgo ./...
   - find bin
+  - file bin/linux_arm/main
+  - ldd bin/linux_arm/main
   - exit 1
   - cd jarvis-go-core
   - go version
