@@ -7,6 +7,7 @@ jdk:
   - oraclejdk8
 before_install:
   - gimme 1.6
+  - echo $PATH
 install:
   - source /home/travis/.gimme/envs/go1.6.env
   - which go
