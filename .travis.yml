@@ -32,7 +32,7 @@ deploy:
   overwrite: true
   api_key: "$GITHUB_OAUTH2_KEY"
   file:
-  - "jarvis-go-core/bin/linux_arm/main"
+  - "${TRAVIS_BUILD_DIR}/jarvis-go-core/bin/linux_arm/main"
   - "jarvis-core/jarvis-core-server/src/test/resources/sample.json"
   - "jarvis-core/jarvis-core-server/target/jarvis-core-server-0.0.1-SNAPSHOT.jar"
   - "jarvis-core/jarvis-rest-module-dio/target/jarvis-rest-module-dio-0.0.1-SNAPSHOT.jar"
