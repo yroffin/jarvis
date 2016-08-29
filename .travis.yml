@@ -41,5 +41,5 @@ deploy:
   - "jarvis-core/jarvis-rest-module-aiml/target/jarvis-rest-module-aiml-0.0.1-SNAPSHOT.jar"
   skip_cleanup: true
   on:
-    tags: true
+    tags: false
 after_deploy: echo "deploiement terminé"
