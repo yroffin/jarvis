@@ -1,4 +1,4 @@
-package native
+package syscall
 
 // #ifdef WIRINGPI
 // #cgo amd64 386 CFLAGS: -DMOCK
@@ -16,8 +16,17 @@ package native
 // #include "native.h"
 //import "C"
 
+import (
+	"syscall"
+)
+
+func Setuid(uid int) (err error) {
+	return syscall.EOPNOTSUPP
+}
+
 func InitWiringPi() int {
-	return int(0)
+	Setuid(0)
+	return 0
 }
 
 func DioOn(pin int, sender int, interruptor int) int {
