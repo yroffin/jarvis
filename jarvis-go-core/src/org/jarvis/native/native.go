@@ -219,6 +219,9 @@ func DioOn(pin int, sender int, interruptor int) int {
 	return int(C.dioOn(C.int(pin), C.int(sender), C.int(interruptor)))
 }
 
+/**
+ * push OFF
+ */
 func DioOff(pin int, sender int, interruptor int) int {
 	return int(C.dioOff(C.int(pin), C.int(sender), C.int(interruptor)))
 }
