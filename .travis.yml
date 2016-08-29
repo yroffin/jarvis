@@ -20,7 +20,7 @@ install:
   - find bin
   - file bin/linux_arm/main
   - ldd bin/linux_arm/main
-  - exit 1
+  - exit 0
   - cd jarvis-go-core
   - go version
   - make
