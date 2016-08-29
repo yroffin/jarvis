@@ -7,7 +7,10 @@ jdk:
   - oraclejdk8
 before_install:
   - gimme 1.6
-  - which rake
+  - RAKE=`which rake`
+  - mv `which rake` `which rake`.old
+  - touch ${RAKE}
+  - chmod 755 ${RAKE}
 install:
   - source /home/travis/.gimme/envs/go1.6.env
   - which go
