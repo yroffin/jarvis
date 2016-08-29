@@ -30,6 +30,7 @@ install:
 deploy:
   provider: releases
   api_key: "$GITHUB_OAUTH2_KEY"
+  file: "jarvis-go-core/bin/linux_arm/main"
   file: "jarvis-core/jarvis-core-server/src/test/resources/sample.json"
   file: "jarvis-core/jarvis-core-server/target/jarvis-core-server-0.0.1-SNAPSHOT.jar"
   file: "jarvis-core/jarvis-rest-module-dio/target/jarvis-rest-module-dio-0.0.1-SNAPSHOT.jar"
