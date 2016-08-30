@@ -12,7 +12,7 @@ before_install:
   - touch ${RAKE}
   - chmod 755 ${RAKE}
 install:
-  - pwd
+  - echo $TRAVIS_BUILD_DIR
   - source /home/travis/.gimme/envs/go1.6.env
   - which go
   - go version
@@ -30,6 +30,7 @@ deploy:
   api_key: "$GITHUB_OAUTH2_KEY"
   file:
   - "${TRAVIS_BUILD_DIR}/jarvis-go-core/jarvis-rest-module-0.0.1-SNAPSHOT.arm"
+  - "${TRAVIS_BUILD_DIR}/jarvis-go-core/module.properties"
   - "${TRAVIS_BUILD_DIR}/jarvis-core/jarvis-core-server/src/test/resources/sample.json"
   - "${TRAVIS_BUILD_DIR}/jarvis-core/jarvis-core-server/target/jarvis-core-server-0.0.1-SNAPSHOT.jar"
   - "${TRAVIS_BUILD_DIR}/jarvis-core/jarvis-rest-module-dio/target/jarvis-rest-module-dio-0.0.1-SNAPSHOT.jar"
