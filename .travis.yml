@@ -1,6 +1,6 @@
 language: go java
 env:
-  - GIMME_OS=linux GIMME_ARCH=amd64 GOPATH=~/import
+  - GIMME_OS=linux GIMME_ARCH=amd64
 go:
   - 1.6
 jdk:
@@ -12,29 +12,33 @@ before_install:
   - touch ${RAKE}
   - chmod 755 ${RAKE}
 install:
+  - echo build go binary
   - source /home/travis/.gimme/envs/go1.6.env
   - which go
   - go version
-  - go get -u $(go list -f '{{join .Imports "\n"}}' ./... | sort | uniq | grep -v "org/jarvis" | grep -v "C")
+  - GOPATH=~/import go get -u $(go list -f '{{join .Imports "\n"}}' ./... | sort | uniq | grep -v "org/jarvis" | grep -v "C")
   - cd jarvis-go-core
   - GOPATH=~/import:${PWD} GOOS=linux GOARCH=arm GOARM=6 CGO_ENABLED=0 CFLAGS=-DWIRINGPI go install -installsuffix cgo ./...
   - find bin
-  - file bin/linux_arm/main
-  - nm bin/linux_arm/main | echo ldd
-  - echo cd jarvis-go-core
-  - echo go version
-  - echo make
-  - echo cd jarvis-core
-  - echo java -version
-  - echo mvn -q install
+  - mv bin/linux_arm/main jarvis-rest-module-0.0.1-SNAPSHOT.arm
+  - echo build java binary
+  - cd jarvis-core
+  - java -version
+  - mvn -q install
 deploy:
   provider: releases
   overwrite: true
   api_key: "$GITHUB_OAUTH2_KEY"
   file:
-  - "${TRAVIS_BUILD_DIR}/jarvis-go-core/bin/linux_arm/main"
+  - "${TRAVIS_BUILD_DIR}/jarvis-go-core/jarvis-rest-module-0.0.1-SNAPSHOT.arm"
   - "${TRAVIS_BUILD_DIR}/jarvis-core/jarvis-core-server/src/test/resources/sample.json"
+  - "${TRAVIS_BUILD_DIR}/jarvis-core/jarvis-core-server/target/jarvis-core-server-0.0.1-SNAPSHOT.jar"
+  - "${TRAVIS_BUILD_DIR}/jarvis-core/jarvis-rest-module-dio/target/jarvis-rest-module-dio-0.0.1-SNAPSHOT.jar"
+  - "${TRAVIS_BUILD_DIR}/jarvis-core/jarvis-rest-module-voice/target/jarvis-rest-module-voice-0.0.1-SNAPSHOT.jar"
+  - "${TRAVIS_BUILD_DIR}/jarvis-core/jarvis-rest-module-exec/target/jarvis-rest-module-exec-0.0.1-SNAPSHOT.jar"
+  - "${TRAVIS_BUILD_DIR}/jarvis-core/jarvis-rest-module-aiml/target/jarvis-rest-module-aiml-0.0.1-SNAPSHOT.jar"
   skip_cleanup: true
   on:
-    tags: false
+    tags: true
+    all_branches: true
 after_deploy: echo "deploiement terminé"
