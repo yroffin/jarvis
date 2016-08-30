@@ -17,12 +17,12 @@ install:
   - which go
   - go version
   - GOPATH=~/import go get -u $(go list -f '{{join .Imports "\n"}}' ./... | sort | uniq | grep -v "org/jarvis" | grep -v "C")
-  - cd jarvis-go-core
+  - cd ${HOME}/jarvis-go-core
   - GOPATH=~/import:${PWD} GOOS=linux GOARCH=arm GOARM=6 CGO_ENABLED=0 CFLAGS=-DWIRINGPI go install -installsuffix cgo ./...
   - find bin
   - mv bin/linux_arm/main jarvis-rest-module-0.0.1-SNAPSHOT.arm
   - echo build java binary
-  - cd jarvis-core
+  - cd ${HOME}/jarvis-core
   - java -version
   - mvn -q install
 deploy:
