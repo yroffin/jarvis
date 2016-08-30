@@ -12,7 +12,7 @@ before_install:
   - touch ${RAKE}
   - chmod 755 ${RAKE}
 install:
-  - echo build go binary
+  - pwd
   - source /home/travis/.gimme/envs/go1.6.env
   - which go
   - go version
@@ -21,7 +21,6 @@ install:
   - GOPATH=~/import:${PWD} GOOS=linux GOARCH=arm GOARM=6 CGO_ENABLED=0 CFLAGS=-DWIRINGPI go install -installsuffix cgo ./...
   - find bin
   - mv bin/linux_arm/main jarvis-rest-module-0.0.1-SNAPSHOT.arm
-  - echo build java binary
   - cd ${HOME}/jarvis/jarvis-core
   - java -version
   - mvn -q install
