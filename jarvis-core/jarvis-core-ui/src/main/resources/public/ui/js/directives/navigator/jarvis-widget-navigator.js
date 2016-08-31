@@ -35,7 +35,7 @@ angular.module('jarvis.directives.navigator', ['JarvisApp.services'])
 			'jarvisWidgetTriggerService',
 			'scenarioResourceService',
 			'cronResourceService',
-			'connectorResourceService',
+			'jarvisWidgetConnectorService',
 			'jarvisWidgetCommandService',
 			'pluginResourceService',
 			'deviceResourceService',

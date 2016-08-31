@@ -9,6 +9,6 @@ import (
  * main function
  */
 func main() {
-	cron.Init("* * * * * *")
+	cron.Init("@every 60s")
 	routes.Init("/api")
 }

@@ -57,6 +57,10 @@ func handler() {
  */
 func Init(cr string) int {
 	/**
+	 * first call
+	 */
+	handler()
+	/**
 	 * init cron
 	 */
 	c := cron.New()
