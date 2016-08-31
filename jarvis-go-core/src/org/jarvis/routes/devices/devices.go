@@ -6,6 +6,7 @@ import http "net/http"
 import "encoding/json"
 import "io/ioutil"
 import "fmt"
+import "org/jarvis/native"
 
 import (
 	log "github.com/Sirupsen/logrus"
@@ -41,10 +42,10 @@ func PostHandler(next http.Handler) http.Handler {
 				"on":          m.On,
 			}).Info("DIO")
 
-			if m.On {
-				//native.DioOn(m.Pin, m.Sender, m.Interuptor)
+			if m.On == "true" {
+				native.DioOn(m.Pin, m.Sender, m.Interuptor)
 			} else {
-				//native.DioOff(m.Pin, m.Sender, m.Interuptor)
+				native.DioOff(m.Pin, m.Sender, m.Interuptor)
 			}
 			w.Header().Set("Content-Type", "application/json")
 			w.Write([]byte(body))
