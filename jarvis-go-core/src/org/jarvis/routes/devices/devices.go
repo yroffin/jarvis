@@ -6,7 +6,7 @@ import http "net/http"
 import "encoding/json"
 import "io/ioutil"
 import "fmt"
-import "org/jarvis/native"
+import native "org/jarvis/native"
 
 import (
 	log "github.com/Sirupsen/logrus"
