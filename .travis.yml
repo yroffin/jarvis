@@ -5,6 +5,9 @@ go:
   - 1.6
 jdk:
   - oraclejdk8
+env:
+  - ARCH=x64
+  - ARCH=arm
 before_install:
   - gimme 1.6
   - RAKE=`which rake`
@@ -13,7 +16,7 @@ before_install:
   - chmod 755 ${RAKE}
 install:
   - echo $TRAVIS_BUILD_DIR
-  - "bash -ex $TRAVIS_BUILD_DIR/travis/travis-ci.sh ls -lrt"
+  - "bash -ex $TRAVIS_BUILD_DIR/jarvi-go-core/travis/travis-ci.sh ls -lrt"
   - exit 0
   - source /home/travis/.gimme/envs/go1.6.env
   - which go
