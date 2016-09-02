@@ -1,7 +1,7 @@
 #!/bin/bash
 # Based on a test script from avsm/ocaml repo https://github.com/avsm/ocaml
 
-CHROOT_DIR=/tmp/arm-chroot
+CHROOT_DIR=${TRAVIS_BUILD_DIR}/arm-chroot
 MIRROR=http://archive.raspbian.org/raspbian
 VERSION=wheezy
 CHROOT_ARCH=armhf
@@ -16,11 +16,8 @@ GUEST_DEPENDENCIES="build-essential git m4 sudo python"
 TEST_COMMAND="make test"
 
 function setup_arm_chroot {
-    # Host dependencies
-    sudo apt-get install -qq -y ${HOST_DEPENDENCIES}
-
     # Create chrooted environment
-    sudo mkdir ${CHROOT_DIR}
+    sudo mkdir -p ${CHROOT_DIR}
     sudo debootstrap --foreign --no-check-gpg --include=fakeroot,build-essential \
         --arch=${CHROOT_ARCH} ${VERSION} ${CHROOT_DIR} ${MIRROR}
     sudo cp /usr/bin/qemu-arm-static ${CHROOT_DIR}/usr/bin/
