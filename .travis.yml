@@ -8,13 +8,13 @@ jdk:
 env:
   - ARCH=x64
   - ARCH=arm
-  addons:
-apt:
-  packages:
-    - debootstrap
-    - qemu-user-static
-    - binfmt-support
-    - sbuild
+addons:
+  apt:
+    packages:
+      - debootstrap
+      - qemu-user-static
+      - binfmt-support
+      - sbuild
 before_install:
   - gimme 1.6
   - RAKE=`which rake`
