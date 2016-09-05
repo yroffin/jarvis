@@ -7,8 +7,10 @@ jdk:
   - oraclejdk8
 addons:
   apt:
+    sources:
+      - debian-sid
     packages:
-      - arm-none-eabi-gcc
+      - gcc-arm-none-eabi
 before_install:
   - gimme 1.6
   - RAKE=`which rake`
