@@ -21,8 +21,7 @@ before_install:
 install:
   - echo $TRAVIS_BUILD_DIR
   - git clone git://git.drogon.net/wiringPi
-  - cd $TRAVIS_BUILD_DIR/wiringPi
-  - find *
+  - cd $TRAVIS_BUILD_DIR/wiringPi/wiringPi
   - CC=arm-linux-gnueabihf make all
   - find *
   - exit 0
