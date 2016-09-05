@@ -32,7 +32,7 @@ install:
   - cd $TRAVIS_BUILD_DIR
   - GOPATH=$TRAVIS_BUILD_DIR/import go get -u $(go list -f '{{join .Imports "\n"}}' ./... | sort | uniq | grep -v "org/jarvis" | grep -v "C")
   - cd $TRAVIS_BUILD_DIR/jarvis-go-core
-  - ls -lrt ${TRAVIS_BUILD_DIR}/wiringPi/wiringPi/*.a
+  - ls -lrt ${TRAVIS_BUILD_DIR}/wiringPi/wiringPi/*.so
   - GOPATH=$TRAVIS_BUILD_DIR/import:${PWD} CC=arm-linux-gnueabihf-gcc GOOS=linux GOARCH=arm GOARM=6 CGO_ENABLED=1 LDFLAGS="-L${TRAVIS_BUILD_DIR}/wiringPi/wiringPi -lwiringPi" go install -installsuffix cgo ./...
   - find bin
   - mv bin/linux_arm/main jarvis-rest-module-0.0.1-SNAPSHOT.arm
