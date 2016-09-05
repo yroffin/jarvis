@@ -1,4 +1,3 @@
-sudo: required
 language: go java
 env:
   - GIMME_OS=linux GIMME_ARCH=amd64
@@ -6,15 +5,10 @@ go:
   - 1.6
 jdk:
   - oraclejdk8
-env:
-  - ARCH=arm
 addons:
   apt:
     packages:
-      - debootstrap
-      - qemu-user-static
-      - binfmt-support
-      - sbuild
+      - gcc-arm-none-eabi
 before_install:
   - gimme 1.6
   - RAKE=`which rake`
@@ -23,7 +17,7 @@ before_install:
   - chmod 755 ${RAKE}
 install:
   - echo $TRAVIS_BUILD_DIR
-  - "bash -ex $TRAVIS_BUILD_DIR/travis/travis-ci.sh ls -lrt"
+  - "gcc-arm-none-eabi --version"
   - exit 0
   - source /home/travis/.gimme/envs/go1.6.env
   - which go
