@@ -24,7 +24,6 @@ install:
   - cd $TRAVIS_BUILD_DIR/wiringPi/wiringPi
   - CC=arm-linux-gnueabihf make all
   - find *
-  - exit 0
   - source /home/travis/.gimme/envs/go1.6.env
   - which go
   - go version
