@@ -1,26 +1,5 @@
-package syscall
+package native
 
-// #cgo amd64 386 CFLAGS: -DMOCK
-// #cgo arm LDFLAGS:
-// #ifdef WIRINGPI
-// void  delay             	(unsigned int howLong);
-// void  delayMicroseconds 	(unsigned int howLong);
-// unsigned int millis      (void);
-// unsigned int micros      (void);
-// void digitalWrite        (int pin, int value);
-// int  wiringPiSetup       (void);
-// void pinMode             (int pin, int mode);
-// int  setuid      		(int uid);
-// #else
-// void  delay             	(unsigned int howLong) {}
-// void  delayMicroseconds 	(unsigned int howLong) {}
-// unsigned int millis      (void) {}
-// unsigned int micros      (void) {}
-// void digitalWrite        (int pin, int value) {}
-// int  wiringPiSetup       (void) {return 0;}
-// void pinMode             (int pin, int mode) {}
-// int  setuid      		(int uid) {return 0;}
-// #endif
 /*
 // Par Idleman (idleman@idleman.fr - http://blog.idleman.fr)
 // Licence : CC by sa
