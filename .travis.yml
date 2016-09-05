@@ -41,7 +41,7 @@ install:
   - GOPATH=$TRAVIS_BUILD_DIR/import:${PWD} CC=arm-linux-gnueabihf-gcc GOOS=linux GOARCH=arm GOARM=6 CGO_ENABLED=1 LDFLAGS="-L${TRAVIS_BUILD_DIR}/wiringPi/wiringPi -lwiringPi" go install -installsuffix cgo ./...
   - find bin
   - mv bin/linux_arm/main jarvis-rest-module-0.0.1-SNAPSHOT.arm
-  - exit 0
+  # Java
   - cd $TRAVIS_BUILD_DIR/jarvis-core
   - java -version
   - mvn -q install
