@@ -23,7 +23,7 @@ install:
   # wiringPI
   - git clone git://git.drogon.net/wiringPi
   - cd $TRAVIS_BUILD_DIR/wiringPi/wiringPi
-  - CC=arm-linux-gnueabihf make static
+  - CC=arm-linux-gnueabihf make all
   - find *
   # Go
   - source /home/travis/.gimme/envs/go1.6.env
