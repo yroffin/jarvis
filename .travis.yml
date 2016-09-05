@@ -43,6 +43,7 @@ install:
   - find bin
   - ls -lrt bin/linux_arm/main
   - mv bin/linux_arm/main jarvis-rest-module-0.0.1-SNAPSHOT.arm
+  - file jarvis-rest-module-0.0.1-SNAPSHOT.arm
   # Java
   - cd $TRAVIS_BUILD_DIR/jarvis-core
   - java -version
