@@ -12,6 +12,8 @@ before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -qq -y gcc-arm-linux-gnueabihf
   - arm-linux-gnueabihf-gcc --version
+  - wget http://releases.linaro.org/14.08/components/toolchain/binaries/gcc-linaro-arm-linux-gnueabihf-4.9-2014.08_linux.tar.xz
+  - tar xf gcc-linaro-arm-linux-gnueabihf-4.9-2014.08_linux.tar.xz
   # Install golang
   - gimme 1.6
   # Correct rake bug
@@ -20,6 +22,8 @@ before_install:
   - touch ${RAKE}
   - chmod 755 ${RAKE}
 install:
+  - export PATH=$PATH:$PWD/gcc-linaro-arm-linux-gnueabihf-4.9-2014.08_linux/bin
+  - arm-linux-gnueabihf-gcc --version
   - echo $TRAVIS_BUILD_DIR
   # wiringPI
   - git clone git://git.drogon.net/wiringPi
