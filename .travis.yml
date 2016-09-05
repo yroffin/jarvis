@@ -23,7 +23,8 @@ before_install:
   - chmod 755 ${RAKE}
 install:
   - export PATH=$PWD/gcc-linaro-arm-linux-gnueabihf-4.9-2014.08_linux/bin:$PATH
-  - arm-linux-gnueabihf-gcc --version
+  - file $PWD/gcc-linaro-arm-linux-gnueabihf-4.9-2014.08_linux/bin/arm-linux-gnueabihf-gcc
+  - $PWD/gcc-linaro-arm-linux-gnueabihf-4.9-2014.08_linux/bin/arm-linux-gnueabihf-gcc --version
   - echo $TRAVIS_BUILD_DIR
   # wiringPI
   - git clone git://git.drogon.net/wiringPi
