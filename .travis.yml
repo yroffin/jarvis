@@ -23,9 +23,9 @@ install:
   # wiringPI
   - git clone git://git.drogon.net/wiringPi
   - cd $TRAVIS_BUILD_DIR/wiringPi/wiringPi
-  - sed 's!gcc!arm-linux-gnueabihf!g' Makefile > Makefile.tmp
+  - sed 's!gcc!arm-linux-gnueabihf-gcc!g' Makefile > Makefile.tmp
   - mv -f Makefile.tmp Makefile
-  - CC=arm-linux-gnueabihf make all
+  - CC=arm-linux-gnueabihf-gcc make all
   - find *
   # Go
   - source /home/travis/.gimme/envs/go1.6.env
