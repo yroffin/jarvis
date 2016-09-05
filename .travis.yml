@@ -22,14 +22,14 @@ install:
   - echo $TRAVIS_BUILD_DIR
   - git clone git://git.drogon.net/wiringPi
   - cd $TRAVIS_BUILD_DIR/wiringPi/wiringPi
-  - CC=arm-linux-gnueabihf make all
+  - CC=arm-linux-gnueabihf make static
   - find *
   - source /home/travis/.gimme/envs/go1.6.env
   - which go
   - go version
   - GOPATH=~/import go get -u $(go list -f '{{join .Imports "\n"}}' ./... | sort | uniq | grep -v "org/jarvis" | grep -v "C")
   - cd $TRAVIS_BUILD_DIR/jarvis-go-core
-  - GOPATH=~/import:${PWD} CC=arm-linux-gnueabihf-gcc GOOS=linux GOARCH=arm GOARM=6 CGO_ENABLED=1 LDFLAGS="-L$TRAVIS_BUILD_DIR/wiringPi/wiringPi -llibwiringPi" go install -installsuffix cgo ./...
+  - GOPATH=~/import:${PWD} CC=arm-linux-gnueabihf-gcc GOOS=linux GOARCH=arm GOARM=6 CGO_ENABLED=1 CFLAGS="-L$TRAVIS_BUILD_DIR/wiringPi/wiringPi -lwiringPi" go install -installsuffix cgo ./...
   - find bin
   - mv bin/linux_arm/main jarvis-rest-module-0.0.1-SNAPSHOT.arm
   - exit 0
