@@ -19,17 +19,17 @@ before_install:
   - chmod 755 ${RAKE}
 install:
   - echo $TRAVIS_BUILD_DIR
-  - "gcc-arm-none-eabi --version"
-  - exit 0
+  - "arm-none-eabi-gcc --version"
   - source /home/travis/.gimme/envs/go1.6.env
   - which go
   - go version
   - GOPATH=~/import go get -u $(go list -f '{{join .Imports "\n"}}' ./... | sort | uniq | grep -v "org/jarvis" | grep -v "C")
-  - cd /home/travis/build/yroffin/jarvis/jarvis-go-core
+  - cd $TRAVIS_BUILD_DIR/jarvis-go-core
   - GOPATH=~/import:${PWD} GOOS=linux GOARCH=arm GOARM=6 CGO_ENABLED=1 CFLAGS=-DWIRINGPI go install -installsuffix cgo ./...
   - find bin
   - mv bin/linux_arm/main jarvis-rest-module-0.0.1-SNAPSHOT.arm
-  - cd /home/travis/build/yroffin/jarvis/jarvis-core
+  - exit 0
+  - cd $TRAVIS_BUILD_DIR/jarvis-core
   - java -version
   - mvn -q install
 deploy:
