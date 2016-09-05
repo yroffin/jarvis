@@ -10,7 +10,7 @@ addons:
     sources:
       - debian-sid
     packages:
-      - gcc-arm-none-eabi
+      - gcc-arm-linux-gnueabihf
 before_install:
   - gimme 1.6
   - RAKE=`which rake`
@@ -19,13 +19,13 @@ before_install:
   - chmod 755 ${RAKE}
 install:
   - echo $TRAVIS_BUILD_DIR
-  - "arm-none-eabi-gcc --version"
+  - "gcc-arm-linux-gnueabihf --version"
   - source /home/travis/.gimme/envs/go1.6.env
   - which go
   - go version
   - GOPATH=~/import go get -u $(go list -f '{{join .Imports "\n"}}' ./... | sort | uniq | grep -v "org/jarvis" | grep -v "C")
   - cd $TRAVIS_BUILD_DIR/jarvis-go-core
-  - GOPATH=~/import:${PWD} CC=arm-none-eabi-gcc GOOS=linux GOARCH=arm GOARM=6 CGO_ENABLED=1 CFLAGS=-DWIRINGPI go install -installsuffix cgo ./...
+  - GOPATH=~/import:${PWD} CC=gcc-arm-linux-gnueabihf GOOS=linux GOARCH=arm GOARM=6 CGO_ENABLED=1 CFLAGS=-DWIRINGPI go install -installsuffix cgo ./...
   - find bin
   - mv bin/linux_arm/main jarvis-rest-module-0.0.1-SNAPSHOT.arm
   - exit 0
