@@ -9,7 +9,7 @@ jdk:
 before_install:
   # Install the arm32 cross-compiler
   - sudo apt-get update -qq
-  - sudo apt-get install -y gcc-arm-linux-gnueabihf
+  - sudo apt-get install -qq -y gcc-arm-linux-gnueabihf
   - arm-linux-gnueabihf-gcc --version
   # Install golang
   - gimme 1.6
@@ -22,6 +22,7 @@ install:
   - echo $TRAVIS_BUILD_DIR
   - git clone git://git.drogon.net/wiringPi
   - cd $TRAVIS_BUILD_DIR/wiringPi
+  - find all
   - CC=arm-linux-gnueabihf make all
   - find *
   - exit 0
