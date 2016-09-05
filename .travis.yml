@@ -26,7 +26,7 @@ install:
   - export PATH=$PWD/gcc-linaro-arm-linux-gnueabihf-4.9-2014.08_linux/bin:$PATH
   - file $PWD/gcc-linaro-arm-linux-gnueabihf-4.9-2014.08_linux/bin/arm-linux-gnueabihf-gcc-4.9.2
   - mv $PWD/gcc-linaro-arm-linux-gnueabihf-4.9-2014.08_linux $PWD/usr
-  - chroot $PWD /usr/bin/arm-linux-gnueabihf-gcc-4.9.2 --version
+  - sudo chroot $PWD /usr/bin/arm-linux-gnueabihf-gcc-4.9.2 --version
   - echo $TRAVIS_BUILD_DIR
   # wiringPI
   - git clone git://git.drogon.net/wiringPi
