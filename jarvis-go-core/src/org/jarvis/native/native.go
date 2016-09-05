@@ -1,5 +1,6 @@
 package native
 
+// #cgo arm LDFLAGS: -lwiringPi
 /*
 // Par Idleman (idleman@idleman.fr - http://blog.idleman.fr)
 // Licence : CC by sa
