@@ -27,7 +27,7 @@ install:
   - cd $TRAVIS_BUILD_DIR/wiringPi/wiringPi
   - sed 's!gcc!arm-linux-gnueabihf-gcc!g' Makefile > Makefile.tmp
   - mv -f Makefile.tmp Makefile
-  - CC=arm-linux-gnueabihf-gcc make all
+  - CC=arm-linux-gnueabihf-gcc make static
   - find *
   # Go
   - source /home/travis/.gimme/envs/go1.6.env
@@ -36,10 +36,10 @@ install:
   - cd $TRAVIS_BUILD_DIR
   - GOPATH=$TRAVIS_BUILD_DIR/import go get -u $(go list -f '{{join .Imports "\n"}}' ./... | sort | uniq | grep -v "org/jarvis" | grep -v "C")
   - cd $TRAVIS_BUILD_DIR/jarvis-go-core
-  - ls -lrt ${TRAVIS_BUILD_DIR}/wiringPi/wiringPi/*.so.*
-  - nm ${TRAVIS_BUILD_DIR}/wiringPi/wiringPi/*.so.*
-  - sudo cp ${TRAVIS_BUILD_DIR}/wiringPi/wiringPi/*.so.* /usr/lib/libwiringPi.so
-  - file /usr/lib/libwiringPi.so
+  - ls -lrt ${TRAVIS_BUILD_DIR}/wiringPi/wiringPi/*.a.*
+  - nm ${TRAVIS_BUILD_DIR}/wiringPi/wiringPi/*.a.*
+  - sudo cp ${TRAVIS_BUILD_DIR}/wiringPi/wiringPi/*.a.* /usr/lib/libwiringPi.a
+  - file /usr/lib/libwiringPi.a
   - GOPATH=$TRAVIS_BUILD_DIR/import:${PWD} CC=arm-linux-gnueabihf-gcc GOOS=linux GOARCH=arm GOARM=6 CGO_ENABLED=1 LDFLAGS="-L${TRAVIS_BUILD_DIR}/wiringPi/wiringPi -lwiringPi" go install -installsuffix cgo ./...
   - find bin
   - ls -lrt bin/linux_arm/main
