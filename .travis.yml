@@ -9,12 +9,10 @@ jdk:
   - oraclejdk8
 before_install:
   # Install the arm32 cross-compiler
+  - sudo apt-add-repository 'deb http://archive.ubuntu.com/ubuntu vivid main'
   - sudo apt-get update -qq
-  - sudo apt-get upgrade -qq
   - sudo apt-get install -qq -y gcc-arm-linux-gnueabihf
   - arm-linux-gnueabihf-gcc --version
-  - wget http://releases.linaro.org/14.08/components/toolchain/binaries/gcc-linaro-arm-linux-gnueabihf-4.9-2014.08_linux.tar.xz
-  - tar xfv gcc-linaro-arm-linux-gnueabihf-4.9-2014.08_linux.tar.xz
   # Install golang
   - gimme 1.6
   # Correct rake bug
@@ -23,10 +21,6 @@ before_install:
   - touch ${RAKE}
   - chmod 755 ${RAKE}
 install:
-  - export PATH=$PWD/gcc-linaro-arm-linux-gnueabihf-4.9-2014.08_linux/bin:$PATH
-  - file $PWD/gcc-linaro-arm-linux-gnueabihf-4.9-2014.08_linux/bin/arm-linux-gnueabihf-gcc-4.9.2
-  - mv $PWD/gcc-linaro-arm-linux-gnueabihf-4.9-2014.08_linux $PWD/usr
-  - sudo chroot $PWD /usr/bin/arm-linux-gnueabihf-gcc-4.9.2 --version
   - echo $TRAVIS_BUILD_DIR
   # wiringPI
   - git clone git://git.drogon.net/wiringPi
