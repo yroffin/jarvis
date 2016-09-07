@@ -1,5 +1,6 @@
 package native
 
+// #cgo arm CFLAGS: -marm
 // #cgo arm LDFLAGS: -lwiringPi
 /*
 // Par Idleman (idleman@idleman.fr - http://blog.idleman.fr)
