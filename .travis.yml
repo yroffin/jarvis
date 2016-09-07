@@ -27,7 +27,10 @@ install:
   - cd $TRAVIS_BUILD_DIR/wiringPi/wiringPi
   - sed 's!gcc!arm-linux-gnueabihf-gcc!g' Makefile > Makefile.tmp
   - mv -f Makefile.tmp Makefile
-  - CC=arm-linux-gnueabihf-gcc CFLAGS="-march=armv6j" make all
+  - sed 's!PIC!PIC -mcpu=arm1176jzf-s -march=armv6zk -mfpu=vfp -mfloat-abi=hard!g' Makefile > Makefile.tmp
+  - mv -f Makefile.tmp Makefile
+  - make all
+  - readelf libwiringPi.so
   - find *
   # Go
   - source /home/travis/.gimme/envs/go1.6.env
