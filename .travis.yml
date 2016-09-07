@@ -39,7 +39,7 @@ install:
   - ls -lrt ${TRAVIS_BUILD_DIR}/wiringPi/wiringPi/*.so.*
   - nm ${TRAVIS_BUILD_DIR}/wiringPi/wiringPi/*.so.*
   - sudo cp ${TRAVIS_BUILD_DIR}/wiringPi/wiringPi/*.so.* /usr/lib/libwiringPi.so
-  - file /usr/lib/libwiringPi.a
+  - file /usr/lib/libwiringPi.so
   - GOPATH=$TRAVIS_BUILD_DIR/import:$PWD CC=arm-linux-gnueabihf-gcc GOOS=linux GOARCH=arm GOARM=6 CGO_ENABLED=1 CFLAGS="-march=armv6j" LDFLAGS="-march=armv6j -L${TRAVIS_BUILD_DIR}/wiringPi/wiringPi -lwiringPi" go install -installsuffix armv6j ./...
   - find bin
   - ls -lrt bin/linux_arm/main
