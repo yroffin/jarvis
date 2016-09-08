@@ -30,7 +30,8 @@ install:
   - cd $TRAVIS_BUILD_DIR
   - GOPATH=$TRAVIS_BUILD_DIR/import go get -u $(go list -f '{{join .Imports "\n"}}' ./... | sort | uniq | grep -v "org/jarvis" | grep -v "C")
   - cd $TRAVIS_BUILD_DIR/jarvis-go-core
-  - GOIMPORT=$TRAVIS_BUILD_DIR/import make clean all
+  - ls -lrt
+  - GOIMPORT=$TRAVIS_BUILD_DIR/import make all
   - exit 0
   # Java
   - cd $TRAVIS_BUILD_DIR/jarvis-core
