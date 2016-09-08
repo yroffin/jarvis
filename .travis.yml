@@ -23,18 +23,7 @@ before_install:
   - touch ${RAKE}
   - chmod 755 ${RAKE}
 install:
-  - echo $TRAVIS_BUILD_DIR
-  # wiringPI
-  - git clone git://git.drogon.net/wiringPi
-  - cd $TRAVIS_BUILD_DIR/wiringPi/wiringPi
-  - sed 's!gcc!arm-linux-gnueabi-gcc!g' Makefile > Makefile.tmp
-  - mv -f Makefile.tmp Makefile
-  - sed 's!PIC!PIC -march=armv6j -mfloat-abi=soft!g' Makefile > Makefile.tmp
-  - mv -f Makefile.tmp Makefile
-  - make all
-  - readelf libwiringPi.so
-  - find *
-  # Go
+  # Module build
   - source /home/travis/.gimme/envs/go1.6.env
   - which go
   - go version
