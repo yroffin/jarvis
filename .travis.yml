@@ -52,6 +52,6 @@ deploy:
   #- "${TRAVIS_BUILD_DIR}/jarvis-core/jarvis-rest-module-aiml/target/jarvis-rest-module-aiml-0.0.1-SNAPSHOT.jar"
   skip_cleanup: true
   on:
-    tags: false
+    tags: true
     all_branches: true
 after_deploy: echo "deploiement terminé"
