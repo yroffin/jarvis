@@ -13,29 +13,25 @@ clean:
 	rm -f ${MODULE_ARMEL}
 	rm -f ${MODULE_ARMHF}
 
-${WIRINGPI_ARMEL}/libwiringPi.so.2.32:
+${MODULE_ARMEL}:
 	# wiringPI
 	git clone git://git.drogon.net/wiringPi ${WHERE}/armel
 	cd ${WIRINGPI_ARMEL} && sed 's!gcc!arm-linux-gnueabi-gcc!g' Makefile > Makefile.tmp && mv -f Makefile.tmp Makefile
 	cd ${WIRINGPI_ARMEL} && sed 's!PIC!PIC -march=armv6j -mfloat-abi=soft!g' Makefile > Makefile.tmp && mv -f Makefile.tmp Makefile
 	cd ${WIRINGPI_ARMEL} && make all
 	readelf -A ${WIRINGPI_ARMEL}/libwiringPi.so.2.32
-
-${MODULE_ARMEL}: ${WIRINGPI_ARMEL}/libwiringPi.so.2.32
 	# module
-	GOPATH=${GOIMPORT}:${WHERE} CC=arm-linux-gnueabi-gcc GOOS=linux GOARCH=arm GOARM=6 CGO_ENABLED=1 CGO_CFLAGS="-march=armv6j -mfloat-abi=soft" CGO_LDFLAGS="-L${WIRINGPI_ARMEL} -lwiringPi" go install -installsuffix armel ./...
+	GOPATH=${GOIMPORT}:${WHERE} WIRINGPI_ARMEL=${WIRINGPI_ARMEL} CC=arm-linux-gnueabi-gcc GOOS=linux GOARCH=arm GOARM=6 CGO_ENABLED=1 CGO_CFLAGS="-march=armv6j -mfloat-abi=soft" CGO_LDFLAGS="-L${WIRINGPI_ARMEL} -lwiringPi" go install -installsuffix armel ./...
 	mv -f bin/linux_arm/main jarvis-rest-module-0.0.1-SNAPSHOT.armel
 
-${WIRINGPI_ARMHF}/libwiringPi.so.2.32:
+${MODULE_ARMHF}:
 	# wiringPI
 	git clone git://git.drogon.net/wiringPi ${WHERE}/armhf
 	cd ${WIRINGPI_ARMHF} && sed 's!gcc!arm-linux-gnueabihf-gcc!g' Makefile > Makefile.tmp && mv -f Makefile.tmp Makefile
 	cd ${WIRINGPI_ARMHF} && sed 's!PIC!PIC -march=armv7 -mfloat-abi=hard!g' Makefile > Makefile.tmp && mv -f Makefile.tmp Makefile
 	cd ${WIRINGPI_ARMHF} && make all
 	readelf -A ${WIRINGPI_ARMHF}/libwiringPi.so.2.32
-
-${MODULE_ARMHF}: ${WIRINGPI_ARMHF}/libwiringPi.so.2.32
 	# module
-	GOPATH=${GOIMPORT}:${WHERE} CC=arm-linux-gnueabihf-gcc GOOS=linux GOARCH=arm GOARM=7 CGO_ENABLED=1 CGO_CFLAGS="" CGO_LDFLAGS="-L${WIRINGPI_ARMHF} -lwiringPi" go install -installsuffix armhf ./...
+	GOPATH=${GOIMPORT}:${WHERE} WIRINGPI_ARMHF=${WIRINGPI_ARMHF} CC=arm-linux-gnueabihf-gcc GOOS=linux GOARCH=arm GOARM=7 CGO_ENABLED=1 CGO_CFLAGS="" CGO_LDFLAGS="-L${WIRINGPI_ARMHF} -lwiringPi" go install -installsuffix armhf ./...
 	mv -f bin/linux_arm/main jarvis-rest-module-0.0.1-SNAPSHOT.armhf
 
