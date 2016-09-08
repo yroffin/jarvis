@@ -27,7 +27,10 @@ install:
   - cd $TRAVIS_BUILD_DIR/wiringPi/wiringPi
   - sed 's!gcc!arm-linux-gnueabihf-gcc!g' Makefile > Makefile.tmp
   - mv -f Makefile.tmp Makefile
-  - CC=arm-linux-gnueabihf-gcc make static
+  - sed 's!PIC!PIC -mcpu=arm1176jzf-s -march=armv6zk -mfpu=vfp -mfloat-abi=hard!g' Makefile > Makefile.tmp
+  - mv -f Makefile.tmp Makefile
+  - make all
+  - readelf libwiringPi.so
   - find *
   # Go
   - source /home/travis/.gimme/envs/go1.6.env
@@ -36,20 +39,20 @@ install:
   - cd $TRAVIS_BUILD_DIR
   - GOPATH=$TRAVIS_BUILD_DIR/import go get -u $(go list -f '{{join .Imports "\n"}}' ./... | sort | uniq | grep -v "org/jarvis" | grep -v "C")
   - cd $TRAVIS_BUILD_DIR/jarvis-go-core
-  - ls -lrt ${TRAVIS_BUILD_DIR}/wiringPi/wiringPi/*.a
-  - nm ${TRAVIS_BUILD_DIR}/wiringPi/wiringPi/*.a
-  - sudo cp ${TRAVIS_BUILD_DIR}/wiringPi/wiringPi/*.a /usr/lib/libwiringPi.a
-  - file /usr/lib/libwiringPi.a
-  - GOPATH=$TRAVIS_BUILD_DIR/import:${PWD} CC=arm-linux-gnueabihf-gcc GOOS=linux GOARCH=arm GOARM=6 CGO_ENABLED=1 CFLAGS="-static" LDFLAGS="-static -L${TRAVIS_BUILD_DIR}/wiringPi/wiringPi -lwiringPi" go install --ldflags '-extldflags "-static"' -installsuffix cgo ./...
-  - find bin
-  - ls -lrt bin/linux_arm/main
-  - mv bin/linux_arm/main jarvis-rest-module-0.0.1-SNAPSHOT.arm
-  - file jarvis-rest-module-0.0.1-SNAPSHOT.arm
-  - GOPATH=$TRAVIS_BUILD_DIR/import:${PWD} CC=arm-linux-gnueabihf-gcc GOOS=linux GOARCH=arm GOARM=6 CGO_ENABLED=1 CFLAGS="-march=armv6j -static" LDFLAGS="-march=armv6j -static -L${TRAVIS_BUILD_DIR}/wiringPi/wiringPi -lwiringPi" go install --ldflags '-extldflags "-static"' -installsuffix cgo ./...
+  - ls -lrt ${TRAVIS_BUILD_DIR}/wiringPi/wiringPi/*.so.*
+  - nm ${TRAVIS_BUILD_DIR}/wiringPi/wiringPi/*.so.*
+  - sudo cp ${TRAVIS_BUILD_DIR}/wiringPi/wiringPi/*.so.* /usr/lib/libwiringPi.so
+  - file /usr/lib/libwiringPi.so
+  - GOPATH=$TRAVIS_BUILD_DIR/import:$PWD CC=arm-linux-gnueabihf-gcc GOOS=linux GOARCH=arm GOARM=6 CGO_ENABLED=1 CFLAGS="-march=armv6j" LDFLAGS="-march=armv6j -L${TRAVIS_BUILD_DIR}/wiringPi/wiringPi -lwiringPi" go install -installsuffix armv6j ./...
   - find bin
   - ls -lrt bin/linux_arm/main
   - mv bin/linux_arm/main jarvis-rest-module-0.0.1-SNAPSHOT.arm6j
   - file jarvis-rest-module-0.0.1-SNAPSHOT.arm6j
+  - GOPATH=$TRAVIS_BUILD_DIR/import:$PWD CC=arm-linux-gnueabihf-gcc GOOS=linux GOARCH=arm GOARM=7 CGO_ENABLED=1 CFLAGS="-march=armv7" LDFLAGS="-march=armv7 -L${TRAVIS_BUILD_DIR}/wiringPi/wiringPi -lwiringPi" go install -installsuffix armv7 ./...
+  - find bin
+  - ls -lrt bin/linux_arm/main
+  - mv bin/linux_arm/main jarvis-rest-module-0.0.1-SNAPSHOT.arm
+  - file jarvis-rest-module-0.0.1-SNAPSHOT.arm
   # Java
   - cd $TRAVIS_BUILD_DIR/jarvis-core
   - java -version
@@ -70,6 +73,6 @@ deploy:
   #- "${TRAVIS_BUILD_DIR}/jarvis-core/jarvis-rest-module-aiml/target/jarvis-rest-module-aiml-0.0.1-SNAPSHOT.jar"
   skip_cleanup: true
   on:
-    tags: true
+    tags: false
     all_branches: true
 after_deploy: echo "deploiement terminé"
