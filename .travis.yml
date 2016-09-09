@@ -32,7 +32,6 @@ install:
   - cd $TRAVIS_BUILD_DIR/jarvis-go-core
   - ls -lrt
   - GOIMPORT=$TRAVIS_BUILD_DIR/import make all
-  - exit 0
   # Java
   - cd $TRAVIS_BUILD_DIR/jarvis-core
   - java -version
@@ -45,12 +44,12 @@ deploy:
   - "${TRAVIS_BUILD_DIR}/jarvis-go-core/jarvis-rest-module-0.0.1-SNAPSHOT.armel"
   - "${TRAVIS_BUILD_DIR}/jarvis-go-core/jarvis-rest-module-0.0.1-SNAPSHOT.armhf"
   - "${TRAVIS_BUILD_DIR}/jarvis-go-core/module.properties"
-  #- "${TRAVIS_BUILD_DIR}/jarvis-core/jarvis-core-server/src/test/resources/sample.json"
-  #- "${TRAVIS_BUILD_DIR}/jarvis-core/jarvis-core-server/target/jarvis-core-server-0.0.1-SNAPSHOT.jar"
-  #- "${TRAVIS_BUILD_DIR}/jarvis-core/jarvis-rest-module-dio/target/jarvis-rest-module-dio-0.0.1-SNAPSHOT.jar"
-  #- "${TRAVIS_BUILD_DIR}/jarvis-core/jarvis-rest-module-voice/target/jarvis-rest-module-voice-0.0.1-SNAPSHOT.jar"
-  #- "${TRAVIS_BUILD_DIR}/jarvis-core/jarvis-rest-module-exec/target/jarvis-rest-module-exec-0.0.1-SNAPSHOT.jar"
-  #- "${TRAVIS_BUILD_DIR}/jarvis-core/jarvis-rest-module-aiml/target/jarvis-rest-module-aiml-0.0.1-SNAPSHOT.jar"
+  - "${TRAVIS_BUILD_DIR}/jarvis-core/jarvis-core-server/src/test/resources/sample.json"
+  - "${TRAVIS_BUILD_DIR}/jarvis-core/jarvis-core-server/target/jarvis-core-server-0.0.1-SNAPSHOT.jar"
+  - "${TRAVIS_BUILD_DIR}/jarvis-core/jarvis-rest-module-dio/target/jarvis-rest-module-dio-0.0.1-SNAPSHOT.jar"
+  - "${TRAVIS_BUILD_DIR}/jarvis-core/jarvis-rest-module-voice/target/jarvis-rest-module-voice-0.0.1-SNAPSHOT.jar"
+  - "${TRAVIS_BUILD_DIR}/jarvis-core/jarvis-rest-module-exec/target/jarvis-rest-module-exec-0.0.1-SNAPSHOT.jar"
+  - "${TRAVIS_BUILD_DIR}/jarvis-core/jarvis-rest-module-aiml/target/jarvis-rest-module-aiml-0.0.1-SNAPSHOT.jar"
   skip_cleanup: true
   on:
     tags: true
