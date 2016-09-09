@@ -1,6 +1,7 @@
-package connectors
+package types
 
-type ConnectorBean struct {
+// Connector : connector struct
+type Connector struct {
 	Name       string `json:"name"`
 	Icon       string `json:"icon"`
 	Adress     string `json:"adress"`
