@@ -35,7 +35,7 @@ install:
   # Java
   - cd $TRAVIS_BUILD_DIR/jarvis-core
   - java -version
-  - echo mvn -q install
+  - mvn -q install
 deploy:
   provider: releases
   overwrite: true
