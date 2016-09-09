@@ -1,0 +1,11 @@
+package: github.com/richardlt/jarvis/jarvis-go-core
+import:
+- package: github.com/Sirupsen/logrus
+- package: github.com/labstack/echo
+  subpackages:
+  - engine/standard
+  - middleware
+- package: github.com/parnurzeal/gorequest
+- package: github.com/robfig/cron
+- package: github.com/spf13/cobra
+- package: github.com/spf13/viper
