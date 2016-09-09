@@ -23,6 +23,9 @@ before_install:
   - touch ${RAKE}
   - chmod 755 ${RAKE}
 install:
+  - go get -v github.com/Masterminds/glide
+  - cd $GOPATH/src/github.com/Masterminds/glide && git checkout e73500c735917e39a8b782e0632418ab70250341 && go install && cd -
+  - glide install
   # Module build
   - source /home/travis/.gimme/envs/go1.6.env
   - which go
