@@ -22,7 +22,7 @@ ${MODULE_ARMEL}:
 	sudo mv -f ${WIRINGPI_ARMEL}/libwiringPi.so.2.32 /usr/lib
 	readelf -A /usr/lib/libwiringPi.so.2.32
 	# module
-	GOPATH=${GOIMPORT}:${WHERE} CC=arm-linux-gnueabi-gcc GOOS=linux GOARCH=arm GOARM=6 CGO_ENABLED=1 CGO_CFLAGS="-march=armv6j -mfloat-abi=soft" CGO_LDFLAGS="-lwiringPix" go install -installsuffix armel ./...
+	GOPATH=${GOIMPORT}:${WHERE} CC=arm-linux-gnueabi-gcc GOOS=linux GOARCH=arm GOARM=6 CGO_ENABLED=1 CGO_CFLAGS="-march=armv6j -mfloat-abi=soft" CGO_LDFLAGS="-lwiringPi" go install -installsuffix armel ./...
 	mv -f bin/linux_arm/main jarvis-rest-module-0.0.1-SNAPSHOT.armel
 
 ${MODULE_ARMHF}:
