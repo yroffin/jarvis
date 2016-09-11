@@ -1,6 +1,6 @@
 sudo: required
 dist: trusty
-language: go
+language: java
 env:
 jdk:
   - oraclejdk8
