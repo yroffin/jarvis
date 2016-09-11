@@ -1,40 +1,16 @@
 sudo: required
 dist: trusty
-language: go java
+language: go
 env:
-  - GIMME_OS=linux GIMME_ARCH=amd64 KERNEL=4.1.17
-go:
-  - 1.6
 jdk:
   - oraclejdk8
 before_install:
-  # Install the arm32 cross-compiler
-  - sudo apt-add-repository 'deb http://archive.ubuntu.com/ubuntu vivid main'
-  - sudo apt-get update -qq
-  - sudo apt-get install -qq -y gcc-arm-linux-gnueabi
-  - arm-linux-gnueabi-gcc --version
-  - sudo apt-get install -qq -y gcc-arm-linux-gnueabihf
-  - arm-linux-gnueabihf-gcc --version
-  # Install golang
-  - gimme 1.6
   # Correct rake bug
   - RAKE=`which rake`
   - mv `which rake` `which rake`.old
   - touch ${RAKE}
   - chmod 755 ${RAKE}
 install:
-  - go get -v github.com/Masterminds/glide
-  - cd $GOPATH/src/github.com/Masterminds/glide && git checkout e73500c735917e39a8b782e0632418ab70250341 && go install && cd -
-  - glide install
-  # Module build
-  - source /home/travis/.gimme/envs/go1.6.env
-  - which go
-  - go version
-  - cd $TRAVIS_BUILD_DIR
-  - GOPATH=$TRAVIS_BUILD_DIR/import go get -u $(go list -f '{{join .Imports "\n"}}' ./... | sort | uniq | grep -v "org/jarvis" | grep -v "C")
-  - cd $TRAVIS_BUILD_DIR/jarvis-go-core
-  - ls -lrt
-  - GOIMPORT=$TRAVIS_BUILD_DIR/import make all
   # Java
   - cd $TRAVIS_BUILD_DIR/jarvis-core
   - java -version
@@ -44,9 +20,6 @@ deploy:
   overwrite: true
   api_key: "$GITHUB_OAUTH2_KEY"
   file:
-  - "${TRAVIS_BUILD_DIR}/jarvis-go-core/jarvis-rest-module-0.0.1-SNAPSHOT.armel"
-  - "${TRAVIS_BUILD_DIR}/jarvis-go-core/jarvis-rest-module-0.0.1-SNAPSHOT.armhf"
-  - "${TRAVIS_BUILD_DIR}/jarvis-go-core/module.properties"
   - "${TRAVIS_BUILD_DIR}/jarvis-core/jarvis-core-server/src/test/resources/sample.json"
   - "${TRAVIS_BUILD_DIR}/jarvis-core/jarvis-core-server/target/jarvis-core-server-0.0.1-SNAPSHOT.jar"
   - "${TRAVIS_BUILD_DIR}/jarvis-core/jarvis-rest-module-dio/target/jarvis-rest-module-dio-0.0.1-SNAPSHOT.jar"
