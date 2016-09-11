@@ -6,8 +6,8 @@ Just Another Ridiculous Very Inteligent System
 [![Build Status](https://snap-ci.com/yroffin/jarvis/branch/master/build_image)](https://snap-ci.com/yroffin/jarvis/branch/master)
 [![Build Status](https://travis-ci.org/yroffin/jarvis.svg?branch=master)](https://travis-ci.org/yroffin/jarvis)
 
-Last release [here](https://github.com/yroffin/jarvis/releases/latest)
-
+Last release [here](https://github.com/yroffin/jarvis/releases/latest) for java modules
+And [here](https://github.com/yroffin/jarvis-go-ext/releases) for golang modules
 
 Introduction
 ------------
