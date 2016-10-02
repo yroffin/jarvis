@@ -16,6 +16,11 @@
 
 package org.jarvis.core.resources.api.device;
 
+import static spark.Spark.get;
+
+import java.io.IOException;
+import java.util.List;
+
 import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.model.bean.scenario.TriggerBean;
 import org.jarvis.core.model.bean.tools.CronBean;
@@ -32,6 +37,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+
+import spark.Request;
+import spark.Response;
+import spark.Route;
+import spark.Spark;
 
 /**
  * Trigger resource
@@ -66,6 +76,40 @@ public class ApiTriggerResources extends ApiLinkedResources<TriggerRest,TriggerB
 		 * trigger -> cron
 		 */
 		declare(TRIGGER_RESOURCE, CRON_RESOURCE, apiCronResources, apiHrefTriggerCronResources, CRON, SORTKEY, HREF);
+		/**
+		 * patch
+		 */
+		Spark.patch("/api/"+TRIGGER_RESOURCE+"/:name", patchResources());
+	}
+
+	/**
+	 * activate this trigger by its name
+	 * @return
+	 */
+	protected Route patchResources() {
+		return new Route() {
+		    @Override
+			public Object handle(Request request, Response response) {
+		    	String name = request.params(":name");
+		    	List<TriggerBean> triggers = doFindByAttributeBean("name", name);
+		    	/**
+		    	 * only one row accepted
+		    	 */
+		    	if(triggers.size() != 1) {
+		    		response.status(404);
+		    		return "";
+		    	}
+		    	/**
+		    	 * execute it
+		    	 */
+		    	try {
+					execute(triggers.get(0),(GenericMap) mapper.readValue(request.body(),GenericMap.class));
+		    		return "";
+				} catch (IOException e) {
+					throw new TechnicalException(e);
+				}
+		    }
+		};
 	}
 
 	@Override

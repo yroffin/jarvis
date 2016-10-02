@@ -242,11 +242,14 @@ public class Neo4jService<S extends GenericBean> {
 				throw new TechnicalNotFoundException(id);
 			}
 		} catch (InstantiationException e) {
-			logger.error("Exception", e);
+			logger.error("Instanciation Exception", e);
 			throw new TechnicalException(e);
 		} catch (IllegalAccessException e) {
-			logger.error("Exception", e);
+			logger.error("Illegal Access Exception", e);
 			throw new TechnicalException(e);
+		} catch (TechnicalNotFoundException e) {
+			logger.error("Not found Exception", e);
+			throw e;
 		} catch (Exception e) {
 			logger.error("Exception", e);
 			throw new TechnicalException(e);
