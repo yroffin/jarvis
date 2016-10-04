@@ -19,9 +19,12 @@
 		<jersey.version>2.22.1</jersey.version>
 		<mockito.version>1.10.19</mockito.version>
 		<marytts.version>5.1.2</marytts.version>
+		<swagger.version>1.5.10</swagger.version>
 		<spark-pac4j.version>1.1.0</spark-pac4j.version>
 		<pac4j.version>1.8.8</pac4j.version>
 		<slf4j.version>1.7.7</slf4j.version>
+		<reflections.version>0.9.10</reflections.version>
+		<rs-api.version>2.0.1</rs-api.version>
 	</properties>
 
 	<distributionManagement>
@@ -137,6 +140,40 @@
 				<version>${project.version}</version>
 			</dependency>
 
+			<!-- https://mvnrepository.com/artifact/io.swagger/swagger-core -->
+			<dependency>
+			    <groupId>io.swagger</groupId>
+			    <artifactId>swagger-core</artifactId>
+			    <version>${swagger.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>io.swagger</groupId>
+			    <artifactId>swagger-jaxrs</artifactId>
+			    <version>${swagger.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>io.swagger</groupId>
+			    <artifactId>swagger-jaxrs</artifactId>
+			    <version>${swagger.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>io.swagger</groupId>
+			    <artifactId>swagger-annotations</artifactId>
+			    <version>${swagger.version}</version>
+			</dependency>
+			<!-- reflection -->
+			<dependency>
+				<groupId>org.reflections</groupId>
+				<artifactId>reflections</artifactId>
+				<version>${reflections.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.hibernate</groupId>
+			    <artifactId>hibernate-validator</artifactId>
+			    <version>5.2.2.Final</version>
+			</dependency>
+
+			<!-- pac4j -->
 			<dependency>
 				<groupId>org.pac4j</groupId>
 				<artifactId>pac4j-oauth</artifactId>
@@ -384,6 +421,11 @@
 			</dependency>
 			<dependency>
 				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-annotations</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
 				<artifactId>jackson-databind</artifactId>
 				<version>${jackson.version}</version>
 			</dependency>
@@ -440,6 +482,7 @@
 		<module>jarvis-rest-client</module>
 		<module>jarvis-rest-api-zway</module>
 		<module>jarvis-rest-api-slack</module>
+		<module>jarvis-swagger-ui</module>
 	</modules>
 
 	<repositories>

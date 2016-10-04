@@ -43,6 +43,7 @@ public class PluginShellService extends PluginService {
 	 * @throws IOException 
 	 */
 	public GenericMap command(GenericMap command, GenericMap args) throws IOException, InterruptedException {
+		@SuppressWarnings("unused")
 		String result = ProcessExec.execute((String) command.get("body"));
 		return (GenericMap) new TreeMap<String,Object>();
 	}
@@ -55,6 +56,7 @@ public class PluginShellService extends PluginService {
 	 * @throws IOException 
 	 */
 	public GenericMap shell(GenericMap command, GenericMap args) throws IOException, InterruptedException {
+		@SuppressWarnings("unused")
 		String result = ProcessExec.execute((String) command.get("body"));
 		return (GenericMap) new TreeMap<String,Object>();
 	}

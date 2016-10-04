@@ -13,20 +13,62 @@ import ma.glasnost.orika.impl.DefaultMapperFactory;
  */
 public abstract class ApiMapper {
 
-	protected static final String SCRIPT_RESOURCE = "plugins/scripts";
-	protected static final String COMMAND_RESOURCE = "commands";
-	protected static final String SCENARIO_RESOURCE = "scenarios";
-	protected static final String BLOCK_RESOURCE = "blocks";
-	protected static final String VIEW_RESOURCE = "views";
-	protected static final String CONFIG_RESOURCE = "configurations";
-	protected static final String PROPERTY_RESOURCE = "properties";
-	protected static final String CONNECTOR_RESOURCE = "connectors";
-	protected static final String DEVICE_RESOURCE = "devices";
-	protected static final String EVENT_RESOURCE = "events";
-	protected static final String TRIGGER_RESOURCE = "triggers";
-	protected static final String SNAPSHOT_RESOURCE = "snapshots";
-	protected static final String CRON_RESOURCE = "crons";
-	protected static final String NOTIFICATION_RESOURCE = "notifications";
+	/**
+	 * plugins script
+	 */
+	public static final String SCRIPT_RESOURCE = "plugins/scripts";
+	/**
+	 * commands
+	 */
+	public static final String COMMAND_RESOURCE = "commands";
+	/**
+	 * scenarios
+	 */
+	public static final String SCENARIO_RESOURCE = "scenarios";
+	/**
+	 * blocks
+	 */
+	public static final String BLOCK_RESOURCE = "blocks";
+	/**
+	 * views
+	 */
+	public static final String VIEW_RESOURCE = "views";
+	/**
+	 * configurations
+	 */
+	public static final String CONFIG_RESOURCE = "configurations";
+	/**
+	 * properties
+	 */
+	public static final String PROPERTY_RESOURCE = "properties";
+	/**
+	 * connectors
+	 */
+	public static final String CONNECTOR_RESOURCE = "connectors";
+	/**
+	 * devices
+	 */
+	public static final String DEVICE_RESOURCE = "devices";
+	/**
+	 * events
+	 */
+	public static final String EVENT_RESOURCE = "events";
+	/**
+	 * triggers
+	 */
+	public static final String TRIGGER_RESOURCE = "triggers";
+	/**
+	 * snapshots
+	 */
+	public static final String SNAPSHOT_RESOURCE = "snapshots";
+	/**
+	 * crons
+	 */
+	public static final String CRON_RESOURCE = "crons";
+	/**
+	 * notifications
+	 */
+	public static final String NOTIFICATION_RESOURCE = "notifications";
 
 	protected static final String DEVICE = ":device";
 	protected static final String CONNEXION = ":connexion";
@@ -56,9 +98,4 @@ public abstract class ApiMapper {
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		mapper.registerModule(new JodaModule());
 	}
-
-	/**
-	 * mount resource
-	 */
-	public abstract void mount();
 }

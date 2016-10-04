@@ -16,10 +16,11 @@
 
 package org.jarvis.core.resources.api.device;
 
-import static spark.Spark.get;
-
 import java.io.IOException;
 import java.util.List;
+
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 
 import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.model.bean.scenario.TriggerBean;
@@ -29,6 +30,7 @@ import org.jarvis.core.model.rest.tools.CronRest;
 import org.jarvis.core.resources.api.ApiLinkedResources;
 import org.jarvis.core.resources.api.GenericValue;
 import org.jarvis.core.resources.api.href.ApiHrefTriggerCronResources;
+import org.jarvis.core.resources.api.mapper.ApiMapper;
 import org.jarvis.core.resources.api.tools.ApiCronResources;
 import org.jarvis.core.services.CoreEventDaemon;
 import org.jarvis.core.type.GenericMap;
@@ -38,22 +40,43 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 import spark.Spark;
+import org.jarvis.core.resources.api.Declare;
+import org.jarvis.core.resources.api.DeclareHrefResource;
+import org.jarvis.core.resources.api.DeclareLinkedResource;
 
 /**
  * Trigger resource
  */
+@Api(value = "trigger")
+@Path("/api/triggers")
+@Produces("application/json")
 @Component
+@Declare(resource=ApiMapper.TRIGGER_RESOURCE, summary="Trigger resource", rest=TriggerRest.class)
 public class ApiTriggerResources extends ApiLinkedResources<TriggerRest,TriggerBean,CronRest,CronBean> {
 
+	/**
+	 * cron resource link
+	 */
 	@Autowired
-	ApiCronResources apiCronResources;
+	@DeclareLinkedResource(role=ApiMapper.CRON_RESOURCE, param=ApiMapper.CRON, sortKey=ApiMapper.SORTKEY)
+	public ApiCronResources apiCronResources;
 	
+	/**
+	 * cron resource href
+	 */
 	@Autowired
-	ApiHrefTriggerCronResources apiHrefTriggerCronResources;
+	@DeclareHrefResource(role=ApiMapper.CRON_RESOURCE, href=ApiMapper.HREF)
+	public ApiHrefTriggerCronResources apiHrefTriggerCronResources;
 
 	@Autowired
 	CoreEventDaemon coreEventDaemon;
@@ -68,25 +91,27 @@ public class ApiTriggerResources extends ApiLinkedResources<TriggerRest,TriggerB
 
 	@Override
 	public void mount() {
-		/**
-		 * scripts
-		 */
-		declare(TRIGGER_RESOURCE);
-		/**
-		 * trigger -> cron
-		 */
-		declare(TRIGGER_RESOURCE, CRON_RESOURCE, apiCronResources, apiHrefTriggerCronResources, CRON, SORTKEY, HREF);
+		super.mount();
 		/**
 		 * patch
 		 */
-		Spark.patch("/api/"+TRIGGER_RESOURCE+"/:name", patchResources());
+		Spark.patch("/api/"+TRIGGER_RESOURCE+"/:name", trigger());
 	}
 
 	/**
-	 * activate this trigger by its name
-	 * @return
+	 * local trigger method
+	 * @return Route
 	 */
-	protected Route patchResources() {
+	@io.swagger.jaxrs.PATCH
+	@ApiOperation(value = "Activate a new trigger", nickname="trigger")
+	@ApiImplicitParams({
+			@ApiImplicitParam(required = true, dataType="string", name="name", paramType = "path"),
+	})
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Success", response=GenericMap.class),
+			@ApiResponse(code = 404, message = "Trigger not found", response=GenericMap.class)
+	})
+	public Route trigger() {
 		return new Route() {
 		    @Override
 			public Object handle(Request request, Response response) {

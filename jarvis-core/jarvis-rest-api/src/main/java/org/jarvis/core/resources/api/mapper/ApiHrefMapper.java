@@ -40,6 +40,9 @@ public abstract class ApiHrefMapper<T extends GenericEntity,S extends GenericEnt
 		this.type = type;
 	}
 
+	/**
+	 * must be implemented
+	 */
 	public void mount() {
 		throw new TechnicalException("Not implemented");
 	}

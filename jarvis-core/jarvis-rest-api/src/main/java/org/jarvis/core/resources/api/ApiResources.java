@@ -64,7 +64,7 @@ import spark.utils.IOUtils;
  * @param <T>
  * @param <S>
  */
-public abstract class ApiResources<T extends GenericEntity,S extends GenericBean> extends ApiGenericResources {
+public abstract class ApiResources<T extends GenericEntity,S extends GenericBean> extends ApiGenericResources implements ApiDefaultResources {
 	protected Logger logger = LoggerFactory.getLogger(ApiResources.class);
 
 	private List<ResourcePreListener<T>> preListeners = new ArrayList<>();
@@ -192,7 +192,17 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 		restClass = klass;		
 	}
 
-	protected void declare(String resource) {
+	/**
+	 * get rest class
+	 * @return Class<?>
+	 */
+	@Override
+	public Class<?> getRestClass() {
+		return restClass;		
+	}
+
+	@Override
+	public void declare(String resource) {
 		get("/api/"+resource+"", getResources());
 		get("/api/"+resource+"/:id", getResource());
 		post("/api/"+resource+"", postResource());
@@ -747,6 +757,19 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 		} catch (JsonProcessingException e) {
 			logger.error("Error {} while parsing {}", e, value);
 			throw new TechnicalException(e);
+		}
+	}
+
+	/**
+	 * mount resource
+	 */
+	public void mount() {
+		for(Declare annotation : this.getClass().getAnnotationsByType(Declare.class)) {
+			logger.info("Annotated resource {}", annotation.resource());
+			/**
+			 * declare resource
+			 */
+			declare(annotation.resource());
 		}
 	}
 }

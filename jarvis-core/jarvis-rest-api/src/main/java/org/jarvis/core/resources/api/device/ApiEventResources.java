@@ -16,25 +16,35 @@
 
 package org.jarvis.core.resources.api.device;
 
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+
 import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.model.bean.device.EventBean;
 import org.jarvis.core.model.rest.device.EventRest;
 import org.jarvis.core.resources.api.ApiResources;
+import org.jarvis.core.resources.api.Declare;
 import org.jarvis.core.resources.api.GenericValue;
 import org.jarvis.core.resources.api.ResourcePostListener;
+import org.jarvis.core.resources.api.mapper.ApiMapper;
 import org.jarvis.core.services.CoreEventDaemon;
 import org.jarvis.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import io.swagger.annotations.Api;
 import spark.Request;
 import spark.Response;
 
 /**
  * Event resource
  */
+@Api(value = "event")
+@Path("/api/events")
+@Produces("application/json")
 @Component
+@Declare(resource=ApiMapper.EVENT_RESOURCE, summary="Event resource", rest=EventRest.class)
 public class ApiEventResources extends ApiResources<EventRest,EventBean> {
 
 	@Autowired
@@ -66,10 +76,7 @@ public class ApiEventResources extends ApiResources<EventRest,EventBean> {
 
 	@Override
 	public void mount() {
-		/**
-		 * events
-		 */
-		declare(EVENT_RESOURCE);
+		super.mount();
 		/**
 		 * declare listener
 		 */
@@ -78,6 +85,6 @@ public class ApiEventResources extends ApiResources<EventRest,EventBean> {
 
 	@Override
 	public GenericValue doRealTask(EventBean Event, GenericMap args, TaskType taskType) throws TechnicalException {
-		return null;
+		throw new TechnicalException("Not implemented");
 	}
 }

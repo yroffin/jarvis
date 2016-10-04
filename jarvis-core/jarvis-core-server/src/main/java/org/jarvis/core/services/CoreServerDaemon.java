@@ -224,7 +224,7 @@ public class CoreServerDaemon {
 				return mapper.writeValueAsString(oauth2Config);
 		    }
 		});
-		
+
 		/**
 		 * zway resource
 		 */

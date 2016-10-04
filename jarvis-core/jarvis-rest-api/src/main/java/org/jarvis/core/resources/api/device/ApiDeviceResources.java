@@ -21,7 +21,12 @@ import static spark.Spark.get;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+
 import org.jarvis.core.exception.TechnicalException;
+import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.device.DeviceBean;
 import org.jarvis.core.model.bean.plugin.ScriptPluginBean;
 import org.jarvis.core.model.bean.scenario.TriggerBean;
@@ -30,16 +35,26 @@ import org.jarvis.core.model.rest.device.DeviceRest;
 import org.jarvis.core.model.rest.plugin.ScriptPluginRest;
 import org.jarvis.core.model.rest.scenario.TriggerRest;
 import org.jarvis.core.resources.api.ApiLinkedThirdResources;
+import org.jarvis.core.resources.api.Declare;
+import org.jarvis.core.resources.api.DeclareHrefResource;
+import org.jarvis.core.resources.api.DeclareLinkedResource;
 import org.jarvis.core.resources.api.GenericValue;
 import org.jarvis.core.resources.api.href.ApiHrefDeviceResources;
 import org.jarvis.core.resources.api.href.ApiHrefDeviceScriptPluginResources;
 import org.jarvis.core.resources.api.href.ApiHrefDeviceTriggerResources;
+import org.jarvis.core.resources.api.mapper.ApiMapper;
 import org.jarvis.core.resources.api.plugins.ApiScriptPluginResources;
 import org.jarvis.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -47,23 +62,53 @@ import spark.Route;
 /**
  * device resource
  */
+@Api(value = "device")
+@Path("/api/devices")
+@Produces("application/json")
 @Component
+@Declare(resource=ApiMapper.DEVICE_RESOURCE, summary="Device resource", rest=DeviceRest.class)
 public class ApiDeviceResources extends ApiLinkedThirdResources<DeviceRest,DeviceBean,DeviceRest,DeviceBean,ScriptPluginRest,ScriptPluginBean,TriggerRest,TriggerBean> {
 
-	@Autowired
-	ApiHrefDeviceResources apiHrefDeviceResources;
+	/**
+	 * link to another device
+	 */
+	@DeclareLinkedResource(role=ApiMapper.DEVICE_RESOURCE, param=ApiMapper.DEVICE, sortKey=ApiMapper.SORTKEY)
+	public ApiDeviceResources apiDeviceResources;
 
+	/**
+	 * href handle
+	 */
 	@Autowired
-	ApiHrefDeviceScriptPluginResources apiHrefDeviceScriptPluginResources;
+	@DeclareHrefResource(role=ApiMapper.DEVICE_RESOURCE, href=ApiMapper.HREF)
+	public ApiHrefDeviceResources apiHrefDeviceResources;
 
+	/**
+	 * link to plugin
+	 */
 	@Autowired
-	ApiScriptPluginResources apiScriptPluginResources;
+	@DeclareLinkedResource(role=ApiMapper.SCRIPT_RESOURCE, param=ApiMapper.PLUGIN, sortKey=ApiMapper.SORTKEY)
+	public ApiScriptPluginResources apiScriptPluginResources;
 
+	/**
+	 * href handle
+	 */
 	@Autowired
-	ApiHrefDeviceTriggerResources apiHrefDeviceTriggerResources;
+	@DeclareHrefResource(role=ApiMapper.SCRIPT_RESOURCE, href=ApiMapper.HREF)
+	public ApiHrefDeviceScriptPluginResources apiHrefDeviceScriptPluginResources;
 
+	/**
+	 * link to trigger
+	 */
 	@Autowired
-	ApiTriggerResources apiTriggerResources;
+	@DeclareLinkedResource(role=ApiMapper.TRIGGER_RESOURCE, param=ApiMapper.TRIGGER, sortKey=ApiMapper.SORTKEY)
+	public ApiTriggerResources apiTriggerResources;
+
+	/**
+	 * href handle
+	 */
+	@Autowired
+	@DeclareHrefResource(role=ApiMapper.TRIGGER_RESOURCE, href=ApiMapper.HREF)
+	public ApiHrefDeviceTriggerResources apiHrefDeviceTriggerResources;
 
 	/**
 	 * constructor
@@ -75,26 +120,36 @@ public class ApiDeviceResources extends ApiLinkedThirdResources<DeviceRest,Devic
 
 	@Override
 	public void mount() {
-		/**
-		 * scripts
-		 */
-		declare(DEVICE_RESOURCE);
-		/**
-		 * scripts -> commands
-		 */
-		declare(DEVICE_RESOURCE, DEVICE_RESOURCE, this, apiHrefDeviceResources, DEVICE, SORTKEY, HREF);
-		declareSecond(DEVICE_RESOURCE, SCRIPT_RESOURCE, apiScriptPluginResources, apiHrefDeviceScriptPluginResources, PLUGIN, SORTKEY, HREF);
-		declareThird(DEVICE_RESOURCE, TRIGGER_RESOURCE, apiTriggerResources, apiHrefDeviceTriggerResources, TRIGGER, SORTKEY, HREF);
+		super.mount();
+		apiDeviceResources = this;
 		/**
 		 * device html generator
 		 */
-		get("/api/directives/html/devices/:id", new Route() {
+		get("/api/directives/html/devices/:id", html());
+	}
+
+	/**
+	 * local trigger method
+	 * @return Route
+	 */
+	@GET
+	@Path("/api/directives/html/devices/{id}")
+	@ApiOperation(value = "Retrieve html template for this device", nickname="html")
+	@ApiImplicitParams({
+			@ApiImplicitParam(required = true, dataType="string", name="id", paramType = "path"),
+	})
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Success", response=String.class),
+			@ApiResponse(code = 404, message = "Template not found", response=String.class)
+	})
+	public Route html() {
+		return new Route() {
 		    @Override
-			public Object handle(Request request, Response response) throws Exception {
+			public Object handle(Request request, Response response) throws TechnicalNotFoundException {
 		    	DeviceRest device = doGetByIdRest(request.params(ID));
 		    	return device.template;
 		    }
-		});
+		};
 	}
 
 	@Override

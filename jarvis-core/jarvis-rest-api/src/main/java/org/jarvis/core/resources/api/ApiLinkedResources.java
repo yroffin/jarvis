@@ -5,12 +5,17 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.put;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.GenericBean;
 import org.jarvis.core.model.rest.GenericEntity;
+import org.jarvis.core.resources.api.Declare;
+import org.jarvis.core.resources.api.DeclareHrefResource;
+import org.jarvis.core.resources.api.DeclareLinkedResource;
 import org.jarvis.core.resources.api.mapper.ApiHrefMapper;
 import org.jarvis.core.type.GenericMap;
 
@@ -180,5 +185,35 @@ public abstract class ApiLinkedResources<T extends GenericEntity, S extends Gene
 		    	return doGetById(request, ID, response);
 		    }
 		};
+	}
+
+	/**
+	 * mount resource
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public void mount() {
+		super.mount();
+		for(Declare annotation : this.getClass().getAnnotationsByType(Declare.class)) {
+			for(Field linkedField : this.getClass().getDeclaredFields()) {
+				for(DeclareLinkedResource linkedAnnotation : linkedField.getAnnotationsByType(DeclareLinkedResource.class)) {
+					for(Field hrefField : this.getClass().getDeclaredFields()) {
+						for(DeclareHrefResource hrefAnnotation : hrefField.getAnnotationsByType(DeclareHrefResource.class)) {
+							if(hrefAnnotation.role().equals(linkedAnnotation.role())) {
+								logger.info("Annotated link : param {} sortKey {} href {}", linkedAnnotation.param(), linkedAnnotation.sortKey(), hrefAnnotation.href());
+								/**
+								 * declare link
+								 */
+								try {
+									declare(annotation.resource(), linkedAnnotation.role(), (ApiResources<T1,S1>) linkedField.get(this), (ApiHrefMapper<T,T1>) hrefField.get(this), linkedAnnotation.param(), linkedAnnotation.sortKey(), hrefAnnotation.href());
+								} catch (IllegalArgumentException | IllegalAccessException e) {
+									throw new TechnicalException(e);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 }
