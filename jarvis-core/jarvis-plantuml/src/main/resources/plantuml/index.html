@@ -1,0 +1,74 @@
+<!doctype html>
+<!--
+Copyright 2014 Yannick Roffin.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<html lang="en" ng-app="plantuml.app">
+<head>
+    <title>Plantuml Application</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <!-- Compiled css -->
+    <link rel="stylesheet" href="style.min.css">
+
+    <!-- specific css -->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body
+	ng-controller="PlantumlAppCtrl"
+>
+
+<div ng-cloak>
+    <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z4" md-component-id="left">
+        <md-button ng-click="location('left', '/helper-devices');"><div layout="row"><i class="help-icons">touch_app</i><span flex></span><span>Connected object(s)</span></div></md-button>
+        <md-button ng-click="location('left', '/helper-scenarii');"><div layout="row"><i class="help-icons">list</i><span flex></span><span>Scenario</span></div></md-button>
+        <md-button ng-click="location('left', '/helper-system');"><div layout="row"><i class="help-icons">settings_remote</i><span flex></span><span>System</span></div></md-button>
+        <md-button ng-click="location('left', '/snapshots');"><div layout="row"><i class="help-icons">save</i><span flex></span><span>Snapshot(s)</span></div></md-button>
+        <md-button ng-click="location('left', '/crons');"><div layout="row"><i class="help-icons">av_timer</i><span flex></span><span>Crontab(s)</span></div></md-button>
+        <md-button ng-click="location('left', '/connectors');"><div layout="row"><i class="help-icons">widgets</i><span flex></span><span>Connecteur(s)</span></div></md-button>
+        <md-button ng-click="location('left', '/configurations');"><div layout="row"><i class="help-icons">widgets</i><span flex></span><span>Configuration(s)</span></div></md-button>
+        <md-button ng-click="location('left', '/properties');"><div layout="row"><i class="help-icons">widgets</i><span flex></span><span>Propriété(s)</span></div></md-button>
+    </md-sidenav>
+</div>
+
+<div ng-cloak>
+	<md-content ng-style="{'height': 'auto', 'opacity': config.opacity}" ui-view flex layout-padding>
+	</md-content>
+</div>
+
+<md-content></md-content>
+
+<script src="script-libs.min.js"></script>
+
+
+<!-- Application -->
+<script src="js/app.js"></script>
+<!-- Services -->
+<!-- Main -->
+<script src="js/services.js"></script>
+<script src="js/controllers.js"></script>
+<script src="js/routes.js"></script>
+<script src="js/directives.js"></script>
+<script src="js/filters.js"></script>
+<!-- Widgets -->
+<script src="js/directives/home/plantuml-widget-home.js"></script>
+<script src="js/directives/plantuml/plantuml-widget-plantuml.js"></script>
+
+</body>
+</html>

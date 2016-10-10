@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+  <Appenders>
+	<RollingFile name="RollingFile" fileName="${sys:jarvis.log.dir}/jarvis.log" filePattern="${sys:jarvis.log.dir}/jarvis-%d{MM-dd-yyyy}.log.gz"
+                 ignoreExceptions="false">
+      <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+      <TimeBasedTriggeringPolicy />
+    </RollingFile>
+	<RollingFile name="RollingSessionFile" fileName="${sys:jarvis.log.dir}/jarvis-sessions.log" filePattern="${sys:jarvis.log.dir}/jarvis-sessions-%d{MM-dd-yyyy}.log.gz"
+                 ignoreExceptions="false">
+      <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+      <TimeBasedTriggeringPolicy />
+    </RollingFile>
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+    </Console>
+  </Appenders>
+  <Loggers>
+  	<Logger name="org.jarvis.core.security" level="info" additivity="false">
+      <AppenderRef ref="RollingSessionFile"/>
+    </Logger>
+    <Root level="info">
+      <AppenderRef ref="Console"/>
+      <AppenderRef ref="RollingFile"/>
+    </Root>
+  </Loggers>
+</Configuration>
