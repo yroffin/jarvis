@@ -17,6 +17,7 @@
 package org.jarvis.core.model.bean.connector;
 
 import org.jarvis.core.model.bean.GenericBean;
+import org.joda.time.DateTime;
 
 /**
  * bean connector
@@ -46,4 +47,8 @@ public class ConnectorBean extends GenericBean {
 	 * canAnswer
 	 */
 	public boolean canAnswer;
+	/**
+	 * lastAdvertise
+	 */
+	public DateTime lastAdvertise;
 }

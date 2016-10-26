@@ -17,6 +17,7 @@
 package org.jarvis.core.model.rest.connector;
 
 import org.jarvis.core.model.rest.GenericEntity;
+import org.joda.time.DateTime;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -56,4 +57,9 @@ public class ConnectorRest extends GenericEntity {
 	 */
 	@JsonProperty("canAnswer")
 	public boolean canAnswer;
+	/**
+	 * lastAdvertise
+	 */
+	@JsonProperty("lastAdvertise")
+	public DateTime lastAdvertise;
 }

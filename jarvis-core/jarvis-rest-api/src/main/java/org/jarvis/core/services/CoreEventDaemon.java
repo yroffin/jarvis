@@ -146,7 +146,7 @@ public class CoreEventDaemon {
 					handle(event);
 				}
 			} catch (InterruptedException e) {
-				logger.error("{}", e);
+				logger.error("[EVENT] - InterruptedException {}", e);
 				Thread.currentThread().interrupt();
 			}
 

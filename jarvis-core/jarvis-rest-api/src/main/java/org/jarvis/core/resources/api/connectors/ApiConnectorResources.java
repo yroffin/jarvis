@@ -33,6 +33,7 @@ import org.jarvis.core.resources.api.ApiResources;
 import org.jarvis.core.resources.api.GenericValue;
 import org.jarvis.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
+import org.joda.time.DateTime;
 import org.springframework.stereotype.Component;
 
 /**
@@ -104,6 +105,7 @@ public class ApiConnectorResources extends ApiResources<ConnectorRest,ConnectorB
 			bean.canAnswer = (boolean) copy(args.get("canAnswer"), beans.get(0).canAnswer);
 			bean.isRenderer = (boolean) copy(args.get("isRenderer"), beans.get(0).isRenderer);
 			bean.isSensor = (boolean) copy(args.get("isSensor"), beans.get(0).isSensor);
+			bean.lastAdvertise = DateTime.now();
 			try {
 				doUpdate(beans.get(0).id, bean);
 			} catch (TechnicalNotFoundException e) {

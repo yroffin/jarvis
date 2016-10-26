@@ -1,6 +1,6 @@
 <md-toolbar>
   <div class="md-toolbar-tools" layout-align="center">
-    <h1><br>{{connector.name}}<md-tooltip>connector#{{connector.id}}</md-tooltip></h1>
+    <h1><br>{{connector.name}}<md-tooltip>connector#{{connector.id}} - {{connector.lastAdvertise | date:'yyyy-MM-dd HH:mm:ss Z'}}</md-tooltip></h1>
   </div>
   <md-fab-actions class="md-toolbar-tools">
   	<jarvis-default-menu-bar close="connectors" ng-model="connector"></jarvis-default-menu-bar>
