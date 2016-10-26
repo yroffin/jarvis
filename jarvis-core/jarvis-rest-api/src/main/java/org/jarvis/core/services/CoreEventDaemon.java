@@ -120,6 +120,7 @@ public class CoreEventDaemon {
 	 */
 	public void post(EventBean event) throws InterruptedException {
 		try {
+			logger.info("Event {}", event);
 			linked.put(event);
 		} catch (InterruptedException e) {
 			logger.warn("Exception {}", e);
