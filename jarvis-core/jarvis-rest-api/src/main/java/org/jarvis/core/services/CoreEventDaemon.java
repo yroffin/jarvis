@@ -23,8 +23,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 import javax.annotation.PostConstruct;
 
 import org.jarvis.core.exception.TechnicalNotFoundException;
-import org.jarvis.core.model.bean.device.EventBean;
 import org.jarvis.core.model.bean.device.DeviceBean;
+import org.jarvis.core.model.bean.device.EventBean;
 import org.jarvis.core.model.bean.scenario.ScenarioBean;
 import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.resources.api.device.ApiDeviceResources;
@@ -120,7 +120,6 @@ public class CoreEventDaemon {
 	 */
 	public void post(EventBean event) throws InterruptedException {
 		try {
-			logger.info("Event {}", event);
 			linked.put(event);
 		} catch (InterruptedException e) {
 			logger.warn("Exception {}", e);
@@ -150,6 +149,8 @@ public class CoreEventDaemon {
 				logger.error("{}", e);
 				Thread.currentThread().interrupt();
 			}
+
+			logger.warn("[EVENT] - thread shutdown");
 		}
 
 		private void handle(EventBean event) {
