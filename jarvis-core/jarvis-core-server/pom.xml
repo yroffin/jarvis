@@ -47,6 +47,10 @@
 		</dependency>
 		<!-- external dependencies -->
 		<dependency>
+		    <groupId>org.graylog2.log4j2</groupId>
+		    <artifactId>log4j2-gelf</artifactId>
+		</dependency>
+		<dependency>
 		    <groupId>org.pac4j</groupId>
 		    <artifactId>spark-pac4j</artifactId>
 		</dependency>
