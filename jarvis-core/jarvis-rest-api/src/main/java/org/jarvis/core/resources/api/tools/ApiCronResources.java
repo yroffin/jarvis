@@ -1,10 +1,13 @@
 package org.jarvis.core.resources.api.tools;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ScheduledFuture;
 
 import org.jarvis.core.exception.TechnicalException;
+import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.scenario.TriggerBean;
 import org.jarvis.core.model.bean.tools.CronBean;
 import org.jarvis.core.model.rest.GenericEntity;
@@ -49,6 +52,7 @@ public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 	 * internal cron registry
 	 */
 	ConcurrentMap<String,ScheduledFuture<?>> scheduled = new ConcurrentHashMap<>();
+	ConcurrentMap<String,AnalyzedRun> runners = new ConcurrentHashMap<>();
 	
 	/**
 	 * constructor
@@ -134,6 +138,8 @@ public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 			ScheduledFuture<?> sch = scheduled.get(bean.id);
 			sch.cancel(false);
 			scheduled.remove(bean.id, sch);
+			AnalyzedRun runner = runners.get(bean.id);
+			runners.remove(bean.id, runner);
 			return new GenericValue("false");
 		} else {
 			return new GenericValue("true");
@@ -188,56 +194,125 @@ public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 		}
 	}
 
+	private class TriggerThread implements AnalyzedRun {
+		
+		CronBean bean;
+		DateTime lastRun = DateTime.now();
+		
+		public TriggerThread(CronBean bean) {
+			this.bean = bean;
+		}
+		
+		@Override
+		public DateTime getLastRun() {
+			return lastRun;
+		}
+
+		@Override
+		public void run() {
+			try {
+				fire(bean);
+				lastRun = DateTime.now();
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		}
+
+	}
+
 	/**
 	 * crontab trigger
 	 * @param bean
 	 */
 	private void crontabTrigger(CronBean bean) {
 		Trigger trigger = new CronTrigger(bean.cron);
-		ScheduledFuture<?> sch = jarvisThreadPoolTaskScheduler.schedule(new Runnable() {
-			
-			@Override
-			public void run() {
-				try {
-					fire(bean);
-				} catch (InterruptedException e) {
-					Thread.currentThread().interrupt();
-				}
-			}
-			
-		}, trigger);
+		AnalyzedRun analyzedRun = new TriggerThread(bean);
+		ScheduledFuture<?> sch = jarvisThreadPoolTaskScheduler.schedule(analyzedRun, trigger);
 		scheduled.put(bean.id, sch);
+		runners.put(bean.id, analyzedRun);
 	}
 
+	private class SunriseTriggerThread implements AnalyzedRun {
+		
+		CronBean bean;
+		DateTime lastRun = DateTime.now();
+		
+		public SunriseTriggerThread(CronBean bean) {
+			this.bean = bean;
+		}
+		
+		@Override
+		public DateTime getLastRun() {
+			return lastRun;
+		}
+
+		@Override
+		public void run() {
+			/**
+			 * wait for next sunrise
+			 */
+			long millis = coreSunsetSunrise.getNextSunrise(bean.latitude, bean.longitude) + 60000;
+			logger.warn("Sleep until next sunrise {}", DateTime.now().plus(millis));
+			try {
+				Thread.sleep(millis);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+			try {
+				fire(bean);
+				lastRun = DateTime.now();
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		}
+
+	}
+	
 	/**
 	 * sunrise trigger
 	 * @param bean
 	 */
 	private void sunriseTrigger(CronBean bean) {
 		Trigger trigger = new PeriodicTrigger(1000);
-		ScheduledFuture<?> sch = jarvisThreadPoolTaskScheduler.schedule(new Runnable() {
-			
-			@Override
-			public void run() {
-				/**
-				 * wait for next sunrise
-				 */
-				long millis = coreSunsetSunrise.getNextSunrise(bean.latitude, bean.longitude) + 60000;
-				logger.warn("Sleep until next sunrise {}", DateTime.now().plus(millis));
-				try {
-					Thread.sleep(millis);
-				} catch (InterruptedException e) {
-					Thread.currentThread().interrupt();
-				}
-				try {
-					fire(bean);
-				} catch (InterruptedException e) {
-					Thread.currentThread().interrupt();
-				}
-			}
-			
-		}, trigger);
+		AnalyzedRun analyzedRun = new SunriseTriggerThread(bean);
+		ScheduledFuture<?> sch = jarvisThreadPoolTaskScheduler.schedule(analyzedRun, trigger);
 		scheduled.put(bean.id, sch);
+		runners.put(bean.id, analyzedRun);
+	}
+
+	private class SunsetTriggerThread implements AnalyzedRun {
+		
+		CronBean bean;
+		DateTime lastRun = DateTime.now();
+		
+		public SunsetTriggerThread(CronBean bean) {
+			this.bean = bean;
+		}
+		
+		@Override
+		public DateTime getLastRun() {
+			return lastRun;
+		}
+
+		@Override
+		public void run() {
+			/**
+			 * wait for next sunset
+			 */
+			long millis = coreSunsetSunrise.getNextSunset(bean.latitude, bean.longitude) + 60000;
+			logger.warn("Sleep until next sunset {}", DateTime.now().plus(millis));
+			try {
+				Thread.sleep(millis);
+			} catch (InterruptedException e) {
+				throw new TechnicalException(e);
+			}
+			try {
+				fire(bean);
+				lastRun = DateTime.now();
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		}		
 	}
 
 	/**
@@ -246,29 +321,10 @@ public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 	 */
 	private void sunsetTrigger(CronBean bean) {
 		Trigger trigger = new PeriodicTrigger(1000);
-		ScheduledFuture<?> sch = jarvisThreadPoolTaskScheduler.schedule(new Runnable() {
-			
-			@Override
-			public void run() {
-				/**
-				 * wait for next sunset
-				 */
-				long millis = coreSunsetSunrise.getNextSunset(bean.latitude, bean.longitude) + 60000;
-				logger.warn("Sleep until next sunset {}", DateTime.now().plus(millis));
-				try {
-					Thread.sleep(millis);
-				} catch (InterruptedException e) {
-					throw new TechnicalException(e);
-				}
-				try {
-					fire(bean);
-				} catch (InterruptedException e) {
-					Thread.currentThread().interrupt();
-				}
-			}
-			
-		}, trigger);
+		AnalyzedRun analyzedRun = new SunsetTriggerThread(bean);
+		ScheduledFuture<?> sch = jarvisThreadPoolTaskScheduler.schedule(analyzedRun, trigger);
 		scheduled.put(bean.id, sch);
+		runners.put(bean.id, analyzedRun);
 	}
 
 	/**
@@ -301,5 +357,26 @@ public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 				}
 			}
 		}
+	}
+
+	/**
+	 * scheduled accessor
+	 * @return ConcurrentMap<String, ScheduledFuture<?>>
+	 */
+	public List<CronRest> getScheduled() {
+		List<CronRest> sched = new ArrayList<CronRest>();
+		for(String id: scheduled.keySet()) {
+			try {
+				CronRest obj = doGetByIdRest(id);
+				obj.status = scheduled.containsKey(obj.id);
+				if(obj.status) {
+					obj.lastExecution = runners.get(obj.id).getLastRun();
+				}
+				sched.add(obj);
+			} catch (TechnicalNotFoundException e) {
+				throw new TechnicalException(e);
+			}
+		}
+		return sched;
 	}
 }

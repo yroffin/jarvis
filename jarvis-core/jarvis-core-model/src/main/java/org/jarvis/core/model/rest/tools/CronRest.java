@@ -18,6 +18,7 @@ package org.jarvis.core.model.rest.tools;
 
 import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.type.TriggerType;
+import org.joda.time.DateTime;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -62,4 +63,9 @@ public class CronRest extends GenericEntity {
 	 */
 	@JsonProperty("status")
 	public boolean status;
+	/**
+	 * lastExecute (computed)
+	 */
+	@JsonProperty("lastExecution")
+	public DateTime lastExecution;
 }

@@ -16,21 +16,45 @@
 
 package org.jarvis.core.resources.api.config;
 
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+
 import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.model.bean.config.ConfigBean;
 import org.jarvis.core.model.rest.config.ConfigRest;
+import org.jarvis.core.model.rest.config.ConfigSystemRest;
 import org.jarvis.core.resources.api.ApiResources;
+import org.jarvis.core.resources.api.Declare;
 import org.jarvis.core.resources.api.GenericValue;
+import org.jarvis.core.resources.api.ResourcePreListener;
+import org.jarvis.core.resources.api.mapper.ApiMapper;
+import org.jarvis.core.resources.api.tools.ApiCronResources;
+import org.jarvis.core.services.CoreEventDaemon;
 import org.jarvis.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import io.swagger.annotations.Api;
+import spark.Request;
+import spark.Response;
 
 /**
  * View resource
  */
 @Component
+@Api(value = "configuration")
+@Path("/api/configurations")
+@Produces("application/json")
+@Declare(resource=ApiMapper.CONFIG_RESOURCE, summary="Configuration resource", rest=ConfigRest.class)
 public class ApiConfigResources extends ApiResources<ConfigRest,ConfigBean> {
 
+	@Autowired
+	CoreEventDaemon coreEventDaemon;
+
+	@Autowired
+	ApiCronResources apiCronResources;
+	
 	/**
 	 * constructor
 	 */
@@ -39,12 +63,25 @@ public class ApiConfigResources extends ApiResources<ConfigRest,ConfigBean> {
 		setBeanClass(ConfigBean.class);
 	}
 
+	class ResourceListenerImpl extends ResourcePreListener<ConfigRest> {
+
+		@Override
+		public void get(Request request, Response response, ConfigRest rest) {
+			rest.system = new ConfigSystemRest();
+			rest.system.cron = true;
+			rest.system.scheduled = apiCronResources.getScheduled();
+			rest.system.events = !coreEventDaemon.isInterrupted();
+		}
+	}
+
 	@Override
 	public void mount() {
+		super.mount();
+		
 		/**
-		 * configurations
+		 * register listener
 		 */
-		declare(CONFIG_RESOURCE);
+		addListener(new ResourceListenerImpl());
 	}
 
 	@Override

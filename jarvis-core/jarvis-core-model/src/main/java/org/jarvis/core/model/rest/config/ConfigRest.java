@@ -91,6 +91,11 @@ public class ConfigRest extends GenericEntity {
 	 */
 	@JsonProperty("tilesXl")
 	public String tilesXl;
+	/**
+	 * tilesXl
+	 */
+	@JsonProperty("system")
+	public ConfigSystemRest system;
 	
 	@Override
 	public String toString() {

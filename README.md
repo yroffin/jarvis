@@ -96,3 +96,21 @@ Then upload [sample.json](https://snap-ci.com/buildartifacts/green/52740/default
 After store this configuration with the 'floppy' icon
 and then restore this resource (with the last icon)
 ![STEP-2](http://yroffin.github.io/jarvis/images/init/step-3.PNG)
+
+4 raspberry pi network misc
+----------------------------
+
+4.1 losf network wifi link
+--------------------------
+
+Sometime RT5370 Wireless Adapter are not well configurated
+
+Create new file:
+
+sudo nano /etc/modprobe.d/8192cu.conf
+and paste this:
+
+options 8192cu rtw_power_mgnt=0 rtw_enusbss=1 rtw_ips_mode=1
+then reboot
+
+sudo reboot

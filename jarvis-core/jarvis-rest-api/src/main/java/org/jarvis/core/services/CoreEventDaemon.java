@@ -126,7 +126,7 @@ public class CoreEventDaemon {
 			throw e;
 		}
 	}
-
+	
 	/**
 	 * @param event
 	 */
@@ -134,11 +134,25 @@ public class CoreEventDaemon {
 		inner.handle(event);
 	}
 
+	/**
+	 * is inner thread active ?
+	 * @return boolean
+	 */
+	public boolean isInterrupted() {
+		return inner.isInterrupted();
+	}
+
 	class InnerThread implements Runnable {
+
+		private boolean interrupted;
+
+		public boolean isInterrupted() {
+			return interrupted;
+		}
 
 		@Override
 		public void run() {
-			
+			interrupted = false;
 			EventBean event = null;
 			try {
 				while ((event  = linked.take()) != null) {
@@ -147,9 +161,11 @@ public class CoreEventDaemon {
 				}
 			} catch (InterruptedException e) {
 				logger.error("[EVENT] - InterruptedException {}", e);
+				interrupted = true;
 				Thread.currentThread().interrupt();
 			}
 
+			interrupted = true;
 			logger.warn("[EVENT] - thread shutdown");
 		}
 
