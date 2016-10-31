@@ -3245,7 +3245,17 @@ angular.module('jarvis.directives.configuration', ['JarvisApp.services'])
     	$log.debug('jarvis-configuration');
     }
   }
-}]);
+}])
+.directive('jarvisConfigurationSystem', [ '$log', '$stateParams', function ($log, $stateParams) {
+	  return {
+	    restrict: 'E',
+	    templateUrl: '/ui/js/directives/configuration/partials/jarvis-configuration-system.html',
+	    link: function(scope, element, attrs) {
+	    	$log.debug('jarvis-configuration-system');
+	    }
+	  }
+}])
+;
 /* 
  * Copyright 2014 Yannick Roffin.
  *
