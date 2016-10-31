@@ -37,6 +37,7 @@ public/ui/js/directives/connector;jarvis-widget-connectors.html
 public/ui/js/directives/connector/partials;jarvis-connector-general.html
 public/ui/js/directives/connector/partials;jarvis-connectors.html
 public/ui/js/directives/configuration/partials;jarvis-configuration-general.html
+public/ui/js/directives/configuration/partials;jarvis-configuration-system.html
 public/ui/js/directives/configuration/partials;jarvis-configurations.html
 public/ui/js/directives/configuration;jarvis-widget-configuration.html
 public/ui/js/directives/configuration;jarvis-widget-configurations.html
