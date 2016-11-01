@@ -172,12 +172,12 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
         .state('crons', {
             url: '/crons',
             controller: 'cronsCtrl',
-            templateUrl: '/ui/js/partials/crons/page.html'
+            template: '<jarvis-widget-crons></jarvis-widget-crons>'
         })
         .state('crons-by-id', {
             url: '/crons/:id',
             controller: 'cronCtrl',
-            templateUrl: '/ui/js/partials/crons/cron/page.html'
+            template: '<jarvis-widget-cron></jarvis-widget-cron>'
         })
         .state('scenarios', {
             url: '/scenarios',

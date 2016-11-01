@@ -46,7 +46,6 @@ angular.module('JarvisApp', [
      'JarvisApp.services.plugin',
      'JarvisApp.services.scenario',
      'JarvisApp.services.snapshot',
-     'JarvisApp.services.cron',
      'JarvisApp.services.view',
      'JarvisApp.services.property',
      'JarvisApp.services.device',
@@ -59,6 +58,7 @@ angular.module('JarvisApp', [
       */
      'jarvis.directives.navigator',
      'jarvis.directives.command',
+     'jarvis.directives.cron',
      'jarvis.directives.trigger',
      'jarvis.directives.configuration',
      'jarvis.directives.notification',
@@ -70,7 +70,6 @@ angular.module('JarvisApp', [
      'JarvisApp.ctrl.devices',
      'JarvisApp.ctrl.events',
      'JarvisApp.ctrl.snapshots',
-     'JarvisApp.ctrl.crons',
      'JarvisApp.ctrl.views',
      'JarvisApp.ctrl.properties',
      'JarvisApp.ctrl.scenarios',

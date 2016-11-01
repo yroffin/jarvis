@@ -118,6 +118,7 @@
     "cron.latitude"    	: "Latitude",
     "cron.longitude"   	: "Longitude",
     "cron.cron"    		: "Valeur du cron (Cf. CronTrigger)",
+    "cron.startAtRuntime" : "Active cette crontab au démarrage du serveur",
     "cron.status"    	: "Actif",
     "cron.toggle"  		: "Active / Desactive la crontab",
     "cron.test"  		: "Test la crontab",
