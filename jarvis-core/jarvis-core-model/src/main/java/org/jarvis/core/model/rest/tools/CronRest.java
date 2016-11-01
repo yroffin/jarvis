@@ -64,6 +64,11 @@ public class CronRest extends GenericEntity {
 	@JsonProperty("status")
 	public boolean status;
 	/**
+	 * startAtRuntime
+	 */
+	@JsonProperty("startAtRuntime")
+	public boolean startAtRuntime;
+	/**
 	 * lastExecute (computed)
 	 */
 	@JsonProperty("lastExecution")

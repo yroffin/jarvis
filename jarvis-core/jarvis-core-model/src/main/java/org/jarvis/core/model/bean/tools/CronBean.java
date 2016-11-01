@@ -46,4 +46,14 @@ public class CronBean extends GenericBean {
 	 * cron
 	 */
 	public String cron;
+	/**
+	 * startAtRuntime
+	 */
+	public boolean startAtRuntime;
+	
+	@Override
+	public String toString() {
+		return "CronBean [name=" + name + ", icon=" + icon + ", triggerType=" + triggerType + ", latitude=" + latitude
+				+ ", longitude=" + longitude + ", cron=" + cron + ", startAtRuntime=" + startAtRuntime + "]";
+	}
 }
