@@ -84,6 +84,17 @@ public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 		 * declare listener
 		 */
 		addListener(new ResourceListenerImpl());
+		/**
+		 * start any cron at boot time
+		 */
+		for(CronBean cron : doFindAllBean()) {
+			if(cron.startAtRuntime) {
+				GenericMap args = new GenericMap();
+				args.put("target", true);
+				logger.warn("Toggle {}", cron);
+				doToggle(cron, args);
+			}
+		}
 	}
 
 	@Override

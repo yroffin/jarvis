@@ -15,7 +15,6 @@ public/ui/js;services.js
 public/ui/js;themes.js
 public/ui/js;websocket.js
 public/ui/js/ctrl;blocks.js
-public/ui/js/ctrl;crons.js
 public/ui/js/ctrl;devices.js
 public/ui/js/ctrl;events.js
 public/ui/js/ctrl;home.js
@@ -25,6 +24,10 @@ public/ui/js/ctrl;scenarios.js
 public/ui/js/ctrl;snapshots.js
 public/ui/js/ctrl;views.js
 public/ui/js/directives;widgets.js
+public/ui/js/directives/cron;jarvis-widget-cron.html
+public/ui/js/directives/cron;jarvis-widget-crons.html
+public/ui/js/directives/cron/partials;jarvis-cron-general.html
+public/ui/js/directives/cron/partials;jarvis-crons.html
 public/ui/js/directives/command;jarvis-widget-command.html
 public/ui/js/directives/command;jarvis-widget-commands.html
 public/ui/js/directives/command/partials;jarvis-command-general.html
@@ -85,10 +88,6 @@ public/ui/js/partials/configurations;jarvis-configurations.html
 public/ui/js/partials/configurations;page.html
 public/ui/js/partials/configurations/configuration;jarvis-configuration-general.html
 public/ui/js/partials/configurations/configuration;page.html
-public/ui/js/partials/crons;jarvis-crons.html
-public/ui/js/partials/crons;page.html
-public/ui/js/partials/crons/cron;jarvis-cron-general.html
-public/ui/js/partials/crons/cron;page.html
 public/ui/js/partials/dialog;graphDialog.tmpl.html
 public/ui/js/partials/dialog;labels.tmpl.html
 public/ui/js/partials/dialog;nodesDialog.tmpl.html
