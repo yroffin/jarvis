@@ -226,60 +226,6 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
     }
   }
 }])
-.directive('jarvisScenarios', [ '$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/scenarios/jarvis-scenarios.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-scenarios');
-    }
-  }
-}])
-.directive('jarvisScenario', [ '$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/scenarios/scenario/jarvis-scenario-general.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-scenario');
-    }
-  }
-}])
-.directive('jarvisScenarioBlocks', [ '$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/scenarios/scenario/jarvis-scenario-blocks.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-scenario-blocks');
-    }
-  }
-}])
-.directive('jarvisScenarioBlock', [ '$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/scenarios/scenario/jarvis-scenario-block.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-scenario-block');
-    }
-  }
-}])
-.directive('jarvisScenarioGraph', [ '$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/scenarios/scenario/jarvis-scenario-graph.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-scenario-graph');
-    }
-  }
-}])
-.directive('jarvisScenarioConsole', [ '$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/scenarios/scenario/jarvis-scenario-console.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-scenario-console');
-    }
-  }
-}])
 .directive('jarvisBlocks', [ '$log', '$stateParams', function ($log, $stateParams) {
   return {
     restrict: 'E',

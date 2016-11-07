@@ -110,13 +110,13 @@ angular.module('jarvis.directives.cron', ['JarvisApp.services'])
 		$log.info('cron-ctrl', $scope.crons);
     }
 }])
-.factory('jarvisWidgetCronService', [ 'genericResourceService', function( genericResourceService) {
+.factory('jarvisWidgetCronService', [ 'genericResourceService', function(genericResourceService) {
 	return {
 		  cron : genericResourceService.crud(['crons'])
 	}
 }])
 /**
- * commands
+ * crons
  */
 .directive('jarvisWidgetCrons', [ '$log', '$stateParams', function ($log, $stateParams) {
   return {
@@ -135,7 +135,7 @@ angular.module('jarvis.directives.cron', ['JarvisApp.services'])
   }
 }])
 /**
- * command
+ * cron
  */
 .directive('jarvisWidgetCron', [ '$log', '$stateParams', function ($log, $stateParams) {
   return {

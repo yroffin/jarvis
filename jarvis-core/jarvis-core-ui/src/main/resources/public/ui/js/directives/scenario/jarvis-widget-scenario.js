@@ -18,10 +18,10 @@
 
 /* Ctrls */
 
-angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
+angular.module('jarvis.directives.scenario', ['JarvisApp.services'])
 .controller('scenariosCtrl', 
-		[ '$scope', '$log', 'genericScopeService', 'scenarioResourceService', 'toastService',
-	function($scope, $log, genericScopeService, scenarioResourceService, toastService){
+		[ '$scope', '$log', 'genericScopeService', 'jarvisWidgetScenarioService', 'toastService',
+	function($scope, $log, genericScopeService, jarvisWidgetScenarioService, toastService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
 	 */
@@ -34,7 +34,7 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
 			},
 			$scope, 
 			'scenarios', 
-			scenarioResourceService.scenario,
+			jarvisWidgetScenarioService.scenario,
 			{
     			name: "scenario name",
     			icon: "list"
@@ -49,7 +49,7 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
 		  'genericScopeService',
 		  'genericResourceService',
 		  'genericPickerService',
-		  'scenarioResourceService',
+		  'jarvisWidgetScenarioService',
 		  'blockResourceService',
 		  'pluginResourceService',
 		  'toastService',
@@ -61,7 +61,7 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
 			genericScopeService,
 			genericResourceService,
 			genericPickerService,
-			scenarioResourceService,
+			jarvisWidgetScenarioService,
 			blockResourceService,
 			pluginResourceService,
 			toastService){
@@ -72,7 +72,7 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
 			$scope, 
 			'scenario', 
 			'scenarios', 
-			scenarioResourceService.scenario);
+			jarvisWidgetScenarioService.scenario);
 	/**
 	 * declare links
 	 */
@@ -90,8 +90,8 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
 			$scope.links.blocks,
 			'scenario', 
 			'scenarios', 
-			scenarioResourceService.scenario,
-			scenarioResourceService.blocks, 
+			jarvisWidgetScenarioService.scenario,
+			jarvisWidgetScenarioService.blocks, 
 			{
 				'order':'1'
 			},
@@ -107,8 +107,8 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
 			$scope.links.triggers,
 			'scenario', 
 			'scenarios', 
-			scenarioResourceService.scenario,
-			scenarioResourceService.triggers, 
+			jarvisWidgetScenarioService.scenario,
+			jarvisWidgetScenarioService.triggers, 
 			{
 				'order':'1'
 			},
@@ -215,7 +215,7 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
      */
     $scope.chart = function(scenario) {
     	if(scenario != undefined && scenario.id != undefined && scenario.id != '') {
-    		scenarioResourceService.scenario.task(scenario.id, 'render', {}, function(data) {
+    		jarvisWidgetScenarioService.scenario.task(scenario.id, 'render', {}, function(data) {
        	    	$log.debug('[SCENARIO/render]', scenario, data);
        	    	$scope.codes = $scope.build(data);
        	    	$scope.render($scope.codes);
@@ -228,7 +228,7 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
      */
     $scope.execute = function(scenario) {
     	if(scenario != undefined && scenario.id != undefined && scenario.id != '') {
-    		scenarioResourceService.scenario.task(scenario.id, 'execute', {}, function(data) {
+    		jarvisWidgetScenarioService.scenario.task(scenario.id, 'execute', {}, function(data) {
        	    	$log.debug('[SCENARIO/execute]', scenario, data);
        	    	$scope.console = data;
     	    }, toastService.failure);
@@ -247,14 +247,14 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
     	genericResourceService.scope.entity.get($stateParams.id, function(update) {
     		$scope.scenario=update;
     		$scope.chart(update);
-    	}, scenarioResourceService.scenario);
+    	}, jarvisWidgetScenarioService.scenario);
 
 		/**
 		 * find all blocks
 		 */
     	$scope.blocks = [];
     	genericResourceService.scope.collections.findAll(
-    			'blocks', $stateParams.id, $scope.blocks, scenarioResourceService.blocks,
+    			'blocks', $stateParams.id, $scope.blocks, jarvisWidgetScenarioService.blocks,
     			function(blocks) {
     				_.forEach(blocks, function(block) {
     					block.plugins = {};
@@ -285,8 +285,86 @@ angular.module('JarvisApp.ctrl.scenarios', ['JarvisApp.services'])
     			}
     	);
     	$scope.triggers = [];
-    	genericResourceService.scope.collections.findAll('triggers', $stateParams.id, $scope.triggers, scenarioResourceService.triggers);
+    	genericResourceService.scope.collections.findAll('triggers', $stateParams.id, $scope.triggers, jarvisWidgetScenarioService.triggers);
 
 		$log.debug('scenario-ctrl', $scope.scenario);
     }
-}]);
+}])
+.factory('jarvisWidgetScenarioService', [ 'genericResourceService', function(genericResourceService) {
+	return {
+		   scenario : genericResourceService.crud(['scenarios']),
+		   blocks  : genericResourceService.links(['scenarios'], ['blocks']),
+		   triggers: genericResourceService.links(['scenarios'], ['triggers'])
+	}
+}])
+/**
+ * scenarios
+ */
+.directive('jarvisWidgetScenarios', [ '$log', '$stateParams', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/directives/scenario/jarvis-widget-scenarios.html',
+    link: function(scope, element, attrs) {
+    }
+  }
+}])
+.directive('jarvisScenarios', [ '$log', '$stateParams', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/directives/scenario/partials/jarvis-scenarios.html',
+    link: function(scope, element, attrs) {
+    }
+  }
+}])
+/**
+ * cron
+ */
+.directive('jarvisWidgetScenario', [ '$log', '$stateParams', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/directives/scenario/jarvis-widget-scenario.html',
+    link: function(scope, element, attrs) {
+    }
+  }
+}])
+.directive('jarvisScenario', [ '$log', '$stateParams', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/directives/scenario/partials/jarvis-scenario-general.html',
+    link: function(scope, element, attrs) {
+    }
+  }
+}])
+.directive('jarvisScenarioBlock', [ '$log', '$stateParams', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/directives/scenario/partials/jarvis-scenario-block.html',
+    link: function(scope, element, attrs) {
+    }
+  }
+}])
+.directive('jarvisScenarioBlocks', [ '$log', '$stateParams', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/directives/scenario/partials/jarvis-scenario-blocks.html',
+    link: function(scope, element, attrs) {
+    }
+  }
+}])
+.directive('jarvisScenarioConsole', [ '$log', '$stateParams', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/directives/scenario/partials/jarvis-scenario-console.html',
+    link: function(scope, element, attrs) {
+    }
+  }
+}])
+.directive('jarvisScenarioGraph', [ '$log', '$stateParams', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/directives/scenario/partials/jarvis-scenario-graph.html',
+    link: function(scope, element, attrs) {
+    }
+  }
+}])
+;

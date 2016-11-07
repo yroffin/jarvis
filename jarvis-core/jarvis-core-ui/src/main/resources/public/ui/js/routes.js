@@ -115,7 +115,7 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
             template: '<jarvis-widget-commands></jarvis-widget-commands>'
         })
         .state('commands-by-id', {
-            url: '/commands/:id',
+            url: '/commands/:id?tab',
             controller: 'commandCtrl',
             template: '<jarvis-widget-command></jarvis-widget-command>'
         })
@@ -125,7 +125,7 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
             templateUrl: '/ui/js/partials/views/page.html'
         })
         .state('views-by-id', {
-            url: '/views/:id',
+            url: '/views/:id?tab',
             controller: 'viewCtrl',
             templateUrl: '/ui/js/partials/views/view/page.html'
         })
@@ -135,7 +135,7 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
             templateUrl: '/ui/js/directives/configuration/jarvis-widget-configurations.html'
         })
         .state('configurations-by-id', {
-            url: '/configurations/:id',
+            url: '/configurations/:id?tab',
             controller: 'configurationCtrl',
             templateUrl: '/ui/js/directives/configuration/jarvis-widget-configuration.html'
         })
@@ -145,7 +145,7 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
             templateUrl: '/ui/js/partials/properties/page.html'
         })
         .state('properties-by-id', {
-            url: '/properties/:id',
+            url: '/properties/:id?tab',
             controller: 'propertyCtrl',
             templateUrl: '/ui/js/partials/properties/property/page.html'
         })
@@ -155,7 +155,7 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
             template: '<jarvis-widget-connectors></jarvis-widget-connectors>'
         })
         .state('connectors-by-id', {
-            url: '/connectors/:id',
+            url: '/connectors/:id?tab',
             controller: 'connectorCtrl',
             template: '<jarvis-widget-connector></jarvis-widget-connector>'
         })
@@ -165,7 +165,7 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
             templateUrl: '/ui/js/partials/snapshots/page.html'
         })
         .state('snapshots-by-id', {
-            url: '/snapshots/:id',
+            url: '/snapshots/:id?tab',
             controller: 'snapshotCtrl',
             templateUrl: '/ui/js/partials/snapshots/snapshot/page.html'
         })
@@ -175,19 +175,19 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
             template: '<jarvis-widget-crons></jarvis-widget-crons>'
         })
         .state('crons-by-id', {
-            url: '/crons/:id',
+            url: '/crons/:id?tab',
             controller: 'cronCtrl',
             template: '<jarvis-widget-cron></jarvis-widget-cron>'
         })
         .state('scenarios', {
             url: '/scenarios',
             controller: 'scenariosCtrl',
-            templateUrl: '/ui/js/partials/scenarios/page.html'
+            template: '<jarvis-widget-scenarios></jarvis-widget-scenarios>'
         })
         .state('scenarios-by-id', {
             url: '/scenarios/:id?tab',
             controller: 'scenarioCtrl',
-            templateUrl: '/ui/js/partials/scenarios/scenario/page.html'
+            template: '<jarvis-widget-scenario></jarvis-widget-scenario>'
         })
         .state('blocks', {
             url: '/blocks',
