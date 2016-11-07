@@ -120,4 +120,57 @@ public class DefaultProcessService {
 			throw new TechnicalException(e);
 		}
 	}
+
+	/**
+	 * @param stage
+	 * @param position 
+	 * @param message
+	 */
+	public static void addNote(StringBuilder stage, String position, String message) {
+		stage.append("note " + position + "\n");
+		stage.append(message + "\n");
+		stage.append("end note\n");
+	}
+
+	/**
+	 * @param stage
+	 * @param step
+	 */
+	public static void addLine(StringBuilder stage, String step) {
+		stage.append(step + "\n");
+	}
+
+	/**
+	 * @param stage
+	 * @param step
+	 * @param type 
+	 */
+	public static void addCall(StringBuilder stage, String step, String type) {
+		stage.append(":" + step + type + "\n");
+	}
+
+	/**
+	 * @param stage
+	 * @param expression
+	 * @param value 
+	 */
+	public static void addIf(StringBuilder stage, String expression, String value) {
+		stage.append("if(" + expression + ") then (" + value + ")\n");
+	}
+
+	/**
+	 * @param stage
+	 */
+	public static void addEndIf(StringBuilder stage) {
+		stage.append("endif\n");
+	}
+
+	/**
+	 * @param stage
+	 * @param expression
+	 * @param value 
+	 */
+	public static void addElse(StringBuilder stage, String expression, String value) {
+		stage.append("else (" + value + ")\n");
+	}
 }

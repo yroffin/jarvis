@@ -367,4 +367,87 @@ public class ApiBlockResources extends ApiLinkedTwiceResources<BlockRest,BlockBe
 			return calls;
 		}
 	}
+
+	/**
+	 * @param level 
+	 * @param stage 
+	 * @param currentBlock 
+	 * @throws TechnicalNotFoundException 
+	 */
+	public void renderActivity(Integer level, StringBuilder stage, BlockBean currentBlock) throws TechnicalNotFoundException {
+		/**
+		 * create start node
+		 */
+		DefaultProcessService.addCall(stage, currentBlock.name, "|");
+		DefaultProcessService.addNote(stage, "right", "//id " + currentBlock.id + " level " + level + "//\n====\nExecute block "+ currentBlock.name  + "\n");
+
+		/**
+		 * stop recursion
+		 */
+		List<GenericEntity> conditions = apiHrefBlockScriptPluginResources.findAllConditions(currentBlock);
+		if(conditions.size() > 0) {
+			/**
+			 * find condition
+			 */
+			ScriptPluginBean conditionScript = apiScriptPluginResources.doGetByIdBean(conditions.get(0).id);
+			DefaultProcessService.addCall(stage, conditionScript.name, "]");
+			DefaultProcessService.addNote(stage, "left", "//id " + conditionScript.id + "//\n====\nCondition computing "+ conditionScript.name  + "\n");
+			/**
+			 * generate if then
+			 */
+			DefaultProcessService.addIf(stage, "//id " + currentBlock.id + "//\n====\nCondition is <b>"+ currentBlock.expression  + "</b>\n", "true");
+			List<GenericEntity> pluginsThen = apiHrefBlockScriptPluginResources.findAllThen(currentBlock);
+			List<GenericEntity> blocksThen = apiHrefBlockBlockResources.findAllThen(currentBlock);
+			/**
+			 * then plugin
+			 */
+			if(pluginsThen.size() > 0) {
+				for(GenericEntity plugin : pluginsThen) {
+					ScriptPluginBean pluginScript = apiScriptPluginResources.doGetByIdBean(plugin.id);
+					DefaultProcessService.addCall(stage, pluginScript.name, "|");
+					DefaultProcessService.addNote(stage, "right", "//id " + pluginScript.id + "//\n====\nPlugin execution "+ pluginScript.name  + "\n");
+				}
+			}
+			/**
+			 * then block
+			 */
+			if(blocksThen.size()>0) {
+				for(GenericEntity block : blocksThen) {
+					BlockBean blockBean = doGetByIdBean(block.id);
+					renderActivity(level + 1, stage, blockBean);
+				}
+			}
+			/**
+			 * else
+			 */
+			List<GenericEntity> pluginsElse = apiHrefBlockScriptPluginResources.findAllElse(currentBlock);
+			List<GenericEntity> blocksElse = apiHrefBlockBlockResources.findAllElse(currentBlock);
+			/**
+			 * generate else
+			 */
+			if(pluginsElse.size() > 0 || blocksElse.size()>0) {
+				DefaultProcessService.addElse(stage, "//id " + currentBlock.id + "//\n====\nCondition is "+ currentBlock.expression  + "\n", "false");
+			}
+			/**
+			 * else plugin
+			 */
+			if(pluginsElse.size() > 0) {
+				for(GenericEntity plugin : pluginsElse) {
+					ScriptPluginBean pluginScript = apiScriptPluginResources.doGetByIdBean(plugin.id);
+					DefaultProcessService.addCall(stage, pluginScript.name, "|");
+					DefaultProcessService.addNote(stage, "left", "//id " + pluginScript.id + "//\n====\nPlugin execution "+ pluginScript.name  + "\n");
+				}
+			}
+			/**
+			 * else block
+			 */
+			if(blocksElse.size()>0) {
+				for(GenericEntity block : blocksElse) {
+					BlockBean blockBean = doGetByIdBean(block.id);
+					renderActivity(level + 1, stage, blockBean);
+				}
+			}
+			DefaultProcessService.addEndIf(stage);
+		}
+	}
 }
