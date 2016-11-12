@@ -1,5 +1,5 @@
 /* 
- * Copyright 2014 Yannick Roffin.
+ * Copyright 2016 Yannick Roffin.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,13 +43,6 @@ angular.module('JarvisApp', [
      'JarvisApp.services.filter',
      'JarvisApp.services.generic',
      'JarvisApp.services.scope',
-     'JarvisApp.services.plugin',
-     'JarvisApp.services.snapshot',
-     'JarvisApp.services.view',
-     'JarvisApp.services.property',
-     'JarvisApp.services.device',
-     'JarvisApp.services.event',
-     'JarvisApp.services.block',
      'JarvisApp.directives.files',
      'JarvisApp.directives.widgets',
      /**
@@ -63,15 +56,12 @@ angular.module('JarvisApp', [
      'jarvis.directives.configuration',
      'jarvis.directives.notification',
      'jarvis.directives.connector',
-     /**
-      * controllers
-      */
-     'JarvisApp.ctrl.plugins',
-     'JarvisApp.ctrl.devices',
-     'JarvisApp.ctrl.events',
-     'JarvisApp.ctrl.snapshots',
-     'JarvisApp.ctrl.views',
-     'JarvisApp.ctrl.properties',
-     'JarvisApp.ctrl.blocks',
-     'JarvisApp.ctrl.home'
+     'jarvis.directives.block',
+     'jarvis.directives.device',
+     'jarvis.directives.event',
+     'jarvis.directives.home',
+     'jarvis.directives.plugin',
+     'jarvis.directives.property',
+     'jarvis.directives.snapshot',
+     'jarvis.directives.view',
 ]);

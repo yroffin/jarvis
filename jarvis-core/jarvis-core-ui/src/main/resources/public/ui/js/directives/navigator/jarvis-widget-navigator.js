@@ -27,31 +27,33 @@ angular.module('jarvis.directives.navigator', ['JarvisApp.services'])
 .factory('jarvisWidgetNavigatorService', [
 			'$q',
 			'$location',
-			'snapshotResourceService',
-			'blockResourceService',
+			'$log',
+			'jarvisWidgetSnapshotService',
+			'jarvisWidgetBlockService',
 			'jarvisWidgetConfigurationService',
-			'propertyResourceService',
-			'viewResourceService',
+			'jarvisWidgetPropertyService',
+			'jarvisWidgetViewService',
 			'jarvisWidgetTriggerService',
-			'scenarioResourceService',
+			'jarvisWidgetScenarioService',
 			'jarvisWidgetCronService',
 			'jarvisWidgetConnectorService',
 			'jarvisWidgetCommandService',
-			'pluginResourceService',
-			'deviceResourceService',
+			'jarvisWidgetPluginService',
+			'jarvisWidgetDeviceService',
 	function(
 			$q,
 			$location,
+			$log,
 			snapshotResourceService,
 			blockResourceService,
 			configurationResourceService,
 			propertyResourceService,
 			viewResourceService,
 			triggerResourceService,
-			scenarioResourceService,
+			scenarioService,
 			cronResourceService,
 			connectorResourceService,
-			jarvisWidgetCommandService,
+			commandService,
 			pluginResourceService,
 			deviceResourceService) {
 	return {
@@ -106,7 +108,7 @@ angular.module('jarvis.directives.navigator', ['JarvisApp.services'])
 		 */
 		commands: function() {
 			var deferred = $q.defer();
-			jarvisWidgetCommandService.command.findAll(function(commands) {
+			commandService.command.findAll(function(commands) {
 				_.each(commands, function(command) {
 					command.ext = command.body;
 					command.selectable = true;
@@ -219,7 +221,7 @@ angular.module('jarvis.directives.navigator', ['JarvisApp.services'])
 		 */
 		scenarios: function() {
 			var deferred = $q.defer();
-			scenarioResourceService.scenario.findAll(function(scenarios) {
+			scenarioService.scenario.findAll(function(scenarios) {
 				_.each(scenarios, function(scenario) {
 					scenario.selectable = true;
 					scenario.callback = function(node) {
@@ -266,7 +268,17 @@ angular.module('jarvis.directives.navigator', ['JarvisApp.services'])
 }])
 .directive('jarvisWidgetNavigator', [
              '$log', '$location', '$stateParams', 'jarvisWidgetNavigatorService',
-             function ($log, $location, $stateParams, jarvisWidgetNavigatorService) {
+             function ($log, $location, $stateParams, componentService) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/directives/navigator/jarvis-widget-navigator.html',
+    link: function(scope, element, attrs) {
+    }
+  }
+}])
+.directive('jarvisNavigator', [
+             '$log', '$location', '$stateParams', 'jarvisWidgetNavigatorService',
+             function ($log, $location, $stateParams, componentService) {
   return {
     restrict: 'E',
     templateUrl: '/ui/js/directives/navigator/partials/jarvis-navigator.html',
@@ -277,40 +289,40 @@ angular.module('jarvis.directives.navigator', ['JarvisApp.services'])
 		 */
 		var promise = null;
 		if(attrs['resource'] === 'devices') {
-			promise = jarvisWidgetNavigatorService.devices();
+			promise = componentService.devices();
 		}
 		if(attrs['resource'] === 'plugins') {
-			promise = jarvisWidgetNavigatorService.plugins();
+			promise = componentService.plugins();
 		}
 		if(attrs['resource'] === 'commands') {
-			promise = jarvisWidgetNavigatorService.commands();
+			promise = componentService.commands();
 		}
 		if(attrs['resource'] === 'snapshots') {
-			promise = jarvisWidgetNavigatorService.snapshots();
+			promise = componentService.snapshots();
 		}
 		if(attrs['resource'] === 'blocks') {
-			promise = jarvisWidgetNavigatorService.blocks();
+			promise = componentService.blocks();
 		}
 		if(attrs['resource'] === 'configurations') {
-			promise = jarvisWidgetNavigatorService.configurations();
+			promise = componentService.configurations();
 		}
 		if(attrs['resource'] === 'properties') {
-			promise = jarvisWidgetNavigatorService.properties();
+			promise = componentService.properties();
 		}
 		if(attrs['resource'] === 'views') {
-			promise = jarvisWidgetNavigatorService.views();
+			promise = componentService.views();
 		}
 		if(attrs['resource'] === 'triggers') {
-			promise = jarvisWidgetNavigatorService.triggers();
+			promise = componentService.triggers();
 		}
 		if(attrs['resource'] === 'scenarios') {
-			promise = jarvisWidgetNavigatorService.scenarios();
+			promise = componentService.scenarios();
 		}
 		if(attrs['resource'] === 'crons') {
-			promise = jarvisWidgetNavigatorService.crons();
+			promise = componentService.crons();
 		}
 		if(attrs['resource'] === 'connectors') {
-			promise = jarvisWidgetNavigatorService.connectors();
+			promise = componentService.connectors();
 		}
 		if(promise != null) {
 			promise.then(function(result){

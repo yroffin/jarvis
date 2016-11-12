@@ -33,6 +33,14 @@ public enum TaskType {
 	 */
 	RENDER,
 	/**
+	 * execute task activity
+	 */
+	ACTIVITY,
+	/**
+	 * execute task svg
+	 */
+	SVG,
+	/**
 	 * download
 	 */
 	DOWNLOAD,

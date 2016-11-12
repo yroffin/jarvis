@@ -73,7 +73,7 @@ angular.module('jarvis.directives.notification', ['JarvisApp.services'])
 		 * get current notification
 		 */
     	genericResourceService.scope.entity.get($stateParams.id, function(update) {$scope.notification=update}, notificationResourceService.notification);
-    	$log.info('notification-ctrl');
+    	$log.info('notification-ctrl', $scope.notification);
     }
 }])
 .factory('jarvisWidgetNotificationService', [ 'genericResourceService', function( genericResourceService) {
@@ -90,6 +90,22 @@ angular.module('jarvis.directives.notification', ['JarvisApp.services'])
 	          	   }
 	        ]
 	}
+}])
+.directive('jarvisWidgetNotifications', [ '$log', '$stateParams', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/directives/notification/jarvis-widget-notifications.html',
+    link: function(scope, element, attrs) {
+    }
+  }
+}])
+.directive('jarvisWidgetNotification', [ '$log', '$stateParams', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/directives/notification/jarvis-widget-notification.html',
+    link: function(scope, element, attrs) {
+    }
+  }
 }])
 .directive('jarvisNotifications', [ '$log', '$stateParams', function ($log, $stateParams) {
   return {

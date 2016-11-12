@@ -81,8 +81,8 @@ angular.module('JarvisApp.config',['JarvisApp.directives.files'])
     		 '$state',
     		 'genericPickerService',
     		 'toastService',
-    		 'deviceResourceService',
-    		 'eventResourceService',
+    		 'jarvisWidgetDeviceService',
+    		 'jarvisWidgetEventService',
     		 'jarvisWidgetConfigurationService',
     		 'oauth2ResourceService',
     	function(

@@ -19,15 +19,6 @@
 /* Directives */
 
 angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
-.directive('jarvisPlugins', ['$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/plugins/jarvis-plugins.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-plugins');
-    }
-  }
-}])
 .directive('jarvisDefaultMenuBar', [ '$log', '$parse', function ($log, $parse) {
 	return {
 	    restrict: 'E',
@@ -64,24 +55,6 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
 	    }
 	}
 }])
-.directive('jarvisPluginCommon', [ '$log', '$stateParams', function ($log, $stateParams) {
-	  return {
-	    restrict: 'E',
-	    templateUrl: '/ui/js/partials/plugins/script/jarvis-plugin-general.html',
-	    link: function(scope, element, attrs) {
-	    	$log.debug('jarvis-plugin-common');
-	    }
-	  }
-}])
-.directive('jarvisPluginScript', [ '$log', '$stateParams', function ($log, $stateParams) {
-	  return {
-	    restrict: 'E',
-	    templateUrl: '/ui/js/partials/plugins/script/jarvis-plugin-script.html',
-	    link: function(scope, element, attrs) {
-	    	$log.debug('jarvis-plugin-script');
-	    }
-	  }
-}])
 .directive('typecommand', [ '$log', function ($log) {
 	return {
 	    require: 'ngModel',
@@ -117,159 +90,6 @@ angular.module('JarvisApp.directives.widgets', ['JarvisApp.services'])
 			};
 	    }
 	}
-}])
-.directive('jarvisPluginRender', [ '$log', '$stateParams', function ($log, $stateParams) {
-	  return {
-	    restrict: 'E',
-	    templateUrl: '/ui/js/partials/plugins/script/jarvis-plugin-result.html',
-	    link: function(scope, element, attrs) {
-	    	$log.debug('jarvis-plugin-output');
-	    }
-	  }
-}])
-.directive('jarvisDevices', [ '$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/devices/jarvis-devices.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-devices');
-    }
-  }
-}])
-.directive('jarvisDevice', [ '$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/devices/device/jarvis-device-general.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-device-general');
-    }
-  }
-}])
-.directive('jarvisDevicePlugin', [ '$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/devices/device/jarvis-device-plugin.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-device-plugin');
-    }
-  }
-}])
-.directive('jarvisDeviceRender', [ '$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/devices/device/jarvis-device-render.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-device-render');
-    }
-  }
-}])
-.directive('jarvisEvents', [ '$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/events/jarvis-events.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-devices');
-    }
-  }
-}])
-.directive('jarvisViews', [ '$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/views/jarvis-views.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-views');
-    }
-  }
-}])
-.directive('jarvisView', [ '$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/views/view/jarvis-view-general.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-view');
-    }
-  }
-}])
-.directive('jarvisProperties', [ '$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/properties/jarvis-properties.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-properties');
-    }
-  }
-}])
-.directive('jarvisProperty', [ '$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/properties/property/jarvis-property-general.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-property');
-    }
-  }
-}])
-.directive('jarvisSnapshots', [ '$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/snapshots/jarvis-snapshots.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-snapshots');
-    }
-  }
-}])
-.directive('jarvisSnapshot', [ '$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/snapshots/snapshot/jarvis-snapshot-general.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-snapshot');
-    }
-  }
-}])
-.directive('jarvisBlocks', [ '$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/blocks/jarvis-blocks.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-blocks');
-    }
-  }
-}])
-.directive('jarvisBlock', [ '$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/blocks/block/jarvis-block-general.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-block');
-    }
-  }
-}])
-.directive('jarvisBlockThen', [ '$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/blocks/block/jarvis-block-then.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-block-then');
-    }
-  }
-}])
-.directive('jarvisBlockElse', [ '$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/blocks/block/jarvis-block-else.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-block-else');
-    }
-  }
-}])
-.directive('jarvisHome', [ '$log', '$stateParams', function ($log, $stateParams) {
-  return {
-    restrict: 'E',
-    templateUrl: '/ui/js/partials/home/jarvis-home.html',
-    link: function(scope, element, attrs) {
-    	$log.debug('jarvis-home');
-    }
-  }
 }])
 .directive('jarvisCard', [ '$log', '$parse', function ($log, $parse) {
   return {

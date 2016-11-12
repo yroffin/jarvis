@@ -145,7 +145,7 @@ public class CoreServerDaemon {
 		String iface = env.getProperty("jarvis.server.interface");
 		int port = Integer.parseInt(env.getProperty("jarvis.server.port"));
 		spark.Spark.ipAddress(iface);
-		spark.Spark.threadPool(Integer.parseInt(env.getProperty("jarvis.server.pool.thread","8")));
+		spark.Spark.threadPool(Integer.parseInt(env.getProperty("jarvis.server.pool.thread","32")));
 		
 		/**
 		 * port

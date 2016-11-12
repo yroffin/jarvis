@@ -35,18 +35,13 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
             controller: 'extractTokenCtrl',
             template: ''
         })
-        .state('home', {
-            url: '/home',
-            controller: 'homeCtrl',
-            templateUrl: '/ui/js/partials/home/page.html'
-        })
         .state('helper-devices', {
             url: '/helper-devices',
             params: {
             	resources: ['crons','triggers','devices','plugins','commands']
             },
             controller: 'jarvisWidgetNavigatorCtrl',
-            templateUrl: '/ui/js/directives/navigator/jarvis-widget-navigator.html'
+            template: '<jarvis-widget-navigator></jarvis-widget-navigator>'
         })
         .state('helper-scenarii', {
             url: '/helper-scenarii',
@@ -54,7 +49,7 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
             	resources: ['triggers','crons','scenarios','blocks','plugins']
             },
             controller: 'jarvisWidgetNavigatorCtrl',
-            templateUrl: '/ui/js/directives/navigator/jarvis-widget-navigator.html'
+            template: '<jarvis-widget-navigator></jarvis-widget-navigator>'
         })
         .state('helper-system', {
             url: '/helper-system',
@@ -62,52 +57,57 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
             	resources: ['configurations','notifications','properties','connectors','views']
             },
             controller: 'jarvisWidgetNavigatorCtrl',
-            templateUrl: '/ui/js/directives/navigator/jarvis-widget-navigator.html'
+            template: '<jarvis-widget-navigator></jarvis-widget-navigator>'
+        })
+        .state('home', {
+            url: '/home',
+            controller: 'jarvisWidgetHomeCtrl',
+            template: '<jarvis-widget-home></jarvis-widget-home>'
         })
         .state('events', {
             url: '/events',
-            controller: 'eventsCtrl',
-            templateUrl: '/ui/js/partials/events/page.html'
+            controller: 'jarvisWidgetEventsCtrl',
+            template: '<jarvis-widget-event></jarvis-widget-event>'
         })
         .state('triggers', {
             url: '/triggers',
-            controller: 'triggersCtrl',
-            templateUrl: '/ui/js/directives/trigger/jarvis-widget-triggers.html'
+            controller: 'jarvisWidgetTriggersCtrl',
+            template: '<jarvis-widget-triggers></jarvis-widget-triggers>'
         })
         .state('triggers-by-id', {
             url: '/triggers/:id?tab',
-            controller: 'triggerCtrl',
-            templateUrl: '/ui/js/directives/trigger/jarvis-widget-trigger.html'
+            controller: 'jarvisWidgetTriggerCtrl',
+            template: '<jarvis-widget-trigger></jarvis-widget-trigger>'
         })
         .state('notifications', {
             url: '/notifications',
             controller: 'notificationsCtrl',
-            templateUrl: '/ui/js/directives/notification/jarvis-widget-notifications.html'
+            template: '<jarvis-widget-notifications></jarvis-widget-notifications>'
         })
         .state('notifications-by-id', {
             url: '/notifications/:id?tab',
             controller: 'notificationCtrl',
-            templateUrl: '/ui/js/directives/notification/jarvis-widget-notification.html'
+            template: '<jarvis-widget-notification></jarvis-widget-notification>'
         })
         .state('devices', {
             url: '/devices',
             controller: 'devicesCtrl',
-            templateUrl: '/ui/js/partials/devices/page.html'
+            template: '<jarvis-widget-devices></jarvis-widget-devices>'
         })
         .state('devices-by-id', {
             url: '/devices/:id?tab',
             controller: 'deviceCtrl',
-            templateUrl: '/ui/js/partials/devices/device/page.html'
+            template: '<jarvis-widget-device></jarvis-widget-device>'
         })
         .state('plugins', {
             url: '/plugins',
             controller: 'pluginsCtrl',
-            templateUrl: '/ui/js/partials/plugins/page.html'
+            template: '<jarvis-widget-plugins></jarvis-widget-plugins>'
         })
         .state('plugins-by-id-script', {
             url: '/plugins/scripts/:id?tab',
             controller: 'pluginScriptCtrl',
-            templateUrl: '/ui/js/partials/plugins/script/page.html'
+            template: '<jarvis-widget-plugin></jarvis-widget-plugin>'
         })
         .state('commands', {
             url: '/commands',
@@ -122,32 +122,32 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
         .state('views', {
             url: '/views',
             controller: 'viewsCtrl',
-            templateUrl: '/ui/js/partials/views/page.html'
+            template: '<jarvis-widget-views></jarvis-widget-views>'
         })
         .state('views-by-id', {
             url: '/views/:id?tab',
             controller: 'viewCtrl',
-            templateUrl: '/ui/js/partials/views/view/page.html'
+            template: '<jarvis-widget-view></jarvis-widget-view>'
         })
         .state('configurations', {
             url: '/configurations',
             controller: 'configurationsCtrl',
-            templateUrl: '/ui/js/directives/configuration/jarvis-widget-configurations.html'
+            template: '<jarvis-widget-configurations></jarvis-widget-configurations>'
         })
         .state('configurations-by-id', {
             url: '/configurations/:id?tab',
             controller: 'configurationCtrl',
-            templateUrl: '/ui/js/directives/configuration/jarvis-widget-configuration.html'
+            template: '<jarvis-widget-configuration></jarvis-widget-configuration>'
         })
         .state('properties', {
             url: '/properties',
             controller: 'propertiesCtrl',
-            templateUrl: '/ui/js/partials/properties/page.html'
+            template: '<jarvis-widget-properties></jarvis-widget-properties>'
         })
         .state('properties-by-id', {
             url: '/properties/:id?tab',
             controller: 'propertyCtrl',
-            templateUrl: '/ui/js/partials/properties/property/page.html'
+            template: '<jarvis-widget-property></jarvis-widget-property>'
         })
         .state('connectors', {
             url: '/connectors',
@@ -162,12 +162,12 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
         .state('snapshots', {
             url: '/snapshots',
             controller: 'snapshotsCtrl',
-            templateUrl: '/ui/js/partials/snapshots/page.html'
+            template: '<jarvis-widget-snapshots></jarvis-widget-snapshots>'
         })
         .state('snapshots-by-id', {
             url: '/snapshots/:id?tab',
             controller: 'snapshotCtrl',
-            templateUrl: '/ui/js/partials/snapshots/snapshot/page.html'
+            template: '<jarvis-widget-snapshot></jarvis-widget-snapshot>'
         })
         .state('crons', {
             url: '/crons',
@@ -192,12 +192,12 @@ angular.module('JarvisApp.routes',['JarvisApp.config'])
         .state('blocks', {
             url: '/blocks',
             controller: 'blocksCtrl',
-            templateUrl: '/ui/js/partials/blocks/page.html'
+            template: '<jarvis-widget-blocks></jarvis-widget-blocks>'
         })
         .state('blocks-by-id', {
             url: '/blocks/:id?tab',
             controller: 'blockCtrl',
-            templateUrl: '/ui/js/partials/blocks/block/page.html'
+            template: '<jarvis-widget-block></jarvis-widget-block>'
         })
         ;
     }]);

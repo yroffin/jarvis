@@ -21,7 +21,7 @@
 angular.module('jarvis.directives.cron', ['JarvisApp.services'])
 .controller('cronsCtrl', 
 		['$scope', '$log', 'genericScopeService', 'jarvisWidgetCronService', 'toastService',
-	function($scope, $log, genericScopeService, jarvisWidgetCronService, toastService){
+	function($scope, $log, genericScopeService, componentService, toastService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
 	 */
@@ -34,7 +34,7 @@ angular.module('jarvis.directives.cron', ['JarvisApp.services'])
 			},
 			$scope, 
 			'crons', 
-			jarvisWidgetCronService.cron,
+			componentService.cron,
 			{
     			name: "cron name",
     			icon: "list",
@@ -49,7 +49,7 @@ angular.module('jarvis.directives.cron', ['JarvisApp.services'])
     	 * iterate on each cron
     	 */
     	_.each($scope.crons, function(cron) {
-    		jarvisWidgetCronService.cron.task(cron.id, 'toggle', {target:true}, function(data) {
+    		componentService.cron.task(cron.id, 'toggle', {target:true}, function(data) {
 	   	    	toastService.info('crontab ' + crontab.name + '#' + crontab.id + ' toggled to ' + crontab.status);
 		    }, toastService.failure);
     	});
@@ -62,15 +62,15 @@ angular.module('jarvis.directives.cron', ['JarvisApp.services'])
     	 * iterate on each cron
     	 */
     	_.each($scope.crons, function(cron) {
-    		jarvisWidgetCronService.cron.task(cron.id, 'toggle', {target:false}, function(data) {
+    		componentService.cron.task(cron.id, 'toggle', {target:false}, function(data) {
 	   	    	toastService.info('crontab ' + crontab.name + '#' + crontab.id + ' toggled to ' + crontab.status);
 		    }, toastService.failure);
     	});
     }
 }])
 .controller('cronCtrl',
-		['$scope', '$log', '$stateParams', '$filter', '$http', 'genericResourceService', 'genericScopeService', 'jarvisWidgetCronService', 'deviceResourceService', 'toastService',
-	function($scope, $log, $stateParams, $filter, $http, genericResourceService, genericScopeService, jarvisWidgetCronService, deviceResourceService, toastService){
+		['$scope', '$log', '$stateParams', '$filter', '$http', 'genericResourceService', 'genericScopeService', 'jarvisWidgetCronService', 'toastService',
+	function($scope, $log, $stateParams, $filter, $http, genericResourceService, genericScopeService, componentService, toastService){
 	/**
 	 * declare generic scope resource (and inject it in scope)
 	 */
@@ -78,13 +78,13 @@ angular.module('jarvis.directives.cron', ['JarvisApp.services'])
 			$scope, 
 			'cron', 
 			'crons', 
-			jarvisWidgetCronService.cron);
+			componentService.cron);
     /**
      * toggle cron status
      */
     $scope.toggle = function(cron) {
     	$log.info(cron);
-    	jarvisWidgetCronService.cron.task(cron.id, 'toggle', {}, function(data) {
+    	componentService.cron.task(cron.id, 'toggle', {}, function(data) {
    	    	toastService.info('crontab ' + crontab.name + '#' + crontab.id + ' toggled to ' + crontab.status);
 	    }, toastService.failure);
     }
@@ -93,7 +93,7 @@ angular.module('jarvis.directives.cron', ['JarvisApp.services'])
      */
     $scope.test = function(cron) {
     	$log.info(cron);
-    	jarvisWidgetCronService.cron.task(cron.id, 'test', {}, function(data) {
+    	componentService.cron.task(cron.id, 'test', {}, function(data) {
    	    	toastService.info('crontab ' + crontab.name + '#' + crontab.id + ' toggled to ' + crontab.status);
 	    }, toastService.failure);
     }
@@ -105,7 +105,7 @@ angular.module('jarvis.directives.cron', ['JarvisApp.services'])
 		 * get current cron
 		 */
     	$scope.crons = [];
-    	genericResourceService.scope.entity.get($stateParams.id, function(update) {$scope.cron=update}, jarvisWidgetCronService.cron);
+    	genericResourceService.scope.entity.get($stateParams.id, function(update) {$scope.cron=update}, componentService.cron);
 
 		$log.info('cron-ctrl', $scope.crons);
     }

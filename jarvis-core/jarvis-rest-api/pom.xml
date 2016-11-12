@@ -47,6 +47,10 @@
 		</dependency>
 		<!-- external dependencies -->
 		<dependency>
+			<groupId>net.sourceforge.plantuml</groupId>
+			<artifactId>plantuml</artifactId>
+		</dependency>
+		<dependency>
 		    <groupId>io.swagger</groupId>
 		    <artifactId>swagger-core</artifactId>
 		</dependency>

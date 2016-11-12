@@ -1,0 +1,29 @@
+<md-toolbar>
+  <div class="md-toolbar-tools" layout-align="center">
+    <h1><br>{{block.name}}<md-tooltip>block#{{block.id}}</md-tooltip></h1>
+  </div>
+  <md-fab-actions class="md-toolbar-tools">
+  	<jarvis-default-menu-bar close="blocks" ng-model="block"></jarvis-default-menu-bar>
+	<md-button aria-label="menu" class="md-icon-button" ng-click="test(block)"><md-tooltip>{{'block.test'|translate}}</md-tooltip><md-icon md-font-icon="material-icons md-16">cached</md-icon></md-button>
+	<md-button aria-label="menu" class="md-icon-button" ng-click="execute(block)"><md-tooltip>{{'block.execute'|translate}}</md-tooltip><md-icon md-font-icon="material-icons md-16">play_arrow</md-icon></md-button>
+  </md-fab-actions>
+</md-toolbar>
+<div layout="column" ng-init="load()" ng-cloak>
+	<md-tabs md-dynamic-height md-border-bottom>
+		<md-tab label="{{'block.general' | translate}}" md-active="activeTab==1">
+			<md-content layout-padding>
+				<jarvis-block-general></jarvis-block-general>
+			</md-content>
+		</md-tab>
+		<md-tab label="{{'block.then' | translate}}" md-active="activeTab==2">
+			<md-content layout-padding>
+				<jarvis-block-then></jarvis-block-then>
+			</md-content>
+		</md-tab>
+		<md-tab label="{{'block.else' | translate}}" md-active="activeTab==3">
+			<md-content layout-padding>
+				<jarvis-block-else></jarvis-block-else>
+			</md-content>
+		</md-tab>
+	</md-tabs>
+</div>

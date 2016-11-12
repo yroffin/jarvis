@@ -50,8 +50,8 @@ angular.module('jarvis.directives.scenario', ['JarvisApp.services'])
 		  'genericResourceService',
 		  'genericPickerService',
 		  'jarvisWidgetScenarioService',
-		  'blockResourceService',
-		  'pluginResourceService',
+		  'jarvisWidgetBlockService',
+		  'jarvisWidgetPluginService',
 		  'toastService',
 	function(
 			$scope,

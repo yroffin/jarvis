@@ -1,0 +1,31 @@
+<md-toolbar>
+  <div class="md-toolbar-tools" layout-align="center">
+    <h1><br>{{device.name}}<md-tooltip>device#{{device.id}}</md-tooltip></h1>
+  </div>
+  <md-fab-actions class="md-toolbar-tools">
+  	<jarvis-default-menu-bar close="devices" ng-model="device"></jarvis-default-menu-bar>
+	<md-button aria-label="menu" class="md-icon-button" ng-click="render(device)"><md-tooltip>{{'device.render'|translate}}</md-tooltip><md-icon md-font-icon="material-icons md-16">play_arrow</md-icon></md-button>
+	<jarvis-pick-element tooltips="device.pick.device" ctrl="pickDeviceDialogCtrl" icon="local_offer" callback="links.devices.add"></jarvis-pick-element>
+	<jarvis-pick-element tooltips="device.pick.trigger" ctrl="pickTriggerDialogCtrl" icon="settings_remote" callback="links.triggers.add"></jarvis-pick-element>
+	<jarvis-pick-element tooltips="device.pick.plugin" ctrl="pickPluginDialogCtrl" icon="library_add" callback="links.plugins.add"></jarvis-pick-element>
+  </md-fab-actions>
+</md-toolbar>
+<div layout="column" ng-init="load()" ng-cloak>
+	<md-tabs md-dynamic-height md-border-bottom>
+		<md-tab label="{{'device.general' | translate}}" md-active="activeTab==1">
+			<md-content layout-padding>
+				<jarvis-device-general></jarvis-device-general>
+			</md-content>
+		</md-tab>
+		<md-tab label="{{'device.plugins' | translate}}" md-active="activeTab==2">
+			<md-content>
+				<jarvis-device-plugin></jarvis-device-plugin>
+			</md-content>
+		</md-tab>
+		<md-tab label="{{'device.render' | translate}}"  md-active="activeTab==3">
+			<md-content>
+				<jarvis-device-render></jarvis-device-render>
+			</md-content>
+		</md-tab>
+	</md-tabs>
+</div>
