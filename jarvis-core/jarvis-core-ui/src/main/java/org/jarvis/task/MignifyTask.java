@@ -50,7 +50,7 @@ public class MignifyTask {
 				String filename = file.toRealPath(LinkOption.NOFOLLOW_LINKS).toString().replace("\\","/").replace(PATH, "");
 				String f = file.toRealPath(LinkOption.NOFOLLOW_LINKS).toString().replace("\\","/");
 				if(filename.contains("/libs/")) return FileVisitResult.CONTINUE;
-				if(filename.endsWith(".html") || filename.endsWith(".css") || filename.startsWith("script")) {
+				if(filename.endsWith(".html") || filename.endsWith(".css") || filename.endsWith(".markdown") || filename.contains(".min.js") || filename.contains("config.js")) {
 					resources.put(filename, new File(f));
 				}
 				return FileVisitResult.CONTINUE;
