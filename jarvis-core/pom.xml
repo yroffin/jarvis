@@ -22,11 +22,12 @@
 		<marytts.version>5.1.2</marytts.version>
 		<swagger.version>1.5.10</swagger.version>
 		<spark-pac4j.version>1.1.0</spark-pac4j.version>
-		<pac4j.version>1.8.8</pac4j.version>
-		<slf4j.version>1.7.7</slf4j.version>
+		<pac4j.version>1.9.4</pac4j.version>
+		<slf4j.version>1.7.21</slf4j.version>
 		<reflections.version>0.9.10</reflections.version>
 		<rs-api.version>2.0.1</rs-api.version>
 		<hibernate-validator.version>5.2.2.Final</hibernate-validator.version>
+		<ehcache.version>3.0.0.m4</ehcache.version>
 	</properties>
 
 	<distributionManagement>
@@ -438,7 +439,7 @@
 			<dependency>
 				<groupId>org.ehcache</groupId>
 				<artifactId>ehcache</artifactId>
-				<version>3.0.0.m4</version>
+				<version>${ehcache.version}</version>
 			</dependency>
 
 			<dependency>
