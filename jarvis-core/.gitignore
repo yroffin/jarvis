@@ -2,3 +2,5 @@
 .idea
 *.iml
 /jarvis.log
+/jarvis-alexa-server/
+/jarvis-alexa/

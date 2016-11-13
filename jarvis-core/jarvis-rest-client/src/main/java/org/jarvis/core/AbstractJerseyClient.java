@@ -69,6 +69,7 @@ public abstract class AbstractJerseyClient {
 		}
 		
 		// Mapper
+		mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		mapper.registerModule(new JodaModule());
 		mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);

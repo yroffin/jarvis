@@ -109,7 +109,9 @@ public class CoreResources {
 	 * mount local resource
 	 */
 	public void mountLocal() {
-		spark.Spark.staticFileLocation("public");
+		logger.info("Mount local files on {}", "public");
+		spark.Spark.staticFiles.location("/public");
+		spark.Spark.staticFiles.externalLocation("public");
 		spark.Spark.staticFiles.expireTime(600);
 	}
 
@@ -146,14 +148,15 @@ public class CoreResources {
 		/**
 		 * mount resources
 		 */
+		spark.Spark.staticFiles.location("/public");
 		try {
 			resources = copyFromClasspath("public/ui.txt");
 			if(resources == null) {
 				throw new TechnicalException("No static files");
 			}
-			spark.Spark.externalStaticFileLocation(resources.getAbsolutePath() + "/public");
+			spark.Spark.staticFiles.externalLocation(resources.getAbsolutePath() + "/public");
 		} catch (URISyntaxException | IOException e) {
-			logger.error("While creatting resources files {}", e);
+			logger.error("While creating resources files {}", e);
 		}
 		
 		Runtime.getRuntime().addShutdownHook(new Thread() {
@@ -168,7 +171,8 @@ public class CoreResources {
 	        }
 	    });
 
-		// jarvis.server.static.expireTime
+		// just 1 second expire time
+		// TODO : configure it in properties
 		spark.Spark.staticFiles.expireTime(1);
 	}
 }

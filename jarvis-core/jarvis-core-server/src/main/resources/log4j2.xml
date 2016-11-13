@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="WARN">
+<Configuration status="WARN" packages="org.jarvis.core.log4j2">
   <Appenders>
-	<GELF name="gelfAppender" server="192.168.1.26" port="12201" queueSize="1">
-	          <KeyValuePair key="app" value="test app"/>
-	          <KeyValuePair key="foo" value="bar"/>
-	          <KeyValuePair key="jvm" value="${java:vm}"/>
-	</GELF>
+	<GelfCustomAppender name="gelfAppender" url="http://192.168.1.26:122012/gelf" >
+	</GelfCustomAppender>
 	<RollingFile name="RollingFile" fileName="${sys:jarvis.log.dir}/jarvis.log" filePattern="${sys:jarvis.log.dir}/jarvis-%d{MM-dd-yyyy}.log.gz"
                  ignoreExceptions="false">
       <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
@@ -25,9 +22,9 @@
       <AppenderRef ref="RollingSessionFile"/>
     </Logger>
     <Root level="info">
-      <AppenderRef ref="Console"/>
-      <AppenderRef ref="RollingFile"/>
-      <AppenderRef ref="gelfAppender"/>
+      <AppenderRef ref="Console" level="info" />
+      <AppenderRef ref="RollingFile" level="warn" />
+      <AppenderRef ref="gelfAppender"  level="info" />
     </Root>
   </Loggers>
 </Configuration>
