@@ -17,7 +17,8 @@
 		<spark.version>2.5.2</spark.version>
 		<spring-boot.version>1.4.2.RELEASE</spring-boot.version>
 		<spring.version>4.3.3.RELEASE</spring.version>
-		<jersey.version>2.23.1</jersey.version>
+		<jersey.version>2.24</jersey.version>
+		<rs-api.version>2.1-m01</rs-api.version>
 		<mockito.version>1.10.19</mockito.version>
 		<marytts.version>5.1.2</marytts.version>
 		<swagger.version>1.5.10</swagger.version>
@@ -166,11 +167,16 @@
 			    <artifactId>swagger-core</artifactId>
 			    <version>${swagger.version}</version>
 			</dependency>
-
 			<dependency>
 			    <groupId>io.swagger</groupId>
 			    <artifactId>swagger-jaxrs</artifactId>
 			    <version>${swagger.version}</version>
+			    <exclusions>
+			    	<exclusion>
+					    <groupId>javax.ws.rs</groupId>
+					    <artifactId>jsr311-api</artifactId>
+			    	</exclusion>
+			    </exclusions>
 			</dependency>
 			<dependency>
 			    <groupId>io.swagger</groupId>
@@ -206,6 +212,16 @@
 				<groupId>org.glassfish.jersey.core</groupId>
 				<artifactId>jersey-client</artifactId>
 				<version>${jersey.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.glassfish.jersey.core</groupId>
+				<artifactId>jersey-common</artifactId>
+				<version>${jersey.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>javax.ws.rs</groupId>
+				<artifactId>javax.ws.rs-api</artifactId>
+				<version>${rs-api.version}</version>
 			</dependency>
 			<!-- spring boot -->
 			<dependency>
