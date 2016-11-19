@@ -293,28 +293,6 @@ public class ApiScenarioResources extends ApiLinkedTwiceResources<ScenarioRest,S
 	 * @return
 	 * @throws TechnicalNotFoundException
 	 */
-	private HashMap<String, GenericEntity> renderLevel(String stage, Collection<GenericEntity> entities, List<DefaultProcess> processes) throws TechnicalNotFoundException {
-		HashMap<String, GenericEntity> calls = new HashMap<String, GenericEntity>();
-		/**
-		 * iterate on block entities
-		 */
-		for(GenericEntity blockEntity : entities) {
-			DefaultProcess process = new DefaultProcess(stage);
-			processes.add(process);
-			BlockBean block = apiBlockResources.doGetByIdBean(blockEntity.id);
-			apiBlockResources.render(process, block, calls);
-		}
-		return calls;
-	}
-
-	/**
-	 * render this level
-	 * @param stage
-	 * @param entities
-	 * @param processes
-	 * @return
-	 * @throws TechnicalNotFoundException
-	 */
 	private HashMap<String, GenericEntity> renderActivity(StringBuilder stage, Integer level, Collection<GenericEntity> entities, List<DefaultProcess> processes) throws TechnicalNotFoundException {
 		HashMap<String, GenericEntity> calls = new HashMap<String, GenericEntity>();
 		
@@ -374,42 +352,5 @@ public class ApiScenarioResources extends ApiLinkedTwiceResources<ScenarioRest,S
 
 		uml.append("@enduml\n");
 		return uml.toString();
-	}
-
-	/**
-	 * render processes
-	 * @param bean
-	 * @param args
-	 * @param genericMap
-	 * @return
-	 * @throws TechnicalNotFoundException
-	 */
-	private String render(ScenarioBean bean, GenericMap args, GenericMap genericMap) throws TechnicalNotFoundException {
-		/**
-		 * compute first level, return is the sub block of n-1 level
-		 */
-		List<DefaultProcess> processes = new ArrayList<DefaultProcess>();
-		Map<String, GenericEntity> calls = renderLevel("main", sort(apiHrefScenarioBlockResources.findAll(bean), "order"), processes);
-		int level = 1;
-		Set<String> index = new HashSet<String>();
-		while(calls.size()>0) {
-			Map<String, GenericEntity> toRun = new HashMap<String, GenericEntity>();
-			for(Entry<String, GenericEntity> entity : calls.entrySet()) {
-				if(!index.contains(entity.getKey())) {
-					index.add(entity.getKey());
-					toRun.put(entity.getKey(), entity.getValue());
-				}
-			}
-			/**
-			 * render not known block
-			 */
-			calls = renderLevel("level#" + level, toRun.values(), processes);
-			level ++;
-			if(level > 10) {
-				logger.warn("To many levels {}", bean.id);
-				break;
-			}
-		}
-		return DefaultProcessService.toJson(processes);
 	}
 }

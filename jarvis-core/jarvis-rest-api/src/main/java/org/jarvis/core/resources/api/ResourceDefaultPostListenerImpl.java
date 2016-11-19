@@ -11,15 +11,15 @@ import spark.Response;
 public abstract class ResourceDefaultPostListenerImpl<REST,BEAN> implements ResourcePostListener<REST,BEAN> {
 
 	@Override
-	public void postBean(Request request, Response response, BEAN bean) {
+	public void postBean(BEAN bean) {
 	}
 
 	@Override
-	public void putBean(Request request, Response response, BEAN bean) {
+	public void putBean(BEAN bean) {
 	}
 
 	@Override
-	public void getBean(Request request, Response response, BEAN bean) {
+	public void getBean(BEAN bean) {
 	}
 
 	@Override

@@ -6,6 +6,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ScheduledFuture;
 
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+
 import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.scenario.TriggerBean;
@@ -13,11 +16,13 @@ import org.jarvis.core.model.bean.tools.CronBean;
 import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.model.rest.tools.CronRest;
 import org.jarvis.core.resources.api.ApiResources;
+import org.jarvis.core.resources.api.Declare;
 import org.jarvis.core.resources.api.GenericValue;
-import org.jarvis.core.resources.api.ResourceDefaultPreListenerImpl;
-import org.jarvis.core.resources.api.ResourcePreListener;
+import org.jarvis.core.resources.api.ResourceDefaultPostListenerImpl;
+import org.jarvis.core.resources.api.ResourcePostListener;
 import org.jarvis.core.resources.api.device.ApiTriggerResources;
 import org.jarvis.core.resources.api.href.ApiHrefTriggerCronResources;
+import org.jarvis.core.resources.api.mapper.ApiMapper;
 import org.jarvis.core.services.CoreEventDaemon;
 import org.jarvis.core.services.CoreSunsetSunrise;
 import org.jarvis.core.services.CoreThreadPoolTaskScheduler;
@@ -31,6 +36,7 @@ import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.scheduling.support.PeriodicTrigger;
 import org.springframework.stereotype.Component;
 
+import io.swagger.annotations.Api;
 import spark.Request;
 import spark.Response;
 
@@ -38,6 +44,10 @@ import spark.Response;
  * tools resources
  */
 @Component
+@Api(value = "cron")
+@Path("/api/crons")
+@Produces("application/json")
+@Declare(resource=ApiMapper.CRON_RESOURCE, summary="Cron resource", rest=CronRest.class)
 public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 
 	@Autowired
@@ -63,10 +73,10 @@ public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 		setBeanClass(CronBean.class);
 	}
 
-	class ResourceListenerImpl extends ResourceDefaultPreListenerImpl<CronRest> implements ResourcePreListener<CronRest> {
+	class ResourceListenerImpl extends ResourceDefaultPostListenerImpl<CronRest,CronBean> implements ResourcePostListener<CronRest,CronBean> {
 
 		@Override
-		public void get(Request request, Response response, CronRest rest) {
+		public void getRest(Request request, Response response, CronRest rest) {
 			/**
 			 * post compute cron status and inject it
 			 * in result
@@ -78,14 +88,11 @@ public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 
 	@Override
 	public void mount() {
-		/**
-		 * snapshot
-		 */
-		declare(CRON_RESOURCE);
+		super.mount();
 		/**
 		 * declare listener
 		 */
-		addPreListener(new ResourceListenerImpl());
+		addPostListener(new ResourceListenerImpl());
 		/**
 		 * start any cron at boot time
 		 */

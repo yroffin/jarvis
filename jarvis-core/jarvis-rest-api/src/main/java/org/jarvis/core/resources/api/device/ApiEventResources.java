@@ -62,15 +62,15 @@ public class ApiEventResources extends ApiResources<EventRest,EventBean> {
 	class ResourceListenerImpl extends ResourceDefaultPostListenerImpl<EventRest, EventBean> implements ResourcePostListener<EventRest, EventBean> {
 
 		@Override
-		public void postBean(Request request, Response response, EventBean event) {
+		public void postRest(Request request, Response response, EventRest event) {
 			if(request.params(ASYNC) != null && request.params(ASYNC).equals("true")) {
 				try {
-					coreEventDaemon.post(event);
+					coreEventDaemon.post(mapRestToBean(event));
 				} catch (InterruptedException e) {
 					throw new TechnicalException(e);
 				}
 			} else {
-				coreEventDaemon.handle(event);
+				coreEventDaemon.handle(mapRestToBean(event));
 			}
 		}
 

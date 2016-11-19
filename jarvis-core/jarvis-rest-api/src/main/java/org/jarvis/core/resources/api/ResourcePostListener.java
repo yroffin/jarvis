@@ -11,25 +11,19 @@ import spark.Response;
 public interface ResourcePostListener<REST,BEAN> {
 
 	/**
-	 * @param request
-	 * @param response
 	 * @param bean 
 	 */
-	void postBean(Request request, Response response, BEAN bean);
+	void postBean(BEAN bean);
 
 	/**
-	 * @param request
-	 * @param response
 	 * @param bean 
 	 */
-	void putBean(Request request, Response response, BEAN bean);
+	void putBean(BEAN bean);
 
 	/**
-	 * @param request
-	 * @param response
 	 * @param bean 
 	 */
-	public void getBean(Request request, Response response, BEAN bean);
+	public void getBean(BEAN bean);
 
 	/**
 	 * @param request
