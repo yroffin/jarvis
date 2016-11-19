@@ -498,6 +498,7 @@
 		<module>jarvis-rest-client</module>
 		<module>jarvis-rest-api-zway</module>
 		<module>jarvis-rest-api-slack</module>
+		<module>jarvis-swagger-core</module>
 		<module>jarvis-swagger-ui</module>
 		<module>jarvis-plantuml</module>
 	</modules>
