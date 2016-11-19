@@ -25,6 +25,7 @@ import org.jarvis.core.model.rest.device.EventRest;
 import org.jarvis.core.resources.api.ApiResources;
 import org.jarvis.core.resources.api.Declare;
 import org.jarvis.core.resources.api.GenericValue;
+import org.jarvis.core.resources.api.ResourceDefaultPostListenerImpl;
 import org.jarvis.core.resources.api.ResourcePostListener;
 import org.jarvis.core.resources.api.mapper.ApiMapper;
 import org.jarvis.core.services.CoreEventDaemon;
@@ -58,20 +59,21 @@ public class ApiEventResources extends ApiResources<EventRest,EventBean> {
 		setBeanClass(EventBean.class);
 	}
 
-	class ResourceListenerImpl implements ResourcePostListener<EventBean> {
+	class ResourceListenerImpl extends ResourceDefaultPostListenerImpl<EventRest, EventBean> implements ResourcePostListener<EventRest, EventBean> {
 
 		@Override
-		public void post(Request request, Response response, EventBean event) throws InterruptedException {
+		public void postBean(Request request, Response response, EventBean event) {
 			if(request.params(ASYNC) != null && request.params(ASYNC).equals("true")) {
-				coreEventDaemon.post(event);
+				try {
+					coreEventDaemon.post(event);
+				} catch (InterruptedException e) {
+					throw new TechnicalException(e);
+				}
 			} else {
 				coreEventDaemon.handle(event);
 			}
 		}
 
-		@Override
-		public void put(Request request, Response response, EventBean t) {
-		}
 	}
 
 	@Override
@@ -80,7 +82,7 @@ public class ApiEventResources extends ApiResources<EventRest,EventBean> {
 		/**
 		 * declare listener
 		 */
-		addListener(new ResourceListenerImpl());
+		addPostListener(new ResourceListenerImpl());
 	}
 
 	@Override

@@ -26,8 +26,6 @@ import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.plugin.CommandBean;
 import org.jarvis.core.model.bean.tools.NotificationBean;
 import org.jarvis.core.model.rest.GenericEntity;
-import org.jarvis.core.model.rest.plugin.CommandRest;
-import org.jarvis.core.model.rest.tools.NotificationRest;
 import org.jarvis.core.resources.api.mapper.ApiHrefMapper;
 import org.jarvis.core.resources.api.tools.ApiNotificationResources;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +35,7 @@ import org.springframework.stereotype.Component;
  * HREF handler
  */
 @Component
-public class ApiHrefCommandNotificationResources extends ApiHrefMapper<CommandRest,NotificationRest> {
+public class ApiHrefCommandNotificationResources extends ApiHrefMapper<CommandBean,NotificationBean> {
 
 	@Autowired
 	ApiNotificationResources apiNotificationResources;
@@ -55,7 +53,7 @@ public class ApiHrefCommandNotificationResources extends ApiHrefMapper<CommandRe
 	 */
 	public List<NotificationBean> findAll(CommandBean script) {
 		List<NotificationBean> result = new ArrayList<NotificationBean>();
-		for( GenericEntity entity : super.findAll(mapperFactory.getMapperFacade().map(script, CommandRest.class), HREF) ) {
+		for( GenericEntity entity : super.findAll(script, HREF) ) {
 			try {
 				result.add(apiNotificationResources.doGetByIdBean(entity.id));
 			} catch (TechnicalNotFoundException e) {

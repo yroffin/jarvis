@@ -175,12 +175,16 @@ public class CoreEventDaemon {
 			 */
 			coreStatistics.write(event);
 
+			int checkDevice = 0;
+			int checkScenario = 0;
+			
 			/**
 			 * execute it
 			 */
 			for(ScenarioBean scenario : scenarioToExecute(event)) {
 				try {
 					apiScenarioResources.doExecute(null,scenario.id, new GenericMap(), TaskType.EXECUTE);
+					checkScenario++;
 				} catch (TechnicalNotFoundException e) {
 					logger.warn(e.getMessage());
 				}
@@ -192,10 +196,13 @@ public class CoreEventDaemon {
 			for(DeviceBean device : deviceToExecute(event)) {
 				try {
 					apiDeviceResources.doExecute(null,device.id, new GenericMap(), TaskType.EXECUTE);
+					checkDevice++;
 				} catch (TechnicalNotFoundException e) {
 					logger.warn(e.getMessage());
 				}
 			}
+
+			logger.info("Trigger activate {} devices and  {} scenario", checkDevice, checkScenario);
 		}
 
 		/**

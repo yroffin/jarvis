@@ -23,8 +23,6 @@ import javax.annotation.PostConstruct;
 import org.jarvis.core.model.bean.plugin.CommandBean;
 import org.jarvis.core.model.bean.plugin.ScriptPluginBean;
 import org.jarvis.core.model.rest.GenericEntity;
-import org.jarvis.core.model.rest.plugin.CommandRest;
-import org.jarvis.core.model.rest.plugin.ScriptPluginRest;
 import org.jarvis.core.resources.api.mapper.ApiHrefMapper;
 import org.springframework.stereotype.Component;
 
@@ -32,7 +30,7 @@ import org.springframework.stereotype.Component;
  * HREF handler
  */
 @Component
-public class ApiHrefPluginCommandResources extends ApiHrefMapper<ScriptPluginRest,CommandRest> {
+public class ApiHrefPluginCommandResources extends ApiHrefMapper<ScriptPluginBean,CommandBean> {
 
 	@PostConstruct
 	protected
@@ -46,6 +44,6 @@ public class ApiHrefPluginCommandResources extends ApiHrefMapper<ScriptPluginRes
 	 * @return List<GenericEntity>
 	 */
 	public List<GenericEntity> findAll(ScriptPluginBean script) {
-		return super.findAll(mapperFactory.getMapperFacade().map(script, ScriptPluginRest.class), HREF);
+		return super.findAll(script, HREF);
 	}
 }

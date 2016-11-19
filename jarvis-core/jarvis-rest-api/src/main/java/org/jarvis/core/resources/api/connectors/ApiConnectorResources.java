@@ -107,7 +107,7 @@ public class ApiConnectorResources extends ApiResources<ConnectorRest,ConnectorB
 			bean.isSensor = (boolean) copy(args.get("isSensor"), beans.get(0).isSensor);
 			bean.lastAdvertise = DateTime.now();
 			try {
-				doUpdate(beans.get(0).id, bean);
+				doUpdateBean(beans.get(0).id, bean);
 			} catch (TechnicalNotFoundException e) {
 				logger.warn("No such entity {}", beans.get(0));
 			}
@@ -121,7 +121,7 @@ public class ApiConnectorResources extends ApiResources<ConnectorRest,ConnectorB
 			bean.canAnswer = (boolean) copy(args.get("canAnswer"), false);
 			bean.isRenderer = (boolean) copy(args.get("isRenderer"), false);
 			bean.isSensor = (boolean) copy(args.get("isSensor"), false);
-			doCreate(bean);
+			doCreateBean(bean);
 		}
 		return args;
 	}

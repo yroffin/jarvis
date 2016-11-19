@@ -20,11 +20,9 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
-import org.jarvis.core.model.bean.scenario.TriggerBean;
 import org.jarvis.core.model.bean.scenario.ScenarioBean;
+import org.jarvis.core.model.bean.scenario.TriggerBean;
 import org.jarvis.core.model.rest.GenericEntity;
-import org.jarvis.core.model.rest.scenario.TriggerRest;
-import org.jarvis.core.model.rest.scenario.ScenarioRest;
 import org.jarvis.core.resources.api.mapper.ApiHrefMapper;
 import org.springframework.stereotype.Component;
 
@@ -32,7 +30,7 @@ import org.springframework.stereotype.Component;
  * HREF handler
  */
 @Component
-public class ApiHrefScenarioTriggerResources extends ApiHrefMapper<ScenarioRest,TriggerRest> {
+public class ApiHrefScenarioTriggerResources extends ApiHrefMapper<ScenarioBean,TriggerBean> {
 
 	@PostConstruct
 	protected
@@ -42,10 +40,10 @@ public class ApiHrefScenarioTriggerResources extends ApiHrefMapper<ScenarioRest,
 
 	/**
 	 * find all by bean
-	 * @param scenario 
+	 * @param bean 
 	 * @return List<GenericEntity>
 	 */
-	public List<GenericEntity> findAll(ScenarioBean scenario) {
-		return super.findAll(mapperFactory.getMapperFacade().map(scenario, ScenarioRest.class), HREF);
+	public List<GenericEntity> findAll(ScenarioBean bean) {
+		return super.findAll(bean, HREF);
 	}
 }

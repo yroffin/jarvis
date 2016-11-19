@@ -27,13 +27,16 @@ import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.model.parser.history.IAimlHistory;
 import org.junit.Test;
 
+/**
+ * test
+ */
 public class AimlAliceTest {
 
 	/**
 	 * internal utility
 	 * 
 	 * @param resources
-	 * @return
+	 * @return IAimlCoreEngine
 	 * @throws AimlParsingError
 	 */
 	public IAimlCoreEngine instance(String resources) throws AimlParsingError {

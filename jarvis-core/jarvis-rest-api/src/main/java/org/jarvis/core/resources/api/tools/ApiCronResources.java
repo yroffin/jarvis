@@ -14,6 +14,7 @@ import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.model.rest.tools.CronRest;
 import org.jarvis.core.resources.api.ApiResources;
 import org.jarvis.core.resources.api.GenericValue;
+import org.jarvis.core.resources.api.ResourceDefaultPreListenerImpl;
 import org.jarvis.core.resources.api.ResourcePreListener;
 import org.jarvis.core.resources.api.device.ApiTriggerResources;
 import org.jarvis.core.resources.api.href.ApiHrefTriggerCronResources;
@@ -62,7 +63,7 @@ public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 		setBeanClass(CronBean.class);
 	}
 
-	class ResourceListenerImpl extends ResourcePreListener<CronRest> {
+	class ResourceListenerImpl extends ResourceDefaultPreListenerImpl<CronRest> implements ResourcePreListener<CronRest> {
 
 		@Override
 		public void get(Request request, Response response, CronRest rest) {
@@ -72,6 +73,7 @@ public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 			 */
 			rest.status = scheduled.containsKey(rest.id);
 		}
+
 	}
 
 	@Override
@@ -83,7 +85,7 @@ public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 		/**
 		 * declare listener
 		 */
-		addListener(new ResourceListenerImpl());
+		addPreListener(new ResourceListenerImpl());
 		/**
 		 * start any cron at boot time
 		 */

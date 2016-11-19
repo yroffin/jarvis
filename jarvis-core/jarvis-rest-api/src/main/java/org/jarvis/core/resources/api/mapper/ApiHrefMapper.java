@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 
 import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.exception.TechnicalNotFoundException;
+import org.jarvis.core.model.bean.GenericBean;
 import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.services.neo4j.ApiNeo4Service;
 import org.jarvis.core.type.GenericMap;
@@ -18,10 +19,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * api mapper based on href link
  *
- * @param <T>
- * @param <S>
+ * @param <OWNER>
+ * @param <TARGET>
  */
-public abstract class ApiHrefMapper<T extends GenericEntity,S extends GenericEntity> extends ApiMapper {
+public abstract class ApiHrefMapper<OWNER extends GenericBean,TARGET extends GenericBean> extends ApiMapper {
 
 	private String ownerLabel;
 	private String childLabel;
@@ -66,7 +67,7 @@ public abstract class ApiHrefMapper<T extends GenericEntity,S extends GenericEnt
 	 * @throws TechnicalNotFoundException
 	 * when no data found
 	 */
-	public GenericEntity add(T owner, S child, GenericMap properties, String type, String relation) throws TechnicalNotFoundException {
+	public GenericEntity add(OWNER owner, TARGET child, GenericMap properties, String type, String relation) throws TechnicalNotFoundException {
 		try (Transaction create = apiNeo4Service.beginTx()) {
 			/**
 			 * relation can be override by post
@@ -134,7 +135,7 @@ public abstract class ApiHrefMapper<T extends GenericEntity,S extends GenericEnt
 	 * the relation type (default HREF)
 	 * @return List<GenericEntity>
 	 */
-	public List<GenericEntity> findAll(T owner, String relation) {
+	public List<GenericEntity> findAll(OWNER owner, String relation) {
 		Entities result = apiNeo4Service.cypherAllLink(ownerLabel, owner.id, childLabel, relation, "relation", "entity");
 		List<GenericEntity> resultset = new ArrayList<GenericEntity>();
 		while (result.hasNext()) {
@@ -179,7 +180,7 @@ public abstract class ApiHrefMapper<T extends GenericEntity,S extends GenericEnt
 	 * @throws TechnicalNotFoundException
 	 * then no relation or entity exist
 	 */
-	public GenericEntity remove(T owner, S child, String instance, String relation) throws TechnicalNotFoundException {
+	public GenericEntity remove(OWNER owner, TARGET child, String instance, String relation) throws TechnicalNotFoundException {
 		try (Transaction create = apiNeo4Service.beginTx()) {
 			apiNeo4Service.cypherDeleteLink(ownerLabel, owner.id, childLabel, child.id, relation, instance, "relation");
 			create.success();

@@ -20,8 +20,6 @@ import javax.annotation.PostConstruct;
 
 import org.jarvis.core.model.bean.device.DeviceBean;
 import org.jarvis.core.model.bean.view.ViewBean;
-import org.jarvis.core.model.rest.device.DeviceRest;
-import org.jarvis.core.model.rest.view.ViewRest;
 import org.jarvis.core.resources.api.mapper.ApiHrefMapper;
 import org.springframework.stereotype.Component;
 
@@ -29,7 +27,7 @@ import org.springframework.stereotype.Component;
  * HREF handler
  */
 @Component
-public class ApiHrefViewResources extends ApiHrefMapper<ViewRest,DeviceRest> {
+public class ApiHrefViewResources extends ApiHrefMapper<ViewBean,DeviceBean> {
 
 	@PostConstruct
 	protected

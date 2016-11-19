@@ -17,20 +17,32 @@
 package org.jarvis.core.resources.api.device;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
 import org.jarvis.core.exception.TechnicalException;
+import org.jarvis.core.model.bean.device.DeviceBean;
+import org.jarvis.core.model.bean.scenario.ScenarioBean;
 import org.jarvis.core.model.bean.scenario.TriggerBean;
 import org.jarvis.core.model.bean.tools.CronBean;
+import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.model.rest.scenario.TriggerRest;
 import org.jarvis.core.model.rest.tools.CronRest;
 import org.jarvis.core.resources.api.ApiLinkedResources;
+import org.jarvis.core.resources.api.Declare;
+import org.jarvis.core.resources.api.DeclareHrefResource;
+import org.jarvis.core.resources.api.DeclareLinkedResource;
 import org.jarvis.core.resources.api.GenericValue;
+import org.jarvis.core.resources.api.ResourceDefaultPostListenerImpl;
+import org.jarvis.core.resources.api.ResourcePostListener;
+import org.jarvis.core.resources.api.href.ApiHrefDeviceTriggerResources;
+import org.jarvis.core.resources.api.href.ApiHrefScenarioTriggerResources;
 import org.jarvis.core.resources.api.href.ApiHrefTriggerCronResources;
 import org.jarvis.core.resources.api.mapper.ApiMapper;
+import org.jarvis.core.resources.api.scenario.ApiScenarioResources;
 import org.jarvis.core.resources.api.tools.ApiCronResources;
 import org.jarvis.core.services.CoreEventDaemon;
 import org.jarvis.core.type.GenericMap;
@@ -50,9 +62,6 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 import spark.Spark;
-import org.jarvis.core.resources.api.Declare;
-import org.jarvis.core.resources.api.DeclareHrefResource;
-import org.jarvis.core.resources.api.DeclareLinkedResource;
 
 /**
  * Trigger resource
@@ -80,6 +89,18 @@ public class ApiTriggerResources extends ApiLinkedResources<TriggerRest,TriggerB
 
 	@Autowired
 	CoreEventDaemon coreEventDaemon;
+	
+	@Autowired
+	ApiDeviceResources apiDeviceResources;
+
+	@Autowired
+	ApiHrefDeviceTriggerResources apiHrefDeviceTriggerResources;
+	
+	@Autowired
+	ApiScenarioResources apiScenarioResources;
+
+	@Autowired
+	ApiHrefScenarioTriggerResources apiHrefDeviceScenarioResources;
 
 	/**
 	 * constructor
@@ -89,6 +110,30 @@ public class ApiTriggerResources extends ApiLinkedResources<TriggerRest,TriggerB
 		setBeanClass(TriggerBean.class);
 	}
 
+	class ResourceListenerImpl extends ResourceDefaultPostListenerImpl<TriggerRest, TriggerBean> implements ResourcePostListener<TriggerRest, TriggerBean> {
+
+		@Override
+		public void getRest(Request request, Response response, TriggerRest trigger) {
+			trigger.devices = new ArrayList<>();
+			for(DeviceBean device : apiDeviceResources.doFindAllBean()) {
+				for(GenericEntity href : apiHrefDeviceTriggerResources.findAll(device)) {
+					if(href.id.equals(trigger.id)) {
+						trigger.devices.add(apiDeviceResources.mapBeanToRest(device));
+					}
+				}
+			}
+			trigger.scenarii = new ArrayList<>();
+			for(ScenarioBean scenario : apiScenarioResources.doFindAllBean()) {
+				for(GenericEntity href : apiHrefDeviceScenarioResources.findAll(scenario)) {
+					if(href.id.equals(trigger.id)) {
+						trigger.scenarii.add(apiScenarioResources.mapBeanToRest(scenario));
+					}
+				}
+			}
+		}
+
+	}
+
 	@Override
 	public void mount() {
 		super.mount();
@@ -96,6 +141,10 @@ public class ApiTriggerResources extends ApiLinkedResources<TriggerRest,TriggerB
 		 * patch
 		 */
 		Spark.patch("/api/"+TRIGGER_RESOURCE+"/:name", trigger());
+		/**
+		 * declare listener
+		 */
+		addPostListener(new ResourceListenerImpl());
 	}
 
 	/**

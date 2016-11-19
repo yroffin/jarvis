@@ -23,8 +23,6 @@ import javax.annotation.PostConstruct;
 import org.jarvis.core.model.bean.device.DeviceBean;
 import org.jarvis.core.model.bean.scenario.TriggerBean;
 import org.jarvis.core.model.rest.GenericEntity;
-import org.jarvis.core.model.rest.device.DeviceRest;
-import org.jarvis.core.model.rest.scenario.TriggerRest;
 import org.jarvis.core.resources.api.mapper.ApiHrefMapper;
 import org.springframework.stereotype.Component;
 
@@ -32,7 +30,7 @@ import org.springframework.stereotype.Component;
  * HREF handler
  */
 @Component
-public class ApiHrefDeviceTriggerResources extends ApiHrefMapper<DeviceRest,TriggerRest> {
+public class ApiHrefDeviceTriggerResources extends ApiHrefMapper<DeviceBean,TriggerBean> {
 
 	@PostConstruct
 	protected
@@ -46,6 +44,6 @@ public class ApiHrefDeviceTriggerResources extends ApiHrefMapper<DeviceRest,Trig
 	 * @return List<GenericEntity>
 	 */
 	public List<GenericEntity> findAll(DeviceBean bean) {
-		return super.findAll(mapperFactory.getMapperFacade().map(bean, DeviceRest.class), HREF);
+		return super.findAll(bean, HREF);
 	}
 }

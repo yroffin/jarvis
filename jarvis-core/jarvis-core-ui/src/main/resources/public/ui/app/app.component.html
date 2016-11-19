@@ -1,0 +1,20 @@
+<h2>Angular 2 Demo: Dependency Injection</h2>
+
+<button-demo></button-demo>
+    
+<p>This demo shows how a simple component injects a <code>NameService</code> using
+TypeScript annotations and providers. Change the name in <code>NameService</code>
+and see how it gets picked up by <code>NameComponent</code>.</p>
+
+<p>Also, notice how <code>OtherNameComponent</code> introduces a new provider
+for the <code>NameService</code> token, to get a different dependency injected.</p>
+<hr>
+<br>
+<div>
+<name-component></name-component>
+</div>
+<div>
+<other-name-component></other-name-component>
+</div>
+<hr>
+<center>Brought to you by Team <a href="http://thoughtram.io">thoughtram</a></center>

@@ -16,7 +16,10 @@
 
 package org.jarvis.core.model.rest.scenario;
 
+import java.util.List;
+
 import org.jarvis.core.model.rest.GenericEntity;
+import org.jarvis.core.model.rest.device.DeviceRest;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -36,4 +39,14 @@ public class TriggerRest extends GenericEntity {
 	 */
 	@JsonProperty("icon")
 	public String icon;
+	/**
+	 * linked devices
+	 */
+	@JsonProperty("devices")
+	public List<DeviceRest> devices;
+	/**
+	 * linked scenarii
+	 */
+	@JsonProperty("scenarii")
+	public List<ScenarioRest> scenarii;
 }

@@ -86,7 +86,9 @@ angular.module('jarvis.directives.trigger', ['JarvisApp.services'])
      * loading
      */
     $scope.load = function() {
-		/**
+  		$scope.activeTab = $stateParams.tab;
+
+  		/**
 		 * get current trigger
 		 */
     	genericResourceService.scope.entity.get($stateParams.id, function(update) {$scope.trigger=update}, componentService.trigger);
@@ -142,6 +144,14 @@ angular.module('jarvis.directives.trigger', ['JarvisApp.services'])
   return {
     restrict: 'E',
     templateUrl: '/ui/js/directives/trigger/partials/jarvis-trigger-cron.html',
+    link: function(scope, element, attrs) {
+    }
+  }
+}])
+.directive('jarvisTriggerLink', [ '$log', '$stateParams', function ($log, $stateParams) {
+  return {
+    restrict: 'E',
+    templateUrl: '/ui/js/directives/trigger/partials/jarvis-trigger-link.html',
     link: function(scope, element, attrs) {
     }
   }

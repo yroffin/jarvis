@@ -26,7 +26,8 @@ import org.jarvis.core.model.rest.config.ConfigSystemRest;
 import org.jarvis.core.resources.api.ApiResources;
 import org.jarvis.core.resources.api.Declare;
 import org.jarvis.core.resources.api.GenericValue;
-import org.jarvis.core.resources.api.ResourcePreListener;
+import org.jarvis.core.resources.api.ResourceDefaultPostListenerImpl;
+import org.jarvis.core.resources.api.ResourcePostListener;
 import org.jarvis.core.resources.api.mapper.ApiMapper;
 import org.jarvis.core.resources.api.tools.ApiCronResources;
 import org.jarvis.core.services.CoreEventDaemon;
@@ -63,15 +64,16 @@ public class ApiConfigResources extends ApiResources<ConfigRest,ConfigBean> {
 		setBeanClass(ConfigBean.class);
 	}
 
-	class ResourceListenerImpl extends ResourcePreListener<ConfigRest> {
+	class ResourceListenerImpl extends ResourceDefaultPostListenerImpl<ConfigRest,ConfigBean> implements ResourcePostListener<ConfigRest,ConfigBean> {
 
 		@Override
-		public void get(Request request, Response response, ConfigRest rest) {
+		public void getRest(Request request, Response response, ConfigRest rest) {
 			rest.system = new ConfigSystemRest();
 			rest.system.cron = true;
 			rest.system.scheduled = apiCronResources.getScheduled();
 			rest.system.events = !coreEventDaemon.isInterrupted();
 		}
+		
 	}
 
 	@Override
@@ -81,7 +83,7 @@ public class ApiConfigResources extends ApiResources<ConfigRest,ConfigBean> {
 		/**
 		 * register listener
 		 */
-		addListener(new ResourceListenerImpl());
+		addPostListener(new ResourceListenerImpl());
 	}
 
 	@Override

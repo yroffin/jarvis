@@ -43,7 +43,7 @@ public abstract class ApiLinkedResources<T extends GenericEntity, S extends Gene
 	 * @param sortKey
 	 * @param relation
 	 */
-	protected void declare(String resource, String target, ApiResources<T1,S1> api, ApiHrefMapper<T,T1> apiHref, String param, String sortKey, String relation) {
+	protected void declare(String resource, String target, ApiResources<T1,S1> api, ApiHrefMapper<S,S1> apiHref, String param, String sortKey, String relation) {
 		get("/api/"+resource+"/:id/"+target+"", getLinks(api, apiHref, sortKey, relation));
 		post("/api/"+resource+"/:id/"+target+"/"+param, postLink(api, apiHref, param, target, relation));
 		put("/api/"+resource+"/:id/"+target+"/"+param+"/:instance", putLink(api, apiHref, param, relation));
@@ -76,13 +76,13 @@ public abstract class ApiLinkedResources<T extends GenericEntity, S extends Gene
 	 * @param relation
 	 * @return
 	 */
-	protected Route getLinks(ApiResources<T1,S1> api, ApiHrefMapper<T,T1> apiHref, String sortField, String relation) {
+	protected Route getLinks(ApiResources<T1,S1> api, ApiHrefMapper<S,S1> apiHref, String sortField, String relation) {
 		return new Route() {
 		    @SuppressWarnings("unchecked")
 			@Override
 			public Object handle(Request request, Response response) throws Exception {
 		    	try {
-		    		T master = doGetByIdRest(request.params(ID));
+		    		S master = doGetByIdBean(request.params(ID));
 		    		List<T1> result = new ArrayList<T1>();
 		    		for(GenericEntity link : sort(apiHref.findAll(master, findRelType(request,relation)), sortField)) {
 		    			result.add((T1) fromLink(link, api.doGetByIdRest(link.id)));
@@ -105,14 +105,14 @@ public abstract class ApiLinkedResources<T extends GenericEntity, S extends Gene
 	 * @param relation
 	 * @return
 	 */
-	protected Route postLink(ApiResources<T1,S1> api, ApiHrefMapper<T,T1> apiHref, String param, String href, String relation) {
+	protected Route postLink(ApiResources<T1,S1> api, ApiHrefMapper<S,S1> apiHref, String param, String href, String relation) {
 		return new Route() {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
 		    	try {
-		    		T master = doGetByIdRest(request.params(ID));
+		    		S master = doGetByIdBean(request.params(ID));
 			    	try {
-			    		T1 target = api.doGetByIdRest(request.params(param));
+			    		S1 target = api.doGetByIdBean(request.params(param));
 				    	GenericEntity link = apiHref.add(master, target, new GenericMap(request.body()), href, findRelType(request,relation));
 				    	return mapper.writeValueAsString(fromLink(link, api.doGetByIdRest(link.id)));
 			    	} catch(TechnicalNotFoundException e) {
@@ -135,7 +135,7 @@ public abstract class ApiLinkedResources<T extends GenericEntity, S extends Gene
 	 * @param relation
 	 * @return
 	 */
-	protected Route putLink(ApiResources<T1,S1> api, ApiHrefMapper<T,T1> apiHref, String param, String relation) {
+	protected Route putLink(ApiResources<T1,S1> api, ApiHrefMapper<S,S1> apiHref, String param, String relation) {
 		return new Route() {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
@@ -165,14 +165,14 @@ public abstract class ApiLinkedResources<T extends GenericEntity, S extends Gene
 	 * @param relation
 	 * @return
 	 */
-	protected Route deleteLink(ApiResources<T1,S1> api, ApiHrefMapper<T,T1> apiHref, String param, String relation) {
+	protected Route deleteLink(ApiResources<T1,S1> api, ApiHrefMapper<S,S1> apiHref, String param, String relation) {
 		return new Route() {
 		    @Override
 			public Object handle(Request request, Response response) throws Exception {
 		    	try {
-		    		T master = doGetByIdRest(request.params(ID));
+		    		S master = doGetByIdBean(request.params(ID));
 			    	try {
-			    		T1 target = api.doGetByIdRest(request.params(param));
+			    		S1 target = api.doGetByIdBean(request.params(param));
 			    		apiHref.remove(master, target, request.queryParams(INSTANCE), findRelType(request,relation));
 			    	} catch(TechnicalNotFoundException e) {
 			    		response.status(404);
@@ -205,7 +205,7 @@ public abstract class ApiLinkedResources<T extends GenericEntity, S extends Gene
 								 * declare link
 								 */
 								try {
-									declare(annotation.resource(), linkedAnnotation.role(), (ApiResources<T1,S1>) linkedField.get(this), (ApiHrefMapper<T,T1>) hrefField.get(this), linkedAnnotation.param(), linkedAnnotation.sortKey(), hrefAnnotation.href());
+									declare(annotation.resource(), linkedAnnotation.role(), (ApiResources<T1,S1>) linkedField.get(this), (ApiHrefMapper<S,S1>) hrefField.get(this), linkedAnnotation.param(), linkedAnnotation.sortKey(), hrefAnnotation.href());
 								} catch (IllegalArgumentException | IllegalAccessException e) {
 									throw new TechnicalException(e);
 								}

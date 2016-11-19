@@ -1,14 +1,16 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>org.yroffin.com.jarvis</groupId>
-    <artifactId>jarvis</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-  </parent>
-  <artifactId>jarvis-alexa</artifactId>
-  
+  <groupId>com.amazon.alexa.avs</groupId>
+  <artifactId>sample-java-client</artifactId>
+  <version>20160207.1</version>
+  <packaging>jar</packaging>
+  <name>Alexa Voice Service Sample Java Client</name>
+  <url>https://developer.amazon.com/appsandservices/solutions/alexa/alexa-voice-service</url>
+
   <properties>
-      <jetty.version>9.3.7.v20160115</jetty.version>
+    <jetty.version>9.3.7.v20160115</jetty.version>
     <!-- The latest version of alpn-boot that supports JDK 1.8.0_71 through 1.8.0_74 -->
     <!-- To override, pass -Dalpn-boot.version=YOUR_VERSION when running "mvn install" and "mvn exec:exec" -->
     <!-- Your version can be determined here: http://www.eclipse.org/jetty/documentation/current/alpn-chapter.html#alpn-versions -->
@@ -16,7 +18,6 @@
     <slf4j.version>1.7.10</slf4j.version>
     <log4j.version>2.3</log4j.version>
   </properties>
-  
   <dependencies>
     <dependency>
       <groupId>commons-codec</groupId>
@@ -145,8 +146,7 @@
       <version>3.1.0</version>
     </dependency>
   </dependencies>
-
-<build>
+  <build>
     <resources>
       <resource>
         <directory>src/main/resources</directory>
@@ -194,5 +194,4 @@
       </plugins>
     </pluginManagement>
   </build>
-  
 </project>

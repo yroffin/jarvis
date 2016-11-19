@@ -6,10 +6,11 @@ import spark.Request;
 import spark.Response;
 
 /**
- * listener pattern
- * @param <T> 
+ * default pre listener interface
+ *
+ * @param <T>
  */
-public abstract class ResourcePreListener<T> {
+public interface ResourcePreListener<T> {
 
 	/**
 	 * post (creation) notifier
@@ -17,9 +18,7 @@ public abstract class ResourcePreListener<T> {
 	 * @param response
 	 * @param rest 
 	 */
-	public void post(Request request, Response response, T rest) {
-		
-	}
+	void post(Request request, Response response, T rest);
 
 	/**
 	 * put (update) notifier
@@ -27,18 +26,14 @@ public abstract class ResourcePreListener<T> {
 	 * @param response
 	 * @param rest 
 	 */
-	public void put(Request request, Response response, T rest) {
-		
-	}
+	void put(Request request, Response response, T rest);
 
 	/**
 	 * @param request
 	 * @param response
 	 * @param rest 
 	 */
-	public void get(Request request, Response response, T rest) {
-		
-	}
+	void get(Request request, Response response, T rest);
 
 	/**
 	 * find all notifier
@@ -46,9 +41,6 @@ public abstract class ResourcePreListener<T> {
 	 * @param response
 	 * @param list 
 	 */
-	public void findAll(Request request, Response response, List<T> list) {
-		for(T item : list) {
-			get(request,response, item);
-		}
-	}
+	void findAll(Request request, Response response, List<T> list);
+
 }

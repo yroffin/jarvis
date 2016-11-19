@@ -22,7 +22,6 @@ import javax.annotation.PostConstruct;
 
 import org.jarvis.core.model.bean.scenario.BlockBean;
 import org.jarvis.core.model.rest.GenericEntity;
-import org.jarvis.core.model.rest.scenario.BlockRest;
 import org.jarvis.core.resources.api.mapper.ApiHrefMapper;
 import org.springframework.stereotype.Component;
 
@@ -30,7 +29,7 @@ import org.springframework.stereotype.Component;
  * HREF handler
  */
 @Component
-public class ApiHrefBlockBlockResources extends ApiHrefMapper<BlockRest,BlockRest> {
+public class ApiHrefBlockBlockResources extends ApiHrefMapper<BlockBean,BlockBean> {
 
 	@PostConstruct
 	protected
@@ -44,7 +43,7 @@ public class ApiHrefBlockBlockResources extends ApiHrefMapper<BlockRest,BlockRes
 	 * @return List<GenericEntity>
 	 */
 	public List<GenericEntity> findAllThen(BlockBean bean) {
-		return super.findAll(mapperFactory.getMapperFacade().map(bean, BlockRest.class), HREF_THEN);
+		return super.findAll(bean, HREF_THEN);
 	}
 
 	/**
@@ -53,6 +52,6 @@ public class ApiHrefBlockBlockResources extends ApiHrefMapper<BlockRest,BlockRes
 	 * @return List<GenericEntity>
 	 */
 	public List<GenericEntity> findAllElse(BlockBean bean) {
-		return super.findAll(mapperFactory.getMapperFacade().map(bean, BlockRest.class), HREF_ELSE);
+		return super.findAll(bean, HREF_ELSE);
 	}
 }

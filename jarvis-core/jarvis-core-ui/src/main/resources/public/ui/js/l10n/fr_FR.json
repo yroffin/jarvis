@@ -51,6 +51,7 @@
     "trigger.plugin"	: "Plugin",
     "trigger.field"		: "Champ",
     "trigger.cron"		: "Périodicité",
+    "trigger.link"		: "Liens",
     "trigger.sunrise"	: "Déclenché au levé de soleil",
     "trigger.sunset"	: "Déclenché au couché de soleil",
     "trigger.second"	: "Déclenché à chaque seconde",

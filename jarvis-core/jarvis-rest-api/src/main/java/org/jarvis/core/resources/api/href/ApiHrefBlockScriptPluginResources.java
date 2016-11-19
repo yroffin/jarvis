@@ -23,8 +23,6 @@ import javax.annotation.PostConstruct;
 import org.jarvis.core.model.bean.plugin.ScriptPluginBean;
 import org.jarvis.core.model.bean.scenario.BlockBean;
 import org.jarvis.core.model.rest.GenericEntity;
-import org.jarvis.core.model.rest.plugin.ScriptPluginRest;
-import org.jarvis.core.model.rest.scenario.BlockRest;
 import org.jarvis.core.resources.api.mapper.ApiHrefMapper;
 import org.springframework.stereotype.Component;
 
@@ -32,7 +30,7 @@ import org.springframework.stereotype.Component;
  * HREF handler
  */
 @Component
-public class ApiHrefBlockScriptPluginResources extends ApiHrefMapper<BlockRest,ScriptPluginRest> {
+public class ApiHrefBlockScriptPluginResources extends ApiHrefMapper<BlockBean,ScriptPluginBean> {
 
 	@PostConstruct
 	protected
@@ -46,7 +44,7 @@ public class ApiHrefBlockScriptPluginResources extends ApiHrefMapper<BlockRest,S
 	 * @return List<GenericEntity>
 	 */
 	public List<GenericEntity> findAllConditions(BlockBean bean) {
-		return super.findAll(mapperFactory.getMapperFacade().map(bean, BlockRest.class), HREF_IF);
+		return super.findAll(bean, HREF_IF);
 	}
 
 	/**
@@ -55,7 +53,7 @@ public class ApiHrefBlockScriptPluginResources extends ApiHrefMapper<BlockRest,S
 	 * @return List<GenericEntity>
 	 */
 	public List<GenericEntity> findAllThen(BlockBean bean) {
-		return super.findAll(mapperFactory.getMapperFacade().map(bean, BlockRest.class), HREF_THEN);
+		return super.findAll(bean, HREF_THEN);
 	}
 
 	/**
@@ -64,6 +62,6 @@ public class ApiHrefBlockScriptPluginResources extends ApiHrefMapper<BlockRest,S
 	 * @return List<GenericEntity>
 	 */
 	public List<GenericEntity> findAllElse(BlockBean bean) {
-		return super.findAll(mapperFactory.getMapperFacade().map(bean, BlockRest.class), HREF_ELSE);
+		return super.findAll(bean, HREF_ELSE);
 	}
 }

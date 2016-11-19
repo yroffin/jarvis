@@ -19,6 +19,7 @@ package org.jarvis.core.services;
 
 import javax.annotation.PostConstruct;
 
+import org.jarvis.core.SwaggerParser;
 import org.jarvis.core.model.bean.config.Oauth2Config;
 import org.jarvis.core.resources.CoreResources;
 import org.jarvis.core.resources.CoreWebsocket;
@@ -54,6 +55,10 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import io.swagger.annotations.Contact;
+import io.swagger.annotations.Info;
+import io.swagger.annotations.SwaggerDefinition;
+import io.swagger.annotations.Tag;
 import jersey.repackaged.com.google.common.collect.ImmutableList;
 import spark.Request;
 import spark.Response;
@@ -67,6 +72,20 @@ import spark.Route;
 	@PropertySource(value = "classpath:server.properties", ignoreResourceNotFound = true),
 	@PropertySource(value = "file://${jarvis.user.dir}/config.properties", ignoreResourceNotFound = true)
 })
+@SwaggerDefinition(host = "192.168.1.12:8082",
+info = @Info(
+		description = "Jarvis",
+		version = "v1.0", //
+		title = "Jarvis core system",
+		contact = @Contact(
+				name = "Yannick Roffin", url = "https://yroffin.github.io"
+				)
+),
+schemes = { SwaggerDefinition.Scheme.HTTP, SwaggerDefinition.Scheme.HTTPS },
+consumes = { "application/json" },
+produces = { "application/json" },
+tags = { @Tag(name = "swagger") }
+)
 public class CoreServerDaemon {
 	protected Logger logger = LoggerFactory.getLogger(CoreServerDaemon.class);
 
@@ -253,6 +272,15 @@ public class CoreServerDaemon {
 		apiConnectorResources.mount();
 		apiConfigResources.mount();
 		apiPropertyResources.mount();
+
+		/**
+		 * Build swagger json description
+		 */
+		final String swaggerJson;
+		swaggerJson = SwaggerParser.getSwaggerJson("org.jarvis.core");
+		spark.Spark.get("/api/swagger", (req, res) -> {
+			return swaggerJson;
+		});
 
 		spark.Spark.after((request, response) -> {
 		    response.header("Content-Encoding", "gzip");

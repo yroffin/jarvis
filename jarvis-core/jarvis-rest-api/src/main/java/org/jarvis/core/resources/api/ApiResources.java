@@ -59,22 +59,31 @@ import spark.Route;
 import spark.utils.IOUtils;
 
 /**
- * RESOURCE api
- *
- * @param <T>
- * @param <S>
+ * standard resource api
+ * 
+ * @param <REST> 
+ * @param <BEAN>
  */
-public abstract class ApiResources<T extends GenericEntity,S extends GenericBean> extends ApiGenericResources implements ApiDefaultResources {
+public abstract class ApiResources<REST extends GenericEntity,BEAN extends GenericBean> extends ApiGenericResources implements ApiDefaultResources {
 	protected Logger logger = LoggerFactory.getLogger(ApiResources.class);
 
-	private List<ResourcePreListener<T>> preListeners = new ArrayList<>();
-	private List<ResourcePostListener<S>> postListeners = new ArrayList<>();
+	private List<ResourcePreListener<REST>> preListeners = new ArrayList<>();
+	private List<ResourcePostListener<REST,BEAN>> postListeners = new ArrayList<>();
 	
+	/**
+	 * mapper
+	 * @param bean
+	 * @return REST
+	 */
+	public REST mapBeanToRest(BEAN bean) {
+		return mapperFactory.getMapperFacade().map(bean, restClass);
+	}
+
 	/**
 	 * add new listener
 	 * @param listener
 	 */
-	public void addListener(ResourcePreListener<T> listener) {
+	public void addPreListener(ResourcePreListener<REST> listener) {
 		preListeners.add(listener);
     }
 
@@ -82,32 +91,44 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * add new listener
 	 * @param listener
 	 */
-	public void addListener(ResourcePostListener<S> listener) {
+	public void addPostListener(ResourcePostListener<REST,BEAN> listener) {
 		postListeners.add(listener);
     }
 
 	/**
-	 * notifier
-	 * @param request
-	 * @param response
-	 * @param r
+	 * all ressource method
 	 */
-	private void notifyFindAll(Request request, Response response, List<T> r) {
-        for(ResourcePreListener<T> listener : preListeners){
-            listener.findAll(request,response,r);
-        }
+	private enum TRIGGER_METHOD {
+		POST, PUT, GET, FINDALL
 	}
 
 	/**
-	 * notify handler for get
+	 * pre notification
 	 * @param request
 	 * @param response
-	 * @param r
+	 * @param t
 	 */
-	private void notifyGet(Request request, Response response, T r) {
-        for(ResourcePreListener<T> listener : preListeners){
-            listener.get(request,response,r);
-        }
+	private void triggerBefore(TRIGGER_METHOD method, Request request, Response response, REST rest) {
+		switch(method) {
+			case POST:
+		        for(ResourcePreListener<REST> listener : preListeners){
+		            listener.post(request, response, rest);
+		        }
+		        break;
+			case PUT:
+		        for(ResourcePreListener<REST> listener : preListeners){
+		            listener.put(request, response, rest);
+		        }
+		        break;
+			case GET:
+		        for(ResourcePreListener<REST> listener : preListeners){
+		            listener.get(request, response, rest);
+		        }
+		        break;
+		    default:
+		    	logger.warn("No such post treatment for {}", method);
+				break;
+		}
 	}
 
 	/**
@@ -117,31 +138,90 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * @param s
 	 * @throws InterruptedException 
 	 */
-	private void notifyPost(Request request, Response response, S s) throws InterruptedException {
-        for(ResourcePostListener<S> listener : postListeners){
-            listener.post(request,response,s);
-        }
+	private void triggerAfterBean(TRIGGER_METHOD method, Request request, Response response, BEAN bean) {
+		switch(method) {
+			case POST:
+		        for(ResourcePostListener<REST,BEAN> listener : postListeners){
+		            listener.postBean(request, response, bean);
+		        }
+		        break;
+			case PUT:
+		        for(ResourcePostListener<REST,BEAN> listener : postListeners){
+		            listener.putBean(request, response, bean);
+		        }
+		        break;
+			case GET:
+		        for(ResourcePostListener<REST,BEAN> listener : postListeners){
+		            listener.getBean(request, response, bean);
+		        }
+		        break;
+		    default:
+		    	logger.warn("No such post treatment for {}", method);
+				break;
+		}
 	}
 
-	private void notifyPrePost(Request request, Response response, T t) {
-        for(ResourcePreListener<T> listener : preListeners){
-            listener.post(request,response,t);
-        }
+	private void triggerAfterRest(TRIGGER_METHOD method, Request request, Response response, REST rest) {
+		switch(method) {
+			case POST:
+		        for(ResourcePostListener<REST,BEAN> listener : postListeners){
+		            listener.postRest(request, response, rest);
+		        }
+		        break;
+			case PUT:
+		        for(ResourcePostListener<REST,BEAN> listener : postListeners){
+		            listener.putRest(request, response, rest);
+		        }
+		        break;
+			case GET:
+		        for(ResourcePostListener<REST,BEAN> listener : postListeners){
+		            listener.getRest(request, response, rest);
+		        }
+		        break;
+		    default:
+		    	logger.warn("No such post treatment for {}", method);
+				break;
+		}
 	}
 
-	private void notifyPut(Request request, Response response, S s) {
-		/**
-		 * notify to all listener on server side
-		 */
-        for(ResourcePostListener<S> listener : postListeners){
-            listener.put(request,response,s);
-        }
+	/**
+	 * find methods
+	 * @param method
+	 * @param request
+	 * @param response
+	 * @param beans
+	 */
+	private void triggerAfterBean(TRIGGER_METHOD method, Request request, Response response, List<BEAN> beans) {
+		switch(method) {
+			case FINDALL:
+		        for(ResourcePostListener<REST,BEAN> listener : postListeners){
+		            for(BEAN bean : beans) {
+		            	listener.getBean(request, response, bean);
+		            }
+		        }
+		        break;
+			default:
+		}
 	}
 
-	private void notifyPrePut(Request request, Response response, T t) {
-        for(ResourcePreListener<T> listener : preListeners){
-            listener.put(request,response,t);
-        }
+	/**
+	 * find methods
+	 * @param method
+	 * @param request
+	 * @param response
+	 * @param beans
+	 */
+	private void triggerAfterRest(TRIGGER_METHOD method, Request request, Response response, List<REST> rests) {
+		switch(method) {
+			case FINDALL:
+		        for(ResourcePostListener<REST,BEAN> listener : postListeners){
+		            for(REST rest : rests) {
+		            	listener.getRest(request, response, rest);
+		            }
+		        }
+		        break;
+			default:
+		}
 	}
 
 	@Autowired
@@ -153,17 +233,17 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	/**
 	 * internal api service
 	 */
-	ApiService<S> apiService;
+	ApiService<BEAN> apiService;
 
 	/**
 	 * bean class
 	 */
-	private Class<S> beanClass;
+	private Class<BEAN> beanClass;
 
 	/**
 	 * rest class
 	 */
-	private Class<T> restClass;
+	private Class<REST> restClass;
 
 	/**
 	 * spring init
@@ -180,7 +260,7 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * set bean class
 	 * @param klass
 	 */
-	protected void setBeanClass(Class<S> klass) {
+	protected void setBeanClass(Class<BEAN> klass) {
 		beanClass = klass;
 	}
 
@@ -188,7 +268,7 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * set rest class
 	 * @param klass
 	 */
-	protected void setRestClass(Class<T> klass) {
+	protected void setRestClass(Class<REST> klass) {
 		restClass = klass;		
 	}
 
@@ -269,9 +349,9 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * find all elements
 	 * @return List<Rest>
 	 */
-	public List<T> doFindAllRest() {
-		List<T> result = new ArrayList<>();
-		for(S item : apiService.findAll()) {
+	public List<REST> doFindAllRest() {
+		List<REST> result = new ArrayList<>();
+		for(BEAN item : apiService.findAll()) {
 			result.add(mapperFactory.getMapperFacade().map(item, restClass));
 		}
 		return result;
@@ -283,9 +363,9 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * @param value 
 	 * @return List<Rest>
 	 */
-	public List<T> doFindByAttributeRest(String field, String value) {
-		List<T> result = new ArrayList<>();
-		for(S item : apiService.findByAttribute(field, value)) {
+	public List<REST> doFindByAttributeRest(String field, String value) {
+		List<REST> result = new ArrayList<>();
+		for(BEAN item : apiService.findByAttribute(field, value)) {
 			result.add(mapperFactory.getMapperFacade().map(item, restClass));
 		}
 		return result;
@@ -297,10 +377,10 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * @param value 
 	 * @return List<Rest>
 	 */
-	public List<S> doFindByAttributeBean(String field, String value) {
-		List<S> result = new ArrayList<>();
-		for(S item : apiService.findByAttribute(field, value)) {
-			result.add(item);
+	public List<BEAN> doFindByAttributeBean(String field, String value) {
+		List<BEAN> result = new ArrayList<>();
+		for(BEAN bean : apiService.findByAttribute(field, value)) {
+			result.add(bean);
 		}
 		return result;
 	}
@@ -309,9 +389,9 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * find all elements
 	 * @return List<Rest>
 	 */
-	public List<S> doFindAllBean() {
-		List<S> result = new ArrayList<>();
-		for(S item : apiService.findAll()) {
+	public List<BEAN> doFindAllBean() {
+		List<BEAN> result = new ArrayList<>();
+		for(BEAN item : apiService.findAll()) {
 			result.add(item);
 		}
 		return result;
@@ -323,8 +403,8 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * @return Rest
 	 * @throws TechnicalNotFoundException 
 	 */
-	public S doGetByIdBean(String id) throws TechnicalNotFoundException {
-		S bean = apiService.getById(id);
+	public BEAN doGetByIdBean(String id) throws TechnicalNotFoundException {
+		BEAN bean = apiService.getById(id);
 		return mapperFactory.getMapperFacade().map(bean, beanClass);
 	}
 	
@@ -334,27 +414,26 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * @return Rest
 	 * @throws TechnicalNotFoundException 
 	 */
-	public T doGetByIdRest(String id) throws TechnicalNotFoundException {
+	public REST doGetByIdRest(String id) throws TechnicalNotFoundException {
 		return mapperFactory.getMapperFacade().map(apiService.getById(id), restClass);
 	}
 
 	/**
 	 * create new entity
-	 * @param r 
+	 * @param rest
 	 * @return Rest
 	 */
-	public T doCreate(T r) {
-		S bean = mapperFactory.getMapperFacade().map(r, beanClass);
-		return mapperFactory.getMapperFacade().map(apiService.create(bean), restClass);
+	public BEAN doCreateRest(REST rest) {
+		return mapperFactory.getMapperFacade().map(rest, beanClass);
 	}
 	
 	/**
 	 * create new entity
-	 * @param b 
+	 * @param bean
 	 * @return Rest
 	 */
-	public S doCreate(S b) {
-		return apiService.create(b);
+	public BEAN doCreateBean(BEAN bean) {
+		return apiService.create(bean);
 	}
 	
 	/**
@@ -363,7 +442,7 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * @return Rest
 	 * @throws TechnicalNotFoundException
 	 */
-	public T doDelete(String id) throws TechnicalNotFoundException {
+	public REST doDelete(String id) throws TechnicalNotFoundException {
 		return mapperFactory.getMapperFacade().map(
 				apiService.remove(id),
 				restClass);
@@ -372,25 +451,23 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	/**
 	 * update entity
 	 * @param id
-	 * @param r 
+	 * @param rest 
 	 * @return Rest
 	 * @throws TechnicalNotFoundException 
 	 */
-	public T doUpdate(String id, T r) throws TechnicalNotFoundException {
-		return mapperFactory.getMapperFacade().map(
-				apiService.update(id, mapperFactory.getMapperFacade().map(r, beanClass)), 
-				restClass);
+	public BEAN doUpdateRest(String id, REST rest) throws TechnicalNotFoundException {
+		return apiService.update(id, mapperFactory.getMapperFacade().map(rest, beanClass));
 	}
 
 	/**
 	 * update entity
 	 * @param id
-	 * @param s 
+	 * @param bean 
 	 * @return Rest
 	 * @throws TechnicalNotFoundException 
 	 */
-	public S doUpdate(String id, S s) throws TechnicalNotFoundException {
-		return apiService.update(id, s);
+	public BEAN doUpdateBean(String id, BEAN bean) throws TechnicalNotFoundException {
+		return apiService.update(id, bean);
 	}
 
 	/**
@@ -401,14 +478,14 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * @throws TechnicalException 
 	 */
 	public String doFindAll(Request request, Response response) {
-		List<T> r = doFindAllRest();
-		notifyFindAll(request,response,r);
-    	try {
-			return mapper.writeValueAsString(r);
-		} catch (JsonProcessingException e) {
-			logger.error("Error {} while parsing {}", r);
-			throw new TechnicalException(e);
+		List<BEAN> beans = doFindAllBean();
+		triggerAfterBean(TRIGGER_METHOD.FINDALL, request, response, beans);
+		List<REST> rests = new ArrayList<>();
+		for(BEAN bean : beans) {
+			rests.add(mapperFactory.getMapperFacade().map(bean, restClass));
 		}
+		triggerAfterRest(TRIGGER_METHOD.FINDALL, request, response, rests);
+		return writeValueAsString(rests);
     }
 
 	/**
@@ -421,14 +498,11 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 */
 	public String doGetById(Request request, String id, Response response) {
     	try {
-    		T r = doGetByIdRest(request.params(id));
-    		notifyGet(request,response,r);
-    		try {
-				return mapper.writeValueAsString(r);
-			} catch (JsonProcessingException e) {
-				logger.error("Error {} while parsing {}", r);
-				throw new TechnicalException(e);
-			}
+    		BEAN bean = doGetByIdBean(request.params(id));
+    		triggerAfterBean(TRIGGER_METHOD.GET, request, response, bean);
+    		REST rest = mapperFactory.getMapperFacade().map(bean, restClass);
+    		triggerAfterRest(TRIGGER_METHOD.GET, request, response, rest);
+			return writeValueAsString(rest);
     	} catch(TechnicalNotFoundException e) {
     		response.status(404);
     		return "";
@@ -444,31 +518,24 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * @throws InterruptedException 
 	 * @throws TechnicalException 
 	 */
-	public String doCreate(Request request, Response response, Class<T> klass) throws InterruptedException {
+	public String doCreate(Request request, Response response, Class<REST> klass) throws InterruptedException {
     	if(request.contentType() == null || !request.contentType().contains("application/json")) {
     		response.status(403);
     		return "";
     	}
-		T k;
+		REST rest;
 		try {
-			k = mapper.readValue(request.body(), klass);
+			rest = mapper.readValue(request.body(), klass);
 		} catch (IOException e) {
 			logger.error("Error {} while parsing {}", request.body());
 			throw new TechnicalException(e);
 		}
-		notifyPrePost(request,response,k);
-		T r = doCreate(k);
-		try {
-			notifyPost(request,response,mapperFactory.getMapperFacade().map(r, beanClass));
-		} catch (InterruptedException e) {
-			throw e;
-		}
-    	try {
-			return mapper.writeValueAsString(r);
-		} catch (JsonProcessingException e) {
-			logger.error("Error {} while parsing {}", r);
-			throw new TechnicalException(e);
-		}
+		triggerBefore(TRIGGER_METHOD.POST, request, response, rest);
+		BEAN created = doCreateRest(rest);
+		triggerAfterBean(TRIGGER_METHOD.POST, request, response, created);
+		REST result = mapperFactory.getMapperFacade().map(created, restClass);
+		triggerAfterRest(TRIGGER_METHOD.POST, request, response, result);
+		return writeValueAsString(result);
     }
 
 	/**
@@ -480,28 +547,24 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * @return String
 	 * @throws TechnicalException 
 	 */
-	public String doUpdate(Request request, String id, Response response, Class<T> klass) {
+	public String doUpdate(Request request, String id, Response response, Class<REST> klass) {
     	if(request.contentType() == null || !request.contentType().contains("application/json")) {
     		response.status(403);
     		return "";
     	}
     	try {
-			T k;
+			REST rest;
 			try {
-				k = mapper.readValue(request.body(), klass);
+				rest = mapper.readValue(request.body(), klass);
 			} catch (IOException e) {
 				logger.error("Error {} while parsing {}", request.body());
 				throw new TechnicalException(e);
 			}
-			notifyPrePut(request,response,k);
-			T r = doUpdate(request.params(id), k);
-			notifyPut(request,response,mapperFactory.getMapperFacade().map(r, beanClass));
-	    	try {
-				return mapper.writeValueAsString(r);
-			} catch (JsonProcessingException e) {
-				logger.error("Error {} while parsing {}", r);
-				throw new TechnicalException(e);
-			}
+			triggerBefore(TRIGGER_METHOD.PUT, request, response, rest);
+			BEAN updated = doUpdateRest(request.params(id), rest);
+			REST result = mapperFactory.getMapperFacade().map(updated, restClass);
+			triggerAfterRest(TRIGGER_METHOD.PUT, request, response, result);
+			return writeValueAsString(result);
     	} catch(TechnicalNotFoundException e) {
     		response.status(404);
     		return "";
@@ -517,7 +580,7 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * @return String
 	 * @throws TechnicalException
 	 */
-	public String doDelete(Request request, String id, Response response, Class<T> klass) {
+	public String doDelete(Request request, String id, Response response, Class<REST> klass) {
     	if(request.contentType() == null || !request.contentType().contains("application/json")) {
     		response.status(403);
     		return "";
@@ -540,7 +603,7 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * @return String
 	 * @throws TechnicalException 
 	 */
-	public abstract GenericValue doRealTask(S bean, GenericMap args, TaskType taskType);
+	public abstract GenericValue doRealTask(BEAN bean, GenericMap args, TaskType taskType);
 
 	/**
 	 * execute real task on all resources, all task must be overridden in each
@@ -566,7 +629,7 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	 * @throws TechnicalException 
 	 * @throws TechnicalNotFoundException 
 	 */
-	public String doTask(Request request, String id, String task, Response response, Class<T> klass) throws TechnicalNotFoundException {
+	public String doTask(Request request, String id, String task, Response response, Class<REST> klass) throws TechnicalNotFoundException {
 		GenericMap body = null;
     	if(request.contentType() != null && request.contentType().startsWith("multipart/form-data")) {
     		body = new GenericMap();
@@ -596,19 +659,13 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
     		 * task can return String, Boolean, Object or list
     		 */
     		if(GenericMap.class == result.getClass() || ArrayList.class == result.getClass() || Boolean.class == result.getClass()) {
-    			return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(result);
+    			return writeValueAsString(result);
     		} else {
        			return (String) result;
     		}
     	} catch(TechnicalNotFoundException e) {
     		response.status(404);
     		return "";
-    	} catch (JsonParseException e) {
-			throw new TechnicalException(e);
-		} catch (JsonMappingException e) {
-			throw new TechnicalException(e);
-		} catch (IOException e) {
-			throw new TechnicalException(e);
 		}
     }
 
@@ -648,22 +705,14 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 		/**
 		 * read object by id
 		 */
-		S bean = null;
+		BEAN bean = null;
 		if(!id.equals("*")) {
 			bean = apiService.getById(id);
-			try {
-				logger.info("TASK - CONTEXT {}\n{}", beanClass.getName(), mapper.writerWithDefaultPrettyPrinter().writeValueAsString(bean));
-			} catch (JsonProcessingException e) {
-				throw new TechnicalException(e);
-			}
+			logger.info("TASK - CONTEXT {}\n{}", beanClass.getName(), writeValueAsString(bean));
 		} else {
 			logger.info("TASK - CONTEXT {}", "*");
 		}
-		try {
-			logger.info("TASK - INPUT\n{}", mapper.writerWithDefaultPrettyPrinter().writeValueAsString(body));
-		} catch (JsonProcessingException e) {
-			throw new TechnicalException(e);
-		}
+		logger.info("TASK - INPUT\n{}", writeValueAsString(body));
 		GenericValue result = null;
 		try {
 			if(bean == null) {
@@ -753,7 +802,7 @@ public abstract class ApiResources<T extends GenericEntity,S extends GenericBean
 	
 	protected String writeValueAsString(Object value) {
 		try {
-			return mapper.writeValueAsString(value);
+			return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(value);
 		} catch (JsonProcessingException e) {
 			logger.error("Error {} while parsing {}", e, value);
 			throw new TechnicalException(e);

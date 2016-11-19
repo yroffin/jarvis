@@ -20,8 +20,6 @@ import javax.annotation.PostConstruct;
 
 import org.jarvis.core.model.bean.device.DeviceBean;
 import org.jarvis.core.model.bean.plugin.ScriptPluginBean;
-import org.jarvis.core.model.rest.device.DeviceRest;
-import org.jarvis.core.model.rest.plugin.ScriptPluginRest;
 import org.jarvis.core.resources.api.mapper.ApiHrefMapper;
 import org.springframework.stereotype.Component;
 
@@ -29,7 +27,7 @@ import org.springframework.stereotype.Component;
  * HREF handler
  */
 @Component
-public class ApiHrefDeviceScriptPluginResources extends ApiHrefMapper<DeviceRest,ScriptPluginRest> {
+public class ApiHrefDeviceScriptPluginResources extends ApiHrefMapper<DeviceBean,ScriptPluginBean> {
 
 	@PostConstruct
 	protected

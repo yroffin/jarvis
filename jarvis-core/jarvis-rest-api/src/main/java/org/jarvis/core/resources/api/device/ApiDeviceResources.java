@@ -222,7 +222,6 @@ public class ApiDeviceResources extends ApiLinkedThirdResources<DeviceRest,Devic
 			parameters = new GenericMap();
 			parameters.put("default", new GenericMap());
 		}
-		DeviceRest deviceRest = mapperFactory.getMapperFacade().map(device, DeviceRest.class);
 		/**
 		 * iterate on each entity and execute them as a pipeline
 		 */
@@ -231,7 +230,7 @@ public class ApiDeviceResources extends ApiLinkedThirdResources<DeviceRest,Devic
 			for(Entry<String, Object> param : ((Map<String,Object>) entry.getValue()).entrySet()) {
 				params.put(param.getKey(), param.getValue());
 			}
-			for(GenericEntity entity : sort(apiHrefDeviceScriptPluginResources.findAll(deviceRest, HREF), "order")) {
+			for(GenericEntity entity : sort(apiHrefDeviceScriptPluginResources.findAll(device, HREF), "order")) {
 				ScriptPluginRest script = apiScriptPluginResources.doGetByIdRest(entity.id);
 				if(render) {
 					logger.info("Before render params = {}, context = {}", params, result);

@@ -217,6 +217,10 @@ public class ApiCommandResources extends ApiLinkedResources<CommandRest,CommandB
 				default:
 			}
 		} catch (TechnicalException e) {
+			logger.warn("COMMAND - BODY {}\n{}", command.body);
+			throw new TechnicalException(e);
+		} catch (Exception e) {
+			logger.warn("COMMAND - BODY {}\n{}", command.body);
 			throw new TechnicalException(e);
 		}
 		/**

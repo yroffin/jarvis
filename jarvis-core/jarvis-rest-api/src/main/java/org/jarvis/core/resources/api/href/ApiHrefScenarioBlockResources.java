@@ -23,8 +23,6 @@ import javax.annotation.PostConstruct;
 import org.jarvis.core.model.bean.scenario.BlockBean;
 import org.jarvis.core.model.bean.scenario.ScenarioBean;
 import org.jarvis.core.model.rest.GenericEntity;
-import org.jarvis.core.model.rest.scenario.BlockRest;
-import org.jarvis.core.model.rest.scenario.ScenarioRest;
 import org.jarvis.core.resources.api.mapper.ApiHrefMapper;
 import org.springframework.stereotype.Component;
 
@@ -32,7 +30,7 @@ import org.springframework.stereotype.Component;
  * HREF handler
  */
 @Component
-public class ApiHrefScenarioBlockResources extends ApiHrefMapper<ScenarioRest,BlockRest> {
+public class ApiHrefScenarioBlockResources extends ApiHrefMapper<ScenarioBean,BlockBean> {
 
 	@PostConstruct
 	protected
@@ -46,6 +44,6 @@ public class ApiHrefScenarioBlockResources extends ApiHrefMapper<ScenarioRest,Bl
 	 * @return List<GenericEntity>
 	 */
 	public List<GenericEntity> findAll(ScenarioBean scenario) {
-		return super.findAll(mapperFactory.getMapperFacade().map(scenario, ScenarioRest.class), HREF);
+		return super.findAll(scenario, HREF);
 	}
 }

@@ -30,13 +30,16 @@ import org.jarvis.main.model.parser.IAimlResult;
 import org.jarvis.main.model.parser.history.IAimlHistory;
 import org.junit.Test;
 
+/**
+ * Test
+ */
 public class AimlAliceTest {
 
 	/**
 	 * internal utility
 	 * 
 	 * @param resources
-	 * @return
+	 * @return IAimlCoreEngine
 	 * @throws AimlParsingError
 	 */
 	public IAimlCoreEngine instance(String resources) throws AimlParsingError {
@@ -63,6 +66,9 @@ public class AimlAliceTest {
 		assertEquals("My name is ALICE too!", answer.get(0).getAnswer());
 	}
 
+	/**
+	 * @throws AimlParsingError
+	 */
 	@Test
 	public void testSimpleAliceIsMyName() throws AimlParsingError {
 		IAimlCoreEngine engine = instance("src/test/resources/core/alice/alice.aiml");
@@ -75,6 +81,9 @@ public class AimlAliceTest {
 				answer.get(0).getAnswer());
 	}
 
+	/**
+	 * @throws AimlParsingError
+	 */
 	@Test
 	public void testSimpleAliceHello() throws AimlParsingError {
 		IAimlCoreEngine engine = instance("src/test/resources/core/alice/alice.aiml");

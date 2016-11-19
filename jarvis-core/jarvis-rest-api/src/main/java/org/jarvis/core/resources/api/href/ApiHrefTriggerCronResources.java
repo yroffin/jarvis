@@ -23,8 +23,6 @@ import javax.annotation.PostConstruct;
 import org.jarvis.core.model.bean.scenario.TriggerBean;
 import org.jarvis.core.model.bean.tools.CronBean;
 import org.jarvis.core.model.rest.GenericEntity;
-import org.jarvis.core.model.rest.scenario.TriggerRest;
-import org.jarvis.core.model.rest.tools.CronRest;
 import org.jarvis.core.resources.api.mapper.ApiHrefMapper;
 import org.springframework.stereotype.Component;
 
@@ -32,7 +30,7 @@ import org.springframework.stereotype.Component;
  * HREF handler
  */
 @Component
-public class ApiHrefTriggerCronResources extends ApiHrefMapper<TriggerRest,CronRest> {
+public class ApiHrefTriggerCronResources extends ApiHrefMapper<TriggerBean,CronBean> {
 
 	@PostConstruct
 	protected
@@ -42,10 +40,10 @@ public class ApiHrefTriggerCronResources extends ApiHrefMapper<TriggerRest,CronR
 
 	/**
 	 * find all by bean
-	 * @param script
+	 * @param bean
 	 * @return List<GenericEntity>
 	 */
-	public List<GenericEntity> findAll(TriggerBean script) {
-		return super.findAll(mapperFactory.getMapperFacade().map(script, TriggerRest.class), HREF);
+	public List<GenericEntity> findAll(TriggerBean bean) {
+		return super.findAll(bean, HREF);
 	}
 }
