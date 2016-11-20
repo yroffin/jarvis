@@ -13,6 +13,7 @@
   "private": true,
   "dependencies": {
     "hammerjs": "^2.0.8",
+    "@types/hammerjs": "^2.0.8",
     "@angular/common": "^2.1.0",
     "@angular/compiler": "^2.1.0",
     "@angular/core": "^2.1.0",
