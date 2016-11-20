@@ -46,4 +46,9 @@ public class PluginBean extends GenericBean {
 	 * visible
 	 */
 	public boolean visible;
+	@Override
+	public String toString() {
+		return "PluginBean [name=" + name + ", type=" + type + ", icon=" + icon + ", owner=" + owner + ", active="
+				+ active + ", visible=" + visible + "]";
+	}
 }

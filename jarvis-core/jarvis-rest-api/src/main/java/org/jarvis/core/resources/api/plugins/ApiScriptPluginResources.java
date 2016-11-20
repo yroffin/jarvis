@@ -147,14 +147,14 @@ public class ApiScriptPluginResources extends ApiLinkedResources<ScriptPluginRes
 			 * ignore data in phase action
 			 */
 			if(entity.get("type") != null && entity.get("type").equals("data") && !render) {
-				logger.warn("Plugin {} cannot be executed, its a data");
+				logger.debug("Device {} plugin {} command {} cannot be executed, it's a data", device, plugin, entity);
 				continue;
 			}
 			/**
 			 * ignore action in phase data
 			 */
 			if(entity.get("type") != null && entity.get("type").equals("action") && render) {
-				logger.warn("Plugin {} cannot be rendered, its ans action");
+				logger.debug("Device {} plugin {} command {} cannot be rendered, it's an action", device, plugin, entity);
 				continue;
 			}
 			

@@ -69,4 +69,10 @@ public class DeviceBean extends GenericBean {
 	 * template
 	 */
 	public String template;
+	@Override
+	public String toString() {
+		return "DeviceBean [name=" + name + ", parameters=" + parameters + ", owner=" + owner + ", visible=" + visible
+				+ ", icon=" + icon + ", tagColor=" + tagColor + ", tagOpacity=" + tagOpacity + ", tagTextColor="
+				+ tagTextColor + ", rowSpan=" + rowSpan + ", colSpan=" + colSpan + ", template=" + template + "]";
+	}
 }
