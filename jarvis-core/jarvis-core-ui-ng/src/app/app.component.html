@@ -7,6 +7,9 @@
   </md-toolbar>
 
 
+  {{myDevices}}
+  <p *ngFor="let device of myDevices; let index=index">{{device.name}}</p>
+
   <md-card-content *ngIf="todoList.length">
     <md-list>
       <md-list-item *ngFor="let todo of todoList; let index=index">

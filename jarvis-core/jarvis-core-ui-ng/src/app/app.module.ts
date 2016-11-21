@@ -17,6 +17,8 @@ import { MdListModule } from '@angular2-material/list';
 import { MdIconModule, MdIconRegistry } from '@angular2-material/icon';
 
 import { JarvisDialogComponent } from './jarvis-dialog/jarvis-dialog.component';
+import { JarvisConfigurationService } from './service/jarvis-configuration.service';
+import { JarvisDataDeviceService } from './service/jarvis-data-device.service';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,10 @@ import { JarvisDialogComponent } from './jarvis-dialog/jarvis-dialog.component';
     MdListModule,
     MdIconModule
   ],
-  providers: [MdIconRegistry],
+  providers: [
+    MdIconRegistry,
+    JarvisConfigurationService,
+    JarvisDataDeviceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

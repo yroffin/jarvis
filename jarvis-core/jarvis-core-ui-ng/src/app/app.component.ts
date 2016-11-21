@@ -1,12 +1,22 @@
 import { Component } from '@angular/core';
+import { JarvisDataDeviceService } from './service/jarvis-data-device.service';
+
+/**
+ * data model
+ */
+import { DeviceBean } from './model/device-bean';
 
 @Component({
   selector: 'app-root',
+  providers: [JarvisDataDeviceService],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
   title = 'app works great plus!';
+
+  constructor(private _jarvisDataDeviceService: JarvisDataDeviceService) {
+  }
 
   showDialog: boolean = false;
   editingTodo = null;
@@ -14,7 +24,21 @@ export class AppComponent {
   todoList: any = [];
   okButtonText: string = 'Create task';
 
+  myDevices: DeviceBean [];
+
+  private getAllDevices(): void {
+    var myDevices: DeviceBean [];
+
+    this._jarvisDataDeviceService
+        .GetAll()
+        .subscribe((data:DeviceBean[]) => this.myDevices = data,
+            error => console.log(error),
+            () => console.log('Get all Items complete'));
+  }
+
   todoDialog(todo = null) {
+    this.getAllDevices();
+
     this.okButtonText = 'Create task';
     this.fieldValue = '';
     this.editingTodo = todo;
