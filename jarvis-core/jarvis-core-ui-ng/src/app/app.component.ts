@@ -1,21 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectorRef, ApplicationRef } from '@angular/core';
 import { JarvisDataDeviceService } from './service/jarvis-data-device.service';
+import { JarvisDataViewService } from './service/jarvis-data-view.service';
+import { JarvisDataStoreService } from './service/jarvis-data-store.service';
 
 /**
  * data model
  */
 import { DeviceBean } from './model/device-bean';
+import { ViewBean } from './model/view-bean';
 
 @Component({
   selector: 'app-root',
-  providers: [JarvisDataDeviceService],
+  providers: [
+    JarvisDataDeviceService,
+    JarvisDataViewService],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'app works great plus!';
 
-  constructor(private _jarvisDataDeviceService: JarvisDataDeviceService) {
+  constructor(
+    private _changeDetectorRef: ChangeDetectorRef,
+    private _applicationRef: ApplicationRef ,
+    private _jarvisDataDeviceService: JarvisDataDeviceService,
+    private _jarvisDataStoreService: JarvisDataStoreService,
+    private _jarvisDataViewService: JarvisDataViewService) {
   }
 
   showDialog: boolean = false;
@@ -25,6 +35,13 @@ export class AppComponent {
   okButtonText: string = 'Create task';
 
   myDevices: DeviceBean [];
+  @Input() myViews: ViewBean [];
+
+  private getAllViews(): void {
+    this._jarvisDataViewService.FindViewsAndDevices().subscribe(
+      (data:ViewBean[]) => this.myViews = this._jarvisDataStoreService.getViews()
+    );
+  }
 
   private getAllDevices(): void {
     var myDevices: DeviceBean [];
@@ -36,9 +53,11 @@ export class AppComponent {
             () => console.log('Get all Items complete'));
   }
 
-  todoDialog(todo = null) {
-    this.getAllDevices();
+  ngOnInit() {
+    this.getAllViews();
+  }
 
+  todoDialog(todo = null) {
     this.okButtonText = 'Create task';
     this.fieldValue = '';
     this.editingTodo = todo;

@@ -1,14 +1,14 @@
+<app-jarvis-toolbar></app-jarvis-toolbar>
+<app-jarvis-home></app-jarvis-home>
+
 <md-card class="todoapp">
   <md-toolbar color="primary">
     material2-do
     <button md-fab class="fab-add" (click)="todoDialog()">
       <md-icon>add</md-icon>
     </button>
-  </md-toolbar>
+</md-toolbar>
 
-
-  {{myDevices}}
-  <p *ngFor="let device of myDevices; let index=index">{{device.name}}</p>
 
   <md-card-content *ngIf="todoList.length">
     <md-list>

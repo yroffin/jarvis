@@ -1,0 +1,9 @@
+<md-tab-group md-dynamic-height md-dynamic-width>
+  <md-tab class="md-tab-label md-tab-active" *ngFor="let myView of myViews; let index=index">
+    <template md-tab-label>{{myView.name}}</template>
+    <template md-tab-content>
+      <app-jarvis-tiles-view [myDevices]=myView.devices ></app-jarvis-tiles-view>
+    </template>
+  </md-tab>
+</md-tab-group>
+

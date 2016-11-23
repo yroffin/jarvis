@@ -1,0 +1,15 @@
+<div class="demo-grid-list">
+  <md-card>
+    <md-card-title>Grid list with header</md-card-title>
+    <md-card-content>
+      <md-grid-list cols="6" rowHeight="100px">
+        <md-grid-tile *ngFor="let device of myDevices; let index=index" style="background:gray">
+          <md-grid-tile-header>
+            <md-icon md-grid-avatar>info_outline</md-icon>
+            {{device.name}} - {{index}}
+          </md-grid-tile-header>
+        </md-grid-tile>
+      </md-grid-list>
+    </md-card-content>
+  </md-card>
+</div>
