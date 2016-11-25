@@ -1,6 +1,7 @@
 sudo: required
 dist: trusty
 env:
+  - PATH=${HOME}/node-v6.9.1-linux-x64/bin:${PATH}
 language: java
 jdk:
   - oraclejdk8
