@@ -13,6 +13,7 @@ before_install:
   - npm install -g angular-cli
 cache:
   directories:
+    - $(npm config get prefix)
     - $TRAVIS_BUILD_DIR/jarvis-core/jarvis-core-ui-ng/node_modules
 install:
   # Npm
