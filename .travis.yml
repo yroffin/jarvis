@@ -11,13 +11,9 @@ before_install:
   - mv `which rake` `which rake`.old
   - touch ${RAKE}
   - chmod 755 ${RAKE}
-script
-  - nvm use $NODE_VERSION
-cache:
-  directories:
-    - $(npm config get prefix)
-    - $TRAVIS_BUILD_DIR/jarvis-core/jarvis-core-ui-ng/node_modules
 install:
+  # Nvm
+  - nvm use $NODE_VERSION
   # Npm
   - ls -lrt $(npm config get prefix)
   - node --version
@@ -33,6 +29,10 @@ install:
   - cd $TRAVIS_BUILD_DIR/jarvis-core
   #- java -version
   #- mvn -q install
+cache:
+  directories:
+    - $(npm config get prefix)
+    - $TRAVIS_BUILD_DIR/jarvis-core/jarvis-core-ui-ng/node_modules
 deploy:
   provider: releases
   overwrite: true
