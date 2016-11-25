@@ -11,10 +11,14 @@ before_install:
   - touch ${RAKE}
   - chmod 755 ${RAKE}
   - npm install -g angular-cli
+cache:
+  directories:
+    - $TRAVIS_BUILD_DIR/jarvis-core/jarvis-core-ui-ng/node_modules
 install:
   # Npm
   - cd $TRAVIS_BUILD_DIR/jarvis-core/jarvis-core-ui-ng
   - npm install
+  - ls -lrt node_modules
   - ng build --prod
   # Java
   - cd $TRAVIS_BUILD_DIR/jarvis-core
