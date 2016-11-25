@@ -19,6 +19,8 @@ cache:
 install:
   # Npm
   - ls -lrt $(npm config get prefix)
+  - node --version
+  - npm --version
   - npm install -g angular-cli
   # Angular
   - cd $TRAVIS_BUILD_DIR/jarvis-core/jarvis-core-ui-ng
