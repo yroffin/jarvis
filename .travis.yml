@@ -3,7 +3,7 @@ dist: trusty
 env:
 language: node_js
 node_js:
-  - "6.9.1"
+  - 6
 language: java
 jdk:
   - oraclejdk8
