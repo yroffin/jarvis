@@ -1,7 +1,8 @@
 sudo: required
 dist: trusty
 env:
-  - NODE_VERSION=6
+  - NODE_VERSION="6"
+  - TRAVIS_NODE_VERSION="6"
 language: java
 jdk:
   - oraclejdk8
@@ -12,8 +13,6 @@ before_install:
   - touch ${RAKE}
   - chmod 755 ${RAKE}
 install:
-  # Nvm
-  - nvm use $NODE_VERSION
   # Npm
   - ls -lrt $(npm config get prefix)
   - node --version
