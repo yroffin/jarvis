@@ -13,7 +13,8 @@ before_install:
   - npm install -g angular-cli
 install:
   # Npm
-  - cd $TRAVIS_BUILD_DIR/jarvis-core
+  - cd $TRAVIS_BUILD_DIR/jarvis-core/jarvis-core-ui-ng
+  - ng build --prod
   # Java
   - cd $TRAVIS_BUILD_DIR/jarvis-core
   #- java -version
