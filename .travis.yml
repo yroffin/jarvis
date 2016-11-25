@@ -15,6 +15,7 @@ before_install:
   - tar xvfJ node-v6.9.1-linux-x64.tar.xz
 install:
   # Npm
+  - echo ${PATH}
   - ls -lrt $(npm config get prefix)
   # Npm
   - ls -lrt $(npm config get prefix)
