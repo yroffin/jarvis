@@ -10,16 +10,17 @@ before_install:
   - mv `which rake` `which rake`.old
   - touch ${RAKE}
   - chmod 755 ${RAKE}
-  - npm install -g angular-cli
 cache:
   directories:
     - $(npm config get prefix)
     - $TRAVIS_BUILD_DIR/jarvis-core/jarvis-core-ui-ng/node_modules
 install:
   # Npm
+  - ls -lrt $(npm config get prefix)
+  - npm install -g angular-cli
   - cd $TRAVIS_BUILD_DIR/jarvis-core/jarvis-core-ui-ng
-  - npm install
   - ls -lrt node_modules
+  - npm install
   - ng build
   - ng build --prod
   # Java
