@@ -11,10 +11,13 @@ before_install:
   - touch ${RAKE}
   - chmod 755 ${RAKE}
 install:
+  # Npm
+  - cd $TRAVIS_BUILD_DIR/jarvis-core
+  - npm
   # Java
   - cd $TRAVIS_BUILD_DIR/jarvis-core
-  - java -version
-  - mvn -q install
+  #- java -version
+  #- mvn -q install
 deploy:
   provider: releases
   overwrite: true
