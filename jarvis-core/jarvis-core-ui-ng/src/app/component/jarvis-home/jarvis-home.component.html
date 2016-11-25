@@ -1,9 +1,5 @@
-<md-tab-group md-dynamic-height md-dynamic-width>
-  <md-tab class="md-tab-label md-tab-active" *ngFor="let myView of myViews; let index=index">
-    <template md-tab-label>{{myView.name}}</template>
-    <template md-tab-content>
-      <app-jarvis-tiles-view [myDevices]=myView.devices ></app-jarvis-tiles-view>
-    </template>
-  </md-tab>
-</md-tab-group>
-
+<div *ngFor="let myView of myViews; let index=index">
+  <app-jarvis-tiles-view *ngIf="index == myIndex" [myView]=myView [myDevices]=myView.devices ></app-jarvis-tiles-view>
+</div>
+<button md-fab class="app-action-left" (click)="left()"><md-icon>fast_rewind</md-icon></button>
+<button md-fab class="app-action-right" (click)="right()"><md-icon>fast_forward</md-icon></button>

@@ -18,11 +18,13 @@ import { ViewBean } from '../../model/view-bean';
 export class JarvisHomeComponent implements OnInit {
 
   myViews: ViewBean [];
+  myIndex: number;
 
   constructor(
     private _jarvisDataDeviceService: JarvisDataDeviceService,
     private _jarvisDataStoreService: JarvisDataStoreService,
     private _jarvisDataViewService: JarvisDataViewService) {
+      this.myIndex = 0;
   }
 
   ngOnInit() {
@@ -36,5 +38,19 @@ export class JarvisHomeComponent implements OnInit {
     this._jarvisDataViewService.FindViewsAndDevices().subscribe(
       (data:ViewBean[]) => this.myViews = this._jarvisDataStoreService.getViews()
     );
+  }
+
+  private left(): void {
+    this.myIndex--;
+    if(this.myIndex < 0) {
+      this.myIndex = this.myViews.length - 1;
+    }
+  }
+
+  private right(): void {
+    this.myIndex++;
+    if(this.myIndex >= this.myViews.length) {
+      this.myIndex = 0;
+    }
   }
 }

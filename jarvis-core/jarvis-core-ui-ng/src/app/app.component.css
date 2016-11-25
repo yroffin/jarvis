@@ -1,31 +1,73 @@
-.demo-toolbar {
-  padding: 6px;
-
-  .demo-toolbar-icon {
-    padding: 0 14px;
-  }
-
-  .demo-fill-remaining {
-    flex: 1 1 auto;
-  }
+md-sidenav-layout.m2app-dark {
+  background: black;
 }
 
-.demo-grid-list {
-  width: 1100px;
+.app-content {
+  padding: 20px;
+}
 
-  md-card {
-    margin: 16px 0;
-  }
+.app-content md-card {
+  margin: 20px;
+}
 
-  p {
-    margin: 16px;
-  }
+.app-sidenav {
+  padding: 10px;
+  min-width: 100px;
+}
 
-  .demo-basic-list md-grid-tile {
-    background: rgba(0, 0, 0, 0.32);
-  }
+.app-content md-checkbox {
+  margin: 10px;
+}
 
-  img {
-    width: 350px;
-  }
+.app-toolbar-filler {
+  flex: 1 1 auto;
+}
+
+.app-toolbar-menu {
+  padding: 0 14px 0 14px;
+  color: white;
+}
+
+.app-icon-button {
+  box-shadow: none;
+  user-select: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  filter: none;
+  font-weight: normal;
+  height: auto;
+  line-height: inherit;
+  margin: 0;
+  min-width: 0;
+  padding: 0;
+  text-align: left;
+  text-decoration: none;
+}
+
+.app-action {
+  display: inline-block;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+.app-spinner {
+  height: 30px;
+  width: 30px;
+  display: inline-block;
+}
+
+.app-input-icon {
+  font-size: 16px;
+}
+
+.app-list {
+  border: 1px solid rgba(0,0,0,0.12);
+  width: 350px;
+  margin: 20px;
+}
+
+.app-progress {
+  margin: 20px;
 }

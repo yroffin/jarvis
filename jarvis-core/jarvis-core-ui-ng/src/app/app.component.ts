@@ -4,6 +4,11 @@ import { JarvisDataViewService } from './service/jarvis-data-view.service';
 import { JarvisDataStoreService } from './service/jarvis-data-store.service';
 
 /**
+ * Cf. https://material2-app.firebaseapp.com/
+ * Cf. https://github.com/jelbourn/material2-app
+ */
+
+/**
  * data model
  */
 import { DeviceBean } from './model/device-bean';
@@ -34,27 +39,7 @@ export class AppComponent implements OnInit {
   todoList: any = [];
   okButtonText: string = 'Create task';
 
-  myDevices: DeviceBean [];
-  @Input() myViews: ViewBean [];
-
-  private getAllViews(): void {
-    this._jarvisDataViewService.FindViewsAndDevices().subscribe(
-      (data:ViewBean[]) => this.myViews = this._jarvisDataStoreService.getViews()
-    );
-  }
-
-  private getAllDevices(): void {
-    var myDevices: DeviceBean [];
-
-    this._jarvisDataDeviceService
-        .GetAll()
-        .subscribe((data:DeviceBean[]) => this.myDevices = data,
-            error => console.log(error),
-            () => console.log('Get all Items complete'));
-  }
-
   ngOnInit() {
-    this.getAllViews();
   }
 
   todoDialog(todo = null) {

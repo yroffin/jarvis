@@ -1,246 +1,1143 @@
 {
-  "BlockBean": {
-    "206": {
-      "expression": "noname.status == 1",
-      "icon": "list",
-      "id": "206",
-      "isSecured": false,
-      "name": "block name",
-      "testParameter": "{}"
-    }
-  },
+  "BlockBean": {},
   "CommandBean": {
-    "193": {
-      "body": "import groovy.json.*\nimport groovyx.net.http.RESTClient\nimport static groovyx.net.http.ContentType.*\n\n/**\n * simple api call to simulate data\n*/\ndef hue = new RESTClient( 'http://jsonplaceholder.typicode.com' )\ndef resp = hue.get( path: '/users/1' )\n\nif(resp.status == 200) {\n    return resp.data\n} else {\n    return new JsonSlurper().parseText('{}')\n}\nreturn resp",
-      "icon": "whatshot",
-      "id": "23",
-      "name": "Json Sample Call (data)",
-      "type": "GROOVY"
-    },
-    "194": {
-      "body": "import groovy.json.*\n\n/**\n * simple api call to simulate action\n*/\nreturn new JsonSlurper().parseText('{\"status\":true}')",
-      "icon": "whatshot",
-      "id": "45",
-      "name": "Json Sample Call (action)",
-      "type": "GROOVY"
-    },
-    "195": {
-      "body": "import groovy.json.*\n\n/**\n * simple api call to simulate action\n*/\nreturn new JsonSlurper().parseText('{\"status\":false}')",
-      "icon": "whatshot",
-      "id": "46",
-      "name": "Json Sample Call (action)",
-      "type": "GROOVY"
-    },
-    "203": {
-      "body": "import groovy.json.*\nimport org.joda.time.*\n\n/**\n * simple api call to simulate action\n*/\ndef now = DateTime.now().getSecondOfDay() % 2\nreturn new JsonSlurper().parseText('{\"status\":'+now+'}')",
-      "icon": "whatshot",
-      "id": "203",
+    "714": {
+      "body": "import groovy.json.*\nimport groovyx.net.http.RESTClient\nimport static groovyx.net.http.ContentType.*\n\n/**\n * Simulate an object result\n */\nreturn new JsonSlurper().parseText('{}')",
+      "icon": "data_usage",
+      "id": "714",
+      "isLogged": false,
       "isSecured": false,
-      "name": "Simple script (boolean) : true when second is zero modulo 1",
+      "name": "Remote API sample",
       "type": "GROOVY"
     },
-    "207": {
-      "body": "logger.warn(\"Just a test {}\", input)",
-      "icon": "list",
-      "id": "207",
+    "716": {
+      "body": "import groovy.json.*\nimport groovyx.net.http.RESTClient\nimport static groovyx.net.http.ContentType.*\n\n/**\n * simulate a call to hue gateway\n * http://hue/api/{api-resource-id}/lights\n */\nreturn new JsonSlurper().parseText(' { \"1\": { \"state\": { \"on\": true, \"bri\": 254, \"alert\": \"none\",  \"reachable\": true }, \"type\":\"Dimmablelight\", \"name\":\"Salon\",\"modelid\":\"LWB006\", \"manufacturername\":\"Philips\",\"uniqueid\":\"00:17:88:01:10:59:3e:a7-0b\", \"swversion\":\"5.38.1.15095\"}, \"2\":{\"state\":{ \"on\":true,\"bri\":254, \"alert\":\"none\",\"reachable\":false },\"type\":\"Dimmablelight\", \"name\":\"Pierre et compagnie\",\"modelid\":\"LWB006\", \"manufacturername\":\"Philips\", \"uniqueid\":\"00:17:88:01:10:4c:4e:47-0b\",\"swversion\":\"5.38.1.15095\" },\"3\":{ \"state\":{ \"on\":true, \"bri\":254, \"alert\":\"none\", \"reachable\":false }, \"type\":\"Dimmablelight\",\"name\":\"Nathalie\", \"modelid\":\"LWB006\", \"manufacturername\":\"Philips\", \"uniqueid\":\"00:17:88:01:10:59:4c:dc-0b\", \"swversion\":\"5.38.1.15095\"}, \"4\":{ \"state\":{ \"on\":true,\"bri\":254, \"alert\":\"none\", \"reachable\":true },\"type\":\"Dimmablelight\", \"name\":\"Couloir\",\"modelid\":\"LWB006\",\"manufacturername\":\"Philips\",\"uniqueid\":\"00:17:88:01:10:2b:07:7c-0b\",\"swversion\":\"5.38.1.15095\"},\"5\":{\"state\":{\"on\":true,\"bri\":254,\"alert\":\"none\",\"reachable\":false},\"type\":\"Dimmablelight\",\"name\":\"Papa\",\"modelid\":\"LWB006\",\"manufacturername\":\"Philips\",\"uniqueid\":\"00:17:88:01:10:2b:06:c2-0b\",\"swversion\":\"5.38.1.15095\"},\"6\":{\"state\":{\"on\":true,\"bri\":254,\"alert\":\"none\",\"reachable\":false},\"type\":\"Dimmablelight\",\"name\":\"Lampe du salon\",\"modelid\":\"LWB006\",\"manufacturername\":\"Philips\",\"uniqueid\":\"00:17:88:01:10:29:7b:fc-0b\",\"swversion\":\"5.38.1.15095\"}}')",
+      "icon": "whatshot",
+      "id": "716",
+      "isLogged": false,
       "isSecured": false,
-      "name": "Log a single output",
+      "name": "Philips HUE simulation get all lights",
+      "type": "GROOVY"
+    },
+    "717": {
+      "body": "import groovy.json.*\nimport groovyx.net.http.RESTClient\nimport static groovyx.net.http.ContentType.*\n\n/**\n * simulate a call to hue gateway\n * http://hue/api/{api-resource-id}/lights/{id}\n * with body sample {\"on\":\"true\"} or {\"on\":\"false\"}\n */\nreturn new JsonSlurper().parseText(' [ { \"success\": { \"/lights/1/state/on\": false } } ] ')",
+      "icon": "whatshot",
+      "id": "717",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "Philips HUE simulation fix light status",
+      "type": "GROOVY"
+    },
+    "719": {
+      "body": "import groovy.json.*\nimport groovyx.net.http.RESTClient\nimport static groovyx.net.http.ContentType.*\n\n/**\n * simple api call to simulate data\n * GET /ZWaveAPI/Run/devices[3].instances[0].commandClasses[49] with Basic Authentification\n*/\nreturn new JsonSlurper().parseText('{ \"data\": { \"interviewCounter\": { \"invalidateTime\": 1467846503, \"type\": \"int\", \"updateTime\": 1467846504, \"value\": 10 }, \"interviewDone\": { \"invalidateTime\": 1467846503, \"type\": \"bool\", \"updateTime\": 1467846504, \"value\": false }, \"invalidateTime\": 1467846503, \"security\": { \"invalidateTime\": 1467846503, \"type\": \"bool\", \"updateTime\": 1467846504, \"value\": false }, \"supported\": { \"invalidateTime\": 1467846503, \"type\": \"bool\", \"updateTime\": 1467846504, \"value\": true }, \"type\": \"empty\", \"typemask\": { \"invalidateTime\": 1467846503, \"type\": \"empty\", \"updateTime\": 1467846504, \"value\": null }, \"id\": 49, \"name\": \"SensorMultilevel\" }')",
+      "icon": "wifi_tethering",
+      "id": "719",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "ZWaveAPI get sample",
+      "type": "GROOVY"
+    },
+    "721": {
+      "body": "import groovy.json.*\nimport groovyx.net.http.RESTClient\nimport static groovyx.net.http.ContentType.*\n\n/**\n * simulate a call to hue gateway\n * http://hue/api/{hue-resource-id}/lights/{id}\n * with body sample {\"on\":\"true\"} or {\"on\":\"false\"}\n */\nreturn new JsonSlurper().parseText('{\"deviceScale\": { \"invalidateTime\": 1455958740, \"updateTime\": 1479926223, \"type\": \"int\", \"value\": 0 }, \"invalidateTime\": 1467846338, \"scale\": { \"invalidateTime\": 1455958740, \"updateTime\": 1455958741, \"type\": \"int\", \"value\": 0 }, \"scaleString\": { \"invalidateTime\": 1455958740, \"updateTime\": 1479926223, \"type\": \"string\", \"value\": \"°C\" }, \"sensorTypeString\": { \"invalidateTime\": 1455958740, \"updateTime\": 1455958741, \"type\": \"string\", \"value\": \"Temperature\" }, \"type\": \"empty\", \"updateTime\": 1479926223, \"val\": { \"invalidateTime\": 1455958740, \"updateTime\": 1479926223, \"type\": \"float\", \"value\": 22.3 }, \"value\": null }')",
+      "icon": "rss_feed",
+      "id": "721",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "Simulation de lecture d'objet via le plugin API ZWay",
       "type": "GROOVY"
     }
   },
   "ConfigBean": {
-    "202": {
+    "792": {
       "active": true,
-      "backgroundUrl": "http://artroyalephotography.com/wp-content/uploads/2011/08/minimal-gray-to-white-gradient-wallpapers_33797_1920x1200-1024x640.jpg",
-      "id": "209",
+      "backgroundUrl": "",
+      "id": "112",
+      "isLogged": false,
+      "isSecured": false,
       "name": "default",
       "opacity": "1",
-      "tilesGtLg": "16",
+      "tilesGtLg": "12",
       "tilesGtMd": "10",
-      "tilesGtSm": "8",
-      "tilesGtXs": "6",
-      "tilesLg": "12",
+      "tilesGtSm": "6",
+      "tilesGtXs": "5",
+      "tilesLg": "10",
       "tilesMd": "8",
       "tilesSm": "6",
-      "tilesXl": "20",
+      "tilesXl": "16",
       "tilesXs": "3"
     }
   },
-  "ConnectorBean": {},
-  "CronBean": {
-    "199": {
-      "cron": "* * * * * *",
-      "icon": "list",
-      "id": "199",
+  "ConnectorBean": {
+    "783": {
+      "adress": "http://192.168.1.73:7001",
+      "canAnswer": false,
+      "icon": "settings_input_antenna",
+      "id": "783",
+      "isLogged": false,
+      "isRenderer": true,
       "isSecured": false,
-      "name": "Toutes les minutes",
+      "isSensor": false,
+      "lastAdvertise": "2016-11-19T17:48:21.078Z",
+      "name": "remote connector sample"
+    }
+  },
+  "CronBean": {
+    "784": {
+      "cron": "0 15 6 * * *",
+      "icon": "list",
+      "id": "108",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "06h15 du lundi au dimanche",
       "triggerType": "CRONTAB"
     },
-    "200": {
-      "cron": "* * * * *",
+    "785": {
+      "cron": "0 15 16 * * *",
       "icon": "list",
-      "id": "184",
+      "id": "109",
+      "isLogged": false,
       "isSecured": false,
-      "latitude": "30",
-      "longitude": "30",
-      "name": "Sunset",
-      "triggerType": "SUNSET"
+      "name": "16h15 du lundi au dimanche",
+      "triggerType": "CRONTAB"
     },
-    "201": {
-      "cron": "* * * * *",
+    "786": {
+      "cron": "0 30 7 * * *",
       "icon": "list",
-      "id": "185",
+      "id": "110",
+      "isLogged": false,
       "isSecured": false,
-      "latitude": "30",
-      "longitude": "30",
-      "name": "Sunrise",
-      "triggerType": "SUNRISE"
+      "name": "7h30 du lundi au dimanche",
+      "startAtRuntime": true,
+      "triggerType": "CRONTAB"
+    },
+    "787": {
+      "cron": "0 0 21 * * *",
+      "icon": "list",
+      "id": "111",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "21h00 du lundi au dimanche",
+      "startAtRuntime": true,
+      "triggerType": "CRONTAB"
+    },
+    "788": {
+      "cron": "0 0 09 * * *",
+      "icon": "list",
+      "id": "117",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "09h00 du lundi au dimanche (extinction)",
+      "startAtRuntime": true,
+      "triggerType": "CRONTAB"
+    },
+    "789": {
+      "cron": "0 10 1 * * *",
+      "icon": "list",
+      "id": "128",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "01h10 du lundi au dimanche (extinction hifi)",
+      "startAtRuntime": true,
+      "triggerType": "CRONTAB"
+    },
+    "790": {
+      "cron": "0 12 1 * * *",
+      "icon": "list",
+      "id": "129",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "01h12 du lundi au dimanche (extinction hifi)",
+      "startAtRuntime": true,
+      "triggerType": "CRONTAB"
+    },
+    "791": {
+      "cron": "0 30 22 * * *",
+      "icon": "list",
+      "id": "132",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "22h30 du lundi au dimanche",
+      "startAtRuntime": true,
+      "triggerType": "CRONTAB"
+    }
+  },
+  "DeviceBean": {
+    "724": {
+      "icon": "touch_app",
+      "id": "6",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "Volet du bureau",
+      "parameters": "{\"open\": {\"on\":\"false\",\"sender\":5255035,\"interruptor\":1}}",
+      "tagColor": "red",
+      "template": "<md-grid-tile-header>\n\t<h3>{{device.name}}</h3>\n</md-grid-tile-header>\n<md-icon md-font-icon=\"material-icons md-64\">border_all</md-icon>",
+      "visible": true
+    },
+    "727": {
+      "icon": "touch_app",
+      "id": "36",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "Volet du bureau",
+      "parameters": "{\"open\": {\"on\":\"true\",\"sender\":5255035,\"interruptor\":1}}",
+      "tagColor": "green",
+      "template": "<md-grid-tile-header>\n\t<h3>{{device.name}}</h3>\n</md-grid-tile-header>\n<md-icon md-font-icon=\"material-icons md-64\">border_all</md-icon>",
+      "visible": true
+    },
+    "728": {
+      "colSpan": "2",
+      "icon": "lightbulb_outline",
+      "id": "67",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "HUE status",
+      "rowSpan": "2",
+      "tagColor": "blue",
+      "template": "<div ng-repeat=\"light in data.status\">\n<md-icon ng-if=\"light.state.on\" md-font-icon=\"material-icons md-16\">lightbulb_outline</md-icon>\n<md-icon ng-if=\"!light.state.on\" md-font-icon=\"material-icons md-16\">power_settings_new</md-icon>\n{{light.name}}</div>",
+      "visible": false
+    },
+    "729": {
+      "colSpan": "1",
+      "icon": "wb_incandescent",
+      "id": "68",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "Salon",
+      "parameters": "{\"close\": {\"light\":1, \"state\": false}}",
+      "rowSpan": "1",
+      "tagColor": "red",
+      "template": "<md-grid-tile-header>\n\t<h3>{{device.name}}</h3>\n</md-grid-tile-header>\n<md-icon md-font-icon=\"material-icons md-64\">lightbulb_outline</md-icon>",
+      "visible": false
+    },
+    "730": {
+      "colSpan": "1",
+      "icon": "lightbulb_outline",
+      "id": "69",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "Salon",
+      "parameters": "{\"close\": {\"light\":1, \"state\": true}}",
+      "rowSpan": "1",
+      "tagColor": "green",
+      "template": "<md-grid-tile-header>\n\t<h3>{{device.name}}</h3>\n</md-grid-tile-header>\n<md-icon md-font-icon=\"material-icons md-64\">lightbulb_outline</md-icon>",
+      "visible": false
+    },
+    "733": {
+      "colSpan": "1",
+      "icon": "touch_app",
+      "id": "72",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "Volet RDC",
+      "parameters": "{\"open\": {\"on\":\"true\",\"sender\":8217035,\"interruptor\":1}}",
+      "rowSpan": "1",
+      "tagColor": "green",
+      "template": "<md-grid-tile-header>\n\t<h3>{{device.name}}</h3>\n</md-grid-tile-header>\n<md-icon md-font-icon=\"material-icons md-64\">border_all</md-icon>",
+      "visible": true
+    },
+    "734": {
+      "colSpan": "1",
+      "icon": "touch_app",
+      "id": "73",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "Volet RDC",
+      "parameters": "{\"close\": {\"on\":\"false\",\"sender\":8217035,\"interruptor\":1}}",
+      "rowSpan": "1",
+      "tagColor": "red",
+      "template": "<md-grid-tile-header>\n\t<h3>{{device.name}}</h3>\n</md-grid-tile-header>\n<md-icon md-font-icon=\"material-icons md-64\">border_all</md-icon>",
+      "visible": true
+    },
+    "735": {
+      "icon": "wb_incandescent",
+      "id": "74",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "Pierre",
+      "parameters": "{\"close\": {\"light\":2, \"state\": false}}",
+      "tagColor": "red",
+      "template": "<md-grid-tile-header>\n\t<h3>{{device.name}}</h3>\n</md-grid-tile-header>\n<md-icon md-font-icon=\"material-icons md-64\">lightbulb_outline</md-icon>",
+      "visible": false
+    },
+    "736": {
+      "icon": "lightbulb_outline",
+      "id": "75",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "Pierre",
+      "parameters": "{\"close\": {\"light\":2, \"state\": true}}",
+      "tagColor": "green",
+      "template": "<md-grid-tile-header>\n\t<h3>{{device.name}}</h3>\n</md-grid-tile-header>\n<md-icon md-font-icon=\"material-icons md-64\">lightbulb_outline</md-icon>",
+      "visible": false
+    },
+    "737": {
+      "icon": "wb_incandescent",
+      "id": "76",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "Nathalie",
+      "parameters": "{\"close\": {\"light\":3, \"state\": false}}",
+      "tagColor": "red",
+      "template": "<md-grid-tile-header>\n\t<h3>{{device.name}}</h3>\n</md-grid-tile-header>\n<md-icon md-font-icon=\"material-icons md-64\">lightbulb_outline</md-icon>",
+      "visible": false
+    },
+    "738": {
+      "icon": "lightbulb_outline",
+      "id": "77",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "Nathalie",
+      "parameters": "{\"close\": {\"light\":3, \"state\": true}}",
+      "tagColor": "green",
+      "template": "<md-grid-tile-header>\n\t<h3>{{device.name}}</h3>\n</md-grid-tile-header>\n<md-icon md-font-icon=\"material-icons md-64\">lightbulb_outline</md-icon>",
+      "visible": false
+    },
+    "739": {
+      "icon": "touch_app",
+      "id": "78",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "Volet simbad",
+      "parameters": "{\"open\": {\"on\":\"true\",\"sender\":8255035,\"interruptor\":1}}",
+      "tagColor": "green",
+      "template": "<md-grid-tile-header>\n\t<h3>{{device.name}}</h3>\n</md-grid-tile-header>\n<md-icon md-font-icon=\"material-icons md-64\">border_all</md-icon>",
+      "visible": true
+    },
+    "740": {
+      "icon": "touch_app",
+      "id": "79",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "Volet simbad",
+      "parameters": "{\"close\": {\"on\":\"false\",\"sender\":8255035,\"interruptor\":1}}",
+      "tagColor": "red",
+      "template": "<md-grid-tile-header>\n\t<h3>{{device.name}}</h3>\n</md-grid-tile-header>\n<md-icon md-font-icon=\"material-icons md-64\">border_all</md-icon>",
+      "visible": true
+    },
+    "741": {
+      "colSpan": "1",
+      "icon": "touch_app",
+      "id": "741",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "Volet Nathalie",
+      "parameters": "{\"open\": {\"on\":\"true\",\"sender\":8266035,\"interruptor\":1}}",
+      "rowSpan": "1",
+      "tagColor": "green",
+      "template": "<md-grid-tile-header>\n\t<h3>{{device.name}}</h3>\n</md-grid-tile-header>\n<md-icon md-font-icon=\"material-icons md-64\">border_all</md-icon>",
+      "visible": true
+    },
+    "742": {
+      "colSpan": "1",
+      "icon": "touch_app",
+      "id": "742",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "Volet Nathalie",
+      "parameters": "{\"close\": {\"on\":\"false\",\"sender\":8266035,\"interruptor\":1}}",
+      "rowSpan": "1",
+      "tagColor": "red",
+      "template": "<md-grid-tile-header>\n\t<h3>{{device.name}}</h3>\n</md-grid-tile-header>\n<md-icon md-font-icon=\"material-icons md-64\">border_all</md-icon>",
+      "visible": true
+    },
+    "743": {
+      "colSpan": "1",
+      "icon": "touch_app",
+      "id": "743",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "Piscine",
+      "parameters": "{\"close\": {\"on\":\"false\",\"sender\":333035,\"interruptor\":1}}",
+      "rowSpan": "1",
+      "tagColor": "red",
+      "template": "<md-grid-tile-header>\n\t<h3>{{device.name}}</h3>\n</md-grid-tile-header>\n<md-icon md-font-icon=\"material-icons md-64\">toys</md-icon>",
+      "visible": true
+    },
+    "744": {
+      "colSpan": "1",
+      "icon": "touch_app",
+      "id": "744",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "Piscine",
+      "parameters": "{\"open\": {\"on\":\"true\",\"sender\":333035,\"interruptor\":1}}",
+      "rowSpan": "1",
+      "tagColor": "green",
+      "template": "<md-grid-tile-header>\n\t<h3>{{device.name}}</h3>\n</md-grid-tile-header>\n<md-icon md-font-icon=\"material-icons md-64\">toys</md-icon>",
+      "visible": true
+    },
+    "745": {
+      "icon": "timeline",
+      "id": "745",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "Sensor",
+      "template": "<md-grid-tile-header>\n\t<h3>{{device.name}}</h3>\n</md-grid-tile-header>\n<br>\n<br>\nSalon {{data.salon.val.value}} {{data.salon.scaleString.value}}<br>",
+      "visible": false
+    },
+    "746": {
+      "colSpan": "1",
+      "icon": "touch_app",
+      "id": "746",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "Volet étage",
+      "parameters": "{\"open\": {\"on\":\"true\",\"sender\":8219995,\"interruptor\":1}}",
+      "rowSpan": "1",
+      "tagColor": "green",
+      "template": "<md-grid-tile-header>\n\t<h3>{{device.name}}</h3>\n</md-grid-tile-header>\n<md-icon md-font-icon=\"material-icons md-64\">border_all</md-icon>",
+      "visible": true
+    },
+    "747": {
+      "colSpan": "1",
+      "icon": "touch_app",
+      "id": "747",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "Volet étage",
+      "parameters": "{\"close\": {\"on\":\"false\",\"sender\":8219995,\"interruptor\":1}}",
+      "rowSpan": "1",
+      "tagColor": "red",
+      "template": "<md-grid-tile-header>\n\t<h3>{{device.name}}</h3>\n</md-grid-tile-header>\n<md-icon md-font-icon=\"material-icons md-64\">border_all</md-icon>",
+      "visible": true
+    },
+    "748": {
+      "colSpan": "1",
+      "icon": "touch_app",
+      "id": "748",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "Volet cuisine",
+      "parameters": "{\"open\": {\"on\":\"true\",\"sender\":8222035,\"interruptor\":1}}",
+      "rowSpan": "1",
+      "tagColor": "green",
+      "template": "<md-grid-tile-header>\n\t<h3>{{device.name}}</h3>\n</md-grid-tile-header>\n<md-icon md-font-icon=\"material-icons md-64\">border_all</md-icon>",
+      "visible": true
+    },
+    "749": {
+      "colSpan": "1",
+      "icon": "touch_app",
+      "id": "749",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "Volet cuisine",
+      "parameters": "{\"close\": {\"on\":\"false\",\"sender\":8222035,\"interruptor\":1}}",
+      "rowSpan": "1",
+      "tagColor": "red",
+      "template": "<md-grid-tile-header>\n\t<h3>{{device.name}}</h3>\n</md-grid-tile-header>\n<md-icon md-font-icon=\"material-icons md-64\">border_all</md-icon>",
+      "visible": true
+    },
+    "750": {
+      "colSpan": "1",
+      "icon": "touch_app",
+      "id": "750",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "Volet piano",
+      "parameters": "{\"open\": {\"on\":\"true\",\"sender\":8266033,\"interruptor\":1}}",
+      "rowSpan": "1",
+      "tagColor": "green",
+      "template": "<md-grid-tile-header>\n\t<h3>{{device.name}}</h3>\n</md-grid-tile-header>\n<md-icon md-font-icon=\"material-icons md-64\">border_all</md-icon>",
+      "visible": true
+    },
+    "751": {
+      "colSpan": "1",
+      "icon": "touch_app",
+      "id": "751",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "Volet piano",
+      "parameters": "{\"close\": {\"on\":\"false\",\"sender\":8266033,\"interruptor\":1}}",
+      "rowSpan": "1",
+      "tagColor": "red",
+      "template": "<md-grid-tile-header>\n\t<h3>{{device.name}}</h3>\n</md-grid-tile-header>\n<md-icon md-font-icon=\"material-icons md-64\">border_all</md-icon>",
+      "visible": true
+    },
+    "752": {
+      "colSpan": "1",
+      "icon": "touch_app",
+      "id": "91",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "Volet jardin",
+      "parameters": "{\"open\": {\"on\":\"true\",\"sender\":9966055,\"interruptor\":3}}",
+      "rowSpan": "1",
+      "tagColor": "green",
+      "template": "<md-grid-tile-header>\n\t<h3>{{device.name}}</h3>\n</md-grid-tile-header>\n<md-icon md-font-icon=\"material-icons md-64\">border_all</md-icon>",
+      "visible": true
+    },
+    "753": {
+      "colSpan": "1",
+      "icon": "touch_app",
+      "id": "92",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "Volet jardin",
+      "parameters": "{\"close\": {\"on\":\"false\",\"sender\":9966055,\"interruptor\":3}}",
+      "rowSpan": "1",
+      "tagColor": "red",
+      "template": "<md-grid-tile-header>\n\t<h3>{{device.name}}</h3>\n</md-grid-tile-header>\n<md-icon md-font-icon=\"material-icons md-64\">border_all</md-icon>",
+      "visible": true
+    },
+    "754": {
+      "colSpan": "1",
+      "icon": "wb_incandescent",
+      "id": "119",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "Couloir",
+      "parameters": "{\"close\": {\"light\":4, \"state\": false}}",
+      "rowSpan": "1",
+      "tagColor": "red",
+      "template": "<md-grid-tile-header>\n\t<h3>{{device.name}}</h3>\n</md-grid-tile-header>\n<md-icon md-font-icon=\"material-icons md-64\">lightbulb_outline</md-icon>",
+      "visible": false
+    },
+    "755": {
+      "colSpan": "1",
+      "icon": "lightbulb_outline",
+      "id": "120",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "Couloir",
+      "parameters": "{\"close\": {\"light\":4, \"state\": true}}",
+      "rowSpan": "1",
+      "tagColor": "green",
+      "template": "<md-grid-tile-header>\n\t<h3>{{device.name}}</h3>\n</md-grid-tile-header>\n<md-icon md-font-icon=\"material-icons md-64\">lightbulb_outline</md-icon>",
+      "visible": false
+    },
+    "756": {
+      "colSpan": "1",
+      "icon": "wb_incandescent",
+      "id": "121",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "Papa",
+      "parameters": "{\"close\": {\"light\":5, \"state\": false}}",
+      "rowSpan": "1",
+      "tagColor": "red",
+      "template": "<md-grid-tile-header>\n\t<h3>{{device.name}}</h3>\n</md-grid-tile-header>\n<md-icon md-font-icon=\"material-icons md-64\">lightbulb_outline</md-icon>",
+      "visible": false
+    },
+    "757": {
+      "colSpan": "1",
+      "icon": "lightbulb_outline",
+      "id": "120",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "Papa",
+      "parameters": "{\"close\": {\"light\":5, \"state\": true}}",
+      "rowSpan": "1",
+      "tagColor": "green",
+      "template": "<md-grid-tile-header>\n\t<h3>{{device.name}}</h3>\n</md-grid-tile-header>\n<md-icon md-font-icon=\"material-icons md-64\">lightbulb_outline</md-icon>",
+      "visible": false
+    },
+    "758": {
+      "colSpan": "1",
+      "icon": "flash_auto",
+      "id": "123",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "Prise Salon Orange",
+      "parameters": "{\"close\": {\"on\":\"false\",\"sender\":111035,\"interruptor\":1}}",
+      "rowSpan": "1",
+      "tagColor": "red",
+      "template": "<md-grid-tile-header>\n\t<h3>{{device.name}}</h3>\n</md-grid-tile-header>\n<md-icon md-font-icon=\"material-icons md-64\">toys</md-icon>",
+      "visible": true
+    },
+    "759": {
+      "colSpan": "1",
+      "icon": "flash_auto",
+      "id": "124",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "Prise Salon Orange",
+      "parameters": "{\"open\": {\"on\":\"true\",\"sender\":111035,\"interruptor\":1}}",
+      "rowSpan": "1",
+      "tagColor": "green",
+      "template": "<md-grid-tile-header>\n\t<h3>{{device.name}}</h3>\n</md-grid-tile-header>\n<md-icon md-font-icon=\"material-icons md-64\">toys</md-icon>",
+      "visible": true
+    },
+    "760": {
+      "colSpan": "1",
+      "icon": "flash_auto",
+      "id": "760",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "Prise Salon Tv",
+      "parameters": "{\"close\": {\"on\":\"false\",\"sender\":112037,\"interruptor\":2}}",
+      "rowSpan": "1",
+      "tagColor": "red",
+      "template": "<md-grid-tile-header>\n\t<h3>{{device.name}}</h3>\n</md-grid-tile-header>\n<md-icon md-font-icon=\"material-icons md-64\">toys</md-icon>",
+      "visible": true
+    },
+    "761": {
+      "colSpan": "1",
+      "icon": "flash_auto",
+      "id": "761",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "Prise Salon Tv",
+      "parameters": "{\"open\": {\"on\":\"true\",\"sender\":112037,\"interruptor\":2}}",
+      "rowSpan": "1",
+      "tagColor": "green",
+      "template": "<md-grid-tile-header>\n\t<h3>{{device.name}}</h3>\n</md-grid-tile-header>\n<md-icon md-font-icon=\"material-icons md-64\">toys</md-icon>",
+      "visible": true
     }
   },
   "EventBean": {},
   "HREF": {
-    "31": {
-      "__from": 197,
-      "__to": 193,
+    "584": {
+      "__from": 733,
+      "__to": 763,
       "href": "HREF",
-      "name": "user",
-      "nature": "json",
-      "order": "3",
-      "type": "data"
+      "order": "1"
     },
-    "32": {
-      "__from": 196,
-      "__to": 197
+    "585": {
+      "__from": 734,
+      "__to": 763
     },
-    "33": {
-      "__from": 198,
-      "__to": 196
+    "586": {
+      "__from": 739,
+      "__to": 763
     },
-    "34": {
-      "__from": 197,
-      "__to": 194,
+    "587": {
+      "__from": 758,
+      "__to": 763
+    },
+    "588": {
+      "__from": 740,
+      "__to": 763
+    },
+    "589": {
+      "__from": 727,
+      "__to": 763
+    },
+    "590": {
+      "__from": 778,
+      "__to": 727
+    },
+    "592": {
+      "__from": 763,
+      "__to": 714,
       "href": "HREF",
-      "name": "always_true",
+      "name": "send",
       "nature": "json",
       "order": "1",
+      "parameter": "{}",
       "type": "action"
     },
-    "35": {
-      "__from": 197,
-      "__to": 195,
+    "593": {
+      "__from": 752,
+      "__to": 763
+    },
+    "594": {
+      "__from": 753,
+      "__to": 763
+    },
+    "599": {
+      "__from": 759,
+      "__to": 763
+    },
+    "602": {
+      "__from": 778,
+      "__to": 724
+    },
+    "603": {
+      "__from": 724,
+      "__to": 763
+    },
+    "604": {
+      "__from": 746,
+      "__to": 763
+    },
+    "605": {
+      "__from": 747,
+      "__to": 763
+    },
+    "606": {
+      "__from": 764,
+      "__to": 716,
       "href": "HREF",
-      "name": "always_false",
+      "name": "status",
       "nature": "json",
-      "order": "2",
-      "type": "action"
+      "order": "1",
+      "type": "data"
     },
-    "36": {
-      "__from": 205,
-      "__to": 203,
+    "607": {
+      "__from": 728,
+      "__to": 764,
+      "href": "HREF",
+      "order": "1"
+    },
+    "608": {
+      "__from": 765,
+      "__to": 717,
       "href": "HREF",
       "name": "noname",
       "nature": "json",
       "order": "1",
       "type": "action"
     },
-    "38": {
-      "__from": 208,
-      "__to": 207
+    "609": {
+      "__from": 729,
+      "__to": 765,
+      "href": "HREF",
+      "order": "1"
     },
-    "39": {
-      "__from": 209,
-      "__to": 206
+    "610": {
+      "__from": 777,
+      "__to": 729,
+      "href": "HREF",
+      "order": "1"
     },
-    "42": {
-      "__from": 210,
-      "__to": 199
+    "611": {
+      "__from": 777,
+      "__to": 730,
+      "href": "HREF",
+      "order": "1"
     },
-    "43": {
-      "__from": 209,
-      "__to": 210
+    "612": {
+      "__from": 730,
+      "__to": 765,
+      "href": "HREF",
+      "order": "1"
+    },
+    "615": {
+      "__from": 778,
+      "__to": 734
+    },
+    "616": {
+      "__from": 778,
+      "__to": 733
+    },
+    "617": {
+      "__from": 735,
+      "__to": 765
+    },
+    "618": {
+      "__from": 736,
+      "__to": 765
+    },
+    "619": {
+      "__from": 737,
+      "__to": 765
+    },
+    "620": {
+      "__from": 738,
+      "__to": 765
+    },
+    "621": {
+      "__from": 777,
+      "__to": 735
+    },
+    "622": {
+      "__from": 777,
+      "__to": 736
+    },
+    "623": {
+      "__from": 777,
+      "__to": 737
+    },
+    "624": {
+      "__from": 777,
+      "__to": 738
+    },
+    "625": {
+      "__from": 778,
+      "__to": 740
+    },
+    "626": {
+      "__from": 778,
+      "__to": 739
+    },
+    "627": {
+      "__from": 779,
+      "__to": 737
+    },
+    "628": {
+      "__from": 779,
+      "__to": 738
+    },
+    "629": {
+      "__from": 779,
+      "__to": 742
+    },
+    "630": {
+      "__from": 779,
+      "__to": 741
+    },
+    "633": {
+      "__from": 780,
+      "__to": 743
+    },
+    "634": {
+      "__from": 780,
+      "__to": 744
+    },
+    "637": {
+      "__from": 770,
+      "__to": 784
+    },
+    "638": {
+      "__from": 771,
+      "__to": 785
+    },
+    "639": {
+      "__from": 743,
+      "__to": 771
+    },
+    "640": {
+      "__from": 744,
+      "__to": 770
+    },
+    "641": {
+      "__from": 745,
+      "__to": 767
+    },
+    "642": {
+      "__from": 781,
+      "__to": 745
+    },
+    "643": {
+      "__from": 782,
+      "__to": 747
+    },
+    "644": {
+      "__from": 782,
+      "__to": 746
+    },
+    "645": {
+      "__from": 772,
+      "__to": 786
+    },
+    "646": {
+      "__from": 746,
+      "__to": 772
+    },
+    "647": {
+      "__from": 773,
+      "__to": 787
+    },
+    "648": {
+      "__from": 747,
+      "__to": 773
+    },
+    "649": {
+      "__from": 778,
+      "__to": 749
+    },
+    "650": {
+      "__from": 778,
+      "__to": 748
+    },
+    "651": {
+      "__from": 778,
+      "__to": 751
+    },
+    "652": {
+      "__from": 778,
+      "__to": 750
+    },
+    "657": {
+      "__from": 778,
+      "__to": 753
+    },
+    "658": {
+      "__from": 778,
+      "__to": 752
+    },
+    "660": {
+      "__from": 767,
+      "__to": 721,
+      "href": "HREF",
+      "name": "salon",
+      "nature": "json",
+      "order": "1",
+      "type": "data"
+    },
+    "661": {
+      "__from": 774,
+      "__to": 788
+    },
+    "662": {
+      "__from": 737,
+      "__to": 774
+    },
+    "663": {
+      "__from": 735,
+      "__to": 774
+    },
+    "664": {
+      "__from": 729,
+      "__to": 774
+    },
+    "665": {
+      "__from": 754,
+      "__to": 774
+    },
+    "666": {
+      "__from": 756,
+      "__to": 774
+    },
+    "667": {
+      "__from": 777,
+      "__to": 756
+    },
+    "668": {
+      "__from": 777,
+      "__to": 757
+    },
+    "669": {
+      "__from": 756,
+      "__to": 765
+    },
+    "670": {
+      "__from": 757,
+      "__to": 765
+    },
+    "671": {
+      "__from": 778,
+      "__to": 758
+    },
+    "672": {
+      "__from": 778,
+      "__to": 759
+    },
+    "673": {
+      "__from": 754,
+      "__to": 765
+    },
+    "674": {
+      "__from": 755,
+      "__to": 765
+    },
+    "677": {
+      "__from": 778,
+      "__to": 760
+    },
+    "678": {
+      "__from": 778,
+      "__to": 761
+    },
+    "679": {
+      "__from": 777,
+      "__to": 754
+    },
+    "680": {
+      "__from": 777,
+      "__to": 755
+    },
+    "681": {
+      "__from": 777,
+      "__to": 728
+    },
+    "682": {
+      "__from": 758,
+      "__to": 775
+    },
+    "683": {
+      "__from": 760,
+      "__to": 775
+    },
+    "684": {
+      "__from": 775,
+      "__to": 790
+    },
+    "685": {
+      "__from": 776,
+      "__to": 791
+    },
+    "686": {
+      "__from": 759,
+      "__to": 776
+    },
+    "687": {
+      "__from": 743,
+      "__to": 763
+    },
+    "688": {
+      "__from": 744,
+      "__to": 763
+    },
+    "689": {
+      "__from": 748,
+      "__to": 763
+    },
+    "690": {
+      "__from": 741,
+      "__to": 763
+    },
+    "691": {
+      "__from": 742,
+      "__to": 763
+    },
+    "692": {
+      "__from": 750,
+      "__to": 763
+    },
+    "693": {
+      "__from": 751,
+      "__to": 763
+    },
+    "694": {
+      "__from": 760,
+      "__to": 763
+    },
+    "695": {
+      "__from": 761,
+      "__to": 763
+    },
+    "696": {
+      "__from": 749,
+      "__to": 763
     }
   },
-  "HREF_ELSE": {
-    "41": {
-      "__from": 206,
-      "__to": 208
-    }
-  },
-  "HREF_IF": {
-    "37": {
-      "__from": 206,
-      "__to": 205
-    }
-  },
-  "HREF_THEN": {
-    "40": {
-      "__from": 206,
-      "__to": 208
-    }
-  },
-  "DeviceBean": {
-    "196": {
-      "icon": "touch_app",
-      "id": "29",
-      "name": "Device Json Mapper",
-      "parameters": "{\"instance0\":{}}",
-      "tagColor": "red",
-      "template": "<ul>\n<li>{{iot.name}}</li>\n<li>{{data.user.username}}</li>\n<ul>\n<md-button ng-click=\"execute(iot)\">{{iot.name}}<md-tooltip>{{data}}</md-tooltip></md-button>",
-      "visible": true
-    }
-  },
+  "HREF_ELSE": {},
+  "HREF_IF": {},
+  "HREF_THEN": {},
   "PropertyBean": {},
   "ScenarioBean": {
-    "209": {
+    "762": {
       "icon": "list",
-      "id": "209",
-      "isSecured": false,
-      "name": "Jus a test"
+      "name": "scenario name"
     }
   },
   "ScriptPluginBean": {
-    "197": {
-      "active": false,
-      "icon": "lightbulb_outline",
-      "id": "39",
-      "name": "Json Command Mapper",
-      "type": "script",
-      "visible": false
-    },
-    "205": {
-      "active": false,
-      "icon": "lightbulb_outline",
-      "id": "205",
-      "isSecured": false,
-      "name": "Retrieve a single integer in noname.status",
-      "type": "script",
-      "visible": false
-    },
-    "208": {
+    "763": {
       "active": false,
       "icon": "list",
-      "id": "208",
+      "id": "763",
+      "isLogged": false,
       "isSecured": false,
-      "name": "log it",
+      "name": "Remote API simulation plugin",
+      "type": "script",
+      "visible": false
+    },
+    "764": {
+      "active": false,
+      "icon": "lightbulb_outline",
+      "id": "764",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "All lights simulation plugin",
+      "type": "script",
+      "visible": false
+    },
+    "765": {
+      "active": false,
+      "icon": "swap_horiz",
+      "id": "765",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "HUE fix light status plugin simulation",
+      "type": "script",
+      "visible": false
+    },
+    "767": {
+      "active": false,
+      "icon": "cloud_queue",
+      "id": "767",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "ZWave sensor simulation plugin",
       "type": "script",
       "visible": false
     }
   },
   "TriggerBean": {
-    "210": {
+    "770": {
       "icon": "settings_remote",
-      "id": "210",
+      "id": "32",
       "isSecured": false,
-      "name": "trigger de test"
+      "name": "Allumer la piscine"
+    },
+    "771": {
+      "icon": "settings_remote",
+      "id": "33",
+      "isSecured": false,
+      "name": "Eteindre la piscine"
+    },
+    "772": {
+      "icon": "settings_remote",
+      "id": "772",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "Lever les stores de l'étage"
+    },
+    "773": {
+      "icon": "settings_remote",
+      "id": "773",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "Baisser les stores de l'étage"
+    },
+    "774": {
+      "icon": "settings_remote",
+      "id": "774",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "Eteindre les lumières"
+    },
+    "775": {
+      "icon": "settings_remote",
+      "id": "775",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "Eteindre la hifi"
+    },
+    "776": {
+      "icon": "settings_remote",
+      "id": "133",
+      "isLogged": false,
+      "isSecured": false,
+      "name": "Allumer la TV orange"
     }
   },
   "ViewBean": {
-    "198": {
+    "777": {
+      "icon": "list",
+      "id": "4",
+      "ishome": true,
+      "name": "Philips HUE",
+      "url": "http://p1.pichost.me/i/51/1747963.jpg"
+    },
+    "778": {
+      "icon": "list",
+      "id": "778",
+      "isLogged": false,
+      "isSecured": false,
+      "ishome": true,
+      "name": "Volets rez de chaussée",
+      "url": "http://p1.pichost.me/i/51/1747963.jpg"
+    },
+    "779": {
+      "icon": "list",
+      "id": "26",
+      "ishome": true,
+      "name": "Nathalie",
+      "url": "http://p1.pichost.me/i/51/1747963.jpg"
+    },
+    "780": {
+      "icon": "list",
+      "id": "31",
+      "isSecured": false,
+      "ishome": true,
+      "name": "Piscine"
+    },
+    "781": {
+      "icon": "list",
+      "id": "106",
+      "isLogged": false,
+      "isSecured": false,
+      "ishome": true,
+      "name": "Sensor"
+    },
+    "782": {
       "icon": "list",
       "id": "42",
+      "isSecured": false,
       "ishome": true,
-      "name": "Json Sample",
-      "url": ""
+      "name": "Etage"
     }
   }
 }
