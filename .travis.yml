@@ -14,6 +14,7 @@ before_install:
 install:
   # Npm
   - cd $TRAVIS_BUILD_DIR/jarvis-core/jarvis-core-ui-ng
+  - npm install
   - ng build --prod
   # Java
   - cd $TRAVIS_BUILD_DIR/jarvis-core
