@@ -51,6 +51,10 @@
 		</dependency>
 		<dependency>
 			<groupId>org.yroffin.com.jarvis</groupId>
+			<artifactId>jarvis-core-ui-ng</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.yroffin.com.jarvis</groupId>
 			<artifactId>jarvis-core-statistics</artifactId>
 		</dependency>
 		<!-- external dependencies -->
