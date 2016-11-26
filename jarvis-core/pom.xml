@@ -511,6 +511,7 @@
 		<module>jarvis-test-tools</module>
 		<module>jarvis-core-statistics</module>
 		<module>jarvis-core-ui</module>
+		<module>jarvis-core-ui-ng</module>
 		<module>jarvis-rest-client</module>
 		<module>jarvis-rest-api-zway</module>
 		<module>jarvis-rest-api-slack</module>
