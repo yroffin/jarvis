@@ -16,9 +16,6 @@ before_install:
   - cd ${HOME} && ls -lrt ${HOME}/node-v6.9.1-linux-x64/bin
 install:
   # Npm
-  - ls -lrt $(npm config get prefix)
-  # Npm
-  - ls -lrt $(npm config get prefix)
   - node --version
   - npm --version
   - npm install -g angular-cli
@@ -26,12 +23,13 @@ install:
   - cd $TRAVIS_BUILD_DIR/jarvis-core/jarvis-core-ui-ng
   - ls -lrt node_modules
   - npm install
-  - ng build
-  - ng build --prod
+  - ng build --prod --output-path=src/main/resources/public
+  - ls -lrt $TRAVIS_BUILD_DIR/jarvis-core/jarvis-core-ui-ng/src/main/resources/public
+  - exit 0
   # Java
   - cd $TRAVIS_BUILD_DIR/jarvis-core
-  #- java -version
-  #- mvn -q install
+  - java -version
+  - mvn -q install
 cache:
   directories:
     - $(npm config get prefix)
