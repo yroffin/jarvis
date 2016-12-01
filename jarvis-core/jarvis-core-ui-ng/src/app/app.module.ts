@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
 
@@ -34,6 +35,23 @@ import { JarvisDataStoreService } from './service/jarvis-data-store.service';
 import { JarvisHomeComponent } from './component/jarvis-home/jarvis-home.component';
 import { JarvisTilesViewComponent } from './component/jarvis-tiles-view/jarvis-tiles-view.component';
 import { JarvisToolbarComponent } from './component/jarvis-toolbar/jarvis-toolbar.component';
+import { JarvisResourceDeviceComponent } from './component/jarvis-resource-device/jarvis-resource-device.component';
+import { JarvisResourcesComponent } from './component/jarvis-resources/jarvis-resources.component';
+import { JarvisResourceDeviceGeneralComponent } from './component/jarvis-resource-device/jarvis-resource-device-general/jarvis-resource-device-general.component';
+import { JarvisResourceDevicePluginComponent } from './component/jarvis-resource-device/jarvis-resource-device-plugin/jarvis-resource-device-plugin.component';
+import { JarvisResourceDeviceRenderComponent } from './component/jarvis-resource-device/jarvis-resource-device-render/jarvis-resource-device-render.component';
+import { JarvisLayoutDirective } from './directive/jarvis-layout.directive';
+
+import { HighlightJsModule, HighlightJsService } from '../../node_modules/angular2-highlight-js';
+import { JarvisTileComponent } from './component/jarvis-tile/jarvis-tile.component';
+import { JarvisToolbarMenuComponent } from './component/jarvis-toolbar-menu/jarvis-toolbar-menu.component'
+
+const appRoutes: Routes = [
+  { path: 'devices', component: JarvisResourcesComponent, data: { resource: 'devices' } },
+  { path: 'devices/:id', component: JarvisResourceDeviceComponent },
+  { path: '', component: JarvisHomeComponent },
+  { path: '**', component: JarvisHomeComponent }
+];
 
 @NgModule({
   declarations: [
@@ -41,10 +59,19 @@ import { JarvisToolbarComponent } from './component/jarvis-toolbar/jarvis-toolba
     JarvisDialogComponent,
     JarvisHomeComponent,
     JarvisTilesViewComponent,
-    JarvisToolbarComponent
+    JarvisToolbarComponent,
+    JarvisResourceDeviceComponent,
+    JarvisResourcesComponent,
+    JarvisResourceDeviceGeneralComponent,
+    JarvisResourceDevicePluginComponent,
+    JarvisResourceDeviceRenderComponent,
+    JarvisLayoutDirective,
+    JarvisTileComponent,
+    JarvisToolbarMenuComponent
   ],
   imports: [
     BrowserModule,
+    HighlightJsModule,
     FormsModule,
     HttpModule,
     MdCoreModule,
@@ -65,9 +92,14 @@ import { JarvisToolbarComponent } from './component/jarvis-toolbar/jarvis-toolba
     MdProgressCircleModule,
     MdProgressBarModule,
     MdTooltipModule,
-    MdMenuModule
+    MdMenuModule,
+    /**
+     * routes
+     */
+    RouterModule.forRoot(appRoutes)
   ],
   providers: [
+    HighlightJsService,
     MdIconRegistry,
     JarvisConfigurationService,
     JarvisDataDeviceService,

@@ -1,0 +1,14 @@
+.app-action-left {
+    display: inline-block;
+    position: fixed;
+    top: 80px;
+    left: 16px;
+}
+
+.app-action-right {
+    display: inline-block;
+    position: fixed;
+    top: 80px;
+    right: 16px;
+}
+

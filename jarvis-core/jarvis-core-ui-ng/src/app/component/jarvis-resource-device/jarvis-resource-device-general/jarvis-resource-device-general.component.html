@@ -1,0 +1,24 @@
+<h1 style="text-align: center">Général</h1>
+<div *ngIf="myDevice" layout="column">
+  <md-input placeholder="Nom" [(ngModel)]="myDevice.name"></md-input>
+  <md-input placeholder="Paramètres" [(ngModel)]="myDevice.parameters"></md-input>
+  <div *ngFor="let trigger of myDevice.triggers; let index=index">
+    <div layout="row">
+      <md-input placeholder="Nom du trigger" [(ngModel)]="trigger.name"></md-input>
+      <button (click)="dropTriggerLink(trigger)"><md-icon>delete</md-icon></button>
+    </div>
+  </div>
+  <div *ngFor="let device of myDevice.devices; let index=index">
+    <div layout="row">
+      <md-input placeholder="Nom du device (container)" [(ngModel)]="device.name"></md-input>
+      <button (click)="dropDeviceLink(device)"><md-icon>delete</md-icon></button>
+    </div>
+  </div>
+  <md-checkbox [(ngModel)]="myDevice.visible">Visible</md-checkbox>
+  <md-input placeholder="Icône" [(ngModel)]="myDevice.icon"></md-input>
+  <md-input placeholder="Couleur de la cellule" [(ngModel)]="myDevice.tagColor"></md-input>
+  <md-input placeholder="Opacité de la cellule" [(ngModel)]="myDevice.tagOpacity"></md-input>
+  <md-input placeholder="Couleur du texte de la cellule" [(ngModel)]="myDevice.tagTextColor"></md-input>
+  <md-input placeholder="Nombre de ligne de la cellule" [(ngModel)]="myDevice.rowSpan"></md-input>
+  <md-input placeholder="Nombre de colonne de la cellule" [(ngModel)]="myDevice.colSpan"></md-input>
+</div>

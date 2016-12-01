@@ -1,0 +1,7 @@
+<div [ngSwitch]="getState()">
+    <app-jarvis-resource-device-general [myDevice]="myDevice" *ngSwitchCase="0"></app-jarvis-resource-device-general>
+    <app-jarvis-resource-device-plugin  [myDevice]="myDevice" *ngSwitchCase="1"></app-jarvis-resource-device-plugin>
+    <app-jarvis-resource-device-render  [myDevice]="myDevice" *ngSwitchCase="2"></app-jarvis-resource-device-render>
+</div>
+<button md-fab class="app-action-left" (click)="close()"><md-icon>highlight_off</md-icon></button>
+<button md-fab class="app-action-right" (click)="next()"><md-icon>exit_to_app</md-icon></button>

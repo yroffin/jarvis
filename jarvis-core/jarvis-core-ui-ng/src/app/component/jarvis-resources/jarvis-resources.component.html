@@ -1,0 +1,13 @@
+<md-card>
+  <md-card-title>{{myResourceName}}</md-card-title>
+  <md-card-content flex>
+    <md-grid-list cols="{{fixedCols}}" rowHeight="{{fitListHeight}}">
+      <md-grid-tile *ngFor="let myResource of myResources; let index=index" (click)="view(myResource)">
+        <md-grid-tile-header>
+          <md-icon md-grid-avatar>{{myResource.icon}}</md-icon>
+          <h3>{{myResource.name}}</h3>
+        </md-grid-tile-header>
+      </md-grid-tile>
+    </md-grid-list>
+  </md-card-content>
+</md-card>

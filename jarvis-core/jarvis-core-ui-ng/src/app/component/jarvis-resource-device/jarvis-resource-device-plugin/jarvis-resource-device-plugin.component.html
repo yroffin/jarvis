@@ -1,0 +1,12 @@
+<h1 style="text-align: center">Plugin</h1>
+<div *ngIf="myDevice" layout="column">
+  <div *ngFor="let plugin of myDevice.plugins; let index=index">
+    <div layout="row">
+      <button md-raised-button (click)="updatePluginLink(plugin)"><md-icon>save</md-icon></button>
+      <button md-raised-button (click)="dropPluginLink(plugin)"><md-icon>delete</md-icon></button>
+      <md-input placeholder="Identifiant du plugin" [(ngModel)]="plugin.id" disabled></md-input>
+      <md-input placeholder="Ordre de tri du plugin" [(ngModel)]="plugin.extended.order"></md-input>
+      <md-input placeholder="Nom du plugin" [(ngModel)]="plugin.name" disabled></md-input>
+    </div>
+  </div>
+</div>

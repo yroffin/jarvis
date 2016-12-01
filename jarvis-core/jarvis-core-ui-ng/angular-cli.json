@@ -32,6 +32,7 @@
   "addons": [
   ],
   "packages": [
+    "node_modules/angular2-highlight-js/lib"
   ],
   "e2e": {
     "protractor": {
