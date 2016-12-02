@@ -1,6 +1,5 @@
 import { Component, Input, ViewChild, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { MdInput } from '@angular2-material/input';
 
 import { JarvisConfigurationService } from '../../service/jarvis-configuration.service';
 import { JarvisDataDeviceService } from '../../service/jarvis-data-device.service';
@@ -9,6 +8,7 @@ import { JarvisDataDeviceService } from '../../service/jarvis-data-device.servic
  * class
  */
 import { JarvisResource } from '../../class/jarvis-resource';
+import { CompleteCallback } from '../../class/jarvis-resource';
 
 /**
  * data model
@@ -22,85 +22,47 @@ import { ScriptBean } from '../../model/script-bean';
   templateUrl: './jarvis-resource-device.component.html',
   styleUrls: ['./jarvis-resource-device.component.css']
 })
-export class JarvisResourceDeviceComponent extends JarvisResource implements OnInit {
-
-  myDevice: DeviceBean;
+export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> implements OnInit {
 
   /**
    * constructor
    */
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
+    private _route: ActivatedRoute,
+    private _router: Router,
     private _jarvisConfigurationService: JarvisConfigurationService,
-    private _jarvisDataDeviceService: JarvisDataDeviceService) {
-      super(2);
-    }
+    private _resourceService: JarvisDataDeviceService) {
+    super(2, '/devices', ['render'], _resourceService, _route, _router);
+  }
+
+  /**
+   * complete resource
+   */
+  public complete(that: JarvisDataDeviceService, resource: DeviceBean): void {
+    that.GetAllLinkedTrigger(resource.id)
+      .subscribe(
+      (data: TriggerBean[]) => resource.triggers = data,
+      error => console.log(error),
+      () => {
+      });
+    that.GetAllLinkedDevice(resource.id)
+      .subscribe(
+      (data: DeviceBean[]) => resource.devices = data,
+      error => console.log(error),
+      () => {
+      });
+    that.GetAllLinkedPluginScript(resource.id)
+      .subscribe(
+      (data: ScriptBean[]) => resource.plugins = data,
+      error => console.log(error),
+      () => {
+      });
+  }
 
   /**
    * load device and related data
    */
   ngOnInit() {
-    this.route.params
-      .map(params => params['id'])
-      .subscribe((id) => {
-        this._jarvisDataDeviceService.GetSingle(id)
-          .subscribe(
-            (data: DeviceBean) => this.myDevice = data,
-            error => console.log(error),
-            () => {
-              this._jarvisDataDeviceService.GetAllLinkedTrigger(id)
-                .subscribe(
-                  (data: TriggerBean[]) => this.myDevice.triggers = data,
-                  error => console.log(error),
-                  () => {
-                  });
-              this._jarvisDataDeviceService.GetAllLinkedDevice(id)
-                .subscribe(
-                  (data: DeviceBean[]) => this.myDevice.devices = data,
-                  error => console.log(error),
-                  () => {
-                  });
-              this._jarvisDataDeviceService.GetAllLinkedPluginScript(id)
-                .subscribe(
-                  (data: ScriptBean[]) => this.myDevice.plugins = data,
-                  error => console.log(error),
-                  () => {
-                  });
-            }
-          );
-      });
-  }
-
-  public close(): void {
-    this.router.navigate(['/devices']);
-  }
-
-  public save(): void {
-    this._jarvisDataDeviceService.Update(this.myDevice.id, this.myDevice)
-      .subscribe(
-        (data: DeviceBean) => data,
-        error => console.log(error),
-        () => {
-        });
-  }
-
-  public remove(): void {
-    this._jarvisDataDeviceService.Delete(this.myDevice.id)
-      .subscribe(
-        (data: DeviceBean) => data,
-        error => console.log(error),
-        () => {
-          this.close();
-        });
-  }
-
-  public duplicate(): void {
-    this._jarvisDataDeviceService.Add(this.myDevice)
-      .subscribe(
-        (data: DeviceBean) => data,
-        error => console.log(error),
-        () => {
-        });
+    this.init(this.complete);
   }
 }

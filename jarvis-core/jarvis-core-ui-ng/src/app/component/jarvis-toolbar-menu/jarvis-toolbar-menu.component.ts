@@ -2,6 +2,11 @@ import { Component, Input, OnInit } from '@angular/core';
 
 import { JarvisToolbarAction } from '../../interface/jarvis-toolbar-action';
 
+/**
+ * data model
+ */
+import { TaskBean } from '../../model/task-bean';
+
 @Component({
   selector: 'app-jarvis-toolbar-menu',
   templateUrl: './jarvis-toolbar-menu.component.html',
@@ -10,6 +15,7 @@ import { JarvisToolbarAction } from '../../interface/jarvis-toolbar-action';
 export class JarvisToolbarMenuComponent implements OnInit {
 
   @Input() actions: JarvisToolbarAction;
+  @Input() tasks: TaskBean[];
 
   constructor() { }
 
@@ -34,5 +40,9 @@ export class JarvisToolbarMenuComponent implements OnInit {
 
   public next(): void {
     this.actions.next();
+  }
+
+  public task(tsk: TaskBean): void {
+    this.actions.task(tsk.action);
   }
 }

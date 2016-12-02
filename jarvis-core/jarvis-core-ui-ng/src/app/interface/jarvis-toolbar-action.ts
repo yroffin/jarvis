@@ -4,4 +4,5 @@ export interface JarvisToolbarAction {
     remove(): void;
     duplicate(): void;
     next(): void;
+    task(task: string): void;
 }

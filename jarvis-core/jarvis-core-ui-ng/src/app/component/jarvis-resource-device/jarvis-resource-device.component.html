@@ -1,6 +1,6 @@
-<app-jarvis-toolbar-menu [actions]="this"></app-jarvis-toolbar-menu>
+<app-jarvis-toolbar-menu [actions]="this" [tasks]="[{'action':'render','icon':'play_arrow'}]"></app-jarvis-toolbar-menu>
 <div [ngSwitch]="getState()">
-    <app-jarvis-resource-device-general [myDevice]="myDevice" *ngSwitchCase="0"></app-jarvis-resource-device-general>
-    <app-jarvis-resource-device-plugin  [myDevice]="myDevice" *ngSwitchCase="1"></app-jarvis-resource-device-plugin>
-    <app-jarvis-resource-device-render  [myDevice]="myDevice" *ngSwitchCase="2"></app-jarvis-resource-device-render>
+    <app-jarvis-resource-device-general [myDevice]="getResource()" *ngSwitchCase="0"></app-jarvis-resource-device-general>
+    <app-jarvis-resource-device-plugin  [myDevice]="getResource()" *ngSwitchCase="1"></app-jarvis-resource-device-plugin>
+    <app-jarvis-resource-device-render  [myDevice]="getResource()" *ngSwitchCase="2"></app-jarvis-resource-device-render>
 </div>

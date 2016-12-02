@@ -3,6 +3,7 @@ import { Http, Response, Headers } from '@angular/http';
 import 'rxjs/add/operator/map'
 import { Observable } from 'rxjs/Observable';
 import { JarvisConfigurationService } from './jarvis-configuration.service';
+import { JarvisDefaultResource } from '../interface/jarvis-default-resource';
 
 /**
  * data model
@@ -12,7 +13,7 @@ import { TriggerBean } from './../model/trigger-bean';
 import { ScriptBean } from './../model/script-bean';
 
 @Injectable()
-export class JarvisDataDeviceService {
+export class JarvisDataDeviceService implements JarvisDefaultResource<DeviceBean> {
 
     private actionUrl: string;
     private headers: Headers;
