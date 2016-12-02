@@ -6,6 +6,11 @@ import { JarvisConfigurationService } from '../../service/jarvis-configuration.s
 import { JarvisDataDeviceService } from '../../service/jarvis-data-device.service';
 
 /**
+ * class
+ */
+import { JarvisResource } from '../../class/jarvis-resource';
+
+/**
  * data model
  */
 import { DeviceBean } from '../../model/device-bean';
@@ -17,19 +22,24 @@ import { ScriptBean } from '../../model/script-bean';
   templateUrl: './jarvis-resource-device.component.html',
   styleUrls: ['./jarvis-resource-device.component.css']
 })
-export class JarvisResourceDeviceComponent implements OnInit {
+export class JarvisResourceDeviceComponent extends JarvisResource implements OnInit {
 
   myDevice: DeviceBean;
 
-  private state: number = 0;
-
+  /**
+   * constructor
+   */
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private _jarvisConfigurationService: JarvisConfigurationService,
     private _jarvisDataDeviceService: JarvisDataDeviceService) {
+      super(2);
     }
 
+  /**
+   * load device and related data
+   */
   ngOnInit() {
     this.route.params
       .map(params => params['id'])
@@ -57,21 +67,40 @@ export class JarvisResourceDeviceComponent implements OnInit {
                   error => console.log(error),
                   () => {
                   });
-              console.error(this.myDevice);
             }
           );
       });
   }
 
-  private getState(): number {
-    return this.state;
+  public close(): void {
+    this.router.navigate(['/devices']);
   }
 
-  private next(): number {
-    this.state++;
-    if(this.state > 2) {
-      this.state = 0;
-    }
-    return this.state;
+  public save(): void {
+    this._jarvisDataDeviceService.Update(this.myDevice.id, this.myDevice)
+      .subscribe(
+        (data: DeviceBean) => data,
+        error => console.log(error),
+        () => {
+        });
+  }
+
+  public remove(): void {
+    this._jarvisDataDeviceService.Delete(this.myDevice.id)
+      .subscribe(
+        (data: DeviceBean) => data,
+        error => console.log(error),
+        () => {
+          this.close();
+        });
+  }
+
+  public duplicate(): void {
+    this._jarvisDataDeviceService.Add(this.myDevice)
+      .subscribe(
+        (data: DeviceBean) => data,
+        error => console.log(error),
+        () => {
+        });
   }
 }

@@ -46,22 +46,21 @@ export class JarvisDataDeviceService {
             .catch(this.handleError);
     }
 
-    public Add = (itemName: string): Observable<DeviceBean> => {
-        let toAdd = JSON.stringify({ ItemName: itemName });
-
-        return this._http.post(this.actionUrl, toAdd, { headers: this.headers })
+    public Add = (itemToAdd: DeviceBean): Observable<DeviceBean> => {
+        return this._http.post(this.actionUrl, JSON.stringify(itemToAdd), { headers: this.headers })
             .map((response: Response) => <DeviceBean>response.json())
             .catch(this.handleError);
     }
 
     public Update = (id: string, itemToUpdate: DeviceBean): Observable<DeviceBean> => {
-        return this._http.put(this.actionUrl + id, JSON.stringify(itemToUpdate), { headers: this.headers })
+        return this._http.put(this.actionUrl + '/' + id, JSON.stringify(itemToUpdate), { headers: this.headers })
             .map((response: Response) => <DeviceBean>response.json())
             .catch(this.handleError);
     }
 
-    public Delete = (id: string): Observable<Response> => {
-        return this._http.delete(this.actionUrl + id)
+    public Delete = (id: string): Observable<DeviceBean> => {
+        return this._http.delete(this.actionUrl + '/' + id, { headers: this.headers })
+            .map((response: Response) => <DeviceBean>response.json())
             .catch(this.handleError);
     }
 
