@@ -1,5 +1,6 @@
 import { Component, Input, ViewChild, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { MdDialogRef, MdDialog } from '@angular/material/dialog';
 
 import { JarvisConfigurationService } from '../../service/jarvis-configuration.service';
 import { JarvisDataDeviceService } from '../../service/jarvis-data-device.service';
@@ -16,6 +17,7 @@ import { CompleteCallback } from '../../class/jarvis-resource';
 import { DeviceBean } from '../../model/device-bean';
 import { TriggerBean } from '../../model/trigger-bean';
 import { ScriptBean } from '../../model/script-bean';
+import { PickerBean } from '../../model/picker-bean';
 
 @Component({
   selector: 'app-jarvis-resource-device',
@@ -24,6 +26,8 @@ import { ScriptBean } from '../../model/script-bean';
 })
 export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> implements OnInit {
 
+  dialogRef: MdDialogRef<PizzaDialog>;
+
   /**
    * constructor
    */
@@ -31,7 +35,8 @@ export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> im
     private _route: ActivatedRoute,
     private _router: Router,
     private _jarvisConfigurationService: JarvisConfigurationService,
-    private _resourceService: JarvisDataDeviceService) {
+    private _resourceService: JarvisDataDeviceService,
+    private dialog: MdDialog) {
     super(2, '/devices', ['render'], _resourceService, _route, _router);
   }
 
@@ -59,10 +64,40 @@ export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> im
       });
   }
 
+  openDialog() {
+    this.dialogRef = this.dialog.open(PizzaDialog, {
+      disableClose: false
+    });
+
+    this.dialogRef.afterClosed().subscribe(result => {
+      console.log('result: ' + result);
+      this.dialogRef = null;
+    });
+  }
+
+  /**
+   * task action
+   */
+  public pick(picker: PickerBean): void {
+    console.warn('picker', picker);
+    this.openDialog();
+  }
+
   /**
    * load device and related data
    */
   ngOnInit() {
     this.init(this.complete);
   }
+}
+
+@Component({
+  selector: 'pizza-dialog',
+  template: `
+  <button type="button" (click)="dialogRef.close('yes')">Yes</button>
+  <button type="button" (click)="dialogRef.close('no')">No</button>
+  `
+})
+export class PizzaDialog {
+  constructor(public dialogRef: MdDialogRef<PizzaDialog>) { }
 }

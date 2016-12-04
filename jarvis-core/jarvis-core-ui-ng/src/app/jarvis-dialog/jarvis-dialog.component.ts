@@ -1,8 +1,8 @@
 import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
-import {MdCard} from '@angular2-material/card';
-import {MdInput} from '@angular2-material/input';
-import {MdToolbar} from '@angular2-material/toolbar';
-import {MdButton} from '@angular2-material/button';
+import {MdCard} from '@angular/material/card';
+import {MdInput} from '@angular/material/input';
+import {MdToolbar} from '@angular/material/toolbar';
+import {MdButton} from '@angular/material/button';
 
 @Component({
   selector: 'app-jarvis-dialog',

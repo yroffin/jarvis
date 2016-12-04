@@ -6,4 +6,5 @@
   <button md-fab (click)="duplicate()"><md-icon>control_point_duplicate</md-icon></button>
   <button md-fab (click)="next()"><md-icon>fast_forward</md-icon></button>
   <button *ngFor="let taskElement of tasks; let index=index" md-fab (click)="task(taskElement)"><md-icon>{{taskElement.icon}}</md-icon></button>
+  <button *ngFor="let pickerElement of pickers; let index=index" md-fab (click)="pick(pickerElement)"><md-icon>{{pickerElement.icon}}</md-icon></button>
 </md-toolbar>

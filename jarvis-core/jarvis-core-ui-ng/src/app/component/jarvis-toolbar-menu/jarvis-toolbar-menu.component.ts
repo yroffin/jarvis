@@ -6,6 +6,7 @@ import { JarvisToolbarAction } from '../../interface/jarvis-toolbar-action';
  * data model
  */
 import { TaskBean } from '../../model/task-bean';
+import { PickerBean } from '../../model/picker-bean';
 
 @Component({
   selector: 'app-jarvis-toolbar-menu',
@@ -16,6 +17,7 @@ export class JarvisToolbarMenuComponent implements OnInit {
 
   @Input() actions: JarvisToolbarAction;
   @Input() tasks: TaskBean[];
+  @Input() pickers: PickerBean[];
 
   constructor() { }
 
@@ -44,5 +46,9 @@ export class JarvisToolbarMenuComponent implements OnInit {
 
   public task(tsk: TaskBean): void {
     this.actions.task(tsk.action);
+  }
+
+  public pick(pck: PickerBean): void {
+    this.actions.pick(pck);
   }
 }

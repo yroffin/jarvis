@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, ChangeDetectorRef, ApplicationRef } from '@angular/core';
+
 import { JarvisDataDeviceService } from './service/jarvis-data-device.service';
 import { JarvisDataViewService } from './service/jarvis-data-view.service';
 import { JarvisDataStoreService } from './service/jarvis-data-store.service';

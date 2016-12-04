@@ -1,4 +1,4 @@
-<app-jarvis-toolbar-menu [actions]="this" [tasks]="[{'action':'render','icon':'play_arrow'}]"></app-jarvis-toolbar-menu>
+<app-jarvis-toolbar-menu [actions]="this" [tasks]="[{'action':'render','icon':'play_arrow'}]" [pickers]="[{'icon':'local_offer'},{'icon':'settings_remote'},{'icon':'library_add'}]"></app-jarvis-toolbar-menu>
 <div [ngSwitch]="getState()">
     <app-jarvis-resource-device-general [myDevice]="getResource()" *ngSwitchCase="0"></app-jarvis-resource-device-general>
     <app-jarvis-resource-device-plugin  [myDevice]="getResource()" *ngSwitchCase="1"></app-jarvis-resource-device-plugin>

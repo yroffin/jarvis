@@ -1,3 +1,5 @@
+import { PickerBean } from '../model/picker-bean';
+
 export interface JarvisToolbarAction {
     close(): void;
     save(): void;
@@ -5,4 +7,5 @@ export interface JarvisToolbarAction {
     duplicate(): void;
     next(): void;
     task(task: string): void;
+    pick(picker: PickerBean): void;
 }

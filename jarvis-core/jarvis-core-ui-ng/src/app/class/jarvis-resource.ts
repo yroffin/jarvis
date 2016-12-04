@@ -6,6 +6,7 @@ import { JarvisDefaultResource } from '../interface/jarvis-default-resource';
  * data model
  */
 import { ResourceBean } from '../model/resource-bean';
+import { PickerBean } from '../model/picker-bean';
 
 export interface CompleteCallback<T extends ResourceBean> {
     (that: JarvisDefaultResource<T>, resource: T): void 
@@ -80,10 +81,16 @@ export class JarvisResource<T extends ResourceBean> {
         });
     }
 
+    /**
+     * go back
+     */
     public close(): void {
         this.router.navigate([this.uri]);
     }
 
+    /**
+     * save it
+     */
     public save(): void {
         this.myJarvisResource.Update(this.myResource.id, this.myResource)
             .subscribe(
@@ -93,6 +100,9 @@ export class JarvisResource<T extends ResourceBean> {
             });
     }
 
+    /**
+     * remove resource
+     */
     public remove(): void {
         this.myJarvisResource.Delete(this.myResource.id)
             .subscribe(
@@ -103,6 +113,9 @@ export class JarvisResource<T extends ResourceBean> {
             });
     }
 
+    /**
+     * duplicate resource
+     */
     public duplicate(): void {
         this.myJarvisResource.Add(this.myResource)
             .subscribe(
@@ -112,6 +125,9 @@ export class JarvisResource<T extends ResourceBean> {
             });
     }
 
+    /**
+     * task action
+     */
     public task(action: string): void {
         this.myJarvisResource.Task(this.myResource.id, action)
             .subscribe(
