@@ -1,3 +1,9 @@
-<p>
-  jarvis-picker works!
-</p>
+<Tree
+    #tree
+    [nodes]="nodes"
+    [focused]="true"
+    [options]="customTemplateStringOptions"
+    (onEvent)="onEvent($event)"
+></Tree>
+<button type="button" (click)="validate()">Yes</button>
+<button type="button" (click)="cancel()">No</button>

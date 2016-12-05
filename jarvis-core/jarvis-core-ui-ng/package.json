@@ -17,6 +17,7 @@
     "hammerjs": "^2.0.8",
     "@types/hammerjs": "^2.0.8",
     "angular2-highlight-js": "^4.0.0",
+    "angular2-tree-component": "^2.5.0",
     "@angular/common": "^2.1.0",
     "@angular/compiler": "^2.1.0",
     "@angular/core": "^2.1.0",

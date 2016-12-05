@@ -7,12 +7,15 @@ import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
+import { TreeModule } from 'angular2-tree-component';
 
 import { MaterialModule } from '@angular/material';
 
 import { JarvisDialogComponent } from './jarvis-dialog/jarvis-dialog.component';
 import { JarvisConfigurationService } from './service/jarvis-configuration.service';
 import { JarvisDataDeviceService } from './service/jarvis-data-device.service';
+import { JarvisDataTriggerService } from './service/jarvis-data-trigger.service';
+import { JarvisDataPluginService } from './service/jarvis-data-plugin.service';
 import { JarvisDataStoreService } from './service/jarvis-data-store.service';
 import { JarvisHomeComponent } from './component/jarvis-home/jarvis-home.component';
 import { JarvisTilesViewComponent } from './component/jarvis-tiles-view/jarvis-tiles-view.component';
@@ -51,17 +54,17 @@ const appRoutes: Routes = [
     JarvisLayoutDirective,
     JarvisTileComponent,
     JarvisToolbarMenuComponent,
-    JarvisPickerComponent,
-    PizzaDialog
+    JarvisPickerComponent
   ],
   entryComponents: [
-    PizzaDialog
+    JarvisPickerComponent
   ],
   imports: [
     BrowserModule,
     HighlightJsModule,
     FormsModule,
     HttpModule,
+    TreeModule,
     /**
      * load all materials
      */
@@ -75,6 +78,8 @@ const appRoutes: Routes = [
     HighlightJsService,
     JarvisConfigurationService,
     JarvisDataDeviceService,
+    JarvisDataTriggerService,
+    JarvisDataPluginService,
     JarvisDataStoreService
   ],
   bootstrap: [AppComponent]

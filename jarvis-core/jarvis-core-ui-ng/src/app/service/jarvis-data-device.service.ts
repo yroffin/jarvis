@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
-import 'rxjs/add/operator/map'
+import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { JarvisConfigurationService } from './jarvis-configuration.service';
-import { JarvisDefaultResource } from '../interface/jarvis-default-resource';
+import { JarvisDefaultResource, JarvisDefaultLinkResource } from '../interface/jarvis-default-resource';
+import { JarvisDataCoreResource } from './jarvis-data-core-resource';
+import { JarvisDataLinkedResource } from './jarvis-data-linked-resource';
 
 /**
  * data model
@@ -13,78 +15,20 @@ import { TriggerBean } from './../model/trigger-bean';
 import { ScriptBean } from './../model/script-bean';
 
 @Injectable()
-export class JarvisDataDeviceService implements JarvisDefaultResource<DeviceBean> {
+export class JarvisDataDeviceService extends JarvisDataCoreResource<DeviceBean> implements JarvisDefaultResource<DeviceBean> {
 
-    private actionUrl: string;
-    private headers: Headers;
+    public allLinkedDevice: JarvisDefaultLinkResource<DeviceBean>;
+    public allLinkedTrigger: JarvisDefaultLinkResource<DeviceBean>;
+    public allLinkedPluginScript: JarvisDefaultLinkResource<DeviceBean>;
 
     constructor(private _http: Http, private _configuration: JarvisConfigurationService) {
-        this.actionUrl = _configuration.ServerWithApiUrl + 'devices';
+        super(_configuration.ServerWithApiUrl + 'devices', _http);
 
-        this.headers = new Headers();
-        this.headers.append('Content-Type', 'application/json');
-        this.headers.append('Accept', 'application/json');
-    }
-
-    /**
-     * execute remote task on this device
-     */
-    public Task = (id: string, task: string): Observable<any> => {
-        return this._http.post(this.actionUrl + '/' + id + '?task=' + task, {})
-            .map((response: Response) => <any>response.json())
-            .catch(this.handleError);
-    }
-
-    public GetAll = (): Observable<DeviceBean[]> => {
-        return this._http.get(this.actionUrl)
-            .map((response: Response) => <DeviceBean[]>response.json())
-            .catch(this.handleError);
-    }
-
-    public GetSingle = (id: string): Observable<DeviceBean> => {
-        return this._http.get(this.actionUrl + '/' + id)
-            .map((response: Response) => <DeviceBean>response.json())
-            .catch(this.handleError);
-    }
-
-    public Add = (itemToAdd: DeviceBean): Observable<DeviceBean> => {
-        return this._http.post(this.actionUrl, JSON.stringify(itemToAdd), { headers: this.headers })
-            .map((response: Response) => <DeviceBean>response.json())
-            .catch(this.handleError);
-    }
-
-    public Update = (id: string, itemToUpdate: DeviceBean): Observable<DeviceBean> => {
-        return this._http.put(this.actionUrl + '/' + id, JSON.stringify(itemToUpdate), { headers: this.headers })
-            .map((response: Response) => <DeviceBean>response.json())
-            .catch(this.handleError);
-    }
-
-    public Delete = (id: string): Observable<DeviceBean> => {
-        return this._http.delete(this.actionUrl + '/' + id, { headers: this.headers })
-            .map((response: Response) => <DeviceBean>response.json())
-            .catch(this.handleError);
-    }
-
-    public GetAllLinkedTrigger = (id: string): Observable<TriggerBean[]> => {
-        return this._http.get(this.actionUrl + '/' + id + '/triggers')
-            .map((response: Response) => <TriggerBean[]>response.json())
-            .catch(this.handleError);
-    }
-
-    public GetAllLinkedDevice = (id: string): Observable<DeviceBean[]> => {
-        return this._http.get(this.actionUrl + '/' + id + '/devices')
-            .map((response: Response) => <DeviceBean[]>response.json())
-            .catch(this.handleError);
-    }
-
-    public GetAllLinkedPluginScript = (id: string): Observable<ScriptBean[]> => {
-        return this._http.get(this.actionUrl + '/' + id + '/plugins/scripts')
-            .map((response: Response) => <ScriptBean[]>response.json())
-            .catch(this.handleError);
-    }
-
-    private handleError(error: Response) {
-        console.error(error);
-        return Observable.throw(error.json().error || 'Server error');
+        /**
+         * map linked elements
+         */
+        this.allLinkedDevice = new JarvisDataLinkedResource<DeviceBean>(this.actionUrl, '/devices', _http);
+        this.allLinkedTrigger = new JarvisDataLinkedResource<DeviceBean>(this.actionUrl, '/triggers', _http);
+        this.allLinkedPluginScript = new JarvisDataLinkedResource<DeviceBean>(this.actionUrl, '/plugins/scripts', _http);
     }
 }

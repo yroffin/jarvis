@@ -2,8 +2,11 @@ import { Component, Input, ViewChild, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { MdDialogRef, MdDialog } from '@angular/material/dialog';
 
+import { JarvisPickerComponent } from '../../dialog/jarvis-picker/jarvis-picker.component';
 import { JarvisConfigurationService } from '../../service/jarvis-configuration.service';
 import { JarvisDataDeviceService } from '../../service/jarvis-data-device.service';
+import { JarvisDataTriggerService } from '../../service/jarvis-data-trigger.service';
+import { JarvisDataPluginService } from '../../service/jarvis-data-plugin.service';
 
 /**
  * class
@@ -26,7 +29,7 @@ import { PickerBean } from '../../model/picker-bean';
 })
 export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> implements OnInit {
 
-  dialogRef: MdDialogRef<PizzaDialog>;
+  dialogRef: MdDialogRef<JarvisPickerComponent>;
 
   /**
    * constructor
@@ -35,28 +38,30 @@ export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> im
     private _route: ActivatedRoute,
     private _router: Router,
     private _jarvisConfigurationService: JarvisConfigurationService,
-    private _resourceService: JarvisDataDeviceService,
+    private _deviceService: JarvisDataDeviceService,
+    private _triggerService: JarvisDataTriggerService,
+    private _pluginService: JarvisDataDeviceService,
     private dialog: MdDialog) {
-    super(2, '/devices', ['render'], _resourceService, _route, _router);
+    super(2, '/devices', ['render'], _deviceService, _route, _router);
   }
 
   /**
    * complete resource
    */
   public complete(that: JarvisDataDeviceService, resource: DeviceBean): void {
-    that.GetAllLinkedTrigger(resource.id)
+    that.allLinkedTrigger.GetAll(resource.id)
       .subscribe(
       (data: TriggerBean[]) => resource.triggers = data,
       error => console.log(error),
       () => {
       });
-    that.GetAllLinkedDevice(resource.id)
+    that.allLinkedDevice.GetAll(resource.id)
       .subscribe(
       (data: DeviceBean[]) => resource.devices = data,
       error => console.log(error),
       () => {
       });
-    that.GetAllLinkedPluginScript(resource.id)
+    that.allLinkedPluginScript.GetAll(resource.id)
       .subscribe(
       (data: ScriptBean[]) => resource.plugins = data,
       error => console.log(error),
@@ -64,13 +69,23 @@ export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> im
       });
   }
 
-  openDialog() {
-    this.dialogRef = this.dialog.open(PizzaDialog, {
+  openDialog(action: string) {
+    this.dialogRef = this.dialog.open(JarvisPickerComponent, {
       disableClose: false
     });
 
+    if(action === 'devices') {
+      this.dialogRef.componentInstance.loadResource<DeviceBean>('devices', 12, this._deviceService);
+    }
+    if(action === 'triggers') {
+      this.dialogRef.componentInstance.loadResource<TriggerBean>('triggers', 12, this._triggerService);
+    }
+    if(action === 'plugins') {
+      this.dialogRef.componentInstance.loadResource<DeviceBean>('plugins', 12, this._deviceService);
+    }
+
     this.dialogRef.afterClosed().subscribe(result => {
-      console.log('result: ' + result);
+      console.log('result: ', result);
       this.dialogRef = null;
     });
   }
@@ -80,7 +95,7 @@ export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> im
    */
   public pick(picker: PickerBean): void {
     console.warn('picker', picker);
-    this.openDialog();
+    this.openDialog(picker.action);
   }
 
   /**

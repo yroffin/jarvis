@@ -1,5 +1,13 @@
 import { Observable } from 'rxjs/Observable';
 
+export interface JarvisDefaultLinkResource<T> {
+    GetAll(id: string): Observable<T[]>;
+    GetSingle(id: string, linkId: string): Observable<T>;
+    Add(id: string, linkToAdd: T): Observable<T>;
+    Update(id: string, linkId: string, linkToUpdate: T): Observable<T>;
+    Delete(id: string, linkId: string): Observable<T>;
+}
+
 export interface JarvisDefaultResource<T> {
     Task(id: string, task: string): Observable<any>;
     GetAll(): Observable<T[]>;
