@@ -100,7 +100,7 @@ public class ApiScenarioResources extends ApiLinkedTwiceResources<ScenarioRest,S
 	 * href blocks
 	 */
 	@Autowired
-	@DeclareHrefResource(role=ApiMapper.BLOCK_RESOURCE, href=ApiMapper.HREF)
+	@DeclareHrefResource(role=ApiMapper.BLOCK_RESOURCE, href=ApiMapper.HREF, target=BlockRest.class)
 	public ApiHrefScenarioBlockResources apiHrefScenarioBlockResources;
 
 	/**
@@ -114,7 +114,7 @@ public class ApiScenarioResources extends ApiLinkedTwiceResources<ScenarioRest,S
 	 * href trigger
 	 */
 	@Autowired
-	@DeclareHrefResource(role=ApiMapper.TRIGGER_RESOURCE, href=ApiMapper.HREF)
+	@DeclareHrefResource(role=ApiMapper.TRIGGER_RESOURCE, href=ApiMapper.HREF, target=TriggerRest.class)
 	public ApiHrefScenarioTriggerResources apiHrefScenarioTriggerResources;
 
 	@Autowired

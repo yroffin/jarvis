@@ -47,7 +47,7 @@ export class JarvisDataLinkedResource<T extends ResourceBean> implements JarvisD
      * get single link
      */
     public GetSingle = (id: string, linkId: string): Observable<T> => {
-        return this.http.get(this.actionUrl + '/' + id  + this.link + '/' + linkId)
+        return this.http.get(this.actionUrl + '/' + id  + this.link + '/' + linkId, { headers: this.headers })
             .map((response: Response) => <T>response.json())
             .catch(this.handleError);
     }
@@ -55,8 +55,8 @@ export class JarvisDataLinkedResource<T extends ResourceBean> implements JarvisD
     /**
      * add a new link
      */
-    public Add = (id: string, linkToAdd: T): Observable<T> => {
-        return this.http.post(this.actionUrl + '/' + id  + this.link, JSON.stringify(linkToAdd), { headers: this.headers })
+    public Add = (id: string, linkId: string, linkToAdd: any): Observable<T> => {
+        return this.http.post(this.actionUrl + '/' + id  + this.link + '/' + linkId, JSON.stringify(linkToAdd), { headers: this.headers })
             .map((response: Response) => <T>response.json())
             .catch(this.handleError);
     }
@@ -64,8 +64,8 @@ export class JarvisDataLinkedResource<T extends ResourceBean> implements JarvisD
     /**
      * update a link
      */
-    public Update = (id: string, linkId: string, linkToUpdate: T): Observable<T> => {
-        return this.http.put(this.actionUrl + '/' + id  + this.link + '/' + linkId, JSON.stringify(linkToUpdate), { headers: this.headers })
+    public Update = (id: string, linkId: string, instance: string, linkToUpdate: any): Observable<T> => {
+        return this.http.put(this.actionUrl + '/' + id  + this.link + '/' + linkId + '?instance=' + instance, JSON.stringify(linkToUpdate), { headers: this.headers })
             .map((response: Response) => <T>response.json())
             .catch(this.handleError);
     }
@@ -73,8 +73,8 @@ export class JarvisDataLinkedResource<T extends ResourceBean> implements JarvisD
     /**
      * delete a link
      */
-    public Delete = (id: string, linkId: string): Observable<T> => {
-        return this.http.delete(this.actionUrl + '/' + id  + this.link + '/' + linkId, { headers: this.headers })
+    public Delete = (id: string, linkId: string, instance: string): Observable<T> => {
+        return this.http.delete(this.actionUrl + '/' + id  + this.link + '/' + linkId + '?instance=' + instance, { headers: this.headers })
             .map((response: Response) => <T>response.json())
             .catch(this.handleError);
     }

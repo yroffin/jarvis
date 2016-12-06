@@ -19,8 +19,9 @@ import { CompleteCallback } from '../../class/jarvis-resource';
  */
 import { DeviceBean } from '../../model/device-bean';
 import { TriggerBean } from '../../model/trigger-bean';
-import { ScriptBean } from '../../model/script-bean';
+import { PluginBean } from '../../model/plugin-bean';
 import { PickerBean } from '../../model/picker-bean';
+import { LinkBean } from '../../model/link-bean';
 
 @Component({
   selector: 'app-jarvis-resource-device',
@@ -40,7 +41,7 @@ export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> im
     private _jarvisConfigurationService: JarvisConfigurationService,
     private _deviceService: JarvisDataDeviceService,
     private _triggerService: JarvisDataTriggerService,
-    private _pluginService: JarvisDataDeviceService,
+    private _pluginService: JarvisDataPluginService,
     private dialog: MdDialog) {
     super(2, '/devices', ['render'], _deviceService, _route, _router);
   }
@@ -61,9 +62,9 @@ export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> im
       error => console.log(error),
       () => {
       });
-    that.allLinkedPluginScript.GetAll(resource.id)
+    that.allLinkedPlugin.GetAll(resource.id)
       .subscribe(
-      (data: ScriptBean[]) => resource.plugins = data,
+      (data: PluginBean[]) => resource.plugins = data,
       error => console.log(error),
       () => {
       });
@@ -74,19 +75,75 @@ export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> im
       disableClose: false
     });
 
-    if(action === 'devices') {
+    if (action === 'devices') {
       this.dialogRef.componentInstance.loadResource<DeviceBean>('devices', 12, this._deviceService);
     }
-    if(action === 'triggers') {
+    if (action === 'triggers') {
       this.dialogRef.componentInstance.loadResource<TriggerBean>('triggers', 12, this._triggerService);
     }
-    if(action === 'plugins') {
-      this.dialogRef.componentInstance.loadResource<DeviceBean>('plugins', 12, this._deviceService);
+    if (action === 'plugins') {
+      this.dialogRef.componentInstance.loadResource<PluginBean>('plugins', 12, this._pluginService);
     }
 
     this.dialogRef.afterClosed().subscribe(result => {
-      console.log('result: ', result);
       this.dialogRef = null;
+      if (result === null) {
+        return;
+      }
+
+      /**
+       * handle devices
+       */
+      if (action === 'devices') {
+        let device: DeviceBean;
+        let that = this;
+        this._deviceService.allLinkedDevice.Add(this.getResource().id, result.id, {"order": "1", href: "HREF"})
+          .subscribe(
+          (data: DeviceBean) => device = data,
+          error => console.log(error),
+          () => {
+            /**
+             * add this device to current view
+             */
+            that.getResource().devices.push(device);
+          });
+      }
+
+      /**
+       * handle triggers
+       */
+      if (action === 'triggers') {
+        let trigger: TriggerBean;
+        let that = this;
+        this._deviceService.allLinkedTrigger.Add(this.getResource().id, result.id, {"order": "1", href: "HREF"})
+          .subscribe(
+          (data: TriggerBean) => trigger = data,
+          error => console.log(error),
+          () => {
+            /**
+             * add this device to current view
+             */
+            that.getResource().triggers.push(trigger);
+          });
+      }
+
+      /**
+       * handle plugins
+       */
+      if (action === 'plugins') {
+        let plugin: PluginBean;
+        let that = this;
+        this._deviceService.allLinkedPlugin.Add(this.getResource().id, result.id, {"order": "1", href: "HREF"})
+          .subscribe(
+          (data: PluginBean) => plugin = data,
+          error => console.log(error),
+          () => {
+            /**
+             * add this device to current view
+             */
+            that.getResource().plugins.push(plugin);
+          });
+      }
     });
   }
 

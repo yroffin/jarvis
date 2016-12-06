@@ -84,7 +84,7 @@ public class ApiTriggerResources extends ApiLinkedResources<TriggerRest,TriggerB
 	 * cron resource href
 	 */
 	@Autowired
-	@DeclareHrefResource(role=ApiMapper.CRON_RESOURCE, href=ApiMapper.HREF)
+	@DeclareHrefResource(role=ApiMapper.CRON_RESOURCE, href=ApiMapper.HREF, target=CronRest.class)
 	public ApiHrefTriggerCronResources apiHrefTriggerCronResources;
 
 	@Autowired

@@ -4,13 +4,17 @@
   <md-input placeholder="Paramètres" [(ngModel)]="myDevice.parameters"></md-input>
   <div *ngFor="let trigger of myDevice.triggers; let index=index">
     <div layout="row">
-      <md-input placeholder="Nom du trigger" [(ngModel)]="trigger.name"></md-input>
+      <md-input placeholder="Id du trigger" [(ngModel)]="trigger.id" disabled></md-input>
+      <md-input placeholder="Instance du trigger" [(ngModel)]="trigger.instance" disabled></md-input>
+      <md-input placeholder="Nom du trigger" [(ngModel)]="trigger.name" disabled></md-input>
       <button (click)="dropTriggerLink(trigger)"><md-icon>delete</md-icon></button>
     </div>
   </div>
   <div *ngFor="let device of myDevice.devices; let index=index">
     <div layout="row">
-      <md-input placeholder="Nom du device (container)" [(ngModel)]="device.name"></md-input>
+      <md-input placeholder="Id du device (container)" [(ngModel)]="device.id" disabled></md-input>
+      <md-input placeholder="Instance du device (container)" [(ngModel)]="device.instance" disabled></md-input>
+      <md-input placeholder="Nom du device (container)" [(ngModel)]="device.name" disabled></md-input>
       <button (click)="dropDeviceLink(device)"><md-icon>delete</md-icon></button>
     </div>
   </div>

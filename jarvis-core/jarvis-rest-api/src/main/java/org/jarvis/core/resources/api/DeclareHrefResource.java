@@ -28,4 +28,10 @@ public @interface DeclareHrefResource {
 	 */
 	String href();
 
+	/**
+	 * fix target
+	 * @return class
+	 */
+	Class<?> target();
+
 }

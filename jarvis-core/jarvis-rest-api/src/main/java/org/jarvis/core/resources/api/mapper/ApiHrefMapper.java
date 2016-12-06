@@ -83,6 +83,7 @@ public abstract class ApiHrefMapper<OWNER extends GenericBean,TARGET extends Gen
 				/**
 				 * set node properties
 				 */
+				update(rows.get("id(relation)")+"", properties);
 				GenericEntity genericEntity = new GenericEntity();
 				genericEntity.id = child.id;
 				genericEntity.instance = rows.get("id(relation)")+"";
@@ -90,10 +91,8 @@ public abstract class ApiHrefMapper<OWNER extends GenericBean,TARGET extends Gen
 				/**
 				 * set relationship properties
 				 */
-				Node r = (Node) rows.get("relation");
 				for(Entry<String, Object> property : properties.entrySet()) {
 					if(String.class == property.getValue().getClass()) {
-						r.setProperty(property.getKey(), (String) property.getValue());
 						genericEntity.put(property.getKey(), (String) property.getValue());
 					}
 				}

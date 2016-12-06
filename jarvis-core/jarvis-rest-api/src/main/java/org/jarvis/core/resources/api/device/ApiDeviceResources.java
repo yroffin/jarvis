@@ -72,6 +72,7 @@ public class ApiDeviceResources extends ApiLinkedThirdResources<DeviceRest,Devic
 	/**
 	 * link to another device
 	 */
+	@Autowired
 	@DeclareLinkedResource(role=ApiMapper.DEVICE_RESOURCE, param=ApiMapper.DEVICE, sortKey=ApiMapper.SORTKEY)
 	public ApiDeviceResources apiDeviceResources;
 
@@ -79,7 +80,7 @@ public class ApiDeviceResources extends ApiLinkedThirdResources<DeviceRest,Devic
 	 * href handle
 	 */
 	@Autowired
-	@DeclareHrefResource(role=ApiMapper.DEVICE_RESOURCE, href=ApiMapper.HREF)
+	@DeclareHrefResource(role=ApiMapper.DEVICE_RESOURCE, href=ApiMapper.HREF, target=DeviceRest.class)
 	public ApiHrefDeviceResources apiHrefDeviceResources;
 
 	/**
@@ -93,7 +94,7 @@ public class ApiDeviceResources extends ApiLinkedThirdResources<DeviceRest,Devic
 	 * href handle
 	 */
 	@Autowired
-	@DeclareHrefResource(role=ApiMapper.SCRIPT_RESOURCE, href=ApiMapper.HREF)
+	@DeclareHrefResource(role=ApiMapper.SCRIPT_RESOURCE, href=ApiMapper.HREF, target=ScriptPluginRest.class)
 	public ApiHrefDeviceScriptPluginResources apiHrefDeviceScriptPluginResources;
 
 	/**
@@ -107,7 +108,7 @@ public class ApiDeviceResources extends ApiLinkedThirdResources<DeviceRest,Devic
 	 * href handle
 	 */
 	@Autowired
-	@DeclareHrefResource(role=ApiMapper.TRIGGER_RESOURCE, href=ApiMapper.HREF)
+	@DeclareHrefResource(role=ApiMapper.TRIGGER_RESOURCE, href=ApiMapper.HREF, target=TriggerRest.class)
 	public ApiHrefDeviceTriggerResources apiHrefDeviceTriggerResources;
 
 	/**

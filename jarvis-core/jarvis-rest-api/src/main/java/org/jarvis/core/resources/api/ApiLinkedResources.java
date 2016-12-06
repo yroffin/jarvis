@@ -46,7 +46,7 @@ public abstract class ApiLinkedResources<T extends GenericEntity, S extends Gene
 	protected void declare(String resource, String target, ApiResources<T1,S1> api, ApiHrefMapper<S,S1> apiHref, String param, String sortKey, String relation) {
 		get("/api/"+resource+"/:id/"+target+"", getLinks(api, apiHref, sortKey, relation));
 		post("/api/"+resource+"/:id/"+target+"/"+param, postLink(api, apiHref, param, target, relation));
-		put("/api/"+resource+"/:id/"+target+"/"+param+"/:instance", putLink(api, apiHref, param, relation));
+		put("/api/"+resource+"/:id/"+target+"/"+param, putLink(api, apiHref, param, relation));
 		delete("/api/"+resource+"/:id/"+target+"/"+param, deleteLink(api, apiHref, param, relation));
 	}
 
@@ -87,7 +87,7 @@ public abstract class ApiLinkedResources<T extends GenericEntity, S extends Gene
 		    		for(GenericEntity link : sort(apiHref.findAll(master, findRelType(request,relation)), sortField)) {
 		    			result.add((T1) fromLink(link, api.doGetByIdRest(link.id)));
 		    		}
-			    	return mapper.writeValueAsString(result);
+			    	return writeValueAsString(result);
 		    	} catch(TechnicalNotFoundException e) {
 		    		response.status(404);
 		    		return "";
@@ -114,7 +114,7 @@ public abstract class ApiLinkedResources<T extends GenericEntity, S extends Gene
 			    	try {
 			    		S1 target = api.doGetByIdBean(request.params(param));
 				    	GenericEntity link = apiHref.add(master, target, new GenericMap(request.body()), href, findRelType(request,relation));
-				    	return mapper.writeValueAsString(fromLink(link, api.doGetByIdRest(link.id)));
+				    	return writeValueAsString(fromLink(link, api.doGetByIdRest(link.id)));
 			    	} catch(TechnicalNotFoundException e) {
 			    		response.status(404);
 			    		return "";
@@ -143,8 +143,8 @@ public abstract class ApiLinkedResources<T extends GenericEntity, S extends Gene
 		    		doGetByIdRest(request.params(ID));
 			    	try {
 			    		api.doGetByIdRest(request.params(param));
-				    	GenericMap properties = apiHref.update(request.params(INSTANCE), new GenericMap(request.body()));
-				    	return mapper.writeValueAsString(properties);
+				    	GenericMap properties = apiHref.update(request.queryParams(INSTANCE), new GenericMap(request.body()));
+				    	return writeValueAsString(properties);
 			    	} catch(TechnicalNotFoundException e) {
 			    		response.status(404);
 			    		return "";
@@ -205,6 +205,10 @@ public abstract class ApiLinkedResources<T extends GenericEntity, S extends Gene
 								 * declare link
 								 */
 								try {
+									if(linkedField.get(this) == null) {
+										logger.error("Annotated link error : annotation {} linkedField {}", annotation, linkedField);
+										throw new TechnicalException("Internal error while injecting resource");
+									}
 									declare(annotation.resource(), linkedAnnotation.role(), (ApiResources<T1,S1>) linkedField.get(this), (ApiHrefMapper<S,S1>) hrefField.get(this), linkedAnnotation.param(), linkedAnnotation.sortKey(), hrefAnnotation.href());
 								} catch (IllegalArgumentException | IllegalAccessException e) {
 									throw new TechnicalException(e);
