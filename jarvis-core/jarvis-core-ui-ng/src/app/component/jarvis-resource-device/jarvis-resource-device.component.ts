@@ -65,6 +65,9 @@ export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> im
     (new JarvisResourceLink<PluginBean>()).loadLinks(resource.id, resource.plugins, that.allLinkedPlugin);
   }
 
+  /**
+   * picker dialog
+   */
   openDialog(action: string) {
     this.dialogRef = this.dialog.open(JarvisPickerComponent, {
       disableClose: false
