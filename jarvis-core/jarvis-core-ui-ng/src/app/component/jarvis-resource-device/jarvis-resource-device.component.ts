@@ -7,6 +7,7 @@ import { JarvisConfigurationService } from '../../service/jarvis-configuration.s
 import { JarvisDataDeviceService } from '../../service/jarvis-data-device.service';
 import { JarvisDataTriggerService } from '../../service/jarvis-data-trigger.service';
 import { JarvisDataPluginService } from '../../service/jarvis-data-plugin.service';
+import { JarvisResourceLink } from '../../class/jarvis-resource-link';
 
 /**
  * class
@@ -31,6 +32,9 @@ import { LinkBean } from '../../model/link-bean';
 export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> implements OnInit {
 
   dialogRef: MdDialogRef<JarvisPickerComponent>;
+  private jarvisDeviceLink: JarvisResourceLink<DeviceBean>;
+  private jarvisTriggerLink: JarvisResourceLink<TriggerBean>;
+  private jarvisPluginLink: JarvisResourceLink<PluginBean>;
 
   /**
    * constructor
@@ -44,30 +48,21 @@ export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> im
     private _pluginService: JarvisDataPluginService,
     private dialog: MdDialog) {
     super(2, '/devices', ['render'], _deviceService, _route, _router);
+    this.jarvisDeviceLink = new JarvisResourceLink<DeviceBean>();
+    this.jarvisTriggerLink = new JarvisResourceLink<TriggerBean>();
+    this.jarvisPluginLink = new JarvisResourceLink<PluginBean>();
   }
 
   /**
    * complete resource
    */
   public complete(that: JarvisDataDeviceService, resource: DeviceBean): void {
-    that.allLinkedTrigger.GetAll(resource.id)
-      .subscribe(
-      (data: TriggerBean[]) => resource.triggers = data,
-      error => console.log(error),
-      () => {
-      });
-    that.allLinkedDevice.GetAll(resource.id)
-      .subscribe(
-      (data: DeviceBean[]) => resource.devices = data,
-      error => console.log(error),
-      () => {
-      });
-    that.allLinkedPlugin.GetAll(resource.id)
-      .subscribe(
-      (data: PluginBean[]) => resource.plugins = data,
-      error => console.log(error),
-      () => {
-      });
+    resource.devices = [];
+    (new JarvisResourceLink<DeviceBean>()).loadLinks(resource.id, resource.devices, that.allLinkedDevice);
+    resource.triggers = [];
+    (new JarvisResourceLink<TriggerBean>()).loadLinks(resource.id, resource.triggers, that.allLinkedTrigger);
+    resource.plugins = [];
+    (new JarvisResourceLink<PluginBean>()).loadLinks(resource.id, resource.plugins, that.allLinkedPlugin);
   }
 
   openDialog(action: string) {
@@ -95,54 +90,21 @@ export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> im
        * handle devices
        */
       if (action === 'devices') {
-        let device: DeviceBean;
-        let that = this;
-        this._deviceService.allLinkedDevice.Add(this.getResource().id, result.id, {"order": "1", href: "HREF"})
-          .subscribe(
-          (data: DeviceBean) => device = data,
-          error => console.log(error),
-          () => {
-            /**
-             * add this device to current view
-             */
-            that.getResource().devices.push(device);
-          });
+        this.jarvisDeviceLink.addLink(this.getResource().id, result.id, this.getResource().devices, {"order": "1", href: "HREF"}, this._deviceService.allLinkedDevice);
       }
 
       /**
        * handle triggers
        */
       if (action === 'triggers') {
-        let trigger: TriggerBean;
-        let that = this;
-        this._deviceService.allLinkedTrigger.Add(this.getResource().id, result.id, {"order": "1", href: "HREF"})
-          .subscribe(
-          (data: TriggerBean) => trigger = data,
-          error => console.log(error),
-          () => {
-            /**
-             * add this device to current view
-             */
-            that.getResource().triggers.push(trigger);
-          });
+        this.jarvisTriggerLink.addLink(this.getResource().id, result.id, this.getResource().triggers, {"order": "1", href: "HREF"}, this._deviceService.allLinkedTrigger);
       }
 
       /**
        * handle plugins
        */
       if (action === 'plugins') {
-        let plugin: PluginBean;
-        let that = this;
-        this._deviceService.allLinkedPlugin.Add(this.getResource().id, result.id, {"order": "1", href: "HREF"})
-          .subscribe(
-          (data: PluginBean) => plugin = data,
-          error => console.log(error),
-          () => {
-            /**
-             * add this device to current view
-             */
-            that.getResource().plugins.push(plugin);
-          });
+        this.jarvisPluginLink.addLink(this.getResource().id, result.id, this.getResource().plugins, {"order": "1", href: "HREF"}, this._deviceService.allLinkedPlugin);
       }
     });
   }
@@ -151,7 +113,6 @@ export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> im
    * task action
    */
   public pick(picker: PickerBean): void {
-    console.warn('picker', picker);
     this.openDialog(picker.action);
   }
 
@@ -161,15 +122,4 @@ export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> im
   ngOnInit() {
     this.init(this.complete);
   }
-}
-
-@Component({
-  selector: 'pizza-dialog',
-  template: `
-  <button type="button" (click)="dialogRef.close('yes')">Yes</button>
-  <button type="button" (click)="dialogRef.close('no')">No</button>
-  `
-})
-export class PizzaDialog {
-  constructor(public dialogRef: MdDialogRef<PizzaDialog>) { }
 }

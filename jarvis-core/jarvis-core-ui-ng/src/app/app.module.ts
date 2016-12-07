@@ -21,7 +21,7 @@ import { JarvisHomeComponent } from './component/jarvis-home/jarvis-home.compone
 import { JarvisTilesViewComponent } from './component/jarvis-tiles-view/jarvis-tiles-view.component';
 import { JarvisToolbarComponent } from './component/jarvis-toolbar/jarvis-toolbar.component';
 import { JarvisResourcesComponent } from './component/jarvis-resources/jarvis-resources.component';
-import { JarvisResourceDeviceComponent, PizzaDialog } from './component/jarvis-resource-device/jarvis-resource-device.component';
+import { JarvisResourceDeviceComponent } from './component/jarvis-resource-device/jarvis-resource-device.component';
 import { JarvisResourceDeviceGeneralComponent } from './component/jarvis-resource-device/jarvis-resource-device-general/jarvis-resource-device-general.component';
 import { JarvisResourceDevicePluginComponent } from './component/jarvis-resource-device/jarvis-resource-device-plugin/jarvis-resource-device-plugin.component';
 import { JarvisResourceDeviceRenderComponent } from './component/jarvis-resource-device/jarvis-resource-device-render/jarvis-resource-device-render.component';

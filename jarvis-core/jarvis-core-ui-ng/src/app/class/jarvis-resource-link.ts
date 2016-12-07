@@ -13,15 +13,53 @@ import { ResourceBean } from '../model/resource-bean';
  */
 export class JarvisResourceLink<T extends ResourceBean> {
 
-    /**
-     * constructor
-     */
-    constructor(
-    ) {
-    }
+  /**
+   * constructor
+   */
+  constructor(
+  ) {
+  }
 
   /**
-   * drop trigger link
+   * load link
+   */
+  public loadLinks(owner: string, elements: Array<T>, service: JarvisDefaultLinkResource<T>): void {
+    /**
+     * clear array
+     */
+    _.remove(elements, function (element) {
+      return true;
+    })
+    /**
+     * then load it
+     */
+    service.GetAll(owner)
+      .subscribe(
+      (data: T[]) => _.merge(elements, data),
+      error => console.log(error),
+      () => {
+      });
+  }
+
+  /**
+   * add link
+   */
+  public addLink(owner: string, linked: string, elements: Array<T>, value: any, service: JarvisDefaultLinkResource<T>): void {
+    let created: T;
+    service.Add(owner, linked, value)
+      .subscribe(
+      (data: T) => created = data,
+      error => console.log(error),
+      () => {
+        /**
+         * add this element to current view
+         */
+        elements.push(created);
+      });
+  }
+
+  /**
+   * drop link
    */
   public dropLink(linked: T, owner: string, elements: Array<T>, service: JarvisDefaultLinkResource<T>): void {
     let deleted;
@@ -37,7 +75,7 @@ export class JarvisResourceLink<T extends ResourceBean> {
   }
 
   /**
-   * drop trigger link
+   * drop link
    */
   public updateLink(linked: T, owner: string, service: JarvisDefaultLinkResource<T>): void {
     let deleted;
