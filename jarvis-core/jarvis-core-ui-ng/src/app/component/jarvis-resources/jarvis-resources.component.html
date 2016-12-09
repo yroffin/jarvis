@@ -1,13 +1,10 @@
-<md-card>
-  <md-card-title>{{myResourceName}}</md-card-title>
-  <md-card-content flex>
-    <md-grid-list cols="{{fixedCols}}" rowHeight="{{fitListHeight}}">
-      <md-grid-tile *ngFor="let myResource of myResources; let index=index" (click)="view(myResource)">
-        <md-grid-tile-header>
-          <md-icon md-grid-avatar>{{myResource.icon}}</md-icon>
-          <h3>{{myResource.name}}</h3>
-        </md-grid-tile-header>
-      </md-grid-tile>
-    </md-grid-list>
-  </md-card-content>
-</md-card>
+<p-dataTable [value]="myResources" [rows]="10" [globalFilter]="gb" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]">
+    <header>{{myResourceName}}</header>
+    <p-column header="Icône">
+      <template let-myResource="rowData" pTemplate type="body">
+        <md-icon md-grid-avatar (click)="view(myResource)">{{myResource.icon}}</md-icon>
+      </template>
+    </p-column>
+    <p-column field="id" header="Id" [filter]="true"></p-column>
+    <p-column field="name" header="Name" [filter]="true"></p-column>
+</p-dataTable>

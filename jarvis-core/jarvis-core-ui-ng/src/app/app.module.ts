@@ -1,5 +1,3 @@
-import 'hammerjs';
-
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -16,6 +14,7 @@ import { InputTextModule } from 'primeng/primeng';
 import { AccordionModule } from 'primeng/primeng';
 import { CodeHighlighterModule } from 'primeng/primeng';
 import { InputTextareaModule } from 'primeng/primeng';
+import { DataListModule } from 'primeng/primeng';
 
 import { MaterialModule } from '@angular/material';
 
@@ -37,6 +36,9 @@ import { JarvisTileComponent } from './component/jarvis-tile/jarvis-tile.compone
 import { JarvisToolbarMenuComponent } from './component/jarvis-toolbar-menu/jarvis-toolbar-menu.component';
 import { JarvisPickerComponent } from './dialog/jarvis-picker/jarvis-picker.component'
 
+/**
+ * default route definition
+ */
 const appRoutes: Routes = [
   { path: 'devices', component: JarvisResourcesComponent, data: { resource: 'devices' } },
   { path: 'devices/:id', component: JarvisResourceDeviceComponent },
@@ -79,6 +81,7 @@ const appRoutes: Routes = [
     AccordionModule,
     CodeHighlighterModule,
     InputTextareaModule,
+    DataListModule,
     /**
      * load all materials
      */
