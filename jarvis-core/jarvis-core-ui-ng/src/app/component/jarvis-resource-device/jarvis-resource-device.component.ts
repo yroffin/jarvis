@@ -31,6 +31,8 @@ import { LinkBean } from '../../model/link-bean';
 })
 export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> implements OnInit {
 
+  @Input() myDevice: DeviceBean;
+
   dialogRef: MdDialogRef<JarvisPickerComponent>;
   private jarvisDeviceLink: JarvisResourceLink<DeviceBean>;
   private jarvisTriggerLink: JarvisResourceLink<TriggerBean>;
@@ -47,7 +49,7 @@ export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> im
     private _triggerService: JarvisDataTriggerService,
     private _pluginService: JarvisDataPluginService,
     private dialog: MdDialog) {
-    super(2, '/devices', ['render'], _deviceService, _route, _router);
+    super('/devices', ['render'], _deviceService, _route, _router);
     this.jarvisDeviceLink = new JarvisResourceLink<DeviceBean>();
     this.jarvisTriggerLink = new JarvisResourceLink<TriggerBean>();
     this.jarvisPluginLink = new JarvisResourceLink<PluginBean>();
@@ -56,7 +58,8 @@ export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> im
   /**
    * complete resource
    */
-  public complete(that: JarvisDataDeviceService, resource: DeviceBean): void {
+  public complete(owner: any, that: JarvisDataDeviceService, resource: DeviceBean): void {
+    owner.myDevice = resource;
     resource.devices = [];
     (new JarvisResourceLink<DeviceBean>()).loadLinks(resource.id, resource.devices, that.allLinkedDevice);
     resource.triggers = [];

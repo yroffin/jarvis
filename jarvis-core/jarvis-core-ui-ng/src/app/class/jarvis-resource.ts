@@ -9,7 +9,7 @@ import { ResourceBean } from '../model/resource-bean';
 import { PickerBean } from '../model/picker-bean';
 
 export interface CompleteCallback<T extends ResourceBean> {
-    (that: JarvisDefaultResource<T>, resource: T): void 
+    (owner: any, that: JarvisDefaultResource<T>, resource: T): void 
 };
 
 /**
@@ -25,20 +25,16 @@ export class JarvisResource<T extends ResourceBean> {
 
     private uri: string;
     private tasks: string[];
-    private state: number = 0;
-    private maxState: number = 0;
 
     /**
      * constructor
      */
     constructor(
-        _maxState: number,
         _uri: string,
         _tasks: string[],
         _resourceService: JarvisDefaultResource<T>,
         _route: ActivatedRoute,
         _router: Router) {
-        this.maxState = _maxState;
         this.uri = _uri;
         this.tasks = _tasks;
         this.myJarvisResource = _resourceService;
@@ -75,7 +71,7 @@ export class JarvisResource<T extends ResourceBean> {
                     /**
                      * complete resource
                      */
-                    completeCallback(this.myJarvisResource, this.getResource());
+                    completeCallback(this, this.myJarvisResource, this.getResource());
                 }
             );
         });
@@ -135,23 +131,5 @@ export class JarvisResource<T extends ResourceBean> {
             error => console.log(error),
             () => {
             });
-    }
-
-    /**
-     * retrieve current state
-     */
-    private getState(): number {
-        return this.state;
-    }
-
-    /**
-     * go to next state
-     */
-    private next(): number {
-        this.state++;
-        if (this.state > this.maxState) {
-            this.state = 0;
-        }
-        return this.state;
     }
 }

@@ -9,6 +9,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { TreeModule } from 'angular2-tree-component';
 
+import { DataTableModule, SharedModule } from 'primeng/primeng';
+import { MenubarModule, MenuModule } from 'primeng/primeng';
+import { CheckboxModule } from 'primeng/primeng';
+import { InputTextModule } from 'primeng/primeng';
+import { AccordionModule } from 'primeng/primeng';
+import { CodeHighlighterModule } from 'primeng/primeng';
+import { InputTextareaModule } from 'primeng/primeng';
+
 import { MaterialModule } from '@angular/material';
 
 import { JarvisDialogComponent } from './jarvis-dialog/jarvis-dialog.component';
@@ -65,6 +73,18 @@ const appRoutes: Routes = [
     FormsModule,
     HttpModule,
     TreeModule,
+    /**
+     * primeface
+     */
+    DataTableModule,
+    SharedModule,
+    MenuModule,
+    MenubarModule,
+    CheckboxModule,
+    InputTextModule,
+    AccordionModule,
+    CodeHighlighterModule,
+    InputTextareaModule,
     /**
      * load all materials
      */

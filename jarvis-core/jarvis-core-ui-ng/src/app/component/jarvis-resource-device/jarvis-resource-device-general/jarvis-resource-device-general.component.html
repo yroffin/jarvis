@@ -1,28 +1,139 @@
-<h1 style="text-align: center">Général</h1>
-<div *ngIf="myDevice" layout="column">
-  <md-input placeholder="Nom" [(ngModel)]="myDevice.name"></md-input>
-  <md-input placeholder="Paramètres" [(ngModel)]="myDevice.parameters"></md-input>
-  <div *ngFor="let trigger of myDevice.triggers; let index=index">
-    <div layout="row">
-      <md-input placeholder="Id du trigger" [(ngModel)]="trigger.id" disabled></md-input>
-      <md-input placeholder="Instance du trigger" [(ngModel)]="trigger.instance" disabled></md-input>
-      <md-input placeholder="Nom du trigger" [(ngModel)]="trigger.name" disabled></md-input>
-      <button (click)="dropTriggerLink(trigger)"><md-icon>delete</md-icon></button>
-    </div>
-  </div>
-  <div *ngFor="let device of myDevice.devices; let index=index">
-    <div layout="row">
-      <md-input placeholder="Id du device (container)" [(ngModel)]="device.id" disabled></md-input>
-      <md-input placeholder="Instance du device (container)" [(ngModel)]="device.instance" disabled></md-input>
-      <md-input placeholder="Nom du device (container)" [(ngModel)]="device.name" disabled></md-input>
-      <button (click)="dropDeviceLink(device)"><md-icon>delete</md-icon></button>
-    </div>
-  </div>
-  <md-checkbox [(ngModel)]="myDevice.visible">Visible</md-checkbox>
-  <md-input placeholder="Icône" [(ngModel)]="myDevice.icon"></md-input>
-  <md-input placeholder="Couleur de la cellule" [(ngModel)]="myDevice.tagColor"></md-input>
-  <md-input placeholder="Opacité de la cellule" [(ngModel)]="myDevice.tagOpacity"></md-input>
-  <md-input placeholder="Couleur du texte de la cellule" [(ngModel)]="myDevice.tagTextColor"></md-input>
-  <md-input placeholder="Nombre de ligne de la cellule" [(ngModel)]="myDevice.rowSpan"></md-input>
-  <md-input placeholder="Nombre de colonne de la cellule" [(ngModel)]="myDevice.colSpan"></md-input>
+<div *ngIf="myDevice">
+
+  <p-accordion>
+    <p-accordionTab header="Entête">
+      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Nom du device
+          </div>
+          <div class="ui-grid-col-8">
+            <input type="text" pInputText [(ngModel)]="myDevice.name" placeholder="Nom du device" />
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Paramètres
+          </div>
+          <div class="ui-grid-col-8">
+            <input type="text" pInputText [(ngModel)]="myDevice.parameters" placeholder="Paramètres (json)" />
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Paramètres
+          </div>
+          <div class="ui-grid-col-8">
+            <p-checkbox binary="true" label="Visible" [(ngModel)]="myDevice.visible"></p-checkbox>
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Icône
+          </div>
+          <div class="ui-grid-col-8">
+            <input type="text" pInputText [(ngModel)]="myDevice.icon" placeholder="Icône" />
+          </div>
+        </div>
+      </div>
+    </p-accordionTab>
+    <p-accordionTab header="Triggers">
+      <p-dataTable [value]="myDevice.triggers">
+        <header>Trigger</header>
+        <p-column field="extended.order" header="Ordre"></p-column>
+        <p-column field="id" header="Id"></p-column>
+        <p-column field="instance" header="Inst."></p-column>
+        <p-column field="name" header="Nom"></p-column>
+        <p-column header="Action">
+          <template let-plugin="rowData" pTemplate type="body">
+            <button md-mini-fab md-tooltip="Supprimer le lien" (click)="dropTriggerLink(trigger)"><md-icon>delete</md-icon></button>
+          </template>
+        </p-column>
+      </p-dataTable>
+    </p-accordionTab>
+    <p-accordionTab header="Devices">
+      <p-dataTable [value]="myDevice.devices">
+        <header>Devices (container)</header>
+        <p-column field="extended.order" header="Ordre"></p-column>
+        <p-column field="id" header="Id"></p-column>
+        <p-column field="instance" header="Inst."></p-column>
+        <p-column field="name" header="Nom"></p-column>
+        <p-column header="Action">
+          <template let-plugin="rowData" pTemplate type="body">
+            <button md-mini-fab md-tooltip="Supprimer le lien" (click)="dropDeviceLink(device)"><md-icon>delete</md-icon></button>
+          </template>
+        </p-column>
+      </p-dataTable>
+    </p-accordionTab>
+    <p-accordionTab header="Plugins">
+      <p-dataTable [value]="myDevice.plugins">
+        <header>Plugin</header>
+        <p-column header="Ordre">
+          <template let-plugin="rowData" pTemplate>
+            <input type="text" size="2" pInputText [(ngModel)]="plugin.extended.order" />
+          </template>
+        </p-column>
+        <p-column field="id" header="Id"></p-column>
+        <p-column field="instance" header="Instance"></p-column>
+        <p-column field="name" header="Nom"></p-column>
+        <p-column header="Action">
+          <template let-plugin="rowData" pTemplate type="body">
+            <button md-mini-fab md-tooltip="Mettre à jour le lien" (click)="updatePluginLink(plugin)"><md-icon>save</md-icon></button>
+            <button md-mini-fab md-tooltip="Supprimer le lien" (click)="dropPluginLink(plugin)"><md-icon>delete</md-icon></button>
+          </template>
+        </p-column>
+      </p-dataTable>
+    </p-accordionTab>
+    <p-accordionTab header="Rendu">
+      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Couleur de la cellule
+          </div>
+          <div class="ui-grid-col-8">
+            <input type="text" pInputText [(ngModel)]="myDevice.tagColor" placeholder="Couleur de la cellule" />
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Opacité de la cellule
+          </div>
+          <div class="ui-grid-col-8">
+            <input type="text" pInputText [(ngModel)]="myDevice.tagOpacity" placeholder="Opacité de la cellule" />
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Couleur du texte de la cellule
+          </div>
+          <div class="ui-grid-col-8">
+            <input type="text" pInputText [(ngModel)]="myDevice.tagTextColor" placeholder="Couleur du texte de la cellule" />
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Nombre de ligne de la cellule
+          </div>
+          <div class="ui-grid-col-8">
+            <input type="text" pInputText [(ngModel)]="myDevice.rowSpan" placeholder="Nombre de ligne de la cellule" />
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Nombre de colonne de la cellule
+          </div>
+          <div class="ui-grid-col-8">
+            <input type="text" pInputText [(ngModel)]="myDevice.colSpan" placeholder="Nombre de colonne de la cellule" />
+          </div>
+        </div>
+      </div>
+    </p-accordionTab>
+    <p-accordionTab header="Rendu (test)">
+      <textarea pInputTextarea [(ngModel)]="myDevice.template" autoResize="autoResize"></textarea>
+      <app-jarvis-tile [myDevice]="myDevice" ></app-jarvis-tile>
+      <pre class="language-js">
+        <code pCode>{{myDevice.template}}</code>
+      </pre>
+    </p-accordionTab>
+  </p-accordion>
 </div>

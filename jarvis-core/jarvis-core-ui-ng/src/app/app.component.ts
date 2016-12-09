@@ -3,6 +3,7 @@ import { Component, Input, OnInit, ChangeDetectorRef, ApplicationRef } from '@an
 import { JarvisDataDeviceService } from './service/jarvis-data-device.service';
 import { JarvisDataViewService } from './service/jarvis-data-view.service';
 import { JarvisDataStoreService } from './service/jarvis-data-store.service';
+import { MenuItem } from 'primeng/primeng';
 
 /**
  * Cf. https://material2-app.firebaseapp.com/
@@ -24,11 +25,11 @@ import { ViewBean } from './model/view-bean';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'app works great plus!';
+  private items: MenuItem[];
 
   constructor(
     private _changeDetectorRef: ChangeDetectorRef,
-    private _applicationRef: ApplicationRef ,
+    private _applicationRef: ApplicationRef,
     private _jarvisDataDeviceService: JarvisDataDeviceService,
     private _jarvisDataStoreService: JarvisDataStoreService,
     private _jarvisDataViewService: JarvisDataViewService) {
@@ -41,6 +42,51 @@ export class AppComponent implements OnInit {
   okButtonText: string = 'Create task';
 
   ngOnInit() {
+    this.items = [
+      {
+        label: 'Ressource',
+        icon: 'fa-file-o',
+        items: [
+          { label: 'Device', icon: 'fa-plus', routerLink: ['/devices'] },
+          { label: 'Open' },
+          { label: 'Quit' }
+        ]
+      },
+      {
+        label: 'Edit',
+        icon: 'fa-edit',
+        items: [
+          { label: 'Undo', icon: 'fa-mail-forward' },
+          { label: 'Redo', icon: 'fa-mail-reply' }
+        ]
+      },
+      {
+        label: 'Help',
+        icon: 'fa-question',
+        items: [
+          {
+            label: 'Contents'
+          },
+          {
+            label: 'Search',
+            icon: 'fa-search',
+            items: [
+              {
+                label: 'Text',
+                items: [
+                  {
+                    label: 'Workspace'
+                  }
+                ]
+              },
+              {
+                label: 'File'
+              }
+            ]
+          }
+        ]
+      }
+    ];
   }
 
   todoDialog(todo = null) {
@@ -75,7 +121,7 @@ export class AppComponent implements OnInit {
   }
 
   addTodo(title) {
-    const todo = {title: title, completed: false};
+    const todo = { title: title, completed: false };
     this.todoList.push(todo);
   }
 
