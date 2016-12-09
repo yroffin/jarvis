@@ -1,8 +1,0 @@
-<div *ngIf="myDevice" layout="column">
-  <md-input placeholder="Template" [(ngModel)]="myDevice.template"></md-input>
-  <app-jarvis-tile [myDevice]="myDevice" ></app-jarvis-tile>
-  <pre highlight-js-content=".highlight">
-      <code class="html highlight" [innerText]="myDevice.template">
-      </code>
-  </pre>
-</div>

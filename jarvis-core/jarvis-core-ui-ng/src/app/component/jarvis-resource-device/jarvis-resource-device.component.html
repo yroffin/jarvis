@@ -23,7 +23,7 @@
         </div>
         <div class="ui-grid-row">
           <div class="ui-grid-col-4">
-            Paramètres
+            Visibilité
           </div>
           <div class="ui-grid-col-8">
             <p-checkbox binary="true" label="Visible" [(ngModel)]="myDevice.visible"></p-checkbox>
@@ -131,11 +131,34 @@
       </div>
     </p-accordionTab>
     <p-accordionTab header="Rendu (test)">
-      <textarea pInputTextarea [(ngModel)]="myDevice.template" autoResize="autoResize"></textarea>
-      <app-jarvis-tile [myDevice]="myDevice" ></app-jarvis-tile>
-      <pre class="language-js">
-        <code pCode>{{myDevice.template}}</code>
-      </pre>
+      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Paramétrage de la tuile
+          </div>
+          <div class="ui-grid-col-8">
+            <textarea pInputTextarea [(ngModel)]="myDevice.template" autoResize="autoResize"></textarea>
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Rendu
+          </div>
+          <div class="ui-grid-col-8">
+            <app-jarvis-tile [myDevice]="myDevice"></app-jarvis-tile>
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Html
+          </div>
+          <div class="ui-grid-col-8">
+            <pre class="language-html">
+              <code pCode>{{myDevice.template}}</code>
+            </pre>
+          </div>
+        </div>
+      </div>
     </p-accordionTab>
   </p-accordion>
 </div>
