@@ -34,6 +34,7 @@ export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> im
   @Input() myDevice: DeviceBean;
 
   dialogRef: MdDialogRef<JarvisPickerComponent>;
+
   private jarvisDeviceLink: JarvisResourceLink<DeviceBean>;
   private jarvisTriggerLink: JarvisResourceLink<TriggerBean>;
   private jarvisPluginLink: JarvisResourceLink<PluginBean>;
@@ -120,6 +121,34 @@ export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> im
    */
   public pick(picker: PickerBean): void {
     this.openDialog(picker.action);
+  }
+
+  /**
+   * drop device link
+   */
+  public dropDeviceLink(linked: DeviceBean): void {
+    this.jarvisDeviceLink.dropLink(linked, this.myDevice.id, this.myDevice.devices, this._deviceService.allLinkedDevice);
+  }
+
+  /**
+   * drop trigger link
+   */
+  public dropTriggerLink(linked: TriggerBean): void {
+    this.jarvisTriggerLink.dropLink(linked, this.myDevice.id, this.myDevice.triggers, this._deviceService.allLinkedTrigger);
+  }
+
+  /**
+   * drop plugin link
+   */
+  public dropPluginLink(linked: PluginBean): void {
+    this.jarvisPluginLink.dropLink(linked, this.myDevice.id, this.myDevice.plugins, this._deviceService.allLinkedPlugin);
+  }
+
+  /**
+   * drop plugin link
+   */
+  public updatePluginLink(linked: PluginBean): void {
+    this.jarvisPluginLink.updateLink(linked, this.myDevice.id, this._deviceService.allLinkedPlugin);
   }
 
   /**

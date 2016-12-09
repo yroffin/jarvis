@@ -47,7 +47,7 @@
         <p-column field="instance" header="Inst."></p-column>
         <p-column field="name" header="Nom"></p-column>
         <p-column header="Action">
-          <template let-plugin="rowData" pTemplate type="body">
+          <template let-trigger="rowData" pTemplate type="body">
             <button md-mini-fab md-tooltip="Supprimer le lien" (click)="dropTriggerLink(trigger)"><md-icon>delete</md-icon></button>
           </template>
         </p-column>
@@ -61,7 +61,7 @@
         <p-column field="instance" header="Inst."></p-column>
         <p-column field="name" header="Nom"></p-column>
         <p-column header="Action">
-          <template let-plugin="rowData" pTemplate type="body">
+          <template let-device="rowData" pTemplate type="body">
             <button md-mini-fab md-tooltip="Supprimer le lien" (click)="dropDeviceLink(device)"><md-icon>delete</md-icon></button>
           </template>
         </p-column>
