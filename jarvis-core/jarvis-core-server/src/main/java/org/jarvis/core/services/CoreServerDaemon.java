@@ -181,6 +181,7 @@ public class CoreServerDaemon {
 		 */
 		if(System.getProperty("profile") != null && System.getProperty("profile").equals("dev")) {
 			coreResources.mountLocal();
+			spark.Spark.staticFiles.expireTime(600);
 		} else {
 			coreResources.mountExternal();
 			spark.Spark.staticFiles.expireTime(1);

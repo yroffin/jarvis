@@ -17,6 +17,8 @@
 package org.jarvis.core;
 
 import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,6 +44,17 @@ public class JarvisCoreServer {
 	 * @throws MalformedURLException 
 	 */
 	public static void main(String[] args) throws MalformedURLException {
+		/**
+		 * dump classpath
+		 */
+		ClassLoader cl = ClassLoader.getSystemClassLoader();
+
+	    URL[] urls = ((URLClassLoader)cl).getURLs();
+
+	    for(URL url: urls){
+	    	logger.info("Classpath {}", url.getFile());
+	    }
+	    
 		/**
 		 * start application
 		 */

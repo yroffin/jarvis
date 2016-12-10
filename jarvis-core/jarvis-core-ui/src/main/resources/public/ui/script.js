@@ -2614,7 +2614,7 @@ angular.module('jarvis.directives.block', ['JarvisApp.services'])
   }
 }])
 ;/* 
- * Copyright 2014 Yannick Roffin.
+ * Copyright 2016 Yannick Roffin.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -2692,7 +2692,7 @@ angular.module('jarvis.directives.command', ['JarvisApp.services'])
      * @param command, the command to execute
      */
     $scope.execute = function(command) {
-    	jarvisWidgetCommandService.command.task(command.id, 'execute', $scope.rawTestData, function(data) {
+    	jarvisCommandService.command.task(command.id, 'execute', $scope.rawTestData, function(data) {
    	    	toastService.info('command ' + command.name + '#' + command.id + ' executed');
    	    	$scope.output = angular.toJson(data, true);
 	    }, toastService.failure);
@@ -2702,7 +2702,7 @@ angular.module('jarvis.directives.command', ['JarvisApp.services'])
      * @param command, the command to execute
      */
     $scope.test = function(command) {
-    	jarvisWidgetCommandService.command.task(command.id, 'test', $scope.rawTestData, function(data) {
+    	jarvisCommandService.command.task(command.id, 'test', $scope.rawTestData, function(data) {
    	    	toastService.info('command ' + command.name + '#' + command.id + ' tested');
    	    	$scope.output = angular.toJson(data, true);
 	    }, toastService.failure);
@@ -2761,7 +2761,7 @@ angular.module('jarvis.directives.command', ['JarvisApp.services'])
 		$log.info('command-ctrl');
     }
 }])
-.factory('jarvisWidgetCommandService', [ 'genericResourceService', function( genericResourceService) {
+.factory('jarvisWidgetCommandService', [ 'genericResourceService', function(genericResourceService) {
 	return {
 	  	command: genericResourceService.crud(['commands']),
 	  	notifications : genericResourceService.links(['commands'], ['notifications']),

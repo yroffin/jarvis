@@ -112,7 +112,6 @@ public class CoreResources {
 		logger.info("Mount local files on {}", "public");
 		spark.Spark.staticFiles.location("/public");
 		spark.Spark.staticFiles.externalLocation("public");
-		spark.Spark.staticFiles.expireTime(600);
 	}
 
 	/**
@@ -170,9 +169,5 @@ public class CoreResources {
 				}
 	        }
 	    });
-
-		// just 1 second expire time
-		// TODO : configure it in properties
-		spark.Spark.staticFiles.expireTime(1);
 	}
 }
