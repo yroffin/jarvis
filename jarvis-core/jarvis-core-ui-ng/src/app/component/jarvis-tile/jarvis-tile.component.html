@@ -1,14 +1,8 @@
-<md-card>
-  <md-card-title>Démontration du device {{myDevice.name}}</md-card-title>
-  <md-card-content flex>
-    <md-grid-list cols="1" rowHeight="128px">
-      <md-grid-tile [style.background]="myDevice.tagColor">
-        <md-grid-tile-header>
-          <md-icon md-grid-avatar>{{myDevice.icon}}</md-icon>
-          <h3>{{myDevice.name}}</h3>
-        </md-grid-tile-header>
-        <div [innerHTML]="getTemplate(myDevice)"></div>
-      </md-grid-tile>
-    </md-grid-list>
-  </md-card-content>
-</md-card>
+<p-panel [header]="'Device'" [style.textAlign]="'center'">
+  <div [style.background]="myDevice.tagColor">
+    <hr class="ui-widget-content" style="border-top:0">
+    <md-icon md-64>{{myDevice.icon}}</md-icon>
+    <div [innerHTML]="getTemplate(myDevice)"></div>
+    <hr class="ui-widget-content" style="border-top:0">
+  </div>
+</p-panel>

@@ -38,46 +38,15 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.items = [
       {
+        label: 'Home',
+        icon: 'fa-home',
+        routerLink: ['/']
+      },
+      {
         label: 'Ressource',
-        icon: 'fa-file-o',
+        icon: 'fa-sliders',
         items: [
-          { label: 'Device', icon: 'fa-plus', routerLink: ['/devices'] },
-          { label: 'Open' },
-          { label: 'Quit' }
-        ]
-      },
-      {
-        label: 'Edit',
-        icon: 'fa-edit',
-        items: [
-          { label: 'Undo', icon: 'fa-mail-forward' },
-          { label: 'Redo', icon: 'fa-mail-reply' }
-        ]
-      },
-      {
-        label: 'Help',
-        icon: 'fa-question',
-        items: [
-          {
-            label: 'Contents'
-          },
-          {
-            label: 'Search',
-            icon: 'fa-search',
-            items: [
-              {
-                label: 'Text',
-                items: [
-                  {
-                    label: 'Workspace'
-                  }
-                ]
-              },
-              {
-                label: 'File'
-              }
-            ]
-          }
+          { label: 'Device', icon: 'fa-server', routerLink: ['/devices'] }
         ]
       }
     ];

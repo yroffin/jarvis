@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
+import { Message } from 'primeng/primeng';
+
 import { JarvisDataDeviceService } from '../../service/jarvis-data-device.service';
 import { JarvisDataViewService } from '../../service/jarvis-data-view.service';
 import { JarvisDataStoreService } from '../../service/jarvis-data-store.service';
@@ -17,40 +19,29 @@ import { ViewBean } from '../../model/view-bean';
 })
 export class JarvisHomeComponent implements OnInit {
 
-  myViews: ViewBean [];
-  myIndex: number;
+  msgs: Message[] = [];
+  myViews: ViewBean[];
 
   constructor(
     private _jarvisDataDeviceService: JarvisDataDeviceService,
     private _jarvisDataStoreService: JarvisDataStoreService,
     private _jarvisDataViewService: JarvisDataViewService) {
-      this.myIndex = 0;
   }
 
   ngOnInit() {
     /**
      * load all views
      */
-    this.getAllViews();
+    this._jarvisDataViewService.FindViewsAndDevices()
+      .subscribe(
+      (data: ViewBean[]) => this.myViews = this._jarvisDataStoreService.getViews()
+      );
   }
 
-  private getAllViews(): void {
-    this._jarvisDataViewService.FindViewsAndDevices().subscribe(
-      (data:ViewBean[]) => this.myViews = this._jarvisDataStoreService.getViews()
-    );
-  }
-
-  private left(): void {
-    this.myIndex--;
-    if(this.myIndex < 0) {
-      this.myIndex = this.myViews.length - 1;
-    }
-  }
-
-  private right(): void {
-    this.myIndex++;
-    if(this.myIndex >= this.myViews.length) {
-      this.myIndex = 0;
-    }
+  private touch(device: DeviceBean): void {
+    this._jarvisDataDeviceService.Task(device.id, "execute")
+      .subscribe(
+      (data: any) => this.msgs.push({severity:'info', summary:'Activation', detail:device.name})
+      );
   }
 }

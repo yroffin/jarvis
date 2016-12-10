@@ -15,6 +15,10 @@ import { AccordionModule } from 'primeng/primeng';
 import { CodeHighlighterModule } from 'primeng/primeng';
 import { InputTextareaModule } from 'primeng/primeng';
 import { DataListModule } from 'primeng/primeng';
+import { TabViewModule } from 'primeng/primeng';
+import { DataGridModule } from 'primeng/primeng';
+import { PanelModule } from 'primeng/primeng';
+import { GrowlModule } from 'primeng/primeng';
 
 import { MaterialModule } from '@angular/material';
 
@@ -82,6 +86,10 @@ const appRoutes: Routes = [
     CodeHighlighterModule,
     InputTextareaModule,
     DataListModule,
+    TabViewModule,
+    DataGridModule,
+    PanelModule,
+    GrowlModule,
     /**
      * load all materials
      */

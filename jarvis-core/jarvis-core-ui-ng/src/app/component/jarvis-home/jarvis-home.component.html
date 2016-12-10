@@ -1,5 +1,12 @@
-<div *ngFor="let myView of myViews; let index=index">
-  <app-jarvis-tiles-view *ngIf="index == myIndex" [myView]=myView [myDevices]=myView.devices ></app-jarvis-tiles-view>
-</div>
-<button md-fab class="app-action-left" (click)="left()"><md-icon>fast_rewind</md-icon></button>
-<button md-fab class="app-action-right" (click)="right()"><md-icon>fast_forward</md-icon></button>
+<p-accordion>
+  <p-accordionTab *ngFor="let myView of myViews; let index=index" header="{{myView.name}}">
+    <p-dataGrid [value]="myView.devices" [paginator]="true" [rows]="20">
+      <template let-myDevice>
+        <div class="ui-g-2 ui-md-3 ui-lg-3 ui-sm-6">
+          <app-jarvis-tile (click)="touch(myDevice)" [myDevice]="myDevice" ></app-jarvis-tile>
+        </div>
+      </template>
+    </p-dataGrid>
+  </p-accordionTab>
+</p-accordion>
+<p-growl [value]="msgs"></p-growl>
