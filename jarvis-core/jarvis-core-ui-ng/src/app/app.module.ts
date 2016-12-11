@@ -7,6 +7,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { TreeModule } from 'angular2-tree-component';
 
+import { ButtonModule } from 'primeng/primeng';
 import { DataTableModule, SharedModule } from 'primeng/primeng';
 import { MenubarModule, MenuModule } from 'primeng/primeng';
 import { CheckboxModule } from 'primeng/primeng';
@@ -19,6 +20,8 @@ import { TabViewModule } from 'primeng/primeng';
 import { DataGridModule } from 'primeng/primeng';
 import { PanelModule } from 'primeng/primeng';
 import { GrowlModule } from 'primeng/primeng';
+import { StepsModule } from 'primeng/primeng';
+import { PanelMenuModule } from 'primeng/primeng';
 
 import { MaterialModule } from '@angular/material';
 
@@ -90,6 +93,9 @@ const appRoutes: Routes = [
     DataGridModule,
     PanelModule,
     GrowlModule,
+    StepsModule,
+    ButtonModule,
+    PanelMenuModule,
     /**
      * load all materials
      */

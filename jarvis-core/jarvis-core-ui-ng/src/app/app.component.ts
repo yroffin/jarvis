@@ -26,6 +26,7 @@ import { ViewBean } from './model/view-bean';
 })
 export class AppComponent implements OnInit {
   private items: MenuItem[];
+  private steps: MenuItem[];
 
   constructor(
     private _changeDetectorRef: ChangeDetectorRef,
@@ -36,6 +37,12 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.steps = [
+            {label: 'Step 1'},
+            {label: 'Step 2'},
+            {label: 'Step 3'}
+        ];
+      
     this.items = [
       {
         label: 'Home',
