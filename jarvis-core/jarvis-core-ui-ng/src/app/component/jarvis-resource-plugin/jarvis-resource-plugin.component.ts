@@ -68,7 +68,7 @@ export class JarvisResourcePluginComponent extends JarvisResource<PluginBean> im
     this.jarvisCommandLink = new JarvisResourceLink<CommandBean>();
     this.types = [];
     this.types.push({ label: 'Select type', value: null });
-    this.types.push({ label: 'Plugin Script', value: { id: 1, name: 'Plugin Script', code: 'script' } })
+    this.types.push({ label: 'Plugin Script', value: 'script' });
   }
 
   /**

@@ -18,7 +18,7 @@
             Catégorie
           </div>
           <div class="ui-grid-col-8">
-            <input type="text" pInputText [(ngModel)]="myPlugin.type" placeholder="Catégorie" />
+            <p-dropdown [options]="types" [(ngModel)]="myPlugin.type"></p-dropdown>
           </div>
         </div>
         <div class="ui-grid-row">
