@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { JarvisTilesViewComponent } from './jarvis-tiles-view.component';
+import { JarvisResourceViewComponent } from './jarvis-resource-view.component';
 
-describe('JarvisTilesViewComponent', () => {
-  let component: JarvisTilesViewComponent;
-  let fixture: ComponentFixture<JarvisTilesViewComponent>;
+describe('JarvisResourceViewComponent', () => {
+  let component: JarvisResourceViewComponent;
+  let fixture: ComponentFixture<JarvisResourceViewComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ JarvisTilesViewComponent ]
+      declarations: [ JarvisResourceViewComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(JarvisTilesViewComponent);
+    fixture = TestBed.createComponent(JarvisResourceViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -33,44 +33,63 @@ export class JarvisDataCoreResource<T extends ResourceBean> implements JarvisDef
     }
 
     /**
-     * execute remote task on this device
+     * execute remote task on this resource
      */
-    public Task = (id: string, task: string): Observable<any> => {
-        return this.http.post(this.actionUrl + '/' + id + '?task=' + task, {})
+    public Task = (id: string, task: string, args: any): Observable<any> => {
+        console.error(JSON.stringify(args));
+        return this.http.post(this.actionUrl + '/' + id + '?task=' + task, JSON.stringify(args), { headers: this.headers })
             .map((response: Response) => <any>response.json())
             .catch(this.handleError);
     }
 
+    /**
+     * get all resources
+     */
     public GetAll = (): Observable<T[]> => {
         return this.http.get(this.actionUrl)
             .map((response: Response) => <T[]>response.json())
             .catch(this.handleError);
     }
 
+    /**
+     * get single resource
+     */
     public GetSingle = (id: string): Observable<T> => {
         return this.http.get(this.actionUrl + '/' + id)
             .map((response: Response) => <T>response.json())
             .catch(this.handleError);
     }
 
+    /**
+     * add a new resource
+     */
     public Add = (itemToAdd: T): Observable<T> => {
         return this.http.post(this.actionUrl, JSON.stringify(itemToAdd), { headers: this.headers })
             .map((response: Response) => <T>response.json())
             .catch(this.handleError);
     }
 
+    /**
+     * update this resource
+     */
     public Update = (id: string, itemToUpdate: T): Observable<T> => {
         return this.http.put(this.actionUrl + '/' + id, JSON.stringify(itemToUpdate), { headers: this.headers })
             .map((response: Response) => <T>response.json())
             .catch(this.handleError);
     }
 
+    /**
+     * delete this resource
+     */
     public Delete = (id: string): Observable<T> => {
         return this.http.delete(this.actionUrl + '/' + id, { headers: this.headers })
             .map((response: Response) => <T>response.json())
             .catch(this.handleError);
     }
 
+    /**
+     * error handler
+     */
     private handleError(error: Response) {
         console.error(error);
         return Observable.throw(error.json().error || 'Server error');

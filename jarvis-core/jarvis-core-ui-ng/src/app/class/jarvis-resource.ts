@@ -125,7 +125,7 @@ export class JarvisResource<T extends ResourceBean> {
      * task action
      */
     public task(action: string): void {
-        this.myJarvisResource.Task(this.myResource.id, action)
+        this.myJarvisResource.Task(this.myResource.id, action, {})
             .subscribe(
             (data: T) => data,
             error => console.log(error),

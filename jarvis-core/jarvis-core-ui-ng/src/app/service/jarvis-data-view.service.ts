@@ -70,7 +70,7 @@ export class JarvisDataViewService {
                       myView.devices = myDevices;
                       let render: any;
                       _.forEach(myDevices, function(myDevice) {
-                        that._jarvisDataDeviceService.Task(myDevice.id, 'render')
+                        that._jarvisDataDeviceService.Task(myDevice.id, 'render', {})
                         .subscribe(
                           (data:any) => render = data,
                           error => console.log(error),

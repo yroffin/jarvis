@@ -57,6 +57,13 @@ export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> im
   }
 
   /**
+   * load device and related data
+   */
+  ngOnInit() {
+    this.init(this.complete);
+  }
+
+  /**
    * complete resource
    */
   public complete(owner: any, that: JarvisDataDeviceService, resource: DeviceBean): void {
@@ -152,9 +159,9 @@ export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> im
   }
 
   /**
-   * load device and related data
+   * goto plugin link
    */
-  ngOnInit() {
-    this.init(this.complete);
+  public gotoPluginLink(linked: PluginBean): void {
+    this._router.navigate(['/plugins/' + linked.id]);
   }
 }

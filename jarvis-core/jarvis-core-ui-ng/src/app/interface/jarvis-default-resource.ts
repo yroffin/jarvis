@@ -1,6 +1,11 @@
 import { Observable } from 'rxjs/Observable';
 
-export interface JarvisDefaultLinkResource<T> {
+/**
+ * data model
+ */
+import { ResourceBean } from '../model/resource-bean';
+
+export interface JarvisDefaultLinkResource<T extends ResourceBean> {
     GetAll(id: string): Observable<T[]>;
     GetSingle(id: string, linkId: string): Observable<T>;
     Add(id: string, linkId: string, linkToAdd: any): Observable<T>;
@@ -8,8 +13,8 @@ export interface JarvisDefaultLinkResource<T> {
     Delete(id: string, linkId: string, instance: string): Observable<T>;
 }
 
-export interface JarvisDefaultResource<T> {
-    Task(id: string, task: string): Observable<any>;
+export interface JarvisDefaultResource<T extends ResourceBean> {
+    Task(id: string, task: string, args: any): Observable<any>;
     GetAll(): Observable<T[]>;
     GetSingle(id: string): Observable<T>;
     Add(itemToAdd: T): Observable<T>;

@@ -19,6 +19,9 @@ package org.jarvis.core.resources.api.plugins;
 import java.io.IOException;
 import java.util.Map.Entry;
 
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+
 import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.device.DeviceBean;
@@ -28,8 +31,12 @@ import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.model.rest.plugin.CommandRest;
 import org.jarvis.core.model.rest.plugin.ScriptPluginRest;
 import org.jarvis.core.resources.api.ApiLinkedResources;
+import org.jarvis.core.resources.api.Declare;
+import org.jarvis.core.resources.api.DeclareHrefResource;
+import org.jarvis.core.resources.api.DeclareLinkedResource;
 import org.jarvis.core.resources.api.GenericValue;
 import org.jarvis.core.resources.api.href.ApiHrefPluginCommandResources;
+import org.jarvis.core.resources.api.mapper.ApiMapper;
 import org.jarvis.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
 import org.slf4j.Logger;
@@ -37,18 +44,26 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import io.swagger.annotations.Api;
+
 /**
  * script plugin resource
  */
+@Api(value = "plugin")
+@Path("/api/plugins")
+@Produces("application/json")
 @Component
+@Declare(resource=ApiMapper.SCRIPT_RESOURCE, summary="Plugin resource", rest=ScriptPluginRest.class)
 public class ApiScriptPluginResources extends ApiLinkedResources<ScriptPluginRest,ScriptPluginBean,CommandRest,CommandBean> {
 	protected Logger logger = LoggerFactory.getLogger(ApiScriptPluginResources.class);
 	
 	@Autowired
-	ApiCommandResources apiCommandResources;
+	@DeclareLinkedResource(role=ApiMapper.COMMAND_RESOURCE, param=ApiMapper.COMMAND, sortKey=ApiMapper.SORTKEY)
+	public ApiCommandResources apiCommandResources;
 
 	@Autowired
-	ApiHrefPluginCommandResources apiHrefPluginCommandResources;
+	@DeclareHrefResource(role=ApiMapper.COMMAND_RESOURCE, href=ApiMapper.HREF, target=CommandRest.class)
+	public ApiHrefPluginCommandResources apiHrefPluginCommandResources;
 
 	/**
 	 * constructor
@@ -60,14 +75,7 @@ public class ApiScriptPluginResources extends ApiLinkedResources<ScriptPluginRes
 	
 	@Override
 	public void mount() {
-		/**
-		 * scripts
-		 */
-		declare(SCRIPT_RESOURCE);
-		/**
-		 * scripts -> commands
-		 */
-		declare(SCRIPT_RESOURCE, COMMAND_RESOURCE, apiCommandResources, apiHrefPluginCommandResources, COMMAND, SORTKEY, HREF);
+		super.mount();
 	}
 
 	/**

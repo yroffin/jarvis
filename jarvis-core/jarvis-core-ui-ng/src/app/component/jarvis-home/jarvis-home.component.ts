@@ -39,7 +39,7 @@ export class JarvisHomeComponent implements OnInit {
   }
 
   private touch(device: DeviceBean): void {
-    this._jarvisDataDeviceService.Task(device.id, "execute")
+    this._jarvisDataDeviceService.Task(device.id, "execute", {})
       .subscribe(
       (data: any) => this.msgs.push({severity:'info', summary:'Activation', detail:device.name})
       );

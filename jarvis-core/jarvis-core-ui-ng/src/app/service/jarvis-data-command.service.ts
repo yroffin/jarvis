@@ -10,22 +10,13 @@ import { JarvisDataLinkedResource } from './jarvis-data-linked-resource';
 /**
  * data model
  */
-import { PluginBean } from './../model/plugin-bean';
-import { DeviceBean } from './../model/device-bean';
 import { CommandBean } from './../model/command-bean';
+import { LinkBean } from './../model/link-bean';
 
 @Injectable()
-export class JarvisDataPluginService extends JarvisDataCoreResource<PluginBean> implements JarvisDefaultResource<PluginBean> {
-
-    public allLinkedCommand: JarvisDefaultLinkResource<CommandBean>;
+export class JarvisDataCommandService extends JarvisDataCoreResource<CommandBean> implements JarvisDefaultResource<CommandBean> {
 
     constructor(private _http: Http, private _configuration: JarvisConfigurationService) {
-        super(_configuration.ServerWithApiUrl + 'plugins/scripts', _http);
-
-        /**
-         * map linked elements
-         */
-        this.allLinkedCommand = new JarvisDataLinkedResource<CommandBean>(this.actionUrl, '/commands', _http);
+        super(_configuration.ServerWithApiUrl + 'commands', _http);
     }
 }
-

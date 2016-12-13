@@ -53,7 +53,8 @@ export class AppComponent implements OnInit {
         label: 'Ressource',
         icon: 'fa-sliders',
         items: [
-          { label: 'Device', icon: 'fa-server', routerLink: ['/devices'] }
+          { label: 'Device', icon: 'fa-server', routerLink: ['/devices'] },
+          { label: 'Plugin', icon: 'fa-podcast', routerLink: ['/plugins'] }
         ]
       }
     ];

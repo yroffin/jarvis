@@ -1,0 +1,169 @@
+<app-jarvis-toolbar-menu [actions]="this" [tasks]="[{'action':'execute','icon':'play_arrow','tooltip':'Simuler (execution)'},{'action':'render','icon':'input','tooltip':'Simuler (rendu)'},{'action':'clear','icon':'loop','tooltip':'Effacer le contexte'}]"
+  [pickers]="[{'action':'commands','icon':'playlist_add','tooltip':'Ajouter une commande'}]"></app-jarvis-toolbar-menu>
+
+<div *ngIf="myPlugin">
+  <p-accordion>
+    <p-accordionTab header="Entête">
+      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Nom du plugin
+          </div>
+          <div class="ui-grid-col-8">
+            <input type="text" pInputText [(ngModel)]="myPlugin.name" placeholder="Nom du plugin" />
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Catégorie
+          </div>
+          <div class="ui-grid-col-8">
+            <input type="text" pInputText [(ngModel)]="myPlugin.type" placeholder="Catégorie" />
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Icône
+          </div>
+          <div class="ui-grid-col-8">
+            <input type="text" pInputText [(ngModel)]="myPlugin.icon" placeholder="Icône" />
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Visibilité
+          </div>
+          <div class="ui-grid-col-8">
+            <p-checkbox binary="true" label="Visible" [(ngModel)]="myPlugin.visible"></p-checkbox>
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Actif
+          </div>
+          <div class="ui-grid-col-8">
+            <p-checkbox binary="true" label="Actif" [(ngModel)]="myPlugin.active"></p-checkbox>
+          </div>
+        </div>
+      </div>
+    </p-accordionTab>
+    <p-accordionTab header="Commands">
+      <p-dataTable [value]="myPlugin.commands">
+        <header>Commande</header>
+        <p-column header="Ordre">
+          <template let-command="rowData" pTemplate>
+            <input type="text" size="2" pInputText [(ngModel)]="command.extended.order" />
+          </template>
+        </p-column>
+        <p-column field="id" header="Id"></p-column>
+        <p-column field="instance" header="Instance"></p-column>
+        <p-column field="name" header="Nom"></p-column>
+        <p-column header="Action">
+          <template let-command="rowData" pTemplate type="body">
+            <button md-mini-fab md-tooltip="Mettre à jour le lien" (click)="updateCommandLink(command)"><md-icon>save</md-icon></button>
+            <button md-mini-fab md-tooltip="Supprimer le lien" (click)="dropCommandLink(command)"><md-icon>delete</md-icon></button>
+            <button md-mini-fab md-tooltip="Visualiser les données du lien" (click)="viewCommandLink(command)"><md-icon>zoom_in</md-icon></button>
+            <button md-mini-fab md-tooltip="Détail" (click)="gotoCommandLink(command)"><md-icon>touch_app</md-icon></button>
+          </template>
+        </p-column>
+      </p-dataTable>
+    </p-accordionTab>
+    <p-accordionTab header="Mise au point">
+      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Données de test (argument du plugin sous forme JSON)
+          </div>
+          <div class="ui-grid-col-8">
+            <input type="text" pInputText [(ngModel)]="myJsonData" placeholder="{}" />
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Données de test (convertie)
+          </div>
+          <div class="ui-grid-col-8">
+            <pre><code [innerHtml]="pretty(myData)"></code></pre>
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Données de test (résultat)
+          </div>
+          <div class="ui-grid-col-8">
+            <pre><code [innerHtml]="pretty(myOutputData)"></code></pre>
+          </div>
+        </div>
+      </div>
+    </p-accordionTab>
+  </p-accordion>
+</div>
+
+<p-dialog header="Commande" [(visible)]="display" modal=true responsive=true width="700" resizable=false>
+  <div *ngIf="myCommand">
+    <p-fieldset legend="Entête" toggleable="true">
+      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Identifiant de la commande
+          </div>
+          <div class="ui-grid-col-8">
+            <input type="text" pInputText [(ngModel)]="myCommand.id" placeholder="Identifiant de la commande" disabled />
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Instance de la commande
+          </div>
+          <div class="ui-grid-col-8">
+            <input type="text" pInputText [(ngModel)]="myCommand.instance" placeholder="Instance de la commande" disabled />
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Nom de la commande
+          </div>
+          <div class="ui-grid-col-8">
+            <input type="text" pInputText [(ngModel)]="myCommand.name" placeholder="Nom de la commande" />
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Name
+          </div>
+          <div class="ui-grid-col-8">
+            <input type="text" pInputText [(ngModel)]="myCommand.extended.name" placeholder="Ordre" />
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Paramètre(s) (json)
+          </div>
+          <div class="ui-grid-col-8">
+            <input type="text" pInputText [(ngModel)]="myCommand.extended.parameter" placeholder="Paramètre(s) (json)" />
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Nature
+          </div>
+          <div class="ui-grid-col-8">
+            <input type="text" pInputText [(ngModel)]="myCommand.extended.nature" placeholder="Nature" />
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Type
+          </div>
+          <div class="ui-grid-col-8">
+            <input type="text" pInputText [(ngModel)]="myCommand.extended.type" placeholder="Type" />
+          </div>
+        </div>
+      </div>
+      <button md-mini-fab md-tooltip="Mettre à jour le lien" (click)="updateCommandLink(myCommand)"><md-icon>save</md-icon></button>
+    </p-fieldset>
+    <p-fieldset legend="Source" toggleable="true">
+      <pre><code [innerHtml]="hightlight(myCommand.body)"></code></pre>
+    </p-fieldset>
+  </div>
+</p-dialog>

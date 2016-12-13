@@ -1,8 +1,0 @@
-<md-card>
-  <md-card-title>{{myView.name}}</md-card-title>
-  <md-card-content flex>
-    <md-grid-list cols="{{fixedCols}}" rowHeight="{{fitListHeight}}">
-      <app-jarvis-tile *ngFor="let myDevice of myDevices; let index=index" [myDevice]="myDevice" ></app-jarvis-tile>
-    </md-grid-list>
-  </md-card-content>
-</md-card>

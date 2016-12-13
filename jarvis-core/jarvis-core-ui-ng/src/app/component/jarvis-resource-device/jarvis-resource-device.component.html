@@ -82,6 +82,7 @@
           <template let-plugin="rowData" pTemplate type="body">
             <button md-mini-fab md-tooltip="Mettre à jour le lien" (click)="updatePluginLink(plugin)"><md-icon>save</md-icon></button>
             <button md-mini-fab md-tooltip="Supprimer le lien" (click)="dropPluginLink(plugin)"><md-icon>delete</md-icon></button>
+            <button md-mini-fab md-tooltip="Détail" (click)="gotoPluginLink(plugin)"><md-icon>touch_app</md-icon></button>
           </template>
         </p-column>
       </p-dataTable>
