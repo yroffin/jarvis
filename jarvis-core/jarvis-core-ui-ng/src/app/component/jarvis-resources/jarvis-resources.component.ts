@@ -7,6 +7,7 @@ import { JarvisDataCoreResource } from '../../service/jarvis-data-core-resource'
 
 import { JarvisDataDeviceService } from '../../service/jarvis-data-device.service';
 import { JarvisDataPluginService } from '../../service/jarvis-data-plugin.service';
+import { JarvisDataCommandService } from '../../service/jarvis-data-command.service';
 
 /**
  * data model
@@ -31,7 +32,8 @@ export class JarvisResourcesComponent implements OnInit {
     private router: Router,
     private _jarvisConfigurationService: JarvisConfigurationService,
     private _jarvisDataDeviceService: JarvisDataDeviceService,
-    private _jarvisDataPluginService: JarvisDataPluginService
+    private _jarvisDataPluginService: JarvisDataPluginService,
+    private _jarvisDataCommandService: JarvisDataCommandService
   ) {
   }
 
@@ -48,6 +50,9 @@ export class JarvisResourcesComponent implements OnInit {
         }
         if (navigationEnd.url === '/plugins') {
           this.load('plugins', this._jarvisDataPluginService);
+        }
+        if (navigationEnd.url === '/commands') {
+          this.load('commands', this._jarvisDataCommandService);
         }
       });
   }

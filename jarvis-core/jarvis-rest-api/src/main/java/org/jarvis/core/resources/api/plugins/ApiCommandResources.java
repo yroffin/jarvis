@@ -18,6 +18,9 @@ package org.jarvis.core.resources.api.plugins;
 
 import java.lang.reflect.Field;
 
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+
 import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.model.bean.device.DeviceBean;
 import org.jarvis.core.model.bean.plugin.CommandBean;
@@ -26,8 +29,12 @@ import org.jarvis.core.model.bean.tools.NotificationBean;
 import org.jarvis.core.model.rest.plugin.CommandRest;
 import org.jarvis.core.model.rest.tools.NotificationRest;
 import org.jarvis.core.resources.api.ApiLinkedResources;
+import org.jarvis.core.resources.api.Declare;
+import org.jarvis.core.resources.api.DeclareHrefResource;
+import org.jarvis.core.resources.api.DeclareLinkedResource;
 import org.jarvis.core.resources.api.GenericValue;
 import org.jarvis.core.resources.api.href.ApiHrefCommandNotificationResources;
+import org.jarvis.core.resources.api.mapper.ApiMapper;
 import org.jarvis.core.resources.api.tools.ApiNotificationResources;
 import org.jarvis.core.services.CoreStatistics;
 import org.jarvis.core.services.groovy.PluginGroovyService;
@@ -40,11 +47,31 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import io.swagger.annotations.Api;
+
 /**
  * Commande resources
  */
+@Api(value = "command")
+@Path("/api/commands")
+@Produces("application/json")
 @Component
+@Declare(resource=ApiMapper.COMMAND_RESOURCE, summary="Command resource", rest=CommandRest.class)
 public class ApiCommandResources extends ApiLinkedResources<CommandRest,CommandBean,NotificationRest,NotificationBean> {
+
+	/**
+	 * notification
+	 */
+	@Autowired
+	@DeclareLinkedResource(role=ApiMapper.NOTIFICATION_RESOURCE, param=ApiMapper.NOTIFICATION, sortKey=ApiMapper.SORTKEY)
+	public ApiNotificationResources apiNotificationResources;
+
+	/**
+	 * notification
+	 */
+	@Autowired
+	@DeclareHrefResource(role=ApiMapper.NOTIFICATION_RESOURCE, href=ApiMapper.HREF, target=NotificationRest.class)
+	public ApiHrefCommandNotificationResources apiHrefCommandNotificationResources;
 
 	/**
 	 * constructor
@@ -56,12 +83,6 @@ public class ApiCommandResources extends ApiLinkedResources<CommandRest,CommandB
 
 	@Autowired
 	PluginShellService pluginShellService;
-
-	@Autowired
-	ApiNotificationResources apiNotificationResources;
-
-	@Autowired
-	ApiHrefCommandNotificationResources apiHrefCommandNotificationResources;
 
 	@Autowired
 	PluginGroovyService pluginGroovyService;

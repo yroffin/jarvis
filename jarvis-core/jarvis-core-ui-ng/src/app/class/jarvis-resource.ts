@@ -9,7 +9,11 @@ import { ResourceBean } from '../model/resource-bean';
 import { PickerBean } from '../model/picker-bean';
 
 export interface CompleteCallback<T extends ResourceBean> {
-    (owner: any, that: JarvisDefaultResource<T>, resource: T): void 
+    (that: any, resource: T): void 
+};
+
+export interface NotifyCallback<T extends ResourceBean> {
+    notify(action: string, resource: T): void 
 };
 
 /**
@@ -71,7 +75,7 @@ export class JarvisResource<T extends ResourceBean> {
                     /**
                      * complete resource
                      */
-                    completeCallback(this, this.myJarvisResource, this.getResource());
+                    completeCallback(this, this.getResource());
                 }
             );
         });

@@ -54,7 +54,16 @@ export class AppComponent implements OnInit {
         icon: 'fa-sliders',
         items: [
           { label: 'Device', icon: 'fa-server', routerLink: ['/devices'] },
-          { label: 'Plugin', icon: 'fa-podcast', routerLink: ['/plugins'] }
+          { label: 'Plugin', icon: 'fa-podcast', routerLink: ['/plugins'] },
+          { label: 'Command', icon: 'fa-plug', routerLink: ['/commands'] },
+          { label: 'Trigger', icon: 'fa-paper-plane', routerLink: ['/triggers'] },
+          { label: 'Cron', icon: 'fa-inbox', routerLink: ['/crons'] },
+          { label: 'Scenario', icon: 'fa-flash', routerLink: ['/scenarios'] },
+          { label: 'Block', icon: 'fa-exchange', routerLink: ['/blocks'] },
+          { label: 'Configuration', icon: 'fa-database', routerLink: ['/configurations'] },
+          { label: 'Property', icon: 'fa-code', routerLink: ['/properties'] },
+          { label: 'Connector', icon: 'fa-bug', routerLink: ['/connectors'] },
+          { label: 'View', icon: 'fa-briefcase', routerLink: ['/views'] }
         ]
       }
     ];

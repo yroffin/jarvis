@@ -42,7 +42,7 @@ export class JarvisResourcePluginComponent extends JarvisResource<PluginBean> im
   private myOutputData: any = {};
   private types: SelectItem[];
 
-  @ViewChild('dataContainer') dataContainer: ElementRef;
+  @ViewChild('pickCommands') pickCommands;
 
   /**
    * internal vars
@@ -89,10 +89,10 @@ export class JarvisResourcePluginComponent extends JarvisResource<PluginBean> im
   /**
    * complete resource
    */
-  public complete(owner: any, that: JarvisDataPluginService, resource: PluginBean): void {
-    owner.myPlugin = resource;
+  public complete(that: any, resource: PluginBean): void {
+    that.myPlugin = resource;
     resource.commands = [];
-    (new JarvisResourceLink<CommandBean>()).loadLinks(resource.id, resource.commands, that.allLinkedCommand);
+    (new JarvisResourceLink<CommandBean>()).loadLinks(resource.id, resource.commands, that._pluginService.allLinkedCommand);
   }
 
   /**
@@ -148,7 +148,7 @@ export class JarvisResourcePluginComponent extends JarvisResource<PluginBean> im
     });
 
     if (action === 'commands') {
-      this.dialogRef.componentInstance.loadResource<CommandBean>('plugins', 12, this._commandService);
+      this.pickCommands.loadResource('plugins', 12);
     }
 
     this.dialogRef.afterClosed().subscribe(result => {

@@ -57,10 +57,16 @@ import io.swagger.annotations.Api;
 public class ApiScriptPluginResources extends ApiLinkedResources<ScriptPluginRest,ScriptPluginBean,CommandRest,CommandBean> {
 	protected Logger logger = LoggerFactory.getLogger(ApiScriptPluginResources.class);
 	
+	/**
+	 * commands link
+	 */
 	@Autowired
 	@DeclareLinkedResource(role=ApiMapper.COMMAND_RESOURCE, param=ApiMapper.COMMAND, sortKey=ApiMapper.SORTKEY)
 	public ApiCommandResources apiCommandResources;
 
+	/**
+	 * commands link
+	 */
 	@Autowired
 	@DeclareHrefResource(role=ApiMapper.COMMAND_RESOURCE, href=ApiMapper.HREF, target=CommandRest.class)
 	public ApiHrefPluginCommandResources apiHrefPluginCommandResources;

@@ -33,6 +33,10 @@ export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> im
 
   @Input() myDevice: DeviceBean;
 
+  @ViewChild('pickDevices') pickDevices;
+  @ViewChild('pickTriggers') pickTriggers;
+  @ViewChild('pickPlugins') pickPlugins;
+
   dialogRef: MdDialogRef<JarvisPickerComponent>;
 
   private jarvisDeviceLink: JarvisResourceLink<DeviceBean>;
@@ -66,32 +70,28 @@ export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> im
   /**
    * complete resource
    */
-  public complete(owner: any, that: JarvisDataDeviceService, resource: DeviceBean): void {
-    owner.myDevice = resource;
+  public complete(that: any, resource: DeviceBean): void {
+    that.myDevice = resource;
     resource.devices = [];
-    (new JarvisResourceLink<DeviceBean>()).loadLinks(resource.id, resource.devices, that.allLinkedDevice);
+    (new JarvisResourceLink<DeviceBean>()).loadLinks(resource.id, resource.devices, that._deviceService.allLinkedDevice);
     resource.triggers = [];
-    (new JarvisResourceLink<TriggerBean>()).loadLinks(resource.id, resource.triggers, that.allLinkedTrigger);
+    (new JarvisResourceLink<TriggerBean>()).loadLinks(resource.id, resource.triggers, that._deviceService.allLinkedTrigger);
     resource.plugins = [];
-    (new JarvisResourceLink<PluginBean>()).loadLinks(resource.id, resource.plugins, that.allLinkedPlugin);
+    (new JarvisResourceLink<PluginBean>()).loadLinks(resource.id, resource.plugins, that._deviceService.allLinkedPlugin);
   }
 
   /**
    * picker dialog
    */
   openDialog(action: string) {
-    this.dialogRef = this.dialog.open(JarvisPickerComponent, {
-      disableClose: false
-    });
-
     if (action === 'devices') {
-      this.dialogRef.componentInstance.loadResource<DeviceBean>('devices', 12, this._deviceService);
+      this.pickDevices.open();
     }
     if (action === 'triggers') {
-      this.dialogRef.componentInstance.loadResource<TriggerBean>('triggers', 12, this._triggerService);
+      this.pickTriggers.open();
     }
     if (action === 'plugins') {
-      this.dialogRef.componentInstance.loadResource<PluginBean>('plugins', 12, this._pluginService);
+      this.pickPlugins.open();
     }
 
     this.dialogRef.afterClosed().subscribe(result => {

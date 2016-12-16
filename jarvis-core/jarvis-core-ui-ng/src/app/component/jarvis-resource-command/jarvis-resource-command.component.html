@@ -1,3 +1,93 @@
-<p>
-  jarvis-resource-command works!
-</p>
+<app-jarvis-toolbar-menu [actions]="this" [tasks]="[{'action':'execute','icon':'play_arrow','tooltip':'Simuler (execution)'},{'action':'render','icon':'input','tooltip':'Simuler (rendu)'},{'action':'clear','icon':'loop','tooltip':'Effacer le contexte'}]"
+  [pickers]="[{'action':'notifications','icon':'playlist_add','tooltip':'Ajouter une notification'}]"></app-jarvis-toolbar-menu>
+
+<div *ngIf="myCommand">
+  <p-accordion>
+    <p-accordionTab header="Entête">
+      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px" >
+<div class="ui-grid-row">
+  <div class="ui-grid-col-4">
+    Nom du plugin
+  </div>
+  <div class="ui-grid-col-8">
+    <input type="text" pInputText [(ngModel)]="myCommand.name" placeholder="Nom du plugin" />
+  </div>
+</div>
+<div class="ui-grid-row">
+  <div class="ui-grid-col-4">
+    Catégorie
+  </div>
+  <div class="ui-grid-col-8">
+    <p-dropdown [options]="types" [(ngModel)]="myCommand.type"></p-dropdown>
+  </div>
+</div>
+<div class="ui-grid-row">
+  <div class="ui-grid-col-4">
+    Icône
+  </div>
+  <div class="ui-grid-col-8">
+    <input type="text" pInputText [(ngModel)]="myCommand.icon" placeholder="Icône" />
+  </div>
+</div>
+</div>
+</p-accordionTab>
+<p-accordionTab header="Script">
+  <p-fieldset legend="Source" toggleable="true">
+    <textarea style="width: 100%; height: 400px;" [(ngModel)]="myCommand.body"></textarea>
+</p-fieldset>
+<p-fieldset legend="Script" toggleable="true">
+  <pre><code [innerHtml]="hightlight(myCommand.body)"></code></pre>
+</p-fieldset>
+</p-accordionTab>
+<p-accordionTab header="Notifications">
+  <p-dataTable [value]="myCommand.notifications">
+    <header>Commande</header>
+    <p-column header="Ordre">
+      <template let-notification="rowData" pTemplate>
+        <input type="text" size="2" pInputText [(ngModel)]="notification.extended.order" />
+      </template>
+    </p-column>
+    <p-column field="id" header="Id"></p-column>
+    <p-column field="instance" header="Instance"></p-column>
+    <p-column field="name" header="Nom"></p-column>
+    <p-column header="Action">
+      <template let-notification="rowData" pTemplate type="body">
+        <button md-mini-fab md-tooltip="Mettre à jour le lien" (click)="updateNotificationLink(notification)"><md-icon>save</md-icon></button>
+        <button md-mini-fab md-tooltip="Supprimer le lien" (click)="dropNotificationLink(notification)"><md-icon>delete</md-icon></button>
+        <button md-mini-fab md-tooltip="Détail" (click)="gotoNotificationLink(notification)"><md-icon>touch_app</md-icon></button>
+      </template>
+    </p-column>
+  </p-dataTable>
+</p-accordionTab>
+<p-accordionTab header="Mise au point">
+  <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+<div class="ui-grid-row">
+  <div class="ui-grid-col-4">
+    Données de test (argument du plugin sous forme JSON)
+  </div>
+  <div class="ui-grid-col-8">
+    <input type="text" pInputText [(ngModel)]="myJsonData" placeholder="{}" />
+  </div>
+</div>
+<div class="ui-grid-row">
+  <div class="ui-grid-col-4">
+    Données de test (convertie)
+  </div>
+  <div class="ui-grid-col-8">
+    <pre><code [innerHtml]="pretty(myData)"></code></pre>
+  </div>
+</div>
+<div class="ui-grid-row">
+  <div class="ui-grid-col-4">
+    Données de test (résultat)
+  </div>
+  <div class="ui-grid-col-8">
+    <pre><code [innerHtml]="pretty(myOutputData)"></code></pre>
+  </div>
+</div>
+</div>
+</p-accordionTab>
+</p-accordion>
+</div>
+
+<app-jarvis-picker #pickNotifications [resource]="{'service':'notifications','label':'Notifications'}"></app-jarvis-picker>

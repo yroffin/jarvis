@@ -10,21 +10,13 @@ import { JarvisDataLinkedResource } from './jarvis-data-linked-resource';
 /**
  * data model
  */
-import { CommandBean } from './../model/command-bean';
 import { NotificationBean } from './../model/notification-bean';
 import { LinkBean } from './../model/link-bean';
 
 @Injectable()
-export class JarvisDataCommandService extends JarvisDataCoreResource<CommandBean> implements JarvisDefaultResource<CommandBean> {
-
-    public allLinkedNotification: JarvisDefaultLinkResource<NotificationBean>;
+export class JarvisDataNotificationService extends JarvisDataCoreResource<NotificationBean> implements JarvisDefaultResource<NotificationBean> {
 
     constructor(private _http: Http, private _configuration: JarvisConfigurationService) {
-        super(_configuration.ServerWithApiUrl + 'commands', _http);
-
-        /**
-         * map linked elements
-         */
-        this.allLinkedNotification = new JarvisDataLinkedResource<NotificationBean>(this.actionUrl, '/notifications', _http);
+        super(_configuration.ServerWithApiUrl + 'notifications', _http);
     }
 }

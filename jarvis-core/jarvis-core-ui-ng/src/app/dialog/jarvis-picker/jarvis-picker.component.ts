@@ -14,105 +14,90 @@
  * limitations under the License.
  */
 
-import { Component, ViewChild, OnInit } from '@angular/core';
-import { MdDialogRef, MdDialog } from '@angular/material/dialog';
+import { Component, Input, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { TreeNode, TREE_ACTIONS, KEYS, IActionMapping } from 'angular2-tree-component';
 import * as _ from 'lodash';
 
-import { MdCard } from '@angular/material/card';
-import { MdInput } from '@angular/material/input';
-import { MdToolbar } from '@angular/material/toolbar';
-import { MdButton } from '@angular/material/button';
-
+import { JarvisPicker } from '../../class/jarvis-pickers';
 import { JarvisDefaultResource } from '../../interface/jarvis-default-resource';
+import { CompleteCallback, NotifyCallback } from '../../class/jarvis-resource';
+import { JarvisConfigurationService } from '../../service/jarvis-configuration.service';
+import { JarvisDataNotificationService } from '../../service/jarvis-data-notification.service';
 
 /**
  * data model
  */
 import { ResourceBean } from '../../model/resource-bean';
+import { PickerDialogBean } from '../../model/picker-bean';
 
 @Component({
   selector: 'app-jarvis-picker',
   templateUrl: './jarvis-picker.component.html',
-  entryComponents: [MdCard, MdToolbar, MdInput, MdButton],
   styleUrls: ['./jarvis-picker.component.css']
 })
 export class JarvisPickerComponent implements OnInit {
 
+  @Input() resource: PickerDialogBean;
   @ViewChild('tree') treeNode;
-  private nodes: any[] = null;
 
-  constructor(public dialogRef: MdDialogRef<JarvisPickerComponent>) {
-  }
+  private picked: any;
+  private show: boolean = false;
+  private jarvisPickerHelper: JarvisPicker<ResourceBean>;
 
-  onEvent = console.log.bind(console);
-
-  /**
-   * validate current focused node
-   */
-  public validate(): void {
-    let node = this.treeNode.treeModel.getFocusedNode();
-    if (node != null) {
-      if (node.data.resourceData != null) {
-        this.dialogRef.close(node.data.resourceData);
-      }
-    } else {
-      /**
-       * close dialog without any selection
-       */
-      this.dialogRef.close();
-    }
-  }
+  private target: NotifyCallback<ResourceBean>;
 
   /**
-   * close dialog without any selection
+   * constructor
    */
-  public cancel(): void {
-    this.dialogRef.close();
-  }
-
-  /**
-   * load a new resource in this dialog
-   */
-  public loadResource<T extends ResourceBean>(name: string, max: number, resource: JarvisDefaultResource<T>) {
-    let all: T[];
-    resource.GetAll()
-      .subscribe(
-      (data: T[]) => all = data,
-      error => console.log(error),
-      () => {
-        this.nodes = [];
-        let that = this;
-        /**
-         * order by name then chunk it by piece of max
-         */
-        _.forEach(_.chunk(_.orderBy(all, ['name'], ['asc']), max), function (chunked) {
-          let node = {
-            expanded: true,
-            name: _.head(chunked).name + ' ... ' + _.last(chunked).name,
-            subTitle: name,
-            children: [
-            ]
-          };
-          /**
-           * each chunk are pushrd in the array
-           */
-          that.nodes.push(node);
-          _.forEach(chunked, function (element) {
-            node.children.push({
-              name: element.name + '#' + element.id,
-              resourceData: element,
-              resourceId: element.id,
-              hasChildren: false
-            });
-          });
-        });
-      });
+  constructor(
+    private _notificationService: JarvisDataNotificationService
+  ) {
   }
 
   /**
    * init this component
    */
   ngOnInit() {
+    let service: JarvisDefaultResource<ResourceBean>;
+    if (this.resource.service === 'notifications') {
+      service = this._notificationService;
+    }
+    /**
+     * create helper
+     */
+    this.jarvisPickerHelper = new JarvisPicker<ResourceBean>(service, this.resource);
+  }
+
+  /**
+   * open this dialog box
+   */
+  public open(that: NotifyCallback<ResourceBean>) {
+    this.jarvisPickerHelper.loadResource(12);
+    this.show = true;
+    this.target = that;
+  }
+
+  /**
+   * validate and close
+   */
+  public validate(add: boolean) {
+    if (add) {
+      this.target.notify(this.resource.service, this.picked);
+    }
+    this.show = false;
+  }
+
+  /**
+   * handler event
+   */
+  public onEvent(event: any) {
+    if (event.eventName === 'onFocus' && event.node.data.resourceData) {
+      if (this.picked != event.node.data.resourceData) {
+        /**
+         * store picked element
+         */
+        this.picked = event.node.data.resourceData;
+      }
+    }
   }
 }

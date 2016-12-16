@@ -25,6 +25,7 @@ import { PanelMenuModule } from 'primeng/primeng';
 import { DialogModule } from 'primeng/primeng';
 import { FieldsetModule } from 'primeng/primeng';
 import { DropdownModule } from 'primeng/primeng';
+import { ConfirmDialogModule, ConfirmationService } from 'primeng/primeng';
 
 import { MaterialModule } from '@angular/material';
 
@@ -34,7 +35,9 @@ import { JarvisDataDeviceService } from './service/jarvis-data-device.service';
 import { JarvisDataTriggerService } from './service/jarvis-data-trigger.service';
 import { JarvisDataPluginService } from './service/jarvis-data-plugin.service';
 import { JarvisDataCommandService } from './service/jarvis-data-command.service';
+import { JarvisDataNotificationService } from './service/jarvis-data-notification.service';
 import { JarvisDataStoreService } from './service/jarvis-data-store.service';
+
 import { JarvisHomeComponent } from './component/jarvis-home/jarvis-home.component';
 import { JarvisToolbarComponent } from './component/jarvis-toolbar/jarvis-toolbar.component';
 import { JarvisResourcesComponent } from './component/jarvis-resources/jarvis-resources.component';
@@ -47,6 +50,7 @@ import { JarvisResourceScenarioComponent } from './component/jarvis-resource-sce
 import { JarvisResourceBlockComponent } from './component/jarvis-resource-block/jarvis-resource-block.component';
 import { JarvisResourceConfigurationComponent } from './component/jarvis-resource-configuration/jarvis-resource-configuration.component';
 import { JarvisResourcePropertyComponent } from './component/jarvis-resource-property/jarvis-resource-property.component';
+import { JarvisResourceConnectorComponent } from './component/jarvis-resource-connector/jarvis-resource-connector.component'
 import { JarvisResourceViewComponent } from './component/jarvis-resource-view/jarvis-resource-view.component'
 import { JarvisLayoutDirective } from './directive/jarvis-layout.directive';
 
@@ -62,6 +66,24 @@ const appRoutes: Routes = [
   { path: 'devices/:id', component: JarvisResourceDeviceComponent },
   { path: 'plugins', component: JarvisResourcesComponent, data: { resource: 'plugins' } },
   { path: 'plugins/:id', component: JarvisResourcePluginComponent },
+  { path: 'commands', component: JarvisResourcesComponent, data: { resource: 'commands' } },
+  { path: 'commands/:id', component: JarvisResourceCommandComponent },
+  { path: 'triggers', component: JarvisResourcesComponent, data: { resource: 'triggers' } },
+  { path: 'triggers/:id', component: JarvisResourceTriggerComponent },
+  { path: 'crons', component: JarvisResourcesComponent, data: { resource: 'crons' } },
+  { path: 'crons/:id', component: JarvisResourceTriggerComponent },
+  { path: 'scenarios', component: JarvisResourcesComponent, data: { resource: 'scenarios' } },
+  { path: 'scenarios/:id', component: JarvisResourceScenarioComponent },
+  { path: 'blocks', component: JarvisResourcesComponent, data: { resource: 'blocks' } },
+  { path: 'blocks/:id', component: JarvisResourceScenarioComponent },
+  { path: 'configurations', component: JarvisResourcesComponent, data: { resource: 'configurations' } },
+  { path: 'configurations/:id', component: JarvisResourceConfigurationComponent },
+  { path: 'properties', component: JarvisResourcesComponent, data: { resource: 'properties' } },
+  { path: 'properties/:id', component: JarvisResourcePropertyComponent },
+  { path: 'connectors', component: JarvisResourcesComponent, data: { resource: 'connectors' } },
+  { path: 'connectors/:id', component: JarvisResourceConnectorComponent },
+  { path: 'views', component: JarvisResourcesComponent, data: { resource: 'views' } },
+  { path: 'views/:id', component: JarvisResourceViewComponent },
   { path: '', component: JarvisHomeComponent },
   { path: '**', component: JarvisHomeComponent }
 ];
@@ -81,6 +103,7 @@ const appRoutes: Routes = [
     JarvisResourcePluginComponent,
     JarvisResourceCommandComponent,
     JarvisResourceTriggerComponent,
+    JarvisResourceConnectorComponent,
     JarvisResourceCronComponent,
     JarvisResourceScenarioComponent,
     JarvisResourceBlockComponent,
@@ -119,6 +142,7 @@ const appRoutes: Routes = [
     DialogModule,
     FieldsetModule,
     DropdownModule,
+    ConfirmDialogModule,
     /**
      * load all materials
      */
@@ -134,7 +158,12 @@ const appRoutes: Routes = [
     JarvisDataTriggerService,
     JarvisDataPluginService,
     JarvisDataCommandService,
-    JarvisDataStoreService
+    JarvisDataNotificationService,
+    JarvisDataStoreService,
+    /**
+     * primeng
+     */
+    ConfirmationService
   ],
   bootstrap: [AppComponent]
 })
