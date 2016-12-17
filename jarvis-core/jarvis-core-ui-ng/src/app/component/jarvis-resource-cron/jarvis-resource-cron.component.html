@@ -1,3 +1,74 @@
-<p>
-  jarvis-resource-cron works!
-</p>
+<app-jarvis-toolbar-menu [actions]="this" [tasks]="[{'action':'toggle','icon':'play_arrow','tooltip':'Active / désactive la crontab'},{'action':'test','icon':'autorenew','tooltip':'Test la crontab'}]" [pickers]="[]"></app-jarvis-toolbar-menu>
+
+<div *ngIf="myCron">
+  <p-accordion>
+    <p-accordionTab header="Entête">
+      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Nom
+          </div>
+          <div class="ui-grid-col-8">
+            <input type="text" pInputText [(ngModel)]="myCron.name" placeholder="Nom" />
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Icône
+          </div>
+          <div class="ui-grid-col-8">
+            <input type="text" pInputText [(ngModel)]="myCron.icon" placeholder="Icône" />
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Type
+          </div>
+          <div class="ui-grid-col-8">
+            <p-dropdown [options]="types" [(ngModel)]="myCron.triggerType"></p-dropdown>
+          </div>
+        </div>
+        <div class="ui-grid-row" *ngIf="myCron.triggerType === 'CRONTAB'">
+          <div class="ui-grid-col-4">
+            Définition
+          </div>
+          <div class="ui-grid-col-8">
+              <input type="text" pInputText [(ngModel)]="myCron.cron" placeholder="* * * * * *" />
+          </div>
+        </div>
+        <div class="ui-grid-row" *ngIf="myCron.triggerType != 'CRONTAB'">
+          <div class="ui-grid-col-4">
+            Latitude
+          </div>
+          <div class="ui-grid-col-8">
+              <input type="text" pInputText [(ngModel)]="myCron.latitude" placeholder="0" />
+          </div>
+        </div>
+        <div class="ui-grid-row" *ngIf="myCron.triggerType != 'CRONTAB'">
+          <div class="ui-grid-col-4">
+            Longitude
+          </div>
+          <div class="ui-grid-col-8">
+              <input type="text" pInputText [(ngModel)]="myCron.longitude" placeholder="0" />
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Activation au démarrage
+          </div>
+          <div class="ui-grid-col-8">
+            <p-checkbox binary="true" label="{{myCron.startAtRuntime === true}}" [(ngModel)]="myCron.startAtRuntime"></p-checkbox>
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Actif
+          </div>
+          <div class="ui-grid-col-8">
+            <p-checkbox binary="true" label="{{myCron.status === true}}" [(ngModel)]="myCron.status" disabled></p-checkbox>
+          </div>
+        </div>
+      </div>
+    </p-accordionTab>
+  </p-accordion>
+</div>

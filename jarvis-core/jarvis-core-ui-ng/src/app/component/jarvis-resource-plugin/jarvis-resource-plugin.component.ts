@@ -84,15 +84,6 @@ export class JarvisResourcePluginComponent extends JarvisResource<PluginBean> im
   }
 
   /**
-   * complete resource
-   */
-  public complete(resource: PluginBean): void {
-    this.myPlugin = resource;
-    this.myPlugin.commands = [];
-    (new JarvisResourceLink<CommandBean>()).loadLinks(resource.id, resource.commands, this._pluginService.allLinkedCommand);
-  }
-
-  /**
    * task action
    */
   public task(action: string): void {

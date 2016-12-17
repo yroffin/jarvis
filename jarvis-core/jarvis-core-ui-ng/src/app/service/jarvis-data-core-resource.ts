@@ -36,7 +36,6 @@ export class JarvisDataCoreResource<T extends ResourceBean> implements JarvisDef
      * execute remote task on this resource
      */
     public Task = (id: string, task: string, args: any): Observable<any> => {
-        console.error(JSON.stringify(args));
         return this.http.post(this.actionUrl + '/' + id + '?task=' + task, JSON.stringify(args), { headers: this.headers })
             .map((response: Response) => <any>response.json())
             .catch(this.handleError);

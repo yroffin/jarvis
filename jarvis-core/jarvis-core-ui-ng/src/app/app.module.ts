@@ -88,7 +88,7 @@ const appRoutes: Routes = [
   { path: 'triggers', component: JarvisResourcesComponent, data: { resource: 'triggers' } },
   { path: 'triggers/:id', component: JarvisResourceTriggerComponent },
   { path: 'crons', component: JarvisResourcesComponent, data: { resource: 'crons' } },
-  { path: 'crons/:id', component: JarvisResourceTriggerComponent },
+  { path: 'crons/:id', component: JarvisResourceCronComponent },
   { path: 'scenarios', component: JarvisResourcesComponent, data: { resource: 'scenarios' } },
   { path: 'scenarios/:id', component: JarvisResourceScenarioComponent },
   { path: 'blocks', component: JarvisResourcesComponent, data: { resource: 'blocks' } },
