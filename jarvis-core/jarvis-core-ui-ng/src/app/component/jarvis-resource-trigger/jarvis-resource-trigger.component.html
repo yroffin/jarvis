@@ -1,3 +1,62 @@
-<p>
-  jarvis-resource-trigger works!
-</p>
+<app-jarvis-toolbar-menu [actions]="this" [tasks]="[{'action':'execute','icon':'play_arrow','tooltip':'Simuler (execution)'}]" [pickers]="[{'action':'crons','icon':'local_offer','tooltip':'Ajouter une crontab'}]"></app-jarvis-toolbar-menu>
+
+<div *ngIf="myTrigger">
+  <p-accordion>
+    <p-accordionTab header="Entête">
+      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Nom du plugin
+          </div>
+          <div class="ui-grid-col-8">
+            <input type="text" pInputText [(ngModel)]="myTrigger.name" placeholder="Nom du plugin" />
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Icône
+          </div>
+          <div class="ui-grid-col-8">
+            <input type="text" pInputText [(ngModel)]="myTrigger.icon" placeholder="Icône" />
+          </div>
+        </div>
+      </div>
+    </p-accordionTab>
+    <p-accordionTab header="Périodicité">
+      <p-dataTable [value]="myTrigger.crons">
+        <header>Crontab</header>
+        <p-column header="Ordre">
+          <template let-cron="rowData" pTemplate>
+            <input type="text" size="2" pInputText [(ngModel)]="cron.extended.order" />
+          </template>
+        </p-column>
+        <p-column field="id" header="Id"></p-column>
+        <p-column field="instance" header="Instance"></p-column>
+        <p-column field="name" header="Nom"></p-column>
+        <p-column header="Action">
+          <template let-cron="rowData" pTemplate type="body">
+            <button md-mini-fab md-tooltip="Mettre à jour le lien" (click)="updateCronLink(cron)"><md-icon>save</md-icon></button>
+            <button md-mini-fab md-tooltip="Supprimer le lien" (click)="dropCronLink(cron)"><md-icon>delete</md-icon></button>
+            <button md-mini-fab md-tooltip="Détail" (click)="gotoCronLink(cron)"><md-icon>touch_app</md-icon></button>
+          </template>
+        </p-column>
+      </p-dataTable>
+    </p-accordionTab>
+    <p-accordionTab header="Devices liés">
+      <p-dataTable [value]="myTrigger.devices">
+        <header>Devices</header>
+        <p-column field="id" header="Id"></p-column>
+        <p-column field="name" header="Nom"></p-column>
+      </p-dataTable>
+    </p-accordionTab>
+    <p-accordionTab header="Scenarii liés">
+      <p-dataTable [value]="myTrigger.scenarii">
+        <header>Scenarii</header>
+        <p-column field="id" header="Id"></p-column>
+        <p-column field="name" header="Nom"></p-column>
+      </p-dataTable>
+    </p-accordionTab>
+  </p-accordion>
+</div>
+
+<app-jarvis-picker #pickCrons [resource]="{'service':'crons','label':'Crontabs'}"></app-jarvis-picker>

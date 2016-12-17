@@ -61,7 +61,7 @@ export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> im
    * load device and related data
    */
   ngOnInit() {
-    this.init(this.complete);
+    this.init(this);
   }
 
   /**

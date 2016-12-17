@@ -24,6 +24,7 @@ import { NotifyCallback } from '../../class/jarvis-resource';
 import { JarvisConfigurationService } from '../../service/jarvis-configuration.service';
 import { JarvisDataDeviceService } from '../../service/jarvis-data-device.service';
 import { JarvisDataTriggerService } from '../../service/jarvis-data-trigger.service';
+import { JarvisDataCronService } from '../../service/jarvis-data-cron.service';
 import { JarvisDataCommandService } from '../../service/jarvis-data-command.service';
 import { JarvisDataPluginService } from '../../service/jarvis-data-plugin.service';
 import { JarvisDataNotificationService } from '../../service/jarvis-data-notification.service';
@@ -58,6 +59,7 @@ export class JarvisPickerComponent implements OnInit {
     private _triggerService: JarvisDataTriggerService,
     private _pluginService: JarvisDataPluginService,
     private _commandService: JarvisDataCommandService,
+    private _cronService: JarvisDataCronService,
     private _notificationService: JarvisDataNotificationService
   ) {
   }
@@ -67,6 +69,9 @@ export class JarvisPickerComponent implements OnInit {
    */
   ngOnInit() {
     let service: JarvisDefaultResource<ResourceBean>;
+    if (this.resource.service === 'crons') {
+      service = this._cronService;
+    }
     if (this.resource.service === 'devices') {
       service = this._deviceService;
     }

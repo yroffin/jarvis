@@ -10,20 +10,12 @@ import { JarvisDataLinkedResource } from './jarvis-data-linked-resource';
 /**
  * data model
  */
-import { TriggerBean } from './../model/trigger-bean';
 import { CronBean } from './../model/cron-bean';
 
 @Injectable()
-export class JarvisDataTriggerService extends JarvisDataCoreResource<TriggerBean> implements JarvisDefaultResource<TriggerBean> {
-
-    public allLinkedCron: JarvisDefaultLinkResource<CronBean>;
+export class JarvisDataCronService extends JarvisDataCoreResource<CronBean> implements JarvisDefaultResource<CronBean> {
 
     constructor(private _http: Http, private _configuration: JarvisConfigurationService) {
-        super(_configuration.ServerWithApiUrl + 'triggers', _http);
-
-        /**
-         * map linked elements
-         */
-        this.allLinkedCron = new JarvisDataLinkedResource<CronBean>(this.actionUrl, '/crons', _http);
+        super(_configuration.ServerWithApiUrl + 'crons', _http);
     }
 }
