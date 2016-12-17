@@ -32,11 +32,12 @@ import { JarvisResourceLink } from '../../class/jarvis-resource-link';
  */
 import { JarvisPicker } from '../../class/jarvis-pickers';
 import { JarvisResource } from '../../class/jarvis-resource';
-import { CompleteCallback, NotifyCallback } from '../../class/jarvis-resource';
+import { NotifyCallback } from '../../class/jarvis-resource';
 
 /**
  * data model
  */
+import { ResourceBean } from '../../model/resource-bean';
 import { PickerBean } from '../../model/picker-bean';
 import { LinkBean } from '../../model/link-bean';
 import { CommandBean } from '../../model/command-bean';
@@ -47,7 +48,7 @@ import { NotificationBean } from '../../model/notification-bean';
   templateUrl: './jarvis-resource-command.component.html',
   styleUrls: ['./jarvis-resource-command.component.css']
 })
-export class JarvisResourceCommandComponent extends JarvisResource<CommandBean> implements NotifyCallback<NotificationBean>, OnInit {
+export class JarvisResourceCommandComponent extends JarvisResource<CommandBean> implements NotifyCallback<ResourceBean>, OnInit {
 
   @Input() myCommand: CommandBean;
   @Input() myJsonData: string = "{}";
@@ -88,7 +89,7 @@ export class JarvisResourceCommandComponent extends JarvisResource<CommandBean> 
    * load device and related data
    */
   ngOnInit() {
-    this.init(this.complete);
+    this.init(this);
   }
 
   /**
@@ -97,15 +98,6 @@ export class JarvisResourceCommandComponent extends JarvisResource<CommandBean> 
   private pretty(val) {
     let body = JSON.stringify(val, null, 2);
     return Prism.highlight(body, Prism.languages.javascript);
-  }
-
-  /**
-   * complete resource
-   */
-  public complete(that: any, resource: CommandBean): void {
-    that.myCommand = resource;
-    resource.notifications = [];
-    (new JarvisResourceLink<NotificationBean>()).loadLinks(resource.id, resource.notifications, that._commandService.allLinkedNotification);
   }
 
   /**
@@ -160,8 +152,15 @@ export class JarvisResourceCommandComponent extends JarvisResource<CommandBean> 
   /**
    * notify to add new resource
    */
-  public notify(action: string, resource: NotificationBean): void {
-    this.jarvisNotificationLink.addLink(this.getResource().id, resource.id, this.getResource().notifications, {"order": "1", href: "HREF"}, this._commandService.allLinkedNotification);
+  public notify(action: string, resource: ResourceBean): void {
+    if( action === 'notifications') {
+      this.jarvisNotificationLink.addLink(this.getResource().id, resource.id, this.getResource().notifications, {"order": "1", href: "HREF"}, this._commandService.allLinkedNotification);
+    }
+    if( action === 'complete') {
+      this.myCommand = <CommandBean> resource;
+      this.myCommand.notifications = [];
+      (new JarvisResourceLink<NotificationBean>()).loadLinks(resource.id, this.myCommand.notifications, this._commandService.allLinkedNotification);
+    }
   }
 
   /**

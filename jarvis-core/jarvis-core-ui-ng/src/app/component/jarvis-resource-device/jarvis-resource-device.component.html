@@ -164,7 +164,7 @@
   </p-accordion>
 </div>
 
-<app-jarvis-picker resource="devices"></app-jarvis-picker>
-<app-jarvis-picker resource="triggers"></app-jarvis-picker>
-<app-jarvis-picker resource="plugins"></app-jarvis-picker>
+<app-jarvis-picker #pickDevices [resource]="{'service':'devices','label':'Devices'}"></app-jarvis-picker>
+<app-jarvis-picker #pickTriggers [resource]="{'service':'triggers','label':'Triggers'}"></app-jarvis-picker>
+<app-jarvis-picker #pickPlugins [resource]="{'service':'plugins','label':'Plugins'}"></app-jarvis-picker>
 

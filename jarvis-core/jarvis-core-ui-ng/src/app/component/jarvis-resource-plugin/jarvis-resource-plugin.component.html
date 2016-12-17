@@ -99,7 +99,7 @@
   </p-accordion>
 </div>
 
-<app-jarvis-picker resource="plugins"></app-jarvis-picker>
+<app-jarvis-picker #pickCommands [resource]="{'service':'commands','label':'Commands'}"></app-jarvis-picker>
 
 <p-dialog header="Commande" [(visible)]="display" modal=true responsive=true width="700" resizable=false>
   <div *ngIf="myCommand">

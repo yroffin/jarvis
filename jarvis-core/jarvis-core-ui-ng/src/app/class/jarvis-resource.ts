@@ -8,10 +8,9 @@ import { JarvisDefaultResource } from '../interface/jarvis-default-resource';
 import { ResourceBean } from '../model/resource-bean';
 import { PickerBean } from '../model/picker-bean';
 
-export interface CompleteCallback<T extends ResourceBean> {
-    (that: any, resource: T): void 
-};
-
+/**
+ * notify interface
+ */
 export interface NotifyCallback<T extends ResourceBean> {
     notify(action: string, resource: T): void 
 };
@@ -63,7 +62,7 @@ export class JarvisResource<T extends ResourceBean> {
     /**
      * default init method
      */
-    public init(completeCallback: CompleteCallback<T>): void {
+    public init(that: NotifyCallback<T>): void {
         this.route.params
         .map(params => params['id'])
         .subscribe((id) => {
@@ -75,7 +74,7 @@ export class JarvisResource<T extends ResourceBean> {
                     /**
                      * complete resource
                      */
-                    completeCallback(this, this.getResource());
+                    that.notify('complete', this.getResource());
                 }
             );
         });

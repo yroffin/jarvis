@@ -20,8 +20,12 @@ import * as _ from 'lodash';
 
 import { JarvisPicker } from '../../class/jarvis-pickers';
 import { JarvisDefaultResource } from '../../interface/jarvis-default-resource';
-import { CompleteCallback, NotifyCallback } from '../../class/jarvis-resource';
+import { NotifyCallback } from '../../class/jarvis-resource';
 import { JarvisConfigurationService } from '../../service/jarvis-configuration.service';
+import { JarvisDataDeviceService } from '../../service/jarvis-data-device.service';
+import { JarvisDataTriggerService } from '../../service/jarvis-data-trigger.service';
+import { JarvisDataCommandService } from '../../service/jarvis-data-command.service';
+import { JarvisDataPluginService } from '../../service/jarvis-data-plugin.service';
 import { JarvisDataNotificationService } from '../../service/jarvis-data-notification.service';
 
 /**
@@ -50,6 +54,10 @@ export class JarvisPickerComponent implements OnInit {
    * constructor
    */
   constructor(
+    private _deviceService: JarvisDataDeviceService,
+    private _triggerService: JarvisDataTriggerService,
+    private _pluginService: JarvisDataPluginService,
+    private _commandService: JarvisDataCommandService,
     private _notificationService: JarvisDataNotificationService
   ) {
   }
@@ -59,8 +67,20 @@ export class JarvisPickerComponent implements OnInit {
    */
   ngOnInit() {
     let service: JarvisDefaultResource<ResourceBean>;
+    if (this.resource.service === 'devices') {
+      service = this._deviceService;
+    }
+    if (this.resource.service === 'triggers') {
+      service = this._triggerService;
+    }
+    if (this.resource.service === 'plugins') {
+      service = this._pluginService;
+    }
     if (this.resource.service === 'notifications') {
       service = this._notificationService;
+    }
+    if (this.resource.service === 'commands') {
+      service = this._commandService;
     }
     /**
      * create helper

@@ -1,6 +1,5 @@
 import { Component, Input, ViewChild, OnInit, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { MdDialogRef, MdDialog } from '@angular/material/dialog';
 import { SelectItem } from 'primeng/primeng';
 
 declare var Prism: any;
@@ -16,11 +15,12 @@ import { JarvisResourceLink } from '../../class/jarvis-resource-link';
  * class
  */
 import { JarvisResource } from '../../class/jarvis-resource';
-import { CompleteCallback } from '../../class/jarvis-resource';
+import { NotifyCallback } from '../../class/jarvis-resource';
 
 /**
  * data model
  */
+import { ResourceBean } from '../../model/resource-bean';
 import { DeviceBean } from '../../model/device-bean';
 import { PluginBean } from '../../model/plugin-bean';
 import { PickerBean } from '../../model/picker-bean';
@@ -32,7 +32,7 @@ import { CommandBean } from '../../model/command-bean';
   templateUrl: './jarvis-resource-plugin.component.html',
   styleUrls: ['./jarvis-resource-plugin.component.css']
 })
-export class JarvisResourcePluginComponent extends JarvisResource<PluginBean> implements OnInit {
+export class JarvisResourcePluginComponent extends JarvisResource<PluginBean> implements NotifyCallback<ResourceBean>, OnInit {
 
   @Input() myPlugin: PluginBean;
   @Input() myJsonData: string = "{}";
@@ -50,8 +50,6 @@ export class JarvisResourcePluginComponent extends JarvisResource<PluginBean> im
   display: boolean = false;
   myCommand: CommandBean;
 
-  dialogRef: MdDialogRef<JarvisPickerComponent>;
-
   private jarvisCommandLink: JarvisResourceLink<CommandBean>;
 
   /**
@@ -62,8 +60,7 @@ export class JarvisResourcePluginComponent extends JarvisResource<PluginBean> im
     private _router: Router,
     private _jarvisConfigurationService: JarvisConfigurationService,
     private _pluginService: JarvisDataPluginService,
-    private _commandService: JarvisDataCommandService,
-    private dialog: MdDialog) {
+    private _commandService: JarvisDataCommandService) {
     super('/plugins', ['execute', 'render', 'clear'], _pluginService, _route, _router);
     this.jarvisCommandLink = new JarvisResourceLink<CommandBean>();
     this.types = [];
@@ -75,7 +72,7 @@ export class JarvisResourcePluginComponent extends JarvisResource<PluginBean> im
    * load device and related data
    */
   ngOnInit() {
-    this.init(this.complete);
+    this.init(this);
   }
 
   /**
@@ -89,10 +86,10 @@ export class JarvisResourcePluginComponent extends JarvisResource<PluginBean> im
   /**
    * complete resource
    */
-  public complete(that: any, resource: PluginBean): void {
-    that.myPlugin = resource;
-    resource.commands = [];
-    (new JarvisResourceLink<CommandBean>()).loadLinks(resource.id, resource.commands, that._pluginService.allLinkedCommand);
+  public complete(resource: PluginBean): void {
+    this.myPlugin = resource;
+    this.myPlugin.commands = [];
+    (new JarvisResourceLink<CommandBean>()).loadLinks(resource.id, resource.commands, this._pluginService.allLinkedCommand);
   }
 
   /**
@@ -136,34 +133,26 @@ export class JarvisResourcePluginComponent extends JarvisResource<PluginBean> im
    * pick action
    */
   public pick(picker: PickerBean): void {
-    this.openDialog(picker.action);
+    /**
+     * find notifications
+     */
+    if (picker.action === 'commands') {
+      this.pickCommands.open(this);
+    }
   }
 
   /**
-   * picker dialog
+   * notify to add new resource
    */
-  openDialog(action: string) {
-    this.dialogRef = this.dialog.open(JarvisPickerComponent, {
-      disableClose: false
-    });
-
+  public notify(action: string, resource: ResourceBean): void {
     if (action === 'commands') {
-      this.pickCommands.loadResource('plugins', 12);
+        this.jarvisCommandLink.addLink(this.getResource().id, resource.id, this.getResource().commands, { "order": "1", href: "HREF" }, this._pluginService.allLinkedCommand);
     }
-
-    this.dialogRef.afterClosed().subscribe(result => {
-      this.dialogRef = null;
-      if (result === null) {
-        return;
-      }
-
-      /**
-       * handle commands
-       */
-      if (action === 'commands') {
-        this.jarvisCommandLink.addLink(this.getResource().id, result.id, this.getResource().commands, { "order": "1", href: "HREF" }, this._pluginService.allLinkedCommand);
-      }
-    });
+    if(action === 'complete') {
+      this.myPlugin = <PluginBean> resource;
+      this.myPlugin.commands = [];
+      (new JarvisResourceLink<CommandBean>()).loadLinks(resource.id, this.myPlugin.commands, this._pluginService.allLinkedCommand);
+    }
   }
 
   /**

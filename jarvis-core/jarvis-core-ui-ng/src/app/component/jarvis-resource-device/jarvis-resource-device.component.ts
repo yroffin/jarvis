@@ -1,6 +1,5 @@
 import { Component, Input, ViewChild, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { MdDialogRef, MdDialog } from '@angular/material/dialog';
 
 import { JarvisPickerComponent } from '../../dialog/jarvis-picker/jarvis-picker.component';
 import { JarvisConfigurationService } from '../../service/jarvis-configuration.service';
@@ -13,11 +12,12 @@ import { JarvisResourceLink } from '../../class/jarvis-resource-link';
  * class
  */
 import { JarvisResource } from '../../class/jarvis-resource';
-import { CompleteCallback } from '../../class/jarvis-resource';
+import { NotifyCallback } from '../../class/jarvis-resource';
 
 /**
  * data model
  */
+import { ResourceBean } from '../../model/resource-bean';
 import { DeviceBean } from '../../model/device-bean';
 import { TriggerBean } from '../../model/trigger-bean';
 import { PluginBean } from '../../model/plugin-bean';
@@ -29,15 +29,13 @@ import { LinkBean } from '../../model/link-bean';
   templateUrl: './jarvis-resource-device.component.html',
   styleUrls: ['./jarvis-resource-device.component.css']
 })
-export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> implements OnInit {
+export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> implements NotifyCallback<ResourceBean>, OnInit {
 
   @Input() myDevice: DeviceBean;
 
-  @ViewChild('pickDevices') pickDevices;
-  @ViewChild('pickTriggers') pickTriggers;
-  @ViewChild('pickPlugins') pickPlugins;
-
-  dialogRef: MdDialogRef<JarvisPickerComponent>;
+  @ViewChild('pickDevices') pickDevices: JarvisPickerComponent;
+  @ViewChild('pickTriggers') pickTriggers: JarvisPickerComponent;
+  @ViewChild('pickPlugins') pickPlugins: JarvisPickerComponent;
 
   private jarvisDeviceLink: JarvisResourceLink<DeviceBean>;
   private jarvisTriggerLink: JarvisResourceLink<TriggerBean>;
@@ -52,8 +50,7 @@ export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> im
     private _jarvisConfigurationService: JarvisConfigurationService,
     private _deviceService: JarvisDataDeviceService,
     private _triggerService: JarvisDataTriggerService,
-    private _pluginService: JarvisDataPluginService,
-    private dialog: MdDialog) {
+    private _pluginService: JarvisDataPluginService) {
     super('/devices', ['render'], _deviceService, _route, _router);
     this.jarvisDeviceLink = new JarvisResourceLink<DeviceBean>();
     this.jarvisTriggerLink = new JarvisResourceLink<TriggerBean>();
@@ -68,6 +65,45 @@ export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> im
   }
 
   /**
+   * pick action
+   */
+  public pick(picker: PickerBean): void {
+    /**
+     * find notifications
+     */
+    if (picker.action === 'devices') {
+      this.pickDevices.open(this);
+    }
+    /**
+     * find notifications
+     */
+    if (picker.action === 'triggers') {
+      this.pickTriggers.open(this);
+    }
+    /**
+     * find notifications
+     */
+    if (picker.action === 'plugins') {
+      this.pickPlugins.open(this);
+    }
+  }
+
+  /**
+   * notify to add new resource
+   */
+  public notify(action: string, resource: ResourceBean): void {
+    if (action === 'devices') {
+      this.jarvisDeviceLink.addLink(this.getResource().id, resource.id, this.getResource().devices, { "order": "1", href: "HREF" }, this._deviceService.allLinkedDevice);
+    }
+    if (action === 'triggers') {
+      this.jarvisTriggerLink.addLink(this.getResource().id, resource.id, this.getResource().triggers, { "order": "1", href: "HREF" }, this._deviceService.allLinkedTrigger);
+    }
+    if (action === 'plugins') {
+      this.jarvisPluginLink.addLink(this.getResource().id, resource.id, this.getResource().plugins, { "order": "1", href: "HREF" }, this._deviceService.allLinkedPlugin);
+    }
+  }
+
+  /**
    * complete resource
    */
   public complete(that: any, resource: DeviceBean): void {
@@ -78,56 +114,6 @@ export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> im
     (new JarvisResourceLink<TriggerBean>()).loadLinks(resource.id, resource.triggers, that._deviceService.allLinkedTrigger);
     resource.plugins = [];
     (new JarvisResourceLink<PluginBean>()).loadLinks(resource.id, resource.plugins, that._deviceService.allLinkedPlugin);
-  }
-
-  /**
-   * picker dialog
-   */
-  openDialog(action: string) {
-    if (action === 'devices') {
-      this.pickDevices.open();
-    }
-    if (action === 'triggers') {
-      this.pickTriggers.open();
-    }
-    if (action === 'plugins') {
-      this.pickPlugins.open();
-    }
-
-    this.dialogRef.afterClosed().subscribe(result => {
-      this.dialogRef = null;
-      if (result === null) {
-        return;
-      }
-
-      /**
-       * handle devices
-       */
-      if (action === 'devices') {
-        this.jarvisDeviceLink.addLink(this.getResource().id, result.id, this.getResource().devices, {"order": "1", href: "HREF"}, this._deviceService.allLinkedDevice);
-      }
-
-      /**
-       * handle triggers
-       */
-      if (action === 'triggers') {
-        this.jarvisTriggerLink.addLink(this.getResource().id, result.id, this.getResource().triggers, {"order": "1", href: "HREF"}, this._deviceService.allLinkedTrigger);
-      }
-
-      /**
-       * handle plugins
-       */
-      if (action === 'plugins') {
-        this.jarvisPluginLink.addLink(this.getResource().id, result.id, this.getResource().plugins, {"order": "1", href: "HREF"}, this._deviceService.allLinkedPlugin);
-      }
-    });
-  }
-
-  /**
-   * task action
-   */
-  public pick(picker: PickerBean): void {
-    this.openDialog(picker.action);
   }
 
   /**
