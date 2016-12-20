@@ -89,6 +89,15 @@ export class JarvisDataLinkedResource<T extends ResourceBean> implements JarvisD
     }
 
     /**
+     * delete a link
+     */
+    public DeleteWithFilter = (id: string, linkId: string, instance: string, filters: string): Observable<T> => {
+        return this.http.delete(this.actionUrl + '/' + id  + this.link + '/' + linkId + '?instance=' + instance + '&' + filters, { headers: this.headers })
+            .map((response: Response) => <T>response.json())
+            .catch(this.handleError);
+    }
+
+    /**
      * handle error
      */
     private handleError(error: Response) {

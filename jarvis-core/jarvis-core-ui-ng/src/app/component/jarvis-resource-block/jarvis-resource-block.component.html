@@ -23,10 +23,10 @@
 </div>
 </div>
 </p-accordionTab>
-<p-accordionTab header="Conditionnal plugins">
+<p-accordionTab header="Conditions">
   <app-jarvis-toolbar-resource [notified]="this" [actions]="[{'label':'Conditions', 'icon': 'fa-check', 'action':'conditionnalPlugins', 'picker': pickConditionnalPlugins}]"></app-jarvis-toolbar-resource>
   <p-dataTable [value]="myBlock.conditionnalPlugins">
-    <header>Trigger</header>
+    <header>Plugins</header>
     <p-column header="Ordre">
       <template let-plugin="rowData" pTemplate>
         <input type="text" size="2" pInputText [(ngModel)]="plugin.extended.order" />
@@ -37,16 +37,35 @@
     <p-column field="name" header="Nom"></p-column>
     <p-column header="Action">
       <template let-plugin="rowData" pTemplate type="body">
-        <button md-mini-fab md-tooltip="Mettre à jour le lien" (click)="updateConditionnalPluginLink(plugin)"><md-icon>save</md-icon></button>
-        <button md-mini-fab md-tooltip="Supprimer le lien" (click)="dropConditionnalPluginLink(plugin)"><md-icon>delete</md-icon></button>
+        <button md-mini-fab md-tooltip="Mettre à jour le lien" (click)="updatePluginLink(plugin)"><md-icon>save</md-icon></button>
+        <button md-mini-fab md-tooltip="Supprimer le lien" (click)="dropPluginLink(plugin, 'HREF_IF', myBlock.conditionnalPlugins)"><md-icon>delete</md-icon></button>
         <button md-mini-fab md-tooltip="Détail" (click)="gotoPluginLink(plugin)"><md-icon>touch_app</md-icon></button>
       </template>
     </p-column>
   </p-dataTable>
 </p-accordionTab>
-<p-accordionTab header="Blocks">
-  <p-dataTable [value]="myBlock.blocks">
-    <header>Trigger</header>
+<p-accordionTab header="Then">
+  <app-jarvis-toolbar-resource [notified]="this" [actions]="[{'label':'Plugins', 'icon': 'fa-check', 'action':'thenPlugins', 'picker': pickThenPlugins},{'label':'Blocks', 'icon': 'fa-check', 'action':'thenBlocks', 'picker': pickThenBlocks}]"></app-jarvis-toolbar-resource>
+  <p-dataTable [value]="myBlock.thenPlugins">
+    <header>Plugins</header>
+    <p-column header="Ordre">
+      <template let-plugin="rowData" pTemplate>
+        <input type="text" size="2" pInputText [(ngModel)]="plugin.extended.order" />
+      </template>
+    </p-column>
+    <p-column field="id" header="Id"></p-column>
+    <p-column field="instance" header="Instance"></p-column>
+    <p-column field="name" header="Nom"></p-column>
+    <p-column header="Action">
+      <template let-plugin="rowData" pTemplate type="body">
+        <button md-mini-fab md-tooltip="Mettre à jour le lien" (click)="updatePluginLink(plugin)"><md-icon>save</md-icon></button>
+        <button md-mini-fab md-tooltip="Supprimer le lien" (click)="dropPluginLink(plugin, 'HREF_THEN', myBlock.thenPlugins)"><md-icon>delete</md-icon></button>
+        <button md-mini-fab md-tooltip="Détail" (click)="gotoPluginLink(plugin)"><md-icon>touch_app</md-icon></button>
+      </template>
+    </p-column>
+  </p-dataTable>
+  <p-dataTable [value]="myBlock.thenBlocks">
+    <header>Blocks</header>
     <p-column header="Ordre">
       <template let-block="rowData" pTemplate>
         <input type="text" size="2" pInputText [(ngModel)]="block.extended.order" />
@@ -58,7 +77,46 @@
     <p-column header="Action">
       <template let-block="rowData" pTemplate type="body">
         <button md-mini-fab md-tooltip="Mettre à jour le lien" (click)="updateBlockLink(block)"><md-icon>save</md-icon></button>
-        <button md-mini-fab md-tooltip="Supprimer le lien" (click)="dropBlockLink(block)"><md-icon>delete</md-icon></button>
+        <button md-mini-fab md-tooltip="Supprimer le lien" (click)="dropBlockLink(block, 'HREF_THEN', myBlock.thenBlocks)"><md-icon>delete</md-icon></button>
+        <button md-mini-fab md-tooltip="Détail" (click)="gotoBlockLink(block)"><md-icon>touch_app</md-icon></button>
+      </template>
+    </p-column>
+  </p-dataTable>
+</p-accordionTab>
+<p-accordionTab header="Else">
+  <app-jarvis-toolbar-resource [notified]="this" [actions]="[{'label':'Plugins', 'icon': 'fa-check', 'action':'elsePlugins', 'picker': pickElsePlugins},{'label':'Blocks', 'icon': 'fa-check', 'action':'elseBlocks', 'picker': pickElseBlocks}]"></app-jarvis-toolbar-resource>
+  <p-dataTable [value]="myBlock.elsePlugins">
+    <header>Plugins</header>
+    <p-column header="Ordre">
+      <template let-plugin="rowData" pTemplate>
+        <input type="text" size="2" pInputText [(ngModel)]="plugin.extended.order" />
+      </template>
+    </p-column>
+    <p-column field="id" header="Id"></p-column>
+    <p-column field="instance" header="Instance"></p-column>
+    <p-column field="name" header="Nom"></p-column>
+    <p-column header="Action">
+      <template let-plugin="rowData" pTemplate type="body">
+        <button md-mini-fab md-tooltip="Mettre à jour le lien" (click)="updatePluginLink(plugin)"><md-icon>save</md-icon></button>
+        <button md-mini-fab md-tooltip="Supprimer le lien" (click)="dropPluginLink(plugin, 'HREF_ELSE', myBlock.elsePlugins)"><md-icon>delete</md-icon></button>
+        <button md-mini-fab md-tooltip="Détail" (click)="gotoPluginLink(plugin)"><md-icon>touch_app</md-icon></button>
+      </template>
+    </p-column>
+  </p-dataTable>
+  <p-dataTable [value]="myBlock.elseBlocks">
+    <header>Blocks</header>
+    <p-column header="Ordre">
+      <template let-block="rowData" pTemplate>
+        <input type="text" size="2" pInputText [(ngModel)]="block.extended.order" />
+      </template>
+    </p-column>
+    <p-column field="id" header="Id"></p-column>
+    <p-column field="instance" header="Instance"></p-column>
+    <p-column field="name" header="Nom"></p-column>
+    <p-column header="Action">
+      <template let-block="rowData" pTemplate type="body">
+        <button md-mini-fab md-tooltip="Mettre à jour le lien" (click)="updateBlockLink(block)"><md-icon>save</md-icon></button>
+        <button md-mini-fab md-tooltip="Supprimer le lien" (click)="dropBlockLink(block, 'HREF_ELSE', myBlock.elseBlocks)"><md-icon>delete</md-icon></button>
         <button md-mini-fab md-tooltip="Détail" (click)="gotoBlockLink(block)"><md-icon>touch_app</md-icon></button>
       </template>
     </p-column>
@@ -68,4 +126,7 @@
 </div>
 
 <app-jarvis-picker #pickConditionnalPlugins [resource]="{'service':'plugins', 'action':'conditionnalPlugins', 'label':'Plugins'}"></app-jarvis-picker>
-<app-jarvis-picker #pickConditionnalBlocks [resource]="{'service':'blocks', 'label':'Blocks'}"></app-jarvis-picker>
+<app-jarvis-picker #pickThenPlugins [resource]="{'service':'plugins', 'action':'thenPlugins', 'label':'Plugins'}"></app-jarvis-picker>
+<app-jarvis-picker #pickElsePlugins [resource]="{'service':'plugins', 'action':'elsePlugins', 'label':'Plugins'}"></app-jarvis-picker>
+<app-jarvis-picker #pickThenBlocks [resource]="{'service':'blocks', 'action':'thenBlocks', 'label':'Blocks'}"></app-jarvis-picker>
+<app-jarvis-picker #pickElseBlocks [resource]="{'service':'blocks', 'action':'elseBlocks', 'label':'Blocks'}"></app-jarvis-picker>

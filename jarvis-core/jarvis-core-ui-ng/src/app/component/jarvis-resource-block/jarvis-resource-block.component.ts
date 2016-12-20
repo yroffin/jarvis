@@ -32,16 +32,17 @@ export class JarvisResourceBlockComponent extends JarvisResource<BlockBean> impl
 
   @Input() myBlock: BlockBean;
 
-  @ViewChild('pickConditionnalBlocks') pickConditionnalBlocks;
   @ViewChild('pickConditionnalPlugins') pickConditionnalPlugins;
+  @ViewChild('pickThenPlugins') pickThenPlugins;
+  @ViewChild('pickElsePlugins') pickElsePlugins;
+  @ViewChild('pickThenBlocks') pickThenBlocks;
+  @ViewChild('pickElseBlocks') pickElseBlocks;
 
   /**
    * internal vars
    */
-  myConditionnalBlock: BlockBean;
-
   private jarvisBlockLink: JarvisResourceLink<BlockBean>;
-  private jarvisConditionnalPluginLink: JarvisResourceLink<PluginBean>;
+  private jarvisPluginLink: JarvisResourceLink<PluginBean>;
 
   items: MenuItem[];
 
@@ -56,7 +57,7 @@ export class JarvisResourceBlockComponent extends JarvisResource<BlockBean> impl
   ) {
     super('/blocks', ['execute','test'], _blockService, _route, _router);
     this.jarvisBlockLink = new JarvisResourceLink<BlockBean>();
-    this.jarvisConditionnalPluginLink = new JarvisResourceLink<PluginBean>();
+    this.jarvisPluginLink = new JarvisResourceLink<PluginBean>();
   }
 
   /**
@@ -117,14 +118,23 @@ export class JarvisResourceBlockComponent extends JarvisResource<BlockBean> impl
     /**
      * find blocks
      */
-    if (picker.action === 'blocks') {
-      this.pickConditionnalBlocks.open(this);
+    if (picker.action === 'thenBlocks') {
+      this.pickThenBlocks.open(this);
+    }
+    if (picker.action === 'elseBlocks') {
+      this.pickElseBlocks.open(this);
     }
     /**
-     * find conditionnal plugins
+     * find plugins
      */
     if (picker.action === 'conditionnalPlugins') {
       this.pickConditionnalPlugins.open(this);
+    }
+    if (picker.action === 'thenPlugins') {
+      this.pickThenPlugins.open(this);
+    }
+    if (picker.action === 'elsePlugins') {
+      this.pickElsePlugins.open(this);
     }
   }
 
@@ -132,33 +142,51 @@ export class JarvisResourceBlockComponent extends JarvisResource<BlockBean> impl
    * notify to add new resource
    */
   public notify(picker: PickerBean, resource: ResourceBean): void {
-    if (picker.action === 'blocks') {
-        this.jarvisBlockLink.addLink(this.getResource().id, resource.id, this.getResource().blocks, { "order": "1", href: "HREF" }, this._blockService.allLinkedBlock);
+    if (picker.action === 'thenBlocks') {
+        this.jarvisBlockLink.addLink(this.getResource().id, resource.id, this.getResource().thenBlocks, { "order": "1", href: "HREF_THEN" }, this._blockService.allLinkedBlock);
+    }
+    if (picker.action === 'elseBlocks') {
+        this.jarvisBlockLink.addLink(this.getResource().id, resource.id, this.getResource().elseBlocks, { "order": "1", href: "HREF_ELSE" }, this._blockService.allLinkedBlock);
     }
     if (picker.action === 'conditionnalPlugins') {
-        this.jarvisConditionnalPluginLink.addLink(this.getResource().id, resource.id, this.getResource().conditionnalPlugins, { "order": "1", href: "HREF_IF" }, this._blockService.allLinkedPlugin);
+        this.jarvisPluginLink.addLink(this.getResource().id, resource.id, this.getResource().conditionnalPlugins, { "order": "1", href: "HREF_IF" }, this._blockService.allLinkedPlugin);
     }
+    if (picker.action === 'thenPlugins') {
+        this.jarvisPluginLink.addLink(this.getResource().id, resource.id, this.getResource().thenPlugins, { "order": "1", href: "HREF_THEN" }, this._blockService.allLinkedPlugin);
+    }
+    if (picker.action === 'elsePlugins') {
+        this.jarvisPluginLink.addLink(this.getResource().id, resource.id, this.getResource().elsePlugins, { "order": "1", href: "HREF_ELSE" }, this._blockService.allLinkedPlugin);
+    }
+    /**
+     * load all elements
+     */
     if(picker.action === 'complete') {
       this.myBlock = <BlockBean> resource;
-      this.myBlock.blocks = [];
-      (new JarvisResourceLink<BlockBean>()).loadLinks(resource.id, this.myBlock.blocks, this._blockService.allLinkedBlock);
+      this.myBlock.thenBlocks = [];
+      (new JarvisResourceLink<BlockBean>()).loadFilteredLinks(resource.id, this.myBlock.thenBlocks, this._blockService.allLinkedBlock, "href=HREF_THEN");
+      this.myBlock.elseBlocks = [];
+      (new JarvisResourceLink<BlockBean>()).loadFilteredLinks(resource.id, this.myBlock.elseBlocks, this._blockService.allLinkedBlock, "href=HREF_ELSE");
       this.myBlock.conditionnalPlugins = [];
       (new JarvisResourceLink<PluginBean>()).loadFilteredLinks(resource.id, this.myBlock.conditionnalPlugins, this._blockService.allLinkedPlugin, "href=HREF_IF");
+      this.myBlock.thenPlugins = [];
+      (new JarvisResourceLink<PluginBean>()).loadFilteredLinks(resource.id, this.myBlock.thenPlugins, this._blockService.allLinkedPlugin, "href=HREF_THEN");
+      this.myBlock.elsePlugins = [];
+      (new JarvisResourceLink<PluginBean>()).loadFilteredLinks(resource.id, this.myBlock.elsePlugins, this._blockService.allLinkedPlugin, "href=HREF_ELSE");
     }
   }
 
   /**
    * drop link
    */
-  public dropConditionnalPluginLink(linked: PluginBean): void {
-    this.jarvisConditionnalPluginLink.dropLink(linked, this.myBlock.id, this.myBlock.conditionnalPlugins, this._blockService.allLinkedPlugin);
+  public dropPluginLink(linked: PluginBean, href: string, collection: PluginBean[]): void {
+    this.jarvisPluginLink.dropHrefLink(linked, this.myBlock.id, collection, href, this._blockService.allLinkedPlugin);
   }
 
   /**
    * drop link
    */
-  public updateConditionnalPluginLink(linked: PluginBean): void {
-    this.jarvisConditionnalPluginLink.updateLink(linked, this.myBlock.id, this._blockService.allLinkedPlugin);
+  public updatePluginLink(linked: PluginBean): void {
+    this.jarvisPluginLink.updateLink(linked, this.myBlock.id, this._blockService.allLinkedPlugin);
   }
 
   /**
@@ -171,8 +199,8 @@ export class JarvisResourceBlockComponent extends JarvisResource<BlockBean> impl
   /**
    * drop link
    */
-  public dropBlockLink(linked: BlockBean): void {
-    this.jarvisBlockLink.dropLink(linked, this.myBlock.id, this.myBlock.blocks, this._blockService.allLinkedBlock);
+  public dropBlockLink(linked: BlockBean, href: string, collection: BlockBean[]): void {
+    this.jarvisBlockLink.dropHrefLink(linked, this.myBlock.id, collection, href, this._blockService.allLinkedBlock);
   }
 
   /**

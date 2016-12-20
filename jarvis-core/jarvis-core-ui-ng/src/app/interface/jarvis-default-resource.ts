@@ -28,6 +28,7 @@ export interface JarvisDefaultLinkResource<T extends ResourceBean> {
     Add(id: string, linkId: string, linkToAdd: any): Observable<T>;
     Update(id: string, linkId: string, instance: string, linkToUpdate: any): Observable<T>;
     Delete(id: string, linkId: string, instance: string): Observable<T>;
+    DeleteWithFilter(id: string, linkId: string, instance: string, filters: string): Observable<T>;
 }
 
 export interface JarvisDefaultResource<T extends ResourceBean> {

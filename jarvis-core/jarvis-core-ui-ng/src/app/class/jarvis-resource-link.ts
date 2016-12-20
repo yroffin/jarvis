@@ -98,6 +98,22 @@ export class JarvisResourceLink<T extends ResourceBean> {
   /**
    * drop link
    */
+  public dropHrefLink(linked: T, owner: string, elements: Array<T>, href: string, service: JarvisDefaultLinkResource<T>): void {
+    let deleted;
+    service.DeleteWithFilter(owner, linked.id, linked.instance, 'href=' + href)
+      .subscribe(
+      (data: T) => deleted = data,
+      error => console.log(error),
+      () => {
+        _.remove(elements, function (element) {
+          return element.id === linked.id && element.instance === linked.instance;
+        });
+      });
+  }
+
+  /**
+   * drop link
+   */
   public updateLink(linked: T, owner: string, service: JarvisDefaultLinkResource<T>): void {
     let deleted;
     service.Update(owner, linked.id, linked.instance, linked.extended)
