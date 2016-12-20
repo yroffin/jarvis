@@ -23,6 +23,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+
 import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.plugin.ScriptPluginBean;
@@ -34,9 +37,13 @@ import org.jarvis.core.profiler.DefaultProcessService;
 import org.jarvis.core.profiler.model.DefaultProcess;
 import org.jarvis.core.profiler.model.GenericNode;
 import org.jarvis.core.resources.api.ApiLinkedTwiceResources;
+import org.jarvis.core.resources.api.Declare;
+import org.jarvis.core.resources.api.DeclareHrefResource;
+import org.jarvis.core.resources.api.DeclareLinkedResource;
 import org.jarvis.core.resources.api.GenericValue;
 import org.jarvis.core.resources.api.href.ApiHrefBlockBlockResources;
 import org.jarvis.core.resources.api.href.ApiHrefBlockScriptPluginResources;
+import org.jarvis.core.resources.api.mapper.ApiMapper;
 import org.jarvis.core.resources.api.plugins.ApiScriptPluginResources;
 import org.jarvis.core.services.groovy.PluginGroovyService;
 import org.jarvis.core.type.GenericMap;
@@ -44,22 +51,46 @@ import org.jarvis.core.type.TaskType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import io.swagger.annotations.Api;
+
 /**
  * Block resource
- *
  */
+@Api(value = "block")
+@Path("/api/blocks")
+@Produces("application/json")
 @Component
+@Declare(resource=ApiMapper.BLOCK_RESOURCE, summary="Block resource", rest=BlockRest.class)
 public class ApiBlockResources extends ApiLinkedTwiceResources<BlockRest,BlockBean,ScriptPluginRest,ScriptPluginBean,BlockRest,BlockBean> {
 
+	/**
+	 * block
+	 */
 	@Autowired
-	ApiHrefBlockScriptPluginResources apiHrefBlockScriptPluginResources;
+	@DeclareLinkedResource(role=ApiMapper.BLOCK_RESOURCE, param=ApiMapper.BLOCK, sortKey=ApiMapper.SORTKEY)
+	public ApiBlockResources misc;
+
+	/**
+	 * block
+	 */
+	@Autowired
+	@DeclareHrefResource(role=ApiMapper.BLOCK_RESOURCE, href=ApiMapper.HREF, target=BlockRest.class)
+	public ApiHrefBlockBlockResources apiHrefBlockBlockResources;
+
+	/**
+	 * plugin
+	 */
+	@Autowired
+	@DeclareLinkedResource(role=ApiMapper.SCRIPT_RESOURCE, param=ApiMapper.PLUGIN, sortKey=ApiMapper.SORTKEY)
+	public ApiScriptPluginResources apiScriptPluginResources;
+
+	/**
+	 * plugin
+	 */
+	@Autowired
+	@DeclareHrefResource(role=ApiMapper.SCRIPT_RESOURCE, href=ApiMapper.HREF, target=ScriptPluginRest.class)
+	public ApiHrefBlockScriptPluginResources apiHrefBlockScriptPluginResources;
 	
-	@Autowired
-	ApiHrefBlockBlockResources apiHrefBlockBlockResources;
-
-	@Autowired
-	ApiScriptPluginResources apiScriptPluginResources;
-
 	/**
 	 * constructor
 	 */
@@ -73,16 +104,7 @@ public class ApiBlockResources extends ApiLinkedTwiceResources<BlockRest,BlockBe
 	 */
 	@Override
 	public void mount() {
-		/**
-		 * blocks
-		 */
-		declare(BLOCK_RESOURCE);
-		/**
-		 * blocks->plugins
-		 * blocks->blocks
-		 */
-		declare(BLOCK_RESOURCE, SCRIPT_RESOURCE, apiScriptPluginResources, apiHrefBlockScriptPluginResources, PLUGIN, SORTKEY, HREF);
-		declareSecond(BLOCK_RESOURCE, BLOCK_RESOURCE, this, apiHrefBlockBlockResources, BLOCK, SORTKEY, HREF);
+		super.mount();
 	}
 
 	@Override

@@ -135,11 +135,11 @@ export class JarvisResourcePluginComponent extends JarvisResource<PluginBean> im
   /**
    * notify to add new resource
    */
-  public notify(action: string, resource: ResourceBean): void {
-    if (action === 'commands') {
+  public notify(picker: PickerBean, resource: ResourceBean): void {
+    if (picker.action === 'commands') {
         this.jarvisCommandLink.addLink(this.getResource().id, resource.id, this.getResource().commands, { "order": "1", href: "HREF" }, this._pluginService.allLinkedCommand);
     }
-    if(action === 'complete') {
+    if(picker.action === 'complete') {
       this.myPlugin = <PluginBean> resource;
       this.myPlugin.commands = [];
       (new JarvisResourceLink<CommandBean>()).loadLinks(resource.id, this.myPlugin.commands, this._pluginService.allLinkedCommand);

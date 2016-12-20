@@ -1,3 +1,69 @@
-<p>
-  jarvis-resource-scenario works!
-</p>
+<app-jarvis-toolbar-menu [actions]="this" [tasks]="[{'action':'execute','icon':'play_arrow','tooltip':'Execute le scenario'}]" [pickers]="[{'action':'triggers','icon':'settings_remote','tooltip':'Ajouter un trigger'},{'action':'blocks','icon':'low_priority','tooltip':'Ajouter un block'}]"></app-jarvis-toolbar-menu>
+
+<div *ngIf="myScenario">
+  <p-accordion>
+    <p-accordionTab header="Entête">
+      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Nom
+          </div>
+          <div class="ui-grid-col-8">
+            <input type="text" pInputText [(ngModel)]="myScenario.name" placeholder="Nom" />
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Icône
+          </div>
+          <div class="ui-grid-col-8">
+            <input type="text" pInputText [(ngModel)]="myScenario.icon" placeholder="Icône" />
+          </div>
+        </div>
+      </div>
+    </p-accordionTab>
+    <p-accordionTab header="Triggers">
+      <p-dataTable [value]="myScenario.triggers">
+        <header>Trigger</header>
+        <p-column header="Ordre">
+          <template let-trigger="rowData" pTemplate>
+            <input type="text" size="2" pInputText [(ngModel)]="trigger.extended.order" />
+          </template>
+        </p-column>
+        <p-column field="id" header="Id"></p-column>
+        <p-column field="instance" header="Instance"></p-column>
+        <p-column field="name" header="Nom"></p-column>
+        <p-column header="Action">
+          <template let-trigger="rowData" pTemplate type="body">
+            <button md-mini-fab md-tooltip="Mettre à jour le lien" (click)="updateTriggerLink(trigger)"><md-icon>save</md-icon></button>
+            <button md-mini-fab md-tooltip="Supprimer le lien" (click)="dropTriggerLink(trigger)"><md-icon>delete</md-icon></button>
+            <button md-mini-fab md-tooltip="Détail" (click)="gotoTriggerLink(trigger)"><md-icon>touch_app</md-icon></button>
+          </template>
+        </p-column>
+      </p-dataTable>
+    </p-accordionTab>
+    <p-accordionTab header="Blocks">
+      <p-dataTable [value]="myScenario.blocks">
+        <header>Trigger</header>
+        <p-column header="Ordre">
+          <template let-block="rowData" pTemplate>
+            <input type="text" size="2" pInputText [(ngModel)]="block.extended.order" />
+          </template>
+        </p-column>
+        <p-column field="id" header="Id"></p-column>
+        <p-column field="instance" header="Instance"></p-column>
+        <p-column field="name" header="Nom"></p-column>
+        <p-column header="Action">
+          <template let-block="rowData" pTemplate type="body">
+            <button md-mini-fab md-tooltip="Mettre à jour le lien" (click)="updateBlockLink(block)"><md-icon>save</md-icon></button>
+            <button md-mini-fab md-tooltip="Supprimer le lien" (click)="dropBlockLink(block)"><md-icon>delete</md-icon></button>
+            <button md-mini-fab md-tooltip="Détail" (click)="gotoBlockLink(block)"><md-icon>touch_app</md-icon></button>
+          </template>
+        </p-column>
+      </p-dataTable>
+    </p-accordionTab>
+  </p-accordion>
+</div>
+
+<app-jarvis-picker #pickTriggers [resource]="{'service':'triggers','label':'Triggers'}"></app-jarvis-picker>
+<app-jarvis-picker #pickBlocks [resource]="{'service':'blocks','label':'Blocks'}"></app-jarvis-picker>

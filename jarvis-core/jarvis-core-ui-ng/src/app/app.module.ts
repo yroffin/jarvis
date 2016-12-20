@@ -42,6 +42,7 @@ import { DialogModule } from 'primeng/primeng';
 import { FieldsetModule } from 'primeng/primeng';
 import { DropdownModule } from 'primeng/primeng';
 import { ConfirmDialogModule, ConfirmationService } from 'primeng/primeng';
+import { SplitButtonModule } from 'primeng/primeng';
 
 import { MaterialModule } from '@angular/material';
 
@@ -53,6 +54,8 @@ import { JarvisDataPluginService } from './service/jarvis-data-plugin.service';
 import { JarvisDataCommandService } from './service/jarvis-data-command.service';
 import { JarvisDataNotificationService } from './service/jarvis-data-notification.service';
 import { JarvisDataCronService } from './service/jarvis-data-cron.service';
+import { JarvisDataScenarioService } from './service/jarvis-data-scenario.service';
+import { JarvisDataBlockService } from './service/jarvis-data-block.service';
 import { JarvisDataStoreService } from './service/jarvis-data-store.service';
 
 import { JarvisHomeComponent } from './component/jarvis-home/jarvis-home.component';
@@ -73,6 +76,7 @@ import { JarvisLayoutDirective } from './directive/jarvis-layout.directive';
 
 import { JarvisTileComponent } from './component/jarvis-tile/jarvis-tile.component';
 import { JarvisToolbarMenuComponent } from './component/jarvis-toolbar-menu/jarvis-toolbar-menu.component';
+import { JarvisToolbarResourceComponent } from './component/jarvis-toolbar-resource/jarvis-toolbar-resource.component';
 import { JarvisPickerComponent } from './dialog/jarvis-picker/jarvis-picker.component';
 
 /**
@@ -92,7 +96,7 @@ const appRoutes: Routes = [
   { path: 'scenarios', component: JarvisResourcesComponent, data: { resource: 'scenarios' } },
   { path: 'scenarios/:id', component: JarvisResourceScenarioComponent },
   { path: 'blocks', component: JarvisResourcesComponent, data: { resource: 'blocks' } },
-  { path: 'blocks/:id', component: JarvisResourceScenarioComponent },
+  { path: 'blocks/:id', component: JarvisResourceBlockComponent },
   { path: 'configurations', component: JarvisResourcesComponent, data: { resource: 'configurations' } },
   { path: 'configurations/:id', component: JarvisResourceConfigurationComponent },
   { path: 'properties', component: JarvisResourcesComponent, data: { resource: 'properties' } },
@@ -116,6 +120,7 @@ const appRoutes: Routes = [
     JarvisLayoutDirective,
     JarvisTileComponent,
     JarvisToolbarMenuComponent,
+    JarvisToolbarResourceComponent,
     JarvisPickerComponent,
     JarvisResourcePluginComponent,
     JarvisResourceCommandComponent,
@@ -160,6 +165,7 @@ const appRoutes: Routes = [
     FieldsetModule,
     DropdownModule,
     ConfirmDialogModule,
+    SplitButtonModule,
     /**
      * load all materials
      */
@@ -177,6 +183,8 @@ const appRoutes: Routes = [
     JarvisDataCommandService,
     JarvisDataCronService,
     JarvisDataNotificationService,
+    JarvisDataScenarioService,
+    JarvisDataBlockService,
     JarvisDataStoreService,
     /**
      * primeng

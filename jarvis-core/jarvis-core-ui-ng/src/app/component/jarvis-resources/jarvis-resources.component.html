@@ -1,3 +1,4 @@
+<button md-mini-fab md-tooltip="Ajouter" (click)="addNewResource()"><md-icon>note_add</md-icon></button>
 <p-dataTable [value]="myResources" [rows]="10" [globalFilter]="gb" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]">
     <header>{{myResourceName}}</header>
     <p-column header="Icône">
@@ -7,4 +8,9 @@
     </p-column>
     <p-column field="id" header="Id" [filter]="true"></p-column>
     <p-column field="name" header="Name" [filter]="true"></p-column>
+    <p-column header="Action">
+      <template let-resource="rowData" pTemplate type="body">
+        <button md-mini-fab md-tooltip="Supprimer" (click)="dropResource(resource)"><md-icon>delete</md-icon></button>
+      </template>
+    </p-column>
 </p-dataTable>

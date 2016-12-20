@@ -42,6 +42,27 @@ export class JarvisResourceLink<T extends ResourceBean> {
   }
 
   /**
+   * load link with filter
+   */
+  public loadFilteredLinks(owner: string, elements: Array<T>, service: JarvisDefaultLinkResource<T>, filters: string): void {
+    /**
+     * clear array
+     */
+    _.remove(elements, function (element) {
+      return true;
+    })
+    /**
+     * then load it
+     */
+    service.FindAll(owner, filters)
+      .subscribe(
+      (data: T[]) => _.merge(elements, data),
+      error => console.log(error),
+      () => {
+      });
+  }
+
+  /**
    * add link
    */
   public addLink(owner: string, linked: string, elements: Array<T>, value: any, service: JarvisDefaultLinkResource<T>): void {

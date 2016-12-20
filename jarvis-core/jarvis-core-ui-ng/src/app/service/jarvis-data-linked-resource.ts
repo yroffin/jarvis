@@ -44,6 +44,15 @@ export class JarvisDataLinkedResource<T extends ResourceBean> implements JarvisD
     }
 
     /**
+     * get all link
+     */
+    public FindAll = (id: string, filters: string): Observable<T[]> => {
+        return this.http.get(this.actionUrl + '/' + id + this.link + '?' + filters, { headers: this.headers })
+            .map((response: Response) => <T[]>response.json())
+            .catch(this.handleError);
+    }
+
+    /**
      * get single link
      */
     public GetSingle = (id: string, linkId: string): Observable<T> => {

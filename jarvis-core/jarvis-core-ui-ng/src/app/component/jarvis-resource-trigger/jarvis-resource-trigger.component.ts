@@ -104,11 +104,11 @@ export class JarvisResourceTriggerComponent extends JarvisResource<TriggerBean> 
   /**
    * notify to add new resource
    */
-  public notify(action: string, resource: ResourceBean): void {
-    if (action === 'crons') {
+  public notify(picker: PickerBean, resource: ResourceBean): void {
+    if (picker.action === 'crons') {
         this.jarvisCronLink.addLink(this.getResource().id, resource.id, this.getResource().crons, { "order": "1", href: "HREF" }, this._triggerService.allLinkedCron);
     }
-    if(action === 'complete') {
+    if(picker.action === 'complete') {
       this.myTrigger = <TriggerBean> resource;
       this.myTrigger.crons = [];
       (new JarvisResourceLink<CronBean>()).loadLinks(resource.id, this.myTrigger.crons, this._triggerService.allLinkedCron);

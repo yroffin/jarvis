@@ -2,14 +2,8 @@
  * default picker model
  */
 export class PickerBean {
+    public service: string;
     public action: string;
     public icon: string;
-}
-
-/**
- * default picker dialog bean
- */
-export class PickerDialogBean {
-    public service: string;
     public label: string;
 }

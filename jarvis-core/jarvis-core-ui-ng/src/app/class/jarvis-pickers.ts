@@ -24,7 +24,7 @@ import { JarvisDataNotificationService } from '../service/jarvis-data-notificati
  * data model
  */
 import { ResourceBean } from '../model/resource-bean';
-import { PickerDialogBean } from '../model/picker-bean';
+import { PickerBean } from '../model/picker-bean';
 
 /**
  * default class to handle default behaviour or resource
@@ -32,7 +32,7 @@ import { PickerDialogBean } from '../model/picker-bean';
  */
 export class JarvisPicker<T extends ResourceBean> {
 
-  private myJarvisConfig: PickerDialogBean;
+  private myJarvisConfig: PickerBean;
   private myJarvisResource: JarvisDefaultResource<T>;
   public nodes: any[] = null;
 
@@ -41,7 +41,7 @@ export class JarvisPicker<T extends ResourceBean> {
    */
   constructor(
     _notificationService: JarvisDefaultResource<T>,
-    _config: PickerDialogBean
+    _config: PickerBean
   ) {
     this.myJarvisResource = _notificationService;
     this.myJarvisConfig = _config;

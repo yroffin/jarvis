@@ -91,14 +91,14 @@ export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> im
   /**
    * notify to add new resource
    */
-  public notify(action: string, resource: ResourceBean): void {
-    if (action === 'devices') {
+  public notify(picker: PickerBean, resource: ResourceBean): void {
+    if (picker.action === 'devices') {
       this.jarvisDeviceLink.addLink(this.getResource().id, resource.id, this.getResource().devices, { "order": "1", href: "HREF" }, this._deviceService.allLinkedDevice);
     }
-    if (action === 'triggers') {
+    if (picker.action === 'triggers') {
       this.jarvisTriggerLink.addLink(this.getResource().id, resource.id, this.getResource().triggers, { "order": "1", href: "HREF" }, this._deviceService.allLinkedTrigger);
     }
-    if (action === 'plugins') {
+    if (picker.action === 'plugins') {
       this.jarvisPluginLink.addLink(this.getResource().id, resource.id, this.getResource().plugins, { "order": "1", href: "HREF" }, this._deviceService.allLinkedPlugin);
     }
   }

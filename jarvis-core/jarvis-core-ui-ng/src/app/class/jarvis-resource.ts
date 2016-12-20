@@ -12,7 +12,7 @@ import { PickerBean } from '../model/picker-bean';
  * notify interface
  */
 export interface NotifyCallback<T extends ResourceBean> {
-    notify(action: string, resource: T): void 
+    notify(action: PickerBean, resource: T): void 
 };
 
 /**
@@ -74,7 +74,9 @@ export class JarvisResource<T extends ResourceBean> {
                     /**
                      * complete resource
                      */
-                    that.notify('complete', this.getResource());
+                    let picker: PickerBean = new PickerBean();
+                    picker.action = 'complete';
+                    that.notify(picker, this.getResource());
                 }
             );
         });

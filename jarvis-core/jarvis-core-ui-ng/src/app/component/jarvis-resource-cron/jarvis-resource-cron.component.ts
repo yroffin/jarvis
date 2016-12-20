@@ -19,6 +19,7 @@ import { NotifyCallback } from '../../class/jarvis-resource';
  */
 import { ResourceBean } from '../../model/resource-bean';
 import { CronBean } from '../../model/cron-bean';
+import { PickerBean } from '../../model/picker-bean';
 
 @Component({
   selector: 'app-jarvis-resource-cron',
@@ -88,8 +89,8 @@ export class JarvisResourceCronComponent extends JarvisResource<CronBean> implem
   /**
    * notify to add new resource
    */
-  public notify(action: string, resource: ResourceBean): void {
-    if(action === 'complete') {
+  public notify(picker: PickerBean, resource: ResourceBean): void {
+    if(picker.action === 'complete') {
       this.myCron = resource;
     }
   }

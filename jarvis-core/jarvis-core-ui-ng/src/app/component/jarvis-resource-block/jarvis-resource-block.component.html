@@ -1,3 +1,71 @@
-<p>
-  jarvis-resource-block works!
-</p>
+<app-jarvis-toolbar-menu [actions]="this" [tasks]="[{'action':'execute','icon':'cached','tooltip':'Test le block'},{'action':'execute','icon':'play_arrow','tooltip':'Execute le block'}]"
+  [pickers]="[{'action':'blocks','icon':'settings_remote','tooltip':'Ajouter un block'}]"></app-jarvis-toolbar-menu>
+
+<div *ngIf="myBlock">
+  <p-accordion>
+    <p-accordionTab header="Entête">
+      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+<div class="ui-grid-row">
+  <div class="ui-grid-col-4">
+    Nom
+  </div>
+  <div class="ui-grid-col-8">
+    <input type="text" pInputText [(ngModel)]="myBlock.name" placeholder="Nom" />
+  </div>
+</div>
+<div class="ui-grid-row">
+  <div class="ui-grid-col-4">
+    Icône
+  </div>
+  <div class="ui-grid-col-8">
+    <input type="text" pInputText [(ngModel)]="myBlock.icon" placeholder="Icône" />
+  </div>
+</div>
+</div>
+</p-accordionTab>
+<p-accordionTab header="Conditionnal plugins">
+  <app-jarvis-toolbar-resource [notified]="this" [actions]="[{'label':'Conditions', 'icon': 'fa-check', 'action':'conditionnalPlugins', 'picker': pickConditionnalPlugins}]"></app-jarvis-toolbar-resource>
+  <p-dataTable [value]="myBlock.conditionnalPlugins">
+    <header>Trigger</header>
+    <p-column header="Ordre">
+      <template let-plugin="rowData" pTemplate>
+        <input type="text" size="2" pInputText [(ngModel)]="plugin.extended.order" />
+      </template>
+    </p-column>
+    <p-column field="id" header="Id"></p-column>
+    <p-column field="instance" header="Instance"></p-column>
+    <p-column field="name" header="Nom"></p-column>
+    <p-column header="Action">
+      <template let-plugin="rowData" pTemplate type="body">
+        <button md-mini-fab md-tooltip="Mettre à jour le lien" (click)="updateConditionnalPluginLink(plugin)"><md-icon>save</md-icon></button>
+        <button md-mini-fab md-tooltip="Supprimer le lien" (click)="dropConditionnalPluginLink(plugin)"><md-icon>delete</md-icon></button>
+        <button md-mini-fab md-tooltip="Détail" (click)="gotoPluginLink(plugin)"><md-icon>touch_app</md-icon></button>
+      </template>
+    </p-column>
+  </p-dataTable>
+</p-accordionTab>
+<p-accordionTab header="Blocks">
+  <p-dataTable [value]="myBlock.blocks">
+    <header>Trigger</header>
+    <p-column header="Ordre">
+      <template let-block="rowData" pTemplate>
+        <input type="text" size="2" pInputText [(ngModel)]="block.extended.order" />
+      </template>
+    </p-column>
+    <p-column field="id" header="Id"></p-column>
+    <p-column field="instance" header="Instance"></p-column>
+    <p-column field="name" header="Nom"></p-column>
+    <p-column header="Action">
+      <template let-block="rowData" pTemplate type="body">
+        <button md-mini-fab md-tooltip="Mettre à jour le lien" (click)="updateBlockLink(block)"><md-icon>save</md-icon></button>
+        <button md-mini-fab md-tooltip="Supprimer le lien" (click)="dropBlockLink(block)"><md-icon>delete</md-icon></button>
+        <button md-mini-fab md-tooltip="Détail" (click)="gotoBlockLink(block)"><md-icon>touch_app</md-icon></button>
+      </template>
+    </p-column>
+  </p-dataTable>
+</p-accordionTab>
+</p-accordion>
+</div>
+
+<app-jarvis-picker #pickConditionnalPlugins [resource]="{'service':'plugins', 'action':'conditionnalPlugins', 'label':'Plugins'}"></app-jarvis-picker>
+<app-jarvis-picker #pickConditionnalBlocks [resource]="{'service':'blocks', 'label':'Blocks'}"></app-jarvis-picker>

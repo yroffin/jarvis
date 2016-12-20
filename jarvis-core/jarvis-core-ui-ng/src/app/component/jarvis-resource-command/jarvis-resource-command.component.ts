@@ -152,11 +152,11 @@ export class JarvisResourceCommandComponent extends JarvisResource<CommandBean> 
   /**
    * notify to add new resource
    */
-  public notify(action: string, resource: ResourceBean): void {
-    if( action === 'notifications') {
+  public notify(picker: PickerBean, resource: ResourceBean): void {
+    if( picker.action === 'notifications') {
       this.jarvisNotificationLink.addLink(this.getResource().id, resource.id, this.getResource().notifications, {"order": "1", href: "HREF"}, this._commandService.allLinkedNotification);
     }
-    if( action === 'complete') {
+    if( picker.action === 'complete') {
       this.myCommand = <CommandBean> resource;
       this.myCommand.notifications = [];
       (new JarvisResourceLink<NotificationBean>()).loadLinks(resource.id, this.myCommand.notifications, this._commandService.allLinkedNotification);

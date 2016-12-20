@@ -16,6 +16,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import * as _ from 'lodash';
 
 import { JarvisConfigurationService } from '../../service/jarvis-configuration.service';
 import { JarvisDefaultResource, JarvisDefaultLinkResource } from '../../interface/jarvis-default-resource';
@@ -29,6 +30,8 @@ import { JarvisDataPluginService } from '../../service/jarvis-data-plugin.servic
 import { JarvisDataCommandService } from '../../service/jarvis-data-command.service';
 import { JarvisDataTriggerService } from '../../service/jarvis-data-trigger.service';
 import { JarvisDataCronService } from '../../service/jarvis-data-cron.service';
+import { JarvisDataScenarioService } from '../../service/jarvis-data-scenario.service';
+import { JarvisDataBlockService } from '../../service/jarvis-data-block.service';
 
 /**
  * data model
@@ -44,6 +47,7 @@ export class JarvisResourcesComponent implements OnInit {
 
   myResourceName: string = "default";
   myResources: ResourceBean[];
+  myService: JarvisDefaultResource<ResourceBean>;
 
   /**
    * constructor
@@ -56,6 +60,8 @@ export class JarvisResourcesComponent implements OnInit {
     private _jarvisDataPluginService: JarvisDataPluginService,
     private _jarvisDataCommandService: JarvisDataCommandService,
     private _jarvisDataTriggerService: JarvisDataTriggerService,
+    private _jarvisDataScenarioService: JarvisDataScenarioService,
+    private _jarvisDataBlockService: JarvisDataBlockService,
     private _jarvisDataCronService: JarvisDataCronService
   ) {
   }
@@ -68,6 +74,12 @@ export class JarvisResourcesComponent implements OnInit {
       .filter(event => event instanceof NavigationEnd)
       .subscribe((navigationEnd: NavigationEnd) => {
         // You only receive NavigationEnd events
+        if (navigationEnd.url === '/blocks') {
+          this.load('blocks', this._jarvisDataBlockService);
+        }
+        if (navigationEnd.url === '/scenarios') {
+          this.load('scenarios', this._jarvisDataScenarioService);
+        }
         if (navigationEnd.url === '/devices') {
           this.load('devices', this._jarvisDataDeviceService);
         }
@@ -99,11 +111,54 @@ export class JarvisResourcesComponent implements OnInit {
       this.myResourceName = res;
     }
 
+    /**
+     * get all resource
+     */
     jarvisDataService.GetAll()
       .subscribe(
       (data: ResourceBean[]) => this.myResources = data,
       error => console.log(error),
       () => {
+        this.myService = jarvisDataService;
+      }
+      );
+  }
+
+  /**
+   * add a new resource
+   */
+  public addNewResource(resource: ResourceBean) {
+    /**
+     * create a single resource
+     */
+    let created: ResourceBean = <ResourceBean> {};
+    created.name = "default";
+    created.icon = "save";
+    this.myService.Add(created)
+      .subscribe(
+      (data: ResourceBean) => created = data,
+      error => console.log(error),
+      () => {
+        this.myResources.push(created);
+      }
+      );
+  }
+
+  /**
+   * delete resource
+   */
+  public dropResource(resource: ResourceBean) {
+    /**
+     * delete a single resource
+     */
+    this.myService.Delete(resource.id)
+      .subscribe(
+      (data: ResourceBean) => resource = data,
+      error => console.log(error),
+      () => {
+        _.remove(this.myResources, function(item) {
+          return item.id === resource.id;
+        })
       }
       );
   }
@@ -112,6 +167,6 @@ export class JarvisResourcesComponent implements OnInit {
    * view this resource
    */
   public view(resource: ResourceBean) {
-    this.router.navigate(['/'+this.myResourceName+'/' + resource.id]);
+    this.router.navigate(['/' + this.myResourceName + '/' + resource.id]);
   }
 }
