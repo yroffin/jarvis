@@ -56,6 +56,7 @@ import { JarvisDataNotificationService } from './service/jarvis-data-notificatio
 import { JarvisDataCronService } from './service/jarvis-data-cron.service';
 import { JarvisDataScenarioService } from './service/jarvis-data-scenario.service';
 import { JarvisDataBlockService } from './service/jarvis-data-block.service';
+import { JarvisDataRawService } from './service/jarvis-data-raw.service';
 import { JarvisDataStoreService } from './service/jarvis-data-store.service';
 
 import { JarvisHomeComponent } from './component/jarvis-home/jarvis-home.component';
@@ -72,7 +73,7 @@ import { JarvisResourceConfigurationComponent } from './component/jarvis-resourc
 import { JarvisResourcePropertyComponent } from './component/jarvis-resource-property/jarvis-resource-property.component';
 import { JarvisResourceConnectorComponent } from './component/jarvis-resource-connector/jarvis-resource-connector.component'
 import { JarvisResourceViewComponent } from './component/jarvis-resource-view/jarvis-resource-view.component'
-import { JarvisLayoutDirective } from './directive/jarvis-layout.directive';
+import { JarvisInlineSvgDirective } from './directive/jarvis-inline-svg.directive';
 
 import { JarvisTileComponent } from './component/jarvis-tile/jarvis-tile.component';
 import { JarvisToolbarMenuComponent } from './component/jarvis-toolbar-menu/jarvis-toolbar-menu.component';
@@ -117,7 +118,7 @@ const appRoutes: Routes = [
     JarvisToolbarComponent,
     JarvisResourceDeviceComponent,
     JarvisResourcesComponent,
-    JarvisLayoutDirective,
+    JarvisInlineSvgDirective,
     JarvisTileComponent,
     JarvisToolbarMenuComponent,
     JarvisToolbarResourceComponent,
@@ -186,6 +187,7 @@ const appRoutes: Routes = [
     JarvisDataScenarioService,
     JarvisDataBlockService,
     JarvisDataStoreService,
+    JarvisDataRawService,
     /**
      * primeng
      */

@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, OnInit, ElementRef } from '@angular/core';
+import { Component, Input, ViewChild, OnInit, Inject, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { JarvisPickerComponent } from '../../dialog/jarvis-picker/jarvis-picker.component';
@@ -48,6 +48,9 @@ export class JarvisResourceScenarioComponent extends JarvisResource<ScenarioBean
    * constructor
    */
   constructor(
+    /**
+     * route
+     */
     private _route: ActivatedRoute,
     private _router: Router,
     private _jarvisConfigurationService: JarvisConfigurationService,

@@ -89,8 +89,7 @@ export class JarvisDataCoreResource<T extends ResourceBean> implements JarvisDef
     /**
      * error handler
      */
-    private handleError(error: Response) {
-        console.error(error);
-        return Observable.throw(error.json().error || 'Server error');
+    protected handleError(error: Response) {
+        return Observable.throw(error || 'Server error');
     }
 }
