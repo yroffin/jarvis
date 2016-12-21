@@ -44,6 +44,8 @@ export class JarvisResourceScenarioComponent extends JarvisResource<ScenarioBean
   private jarvisTriggerLink: JarvisResourceLink<TriggerBean>;
   private jarvisBlockLink: JarvisResourceLink<BlockBean>;
 
+  private console: string[];
+
   /**
    * constructor
    */
@@ -83,6 +85,7 @@ export class JarvisResourceScenarioComponent extends JarvisResource<ScenarioBean
         (result: any) => myOutputData = result,
         error => console.log(error),
         () => {
+          this.console = <string[]> myOutputData;
         }
         );
       return;

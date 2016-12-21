@@ -65,6 +65,13 @@
     <p-accordionTab header="Graphe">
       <div inlineSvg [resourceUrl]="'scenarios/'+myScenario.id+'/svg'" ></div>
     </p-accordionTab>
+    <p-accordionTab header="Test">
+      <p-dataTable [value]="console">
+        <p-column header="Résultat">
+          <template let-line="rowData" pTemplate type="body">{{line}}</template>
+        </p-column>
+      </p-dataTable>
+    </p-accordionTab>
   </p-accordion>
 </div>
 
