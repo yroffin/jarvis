@@ -1,5 +1,5 @@
-<app-jarvis-toolbar-menu [actions]="this" [tasks]="[{'action':'execute','icon':'cached','tooltip':'Test le block'},{'action':'execute','icon':'play_arrow','tooltip':'Execute le block'}]"
-  [pickers]="[{'action':'blocks','icon':'settings_remote','tooltip':'Ajouter un block'}]"></app-jarvis-toolbar-menu>
+<app-jarvis-toolbar-menu [actions]="this" [tasks]="[{'action':'test','icon':'cached','tooltip':'Test le block'},{'action':'execute','icon':'play_arrow','tooltip':'Execute le block'}]"
+  [pickers]="[]"></app-jarvis-toolbar-menu>
 
 <div *ngIf="myBlock">
   <p-accordion>
@@ -21,6 +21,22 @@
     <input type="text" pInputText [(ngModel)]="myBlock.icon" placeholder="Icône" />
   </div>
 </div>
+<div class="ui-grid-row">
+  <div class="ui-grid-col-4">
+    Paramètres(s) JSON
+  </div>
+  <div class="ui-grid-col-8">
+    <input type="text" pInputText [(ngModel)]="myBlock.testParameter" placeholder="{}}" />
+  </div>
+</div>
+<div class="ui-grid-row">
+  <div class="ui-grid-col-4">
+    Expression
+  </div>
+  <div class="ui-grid-col-8">
+    <input type="text" pInputText [(ngModel)]="myBlock.expression" placeholder="def i = 0" />
+  </div>
+</div>
 </div>
 </p-accordionTab>
 <p-accordionTab header="Conditions">
@@ -39,6 +55,7 @@
       <template let-plugin="rowData" pTemplate type="body">
         <button md-mini-fab md-tooltip="Mettre à jour le lien" (click)="updatePluginLink(plugin)"><md-icon>save</md-icon></button>
         <button md-mini-fab md-tooltip="Supprimer le lien" (click)="dropPluginLink(plugin, 'HREF_IF', myBlock.conditionnalPlugins)"><md-icon>delete</md-icon></button>
+        <button md-mini-fab md-tooltip="Détail du lien" (click)="viewPluginLink(plugin)"><md-icon>zoom_in</md-icon></button>
         <button md-mini-fab md-tooltip="Détail" (click)="gotoPluginLink(plugin)"><md-icon>touch_app</md-icon></button>
       </template>
     </p-column>
@@ -130,3 +147,29 @@
 <app-jarvis-picker #pickElsePlugins [resource]="{'service':'plugins', 'action':'elsePlugins', 'label':'Plugins'}"></app-jarvis-picker>
 <app-jarvis-picker #pickThenBlocks [resource]="{'service':'blocks', 'action':'thenBlocks', 'label':'Blocks'}"></app-jarvis-picker>
 <app-jarvis-picker #pickElseBlocks [resource]="{'service':'blocks', 'action':'elseBlocks', 'label':'Blocks'}"></app-jarvis-picker>
+
+<p-dialog header="Condition" [(visible)]="viewCondition" modal=true responsive=true width="700" resizable=false>
+  <div *ngIf="myPlugin">
+    <p-fieldset legend="Entête" toggleable="true">
+      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+<div class="ui-grid-row">
+  <div class="ui-grid-col-4">
+    Identifiant
+  </div>
+  <div class="ui-grid-col-8">
+    <input type="text" pInputText [(ngModel)]="myPlugin.id" placeholder="Identifiant" disabled />
+  </div>
+</div>
+<div class="ui-grid-row">
+  <div class="ui-grid-col-4">
+    Instance
+  </div>
+  <div class="ui-grid-col-8">
+    <input type="text" pInputText [(ngModel)]="myPlugin.instance" placeholder="Instance" disabled />
+  </div>
+</div>
+</div>
+<button md-mini-fab md-tooltip="Mettre à jour le lien" (click)="updatePluginLink(myPlugin)"><md-icon>save</md-icon></button>
+</p-fieldset>
+</div>
+</p-dialog>

@@ -46,6 +46,9 @@ export class JarvisResourceBlockComponent extends JarvisResource<BlockBean> impl
 
   items: MenuItem[];
 
+  private myPlugin: PluginBean;
+  private viewCondition: boolean = false;
+  
   /**
    * constructor
    */
@@ -95,6 +98,20 @@ export class JarvisResourceBlockComponent extends JarvisResource<BlockBean> impl
    * task action
    */
   public task(action: string): void {
+    /**
+     * test this plugin
+     */
+    if (action === 'test') {
+      let myOutputData: any;
+      this._blockService.Task(this.myBlock.id, action, {})
+        .subscribe(
+        (result: any) => myOutputData = result,
+        error => console.log(error),
+        () => {
+        }
+        );
+      return;
+    }
     /**
      * execute this plugin
      */
@@ -187,6 +204,14 @@ export class JarvisResourceBlockComponent extends JarvisResource<BlockBean> impl
    */
   public updatePluginLink(linked: PluginBean): void {
     this.jarvisPluginLink.updateLink(linked, this.myBlock.id, this._blockService.allLinkedPlugin);
+  }
+
+  /**
+   * view link
+   */
+  public viewPluginLink(linked: PluginBean): void {
+    this.myPlugin = linked;
+    this.viewCondition = true;
   }
 
   /**
