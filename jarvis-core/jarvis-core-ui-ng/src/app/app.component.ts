@@ -14,13 +14,12 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ChangeDetectorRef, ApplicationRef } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import { MenuItem } from 'primeng/primeng';
 
 @Component({
   selector: 'app-root',
-  providers: [],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
@@ -31,8 +30,8 @@ export class AppComponent implements OnInit {
    * constructor
    */
   constructor(
-    private _changeDetectorRef: ChangeDetectorRef,
-    private _applicationRef: ApplicationRef) {
+    
+  ) {
   }
 
   /**

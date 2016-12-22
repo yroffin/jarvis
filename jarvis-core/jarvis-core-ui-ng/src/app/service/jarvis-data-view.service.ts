@@ -1,4 +1,4 @@
-import { Injectable, ChangeDetectorRef } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
 import {Subject} from 'rxjs/Rx';
 import 'rxjs/add/operator/map'
@@ -23,7 +23,6 @@ export class JarvisDataViewService {
 
   constructor(
     private _http: Http,
-    private _changeDetectorRef: ChangeDetectorRef,
     private _configuration: JarvisConfigurationService,
     private _jarvisDataStoreService: JarvisDataStoreService,
     private _jarvisDataDeviceService: JarvisDataDeviceService) {

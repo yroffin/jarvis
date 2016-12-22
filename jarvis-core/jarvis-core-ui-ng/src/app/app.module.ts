@@ -59,6 +59,7 @@ import { JarvisDataNotificationService } from './service/jarvis-data-notificatio
 import { JarvisDataCronService } from './service/jarvis-data-cron.service';
 import { JarvisDataScenarioService } from './service/jarvis-data-scenario.service';
 import { JarvisDataBlockService } from './service/jarvis-data-block.service';
+import { JarvisDataViewService } from './service/jarvis-data-view.service';
 import { JarvisDataRawService } from './service/jarvis-data-raw.service';
 import { JarvisDataStoreService } from './service/jarvis-data-store.service';
 
@@ -198,6 +199,7 @@ const appRoutes: Routes = [
     JarvisDataBlockService,
     JarvisDataStoreService,
     JarvisDataRawService,
+    JarvisDataViewService,
     /**
      * primeng
      */
