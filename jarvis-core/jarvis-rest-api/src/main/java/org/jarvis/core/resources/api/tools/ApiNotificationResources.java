@@ -2,11 +2,16 @@ package org.jarvis.core.resources.api.tools;
 
 import java.lang.reflect.Field;
 
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+
 import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.model.bean.tools.NotificationBean;
 import org.jarvis.core.model.rest.tools.NotificationRest;
 import org.jarvis.core.resources.api.ApiResources;
+import org.jarvis.core.resources.api.Declare;
 import org.jarvis.core.resources.api.GenericValue;
+import org.jarvis.core.resources.api.mapper.ApiMapper;
 import org.jarvis.core.resources.api.plugins.PayloadBean;
 import org.jarvis.core.resources.api.plugins.PayloadBeanAttachement;
 import org.jarvis.core.services.slack.PluginSlackService;
@@ -17,10 +22,16 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import io.swagger.annotations.Api;
+
 /**
  * tools resources
  */
+@Api(value = "notification")
+@Path("/api/notifications")
+@Produces("application/json")
 @Component
+@Declare(resource=ApiMapper.NOTIFICATION_RESOURCE, summary="Notification resource", rest=NotificationRest.class)
 public class ApiNotificationResources extends ApiResources<NotificationRest,NotificationBean> {
 
 	@Autowired
@@ -36,10 +47,7 @@ public class ApiNotificationResources extends ApiResources<NotificationRest,Noti
 
 	@Override
 	public void mount() {
-		/**
-		 * snapshot
-		 */
-		declare(NOTIFICATION_RESOURCE);
+		super.mount();
 	}
 
 	@Override

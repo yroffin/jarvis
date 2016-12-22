@@ -1,3 +1,65 @@
-<p>
-  jarvis-resource-configuration works!
-</p>
+<app-jarvis-toolbar-menu [actions]="this" [tasks]="[]" [pickers]="[]"></app-jarvis-toolbar-menu>
+
+<div *ngIf="myConfiguration">
+  <p-accordion>
+    <p-accordionTab header="Entête">
+      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Nom
+          </div>
+          <div class="ui-grid-col-8">
+            <input type="text" pInputText [(ngModel)]="myConfiguration.name" placeholder="Nom" />
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Icône
+          </div>
+          <div class="ui-grid-col-8">
+            <input type="text" pInputText [(ngModel)]="myConfiguration.icon" placeholder="Icône" />
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Active
+          </div>
+          <div class="ui-grid-col-8">
+            <p-checkbox binary="true" label="Active" [(ngModel)]="myConfiguration.active"></p-checkbox>
+          </div>
+        </div>
+      </div>
+    </p-accordionTab>
+    <p-accordionTab header="Présentation">
+      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Opacité
+          </div>
+          <div class="ui-grid-col-8">
+            <input type="text" pInputText [(ngModel)]="myConfiguration.opacity" placeholder="0" />
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Image de fond
+          </div>
+          <div class="ui-grid-col-8">
+            <input type="text" pInputText [(ngModel)]="myConfiguration.backgroundUrl" placeholder="todo" />
+          </div>
+        </div>
+      </div>
+    </p-accordionTab>
+    <p-accordionTab header="Configuration du système">
+      <p-dataTable [value]="myConfiguration.system.scheduled">
+        <header *ngIf="myConfiguration.system.events">Scheduled (actif)</header>
+        <header *ngIf="!myConfiguration.system.events">Scheduled (inactif)</header>
+        <p-column field="id" header="Id"></p-column>
+        <p-column field="name" header="Nom"></p-column>
+        <p-column header="Dernière execution">
+          <template let-data="rowData" pTemplate type="body">{{data.lastExecution | date : 'yyyy-MM-dd HH:mm:ss Z' : timezone}}</template>
+        </p-column>
+      </p-dataTable>
+    </p-accordionTab>
+  </p-accordion>
+</div>

@@ -1,15 +1,15 @@
 <app-jarvis-toolbar-menu [actions]="this" [tasks]="[]" [pickers]="[]"></app-jarvis-toolbar-menu>
 
-<div *ngIf="myConnector">
+<div *ngIf="myNotification">
   <p-accordion>
     <p-accordionTab header="Entête">
-      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
         <div class="ui-grid-row">
           <div class="ui-grid-col-4">
             Nom
           </div>
           <div class="ui-grid-col-8">
-            <input type="text" pInputText [(ngModel)]="myConnector.name" placeholder="Nom" />
+            <input type="text" pInputText [(ngModel)]="myNotification.name" placeholder="Nom" />
           </div>
         </div>
         <div class="ui-grid-row">
@@ -17,7 +17,15 @@
             Icône
           </div>
           <div class="ui-grid-col-8">
-            <input type="text" pInputText [(ngModel)]="myConnector.icon" placeholder="Icône" />
+            <input type="text" pInputText [(ngModel)]="myNotification.icon" placeholder="Icône" />
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Type
+          </div>
+          <div class="ui-grid-col-8">
+            <p-dropdown [options]="types" [(ngModel)]="myNotification.type"></p-dropdown>
           </div>
         </div>
       </div>

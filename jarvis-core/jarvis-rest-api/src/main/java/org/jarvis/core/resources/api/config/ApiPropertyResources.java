@@ -16,19 +16,30 @@
 
 package org.jarvis.core.resources.api.config;
 
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+
 import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.model.bean.config.PropertyBean;
 import org.jarvis.core.model.rest.config.PropertyRest;
 import org.jarvis.core.resources.api.ApiResources;
+import org.jarvis.core.resources.api.Declare;
 import org.jarvis.core.resources.api.GenericValue;
+import org.jarvis.core.resources.api.mapper.ApiMapper;
 import org.jarvis.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
 import org.springframework.stereotype.Component;
+
+import io.swagger.annotations.Api;
 
 /**
  * View resource
  */
 @Component
+@Api(value = "property")
+@Path("/api/properties")
+@Produces("application/json")
+@Declare(resource=ApiMapper.PROPERTY_RESOURCE, summary="Property resource", rest=PropertyRest.class)
 public class ApiPropertyResources extends ApiResources<PropertyRest,PropertyBean> {
 
 	/**
@@ -41,10 +52,7 @@ public class ApiPropertyResources extends ApiResources<PropertyRest,PropertyBean
 
 	@Override
 	public void mount() {
-		/**
-		 * configurations
-		 */
-		declare(PROPERTY_RESOURCE);
+		super.mount();
 	}
 
 	@Override

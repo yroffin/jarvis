@@ -52,6 +52,9 @@ import { JarvisDataDeviceService } from './service/jarvis-data-device.service';
 import { JarvisDataTriggerService } from './service/jarvis-data-trigger.service';
 import { JarvisDataPluginService } from './service/jarvis-data-plugin.service';
 import { JarvisDataCommandService } from './service/jarvis-data-command.service';
+import { JarvisDataConfigurationService } from './service/jarvis-data-configuration.service';
+import { JarvisDataPropertyService } from './service/jarvis-data-property.service';
+import { JarvisDataConnectorService } from './service/jarvis-data-connector.service';
 import { JarvisDataNotificationService } from './service/jarvis-data-notification.service';
 import { JarvisDataCronService } from './service/jarvis-data-cron.service';
 import { JarvisDataScenarioService } from './service/jarvis-data-scenario.service';
@@ -70,6 +73,7 @@ import { JarvisResourceCronComponent } from './component/jarvis-resource-cron/ja
 import { JarvisResourceScenarioComponent } from './component/jarvis-resource-scenario/jarvis-resource-scenario.component';
 import { JarvisResourceBlockComponent } from './component/jarvis-resource-block/jarvis-resource-block.component';
 import { JarvisResourceConfigurationComponent } from './component/jarvis-resource-configuration/jarvis-resource-configuration.component';
+import { JarvisResourceNotificationComponent } from './component/jarvis-resource-notification/jarvis-resource-notification.component';
 import { JarvisResourcePropertyComponent } from './component/jarvis-resource-property/jarvis-resource-property.component';
 import { JarvisResourceConnectorComponent } from './component/jarvis-resource-connector/jarvis-resource-connector.component'
 import { JarvisResourceViewComponent } from './component/jarvis-resource-view/jarvis-resource-view.component'
@@ -100,6 +104,8 @@ const appRoutes: Routes = [
   { path: 'blocks/:id', component: JarvisResourceBlockComponent },
   { path: 'configurations', component: JarvisResourcesComponent, data: { resource: 'configurations' } },
   { path: 'configurations/:id', component: JarvisResourceConfigurationComponent },
+  { path: 'notifications', component: JarvisResourcesComponent, data: { resource: 'notifications' } },
+  { path: 'notifications/:id', component: JarvisResourceNotificationComponent },
   { path: 'properties', component: JarvisResourcesComponent, data: { resource: 'properties' } },
   { path: 'properties/:id', component: JarvisResourcePropertyComponent },
   { path: 'connectors', component: JarvisResourcesComponent, data: { resource: 'connectors' } },
@@ -131,6 +137,7 @@ const appRoutes: Routes = [
     JarvisResourceScenarioComponent,
     JarvisResourceBlockComponent,
     JarvisResourceConfigurationComponent,
+    JarvisResourceNotificationComponent,
     JarvisResourcePropertyComponent,
     JarvisResourceViewComponent
   ],
@@ -182,6 +189,9 @@ const appRoutes: Routes = [
     JarvisDataTriggerService,
     JarvisDataPluginService,
     JarvisDataCommandService,
+    JarvisDataConfigurationService,
+    JarvisDataPropertyService,
+    JarvisDataConnectorService,
     JarvisDataCronService,
     JarvisDataNotificationService,
     JarvisDataScenarioService,

@@ -1,3 +1,26 @@
-<p>
-  jarvis-resource-property works!
-</p>
+<app-jarvis-toolbar-menu [actions]="this" [tasks]="[]" [pickers]="[]"></app-jarvis-toolbar-menu>
+
+<div *ngIf="myProperty">
+  <p-accordion>
+    <p-accordionTab header="Entête">
+      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Nom
+          </div>
+          <div class="ui-grid-col-8">
+            <input type="text" pInputText [(ngModel)]="myProperty.name" placeholder="Nom" />
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Icône
+          </div>
+          <div class="ui-grid-col-8">
+            <input type="text" pInputText [(ngModel)]="myProperty.icon" placeholder="Icône" />
+          </div>
+        </div>
+      </div>
+    </p-accordionTab>
+  </p-accordion>
+</div>

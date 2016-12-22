@@ -53,17 +53,42 @@ export class AppComponent implements OnInit {
         label: 'Ressource',
         icon: 'fa-sliders',
         items: [
-          { label: 'Device', icon: 'fa-server', routerLink: ['/devices'] },
-          { label: 'Plugin', icon: 'fa-podcast', routerLink: ['/plugins'] },
-          { label: 'Command', icon: 'fa-plug', routerLink: ['/commands'] },
-          { label: 'Trigger', icon: 'fa-paper-plane', routerLink: ['/triggers'] },
-          { label: 'Cron', icon: 'fa-inbox', routerLink: ['/crons'] },
-          { label: 'Scenario', icon: 'fa-flash', routerLink: ['/scenarios'] },
-          { label: 'Block', icon: 'fa-exchange', routerLink: ['/blocks'] },
-          { label: 'Configuration', icon: 'fa-database', routerLink: ['/configurations'] },
-          { label: 'Property', icon: 'fa-code', routerLink: ['/properties'] },
-          { label: 'Connector', icon: 'fa-bug', routerLink: ['/connectors'] },
-          { label: 'View', icon: 'fa-briefcase', routerLink: ['/views'] }
+          {
+            label: 'Core',
+            icon: 'fa-code',
+            items: [
+              { label: 'View', icon: 'fa-briefcase', routerLink: ['/views'] },
+              { label: 'Device', icon: 'fa-server', routerLink: ['/devices'] },
+              { label: 'Plugin', icon: 'fa-podcast', routerLink: ['/plugins'] },
+              { label: 'Command', icon: 'fa-plug', routerLink: ['/commands'] },
+              { label: 'Connector', icon: 'fa-bug', routerLink: ['/connectors'] }
+            ]
+          },
+          {
+            label: 'Activation',
+            icon: 'fa-sliders',
+            items: [
+              { label: 'Trigger', icon: 'fa-paper-plane', routerLink: ['/triggers'] },
+              { label: 'Cron', icon: 'fa-inbox', routerLink: ['/crons'] },
+              { label: 'Notification', icon: 'fa-bolt', routerLink: ['/notifications'] },
+            ]
+          },
+          {
+            label: 'Code',
+            icon: 'fa-code-fork',
+            items: [
+              { label: 'Scenario', icon: 'fa-flash', routerLink: ['/scenarios'] },
+              { label: 'Block', icon: 'fa-exchange', routerLink: ['/blocks'] }
+            ]
+          },
+          {
+            label: 'Misc',
+            icon: 'fa-cube',
+            items: [
+              { label: 'Configuration', icon: 'fa-database', routerLink: ['/configurations'] },
+              { label: 'Property', icon: 'fa-code', routerLink: ['/properties'] }
+            ]
+          }
         ]
       }
     ];

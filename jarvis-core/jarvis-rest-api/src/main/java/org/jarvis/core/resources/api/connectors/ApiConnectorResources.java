@@ -19,6 +19,8 @@ package org.jarvis.core.resources.api.connectors;
 import java.io.IOException;
 import java.util.List;
 
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
@@ -30,16 +32,24 @@ import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.connector.ConnectorBean;
 import org.jarvis.core.model.rest.connector.ConnectorRest;
 import org.jarvis.core.resources.api.ApiResources;
+import org.jarvis.core.resources.api.Declare;
 import org.jarvis.core.resources.api.GenericValue;
+import org.jarvis.core.resources.api.mapper.ApiMapper;
 import org.jarvis.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Component;
 
+import io.swagger.annotations.Api;
+
 /**
  * View resource
  */
 @Component
+@Api(value = "connector")
+@Path("/api/connectors")
+@Produces("application/json")
+@Declare(resource=ApiMapper.CONNECTOR_RESOURCE, summary="Connector resource", rest=ConnectorRest.class)
 public class ApiConnectorResources extends ApiResources<ConnectorRest,ConnectorBean> {
 
 	protected Client client;
@@ -51,16 +61,15 @@ public class ApiConnectorResources extends ApiResources<ConnectorRest,ConnectorB
 		setRestClass(ConnectorRest.class);
 		setBeanClass(ConnectorBean.class);
 
-		// create HTTP Client for all call
+		/**
+		 * create HTTP Client for all call
+		 */
 		this.client = ClientBuilder.newClient();
 	}
 
 	@Override
 	public void mount() {
-		/**
-		 * connectors
-		 */
-		declare(CONNECTOR_RESOURCE);
+		super.mount();
 	}
 
 	@Override

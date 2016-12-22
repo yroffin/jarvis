@@ -6,7 +6,7 @@ import { JarvisPickerComponent } from '../../dialog/jarvis-picker/jarvis-picker.
 import { JarvisConfigurationService } from '../../service/jarvis-configuration.service';
 import { JarvisResourceLink } from '../../class/jarvis-resource-link';
 
-import { JarvisDataPropertyService } from '../../service/jarvis-data-property.service';
+import { JarvisDataNotificationService } from '../../service/jarvis-data-notification.service';
 
 /**
  * class
@@ -19,16 +19,21 @@ import { NotifyCallback } from '../../class/jarvis-resource';
  */
 import { ResourceBean } from '../../model/resource-bean';
 import { PickerBean } from '../../model/picker-bean';
-import { PropertyBean } from '../../model/property-bean';
+import { NotificationBean } from '../../model/notification-bean';
 
 @Component({
-  selector: 'app-jarvis-resource-property',
-  templateUrl: './jarvis-resource-property.component.html',
-  styleUrls: ['./jarvis-resource-property.component.css']
+  selector: 'app-jarvis-resource-notification',
+  templateUrl: './jarvis-resource-notification.component.html',
+  styleUrls: ['./jarvis-resource-notification.component.css']
 })
-export class JarvisResourcePropertyComponent extends JarvisResource<PropertyBean> implements NotifyCallback<ResourceBean>, OnInit {
+export class JarvisResourceNotificationComponent extends JarvisResource<NotificationBean> implements NotifyCallback<ResourceBean>, OnInit {
 
-  @Input() myProperty: PropertyBean;
+  @Input() myNotification: NotificationBean;
+
+  /**
+   * internal
+   */
+  private types: SelectItem[];
 
   /**
    * constructor
@@ -37,8 +42,11 @@ export class JarvisResourcePropertyComponent extends JarvisResource<PropertyBean
     private _route: ActivatedRoute,
     private _router: Router,
     private _jarvisConfigurationService: JarvisConfigurationService,
-    private _propertyService: JarvisDataPropertyService) {
-    super('/properties', [], _propertyService, _route, _router);
+    private _notificationService: JarvisDataNotificationService) {
+    super('/notifications', [], _notificationService, _route, _router);
+    this.types = [];
+    this.types.push({ label: 'Select type', value: null });
+    this.types.push({ label: 'Slack notification', value: 'SLACK' });
   }
 
   /**
@@ -59,7 +67,7 @@ export class JarvisResourcePropertyComponent extends JarvisResource<PropertyBean
    */
   public notify(picker: PickerBean, resource: ResourceBean): void {
     if(picker.action === 'complete') {
-      this.myProperty = resource;
+      this.myNotification = resource;
     }
   }
 }

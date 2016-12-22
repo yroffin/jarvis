@@ -32,6 +32,10 @@ import { JarvisDataTriggerService } from '../../service/jarvis-data-trigger.serv
 import { JarvisDataCronService } from '../../service/jarvis-data-cron.service';
 import { JarvisDataScenarioService } from '../../service/jarvis-data-scenario.service';
 import { JarvisDataBlockService } from '../../service/jarvis-data-block.service';
+import { JarvisDataConfigurationService } from '../../service/jarvis-data-configuration.service';
+import { JarvisDataPropertyService } from '../../service/jarvis-data-property.service';
+import { JarvisDataConnectorService } from '../../service/jarvis-data-connector.service';
+import { JarvisDataNotificationService } from '../../service/jarvis-data-notification.service';
 
 /**
  * data model
@@ -62,6 +66,10 @@ export class JarvisResourcesComponent implements OnInit {
     private _jarvisDataTriggerService: JarvisDataTriggerService,
     private _jarvisDataScenarioService: JarvisDataScenarioService,
     private _jarvisDataBlockService: JarvisDataBlockService,
+    private _jarvisDataConfigurationService: JarvisDataConfigurationService,
+    private _jarvisDataPropertyService: JarvisDataPropertyService,
+    private _jarvisDataConnectorService: JarvisDataConnectorService,
+    private _jarvisDataNotificationService: JarvisDataNotificationService,
     private _jarvisDataCronService: JarvisDataCronService
   ) {
   }
@@ -74,6 +82,18 @@ export class JarvisResourcesComponent implements OnInit {
       .filter(event => event instanceof NavigationEnd)
       .subscribe((navigationEnd: NavigationEnd) => {
         // You only receive NavigationEnd events
+        if (navigationEnd.url === '/notifications') {
+          this.load('notifications', this._jarvisDataNotificationService);
+        }
+        if (navigationEnd.url === '/configurations') {
+          this.load('configurations', this._jarvisDataConfigurationService);
+        }
+        if (navigationEnd.url === '/properties') {
+          this.load('properties', this._jarvisDataPropertyService);
+        }
+        if (navigationEnd.url === '/connectors') {
+          this.load('connectors', this._jarvisDataConnectorService);
+        }
         if (navigationEnd.url === '/blocks') {
           this.load('blocks', this._jarvisDataBlockService);
         }

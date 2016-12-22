@@ -16,31 +16,52 @@
 
 package org.jarvis.core.resources.api.views;
 
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+
 import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.model.bean.device.DeviceBean;
 import org.jarvis.core.model.bean.view.ViewBean;
 import org.jarvis.core.model.rest.device.DeviceRest;
 import org.jarvis.core.model.rest.view.ViewRest;
 import org.jarvis.core.resources.api.ApiLinkedResources;
+import org.jarvis.core.resources.api.Declare;
+import org.jarvis.core.resources.api.DeclareHrefResource;
+import org.jarvis.core.resources.api.DeclareLinkedResource;
 import org.jarvis.core.resources.api.GenericValue;
 import org.jarvis.core.resources.api.device.ApiDeviceResources;
 import org.jarvis.core.resources.api.href.ApiHrefViewResources;
+import org.jarvis.core.resources.api.mapper.ApiMapper;
 import org.jarvis.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import io.swagger.annotations.Api;
+
 /**
  * View resource
  */
 @Component
+@Api(value = "view")
+@Path("/api/views")
+@Produces("application/json")
+@Declare(resource=ApiMapper.VIEW_RESOURCE, summary="View resource", rest=ViewRest.class)
 public class ApiViewResources extends ApiLinkedResources<ViewRest,ViewBean,DeviceRest,DeviceBean> {
 
+	/**
+	 * device
+	 */
 	@Autowired
-	ApiDeviceResources apiDeviceResources;
+	@DeclareLinkedResource(role=ApiMapper.DEVICE_RESOURCE, param=ApiMapper.DEVICE, sortKey=ApiMapper.SORTKEY)
+	public ApiDeviceResources apiDeviceResources;
 
+	/**
+	 * device
+	 */
 	@Autowired
-	ApiHrefViewResources apiHrefViewResources;
+	@DeclareHrefResource(role=ApiMapper.DEVICE_RESOURCE, href=ApiMapper.HREF, target=DeviceRest.class)
+	public ApiHrefViewResources apiHrefViewResources;
 
 	/**
 	 * constructor
@@ -52,14 +73,7 @@ public class ApiViewResources extends ApiLinkedResources<ViewRest,ViewBean,Devic
 
 	@Override
 	public void mount() {
-		/**
-		 * views
-		 */
-		declare(VIEW_RESOURCE);
-		/**
-		 * views -> devices
-		 */
-		declare(VIEW_RESOURCE, DEVICE_RESOURCE, apiDeviceResources, apiHrefViewResources, DEVICE, SORTKEY, HREF);
+		super.mount();
 	}
 
 	@Override
