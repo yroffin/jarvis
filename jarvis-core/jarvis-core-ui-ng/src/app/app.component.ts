@@ -1,48 +1,44 @@
+/* 
+ * Copyright 2016 Yannick Roffin.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 import { Component, Input, OnInit, ChangeDetectorRef, ApplicationRef } from '@angular/core';
 
-import { JarvisDataDeviceService } from './service/jarvis-data-device.service';
-import { JarvisDataViewService } from './service/jarvis-data-view.service';
-import { JarvisDataStoreService } from './service/jarvis-data-store.service';
 import { MenuItem } from 'primeng/primeng';
-
-/**
- * Cf. https://material2-app.firebaseapp.com/
- * Cf. https://github.com/jelbourn/material2-app
- */
-
-/**
- * data model
- */
-import { DeviceBean } from './model/device-bean';
-import { ViewBean } from './model/view-bean';
 
 @Component({
   selector: 'app-root',
-  providers: [
-    JarvisDataDeviceService,
-    JarvisDataViewService],
+  providers: [],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
   private items: MenuItem[];
-  private steps: MenuItem[];
 
+  /**
+   * constructor
+   */
   constructor(
     private _changeDetectorRef: ChangeDetectorRef,
-    private _applicationRef: ApplicationRef,
-    private _jarvisDataDeviceService: JarvisDataDeviceService,
-    private _jarvisDataStoreService: JarvisDataStoreService,
-    private _jarvisDataViewService: JarvisDataViewService) {
+    private _applicationRef: ApplicationRef) {
   }
 
+  /**
+   * global init of system menu
+   */
   ngOnInit() {
-    this.steps = [
-            {label: 'Step 1'},
-            {label: 'Step 2'},
-            {label: 'Step 3'}
-        ];
-      
     this.items = [
       {
         label: 'Home',
