@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
-import {Subject} from 'rxjs/Rx';
-import 'rxjs/add/operator/map'
+import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { JarvisConfigurationService } from './jarvis-configuration.service';
+import { JarvisDefaultResource, JarvisDefaultLinkResource } from '../interface/jarvis-default-resource';
+import { JarvisDataCoreResource } from './jarvis-data-core-resource';
+import { JarvisDataLinkedResource } from './jarvis-data-linked-resource';
+
 import { JarvisDataDeviceService } from './jarvis-data-device.service';
 import { JarvisDataStoreService } from './jarvis-data-store.service';
 
@@ -16,24 +19,30 @@ import { ViewBean } from './../model/view-bean';
 import { DeviceBean } from './../model/device-bean';
 
 @Injectable()
-export class JarvisDataViewService {
+export class JarvisDataViewService extends JarvisDataCoreResource<ViewBean> implements JarvisDefaultResource<ViewBean> {
 
-  private actionUrl: string;
-  private headers: Headers;
+  public allLinkedDevice: JarvisDefaultLinkResource<DeviceBean>;
 
+  /**
+   * constructor
+   */
   constructor(
     private _http: Http,
     private _configuration: JarvisConfigurationService,
     private _jarvisDataStoreService: JarvisDataStoreService,
-    private _jarvisDataDeviceService: JarvisDataDeviceService) {
+    private _jarvisDataDeviceService: JarvisDataDeviceService
+  ) {
+    super(_configuration.ServerWithApiUrl + 'views', _http);
 
-    this.actionUrl = _configuration.ServerWithApiUrl + 'views';
-
-    this.headers = new Headers();
-    this.headers.append('Content-Type', 'application/json');
-    this.headers.append('Accept', 'application/json');
+        /**
+         * map linked elements
+         */
+        this.allLinkedDevice = new JarvisDataLinkedResource<DeviceBean>(this.actionUrl, '/devices', _http);
   }
 
+  /**
+   * find views and devices
+   */
   public FindViewsAndDevices(): Observable<ViewBean[]> {
     let that = this;
 
@@ -43,90 +52,47 @@ export class JarvisDataViewService {
     let myViewsObservable = this.GetAll();
 
     myViewsObservable
-        .subscribe(
-          (data:ViewBean[]) => this._jarvisDataStoreService.setViews(data),
-          error => console.log(error),
-          () => {
-            let myViews = this._jarvisDataStoreService.getViews();
-            let myDevices: DeviceBean[];
-            /**
-             * iterate on each view
-             */
-            _.forEach(this._jarvisDataStoreService.getViews(), function(myView) {
+      .subscribe(
+      (data: ViewBean[]) => this._jarvisDataStoreService.setViews(data),
+      error => console.log(error),
+      () => {
+        let myViews = this._jarvisDataStoreService.getViews();
+        let myDevices: DeviceBean[];
+        /**
+         * iterate on each view
+         */
+        _.forEach(this._jarvisDataStoreService.getViews(), function (myView) {
+          /**
+           * find all devices, store this in an observable
+           * to synchronize loading
+           */
+          that.allLinkedDevice.GetAll(myView.id)
+            .subscribe(
+            (data: DeviceBean[]) => myDevices = data,
+            error => console.log(error),
+            () => {
               /**
-               * find all devices, store this in an observable
-               * to synchronize loading
+               * handle devices
                */
-              let myDeviceObs = that.GetAllDevices(myView.id);
-              myDeviceObs
+              myView.devices = myDevices;
+              let render: any;
+              _.forEach(myDevices, function (myDevice) {
+                that._jarvisDataDeviceService.Task(myDevice.id, 'render', {})
                   .subscribe(
-                    (data:DeviceBean[]) => myDevices = data,
-                    error => console.log(error),
-                    () => {
-                      /**
-                       * handle devices
-                       */
-                      myView.devices = myDevices;
-                      let render: any;
-                      _.forEach(myDevices, function(myDevice) {
-                        that._jarvisDataDeviceService.Task(myDevice.id, 'render', {})
-                        .subscribe(
-                          (data:any) => render = data,
-                          error => console.log(error),
-                          () => {
-                            myDevice.render = render
-                          }
-                        );
-                      });
-                    });
+                  (data: any) => render = data,
+                  error => console.log(error),
+                  () => {
+                    myDevice.render = render
+                  }
+                  );
               });
-          });
+            });
+        });
+      });
 
-      /**
-       * sync views and devices
-       */
-      return myViewsObservable;
-  } 
-
-  public GetAllDevices = (id: string): Observable<DeviceBean[]> => {
-    return this._http.get(this.actionUrl + '/' + id + '/devices')
-      .map((response: Response) => <DeviceBean[]>response.json())
-      .catch(this.handleError);
-  }
-
-  public GetAll = (): Observable<ViewBean[]> => {
-    return this._http.get(this.actionUrl)
-      .map((response: Response) => <ViewBean[]>response.json())
-      .catch(this.handleError);
-  }
-
-  public GetSingle = (id: number): Observable<ViewBean> => {
-    return this._http.get(this.actionUrl + id)
-      .map((response: Response) => <ViewBean>response.json())
-      .catch(this.handleError);
-  }
-
-  public Add = (itemName: string): Observable<ViewBean> => {
-    let toAdd = JSON.stringify({ ItemName: itemName });
-
-    return this._http.post(this.actionUrl, toAdd, { headers: this.headers })
-      .map((response: Response) => <ViewBean>response.json())
-      .catch(this.handleError);
-  }
-
-  public Update = (id: number, itemToUpdate: DeviceBean): Observable<ViewBean> => {
-    return this._http.put(this.actionUrl + id, JSON.stringify(itemToUpdate), { headers: this.headers })
-      .map((response: Response) => <ViewBean>response.json())
-      .catch(this.handleError);
-  }
-
-  public Delete = (id: number): Observable<Response> => {
-    return this._http.delete(this.actionUrl + id)
-      .catch(this.handleError);
-  }
-
-  private handleError(error: Response) {
-    console.error(error);
-    return Observable.throw(error.json().error || 'Server error');
+    /**
+     * sync views and devices
+     */
+    return myViewsObservable;
   }
 }

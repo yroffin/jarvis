@@ -26,6 +26,7 @@ import { JarvisDataCoreResource } from '../../service/jarvis-data-core-resource'
  * core resource
  */
 import { JarvisDataDeviceService } from '../../service/jarvis-data-device.service';
+import { JarvisDataViewService } from '../../service/jarvis-data-view.service';
 import { JarvisDataPluginService } from '../../service/jarvis-data-plugin.service';
 import { JarvisDataCommandService } from '../../service/jarvis-data-command.service';
 import { JarvisDataTriggerService } from '../../service/jarvis-data-trigger.service';
@@ -70,7 +71,8 @@ export class JarvisResourcesComponent implements OnInit {
     private _jarvisDataPropertyService: JarvisDataPropertyService,
     private _jarvisDataConnectorService: JarvisDataConnectorService,
     private _jarvisDataNotificationService: JarvisDataNotificationService,
-    private _jarvisDataCronService: JarvisDataCronService
+    private _jarvisDataCronService: JarvisDataCronService,
+    private _jarvisDataViewService: JarvisDataViewService
   ) {
   }
 
@@ -84,6 +86,9 @@ export class JarvisResourcesComponent implements OnInit {
         // You only receive NavigationEnd events
         if (navigationEnd.url === '/notifications') {
           this.load('notifications', this._jarvisDataNotificationService);
+        }
+        if (navigationEnd.url === '/views') {
+          this.load('views', this._jarvisDataViewService);
         }
         if (navigationEnd.url === '/configurations') {
           this.load('configurations', this._jarvisDataConfigurationService);

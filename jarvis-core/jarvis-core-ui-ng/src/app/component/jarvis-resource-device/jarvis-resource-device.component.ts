@@ -101,19 +101,15 @@ export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> im
     if (picker.action === 'plugins') {
       this.jarvisPluginLink.addLink(this.getResource().id, resource.id, this.getResource().plugins, { "order": "1", href: "HREF" }, this._deviceService.allLinkedPlugin);
     }
-  }
-
-  /**
-   * complete resource
-   */
-  public complete(that: any, resource: DeviceBean): void {
-    that.myDevice = resource;
-    resource.devices = [];
-    (new JarvisResourceLink<DeviceBean>()).loadLinks(resource.id, resource.devices, that._deviceService.allLinkedDevice);
-    resource.triggers = [];
-    (new JarvisResourceLink<TriggerBean>()).loadLinks(resource.id, resource.triggers, that._deviceService.allLinkedTrigger);
-    resource.plugins = [];
-    (new JarvisResourceLink<PluginBean>()).loadLinks(resource.id, resource.plugins, that._deviceService.allLinkedPlugin);
+    if(picker.action === 'complete') {
+      this.myDevice = <DeviceBean> resource;
+      this.myDevice.devices = [];
+      (new JarvisResourceLink<DeviceBean>()).loadLinks(resource.id, this.myDevice.devices, this._deviceService.allLinkedDevice);
+      this.myDevice.triggers = [];
+      (new JarvisResourceLink<TriggerBean>()).loadLinks(resource.id, this.myDevice.triggers, this._deviceService.allLinkedTrigger);
+      this.myDevice.plugins = [];
+      (new JarvisResourceLink<PluginBean>()).loadLinks(resource.id, this.myDevice.plugins, this._deviceService.allLinkedPlugin);
+    }
   }
 
   /**

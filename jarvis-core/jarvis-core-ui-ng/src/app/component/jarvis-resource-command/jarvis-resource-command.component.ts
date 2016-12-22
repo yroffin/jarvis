@@ -188,6 +188,6 @@ export class JarvisResourceCommandComponent extends JarvisResource<CommandBean> 
    * goto command link
    */
   public gotoNotificationLink(linked: CommandBean): void {
-    this._router.navigate(['/notification/' + linked.id]);
+    this._router.navigate(['/notifications/' + linked.id]);
   }
 }
