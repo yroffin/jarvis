@@ -24,13 +24,16 @@ import { MenuItem } from 'primeng/primeng';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  /**
+   * global system menu
+   */
   private items: MenuItem[];
 
   /**
    * constructor
    */
   constructor(
-    
+
   ) {
   }
 
