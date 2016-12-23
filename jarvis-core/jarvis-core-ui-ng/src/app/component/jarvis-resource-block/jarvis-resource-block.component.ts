@@ -97,35 +97,29 @@ export class JarvisResourceBlockComponent extends JarvisResource<BlockBean> impl
   /**
    * task action
    */
-  public task(action: string): void {
-    /**
-     * test this plugin
-     */
-    if (action === 'test') {
+  public test(): void {
       let myOutputData: any;
-      this._blockService.Task(this.myBlock.id, action, {})
+      this._blockService.Task(this.myBlock.id, 'test', {})
         .subscribe(
         (result: any) => myOutputData = result,
         error => console.log(error),
         () => {
         }
         );
-      return;
-    }
-    /**
-     * execute this plugin
-     */
-    if (action === 'execute') {
+  }
+
+  /**
+   * task action
+   */
+  public execute(): void {
       let myOutputData: any;
-      this._blockService.Task(this.myBlock.id, action, {})
+      this._blockService.Task(this.myBlock.id, 'execute', {})
         .subscribe(
         (result: any) => myOutputData = result,
         error => console.log(error),
         () => {
         }
         );
-      return;
-    }
   }
 
   /**

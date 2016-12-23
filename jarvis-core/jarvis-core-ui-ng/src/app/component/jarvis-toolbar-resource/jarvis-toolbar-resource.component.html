@@ -1,1 +1,14 @@
-<p-panelMenu [model]="items"></p-panelMenu>
+<p-toolbar>
+    <div class="ui-toolbar-group-left">
+        <button *ngIf="crud" pButton type="button" icon="fa-reply" pTooltip="Retour" tooltipPosition="bottom" (click)="close()"></button>
+        <button *ngIf="crud" pButton type="button" icon="fa-copy" pTooltip="Dupliquer" tooltipPosition="bottom" (click)="duplicate()"></button>
+        <button *ngIf="crud" pButton type="button" icon="fa-trash" pTooltip="Supprimer" tooltipPosition="bottom" (click)="remove()"></button>
+        <button *ngIf="crud" pButton type="button" icon="fa-save" pTooltip="Sauver" tooltipPosition="bottom" (click)="save()"></button>
+        <i *ngIf="crud" class="fa fa-bars"></i>
+        <button *ngFor="let task of tasks; let index = index" pButton type="button" icon="{{task.icon}}" pTooltip="{{task.label}}" tooltipPosition="right" (click)="taskCallback(task)"></button>
+        <i *ngIf="tasks.length > 0" class="fa fa-bars"></i>
+        <button *ngFor="let picker of pickers; let index = index" pButton type="button" icon="{{picker.icon}}" pTooltip="{{picker.label}}" tooltipPosition="right" (click)="pickerCallback(picker)"></button>
+        <i *ngIf="pickers.length > 0" class="fa fa-bars"></i>
+    </div>
+</p-toolbar>
+

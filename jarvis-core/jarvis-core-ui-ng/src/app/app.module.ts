@@ -43,6 +43,8 @@ import { FieldsetModule } from 'primeng/primeng';
 import { DropdownModule } from 'primeng/primeng';
 import { ConfirmDialogModule, ConfirmationService } from 'primeng/primeng';
 import { SplitButtonModule } from 'primeng/primeng';
+import { ToolbarModule } from 'primeng/primeng';
+import { TooltipModule } from 'primeng/primeng';
 
 import { MaterialModule } from '@angular/material';
 
@@ -175,6 +177,8 @@ const appRoutes: Routes = [
     DropdownModule,
     ConfirmDialogModule,
     SplitButtonModule,
+    ToolbarModule,
+    TooltipModule,
     /**
      * load all materials
      */

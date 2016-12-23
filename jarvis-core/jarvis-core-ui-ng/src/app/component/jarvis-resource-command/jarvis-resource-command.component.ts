@@ -103,30 +103,25 @@ export class JarvisResourceCommandComponent extends JarvisResource<CommandBean> 
   /**
    * task action
    */
-  public task(action: string): void {
-    /**
-     * execute this command
-     */
-    if (action === 'execute') {
+  public execute(): void {
       this.myData = JSON.parse(this.myJsonData);
       this.myRawData = JSON.stringify(this.myData);
-      this._commandService.Task(this.myCommand.id, action, this.myData)
+      this._commandService.Task(this.myCommand.id, 'execute', this.myData)
         .subscribe(
         (result: any) => this.myOutputData = result,
         error => console.log(error),
         () => {
         }
         );
-      return;
     }
 
-    /**
-     * render this plugin
-     */
-    if (action === 'render') {
+  /**
+   * task action
+   */
+  public render(): void {
       this.myData = JSON.parse(this.myJsonData);
       this.myRawData = JSON.stringify(this.myData);
-      this._commandService.Task(this.myCommand.id, action, this.myData)
+      this._commandService.Task(this.myCommand.id, 'render', this.myData)
         .subscribe(
         (result: any) => this.myOutputData = result,
         error => console.log(error),
@@ -134,7 +129,6 @@ export class JarvisResourceCommandComponent extends JarvisResource<CommandBean> 
         }
         );
       return;
-    }
   }
 
   /**

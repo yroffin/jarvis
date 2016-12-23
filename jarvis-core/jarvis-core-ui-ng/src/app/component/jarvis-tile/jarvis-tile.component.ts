@@ -57,6 +57,9 @@ export class JarvisTileComponent implements OnInit {
 
   private parse(val: string): string[] {
     this.results = [];
+    if(val === undefined) {
+      return this.results;
+    }
     this.value = val;
     this.getAllResults("{{", "}}");
     return this.results;

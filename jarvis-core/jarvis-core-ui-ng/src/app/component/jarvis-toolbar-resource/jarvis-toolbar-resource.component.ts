@@ -19,12 +19,14 @@ import { MenuItem } from 'primeng/primeng';
 import * as _ from 'lodash';
 
 import { NotifyCallback } from '../../class/jarvis-resource';
+import { JarvisToolbarAction } from '../../interface/jarvis-toolbar-action';
 
 /**
  * data model
  */
 import { ResourceBean } from '../../model/resource-bean';
 import { PickerBean } from '../../model/picker-bean';
+import { TaskBean, PickerTaskBean } from '../../model/action-bean';
 
 @Component({
   selector: 'app-jarvis-toolbar-resource',
@@ -33,10 +35,14 @@ import { PickerBean } from '../../model/picker-bean';
 })
 export class JarvisToolbarResourceComponent implements OnInit {
 
-  @Input() private actions: any[];
-  @Input() private notified: any;
+  @Input() private tasks: TaskBean[] = [];
+  @Input() private pickers: PickerTaskBean[] = [];
 
-  private items: MenuItem[];
+  @Input() private actions: any[];
+  @Input() private notified: JarvisToolbarAction;
+  @Input() private crud: boolean = false;
+
+  private items: MenuItem[] = [];
 
   constructor() {
 
@@ -64,15 +70,60 @@ export class JarvisToolbarResourceComponent implements OnInit {
   }
 
   /**
+   * callback behaviour
+   * little tricky code, may be to refactor
+   */
+  private taskCallback(task: TaskBean): void {
+    eval("this.notified."+task.task).apply(this.notified, [task.args]);
+  }
+
+  /**
+   * callback behaviour
+   * little tricky code, may be to refactor
+   */
+  private pickerCallback(picker: PickerTaskBean): void {
+    let data: PickerBean = new PickerBean();
+    data.action = picker.action;
+    this.pick(picker.action);
+  }
+
+  /**
    * handle pick behaviour
    */
   public pick(action: string): void {
     /**
      * find picker for this action
      */
-    _.find(this.actions, function (item) {
+    _.find(this.pickers, function (item) {
       return item.action === action;
     }).picker.open(this.notified);
   }
 
+  /**
+   * default crud method
+   */
+  public close(): void {
+    this.notified.close();
+  }
+
+  /**
+   * default crud method
+   */
+  public save(): void {
+    this.notified.save();
+  }
+
+  /**
+   * default crud method
+   */
+  public remove(): void {
+    this.notified.remove();
+  }
+
+  /**
+   * default crud method
+   */
+  public duplicate(): void {
+    this.notified.duplicate();
+  }
 }
