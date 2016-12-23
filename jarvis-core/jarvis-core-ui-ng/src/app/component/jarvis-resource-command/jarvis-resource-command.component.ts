@@ -128,7 +128,6 @@ export class JarvisResourceCommandComponent extends JarvisResource<CommandBean> 
         () => {
         }
         );
-      return;
   }
 
   /**

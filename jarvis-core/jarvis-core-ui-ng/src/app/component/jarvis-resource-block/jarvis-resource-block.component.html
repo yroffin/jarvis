@@ -39,7 +39,7 @@
 </div>
 </p-accordionTab>
 <p-accordionTab header="Conditions">
-  <app-jarvis-toolbar-resource [notified]="this" [actions]="[{'label':'Conditions', 'icon': 'fa-check', 'action':'conditionnalPlugins', 'picker': pickConditionnalPlugins}]"></app-jarvis-toolbar-resource>
+  <app-jarvis-toolbar-resource [notified]="this" [pickers]="[{'label':'Ajouter un script de condition', 'icon': 'fa-bolt', 'action':'conditionnalPlugins', 'picker': pickConditionnalPlugins}]"></app-jarvis-toolbar-resource>
   <p-dataTable [value]="myBlock.conditionnalPlugins">
     <header>Plugins</header>
     <p-column header="Ordre">
@@ -52,10 +52,7 @@
     <p-column field="name" header="Nom"></p-column>
     <p-column header="Action">
       <template let-plugin="rowData" pTemplate type="body">
-        <button md-mini-fab md-tooltip="Mettre à jour le lien" (click)="updatePluginLink(plugin)"><md-icon>save</md-icon></button>
-        <button md-mini-fab md-tooltip="Supprimer le lien" (click)="dropPluginLink(plugin, 'HREF_IF', myBlock.conditionnalPlugins)"><md-icon>delete</md-icon></button>
-        <button md-mini-fab md-tooltip="Détail du lien" (click)="viewPluginLink(plugin)"><md-icon>zoom_in</md-icon></button>
-        <button md-mini-fab md-tooltip="Détail" (click)="gotoPluginLink(plugin)"><md-icon>touch_app</md-icon></button>
+        <app-jarvis-toolbar-resource [notified]="this" [tasks]="[{'task':'updatePluginLink','args':[plugin],'icon':'fa-save','label':'Mettre à jour le lien'},{'task':'dropPluginLink','args':[plugin, 'HREF_IF', myBlock.conditionnalPlugins],'icon':'fa-trash','label':'Supprimer le lien'},{'task':'viewPluginLink','args':[plugin],'icon':'fa-eye','label':'Voir'},{'task':'gotoPluginLink','args':[plugin],'icon':'fa-link','label':'Détail'}]" ></app-jarvis-toolbar-resource>
       </template>
     </p-column>
   </p-dataTable>
@@ -74,9 +71,7 @@
     <p-column field="name" header="Nom"></p-column>
     <p-column header="Action">
       <template let-plugin="rowData" pTemplate type="body">
-        <button md-mini-fab md-tooltip="Mettre à jour le lien" (click)="updatePluginLink(plugin)"><md-icon>save</md-icon></button>
-        <button md-mini-fab md-tooltip="Supprimer le lien" (click)="dropPluginLink(plugin, 'HREF_THEN', myBlock.thenPlugins)"><md-icon>delete</md-icon></button>
-        <button md-mini-fab md-tooltip="Détail" (click)="gotoPluginLink(plugin)"><md-icon>touch_app</md-icon></button>
+        <app-jarvis-toolbar-resource [notified]="this" [tasks]="[{'task':'updatePluginLink','args':[plugin],'icon':'fa-save','label':'Mettre à jour le lien'},{'task':'dropPluginLink','args':[plugin, 'HREF_THEN', myBlock.thenPlugins],'icon':'fa-trash','label':'Supprimer le lien'},{'task':'gotoPluginLink','args':[plugin],'icon':'fa-link','label':'Détail'}]" ></app-jarvis-toolbar-resource>
       </template>
     </p-column>
   </p-dataTable>
@@ -92,9 +87,7 @@
     <p-column field="name" header="Nom"></p-column>
     <p-column header="Action">
       <template let-block="rowData" pTemplate type="body">
-        <button md-mini-fab md-tooltip="Mettre à jour le lien" (click)="updateBlockLink(block)"><md-icon>save</md-icon></button>
-        <button md-mini-fab md-tooltip="Supprimer le lien" (click)="dropBlockLink(block, 'HREF_THEN', myBlock.thenBlocks)"><md-icon>delete</md-icon></button>
-        <button md-mini-fab md-tooltip="Détail" (click)="gotoBlockLink(block)"><md-icon>touch_app</md-icon></button>
+        <app-jarvis-toolbar-resource [notified]="this" [tasks]="[{'task':'updateBlockLink','args':[block],'icon':'fa-save','label':'Mettre à jour le lien'},{'task':'dropBlockLink','args':[block, 'HREF_THEN', myBlock.thenBlocks],'icon':'fa-trash','label':'Supprimer le lien'},{'task':'gotoBlockLink','args':[block],'icon':'fa-link','label':'Détail'}]" ></app-jarvis-toolbar-resource>
       </template>
     </p-column>
   </p-dataTable>
@@ -113,9 +106,7 @@
     <p-column field="name" header="Nom"></p-column>
     <p-column header="Action">
       <template let-plugin="rowData" pTemplate type="body">
-        <button md-mini-fab md-tooltip="Mettre à jour le lien" (click)="updatePluginLink(plugin)"><md-icon>save</md-icon></button>
-        <button md-mini-fab md-tooltip="Supprimer le lien" (click)="dropPluginLink(plugin, 'HREF_ELSE', myBlock.elsePlugins)"><md-icon>delete</md-icon></button>
-        <button md-mini-fab md-tooltip="Détail" (click)="gotoPluginLink(plugin)"><md-icon>touch_app</md-icon></button>
+        <app-jarvis-toolbar-resource [notified]="this" [tasks]="[{'task':'updatePluginLink','args':[plugin],'icon':'fa-save','label':'Mettre à jour le lien'},{'task':'dropPluginLink','args':[plugin, 'HREF_ELSE', myBlock.elsePlugins],'icon':'fa-trash','label':'Supprimer le lien'},{'task':'gotoPluginLink','args':[plugin],'icon':'fa-link','label':'Détail'}]" ></app-jarvis-toolbar-resource>
       </template>
     </p-column>
   </p-dataTable>
@@ -131,9 +122,7 @@
     <p-column field="name" header="Nom"></p-column>
     <p-column header="Action">
       <template let-block="rowData" pTemplate type="body">
-        <button md-mini-fab md-tooltip="Mettre à jour le lien" (click)="updateBlockLink(block)"><md-icon>save</md-icon></button>
-        <button md-mini-fab md-tooltip="Supprimer le lien" (click)="dropBlockLink(block, 'HREF_ELSE', myBlock.elseBlocks)"><md-icon>delete</md-icon></button>
-        <button md-mini-fab md-tooltip="Détail" (click)="gotoBlockLink(block)"><md-icon>touch_app</md-icon></button>
+        <app-jarvis-toolbar-resource [notified]="this" [tasks]="[{'task':'updateBlockLink','args':[block],'icon':'fa-save','label':'Mettre à jour le lien'},{'task':'dropBlockLink','args':[block, 'HREF_ELSE', myBlock.elseBlocks],'icon':'fa-trash','label':'Supprimer le lien'},{'task':'gotoBlockLink','args':[block],'icon':'fa-link','label':'Détail'}]" ></app-jarvis-toolbar-resource>
       </template>
     </p-column>
   </p-dataTable>

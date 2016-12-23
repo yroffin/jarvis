@@ -86,38 +86,37 @@ export class JarvisResourcePluginComponent extends JarvisResource<PluginBean> im
   /**
    * task action
    */
-  public task(action: string): void {
+  public execute(): void {
     /**
      * execute this plugin
      */
-    if (action === 'execute') {
-      this.myData = JSON.parse(this.myJsonData);
-      this.myRawData = JSON.stringify(this.myData);
-      this._pluginService.Task(this.myPlugin.id, action, this.myData)
-        .subscribe(
-        (result: any) => this.myOutputData = result,
-        error => console.log(error),
-        () => {
-        }
-        );
-      return;
-    }
+    this.myData = JSON.parse(this.myJsonData);
+    this.myRawData = JSON.stringify(this.myData);
+    this._pluginService.Task(this.myPlugin.id, 'execute', this.myData)
+      .subscribe(
+      (result: any) => this.myOutputData = result,
+      error => console.log(error),
+      () => {
+      }
+      );
+  }
 
+  /**
+   * task action
+   */
+  public render(): void {
     /**
      * render this plugin
      */
-    if (action === 'render') {
-      this.myData = JSON.parse(this.myJsonData);
-      this.myRawData = JSON.stringify(this.myData);
-      this._pluginService.Task(this.myPlugin.id, action, this.myData)
-        .subscribe(
-        (result: any) => this.myOutputData = result,
-        error => console.log(error),
-        () => {
-        }
-        );
-      return;
-    }
+    this.myData = JSON.parse(this.myJsonData);
+    this.myRawData = JSON.stringify(this.myData);
+    this._pluginService.Task(this.myPlugin.id, 'render', this.myData)
+      .subscribe(
+      (result: any) => this.myOutputData = result,
+      error => console.log(error),
+      () => {
+      }
+      );
   }
 
   /**
@@ -137,10 +136,10 @@ export class JarvisResourcePluginComponent extends JarvisResource<PluginBean> im
    */
   public notify(picker: PickerBean, resource: ResourceBean): void {
     if (picker.action === 'commands') {
-        this.jarvisCommandLink.addLink(this.getResource().id, resource.id, this.getResource().commands, { "order": "1", href: "HREF" }, this._pluginService.allLinkedCommand);
+      this.jarvisCommandLink.addLink(this.getResource().id, resource.id, this.getResource().commands, { "order": "1", href: "HREF" }, this._pluginService.allLinkedCommand);
     }
-    if(picker.action === 'complete') {
-      this.myPlugin = <PluginBean> resource;
+    if (picker.action === 'complete') {
+      this.myPlugin = <PluginBean>resource;
       this.myPlugin.commands = [];
       (new JarvisResourceLink<CommandBean>()).loadLinks(resource.id, this.myPlugin.commands, this._pluginService.allLinkedCommand);
     }

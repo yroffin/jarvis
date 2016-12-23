@@ -74,7 +74,7 @@ export class JarvisToolbarResourceComponent implements OnInit {
    * little tricky code, may be to refactor
    */
   private taskCallback(task: TaskBean): void {
-    eval("this.notified."+task.task).apply(this.notified, [task.args]);
+    eval("this.notified."+task.task).apply(this.notified, task.args);
   }
 
   /**

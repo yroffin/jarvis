@@ -1,4 +1,4 @@
-<app-jarvis-toolbar-menu [actions]="this" [tasks]="[{'action':'toggle','icon':'play_arrow','tooltip':'Active / désactive la crontab'},{'action':'test','icon':'autorenew','tooltip':'Test la crontab'}]" [pickers]="[]"></app-jarvis-toolbar-menu>
+<app-jarvis-toolbar-resource [notified]="this" [crud]="true" [tasks]="[{'task':'toggle','icon':'fa-play','label':'Active / désactive la crontab'},{'task':'test','icon':'fa-play','label':'Test la crontab'}]" ></app-jarvis-toolbar-resource>
 
 <div *ngIf="myCron">
   <p-accordion>

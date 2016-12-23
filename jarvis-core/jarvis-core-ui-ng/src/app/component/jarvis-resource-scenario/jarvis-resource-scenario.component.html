@@ -1,4 +1,4 @@
-<app-jarvis-toolbar-menu [actions]="this" [tasks]="[{'action':'execute','icon':'play_arrow','tooltip':'Execute le scenario'}]" [pickers]="[{'action':'triggers','icon':'settings_remote','tooltip':'Ajouter un trigger'},{'action':'blocks','icon':'low_priority','tooltip':'Ajouter un block'}]"></app-jarvis-toolbar-menu>
+<app-jarvis-toolbar-resource [notified]="this" [crud]="true" [tasks]="[{'task':'execute','icon':'fa-play','label':'Execute le scenario'}]" [pickers]="[{'label':'Ajouter un trigger', 'icon': 'fa-bolt', 'action':'triggers', 'picker': pickTriggers},{'label':'Ajouter un block', 'icon': 'fa-bolt', 'action':'blocks', 'picker': pickBlocks}]"></app-jarvis-toolbar-resource>
 
 <div *ngIf="myScenario">
   <p-accordion>
@@ -35,9 +35,7 @@
         <p-column field="name" header="Nom"></p-column>
         <p-column header="Action">
           <template let-trigger="rowData" pTemplate type="body">
-            <button md-mini-fab md-tooltip="Mettre à jour le lien" (click)="updateTriggerLink(trigger)"><md-icon>save</md-icon></button>
-            <button md-mini-fab md-tooltip="Supprimer le lien" (click)="dropTriggerLink(trigger)"><md-icon>delete</md-icon></button>
-            <button md-mini-fab md-tooltip="Détail" (click)="gotoTriggerLink(trigger)"><md-icon>touch_app</md-icon></button>
+            <app-jarvis-toolbar-resource [notified]="this" [tasks]="[{'task':'updateTriggerLink','args':[trigger],'icon':'fa-save','label':'Mettre à jour le lien'},{'task':'dropTriggerLink','args':[trigger],'icon':'fa-trash','label':'Supprimer le lien'},{'task':'gotoTriggerLink','args':[trigger],'icon':'fa-link','label':'Détail'}]" ></app-jarvis-toolbar-resource>
           </template>
         </p-column>
       </p-dataTable>
@@ -55,9 +53,7 @@
         <p-column field="name" header="Nom"></p-column>
         <p-column header="Action">
           <template let-block="rowData" pTemplate type="body">
-            <button md-mini-fab md-tooltip="Mettre à jour le lien" (click)="updateBlockLink(block)"><md-icon>save</md-icon></button>
-            <button md-mini-fab md-tooltip="Supprimer le lien" (click)="dropBlockLink(block)"><md-icon>delete</md-icon></button>
-            <button md-mini-fab md-tooltip="Détail" (click)="gotoBlockLink(block)"><md-icon>touch_app</md-icon></button>
+            <app-jarvis-toolbar-resource [notified]="this" [tasks]="[{'task':'updateBlockLink','args':[block],'icon':'fa-save','label':'Mettre à jour le lien'},{'task':'dropBlockLink','args':[block],'icon':'fa-trash','label':'Supprimer le lien'},{'task':'gotoBlockLink','args':[block],'icon':'fa-link','label':'Détail'}]" ></app-jarvis-toolbar-resource>
           </template>
         </p-column>
       </p-dataTable>

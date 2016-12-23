@@ -65,6 +65,20 @@ export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> im
   }
 
   /**
+   * task action
+   */
+  public render(): void {
+    let output: any;
+      this._deviceService.Task(this.myDevice.id, 'render', {})
+        .subscribe(
+        (result: any) => output = result,
+        error => console.log(error),
+        () => {
+        }
+        );
+  }
+
+  /**
    * pick action
    */
   public pick(picker: PickerBean): void {
@@ -113,35 +127,63 @@ export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> im
   }
 
   /**
-   * drop device link
+   * drop link
    */
   public dropDeviceLink(linked: DeviceBean): void {
     this.jarvisDeviceLink.dropLink(linked, this.myDevice.id, this.myDevice.devices, this._deviceService.allLinkedDevice);
   }
 
   /**
-   * drop trigger link
+   * update link
+   */
+  public updateDeviceLink(linked: DeviceBean): void {
+    this.jarvisDeviceLink.updateLink(linked, this.myDevice.id, this._deviceService.allLinkedDevice);
+  }
+
+  /**
+   * goto link
+   */
+  public gotoDeviceLink(linked: DeviceBean): void {
+    this._router.navigate(['/devices/' + linked.id]);
+  }
+
+  /**
+   * drop link
    */
   public dropTriggerLink(linked: TriggerBean): void {
     this.jarvisTriggerLink.dropLink(linked, this.myDevice.id, this.myDevice.triggers, this._deviceService.allLinkedTrigger);
   }
 
   /**
-   * drop plugin link
+   * update link
+   */
+  public updateTriggerLink(linked: TriggerBean): void {
+    this.jarvisTriggerLink.updateLink(linked, this.myDevice.id, this._deviceService.allLinkedTrigger);
+  }
+
+  /**
+   * goto link
+   */
+  public gotoTriggerLink(linked: TriggerBean): void {
+    this._router.navigate(['/triggers/' + linked.id]);
+  }
+
+  /**
+   * drop link
    */
   public dropPluginLink(linked: PluginBean): void {
     this.jarvisPluginLink.dropLink(linked, this.myDevice.id, this.myDevice.plugins, this._deviceService.allLinkedPlugin);
   }
 
   /**
-   * drop plugin link
+   * update link
    */
   public updatePluginLink(linked: PluginBean): void {
     this.jarvisPluginLink.updateLink(linked, this.myDevice.id, this._deviceService.allLinkedPlugin);
   }
 
   /**
-   * goto plugin link
+   * goto link
    */
   public gotoPluginLink(linked: PluginBean): void {
     this._router.navigate(['/plugins/' + linked.id]);

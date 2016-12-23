@@ -39,7 +39,7 @@ export class JarvisResourceCronComponent extends JarvisResource<CronBean> implem
     private _router: Router,
     private _jarvisConfigurationService: JarvisConfigurationService,
     private _cronService: JarvisDataCronService) {
-    super('/crons', ['toggle','test'], _cronService, _route, _router);
+    super('/crons', ['toggle', 'test'], _cronService, _route, _router);
     this.types = [];
     this.types.push({ label: 'Select type', value: null });
     this.types.push({ label: 'Couché du soleil', value: 'SUNSET' });
@@ -57,40 +57,41 @@ export class JarvisResourceCronComponent extends JarvisResource<CronBean> implem
   /**
    * task action
    */
-  public task(action: string): void {
+  public toggle(): void {
     /**
      * execute this plugin
      */
-    if (action === 'toggle') {
-      let myOutputData;
-      this._cronService.Task(this.myCron.id, action, {})
-        .subscribe(
-        (result: any) => myOutputData = result,
-        error => console.log(error),
-        () => {
-        }
-        );
-      return;
-    }
+    let myOutputData;
+    this._cronService.Task(this.myCron.id, 'toggle', {})
+      .subscribe(
+      (result: any) => myOutputData = result,
+      error => console.log(error),
+      () => {
+      }
+      );
+    return;
+  }
 
-    if (action === 'test') {
-      let myOutputData;
-      this._cronService.Task(this.myCron.id, action, {})
-        .subscribe(
-        (result: any) => myOutputData = result,
-        error => console.log(error),
-        () => {
-        }
-        );
-      return;
-    }
+  /**
+   * task action
+   */
+  public test(): void {
+    let myOutputData;
+    this._cronService.Task(this.myCron.id, 'test', {})
+      .subscribe(
+      (result: any) => myOutputData = result,
+      error => console.log(error),
+      () => {
+      }
+      );
+    return;
   }
 
   /**
    * notify to add new resource
    */
   public notify(picker: PickerBean, resource: ResourceBean): void {
-    if(picker.action === 'complete') {
+    if (picker.action === 'complete') {
       this.myCron = resource;
     }
   }

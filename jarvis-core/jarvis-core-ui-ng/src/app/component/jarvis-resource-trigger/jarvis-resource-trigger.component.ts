@@ -72,21 +72,18 @@ export class JarvisResourceTriggerComponent extends JarvisResource<TriggerBean> 
   /**
    * task action
    */
-  public task(action: string): void {
+  public execute(): void {
     /**
      * execute this plugin
      */
-    if (action === 'execute') {
-      let myOutputData;
-      this._triggerService.Task(this.myTrigger.id, action, {})
-        .subscribe(
-        (result: any) => myOutputData = result,
-        error => console.log(error),
-        () => {
-        }
-        );
-      return;
-    }
+    let myOutputData;
+    this._triggerService.Task(this.myTrigger.id, 'execute', {})
+      .subscribe(
+      (result: any) => myOutputData = result,
+      error => console.log(error),
+      () => {
+      }
+      );
   }
 
   /**
@@ -106,10 +103,10 @@ export class JarvisResourceTriggerComponent extends JarvisResource<TriggerBean> 
    */
   public notify(picker: PickerBean, resource: ResourceBean): void {
     if (picker.action === 'crons') {
-        this.jarvisCronLink.addLink(this.getResource().id, resource.id, this.getResource().crons, { "order": "1", href: "HREF" }, this._triggerService.allLinkedCron);
+      this.jarvisCronLink.addLink(this.getResource().id, resource.id, this.getResource().crons, { "order": "1", href: "HREF" }, this._triggerService.allLinkedCron);
     }
-    if(picker.action === 'complete') {
-      this.myTrigger = <TriggerBean> resource;
+    if (picker.action === 'complete') {
+      this.myTrigger = <TriggerBean>resource;
       this.myTrigger.crons = [];
       (new JarvisResourceLink<CronBean>()).loadLinks(resource.id, this.myTrigger.crons, this._triggerService.allLinkedCron);
     }

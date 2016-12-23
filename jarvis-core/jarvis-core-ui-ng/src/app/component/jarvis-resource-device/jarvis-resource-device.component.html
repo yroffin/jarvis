@@ -1,5 +1,4 @@
-<app-jarvis-toolbar-menu [actions]="this" [tasks]="[{'action':'render','icon':'play_arrow','tooltip':'Tester'}]" [pickers]="[{'action':'devices','icon':'local_offer','tooltip':'Ajouter un container'},{'action':'triggers','icon':'settings_remote','tooltip':'Ajouter un trigger'},{'action':'plugins','icon':'library_add','tooltip':'Ajouter un plugin'}]"></app-jarvis-toolbar-menu>
-
+<app-jarvis-toolbar-resource [notified]="this" [crud]="true" [tasks]="[{'task':'render','icon':'fa-check','label':'Test le rendu du device'}]" [pickers]="[{'action':'devices','icon':'fa-server','label':'Ajouter un container','picker': pickDevices},{'action':'triggers','icon':'fa-send','label':'Ajouter un trigger','picker': pickTriggers},{'action':'plugins','icon':'fa-podcast','label':'Ajouter un plugin','picker': pickPlugins}]"></app-jarvis-toolbar-resource>
 
 <div *ngIf="myDevice">
   <p-accordion>
@@ -40,6 +39,7 @@
       </div>
     </p-accordionTab>
     <p-accordionTab header="Triggers">
+      <app-jarvis-toolbar-resource [notified]="this" [pickers]="[{'action':'triggers','icon':'fa-send','label':'Ajouter un trigger','picker': pickTriggers}]"></app-jarvis-toolbar-resource>
       <p-dataTable [value]="myDevice.triggers">
         <header>Trigger</header>
         <p-column field="extended.order" header="Ordre"></p-column>
@@ -48,12 +48,13 @@
         <p-column field="name" header="Nom"></p-column>
         <p-column header="Action">
           <template let-trigger="rowData" pTemplate type="body">
-            <button md-mini-fab md-tooltip="Supprimer le lien" (click)="dropTriggerLink(trigger)"><md-icon>delete</md-icon></button>
+            <app-jarvis-toolbar-resource [notified]="this" [tasks]="[{'task':'updateTriggerLink','args':[trigger],'icon':'fa-save','label':'Mettre à jour le lien'},{'task':'dropTriggerLink','args':[trigger],'icon':'fa-trash','label':'Supprimer le lien'},{'task':'gotoTriggerLink','args':[trigger],'icon':'fa-link','label':'Détail'}]" ></app-jarvis-toolbar-resource>
           </template>
         </p-column>
       </p-dataTable>
     </p-accordionTab>
     <p-accordionTab header="Devices">
+      <app-jarvis-toolbar-resource [notified]="this" [pickers]="[{'action':'devices','icon':'fa-server','label':'Ajouter un device','picker': pickDevices}]"></app-jarvis-toolbar-resource>
       <p-dataTable [value]="myDevice.devices">
         <header>Devices (container)</header>
         <p-column field="extended.order" header="Ordre"></p-column>
@@ -62,12 +63,13 @@
         <p-column field="name" header="Nom"></p-column>
         <p-column header="Action">
           <template let-device="rowData" pTemplate type="body">
-            <button md-mini-fab md-tooltip="Supprimer le lien" (click)="dropDeviceLink(device)"><md-icon>delete</md-icon></button>
+            <app-jarvis-toolbar-resource [notified]="this" [tasks]="[{'task':'updateDeviceLink','args':[device],'icon':'fa-save','label':'Mettre à jour le lien'},{'task':'dropDeviceLink','args':[device],'icon':'fa-trash','label':'Supprimer le lien'},{'task':'gotoDeviceLink','args':[device],'icon':'fa-link','label':'Détail'}]" ></app-jarvis-toolbar-resource>
           </template>
         </p-column>
       </p-dataTable>
     </p-accordionTab>
     <p-accordionTab header="Plugins">
+      <app-jarvis-toolbar-resource [notified]="this" [pickers]="[{'action':'plugins','icon':'fa-podcast','label':'Ajouter un plugin','picker': pickPlugins}]"></app-jarvis-toolbar-resource>
       <p-dataTable [value]="myDevice.plugins">
         <header>Plugin</header>
         <p-column header="Ordre">
@@ -80,9 +82,7 @@
         <p-column field="name" header="Nom"></p-column>
         <p-column header="Action">
           <template let-plugin="rowData" pTemplate type="body">
-            <button md-mini-fab md-tooltip="Mettre à jour le lien" (click)="updatePluginLink(plugin)"><md-icon>save</md-icon></button>
-            <button md-mini-fab md-tooltip="Supprimer le lien" (click)="dropPluginLink(plugin)"><md-icon>delete</md-icon></button>
-            <button md-mini-fab md-tooltip="Détail" (click)="gotoPluginLink(plugin)"><md-icon>touch_app</md-icon></button>
+            <app-jarvis-toolbar-resource [notified]="this" [tasks]="[{'task':'updatePluginLink','args':[plugin],'icon':'fa-save','label':'Mettre à jour le lien'},{'task':'dropPluginLink','args':[plugin],'icon':'fa-trash','label':'Supprimer le lien'},{'task':'gotoPluginLink','args':[plugin],'icon':'fa-link','label':'Détail'}]" ></app-jarvis-toolbar-resource>
           </template>
         </p-column>
       </p-dataTable>
