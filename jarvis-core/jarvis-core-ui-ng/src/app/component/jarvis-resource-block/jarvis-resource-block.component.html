@@ -58,7 +58,7 @@
   </p-dataTable>
 </p-accordionTab>
 <p-accordionTab header="Then">
-  <app-jarvis-toolbar-resource [notified]="this" [actions]="[{'label':'Plugins', 'icon': 'fa-check', 'action':'thenPlugins', 'picker': pickThenPlugins},{'label':'Blocks', 'icon': 'fa-check', 'action':'thenBlocks', 'picker': pickThenBlocks}]"></app-jarvis-toolbar-resource>
+  <app-jarvis-toolbar-resource [notified]="this" [pickers]="[{'label':'Ajouter un script then', 'icon': 'fa-bolt', 'action':'thenPlugins', 'picker': pickThenPlugins},{'label':'Ajouter un block then', 'icon': 'fa-bolt', 'action':'thenBlocks', 'picker': pickThenBlocks}]"></app-jarvis-toolbar-resource>
   <p-dataTable [value]="myBlock.thenPlugins">
     <header>Plugins</header>
     <p-column header="Ordre">
@@ -93,7 +93,7 @@
   </p-dataTable>
 </p-accordionTab>
 <p-accordionTab header="Else">
-  <app-jarvis-toolbar-resource [notified]="this" [actions]="[{'label':'Plugins', 'icon': 'fa-check', 'action':'elsePlugins', 'picker': pickElsePlugins},{'label':'Blocks', 'icon': 'fa-check', 'action':'elseBlocks', 'picker': pickElseBlocks}]"></app-jarvis-toolbar-resource>
+  <app-jarvis-toolbar-resource [notified]="this" [pickers]="[{'label':'Ajouter un script else', 'icon': 'fa-bolt', 'action':'elsePlugins', 'picker': pickElsePlugins},{'label':'Ajouter un block else', 'icon': 'fa-bolt', 'action':'elseBlocks', 'picker': pickElseBlocks}]"></app-jarvis-toolbar-resource>
   <p-dataTable [value]="myBlock.elsePlugins">
     <header>Plugins</header>
     <p-column header="Ordre">
