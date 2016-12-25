@@ -1,9 +1,0 @@
-<br>
-<md-toolbar color="primary">
-  <button md-mini-fab md-tooltip="Retour" (click)="close()"><md-icon>exit_to_app</md-icon></button>
-  <button md-mini-fab md-tooltip="Sauvegarde" (click)="save()"><md-icon>save</md-icon></button>
-  <button md-mini-fab md-tooltip="Supprimer" (click)="remove()"><md-icon>delete_sweep</md-icon></button>
-  <button md-mini-fab md-tooltip="Dupliquer" (click)="duplicate()"><md-icon>control_point_duplicate</md-icon></button>
-  <button *ngFor="let taskElement of tasks; let index=index" md-mini-fab md-tooltip="{{taskElement.tooltip}}"  (click)="task(taskElement)"><md-icon>{{taskElement.icon}}</md-icon></button>
-  <button *ngFor="let pickerElement of pickers; let index=index" md-mini-fab md-tooltip="{{pickerElement.tooltip}}"  (click)="pick(pickerElement)"><md-icon>{{pickerElement.icon}}</md-icon></button>
-</md-toolbar>

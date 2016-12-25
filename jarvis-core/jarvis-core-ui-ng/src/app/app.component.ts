@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, Inject, OnInit } from '@angular/core';
+import { DOCUMENT } from "@angular/platform-browser";
 
 import { MenuItem } from 'primeng/primeng';
 
@@ -28,19 +29,24 @@ export class AppComponent implements OnInit {
    * global system menu
    */
   private items: MenuItem[];
+  private doc: Document;
 
   /**
    * constructor
    */
   constructor(
-
+    @Inject( DOCUMENT ) doc: any
   ) {
+    this.doc = doc;
   }
 
   /**
    * global init of system menu
    */
   ngOnInit() {
+    /**
+     * global item menu
+     */
     this.items = [
       {
         label: 'Home',
@@ -90,5 +96,66 @@ export class AppComponent implements OnInit {
         ]
       }
     ];
+
+    /**
+     * advertise
+     */
+    this.triggerOnDocument( "angular2-app-ready" );
   }
+
+  /**
+   * the given event on the document root.
+   */
+	public triggerOnDocument( eventType: string ) : Event {
+
+		return( this.triggerOnElement( this.doc, eventType ) );
+
+	}
+
+  /**
+   * trigger on element
+   * Cf. https://github.com/bennadel/JavaScript-Demos/blob/master/demos/pre-bootstrap-evented-loading-screen-angular2
+   */
+  private triggerOnElement(
+		nativeElement: any,
+		eventType: string,
+		bubbles: boolean = true,
+		cancelable: boolean = false
+		) : Event {
+
+		var customEvent = this.createEvent( eventType, bubbles, cancelable );
+
+		nativeElement.dispatchEvent( customEvent );
+
+		return( customEvent );
+	}
+
+  /**
+   * create and return a custom event with the given configuration
+   */
+  private createEvent(
+		eventType: string,
+		bubbles: boolean,
+		cancelable: boolean
+		) : Event {
+
+		// IE (shakes fist) uses some other kind of event initialization. As such, 
+		// we'll default to trying the "normal" event generation and then fallback to
+		// using the IE version. 
+		try {
+
+			var customEvent: any = new CustomEvent( 
+				eventType,
+				{
+					bubbles: bubbles,
+					cancelable: cancelable
+				}
+			);
+		} catch ( error ) {
+			var customEvent: any = this.doc.createEvent( "CustomEvent" );
+			customEvent.initCustomEvent( eventType, bubbles, cancelable );
+		}
+
+		return( customEvent );
+	}
 }

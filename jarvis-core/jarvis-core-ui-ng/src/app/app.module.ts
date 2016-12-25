@@ -46,9 +46,6 @@ import { SplitButtonModule } from 'primeng/primeng';
 import { ToolbarModule } from 'primeng/primeng';
 import { TooltipModule } from 'primeng/primeng';
 
-import { MaterialModule } from '@angular/material';
-
-import { JarvisDialogComponent } from './jarvis-dialog/jarvis-dialog.component';
 import { JarvisConfigurationService } from './service/jarvis-configuration.service';
 import { JarvisDataDeviceService } from './service/jarvis-data-device.service';
 import { JarvisDataTriggerService } from './service/jarvis-data-trigger.service';
@@ -66,7 +63,6 @@ import { JarvisDataRawService } from './service/jarvis-data-raw.service';
 import { JarvisDataStoreService } from './service/jarvis-data-store.service';
 
 import { JarvisHomeComponent } from './component/jarvis-home/jarvis-home.component';
-import { JarvisToolbarComponent } from './component/jarvis-toolbar/jarvis-toolbar.component';
 import { JarvisResourcesComponent } from './component/jarvis-resources/jarvis-resources.component';
 import { JarvisResourceDeviceComponent } from './component/jarvis-resource-device/jarvis-resource-device.component';
 import { JarvisResourcePluginComponent } from './component/jarvis-resource-plugin/jarvis-resource-plugin.component';
@@ -83,7 +79,6 @@ import { JarvisResourceViewComponent } from './component/jarvis-resource-view/ja
 import { JarvisInlineSvgDirective } from './directive/jarvis-inline-svg.directive';
 
 import { JarvisTileComponent } from './component/jarvis-tile/jarvis-tile.component';
-import { JarvisToolbarMenuComponent } from './component/jarvis-toolbar-menu/jarvis-toolbar-menu.component';
 import { JarvisToolbarResourceComponent } from './component/jarvis-toolbar-resource/jarvis-toolbar-resource.component';
 import { JarvisPickerComponent } from './dialog/jarvis-picker/jarvis-picker.component';
 
@@ -122,14 +117,11 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    JarvisDialogComponent,
     JarvisHomeComponent,
-    JarvisToolbarComponent,
     JarvisResourceDeviceComponent,
     JarvisResourcesComponent,
     JarvisInlineSvgDirective,
     JarvisTileComponent,
-    JarvisToolbarMenuComponent,
     JarvisToolbarResourceComponent,
     JarvisPickerComponent,
     JarvisResourcePluginComponent,
@@ -179,10 +171,6 @@ const appRoutes: Routes = [
     SplitButtonModule,
     ToolbarModule,
     TooltipModule,
-    /**
-     * load all materials
-     */
-    MaterialModule.forRoot(),
     /**
      * routes
      */

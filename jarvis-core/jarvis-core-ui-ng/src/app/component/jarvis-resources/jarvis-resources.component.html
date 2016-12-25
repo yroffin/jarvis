@@ -3,7 +3,7 @@
     <header>{{myResourceName}}</header>
     <p-column header="Icône">
       <template let-myResource="rowData" pTemplate>
-        <md-icon md-grid-avatar>{{myResource.icon}}</md-icon>
+        <i class="fa {{myResource.icon}}" aria-hidden="true"></i>
       </template>
     </p-column>
     <p-column field="id" header="Id" [filter]="true"></p-column>

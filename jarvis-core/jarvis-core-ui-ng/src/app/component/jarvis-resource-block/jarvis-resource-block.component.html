@@ -157,7 +157,7 @@
   </div>
 </div>
 </div>
-<button md-mini-fab md-tooltip="Mettre à jour le lien" (click)="updatePluginLink(myPlugin)"><md-icon>save</md-icon></button>
+<app-jarvis-toolbar-resource [notified]="this" [tasks]="[{'task':'updatePluginLink','args':[myPlugin],'icon':'fa-save','label':'Mettre à jour le lien'}]" ></app-jarvis-toolbar-resource>
 </p-fieldset>
 </div>
 </p-dialog>

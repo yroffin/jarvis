@@ -1,7 +1,7 @@
 <p-panel [header]="'Device'" [style.textAlign]="'center'">
   <div [style.background]="myDevice.tagColor">
     <hr class="ui-widget-content" style="border-top:0">
-    <md-icon md-64>{{myDevice.icon}}</md-icon>
+    <i class="fa {{myDevice.icon}}" aria-hidden="true"></i>
     <div [innerHTML]="getTemplate(myDevice)"></div>
     <hr class="ui-widget-content" style="border-top:0">
   </div>
