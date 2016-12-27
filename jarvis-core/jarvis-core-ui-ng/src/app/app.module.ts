@@ -46,6 +46,8 @@ import { SplitButtonModule } from 'primeng/primeng';
 import { ToolbarModule } from 'primeng/primeng';
 import { TooltipModule } from 'primeng/primeng';
 
+import { WindowRef } from './service/jarvis-utils.service';
+import { JarvisSecurityService } from './service/jarvis-security.service';
 import { JarvisConfigurationService } from './service/jarvis-configuration.service';
 import { JarvisDataDeviceService } from './service/jarvis-data-device.service';
 import { JarvisDataTriggerService } from './service/jarvis-data-trigger.service';
@@ -81,6 +83,7 @@ import { JarvisInlineSvgDirective } from './directive/jarvis-inline-svg.directiv
 import { JarvisTileComponent } from './component/jarvis-tile/jarvis-tile.component';
 import { JarvisToolbarResourceComponent } from './component/jarvis-toolbar-resource/jarvis-toolbar-resource.component';
 import { JarvisPickerComponent } from './dialog/jarvis-picker/jarvis-picker.component';
+import { JarvisLoginComponent } from './component/jarvis-login/jarvis-login.component';
 
 /**
  * default route definition
@@ -110,6 +113,7 @@ const appRoutes: Routes = [
   { path: 'connectors/:id', component: JarvisResourceConnectorComponent },
   { path: 'views', component: JarvisResourcesComponent, data: { resource: 'views' } },
   { path: 'views/:id', component: JarvisResourceViewComponent },
+  { path: 'login', component: JarvisLoginComponent },
   { path: '', component: JarvisHomeComponent },
   { path: '**', component: JarvisHomeComponent }
 ];
@@ -134,7 +138,8 @@ const appRoutes: Routes = [
     JarvisResourceConfigurationComponent,
     JarvisResourceNotificationComponent,
     JarvisResourcePropertyComponent,
-    JarvisResourceViewComponent
+    JarvisResourceViewComponent,
+    JarvisLoginComponent
   ],
   entryComponents: [
     JarvisPickerComponent
@@ -192,10 +197,15 @@ const appRoutes: Routes = [
     JarvisDataStoreService,
     JarvisDataRawService,
     JarvisDataViewService,
+    JarvisSecurityService,
     /**
      * primeng
      */
-    ConfirmationService
+    ConfirmationService,
+    /**
+     * extends
+     */
+    WindowRef
   ],
   bootstrap: [AppComponent]
 })

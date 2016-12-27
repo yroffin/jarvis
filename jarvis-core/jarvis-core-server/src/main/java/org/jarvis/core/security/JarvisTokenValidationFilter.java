@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 import spark.Filter;
 import spark.Request;
 import spark.Response;
+import spark.Spark;
 
 /**
  * basic filter for token validation
@@ -102,9 +103,17 @@ public class JarvisTokenValidationFilter implements Filter {
                         credentials = currentClient.getCredentials(context);
                         logger.debug("credentials: {}", credentials);
                     } catch (final RequiresHttpAction e) {
+                        logger.warn("Authentication for client failed: {}", e);
+                        Spark.halt(401);
                         throw new TechnicalException("Unexpected HTTP action", e);
                     }
-                    profile = currentClient.getUserProfile(credentials, context);
+                    try {
+	                    profile = currentClient.getUserProfile(credentials, context);
+                    } catch (final Exception e) {
+                        logger.warn("Profile for client failed: {}", e);
+                        Spark.halt(401);
+                        throw new TechnicalException("Forbidden action", e);
+                    }
                     logger.debug("profile: {}", profile);
                     if (profile != null) {
                         manager.save(useSession, profile);

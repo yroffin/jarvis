@@ -19,6 +19,15 @@ import { DOCUMENT } from "@angular/platform-browser";
 
 import { MenuItem } from 'primeng/primeng';
 
+import { JarvisSecurityService } from './service/jarvis-security.service';
+import { JarvisDataStoreService } from './service/jarvis-data-store.service';
+
+/**
+ * data model
+ */
+import { ResourceBean } from './model/resource-bean';
+import { Oauth2Bean, MeBean } from './model/security/oauth2-bean';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -35,7 +44,9 @@ export class AppComponent implements OnInit {
    * constructor
    */
   constructor(
-    @Inject( DOCUMENT ) doc: any
+    @Inject(DOCUMENT) doc: any,
+    private _jarvisSecurityService: JarvisSecurityService,
+    private _jarvisDataStoreService: JarvisDataStoreService
   ) {
     this.doc = doc;
   }
@@ -44,6 +55,36 @@ export class AppComponent implements OnInit {
    * global init of system menu
    */
   ngOnInit() {
+    if(!this._jarvisDataStoreService.isConnected()) {
+      return;
+    }
+
+    /**
+     * get profile
+     */
+    let profile: MeBean;
+    this._jarvisSecurityService.Me()
+      .subscribe(
+      (data: MeBean) => profile = data,
+      (error: MeBean) => {
+        /**
+         * advertise
+         */
+        this.triggerOnDocument("angular2-app-ready");
+      },
+      () => {
+        this.loadMenu();
+        /**
+         * advertise
+         */
+        this.triggerOnDocument("angular2-app-ready");
+      });
+  }
+
+  /**
+   * the given event on the document root.
+   */
+  private loadMenu(): void {
     /**
      * global item menu
      */
@@ -96,66 +137,59 @@ export class AppComponent implements OnInit {
         ]
       }
     ];
-
-    /**
-     * advertise
-     */
-    this.triggerOnDocument( "angular2-app-ready" );
   }
 
   /**
    * the given event on the document root.
    */
-	public triggerOnDocument( eventType: string ) : Event {
-
-		return( this.triggerOnElement( this.doc, eventType ) );
-
-	}
+  private triggerOnDocument(eventType: string): Event {
+    return (this.triggerOnElement(this.doc, eventType));
+  }
 
   /**
    * trigger on element
    * Cf. https://github.com/bennadel/JavaScript-Demos/blob/master/demos/pre-bootstrap-evented-loading-screen-angular2
    */
   private triggerOnElement(
-		nativeElement: any,
-		eventType: string,
-		bubbles: boolean = true,
-		cancelable: boolean = false
-		) : Event {
+    nativeElement: any,
+    eventType: string,
+    bubbles: boolean = true,
+    cancelable: boolean = false
+  ): Event {
 
-		var customEvent = this.createEvent( eventType, bubbles, cancelable );
+    var customEvent = this.createEvent(eventType, bubbles, cancelable);
 
-		nativeElement.dispatchEvent( customEvent );
+    nativeElement.dispatchEvent(customEvent);
 
-		return( customEvent );
-	}
+    return (customEvent);
+  }
 
   /**
    * create and return a custom event with the given configuration
    */
   private createEvent(
-		eventType: string,
-		bubbles: boolean,
-		cancelable: boolean
-		) : Event {
+    eventType: string,
+    bubbles: boolean,
+    cancelable: boolean
+  ): Event {
 
-		// IE (shakes fist) uses some other kind of event initialization. As such, 
-		// we'll default to trying the "normal" event generation and then fallback to
-		// using the IE version. 
-		try {
+    // IE (shakes fist) uses some other kind of event initialization. As such, 
+    // we'll default to trying the "normal" event generation and then fallback to
+    // using the IE version. 
+    try {
 
-			var customEvent: any = new CustomEvent( 
-				eventType,
-				{
-					bubbles: bubbles,
-					cancelable: cancelable
-				}
-			);
-		} catch ( error ) {
-			var customEvent: any = this.doc.createEvent( "CustomEvent" );
-			customEvent.initCustomEvent( eventType, bubbles, cancelable );
-		}
+      var customEvent: any = new CustomEvent(
+        eventType,
+        {
+          bubbles: bubbles,
+          cancelable: cancelable
+        }
+      );
+    } catch (error) {
+      var customEvent: any = this.doc.createEvent("CustomEvent");
+      customEvent.initCustomEvent(eventType, bubbles, cancelable);
+    }
 
-		return( customEvent );
-	}
+    return (customEvent);
+  }
 }

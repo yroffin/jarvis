@@ -7,6 +7,7 @@ import { JarvisDefaultResource, JarvisDefaultLinkResource } from '../interface/j
 import { JarvisDataCoreResource } from './jarvis-data-core-resource';
 import { JarvisDataLinkedResource } from './jarvis-data-linked-resource';
 
+import { JarvisSecurityService } from './jarvis-security.service';
 import { JarvisDataDeviceService } from './jarvis-data-device.service';
 import { JarvisDataStoreService } from './jarvis-data-store.service';
 
@@ -29,15 +30,16 @@ export class JarvisDataViewService extends JarvisDataCoreResource<ViewBean> impl
   constructor(
     private _http: Http,
     private _configuration: JarvisConfigurationService,
+    private _jarvisSecurityService: JarvisSecurityService,
     private _jarvisDataStoreService: JarvisDataStoreService,
     private _jarvisDataDeviceService: JarvisDataDeviceService
   ) {
     super(_configuration.ServerWithApiUrl + 'views', _http);
 
-        /**
-         * map linked elements
-         */
-        this.allLinkedDevice = new JarvisDataLinkedResource<DeviceBean>(this.actionUrl, '/devices', _http);
+    /**
+     * map linked elements
+     */
+    this.allLinkedDevice = new JarvisDataLinkedResource<DeviceBean>(this.actionUrl, '/devices', _http);
   }
 
   /**
