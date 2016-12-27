@@ -38,7 +38,6 @@ export class AppComponent implements OnInit {
    * global system menu
    */
   private items: MenuItem[];
-  private doc: Document;
 
   /**
    * constructor
@@ -48,37 +47,18 @@ export class AppComponent implements OnInit {
     private _jarvisSecurityService: JarvisSecurityService,
     private _jarvisDataStoreService: JarvisDataStoreService
   ) {
-    this.doc = doc;
   }
 
   /**
    * global init of system menu
    */
   ngOnInit() {
-    if(!this._jarvisDataStoreService.isConnected()) {
-      return;
-    }
-
     /**
-     * get profile
+     * get profile from store
      */
-    let profile: MeBean;
-    this._jarvisSecurityService.Me()
-      .subscribe(
-      (data: MeBean) => profile = data,
-      (error: MeBean) => {
-        /**
-         * advertise
-         */
-        this.triggerOnDocument("angular2-app-ready");
-      },
-      () => {
+    this._jarvisDataStoreService.getMe((data: MeBean) => {
         this.loadMenu();
-        /**
-         * advertise
-         */
-        this.triggerOnDocument("angular2-app-ready");
-      });
+    });
   }
 
   /**
@@ -137,59 +117,5 @@ export class AppComponent implements OnInit {
         ]
       }
     ];
-  }
-
-  /**
-   * the given event on the document root.
-   */
-  private triggerOnDocument(eventType: string): Event {
-    return (this.triggerOnElement(this.doc, eventType));
-  }
-
-  /**
-   * trigger on element
-   * Cf. https://github.com/bennadel/JavaScript-Demos/blob/master/demos/pre-bootstrap-evented-loading-screen-angular2
-   */
-  private triggerOnElement(
-    nativeElement: any,
-    eventType: string,
-    bubbles: boolean = true,
-    cancelable: boolean = false
-  ): Event {
-
-    var customEvent = this.createEvent(eventType, bubbles, cancelable);
-
-    nativeElement.dispatchEvent(customEvent);
-
-    return (customEvent);
-  }
-
-  /**
-   * create and return a custom event with the given configuration
-   */
-  private createEvent(
-    eventType: string,
-    bubbles: boolean,
-    cancelable: boolean
-  ): Event {
-
-    // IE (shakes fist) uses some other kind of event initialization. As such, 
-    // we'll default to trying the "normal" event generation and then fallback to
-    // using the IE version. 
-    try {
-
-      var customEvent: any = new CustomEvent(
-        eventType,
-        {
-          bubbles: bubbles,
-          cancelable: cancelable
-        }
-      );
-    } catch (error) {
-      var customEvent: any = this.doc.createEvent("CustomEvent");
-      customEvent.initCustomEvent(eventType, bubbles, cancelable);
-    }
-
-    return (customEvent);
   }
 }

@@ -25,7 +25,6 @@ import { WindowRef } from './jarvis-utils.service';
 import { JarvisConfigurationService } from './jarvis-configuration.service';
 import { JarvisDefaultResource } from '../interface/jarvis-default-resource';
 import { JarvisDataCoreResource } from './jarvis-data-core-resource';
-import { JarvisDataStoreService } from './jarvis-data-store.service';
 
 /**
  * data model
@@ -44,7 +43,6 @@ export class JarvisSecurityService extends JarvisDataCoreResource<ResourceBean> 
     private window: WindowRef,
     private _router: Router,
     private _windowService: WindowRef,
-    private _jarvisDataStoreService: JarvisDataStoreService,
     private _jarvisConfigurationService:JarvisConfigurationService) {
     super(_jarvisConfigurationService.ServerWithUrl, _http);
   }
@@ -52,8 +50,8 @@ export class JarvisSecurityService extends JarvisDataCoreResource<ResourceBean> 
   /**
    * get me resource
    */
-  public Me = (): Observable<MeBean> => {
-    this.headers.set('JarvisAuthToken', this._jarvisDataStoreService.getToken());
+  public Me = (token: string): Observable<MeBean> => {
+    this.headers.set('JarvisAuthToken', token);
     return this.http.get(this.actionUrl + 'api/profile/me', { headers: this.headers })
       .map((response: Response) => <MeBean> response.json())
       .catch(this.handleError);

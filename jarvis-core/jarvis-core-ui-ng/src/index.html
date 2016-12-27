@@ -45,12 +45,12 @@
         // completed (based on the known transition time).
         setTimeout(
           function removeLoadingScreen() {
-
-            preBootstrapContainer
-              .parentNode
-              .removeChild(preBootstrapContainer)
-              ;
-
+            if(preBootstrapContainer.parentNode) {
+              preBootstrapContainer
+                .parentNode
+                .removeChild(preBootstrapContainer)
+                ;
+            }
           },
           300
         );
