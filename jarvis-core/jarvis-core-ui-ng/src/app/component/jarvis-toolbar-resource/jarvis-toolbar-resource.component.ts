@@ -15,7 +15,9 @@
  */
 
 import { Component, Input, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/primeng';
+
+import { MenuItem, Message } from 'primeng/primeng';
+
 import * as _ from 'lodash';
 
 import { NotifyCallback } from '../../class/jarvis-resource';
@@ -35,6 +37,10 @@ import { TaskBean, PickerTaskBean } from '../../model/action-bean';
 })
 export class JarvisToolbarResourceComponent implements OnInit {
 
+  /**
+   * members
+   */
+  msgs: Message[] = [];
   @Input() private tasks: TaskBean[] = [];
   @Input() private pickers: PickerTaskBean[] = [];
 
@@ -75,6 +81,7 @@ export class JarvisToolbarResourceComponent implements OnInit {
    */
   private taskCallback(task: TaskBean): void {
     eval("this.notified."+task.task).apply(this.notified, task.args);
+    this.msgs.push({severity:'info', summary:'Tâche', detail:task.label});
   }
 
   /**
@@ -111,6 +118,7 @@ export class JarvisToolbarResourceComponent implements OnInit {
    */
   public save(): void {
     this.notified.save();
+    this.msgs.push({severity:'info', summary:'Action', detail:"sauvegarde"});
   }
 
   /**
@@ -118,6 +126,7 @@ export class JarvisToolbarResourceComponent implements OnInit {
    */
   public remove(): void {
     this.notified.remove();
+    this.msgs.push({severity:'info', summary:'Action', detail:"suppression"});
   }
 
   /**
@@ -125,5 +134,6 @@ export class JarvisToolbarResourceComponent implements OnInit {
    */
   public duplicate(): void {
     this.notified.duplicate();
+    this.msgs.push({severity:'info', summary:'Action', detail:"duplication"});
   }
 }

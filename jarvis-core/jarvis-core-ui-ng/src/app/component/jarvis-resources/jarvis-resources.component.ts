@@ -16,6 +16,8 @@
 
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { Message } from 'primeng/primeng';
+
 import * as _ from 'lodash';
 
 import { JarvisConfigurationService } from '../../service/jarvis-configuration.service';
@@ -37,6 +39,7 @@ import { JarvisDataConfigurationService } from '../../service/jarvis-data-config
 import { JarvisDataPropertyService } from '../../service/jarvis-data-property.service';
 import { JarvisDataConnectorService } from '../../service/jarvis-data-connector.service';
 import { JarvisDataNotificationService } from '../../service/jarvis-data-notification.service';
+import { JarvisDataSnapshotService } from '../../service/jarvis-data-snapshot.service';
 
 /**
  * data model
@@ -50,6 +53,10 @@ import { ResourceBean } from '../../model/resource-bean';
 })
 export class JarvisResourcesComponent implements OnInit {
 
+  /**
+   * members
+   */
+  msgs: Message[] = [];
   myResourceName: string = "default";
   myResources: ResourceBean[];
   myService: JarvisDefaultResource<ResourceBean>;
@@ -72,6 +79,7 @@ export class JarvisResourcesComponent implements OnInit {
     private _jarvisDataConnectorService: JarvisDataConnectorService,
     private _jarvisDataNotificationService: JarvisDataNotificationService,
     private _jarvisDataCronService: JarvisDataCronService,
+    private _jarvisDataSnapshotService: JarvisDataSnapshotService,
     private _jarvisDataViewService: JarvisDataViewService
   ) {
   }
@@ -120,6 +128,9 @@ export class JarvisResourcesComponent implements OnInit {
         if (navigationEnd.url === '/crons') {
           this.load('crons', this._jarvisDataCronService);
         }
+        if (navigationEnd.url === '/snapshots') {
+          this.load('snapshots', this._jarvisDataSnapshotService);
+        }
       });
   }
 
@@ -165,6 +176,7 @@ export class JarvisResourcesComponent implements OnInit {
       error => console.log(error),
       () => {
         this.myResources.push(created);
+        this.msgs.push({severity:'info', summary:'Création de la ressource', detail:created.name});
       }
       );
   }
@@ -184,6 +196,7 @@ export class JarvisResourcesComponent implements OnInit {
         _.remove(this.myResources, function(item) {
           return item.id === resource.id;
         })
+        this.msgs.push({severity:'info', summary:'Supression de la ressource', detail:resource.name});
       }
       );
   }
@@ -192,6 +205,6 @@ export class JarvisResourcesComponent implements OnInit {
    * view this resource
    */
   public view(resource: ResourceBean) {
-    this.router.navigate(['/' + this.myResourceName + '/' + resource.id]);
+    this.router.navigateByUrl('/' + this.myResourceName + '/' + resource.id);
   }
 }

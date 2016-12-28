@@ -70,7 +70,7 @@ public class ApiToolResources extends ApiResources<SnapshotRest,SnapshotBean> {
 		} catch (IOException e) {
 			throw new TechnicalException(e);
 		}
-		 return "";
+		 return "{}";
 	}
 
 	/**

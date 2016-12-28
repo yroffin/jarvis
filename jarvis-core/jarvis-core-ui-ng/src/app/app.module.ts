@@ -60,9 +60,11 @@ import { JarvisDataNotificationService } from './service/jarvis-data-notificatio
 import { JarvisDataCronService } from './service/jarvis-data-cron.service';
 import { JarvisDataScenarioService } from './service/jarvis-data-scenario.service';
 import { JarvisDataBlockService } from './service/jarvis-data-block.service';
+import { JarvisDataSnapshotService } from './service/jarvis-data-snapshot.service';
 import { JarvisDataViewService } from './service/jarvis-data-view.service';
 import { JarvisDataRawService } from './service/jarvis-data-raw.service';
 import { JarvisDataStoreService } from './service/jarvis-data-store.service';
+
 
 import { JarvisHomeComponent } from './component/jarvis-home/jarvis-home.component';
 import { JarvisResourcesComponent } from './component/jarvis-resources/jarvis-resources.component';
@@ -84,6 +86,7 @@ import { JarvisTileComponent } from './component/jarvis-tile/jarvis-tile.compone
 import { JarvisToolbarResourceComponent } from './component/jarvis-toolbar-resource/jarvis-toolbar-resource.component';
 import { JarvisPickerComponent } from './dialog/jarvis-picker/jarvis-picker.component';
 import { JarvisLoginComponent } from './component/jarvis-login/jarvis-login.component';
+import { JarvisResourceSnapshotComponent } from './component/jarvis-resource-snapshot/jarvis-resource-snapshot.component';
 
 /**
  * default route definition
@@ -113,6 +116,8 @@ const appRoutes: Routes = [
   { path: 'connectors/:id', component: JarvisResourceConnectorComponent },
   { path: 'views', component: JarvisResourcesComponent, data: { resource: 'views' } },
   { path: 'views/:id', component: JarvisResourceViewComponent },
+  { path: 'snapshots', component: JarvisResourcesComponent, data: { resource: 'snapshots' } },
+  { path: 'snapshots/:id', component: JarvisResourceSnapshotComponent },
   { path: 'login', component: JarvisLoginComponent },
   { path: '', component: JarvisHomeComponent },
   { path: '**', component: JarvisHomeComponent }
@@ -139,7 +144,8 @@ const appRoutes: Routes = [
     JarvisResourceNotificationComponent,
     JarvisResourcePropertyComponent,
     JarvisResourceViewComponent,
-    JarvisLoginComponent
+    JarvisLoginComponent,
+    JarvisResourceSnapshotComponent
   ],
   entryComponents: [
     JarvisPickerComponent
@@ -197,7 +203,9 @@ const appRoutes: Routes = [
     JarvisDataStoreService,
     JarvisDataRawService,
     JarvisDataViewService,
+    JarvisDataSnapshotService,
     JarvisSecurityService,
+    JarvisDataViewService,
     /**
      * primeng
      */

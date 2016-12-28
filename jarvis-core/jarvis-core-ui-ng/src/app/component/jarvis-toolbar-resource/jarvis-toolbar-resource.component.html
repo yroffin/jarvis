@@ -8,4 +8,4 @@
         <button *ngFor="let picker of pickers; let index = index" pButton type="button" icon="{{picker.icon}}" pTooltip="{{picker.label}}" tooltipPosition="right" (click)="pickerCallback(picker)"></button>
     </div>
 </p-toolbar>
-
+<p-growl [value]="msgs"></p-growl>

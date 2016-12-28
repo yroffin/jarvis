@@ -53,6 +53,13 @@ export class WindowRef {
     }
 
     /**
+     * get FileReader
+     */
+    public getFileReader(): any {
+        return new FileReader();
+    }
+
+    /**
      * change href
      */
     public setHref(ref: string): void {

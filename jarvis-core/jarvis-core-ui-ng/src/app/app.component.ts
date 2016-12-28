@@ -62,6 +62,23 @@ export class AppComponent implements OnInit {
   }
 
   /**
+   * test if isMobile
+   */
+  private isMobile(): boolean {
+    if (window.matchMedia("(min-width: 400px)").matches) {
+      /*
+       * the view port is at least 400 pixels wide
+       **/
+      return false;
+    } else {
+      /*
+       * the view port is less than 400 pixels wide
+       **/
+      return true;
+    }
+  }
+
+  /**
    * the given event on the document root.
    */
   private loadMenu(): void {
@@ -111,6 +128,7 @@ export class AppComponent implements OnInit {
             icon: 'fa-cube',
             items: [
               { label: 'Configuration', icon: 'fa-database', routerLink: ['/configurations'] },
+              { label: 'Snapshot', icon: 'fa-clone', routerLink: ['/snapshots'] },
               { label: 'Property', icon: 'fa-code', routerLink: ['/properties'] }
             ]
           }

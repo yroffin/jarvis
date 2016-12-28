@@ -1,2 +1,3 @@
-<p-panelMenu [model]="items"></p-panelMenu>
+<p-panelMenu *ngIf="isMobile()" [model]="items"></p-panelMenu>
+<p-menubar *ngIf="!isMobile()" [model]="items"></p-menubar>
 <router-outlet></router-outlet>

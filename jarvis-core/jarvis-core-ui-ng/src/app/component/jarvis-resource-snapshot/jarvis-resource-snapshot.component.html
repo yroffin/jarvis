@@ -1,0 +1,34 @@
+<app-jarvis-toolbar-resource [notified]="this" [crud]="true" [tasks]="[{'task':'download','icon':'fa-cloud-upload','label':'Télécharger cette configuration'},{'task':'reload','icon':'fa-cloud-download','label':'Recharger cette configuration (sans sauver)'},{'task':'restore','icon':'fa-briefcase','label':'Mise à jour de la configuration courante'}]"></app-jarvis-toolbar-resource>
+
+<input #fileInput style="display:none" type="file" (change)="onChange($event)">
+
+<div *ngIf="mySnapshot">
+  <p-accordion>
+    <p-accordionTab header="Entête">
+      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Nom
+          </div>
+          <div class="ui-grid-col-8">
+            <input type="text" pInputText [(ngModel)]="mySnapshot.name" placeholder="Nom" />
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Icône
+          </div>
+          <div class="ui-grid-col-8">
+            <input type="text" pInputText [(ngModel)]="mySnapshot.icon" placeholder="Icône" />
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-12">
+            <pre><code [innerHtml]="hightlight(mySnapshot.json)"></code></pre>
+          </div>
+        </div>
+      </div>
+    </p-accordionTab>
+  </p-accordion>
+</div>
+<p-growl [value]="msgs"></p-growl>
