@@ -61,7 +61,13 @@ public class JarvisTokenValidationFilter implements Filter {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void handle(Request request, Response response) throws Exception {
-        CommonHelper.assertNotNull("config", config);
+		/**
+		 * no protection on /api/connect and /api/oauth2
+		 */
+		if(request.uri().startsWith("/api/connect")) return;
+		if(request.uri().startsWith("/api/oauth2")) return;
+
+		CommonHelper.assertNotNull("config", config);
         final WebContext context = new SparkWebContext(request, response, config.getSessionStore());
         CommonHelper.assertNotNull("config.httpActionAdapter", config.getHttpActionAdapter());
 

@@ -39,6 +39,13 @@ export class WindowRef {
     }
 
     /**
+     * get search
+     */
+    public getSearch(): string {
+        return this._window.location.search;
+    }
+
+    /**
      * get href
      */
     public getHref(): string {

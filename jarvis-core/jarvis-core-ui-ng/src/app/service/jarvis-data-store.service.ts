@@ -15,6 +15,7 @@
  */
 
 import { Injectable, Inject } from '@angular/core';
+import { PlatformLocation } from '@angular/common';
 import { DOCUMENT } from "@angular/platform-browser";
 
 import { Observable } from 'rxjs/Observable';
@@ -49,6 +50,7 @@ export class JarvisDataStoreService {
     @Inject(DOCUMENT) doc: any,
     private activatedRoute: ActivatedRoute,
     private router: Router,
+    private platformLocation: PlatformLocation,
     private _windowService: WindowRef,
     private _jarvisSecurityService: JarvisSecurityService
   ) {
@@ -66,14 +68,23 @@ export class JarvisDataStoreService {
     if(this.me) {
       meStore(this.me);
     } else {
-      this.getMeFromApi()
+      let connect: boolean;
+      this._jarvisSecurityService.Connect()
         .subscribe(
-        (data: MeBean) => this.me = data,
+        (data: boolean) => connect = data,
         (error: any) => {
           console.error("Credential not valid");
         },
         () => {
-          meStore(this.me);
+          this.getMeFromApi(connect)
+            .subscribe(
+            (data: MeBean) => this.me = data,
+            (error: any) => {
+              console.error("Credential not valid");
+            },
+            () => {
+              meStore(this.me);
+            });
         });
     }
   }
@@ -81,7 +92,7 @@ export class JarvisDataStoreService {
   /**
    * get de from api
    */
-  private getMeFromApi(): Subject<MeBean> {
+  private getMeFromApi(connect: boolean): Subject<MeBean> {
     /**
      * find any token on url
      */
@@ -90,10 +101,14 @@ export class JarvisDataStoreService {
       this.myToken = accessToken.match(/^(.*?)&/)[1].replace('#access_token=', '');
     }
 
-    if (this.myToken === '' && !this._windowService.getHref().endsWith('/login')) {
+    /**
+     * when connect is needed, token must be set
+     */
+    if (this.myToken === '' && connect) {
       console.info('Credential undefined');
-      this._windowService.setHref('http://' + this._windowService.getHost() + '/login');
+      this.router.navigate(['login']);
       this.securityService.next();
+      this.triggerOnDocument("angular2-app-ready");
       return this.securityService;
     }
 
@@ -113,7 +128,12 @@ export class JarvisDataStoreService {
         console.info('Credential completed');
         this.securityService.next(profile);
         this.securityService.complete();
-        this.router.navigateByUrl("/");
+        /**
+         * route on / if on login
+         */
+        if(this.router.url.indexOf('login') >= 0) {
+          this.router.navigateByUrl("/");
+        }
         this.triggerOnDocument("angular2-app-ready");
       });
 

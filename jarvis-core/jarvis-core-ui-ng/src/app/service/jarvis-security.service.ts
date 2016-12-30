@@ -48,6 +48,15 @@ export class JarvisSecurityService extends JarvisDataCoreResource<ResourceBean> 
   }
 
   /**
+   * get connect resource
+   */
+  public Connect = (): Observable<boolean> => {
+    return this.http.get(this.actionUrl + 'api/connect', { headers: this.headers })
+      .map((response: Response) => <boolean> response.json())
+      .catch(this.handleError);
+  }
+
+  /**
    * get me resource
    */
   public Me = (token: string): Observable<MeBean> => {
@@ -61,7 +70,7 @@ export class JarvisSecurityService extends JarvisDataCoreResource<ResourceBean> 
    * get oauth2 resource
    */
   public Oauth2 = (client: string): Observable<Oauth2Bean> => {
-    return this.http.get(this.actionUrl + 'oauth2?client='+client+'&oauth2_redirect_uri=http://'+this._windowService.getHost())
+    return this.http.get(this.actionUrl + 'api/oauth2?client='+client+'&oauth2_redirect_uri=http://'+this._windowService.getHost())
       .map((response: Response) => <Oauth2Bean> response.json())
       .catch(this.handleError);
   }

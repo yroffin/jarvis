@@ -1,30 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN" packages="org.jarvis.core.log4j2">
   <Appenders>
-	<GelfCustomAppender name="gelfAppender" url="http://192.168.1.26:122012/gelf" >
-	</GelfCustomAppender>
 	<RollingFile name="RollingFile" fileName="${sys:jarvis.log.dir}/jarvis.log" filePattern="${sys:jarvis.log.dir}/jarvis-%d{MM-dd-yyyy}.log.gz"
                  ignoreExceptions="false">
-      <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+      <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger{36} - %msg%n"/>
       <TimeBasedTriggeringPolicy />
     </RollingFile>
 	<RollingFile name="RollingSessionFile" fileName="${sys:jarvis.log.dir}/jarvis-sessions.log" filePattern="${sys:jarvis.log.dir}/jarvis-sessions-%d{MM-dd-yyyy}.log.gz"
                  ignoreExceptions="false">
-      <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+      <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger{36} - %msg%n"/>
+      <TimeBasedTriggeringPolicy />
+    </RollingFile>
+	<RollingFile name="RollingAccessFile" fileName="${sys:jarvis.log.dir}/jarvis-access.log" filePattern="${sys:jarvis.log.dir}/jarvis-access-%d{MM-dd-yyyy}.log.gz"
+                 ignoreExceptions="false">
+      <PatternLayout pattern="%d{DEFAULT} %msg%n"/>
       <TimeBasedTriggeringPolicy />
     </RollingFile>
     <Console name="Console" target="SYSTEM_OUT">
-      <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+      <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger{36} - %msg%n"/>
     </Console>
   </Appenders>
   <Loggers>
   	<Logger name="org.jarvis.core.security" level="info" additivity="false">
       <AppenderRef ref="RollingSessionFile"/>
     </Logger>
+  	<Logger name="org.jarvis.core.access" level="info" additivity="false">
+      <AppenderRef ref="RollingAccessFile"/>
+    </Logger>
     <Root level="info">
       <AppenderRef ref="Console" level="info" />
       <AppenderRef ref="RollingFile" level="info" />
-      <AppenderRef ref="gelfAppender"  level="info" />
     </Root>
   </Loggers>
 </Configuration>

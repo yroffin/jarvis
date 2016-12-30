@@ -205,6 +205,6 @@ export class JarvisResourcesComponent implements OnInit {
    * view this resource
    */
   public view(resource: ResourceBean) {
-    this.router.navigateByUrl('/' + this.myResourceName + '/' + resource.id);
+    this.router.navigate([this.myResourceName + '/' + resource.id]);
   }
 }

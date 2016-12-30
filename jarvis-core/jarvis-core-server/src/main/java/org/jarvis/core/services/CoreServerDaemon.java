@@ -16,10 +16,10 @@
 
 package org.jarvis.core.services;
 
-
 import javax.annotation.PostConstruct;
 
 import org.jarvis.core.SwaggerParser;
+import org.jarvis.core.access.JarvisAccessLogFilter;
 import org.jarvis.core.model.bean.config.Oauth2Config;
 import org.jarvis.core.resources.CoreResources;
 import org.jarvis.core.resources.CoreWebsocket;
@@ -223,9 +223,27 @@ public class CoreServerDaemon {
 		});
 
 		/**
+		 * retrieve if credential are needed
+		 */
+		spark.Spark.get("/api/connect", new Route() {
+			@Override
+			public Object handle(Request request, Response response) throws Exception {
+		        /**
+		         * no protection on excluded ips
+		         */
+		        for(String exclude : excludes) {
+		        	if(request.ip().matches(exclude)) {
+		                return false;
+		        	}
+		        }
+		        return true;
+			}			
+		});
+
+		/**
 		 * retrieve oauth2 client and identity
 		 */
-		spark.Spark.get("/oauth2", new Route() {
+		spark.Spark.get("/api/oauth2", new Route() {
 			@Override
 			public Object handle(Request request, Response response) throws Exception {
 		    	Oauth2Config oauth2Config = new Oauth2Config();
@@ -283,8 +301,8 @@ public class CoreServerDaemon {
 			return swaggerJson;
 		});
 
-		spark.Spark.after((request, response) -> {
-		    response.header("Content-Encoding", "gzip");
-		});
+		spark.Spark.after("/*", new JarvisAccessLogFilter());
 	}
+	
+	protected final Logger accesslog = LoggerFactory.getLogger(JarvisAccessLogFilter.class);
 }
