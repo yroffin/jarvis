@@ -17,6 +17,7 @@
 package org.jarvis.core.model.bean.device;
 
 import org.jarvis.core.model.bean.GenericBean;
+import org.jarvis.core.type.GenericMap;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -69,6 +70,10 @@ public class DeviceBean extends GenericBean {
 	 * template
 	 */
 	public String template;
+	/**
+	 * render
+	 */
+	public GenericMap render;
 	@Override
 	public String toString() {
 		return "DeviceBean [name=" + name + ", parameters=" + parameters + ", owner=" + owner + ", visible=" + visible

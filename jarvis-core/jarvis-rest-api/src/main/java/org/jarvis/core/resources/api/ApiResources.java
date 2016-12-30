@@ -634,10 +634,13 @@ public abstract class ApiResources<REST extends GenericEntity,BEAN extends Gener
 					 * ignore any statistics report
 					 */
 				}
+				response.type("application/json");
 				return result.asObject();
 			case ARRAY:
+				response.type("application/json");
 				return result.asList();
 			case BOOLEAN:
+				response.type("application/json");
 				return result.asBoolean();
 			case FILE_STREAM:
 				response.type("application/octet-stream");

@@ -17,6 +17,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { PlatformLocation } from '@angular/common';
 import { DOCUMENT } from "@angular/platform-browser";
+import * as _ from 'lodash';
 
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Rx';
@@ -24,6 +25,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { WindowRef } from './jarvis-utils.service';
 import { JarvisSecurityService } from './jarvis-security.service';
+import { JarvisDataViewService } from './jarvis-data-view.service';
 
 /**
  * data model
@@ -43,7 +45,7 @@ export class JarvisDataStoreService {
   private me: MeBean;
 
   private myToken: string = '';
-  private myViews: ViewBean[];
+  private myViews: ViewBean[] = [];
   private myViewsChange: Subject<ViewBean[]> = new Subject<ViewBean[]>();
 
   constructor(
@@ -52,20 +54,22 @@ export class JarvisDataStoreService {
     private router: Router,
     private platformLocation: PlatformLocation,
     private _windowService: WindowRef,
-    private _jarvisSecurityService: JarvisSecurityService
+    private _jarvisSecurityService: JarvisSecurityService,
+    private _jarvisDataViewService: JarvisDataViewService
   ) {
     /**
      * implement one subject
      */
     this.securityService = new Subject<MeBean>();
     this.doc = doc;
+    this.myViews = [];
   }
 
   /**
    * get profile
    */
   public getMe(meStore: (me: MeBean) => any): void {
-    if(this.me) {
+    if (this.me) {
       meStore(this.me);
     } else {
       let connect: boolean;
@@ -84,6 +88,17 @@ export class JarvisDataStoreService {
             },
             () => {
               meStore(this.me);
+              /**
+               * load views
+               */
+              this._jarvisDataViewService.Task('*', 'GET', {})
+                .subscribe(
+                (data: ViewBean[]) => this.setViews(data),
+                (error: any) => {
+                  console.error("Error while loading views");
+                },
+                () => {
+                });
             });
         });
     }
@@ -131,7 +146,7 @@ export class JarvisDataStoreService {
         /**
          * route on / if on login
          */
-        if(this.router.url.indexOf('login') >= 0) {
+        if (this.router.url.indexOf('login') >= 0) {
           this.router.navigateByUrl("/");
         }
         this.triggerOnDocument("angular2-app-ready");
@@ -148,7 +163,11 @@ export class JarvisDataStoreService {
   }
 
   public setViews(toStore: ViewBean[]) {
-    this.myViews = toStore;
+    this.myViews.splice(0, this.myViews.length);
+    let that = this;
+    _.each(toStore, function(item) {
+      that.myViews.push(item);
+    });
   }
 
   /**

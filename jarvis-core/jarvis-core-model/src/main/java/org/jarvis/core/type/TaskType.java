@@ -29,6 +29,10 @@ public enum TaskType {
 	 */
 	EXECUTE,
 	/**
+	 * get
+	 */
+	GET,
+	/**
 	 * render
 	 */
 	RENDER,

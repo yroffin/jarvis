@@ -87,6 +87,7 @@ import { JarvisToolbarResourceComponent } from './component/jarvis-toolbar-resou
 import { JarvisPickerComponent } from './dialog/jarvis-picker/jarvis-picker.component';
 import { JarvisLoginComponent } from './component/jarvis-login/jarvis-login.component';
 import { JarvisResourceSnapshotComponent } from './component/jarvis-resource-snapshot/jarvis-resource-snapshot.component';
+import { JarvisDesktopComponent } from './component/jarvis-desktop/jarvis-desktop.component';
 
 /**
  * default route definition
@@ -118,6 +119,7 @@ const appRoutes: Routes = [
   { path: 'views/:id', component: JarvisResourceViewComponent },
   { path: 'snapshots', component: JarvisResourcesComponent, data: { resource: 'snapshots' } },
   { path: 'snapshots/:id', component: JarvisResourceSnapshotComponent },
+  { path: 'desktop', component: JarvisDesktopComponent },
   { path: 'login', component: JarvisLoginComponent },
   { path: '', component: JarvisHomeComponent },
   { path: '**', component: JarvisHomeComponent }
@@ -145,7 +147,8 @@ const appRoutes: Routes = [
     JarvisResourcePropertyComponent,
     JarvisResourceViewComponent,
     JarvisLoginComponent,
-    JarvisResourceSnapshotComponent
+    JarvisResourceSnapshotComponent,
+    JarvisDesktopComponent
   ],
   entryComponents: [
     JarvisPickerComponent

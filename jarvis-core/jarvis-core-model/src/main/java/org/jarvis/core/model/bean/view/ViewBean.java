@@ -16,7 +16,10 @@
 
 package org.jarvis.core.model.bean.view;
 
+import java.util.List;
+
 import org.jarvis.core.model.bean.GenericBean;
+import org.jarvis.core.model.bean.device.DeviceBean;
 
 /**
  * VIEW object
@@ -38,4 +41,8 @@ public class ViewBean extends GenericBean {
 	 * ishome
 	 */
 	public boolean ishome;
+	/**
+	 * devices
+	 */
+	public List<DeviceBean> devices;
 }

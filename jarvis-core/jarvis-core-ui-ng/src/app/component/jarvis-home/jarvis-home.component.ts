@@ -14,20 +14,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit } from '@angular/core';
-
-import { Message } from 'primeng/primeng';
-
-import { JarvisDataDeviceService } from '../../service/jarvis-data-device.service';
-import { JarvisDataViewService } from '../../service/jarvis-data-view.service';
-import { JarvisDataStoreService } from '../../service/jarvis-data-store.service';
-
-/**
- * data model
- */
-import { DeviceBean } from '../../model/device-bean';
-import { ViewBean } from '../../model/view-bean';
-import { Oauth2Bean, MeBean } from '../../model/security/oauth2-bean';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-jarvis-home',
@@ -36,34 +23,9 @@ import { Oauth2Bean, MeBean } from '../../model/security/oauth2-bean';
 })
 export class JarvisHomeComponent implements OnInit {
 
-  msgs: Message[] = [];
-  myViews: ViewBean[];
-
-  constructor(
-    private _jarvisDataDeviceService: JarvisDataDeviceService,
-    private _jarvisDataStoreService: JarvisDataStoreService,
-    private _jarvisDataViewService: JarvisDataViewService) {
-  }
+  constructor() { }
 
   ngOnInit() {
-    /**
-     * get profile from store
-     */
-    this._jarvisDataStoreService.getMe((data: MeBean) => {
-      /**
-       * load all views
-       */
-      this._jarvisDataViewService.FindViewsAndDevices()
-        .subscribe(
-        (data: ViewBean[]) => this.myViews = this._jarvisDataStoreService.getViews()
-        );
-    });
   }
 
-  private touch(device: DeviceBean): void {
-    this._jarvisDataDeviceService.Task(device.id, "execute", {})
-      .subscribe(
-      (data: any) => this.msgs.push({severity:'info', summary:'Activation', detail:device.name})
-      );
-  }
 }

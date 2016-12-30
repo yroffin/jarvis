@@ -89,7 +89,7 @@ export class AppComponent implements OnInit {
       {
         label: 'Home',
         icon: 'fa-home',
-        routerLink: ['/']
+        routerLink: ['/desktop']
       },
       {
         label: 'Ressource',

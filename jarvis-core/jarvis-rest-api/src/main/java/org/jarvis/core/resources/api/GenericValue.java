@@ -113,6 +113,18 @@ public class GenericValue {
 	}
 
 	/**
+	 * build as object
+	 * @param bean
+	 */
+	public GenericValue(Object bean) {
+		try {
+			initialize(mapper.writeValueAsString(bean));
+		} catch (JsonProcessingException e) {
+			throw new TechnicalException(e);
+		}
+	}
+
+	/**
 	 * @return ResultType
 	 */
 	public ResultType getType() {
