@@ -84,7 +84,21 @@ Any Java plateform can run Jarvis
 - windows
 - linux, and also raspberry pi :)
 
-3.3 sample configuration
+3.3 raspberry setup
+-------------------
+
+    pi@raspberrypi:~ $ sudo useradd -m -b /home/jarvis jarvis
+    pi@raspberrypi:~ $ export GITHUB=https://github.com/yroffin/jarvis/releases/download/v1.01b
+    pi@raspberrypi:~ $ sudo wget ${GITHUB}/jarvis-core-server-0.0.1-SNAPSHOT.jar -O /home/jarvis/jarvis-core-server-0.0.1-SNAPSHOT.jar
+    pi@raspberrypi:~ $ sudo chmod 755 /home/jarvis/jarvis-core-server-0.0.1-SNAPSHOT.jar
+    pi@raspberrypi:~ $ sudo chown jarvis:jarvis /home/jarvis/jarvis-core-server-0.0.1-SNAPSHOT.jar
+    pi@raspberrypi:~ $ sudo wget ${GITHUB}/jarvis-service -O /etc/init.d/jarvis-service
+    pi@raspberrypi:~ $ sudo chmod 755 /etc/init.d/jarvis-service
+    pi@raspberrypi:~ $ sudo update-rc.d jarvis-service defaults
+    pi@raspberrypi:~ $ sudo service jarvis-service restart
+
+
+3.4 sample configuration
 ------------------------
 
 This simple paragraph is a simple way to have a little configuration, just create a snapshot and then
