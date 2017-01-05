@@ -35,26 +35,7 @@ Oauth2 integration (pac4j)
 2 Components
 ============
 
-2.1 HUE
--------
 TODO
-
-2.2 DIO
--------
-DIO integration is based on this article
-- http://www.homautomation.org/2013/10/09/how-to-control-di-o-devices-with-a-raspberry
-  
-
-2.3 NFC-RC522 (in progress)
----------------------------
-Usefull article for RASPBERRY PI 3 rev 1.2
-- https://www.raspberrypi.org/forums/viewtopic.php?f=37&t=147291
-
-Python setup
-
-Install pip then
-- pip install flask
-- wget https://raw.githubusercontent.com/rasplay/MFRC522-python/master/MFRC522.py
 
 Roadmap
 =======
