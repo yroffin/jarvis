@@ -17,7 +17,6 @@
 package org.jarvis.core.resources.api.connectors;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Path;
@@ -27,16 +26,12 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.glassfish.jersey.client.ClientProperties;
 import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.exception.TechnicalHttpException;
 import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.connector.ConnectorBean;
-import org.jarvis.core.model.bean.device.DeviceBean;
-import org.jarvis.core.model.bean.scenario.ScenarioBean;
-import org.jarvis.core.model.bean.scenario.TriggerBean;
-import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.model.rest.connector.ConnectorRest;
-import org.jarvis.core.model.rest.scenario.TriggerRest;
 import org.jarvis.core.resources.api.ApiResources;
 import org.jarvis.core.resources.api.Declare;
 import org.jarvis.core.resources.api.GenericValue;
@@ -70,10 +65,12 @@ public class ApiConnectorResources extends ApiResources<ConnectorRest,ConnectorB
 		setRestClass(ConnectorRest.class);
 		setBeanClass(ConnectorBean.class);
 
-		/**
-		 * create HTTP Client for all call
-		 */
+		// create HTTP Client for all call
 		this.client = ClientBuilder.newClient();
+
+		// Fix timeout
+		client.property(ClientProperties.CONNECT_TIMEOUT, 2000);
+		client.property(ClientProperties.READ_TIMEOUT,    2000);
 	}
 
 	class ResourceListenerImpl extends ResourceDefaultPostListenerImpl<ConnectorRest, ConnectorBean> implements ResourcePostListener<ConnectorRest, ConnectorBean> {
@@ -82,8 +79,8 @@ public class ApiConnectorResources extends ApiResources<ConnectorRest,ConnectorB
 		public void getRest(Request request, spark.Response response, ConnectorRest rest) {
 			try {
 				rest.collects = findCollector(rest);
-			} catch (TechnicalHttpException e) {
-				throw new TechnicalException(e);
+			} catch (Exception e) {
+				rest.collects = null;
 			}
 		}
 
@@ -256,7 +253,7 @@ public class ApiConnectorResources extends ApiResources<ConnectorRest,ConnectorB
 			/**
 			 * no answer is not an error, may be connector is gone
 			 */
-			return new GenericMap();
+			throw new TechnicalHttpException(entity.getStatus(), rest.adress);
 		}
 	}
 }

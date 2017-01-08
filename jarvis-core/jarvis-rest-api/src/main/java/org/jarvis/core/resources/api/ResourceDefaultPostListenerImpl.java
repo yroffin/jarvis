@@ -33,4 +33,8 @@ public abstract class ResourceDefaultPostListenerImpl<REST,BEAN> implements Reso
 	@Override
 	public void getRest(Request request, Response response, REST rest) {
 	}
+
+	@Override
+	public void getAllRest(Request request, Response response, REST rest) {
+	}
 }

@@ -106,7 +106,7 @@ public abstract class ApiResources<REST extends GenericEntity,BEAN extends Gener
 	 * all ressource method
 	 */
 	private enum TRIGGER_METHOD {
-		POST, PUT, GET, DELETE
+		POST, PUT, GET, DELETE, ALL
 	}
 
 	/**
@@ -168,6 +168,13 @@ public abstract class ApiResources<REST extends GenericEntity,BEAN extends Gener
 		}
 	}
 
+	/**
+	 * trigger action after rest result
+	 * @param method
+	 * @param request
+	 * @param response
+	 * @param rest
+	 */
 	private void triggerAfterRest(TRIGGER_METHOD method, Request request, Response response, REST rest) {
 		switch(method) {
 			case POST:
@@ -183,6 +190,11 @@ public abstract class ApiResources<REST extends GenericEntity,BEAN extends Gener
 			case GET:
 		        for(ResourcePostListener<REST,BEAN> listener : postListeners){
 		            listener.getRest(request, response, rest);
+		        }
+		        break;
+			case ALL:
+		        for(ResourcePostListener<REST,BEAN> listener : postListeners){
+		            listener.getAllRest(request, response, rest);
 		        }
 		        break;
 		    default:
@@ -372,7 +384,7 @@ public abstract class ApiResources<REST extends GenericEntity,BEAN extends Gener
 		for(BEAN bean : beans) {
 			REST rest = mapBeanToRest(bean);
 			rests.add(rest);
-			triggerAfterRest(TRIGGER_METHOD.GET, request, response, rest);
+			triggerAfterRest(TRIGGER_METHOD.ALL, request, response, rest);
 		}
 		return writeValueAsString(rests);
     }

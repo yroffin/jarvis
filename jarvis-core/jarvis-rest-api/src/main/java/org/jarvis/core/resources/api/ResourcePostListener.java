@@ -45,4 +45,11 @@ public interface ResourcePostListener<REST,BEAN> {
 	 * @param rest 
 	 */
 	public void getRest(Request request, Response response, REST rest);
+
+	/**
+	 * @param request
+	 * @param response
+	 * @param rest 
+	 */
+	public void getAllRest(Request request, Response response, REST rest);
 }
