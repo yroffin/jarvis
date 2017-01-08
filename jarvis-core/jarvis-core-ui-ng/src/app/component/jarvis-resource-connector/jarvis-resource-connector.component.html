@@ -66,5 +66,21 @@
         </div>
       </div>
     </p-accordionTab>
+    <p-accordionTab *ngIf="myConnector.collects.collections" header="Collecte(s)">
+      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+        <p-dataTable [value]="myConnector.collects.collections">
+          <header>Collectes</header>
+          <p-column field="name" header="Nom"></p-column>
+          <p-column header="Detail">
+            <template let-detail="rowData.entity" let-keys="rowData.keys" pTemplate type="body">
+              <ul>
+                <li *ngFor="let field of keys; let index=index">{{field}}</li>
+              </ul>
+              {{detail | json}}
+            </template>
+          </p-column>
+        </p-dataTable>
+      </div>
+    </p-accordionTab>
   </p-accordion>
 </div>

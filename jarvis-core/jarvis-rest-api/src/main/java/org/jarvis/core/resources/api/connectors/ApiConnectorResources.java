@@ -17,6 +17,7 @@
 package org.jarvis.core.resources.api.connectors;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Path;
@@ -30,10 +31,17 @@ import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.exception.TechnicalHttpException;
 import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.connector.ConnectorBean;
+import org.jarvis.core.model.bean.device.DeviceBean;
+import org.jarvis.core.model.bean.scenario.ScenarioBean;
+import org.jarvis.core.model.bean.scenario.TriggerBean;
+import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.model.rest.connector.ConnectorRest;
+import org.jarvis.core.model.rest.scenario.TriggerRest;
 import org.jarvis.core.resources.api.ApiResources;
 import org.jarvis.core.resources.api.Declare;
 import org.jarvis.core.resources.api.GenericValue;
+import org.jarvis.core.resources.api.ResourceDefaultPostListenerImpl;
+import org.jarvis.core.resources.api.ResourcePostListener;
 import org.jarvis.core.resources.api.mapper.ApiMapper;
 import org.jarvis.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
@@ -41,6 +49,7 @@ import org.joda.time.DateTime;
 import org.springframework.stereotype.Component;
 
 import io.swagger.annotations.Api;
+import spark.Request;
 
 /**
  * View resource
@@ -67,9 +76,27 @@ public class ApiConnectorResources extends ApiResources<ConnectorRest,ConnectorB
 		this.client = ClientBuilder.newClient();
 	}
 
+	class ResourceListenerImpl extends ResourceDefaultPostListenerImpl<ConnectorRest, ConnectorBean> implements ResourcePostListener<ConnectorRest, ConnectorBean> {
+
+		@Override
+		public void getRest(Request request, spark.Response response, ConnectorRest rest) {
+			try {
+				rest.collects = findCollector(rest);
+			} catch (TechnicalHttpException e) {
+				throw new TechnicalException(e);
+			}
+		}
+
+	}
+
 	@Override
 	public void mount() {
 		super.mount();
+		
+		/**
+		 * declare listener
+		 */
+		addPostListener(new ResourceListenerImpl());
 	}
 
 	@Override
@@ -167,6 +194,15 @@ public class ApiConnectorResources extends ApiResources<ConnectorRest,ConnectorB
 		return new GenericValue(result);
 	}
 
+	/**
+	 * ping this connector
+	 * @param bean
+	 * @param args
+	 * @param properties
+	 * @return
+	 * @throws TechnicalNotFoundException
+	 * @throws TechnicalHttpException
+	 */
 	private GenericMap ping(ConnectorBean bean, GenericMap args, GenericMap properties) throws TechnicalNotFoundException, TechnicalHttpException {
 		/**
 		 * build call
@@ -188,6 +224,39 @@ public class ApiConnectorResources extends ApiResources<ConnectorRest,ConnectorB
 			return body;
 		} else {
 			throw new TechnicalHttpException(entity.getStatus(), bean.adress);
+		}
+	}
+
+	/**
+	 * find any collector on this connector
+	 * @param bean
+	 * @return
+	 * @throws TechnicalHttpException
+	 */
+	private GenericMap findCollector(ConnectorRest rest) throws TechnicalHttpException {
+		/**
+		 * build call
+		 */
+		Response entity = client.target(rest.adress)
+		        .path("/api/collect")
+	            .request(MediaType.APPLICATION_JSON)
+	            .accept(MediaType.APPLICATION_JSON)
+	            .acceptEncoding("charset=UTF-8")
+	            .get();
+
+		if(entity.getStatus() == 200) {
+			GenericMap body = null;
+			try {
+				body = mapper.readValue(entity.readEntity(String.class), GenericMap.class);
+			} catch (IOException e) {
+				throw new TechnicalException(e);
+			}
+			return body;
+		} else {
+			/**
+			 * no answer is not an error, may be connector is gone
+			 */
+			return new GenericMap();
 		}
 	}
 }
