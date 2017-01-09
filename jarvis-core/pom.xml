@@ -25,6 +25,8 @@
 		<spark-pac4j.version>1.1.0</spark-pac4j.version>
 		<pac4j.version>1.9.4</pac4j.version>
 		<slf4j.version>1.7.21</slf4j.version>
+		<log4j.version>2.5</log4j.version>
+		<mongodb.version>3.4.1</mongodb.version>
 		<reflections.version>0.9.10</reflections.version>
 		<rs-api.version>2.0.1</rs-api.version>
 		<hibernate-validator.version>5.2.2.Final</hibernate-validator.version>
@@ -161,32 +163,32 @@
 
 			<!-- https://mvnrepository.com/artifact/net.sourceforge.plantuml/plantuml -->
 			<dependency>
-			    <groupId>net.sourceforge.plantuml</groupId>
-			    <artifactId>plantuml</artifactId>
-			    <version>8048</version>
+				<groupId>net.sourceforge.plantuml</groupId>
+				<artifactId>plantuml</artifactId>
+				<version>8048</version>
 			</dependency>
 
 			<!-- https://mvnrepository.com/artifact/io.swagger/swagger-core -->
 			<dependency>
-			    <groupId>io.swagger</groupId>
-			    <artifactId>swagger-core</artifactId>
-			    <version>${swagger.version}</version>
+				<groupId>io.swagger</groupId>
+				<artifactId>swagger-core</artifactId>
+				<version>${swagger.version}</version>
 			</dependency>
 			<dependency>
-			    <groupId>io.swagger</groupId>
-			    <artifactId>swagger-jaxrs</artifactId>
-			    <version>${swagger.version}</version>
-			    <exclusions>
-			    	<exclusion>
-					    <groupId>javax.ws.rs</groupId>
-					    <artifactId>jsr311-api</artifactId>
-			    	</exclusion>
-			    </exclusions>
+				<groupId>io.swagger</groupId>
+				<artifactId>swagger-jaxrs</artifactId>
+				<version>${swagger.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>javax.ws.rs</groupId>
+						<artifactId>jsr311-api</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<dependency>
-			    <groupId>io.swagger</groupId>
-			    <artifactId>swagger-annotations</artifactId>
-			    <version>${swagger.version}</version>
+				<groupId>io.swagger</groupId>
+				<artifactId>swagger-annotations</artifactId>
+				<version>${swagger.version}</version>
 			</dependency>
 			<!-- reflection -->
 			<dependency>
@@ -195,9 +197,9 @@
 				<version>${reflections.version}</version>
 			</dependency>
 			<dependency>
-			    <groupId>org.hibernate</groupId>
-			    <artifactId>hibernate-validator</artifactId>
-			    <version>${hibernate-validator.version}</version>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-validator</artifactId>
+				<version>${hibernate-validator.version}</version>
 			</dependency>
 
 			<!-- pac4j -->
@@ -370,32 +372,42 @@
 				<version>${slf4j.version}</version>
 			</dependency>
 			<dependency>
+				<groupId>org.mongodb</groupId>
+				<artifactId>mongo-java-driver</artifactId>
+				<version>${mongodb.version}</version>
+			</dependency>
+			<dependency>
 				<groupId>org.apache.logging.log4j</groupId>
 				<artifactId>log4j-api</artifactId>
-				<version>2.5</version>
+				<version>${log4j.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.logging.log4j</groupId>
 				<artifactId>log4j-core</artifactId>
-				<version>2.5</version>
+				<version>${log4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-nosql</artifactId>
+				<version>${log4j.version}</version>
 			</dependency>
 			<!-- Log4j 1.x API Bridge -->
 			<dependency>
 				<groupId>org.apache.logging.log4j</groupId>
 				<artifactId>log4j-1.2-api</artifactId>
-				<version>2.5</version>
+				<version>${log4j.version}</version>
 			</dependency>
 			<!-- Apache Commons Logging Bridge -->
 			<dependency>
 				<groupId>org.apache.logging.log4j</groupId>
 				<artifactId>log4j-jcl</artifactId>
-				<version>2.5</version>
+				<version>${log4j.version}</version>
 			</dependency>
 			<!-- SLF4J Bridge -->
 			<dependency>
 				<groupId>org.apache.logging.log4j</groupId>
 				<artifactId>log4j-slf4j-impl</artifactId>
-				<version>2.5</version>
+				<version>${log4j.version}</version>
 				<exclusions>
 					<exclusion>
 						<groupId>org.slf4j</groupId>

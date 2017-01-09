@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN" packages="org.jarvis.core.log4j2">
   <Appenders>
+	<NoSql name="MongoDbAppender">
+      <MongoDb databaseName="logger" collectionName="jarvis" server="localhost" />
+    </NoSql>
 	<RollingFile name="RollingFile" fileName="${sys:jarvis.log.dir}/jarvis.log" filePattern="${sys:jarvis.log.dir}/jarvis-%d{MM-dd-yyyy}.log.gz"
                  ignoreExceptions="false">
       <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger{36} - %msg%n"/>
@@ -30,6 +33,7 @@
     <Root level="info">
       <AppenderRef ref="Console" level="info" />
       <AppenderRef ref="RollingFile" level="info" />
+      <AppenderRef ref="MongoDbAppender" level="info" />
     </Root>
   </Loggers>
 </Configuration>
