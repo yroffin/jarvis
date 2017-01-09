@@ -8,18 +8,14 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<artifactId>jarvis-core-statistics</artifactId>
-	<url>https://www.elastic.co</url>
+	<url>https://www.mongodb.com</url>
 
-	<name>Core statistics module (elasticsearch based)</name>
+	<name>Core statistics module (mongodb based)</name>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.yroffin.com.jarvis</groupId>
 			<artifactId>jarvis-core-model</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.yroffin.com.jarvis</groupId>
-			<artifactId>jarvis-rest-client</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.yroffin.com.jarvis</groupId>
@@ -31,12 +27,12 @@
 			<artifactId>orika-core</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.glassfish.jersey.core</groupId>
-			<artifactId>jersey-client</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>

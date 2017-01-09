@@ -157,7 +157,11 @@ public class CoreEventDaemon {
 			try {
 				while ((event  = linked.take()) != null) {
 					logger.warn("[EVENT] {}/{}", event.toString(), linked.size());
-					handle(event);
+					try {
+						handle(event);
+					} catch (Exception e) {
+						logger.error("[EVENT] - Exception {}", e);
+					}
 				}
 			} catch (InterruptedException e) {
 				logger.error("[EVENT] - InterruptedException {}", e);
@@ -195,7 +199,7 @@ public class CoreEventDaemon {
 			 */
 			for(DeviceBean device : deviceToExecute(event)) {
 				try {
-					apiDeviceResources.doExecute(null,device.id, new GenericMap(), TaskType.EXECUTE);
+					apiDeviceResources.doExecute(device.id, new GenericMap(), TaskType.EXECUTE);
 					checkDevice++;
 				} catch (TechnicalNotFoundException e) {
 					logger.warn(e.getMessage());

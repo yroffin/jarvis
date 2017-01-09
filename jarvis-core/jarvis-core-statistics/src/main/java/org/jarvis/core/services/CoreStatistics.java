@@ -17,11 +17,8 @@
 package org.jarvis.core.services;
 
 import javax.annotation.PostConstruct;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
-import org.jarvis.core.AbstractJerseyClient;
+import org.bson.Document;
 import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.model.bean.GenericBean;
 import org.jarvis.core.model.bean.device.EventBean;
@@ -38,6 +35,10 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mongodb.MongoClient;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.converter.builtin.PassThroughConverter;
@@ -47,11 +48,16 @@ import ma.glasnost.orika.impl.DefaultMapperFactory;
  * main daemon
  */
 @Component
-public class CoreStatistics extends AbstractJerseyClient {
-	
+public class CoreStatistics {
+
 	protected static Logger logger = LoggerFactory.getLogger(CoreStatistics.class);
 	protected MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
-	
+	protected ObjectMapper mapper = new ObjectMapper();
+
+	MongoClient mongo;
+	private MongoDatabase db;
+	private MongoCollection<Document> statistics;
+
 	@Autowired
 	Environment env;
 
@@ -60,22 +66,17 @@ public class CoreStatistics extends AbstractJerseyClient {
 	 */
 	@PostConstruct
 	public void init() {
-		/**
-		 * initialize
-		 */
-		initialize(
-				env.getProperty("jarvis.elasticsearch.url"),
-				env.getProperty("jarvis.elasticsearch.user"),
-				env.getProperty("jarvis.elasticsearch.password"),
-				env.getProperty("jarvis.elasticsearch.timeout.connect","2000"),
-				env.getProperty("jarvis.elasticsearch.timeout.read","2000"));
-		
+		// mongodb connection
+		this.mongo = new MongoClient("localhost", 27017);
+		this.db = mongo.getDatabase("logger");
+		this.statistics = db.getCollection("statistics");
+
 		// Orika
 		mapperFactory.getConverterFactory().registerConverter(new PassThroughConverter(org.joda.time.DateTime.class));
 	}
-	
+
 	/**
-	 * @param bean 
+	 * @param bean
 	 */
 	public void write(EventBean bean) {
 		try {
@@ -83,7 +84,7 @@ public class CoreStatistics extends AbstractJerseyClient {
 			GenericMap statistics = new GenericMap();
 			statistics.put("entity", d);
 			write(statistics, d.getClass().getPackage().getName() + "." + d.getClass().getSimpleName(), d.id);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			/**
 			 * ignore any statistics report
 			 */
@@ -91,9 +92,9 @@ public class CoreStatistics extends AbstractJerseyClient {
 	}
 
 	/**
-	 * @param bean 
-	 * @param result 
-	 * @param args 
+	 * @param bean
+	 * @param result
+	 * @param args
 	 */
 	public void write(CommandBean bean, GenericMap args, GenericMap result) {
 		try {
@@ -102,8 +103,8 @@ public class CoreStatistics extends AbstractJerseyClient {
 			statistics.put("entity", d.name);
 			statistics.put("args", args);
 			statistics.put("result", result);
-			write(statistics, d.getClass().getPackage().getName()+ "." + d.getClass().getSimpleName(), d.id);
-		} catch(Exception e) {
+			write(statistics, d.getClass().getPackage().getName() + "." + d.getClass().getSimpleName(), d.id);
+		} catch (Exception e) {
 			/**
 			 * ignore any statistics report
 			 */
@@ -111,7 +112,7 @@ public class CoreStatistics extends AbstractJerseyClient {
 	}
 
 	/**
-	 * @param bean 
+	 * @param bean
 	 */
 	public void write(GenericBean bean) {
 		GenericEntity d = mapperFactory.getMapperFacade().map(bean, GenericEntity.class);
@@ -131,24 +132,17 @@ public class CoreStatistics extends AbstractJerseyClient {
 
 	/**
 	 * write this object to statistics
+	 * 
 	 * @param value
 	 * @param index
 	 * @param basename
 	 */
 	public void write(GenericMap value, String index, String basename) {
 		/**
-		 * null url abort statistic store
-		 */
-		if(baseurl == null) {
-			logger.warn("[STATISTICS] no store for {}", value);
-		}
-		
-		/**
 		 * compute statistics
 		 */
-		value.put("timestamp", new DateTime());
-
-		sendEntity(value,index,basename);
+		value.put("timestamp", new DateTime().toString());
+		sendEntity(value, index, basename);
 	}
 
 	/**
@@ -158,35 +152,13 @@ public class CoreStatistics extends AbstractJerseyClient {
 	 * @param basename
 	 */
 	private void sendEntity(Object value, String index, String basename) {
-		/**
-		 * build response
-		 */
-		Response entity;
+		Document parsed;
 		try {
-			entity = client.target(baseurl)
-			        .path("jarvis-" + index.toLowerCase() + "/" + basename)
-			        .request(MediaType.APPLICATION_JSON)
-			        .accept(MediaType.APPLICATION_JSON)
-			        .acceptEncoding("charset=UTF-8")
-			        .post(Entity.entity(mapper.writeValueAsString(value),MediaType.APPLICATION_JSON));
+			parsed = Document.parse(mapper.writeValueAsString(value));
 		} catch (JsonProcessingException e) {
 			throw new TechnicalException(e);
 		}
-		
-		/**
-		 * verify result
-		 */
-		if(entity.getStatus() != 201) {
-			logger.warn("While sending stats {} {} {}", entity.getStatus(), index,  basename);
-			try {
-				logger.warn("Entity {}", entity.toString());
-				logger.warn("Body {}", mapper.writeValueAsString(value));
-				logger.warn("Response {}", entity.readEntity(String.class));
-			} catch (JsonProcessingException e) {
-				throw new TechnicalException(entity.getStatus() + ":" + index + "/" + value.getClass().getSimpleName());
-			}
-			throw new TechnicalException(entity.getStatus() + ":" + index + "/" + value.getClass().getSimpleName());
-		}
+		statistics.insertOne(parsed);
 	}
 
 }
