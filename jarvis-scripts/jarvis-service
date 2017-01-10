@@ -24,7 +24,7 @@ JAVA=/usr/bin/java
 JVM_ARGS="
  -Xmx512m -Xms128m
  -Djarvis.zway.user=admin -Djarvis.zway.password=`grep jarvis.zway.password /etc/jarvis/jarvis.conf | cut -f2 -d=`
- -Djarvis.slack.api=`grep jarvis.slack.api /etc/jarvis/jarvis.conf | cut -f2 -d=`
+ -Djarvis.slack.api=`grep jarvis.slack.api /etc/jarvis/jarvis.conf | cut -f2 -d=` -Djarvis.mongodb.host=`grep jarvis.mongodb.host /etc/jarvis/jarvis.conf | cut -f2 -d=`
 "
 JAR_PATH=/home/jarvis/jarvis-core-server-0.0.1-SNAPSHOT.jar
 JAVA_ARGS="$JVM_ARGS -jar $JAR_PATH"
