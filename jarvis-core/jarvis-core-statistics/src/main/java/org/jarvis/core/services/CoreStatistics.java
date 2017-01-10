@@ -67,7 +67,7 @@ public class CoreStatistics {
 	@PostConstruct
 	public void init() {
 		// mongodb connection
-		this.mongo = new MongoClient("localhost", 27017);
+		this.mongo = new MongoClient(env.getProperty("jarvis.mongodb.host"), 27017);
 		this.db = mongo.getDatabase("logger");
 		this.statistics = db.getCollection("statistics");
 
