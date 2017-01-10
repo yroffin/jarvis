@@ -62,9 +62,12 @@ export class JarvisResourceConnectorComponent extends JarvisResource<ConnectorBe
   public notify(picker: PickerBean, resource: ResourceBean): void {
     if(picker.action === 'complete') {
       this.myConnector = <ConnectorBean> resource;
-      _.each(this.myConnector.collects.collections, function(item) {
-        item.keys = Object.keys(item.entity);
-      });
+      if(this.myConnector.collects) {
+        // load keys
+        _.each(this.myConnector.collects.collections, function(item) {
+          item.keys = Object.keys(item.entity);
+        });
+      }
     }
   }
 }
