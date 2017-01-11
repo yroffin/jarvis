@@ -26,6 +26,7 @@ import org.jarvis.core.resources.CoreWebsocket;
 import org.jarvis.core.resources.api.config.ApiConfigResources;
 import org.jarvis.core.resources.api.config.ApiPropertyResources;
 import org.jarvis.core.resources.api.connectors.ApiConnectorResources;
+import org.jarvis.core.resources.api.connectors.ApiDataSourceResources;
 import org.jarvis.core.resources.api.device.ApiDeviceResources;
 import org.jarvis.core.resources.api.device.ApiEventResources;
 import org.jarvis.core.resources.api.device.ApiTriggerResources;
@@ -100,7 +101,10 @@ public class CoreServerDaemon {
 
 	@Autowired
 	ApiScenarioResources apiScenarioResources;
-	
+
+	@Autowired
+	ApiDataSourceResources apiDataSourceResources;
+
 	@Autowired
 	ApiZwayPluginResources apiZwayPluginResources;
 
@@ -291,6 +295,7 @@ public class CoreServerDaemon {
 		apiConnectorResources.mount();
 		apiConfigResources.mount();
 		apiPropertyResources.mount();
+		apiDataSourceResources.mount();
 
 		/**
 		 * Build swagger json description

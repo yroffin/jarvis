@@ -129,7 +129,8 @@ export class AppComponent implements OnInit {
             items: [
               { label: 'Configuration', icon: 'fa-database', routerLink: ['/configurations'] },
               { label: 'Snapshot', icon: 'fa-clone', routerLink: ['/snapshots'] },
-              { label: 'Property', icon: 'fa-code', routerLink: ['/properties'] }
+              { label: 'Property', icon: 'fa-code', routerLink: ['/properties'] },
+              { label: 'DataSource', icon: 'fa-podcast', routerLink: ['/datasources'] }
             ]
           }
         ]

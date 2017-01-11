@@ -40,6 +40,7 @@ import { JarvisDataPropertyService } from '../../service/jarvis-data-property.se
 import { JarvisDataConnectorService } from '../../service/jarvis-data-connector.service';
 import { JarvisDataNotificationService } from '../../service/jarvis-data-notification.service';
 import { JarvisDataSnapshotService } from '../../service/jarvis-data-snapshot.service';
+import { JarvisDataDatasourceService } from '../../service/jarvis-data-datasource.service';
 
 /**
  * data model
@@ -80,7 +81,8 @@ export class JarvisResourcesComponent implements OnInit {
     private _jarvisDataNotificationService: JarvisDataNotificationService,
     private _jarvisDataCronService: JarvisDataCronService,
     private _jarvisDataSnapshotService: JarvisDataSnapshotService,
-    private _jarvisDataViewService: JarvisDataViewService
+    private _jarvisDataViewService: JarvisDataViewService,
+    private _jarvisDataDatasourceService: JarvisDataDatasourceService
   ) {
   }
 
@@ -94,6 +96,9 @@ export class JarvisResourcesComponent implements OnInit {
         // You only receive NavigationEnd events
         if (navigationEnd.url === '/notifications') {
           this.load('notifications', this._jarvisDataNotificationService);
+        }
+        if (navigationEnd.url === '/datasources') {
+          this.load('datasources', this._jarvisDataDatasourceService);
         }
         if (navigationEnd.url === '/views') {
           this.load('views', this._jarvisDataViewService);
@@ -153,7 +158,9 @@ export class JarvisResourcesComponent implements OnInit {
     jarvisDataService.GetAll()
       .subscribe(
       (data: ResourceBean[]) => this.myResources = data,
-      error => console.log(error),
+      error => {
+         console.log(error)
+      },
       () => {
         this.myService = jarvisDataService;
       }

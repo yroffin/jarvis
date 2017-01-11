@@ -46,6 +46,10 @@ public abstract class ApiMapper {
 	 */
 	public static final String CONNECTOR_RESOURCE = "connectors";
 	/**
+	 * datasources
+	 */
+	public static final String DATASOURCE_RESOURCE = "datasources";
+	/**
 	 * devices
 	 */
 	public static final String DEVICE_RESOURCE = "devices";

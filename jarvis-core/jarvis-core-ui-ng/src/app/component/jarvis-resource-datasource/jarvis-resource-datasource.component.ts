@@ -14,7 +14,10 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewChild, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+
+import * as _ from 'lodash';
+
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { SelectItem } from 'primeng/primeng';
 
@@ -22,7 +25,8 @@ import { JarvisPickerComponent } from '../../dialog/jarvis-picker/jarvis-picker.
 import { JarvisConfigurationService } from '../../service/jarvis-configuration.service';
 import { JarvisResourceLink } from '../../class/jarvis-resource-link';
 
-import { JarvisDataNotificationService } from '../../service/jarvis-data-notification.service';
+import { JarvisDataConnectorService } from '../../service/jarvis-data-connector.service';
+import { JarvisDataDatasourceService } from '../../service/jarvis-data-datasource.service';
 
 /**
  * class
@@ -35,16 +39,17 @@ import { NotifyCallback } from '../../class/jarvis-resource';
  */
 import { ResourceBean } from '../../model/resource-bean';
 import { PickerBean } from '../../model/picker-bean';
-import { NotificationBean } from '../../model/notification-bean';
+import { DataSourceBean } from '../../model/connector/datasource-bean';
+import { ConnectorBean } from '../../model/connector-bean';
 
 @Component({
-  selector: 'app-jarvis-resource-notification',
-  templateUrl: './jarvis-resource-notification.component.html',
-  styleUrls: ['./jarvis-resource-notification.component.css']
+  selector: 'app-jarvis-resource-datasource',
+  templateUrl: './jarvis-resource-datasource.component.html',
+  styleUrls: ['./jarvis-resource-datasource.component.css']
 })
-export class JarvisResourceNotificationComponent extends JarvisResource<NotificationBean> implements NotifyCallback<ResourceBean>, OnInit {
+export class JarvisResourceDatasourceComponent extends JarvisResource<DataSourceBean> implements NotifyCallback<ResourceBean>, OnInit {
 
-  @Input() myNotification: NotificationBean;
+  @Input() myDataSource: DataSourceBean;
 
   /**
    * internal
@@ -58,11 +63,26 @@ export class JarvisResourceNotificationComponent extends JarvisResource<Notifica
     private _route: ActivatedRoute,
     private _router: Router,
     private _jarvisConfigurationService: JarvisConfigurationService,
-    private _notificationService: JarvisDataNotificationService) {
-    super('/notifications', [], _notificationService, _route, _router);
+    private _datasourceService: JarvisDataDatasourceService,
+    private _connectorService: JarvisDataConnectorService) {
+    super('/datasources', [], _datasourceService, _route, _router);
     this.types = [];
     this.types.push({ label: 'Select type', value: null });
-    this.types.push({ label: 'Slack notification', value: 'SLACK' });
+    let connectors: ConnectorBean[];
+    let that = this;
+    _connectorService.GetAll()
+      .subscribe(
+      (data: ConnectorBean[]) => connectors = data,
+      error => console.log(error),
+      () => {
+        /**
+         * complete resource
+         */
+        _.each(connectors, function (connector) {
+          that.types.push({ label: connector.name, value: connector.adress});
+        });
+      }
+      );
   }
 
   /**
@@ -82,8 +102,8 @@ export class JarvisResourceNotificationComponent extends JarvisResource<Notifica
    * notify to add new resource
    */
   public notify(picker: PickerBean, resource: ResourceBean): void {
-    if(picker.action === 'complete') {
-      this.myNotification = resource;
+    if (picker.action === 'complete') {
+      this.myDataSource = <DataSourceBean>resource;
     }
   }
 }
