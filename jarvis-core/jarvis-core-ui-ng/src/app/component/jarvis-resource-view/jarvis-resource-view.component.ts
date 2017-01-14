@@ -92,7 +92,7 @@ export class JarvisResourceViewComponent extends JarvisResource<ViewBean> implem
      * find notifications
      */
     if (picker.action === 'devices') {
-      this.pickDevices.open(this);
+      this.pickDevices.open(this, 'Device');
     }
   }
 

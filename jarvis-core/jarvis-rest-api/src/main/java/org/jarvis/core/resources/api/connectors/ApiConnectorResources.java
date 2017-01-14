@@ -78,7 +78,7 @@ public class ApiConnectorResources extends ApiResources<ConnectorRest,ConnectorB
 		@Override
 		public void getRest(Request request, spark.Response response, ConnectorRest rest) {
 			try {
-				rest.collects = findCollector(rest);
+				rest.collects = findCollectors(rest);
 			} catch (Exception e) {
 				rest.collects = null;
 			}
@@ -226,11 +226,11 @@ public class ApiConnectorResources extends ApiResources<ConnectorRest,ConnectorB
 
 	/**
 	 * find any collector on this connector
-	 * @param bean
-	 * @return
+	 * @param rest 
+	 * @return GenericMap
 	 * @throws TechnicalHttpException
 	 */
-	private GenericMap findCollector(ConnectorRest rest) throws TechnicalHttpException {
+	public GenericMap findCollectors(ConnectorRest rest) throws TechnicalHttpException {
 		/**
 		 * build call
 		 */

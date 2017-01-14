@@ -14,28 +14,24 @@
  *   limitations under the License.
  */
 
-package org.jarvis.core.model.bean.connector;
+package org.jarvis.core.resources.api.href;
 
-import org.jarvis.core.model.bean.GenericBean;
+import javax.annotation.PostConstruct;
+
+import org.jarvis.core.model.bean.connector.ConnectorBean;
+import org.jarvis.core.model.bean.connector.DataSourceBean;
+import org.jarvis.core.resources.api.mapper.ApiHrefMapper;
+import org.springframework.stereotype.Component;
 
 /**
- * bean connector
+ * HREF handler
  */
-public class DataSourceBean extends GenericBean {
-	/**
-	 * name
-	 */
-	public String name;
-	/**
-	 * icon
-	 */
-	public String icon;
-	/**
-	 * collect
-	 */
-	public String collect;
-	/**
-	 * pipes
-	 */
-	public String pipes;
+@Component
+public class ApiHrefConnectorResources extends ApiHrefMapper<DataSourceBean,ConnectorBean> {
+
+	@PostConstruct
+	protected
+	void init() {
+		super.init(DataSourceBean.class.getSimpleName(),ConnectorBean.class.getSimpleName(),"connectors");
+	}
 }

@@ -14,7 +14,10 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs/Observable';
+import { Http, Response, Headers } from '@angular/http';
 
 import * as _ from 'lodash';
 
@@ -40,7 +43,7 @@ import { NotifyCallback } from '../../class/jarvis-resource';
 import { ResourceBean } from '../../model/resource-bean';
 import { PickerBean } from '../../model/picker-bean';
 import { DataSourceBean } from '../../model/connector/datasource-bean';
-import { ConnectorBean } from '../../model/connector-bean';
+import { ConnectorBean } from '../../model/connector/connector-bean';
 
 @Component({
   selector: 'app-jarvis-resource-datasource',
@@ -50,39 +53,25 @@ import { ConnectorBean } from '../../model/connector-bean';
 export class JarvisResourceDatasourceComponent extends JarvisResource<DataSourceBean> implements NotifyCallback<ResourceBean>, OnInit {
 
   @Input() myDataSource: DataSourceBean;
+  @ViewChild('pickConnectors') pickConnectors: JarvisPickerComponent;
 
   /**
    * internal
    */
-  private types: SelectItem[];
+  private jarvisConnectorLink: JarvisResourceLink<ConnectorBean>;
 
   /**
    * constructor
    */
   constructor(
+    private _http: Http,
     private _route: ActivatedRoute,
     private _router: Router,
     private _jarvisConfigurationService: JarvisConfigurationService,
     private _datasourceService: JarvisDataDatasourceService,
     private _connectorService: JarvisDataConnectorService) {
     super('/datasources', [], _datasourceService, _route, _router);
-    this.types = [];
-    this.types.push({ label: 'Select type', value: null });
-    let connectors: ConnectorBean[];
-    let that = this;
-    _connectorService.GetAll()
-      .subscribe(
-      (data: ConnectorBean[]) => connectors = data,
-      error => console.log(error),
-      () => {
-        /**
-         * complete resource
-         */
-        _.each(connectors, function (connector) {
-          that.types.push({ label: connector.name, value: connector.adress});
-        });
-      }
-      );
+    this.jarvisConnectorLink = new JarvisResourceLink<ConnectorBean>();
   }
 
   /**
@@ -93,17 +82,42 @@ export class JarvisResourceDatasourceComponent extends JarvisResource<DataSource
   }
 
   /**
-   * task action
+   * drop link
    */
-  public task(action: string): void {
+  public dropConnectorLink(linked: ConnectorBean): void {
+    this.jarvisConnectorLink.dropLink(linked, this.myDataSource.id, this.myDataSource.connectors, this._datasourceService.allLinkedConnector);
+  }
+
+  /**
+   * goto link
+   */
+  public gotoConnectorLink(linked: ConnectorBean): void {
+    this._router.navigate(['/connectors/' + linked.id]);
   }
 
   /**
    * notify to add new resource
    */
   public notify(picker: PickerBean, resource: ResourceBean): void {
+    if( picker.action === 'connectors') {
+      this.jarvisConnectorLink.addLink(this.getResource().id, resource.id, this.getResource().connectors, {"order": "1", href: "HREF"}, this._datasourceService.allLinkedConnector);
+    }
     if (picker.action === 'complete') {
       this.myDataSource = <DataSourceBean>resource;
+      this.myDataSource.connectors = [];
+      (new JarvisResourceLink<ConnectorBean>()).loadLinks(resource.id, this.myDataSource.connectors, this._datasourceService.allLinkedConnector);
+    }
+  }
+
+  /**
+   * pick datasources
+   */
+  public pick(picker: PickerBean): void {
+    /**
+     * find connectors
+     */
+    if (picker.action === 'connectors') {
+      this.pickConnectors.open(this, 'Connector');
     }
   }
 }

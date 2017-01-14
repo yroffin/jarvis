@@ -138,7 +138,7 @@ export class JarvisResourceCommandComponent extends JarvisResource<CommandBean> 
      * find notifications
      */
     if (picker.action === 'notifications') {
-      this.pickNotifications.open(this);
+      this.pickNotifications.open(this, 'Notification');
     }
   }
 

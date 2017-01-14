@@ -23,6 +23,10 @@ public abstract class ResourceDefaultPostListenerImpl<REST,BEAN> implements Reso
 	}
 
 	@Override
+	public void getAllBean(BEAN bean) {
+	}
+
+	@Override
 	public void postRest(Request request, Response response, REST rest) {
 	}
 

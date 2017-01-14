@@ -37,6 +37,10 @@ public enum TaskType {
 	 */
 	RENDER,
 	/**
+	 * indicator
+	 */
+	INDICATOR,
+	/**
 	 * execute task activity
 	 */
 	ACTIVITY,

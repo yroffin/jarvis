@@ -30,6 +30,8 @@ import { JarvisDataPluginService } from '../../service/jarvis-data-plugin.servic
 import { JarvisDataBlockService } from '../../service/jarvis-data-block.service';
 import { JarvisDataScenarioService } from '../../service/jarvis-data-scenario.service';
 import { JarvisDataNotificationService } from '../../service/jarvis-data-notification.service';
+import { JarvisDataDatasourceService } from '../../service/jarvis-data-datasource.service';
+import { JarvisDataConnectorService } from '../../service/jarvis-data-connector.service';
 
 /**
  * data model
@@ -45,7 +47,6 @@ import { PickerBean } from '../../model/picker-bean';
 export class JarvisPickerComponent implements OnInit {
 
   @Input() resource: PickerBean;
-  @ViewChild('tree') treeNode;
 
   private picked: any;
   private show: boolean = false;
@@ -64,6 +65,8 @@ export class JarvisPickerComponent implements OnInit {
     private _cronService: JarvisDataCronService,
     private _blockService: JarvisDataBlockService,
     private _scenarioService: JarvisDataScenarioService,
+    private _datasourceService: JarvisDataDatasourceService,
+    private _connectorService: JarvisDataConnectorService,
     private _notificationService: JarvisDataNotificationService
   ) {
   }
@@ -76,6 +79,9 @@ export class JarvisPickerComponent implements OnInit {
       this.resource.action = this.resource.service;
     }
     let service: JarvisDefaultResource<ResourceBean>;
+    if (this.resource.service === 'connectors') {
+      service = this._connectorService;
+    }
     if (this.resource.service === 'crons') {
       service = this._cronService;
     }
@@ -100,6 +106,9 @@ export class JarvisPickerComponent implements OnInit {
     if (this.resource.service === 'scenarios') {
       service = this._scenarioService;
     }
+    if (this.resource.service === 'datasources') {
+      service = this._datasourceService;
+    }
     /**
      * create helper
      */
@@ -109,8 +118,8 @@ export class JarvisPickerComponent implements OnInit {
   /**
    * open this dialog box
    */
-  public open(that: NotifyCallback<ResourceBean>) {
-    this.jarvisPickerHelper.loadResource(12);
+  public open(that: NotifyCallback<ResourceBean>, objectType: string) {
+    this.jarvisPickerHelper.loadResource(12, objectType);
     this.show = true;
     this.target = that;
   }
@@ -118,24 +127,10 @@ export class JarvisPickerComponent implements OnInit {
   /**
    * validate and close
    */
-  public validate(add: boolean) {
-    if (add) {
-      this.target.notify(this.resource, this.picked);
+  public validate(picked: any) {
+    if (picked) {
+      this.target.notify(this.resource, picked);
     }
     this.show = false;
-  }
-
-  /**
-   * handler event
-   */
-  public onEvent(event: any) {
-    if (event.eventName === 'onFocus' && event.node.data.resourceData) {
-      if (this.picked != event.node.data.resourceData) {
-        /**
-         * store picked element
-         */
-        this.picked = event.node.data.resourceData;
-      }
-    }
   }
 }

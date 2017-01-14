@@ -103,7 +103,7 @@ export class JarvisToolbarResourceComponent implements OnInit {
      */
     _.find(this.pickers, function (item) {
       return item.action === action;
-    }).picker.open(this.notified);
+    }).picker.open(this.notified, action);
   }
 
   /**

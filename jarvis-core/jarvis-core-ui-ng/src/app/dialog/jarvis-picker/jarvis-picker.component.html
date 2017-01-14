@@ -1,20 +1,27 @@
 <p-dialog header="{{resource.label}}" [(visible)]="show" modal=true responsive=true width="700" resizable=false>
   <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
-  <div class="ui-grid-row">
-    <div class="ui-grid-col-6">
-      <Tree #tree [nodes]="jarvisPickerHelper.nodes" [focused]="true" [options]="customTemplateStringOptions" (onEvent)="onEvent($event)"></Tree>
-    </div>
-    <div class="ui-grid-col-6">
-      {{picked | json}}
-    </div>
+<div class="ui-grid-row">
+  <div class="ui-grid-col-12">
+    <p-dataTable [value]="jarvisPickerHelper.metadata.elements">
+      <p-column field="id" header="Id"></p-column>
+      <p-column field="name" header="Nom"></p-column>
+      <p-column header="Action">
+        <template let-resource="rowData" pTemplate type="body">
+          <button pButton type="button" icon="fa-hand-pointer-o" pTooltip="Selection" tooltipPosition="bottom" (click)="validate(resource)"></button>
+        </template>
+      </p-column>
+    </p-dataTable>
   </div>
-  <div class="ui-grid-row">
-    <div class="ui-grid-col-6">
-      <button type="text" (click)="validate(false)" pButton icon="fa-close" label="Fermer"></button>
-    </div>
-    <div class="ui-grid-col-6">
-      <button type="text" (click)="validate(true)" pButton icon="fa-check" label="Ajouter"></button>
-    </div>
+</div>
+<div class="ui-grid-row">
+  <div class="ui-grid-col-12">
+    {{picked | json}}
   </div>
+</div>
+<div class="ui-grid-row">
+  <div class="ui-grid-col-12">
+    <button type="text" (click)="validate()" pButton icon="fa-close" label="Fermer"></button>
   </div>
+</div>
+</div>
 </p-dialog>

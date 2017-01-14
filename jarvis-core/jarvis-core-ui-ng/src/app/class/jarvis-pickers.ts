@@ -15,6 +15,8 @@
  */
 
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { TreeNode } from 'primeng/primeng';
+
 import * as _ from 'lodash';
 
 import { JarvisDefaultResource } from '../interface/jarvis-default-resource';
@@ -34,7 +36,7 @@ export class JarvisPicker<T extends ResourceBean> {
 
   private myJarvisConfig: PickerBean;
   private myJarvisResource: JarvisDefaultResource<T>;
-  public nodes: any[] = null;
+  public metadata: any = {data:[]};
 
   /**
    * constructor
@@ -50,38 +52,25 @@ export class JarvisPicker<T extends ResourceBean> {
   /**
    * load a new resource in this dialog
    */
-  public loadResource(max: number) {
+  public loadResource(max: number, objectType: string) {
     let all: T[];
     this.myJarvisResource.GetAll()
       .subscribe(
       (data: T[]) => all = data,
       error => console.log(error),
       () => {
-        this.nodes = [];
+        this.metadata = {
+          elements: []
+        };
         let that = this;
         /**
          * order by name then chunk it by piece of max
          */
-        _.forEach(_.chunk(_.orderBy(all, ['name'], ['asc']), max), function (chunked) {
-          let node = {
-            expanded: true,
-            name: _.head(chunked).name + ' ... ' + _.last(chunked).name,
-            subTitle: name,
-            children: [
-            ]
-          };
-          /**
-           * each chunk are pushrd in the array
-           */
-          that.nodes.push(node);
-          _.forEach(chunked, function (element) {
-            node.children.push({
-              name: element.name + '#' + element.id,
-              resourceData: element,
-              resourceId: element.id,
-              hasChildren: false
+        _.forEach(_.orderBy(all, ['name'], ['asc']), function (chunked) {
+            that.metadata.elements.push({
+                id: chunked.id,
+                name: chunked.name
             });
-          });
         });
       });
   }

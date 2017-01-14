@@ -45,6 +45,7 @@ import { ConfirmDialogModule, ConfirmationService } from 'primeng/primeng';
 import { SplitButtonModule } from 'primeng/primeng';
 import { ToolbarModule } from 'primeng/primeng';
 import { TooltipModule } from 'primeng/primeng';
+import { TreeTableModule } from 'primeng/primeng';
 
 import { WindowRef } from './service/jarvis-utils.service';
 import { JarvisSecurityService } from './service/jarvis-security.service';
@@ -189,6 +190,7 @@ const appRoutes: Routes = [
     SplitButtonModule,
     ToolbarModule,
     TooltipModule,
+    TreeTableModule,
     /**
      * routes
      */

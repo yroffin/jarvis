@@ -39,8 +39,8 @@ public class DataSourceRest extends GenericEntity {
 	/**
 	 * adress
 	 */
-	@JsonProperty("adress")
-	public String adress;
+	@JsonProperty("collect")
+	public String collect;
 	/**
 	 * pipes
 	 */

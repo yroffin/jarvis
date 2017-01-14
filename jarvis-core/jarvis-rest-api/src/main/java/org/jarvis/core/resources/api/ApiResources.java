@@ -172,6 +172,11 @@ public abstract class ApiResources<REST extends GenericEntity, BEAN extends Gene
 				listener.getBean(bean);
 			}
 			break;
+		case ALL:
+			for (ResourcePostListener<REST, BEAN> listener : postListeners) {
+				listener.getAllBean(bean);
+			}
+			break;
 		default:
 			logger.warn("No such post treatment for {}", method);
 			break;
@@ -779,7 +784,7 @@ public abstract class ApiResources<REST extends GenericEntity, BEAN extends Gene
 	public List<BEAN> doFindByAttributeBean(String field, String value) {
 		List<BEAN> result = new ArrayList<>();
 		for (BEAN bean : apiService.findByAttribute(field, value)) {
-			triggerAfterBean(TRIGGER_METHOD.GET, bean);
+			triggerAfterBean(TRIGGER_METHOD.ALL, bean);
 			result.add(bean);
 		}
 		return result;
@@ -793,7 +798,7 @@ public abstract class ApiResources<REST extends GenericEntity, BEAN extends Gene
 	public List<BEAN> doFindAllBean() {
 		List<BEAN> result = new ArrayList<>();
 		for (BEAN bean : apiService.findAll()) {
-			triggerAfterBean(TRIGGER_METHOD.GET, bean);
+			triggerAfterBean(TRIGGER_METHOD.ALL, bean);
 			result.add(bean);
 		}
 		return result;

@@ -83,22 +83,22 @@ export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> im
    */
   public pick(picker: PickerBean): void {
     /**
-     * find notifications
+     * find devices
      */
     if (picker.action === 'devices') {
-      this.pickDevices.open(this);
+      this.pickDevices.open(this, 'Device');
     }
     /**
-     * find notifications
+     * find triggers
      */
     if (picker.action === 'triggers') {
-      this.pickTriggers.open(this);
+      this.pickTriggers.open(this, 'Trigger');
     }
     /**
-     * find notifications
+     * find plugins
      */
     if (picker.action === 'plugins') {
-      this.pickPlugins.open(this);
+      this.pickPlugins.open(this, 'Plugin');
     }
   }
 

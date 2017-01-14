@@ -21,7 +21,7 @@ import { NotifyCallback } from '../../class/jarvis-resource';
  */
 import { ResourceBean } from '../../model/resource-bean';
 import { PickerBean } from '../../model/picker-bean';
-import { ConnectorBean } from '../../model/connector-bean';
+import { ConnectorBean } from '../../model/connector/connector-bean';
 
 @Component({
   selector: 'app-jarvis-resource-connector',

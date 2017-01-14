@@ -26,6 +26,11 @@ public interface ResourcePostListener<REST,BEAN> {
 	public void getBean(BEAN bean);
 
 	/**
+	 * @param bean 
+	 */
+	public void getAllBean(BEAN bean);
+
+	/**
 	 * @param request
 	 * @param response
 	 * @param rest 
