@@ -1,6 +1,6 @@
 {
   "project": {
-    "version": "1.0.0-beta.20-4",
+    "version": "1.0.0-beta.26",
     "name": "jarvis-core-ui-ng"
   },
   "apps": [
@@ -19,7 +19,7 @@
       "mobile": false,
       "styles": [
         "styles.css",
-        "../node_modules/primeng/resources/themes/vader/theme.css",
+        "../node_modules/primeng/resources/themes/rocket/theme.css",
         "../node_modules/primeng/resources/primeng.min.css",
         "../node_modules/font-awesome/css/font-awesome.min.css",
         "../node_modules/prismjs/themes/prism.css"
@@ -33,11 +33,6 @@
         "prod": "environments/environment.prod.ts"
       }
     }
-  ],
-  "addons": [
-  ],
-  "packages": [
-    "node_modules/angular2-highlight-js/lib"
   ],
   "e2e": {
     "protractor": {

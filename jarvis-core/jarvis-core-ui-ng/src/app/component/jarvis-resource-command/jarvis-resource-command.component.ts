@@ -74,7 +74,8 @@ export class JarvisResourceCommandComponent extends JarvisResource<CommandBean> 
     private _jarvisConfigurationService: JarvisConfigurationService,
     private _commandService: JarvisDataCommandService,
     private _notificationService: JarvisDataNotificationService,
-    private confirmationService: ConfirmationService) {
+    private confirmationService: ConfirmationService
+  ) {
     super('/commands', ['execute', 'test', 'clear'], _commandService, _route, _router);
     this.jarvisNotificationLink = new JarvisResourceLink<NotificationBean>();
     this.types = [];
@@ -104,30 +105,30 @@ export class JarvisResourceCommandComponent extends JarvisResource<CommandBean> 
    * task action
    */
   public execute(): void {
-      this.myData = JSON.parse(this.myJsonData);
-      this.myRawData = JSON.stringify(this.myData);
-      this._commandService.Task(this.myCommand.id, 'execute', this.myData)
-        .subscribe(
-        (result: any) => this.myOutputData = result,
-        error => console.log(error),
-        () => {
-        }
-        );
-    }
+    this.myData = JSON.parse(this.myJsonData);
+    this.myRawData = JSON.stringify(this.myData);
+    this._commandService.Task(this.myCommand.id, 'execute', this.myData)
+      .subscribe(
+      (result: any) => this.myOutputData = result,
+      error => console.log(error),
+      () => {
+      }
+      );
+  }
 
   /**
    * task action
    */
   public render(): void {
-      this.myData = JSON.parse(this.myJsonData);
-      this.myRawData = JSON.stringify(this.myData);
-      this._commandService.Task(this.myCommand.id, 'render', this.myData)
-        .subscribe(
-        (result: any) => this.myOutputData = result,
-        error => console.log(error),
-        () => {
-        }
-        );
+    this.myData = JSON.parse(this.myJsonData);
+    this.myRawData = JSON.stringify(this.myData);
+    this._commandService.Task(this.myCommand.id, 'render', this.myData)
+      .subscribe(
+      (result: any) => this.myOutputData = result,
+      error => console.log(error),
+      () => {
+      }
+      );
   }
 
   /**
@@ -146,11 +147,11 @@ export class JarvisResourceCommandComponent extends JarvisResource<CommandBean> 
    * notify to add new resource
    */
   public notify(picker: PickerBean, resource: ResourceBean): void {
-    if( picker.action === 'notifications') {
-      this.jarvisNotificationLink.addLink(this.getResource().id, resource.id, this.getResource().notifications, {"order": "1", href: "HREF"}, this._commandService.allLinkedNotification);
+    if (picker.action === 'notifications') {
+      this.jarvisNotificationLink.addLink(this.getResource().id, resource.id, this.getResource().notifications, { "order": "1", href: "HREF" }, this._commandService.allLinkedNotification);
     }
-    if( picker.action === 'complete') {
-      this.myCommand = <CommandBean> resource;
+    if (picker.action === 'complete') {
+      this.myCommand = <CommandBean>resource;
       this.myCommand.notifications = [];
       (new JarvisResourceLink<NotificationBean>()).loadLinks(resource.id, this.myCommand.notifications, this._commandService.allLinkedNotification);
     }

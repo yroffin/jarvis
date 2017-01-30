@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild, OnInit, ElementRef } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { Http, Response, Headers } from '@angular/http';

@@ -19,7 +19,6 @@ package org.jarvis.core.services;
 import javax.annotation.PostConstruct;
 
 import org.jarvis.core.SwaggerParser;
-import org.jarvis.core.access.JarvisAccessLogFilter;
 import org.jarvis.core.model.bean.config.Oauth2Config;
 import org.jarvis.core.resources.CoreResources;
 import org.jarvis.core.resources.CoreWebsocket;
@@ -39,6 +38,7 @@ import org.jarvis.core.resources.api.tools.ApiCronResources;
 import org.jarvis.core.resources.api.tools.ApiNotificationResources;
 import org.jarvis.core.resources.api.tools.ApiToolResources;
 import org.jarvis.core.resources.api.views.ApiViewResources;
+import org.jarvis.core.security.JarvisAccessLogFilter;
 import org.jarvis.core.security.JarvisAuthorizerUsers;
 import org.jarvis.core.security.JarvisCoreClient;
 import org.jarvis.core.security.JarvisTokenValidationFilter;

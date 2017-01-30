@@ -35,7 +35,10 @@ export class JarvisDataBlockService extends JarvisDataCoreResource<BlockBean> im
     public allLinkedBlock: JarvisDefaultLinkResource<BlockBean>;
     public allLinkedPlugin: JarvisDefaultLinkResource<PluginBean>;
 
-    constructor(private _http: Http, private _configuration: JarvisConfigurationService) {
+    constructor(
+        private _http: Http,
+        private _configuration: JarvisConfigurationService
+    ) {
         super(_configuration.ServerWithApiUrl + 'blocks', _http);
 
         /**

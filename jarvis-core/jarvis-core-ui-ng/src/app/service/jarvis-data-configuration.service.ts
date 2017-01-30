@@ -28,7 +28,10 @@ import { ConfigurationBean } from './../model/configuration-bean';
 @Injectable()
 export class JarvisDataConfigurationService extends JarvisDataCoreResource<ConfigurationBean> implements JarvisDefaultResource<ConfigurationBean> {
 
-    constructor(private _http: Http, private _configuration: JarvisConfigurationService) {
+    constructor(
+        private _http: Http,
+        private _configuration: JarvisConfigurationService
+    ) {
         super(_configuration.ServerWithApiUrl + 'configurations', _http);
     }
 }

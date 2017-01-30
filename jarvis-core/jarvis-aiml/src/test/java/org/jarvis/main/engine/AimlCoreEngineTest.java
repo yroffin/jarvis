@@ -26,13 +26,16 @@ import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.model.parser.history.IAimlHistory;
 import org.junit.Test;
 
+/**
+ * default
+ */
 public class AimlCoreEngineTest {
 
 	/**
 	 * internal utility
 	 * 
 	 * @param resources
-	 * @return
+	 * @return IAimlCoreEngine
 	 * @throws AimlParsingError
 	 */
 	public IAimlCoreEngine instance(String resources) throws AimlParsingError {
@@ -42,6 +45,9 @@ public class AimlCoreEngineTest {
 		return core;
 	}
 
+	/**
+	 * @throws AimlParsingError
+	 */
 	@Test
 	public void testSimpleCoreSystem() throws AimlParsingError {
 		List<IAimlHistory> answer = instance(
@@ -49,6 +55,9 @@ public class AimlCoreEngineTest {
 		assertEquals("Hi there!", answer.get(0).getAnswer());
 	}
 
+	/**
+	 * @throws AimlParsingError
+	 */
 	@Test
 	public void testSimpleCoreSystemAlt() throws AimlParsingError {
 		IAimlCoreEngine engine = instance("src/test/resources/core/default/default.xml");
@@ -65,6 +74,9 @@ public class AimlCoreEngineTest {
 		}
 	}
 
+	/**
+	 * @throws AimlParsingError
+	 */
 	@Test
 	public void testSimpleCoreSystemSay() throws AimlParsingError {
 		IAimlCoreEngine engine = instance("src/test/resources/core/default/default.xml");

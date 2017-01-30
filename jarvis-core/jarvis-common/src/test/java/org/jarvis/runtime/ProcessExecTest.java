@@ -22,8 +22,15 @@ import java.io.IOException;
 
 import org.junit.Test;
 
+/**
+ * simple test
+ */
 public class ProcessExecTest {
 
+	/**
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
 	@Test
 	public void testCapture() throws IOException, InterruptedException {
 		CaptureResult capture = ProcessExec.exec("java -version");
@@ -33,6 +40,10 @@ public class ProcessExecTest {
 		System.err.println(capture.getJson());
 	}
 
+	/**
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
 	@Test
 	public void testCaptureString() throws IOException, InterruptedException {
 		String capture = ProcessExec.execute("java -version");

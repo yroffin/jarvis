@@ -28,7 +28,10 @@ import { PropertyBean } from './../model/property-bean';
 @Injectable()
 export class JarvisDataPropertyService extends JarvisDataCoreResource<PropertyBean> implements JarvisDefaultResource<PropertyBean> {
 
-    constructor(private _http: Http, private _configuration: JarvisConfigurationService) {
+    constructor(
+        private _http: Http,
+        private _configuration: JarvisConfigurationService
+    ) {
         super(_configuration.ServerWithApiUrl + 'properties', _http);
     }
 }

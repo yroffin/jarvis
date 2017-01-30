@@ -1,4 +1,20 @@
-import { Component, Input, ViewChild, OnInit } from '@angular/core';
+/* 
+ * Copyright 2016 Yannick Roffin.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import { Component, Input, ViewChild, OnInit, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { JarvisPickerComponent } from '../../dialog/jarvis-picker/jarvis-picker.component';
@@ -50,7 +66,8 @@ export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> im
     private _jarvisConfigurationService: JarvisConfigurationService,
     private _deviceService: JarvisDataDeviceService,
     private _triggerService: JarvisDataTriggerService,
-    private _pluginService: JarvisDataPluginService) {
+    private _pluginService: JarvisDataPluginService
+  ) {
     super('/devices', ['render'], _deviceService, _route, _router);
     this.jarvisDeviceLink = new JarvisResourceLink<DeviceBean>();
     this.jarvisTriggerLink = new JarvisResourceLink<TriggerBean>();
@@ -69,13 +86,13 @@ export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> im
    */
   public render(): void {
     let output: any;
-      this._deviceService.Task(this.myDevice.id, 'render', {})
-        .subscribe(
-        (result: any) => output = result,
-        error => console.log(error),
-        () => {
-        }
-        );
+    this._deviceService.Task(this.myDevice.id, 'render', {})
+      .subscribe(
+      (result: any) => output = result,
+      error => console.log(error),
+      () => {
+      }
+      );
   }
 
   /**
@@ -115,8 +132,8 @@ export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> im
     if (picker.action === 'plugins') {
       this.jarvisPluginLink.addLink(this.getResource().id, resource.id, this.getResource().plugins, { "order": "1", href: "HREF" }, this._deviceService.allLinkedPlugin);
     }
-    if(picker.action === 'complete') {
-      this.myDevice = <DeviceBean> resource;
+    if (picker.action === 'complete') {
+      this.myDevice = <DeviceBean>resource;
       this.myDevice.devices = [];
       (new JarvisResourceLink<DeviceBean>()).loadLinks(resource.id, this.myDevice.devices, this._deviceService.allLinkedDevice);
       this.myDevice.triggers = [];

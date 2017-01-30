@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, Inject, OnInit } from '@angular/core';
-import { DOCUMENT } from "@angular/platform-browser";
+import { Component, Input, OnInit } from '@angular/core';
 
 import { MenuItem } from 'primeng/primeng';
 
@@ -43,7 +42,6 @@ export class AppComponent implements OnInit {
    * constructor
    */
   constructor(
-    @Inject(DOCUMENT) doc: any,
     private _jarvisSecurityService: JarvisSecurityService,
     private _jarvisDataStoreService: JarvisDataStoreService
   ) {

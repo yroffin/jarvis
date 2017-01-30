@@ -26,13 +26,16 @@ import org.jarvis.main.exception.AimlParsingError;
 import org.jarvis.main.model.parser.history.IAimlHistory;
 import org.junit.Test;
 
+/**
+ * default
+ */
 public class AimlCoreEngineSraiTest {
 
 	/**
 	 * internal utility
 	 * 
 	 * @param resources
-	 * @return
+	 * @return IAimlCoreEngine
 	 * @throws AimlParsingError
 	 */
 	public IAimlCoreEngine instance(String resources) throws AimlParsingError {
@@ -74,11 +77,12 @@ public class AimlCoreEngineSraiTest {
 		assertEquals("bruno is someone, but i don't know him.", answer.get(0)
 				.getAnswer());
 		
+		/*
 		for(IAimlCoreTransaction tx : engine.getTransactionMonitor().getTransactions()) {
 			for(ICategoryStack category : tx.getCategories()) {
-				// System.err.println(category);
 			}
 		}
+		*/
 	}
 
 	/**

@@ -21,7 +21,6 @@ import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { TreeModule } from 'angular2-tree-component';
 
 import { ButtonModule } from 'primeng/primeng';
 import { DataTableModule, SharedModule } from 'primeng/primeng';
@@ -162,7 +161,6 @@ const appRoutes: Routes = [
     BrowserModule,
     FormsModule,
     HttpModule,
-    TreeModule,
     /**
      * primeface
      */
@@ -197,7 +195,15 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes)
   ],
   providers: [
+    /**
+     * extends
+     */
+    WindowRef,
+    /**
+     * jarvis
+     */
     JarvisConfigurationService,
+    JarvisSecurityService,
     JarvisDataDeviceService,
     JarvisDataTriggerService,
     JarvisDataPluginService,
@@ -213,17 +219,8 @@ const appRoutes: Routes = [
     JarvisDataRawService,
     JarvisDataViewService,
     JarvisDataSnapshotService,
-    JarvisSecurityService,
     JarvisDataViewService,
-    JarvisDataDatasourceService,
-    /**
-     * primeng
-     */
-    ConfirmationService,
-    /**
-     * extends
-     */
-    WindowRef
+    JarvisDataDatasourceService
   ],
   bootstrap: [AppComponent]
 })

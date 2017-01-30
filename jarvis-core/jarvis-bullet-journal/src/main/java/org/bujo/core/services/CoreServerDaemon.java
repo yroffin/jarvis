@@ -20,22 +20,6 @@ import javax.annotation.PostConstruct;
 import org.bujo.core.resources.CoreResources;
 import org.jarvis.core.SwaggerParser;
 import org.jarvis.core.model.bean.config.Oauth2Config;
-import org.jarvis.core.resources.api.config.ApiConfigResources;
-import org.jarvis.core.resources.api.config.ApiPropertyResources;
-import org.jarvis.core.resources.api.connectors.ApiConnectorResources;
-import org.jarvis.core.resources.api.connectors.ApiDataSourceResources;
-import org.jarvis.core.resources.api.device.ApiDeviceResources;
-import org.jarvis.core.resources.api.device.ApiEventResources;
-import org.jarvis.core.resources.api.device.ApiTriggerResources;
-import org.jarvis.core.resources.api.plugins.ApiCommandResources;
-import org.jarvis.core.resources.api.plugins.ApiScriptPluginResources;
-import org.jarvis.core.resources.api.plugins.ApiZwayPluginResources;
-import org.jarvis.core.resources.api.scenario.ApiBlockResources;
-import org.jarvis.core.resources.api.scenario.ApiScenarioResources;
-import org.jarvis.core.resources.api.tools.ApiCronResources;
-import org.jarvis.core.resources.api.tools.ApiNotificationResources;
-import org.jarvis.core.resources.api.tools.ApiToolResources;
-import org.jarvis.core.resources.api.views.ApiViewResources;
 import org.jarvis.core.security.JarvisAccessLogFilter;
 import org.jarvis.core.security.JarvisAuthorizerUsers;
 import org.jarvis.core.security.JarvisCoreClient;
@@ -95,52 +79,7 @@ public class CoreServerDaemon {
 	CoreResources coreResources;
 	
 	@Autowired
-	ApiScenarioResources apiScenarioResources;
-
-	@Autowired
-	ApiDataSourceResources apiDataSourceResources;
-
-	@Autowired
-	ApiZwayPluginResources apiZwayPluginResources;
-
-	@Autowired
-	ApiBlockResources apiBlockResources;
-
-	@Autowired
-	ApiDeviceResources apiDeviceResources;
-
-	@Autowired
-	ApiViewResources apiViewResources;
-
-	@Autowired
-	ApiEventResources apiEventResources;
-
-	@Autowired
-	ApiConfigResources apiConfigResources;
-
-	@Autowired
-	ApiScriptPluginResources apiScriptPluginResources;
-
-	@Autowired
-	ApiCommandResources apiCommandResources;
-
-	@Autowired
-	ApiTriggerResources apiTriggerResources;
-
-	@Autowired
-	ApiNotificationResources apiNotificationResources;
-
-	@Autowired
-	ApiToolResources apiToolResources;
-
-	@Autowired
-	ApiCronResources apiCronResources;
-
-	@Autowired
-	ApiConnectorResources apiConnectorResources;
-
-	@Autowired
-	ApiPropertyResources apiPropertyResources;
+	ApiEntryResources apiEntryResources;
 
 	protected ObjectMapper mapper = new ObjectMapper();
 	
@@ -258,34 +197,9 @@ public class CoreServerDaemon {
 		});
 
 		/**
-		 * zway resource
+		 * all resources
 		 */
-		apiZwayPluginResources.mount();
-
-		/**
-		 * mount plugin resources
-		 */
-		apiScenarioResources.mount();
-		apiBlockResources.mount();
-		apiDeviceResources.mount();
-		apiViewResources.mount();
-		/**
-		 * mount plugin resources
-		 */
-		apiScriptPluginResources.mount();
-		apiCommandResources.mount();
-		apiEventResources.mount();
-		apiTriggerResources.mount();
-		apiNotificationResources.mount();
-		/**
-		 * tools
-		 */
-		apiCronResources.mount();
-		apiToolResources.mount();
-		apiConnectorResources.mount();
-		apiConfigResources.mount();
-		apiPropertyResources.mount();
-		apiDataSourceResources.mount();
+		apiEntryResources.mount();
 
 		/**
 		 * Build swagger json description

@@ -12,6 +12,7 @@
 	<description>Commons</description>
 
 	<dependencies>
+		<!-- default dependencies -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

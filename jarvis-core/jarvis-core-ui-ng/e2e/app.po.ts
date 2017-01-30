@@ -1,6 +1,6 @@
 import { browser, element, by } from 'protractor';
 
-export class JarvisCoreUiNgPage {
+export class MigrationCliPage {
   navigateTo() {
     return browser.get('/');
   }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, Inject, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { DOCUMENT } from "@angular/platform-browser";
 import { Router, ActivatedRoute, Params } from '@angular/router';
 

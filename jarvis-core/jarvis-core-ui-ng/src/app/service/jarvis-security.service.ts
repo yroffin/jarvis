@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-import { Injectable, Inject } from '@angular/core';
-import { Router } from '@angular/router';
-
+import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
+import { Router } from '@angular/router';
 import { Http, Response, Headers } from '@angular/http';
 
 import { WindowRef } from './jarvis-utils.service';
@@ -40,10 +39,9 @@ export class JarvisSecurityService extends JarvisDataCoreResource<ResourceBean> 
    */
   constructor(
     private _http: Http,
-    private window: WindowRef,
     private _router: Router,
     private _windowService: WindowRef,
-    private _jarvisConfigurationService:JarvisConfigurationService) {
+    private _jarvisConfigurationService: JarvisConfigurationService) {
     super(_jarvisConfigurationService.ServerWithUrl, _http);
   }
 

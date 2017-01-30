@@ -1,10 +1,10 @@
-import { JarvisCoreUiNgPage } from './app.po';
+import { MigrationCliPage } from './app.po';
 
-describe('jarvis-core-ui-ng App', function() {
-  let page: JarvisCoreUiNgPage;
+describe('migration-cli App', function() {
+  let page: MigrationCliPage;
 
   beforeEach(() => {
-    page = new JarvisCoreUiNgPage();
+    page = new MigrationCliPage();
   });
 
   it('should display message saying app works', () => {
