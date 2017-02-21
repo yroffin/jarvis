@@ -22,7 +22,7 @@ import { Http, Response, Headers } from '@angular/http';
 import * as _ from 'lodash';
 
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { SelectItem } from 'primeng/primeng';
+import { SelectItem, UIChart } from 'primeng/primeng';
 
 import { JarvisPickerComponent } from '../../dialog/jarvis-picker/jarvis-picker.component';
 import { JarvisConfigurationService } from '../../service/jarvis-configuration.service';
@@ -54,11 +54,13 @@ export class JarvisResourceDatasourceComponent extends JarvisResource<DataSource
 
   @Input() myDataSource: DataSourceBean;
   @ViewChild('pickConnectors') pickConnectors: JarvisPickerComponent;
+  @ViewChild('chart') chart: UIChart;
 
   /**
    * internal
    */
   private jarvisConnectorLink: JarvisResourceLink<ConnectorBean>;
+  private chartData: any;
 
   /**
    * constructor
@@ -79,6 +81,53 @@ export class JarvisResourceDatasourceComponent extends JarvisResource<DataSource
    */
   ngOnInit() {
     this.init(this);
+
+    this.chartData = {
+            labels: [],
+            datasets: [
+                {
+                    label: 'Dataset',
+                    data: [],
+                    fill: true,
+                    backgroundColor: '#42A5F5',
+                    borderColor: '#1E88E5',
+                }
+            ]
+        }
+  }
+
+  /**
+   * task action
+   */
+  public execute(): void {
+    let myData = JSON.parse(this.myDataSource.body);
+    let myOutputData = {}
+
+    this._datasourceService.Task(this.myDataSource.id, 'render', {"query": myData})
+      .subscribe(
+      (result: any) => this.myDataSource.resultset = result,
+      error => console.log(error),
+      () => {
+        let labels = [];
+        let series = [];
+        let reference = -1
+        _.forEach(_.sortBy(this.myDataSource.resultset, (element) => {
+          return element._id.label;
+        }), (element) => {
+          labels.push(element._id.label);
+          if(reference === -1 ) {
+            series.push(0);
+            reference = element.total;
+          } else {
+            series.push(element.total - reference);
+            reference = element.total;
+          }
+        })
+        this.chartData.labels = labels;
+        this.chartData.datasets[0].data = series;
+        this.chart.refresh();
+      }
+      );
   }
 
   /**

@@ -38,4 +38,8 @@ public class DataSourceBean extends GenericBean {
 	 * pipes
 	 */
 	public String pipes;
+	/**
+	 * body
+	 */
+	public String body;
 }

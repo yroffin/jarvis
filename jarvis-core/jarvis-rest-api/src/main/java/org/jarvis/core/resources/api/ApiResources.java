@@ -635,13 +635,16 @@ public abstract class ApiResources<REST extends GenericEntity, BEAN extends Gene
 	public Object doExecute(Response response, String id, GenericMap body, TaskType taskType)
 			throws TechnicalNotFoundException {
 		GenericValue result = rawExecute(id, body, taskType);
+		List<?> res;
 		switch (result.getType()) {
 		case OBJECT:
 			response.type("application/json");
 			return result.asObject();
 		case ARRAY:
 			response.type("application/json");
-			return result.asList();
+			res = result.asList();
+			response.header("X-Total-Count", res.size()+"");
+			return res;
 		case BOOLEAN:
 			response.type("application/json");
 			return result.asBoolean();

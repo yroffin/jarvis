@@ -19,13 +19,14 @@
       "mobile": false,
       "styles": [
         "styles.css",
-        "../node_modules/primeng/resources/themes/rocket/theme.css",
+        "../node_modules/primeng/resources/themes/darkness/theme.css",
         "../node_modules/primeng/resources/primeng.min.css",
         "../node_modules/font-awesome/css/font-awesome.min.css",
         "../node_modules/prismjs/themes/prism.css"
       ],
       "scripts": [
-        "../node_modules/prismjs/prism.js"
+        "../node_modules/prismjs/prism.js",
+        "../node_modules/chart.js/dist/Chart.js"
       ],
       "environments": {
         "source": "environments/environment.ts",

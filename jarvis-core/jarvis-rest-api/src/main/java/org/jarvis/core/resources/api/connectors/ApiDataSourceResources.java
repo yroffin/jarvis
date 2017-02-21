@@ -16,6 +16,7 @@
 
 package org.jarvis.core.resources.api.connectors;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.ws.rs.Path;
@@ -94,6 +95,13 @@ public class ApiDataSourceResources extends ApiLinkedResources<DataSourceRest,Da
 					throw new TechnicalException(e);
 				}
 				break;
+			case RENDER:
+				try {
+					return render(bean, args);
+				} catch (Exception e) {
+					logger.error("Error {}", e);
+					throw new TechnicalException(e);
+				}
 			default:
 				result = new GenericMap();
 		}
@@ -125,5 +133,40 @@ public class ApiDataSourceResources extends ApiLinkedResources<DataSourceRest,Da
 			}
 		}
 		return result;
+	}
+
+	/**
+	 * render indicators
+	 * @param bean
+	 * @param args
+	 * @return
+	 */
+	private GenericValue render(DataSourceBean bean, GenericMap args) {
+		List<GenericEntity> links = apiHrefConnectorResources.findAll(bean, ApiMapper.HREF);
+		for(GenericEntity link: links) {
+			try {
+				ConnectorRest rest = apiConnectorResources.doGetByIdRest(link.id);
+				try {
+					GenericMap collects = apiConnectorResources.findCollectors(rest);
+					if(collects.get("collections") != null ) {
+						@SuppressWarnings({ "unchecked", "rawtypes" })
+						List<LinkedHashMap> indicators = (List<LinkedHashMap>) collects.get("collections");
+						if(indicators.get(0).get("name") != null) {
+							List<GenericMap> res = apiConnectorResources.pipes(rest, (String) indicators.get(0).get("name"), mapper.writeValueAsString(args.get("query")));
+							return new GenericValue(mapper.writeValueAsString(res));
+						}
+					}
+					throw new TechnicalException("Unable to find any collections");
+				} catch (TechnicalHttpException e) {
+					throw new TechnicalException(e);
+				} catch (JsonProcessingException e) {
+					throw new TechnicalException(e);
+				}
+			} catch (TechnicalNotFoundException e) {
+				logger.error("Error {}", e);
+				throw new TechnicalException(e);
+			}
+		}
+		return new GenericValue("[]");
 	}
 }

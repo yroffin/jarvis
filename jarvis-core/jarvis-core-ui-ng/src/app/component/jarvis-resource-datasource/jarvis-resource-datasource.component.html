@@ -1,4 +1,4 @@
-<app-jarvis-toolbar-resource [notified]="this" [crud]="true" [pickers]="[{'label':'Lier un connecteur', 'icon': 'fa-podcast', 'action':'connectors', 'picker': pickConnectors}]"></app-jarvis-toolbar-resource>
+<app-jarvis-toolbar-resource [notified]="this" [crud]="true" [tasks]="[{'task':'execute','icon':'fa-bolt','label':'Collect'}]" [pickers]="[{'label':'Lier un connecteur', 'icon': 'fa-podcast', 'action':'connectors', 'picker': pickConnectors}]"></app-jarvis-toolbar-resource>
 
 <div *ngIf="myDataSource">
   <p-accordion>
@@ -20,22 +20,6 @@
             <input type="text" pInputText [(ngModel)]="myDataSource.icon" placeholder="Icône" />
           </div>
         </div>
-        <div class="ui-grid-row">
-          <div class="ui-grid-col-4">
-            Connecteur {{myDataSource.adress}}
-          </div>
-          <div class="ui-grid-col-8">
-            <p-dropdown [options]="types" [(ngModel)]="myDataSource.adress"></p-dropdown>
-          </div>
-        </div>
-        <div class="ui-grid-row">
-          <div class="ui-grid-col-4">
-            Adress
-          </div>
-          <div class="ui-grid-col-8">
-            <input type="text" pInputText [(ngModel)]="myDataSource.adress" placeholder="Adress" disabled />
-          </div>
-        </div>
       </div>
     </p-accordionTab>
     <p-accordionTab header="Connecteurs">
@@ -51,6 +35,14 @@
           </template>
         </p-column>
       </p-dataTable>
+    </p-accordionTab>
+    <p-accordionTab header="Query">
+      <p-fieldset legend="Query" toggleable="true">
+        <textarea style="width: 100%; height: 400px;" [(ngModel)]="myDataSource.body"></textarea>
+      </p-fieldset>
+      <p-fieldset legend="Resultset" toggleable="true">
+        <p-chart #chart type="bar" [data]="chartData" (onDataSelect)="selectData($event)"></p-chart>
+      </p-fieldset>
     </p-accordionTab>
   </p-accordion>
 </div>

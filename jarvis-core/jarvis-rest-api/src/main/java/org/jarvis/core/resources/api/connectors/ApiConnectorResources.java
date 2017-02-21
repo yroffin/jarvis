@@ -17,12 +17,14 @@
 package org.jarvis.core.resources.api.connectors;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -70,7 +72,7 @@ public class ApiConnectorResources extends ApiResources<ConnectorRest,ConnectorB
 
 		// Fix timeout
 		client.property(ClientProperties.CONNECT_TIMEOUT, 2000);
-		client.property(ClientProperties.READ_TIMEOUT,    2000);
+		client.property(ClientProperties.READ_TIMEOUT,    20000);
 	}
 
 	class ResourceListenerImpl extends ResourceDefaultPostListenerImpl<ConnectorRest, ConnectorBean> implements ResourcePostListener<ConnectorRest, ConnectorBean> {
@@ -245,6 +247,44 @@ public class ApiConnectorResources extends ApiResources<ConnectorRest,ConnectorB
 			GenericMap body = null;
 			try {
 				body = mapper.readValue(entity.readEntity(String.class), GenericMap.class);
+			} catch (IOException e) {
+				throw new TechnicalException(e);
+			}
+			return body;
+		} else {
+			/**
+			 * no answer is not an error, may be connector is gone
+			 */
+			throw new TechnicalHttpException(entity.getStatus(), rest.adress);
+		}
+	}
+
+	/**
+	 * execute mongodb pipes on this connector
+	 * @param rest 
+	 * @param indicator 
+	 * @param payload 
+	 * @return GenericMap
+	 * @throws TechnicalHttpException
+	 */
+	public List<GenericMap> pipes(ConnectorRest rest, String indicator, String payload) throws TechnicalHttpException {
+		/**
+		 * build call
+		 */
+		Response entity = client.target(rest.adress)
+		        .path("/api/collect/" + indicator)
+		        .queryParam("operation", "pipe")
+	            .request(MediaType.APPLICATION_JSON)
+	            .accept(MediaType.APPLICATION_JSON)
+	            .acceptEncoding("charset=UTF-8")
+	            .post(Entity.entity(payload, MediaType.APPLICATION_JSON_TYPE));
+
+		if(entity.getStatus() == 200) {
+			List<GenericMap> body = new ArrayList<GenericMap>();
+			try {
+				for(Object element : mapper.readValue(entity.readEntity(String.class), List.class)) {
+					body.add(mapper.readValue(mapper.writeValueAsString(element), GenericMap.class));
+				}
 			} catch (IOException e) {
 				throw new TechnicalException(e);
 			}

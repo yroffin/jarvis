@@ -73,8 +73,7 @@ export class JarvisResourceCommandComponent extends JarvisResource<CommandBean> 
     private _router: Router,
     private _jarvisConfigurationService: JarvisConfigurationService,
     private _commandService: JarvisDataCommandService,
-    private _notificationService: JarvisDataNotificationService,
-    private confirmationService: ConfirmationService
+    private _notificationService: JarvisDataNotificationService
   ) {
     super('/commands', ['execute', 'test', 'clear'], _commandService, _route, _router);
     this.jarvisNotificationLink = new JarvisResourceLink<NotificationBean>();

@@ -46,4 +46,9 @@ public class DataSourceRest extends GenericEntity {
 	 */
 	@JsonProperty("pipes")
 	public String pipes;
+	/**
+	 * body
+	 */
+	@JsonProperty("body")
+	public String body;
 }

@@ -23,6 +23,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 
 import { ButtonModule } from 'primeng/primeng';
+import { ChartModule } from 'primeng/primeng';
 import { DataTableModule, SharedModule } from 'primeng/primeng';
 import { MenubarModule, MenuModule } from 'primeng/primeng';
 import { CheckboxModule } from 'primeng/primeng';
@@ -189,6 +190,7 @@ const appRoutes: Routes = [
     ToolbarModule,
     TooltipModule,
     TreeTableModule,
+    ChartModule,
     /**
      * routes
      */
