@@ -1,4 +1,4 @@
-<app-jarvis-toolbar-resource [notified]="this" [crud]="true" [tasks]="[{'task':'execute','icon':'fa-bolt','label':'Collect'}]" [pickers]="[{'label':'Lier un connecteur', 'icon': 'fa-podcast', 'action':'connectors', 'picker': pickConnectors}]"></app-jarvis-toolbar-resource>
+<app-jarvis-toolbar-resource [notified]="this" [crud]="true" [tasks]="[{'task':'handleChange','icon':'fa-bolt','label':'Collect'}]" [pickers]="[{'label':'Lier un connecteur', 'icon': 'fa-podcast', 'action':'connectors', 'picker': pickConnectors}]"></app-jarvis-toolbar-resource>
 
 <div *ngIf="myDataSource">
   <p-accordion>
@@ -37,11 +37,44 @@
       </p-dataTable>
     </p-accordionTab>
     <p-accordionTab header="Query">
+       <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-12">
+            <p-chart #chart type="line" [data]="chartData" (onDataSelect)="selectData($event)"></p-chart>
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-12">
+              <p-toggleButton [(ngModel)]="delta"></p-toggleButton>
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Début
+          </div>
+          <div class="ui-grid-col-8">
+            <p-calendar [(ngModel)]="beginDate" showTime="showTime" hourFormat="24" readonlyInput="true" (onSelect)="handleChange($event)"></p-calendar>
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Fin
+          </div>
+          <div class="ui-grid-col-8">
+            <p-calendar [(ngModel)]="endDate" showTime="showTime" hourFormat="24" readonlyInput="true" (onSelect)="handleChange($event)"></p-calendar>
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Trunc {{truncateDate}}
+          </div>
+          <div class="ui-grid-col-8">
+            <p-slider [(ngModel)]="truncateDate" (onChange)="handleChange($event)"></p-slider>
+          </div>
+        </div>
+      </div>
       <p-fieldset legend="Query" toggleable="true">
-        <textarea style="width: 100%; height: 400px;" [(ngModel)]="myDataSource.body"></textarea>
-      </p-fieldset>
-      <p-fieldset legend="Resultset" toggleable="true">
-        <p-chart #chart type="bar" [data]="chartData" (onDataSelect)="selectData($event)"></p-chart>
+        {{myDataSource.body|json}}
       </p-fieldset>
     </p-accordionTab>
   </p-accordion>

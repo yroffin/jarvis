@@ -46,6 +46,10 @@ import { SplitButtonModule } from 'primeng/primeng';
 import { ToolbarModule } from 'primeng/primeng';
 import { TooltipModule } from 'primeng/primeng';
 import { TreeTableModule } from 'primeng/primeng';
+import { CalendarModule } from 'primeng/primeng';
+import { SpinnerModule } from 'primeng/primeng';
+import { SliderModule } from 'primeng/primeng';
+import { ToggleButtonModule } from 'primeng/primeng';
 
 import { WindowRef } from './service/jarvis-utils.service';
 import { JarvisSecurityService } from './service/jarvis-security.service';
@@ -191,6 +195,10 @@ const appRoutes: Routes = [
     TooltipModule,
     TreeTableModule,
     ChartModule,
+    CalendarModule,
+    SpinnerModule,
+    SliderModule,
+    ToggleButtonModule,
     /**
      * routes
      */

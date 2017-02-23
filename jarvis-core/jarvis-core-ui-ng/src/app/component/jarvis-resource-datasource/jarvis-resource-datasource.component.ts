@@ -56,11 +56,19 @@ export class JarvisResourceDatasourceComponent extends JarvisResource<DataSource
   @ViewChild('pickConnectors') pickConnectors: JarvisPickerComponent;
   @ViewChild('chart') chart: UIChart;
 
+  date1: Date;
+
   /**
    * internal
    */
   private jarvisConnectorLink: JarvisResourceLink<ConnectorBean>;
   private chartData: any;
+  private beginDate: Date = new Date();
+  private endDate: Date = new Date();
+  private truncateDate: number = 16;
+  private timeTemplate: string = "timestamp";
+  private valueTemplate: string = "base";
+  private delta: boolean = true;
 
   /**
    * constructor
@@ -97,12 +105,80 @@ export class JarvisResourceDatasourceComponent extends JarvisResource<DataSource
   }
 
   /**
+   * change action
+   */
+  public handleChange(): void {
+    this.updateBody(this.delta, this.timeTemplate, this.valueTemplate, this.beginDate, this.endDate, this.truncateDate);
+  }
+
+  /**
+   * format date
+   */
+  private dateISODate(ldate: Date): String {
+    function pad(number) {
+      var r = String(number);
+      if ( r.length === 1 ) {
+        r = '0' + r;
+      }
+      return r;
+    }
+
+    return ldate.getUTCFullYear()
+      + '-' + pad( ldate.getUTCMonth() + 1 )
+      + '-' + pad( ldate.getUTCDate() )
+      + 'T' + pad( ldate.getUTCHours() )
+      + ':' + pad( ldate.getUTCMinutes() )
+      + ':' + pad( ldate.getUTCSeconds() )
+      + '.' + String( (ldate.getUTCMilliseconds()/1000).toFixed(3) ).slice( 2, 5 )
+      + 'Z';
+  }
+
+  /**
+   * change action
+   */
+  private updateBody(delta: boolean, timestamp: string, base: string, ldate: Date, rdate: Date, trunc: number): void {
+    // project part
+    let project = {};
+    project[timestamp] = 1;
+    project[base] = 1;
+    project["hash"] = { "$substr": ["$" + timestamp, 0, trunc] };
+    // match part
+    let match = {};
+    match[timestamp] = { "$gte": "ISODate("+this.dateISODate(ldate)+")", "$lte": "ISODate("+this.dateISODate(rdate)+")" };
+    // sort part
+    let sort = {};
+    sort[timestamp] = -1;
+    // group part
+    let group = {};
+    group["_id"] = { "label": "$hash" };
+    group["total"] = { "$max": "$"+base };
+    this.myDataSource.body = JSON.stringify(
+        {
+          "pipes": [
+            {
+              "$project": project
+            },
+            {
+              "$match": match
+            },
+            {
+              "$sort": sort
+            },
+            {
+              "$group": group
+            }
+          ]
+      }
+    );
+    this.execute(delta);
+  }
+
+  /**
    * task action
    */
-  public execute(): void {
+  public execute(delta: boolean): void {
     let myData = JSON.parse(this.myDataSource.body);
     let myOutputData = {}
-
     this._datasourceService.Task(this.myDataSource.id, 'render', {"query": myData})
       .subscribe(
       (result: any) => this.myDataSource.resultset = result,
@@ -111,16 +187,24 @@ export class JarvisResourceDatasourceComponent extends JarvisResource<DataSource
         let labels = [];
         let series = [];
         let reference = -1
-        _.forEach(_.sortBy(this.myDataSource.resultset, (element) => {
-          return element._id.label;
-        }), (element) => {
+        // sort resultset this.myDataSource.resultset
+        _.forEach(
+          _.sortBy(this.myDataSource.resultset, (sorted) => {
+          return sorted._id.label;
+        }),
+        // then push in graph data
+        (element) => {
           labels.push(element._id.label);
-          if(reference === -1 ) {
-            series.push(0);
-            reference = element.total;
+          if(delta) {
+            if(reference === -1 ) {
+              series.push(0);
+              reference = element.total;
+            } else {
+              series.push(element.total - reference);
+              reference = element.total;
+            }
           } else {
-            series.push(element.total - reference);
-            reference = element.total;
+              series.push(element.total);
           }
         })
         this.chartData.labels = labels;
