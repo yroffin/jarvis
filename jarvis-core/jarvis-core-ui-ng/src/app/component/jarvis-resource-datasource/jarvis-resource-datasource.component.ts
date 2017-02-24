@@ -151,7 +151,7 @@ export class JarvisResourceDatasourceComponent extends JarvisResource<DataSource
     // group part
     let group = {};
     group["_id"] = { "label": "$hash" };
-    group["total"] = { "$max": "$"+base };
+    group["total"] = { "$avg": "$"+base };
     this.myDataSource.body = JSON.stringify(
         {
           "pipes": [
