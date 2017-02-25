@@ -93,12 +93,19 @@ export class JarvisResourceDatasourceComponent extends JarvisResource<DataSource
     this.chartData = {
             labels: [],
             datasets: [
-                {
-                    label: 'Dataset',
+{
+                    label: 'max',
                     data: [],
-                    fill: true,
-                    backgroundColor: '#42A5F5',
-                    borderColor: '#1E88E5',
+                    fill: false,
+                    backgroundColor: '#FFFFFF',
+                    borderColor: '#4bc0c0'
+                },
+                {
+                    label: 'average',
+                    data: [],
+                    fill: false,
+                    backgroundColor: '#FFFFFF',
+                    borderColor: '#565656'
                 }
             ]
         }
@@ -151,7 +158,8 @@ export class JarvisResourceDatasourceComponent extends JarvisResource<DataSource
     // group part
     let group = {};
     group["_id"] = { "label": "$hash" };
-    group["total"] = { "$avg": "$"+base };
+    group["max"] = { "$max": "$"+base };
+    group["avg"] = { "$avg": "$"+base };
     this.myDataSource.body = JSON.stringify(
         {
           "pipes": [
@@ -185,8 +193,10 @@ export class JarvisResourceDatasourceComponent extends JarvisResource<DataSource
       error => console.log(error),
       () => {
         let labels = [];
-        let series = [];
-        let reference = -1
+        let avg = [];
+        let max = [];
+        let refmax = -1
+        let refavg = -1
         // sort resultset this.myDataSource.resultset
         _.forEach(
           _.sortBy(this.myDataSource.resultset, (sorted) => {
@@ -196,19 +206,29 @@ export class JarvisResourceDatasourceComponent extends JarvisResource<DataSource
         (element) => {
           labels.push(element._id.label);
           if(delta) {
-            if(reference === -1 ) {
-              series.push(0);
-              reference = element.total;
+            if(refmax === -1 ) {
+              max.push(0);
+              refmax = element.max;
             } else {
-              series.push(element.total - reference);
-              reference = element.total;
+              max.push(element.max - refmax);
+              refmax = element.max;
+            }
+            if(refavg === -1 ) {
+              avg.push(0);
+              refavg = element.avg;
+            } else {
+              avg.push(element.avg - refavg);
+              refavg = element.avg;
             }
           } else {
-              series.push(element.total);
+              max.push(element.max);
+              avg.push(element.avg);
           }
         })
         this.chartData.labels = labels;
-        this.chartData.datasets[0].data = series;
+        this.chartData.datasets[0].data = max;
+        this.chartData.datasets[1].data = avg;
+        console.log("data", this.chartData)
         this.chart.refresh();
       }
       );

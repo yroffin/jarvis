@@ -16,8 +16,11 @@
 
 package org.jarvis.core.resources.api.connectors;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -27,6 +30,8 @@ import org.jarvis.core.exception.TechnicalHttpException;
 import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.connector.ConnectorBean;
 import org.jarvis.core.model.bean.connector.DataSourceBean;
+import org.jarvis.core.model.bean.connector.DataSourcePipeBean;
+import org.jarvis.core.model.bean.connector.DataSourceQueryBean;
 import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.model.rest.connector.ConnectorRest;
 import org.jarvis.core.model.rest.connector.DataSourceRest;
@@ -39,6 +44,7 @@ import org.jarvis.core.resources.api.href.ApiHrefConnectorResources;
 import org.jarvis.core.resources.api.mapper.ApiMapper;
 import org.jarvis.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -102,6 +108,13 @@ public class ApiDataSourceResources extends ApiLinkedResources<DataSourceRest,Da
 					logger.error("Error {}", e);
 					throw new TechnicalException(e);
 				}
+			case EXECUTE:
+				try {
+					return execute(bean, args);
+				} catch (Exception e) {
+					logger.error("Error {}", e);
+					throw new TechnicalException(e);
+				}
 			default:
 				result = new GenericMap();
 		}
@@ -153,6 +166,88 @@ public class ApiDataSourceResources extends ApiLinkedResources<DataSourceRest,Da
 						List<LinkedHashMap> indicators = (List<LinkedHashMap>) collects.get("collections");
 						if(indicators.get(0).get("name") != null) {
 							List<GenericMap> res = apiConnectorResources.pipes(rest, (String) indicators.get(0).get("name"), mapper.writeValueAsString(args.get("query")));
+							return new GenericValue(mapper.writeValueAsString(res));
+						}
+					}
+					throw new TechnicalException("Unable to find any collections");
+				} catch (TechnicalHttpException e) {
+					throw new TechnicalException(e);
+				} catch (JsonProcessingException e) {
+					throw new TechnicalException(e);
+				}
+			} catch (TechnicalNotFoundException e) {
+				logger.error("Error {}", e);
+				throw new TechnicalException(e);
+			}
+		}
+		return new GenericValue("[]");
+	}
+
+	/**
+	 * execute this datasource to render all connector
+	 * @param bean
+	 * @param args
+	 * @return
+	 */
+	private GenericValue execute(DataSourceBean bean, GenericMap args) {
+		List<GenericEntity> links = apiHrefConnectorResources.findAll(bean, ApiMapper.HREF);
+		for(GenericEntity link: links) {
+			try {
+				ConnectorRest rest = apiConnectorResources.doGetByIdRest(link.id);
+				try {
+					GenericMap collects = apiConnectorResources.findCollectors(rest);
+					if(collects.get("collections") != null ) {
+						@SuppressWarnings({ "unchecked", "rawtypes" })
+						List<LinkedHashMap> indicators = (List<LinkedHashMap>) collects.get("collections");
+						if(indicators.get(0).get("name") != null) {
+							String timestamp = "timestamp";
+							String value = "base";
+							DataSourceQueryBean query = new DataSourceQueryBean();
+							// project
+							DataSourcePipeBean project = new DataSourcePipeBean();
+							project.project = new HashMap<String, Object>();
+							Map<String, Object> hash = new HashMap<String, Object>();
+							List<Object> substr = new ArrayList<Object>();
+							project.project.put(timestamp,1);
+							project.project.put(value,1);
+							substr.add("$"+timestamp);
+							substr.add(0);
+							substr.add(args.get("truncate"));
+							hash.put("$substr", substr);
+							project.project.put("hash",hash);
+							// match
+							DataSourcePipeBean match = new DataSourcePipeBean();
+							match.match = new HashMap<String, Object>();
+							Map<String, Object> matchValue = new HashMap<String, Object>();
+							matchValue.put("$gte", "ISODate("+args.get("minDate")+")");
+							matchValue.put("$lte", "ISODate("+args.get("maxDate")+")");
+							match.match.put(timestamp, matchValue);
+							// sort
+							DataSourcePipeBean sort = new DataSourcePipeBean();
+							sort.sort = new HashMap<String, Object>();
+							sort.sort.put(timestamp, -1);
+							// group
+							DataSourcePipeBean group = new DataSourcePipeBean();
+							group.group = new HashMap<String, Object>();
+							Map<String, Object> idMap = new HashMap<String, Object>();
+							idMap.put("label", "$hash");
+							group.group.put("_id", idMap);
+							Map<String, Object> idAvg = new HashMap<String, Object>();
+							idAvg.put("$avg", "$"+value);
+							group.group.put("avg", idAvg);
+							Map<String, Object> idMax = new HashMap<String, Object>();
+							idMax.put("$max", "$"+value);
+							group.group.put("max", idMax);
+							Map<String, Object> idMin = new HashMap<String, Object>();
+							idMin.put("$min", "$"+value);
+							group.group.put("min", idMin);
+							// build pipes
+							query.pipes.add(project);
+							query.pipes.add(match);
+							query.pipes.add(sort);
+							query.pipes.add(group);
+							//System.err.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(query));
+							List<GenericMap> res = apiConnectorResources.pipes(rest, (String) indicators.get(0).get("name"), mapper.writeValueAsString(query));
 							return new GenericValue(mapper.writeValueAsString(res));
 						}
 					}
