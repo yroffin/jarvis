@@ -24,7 +24,7 @@ Jarvis system aim to introduce a human to machine interface capability with :
 - Spark + Spring Boot on server side
 - pac4j integration (security) (Cf. http://www.pac4j.org and https://github.com/pac4j/spark-pac4j)
 - Neo4j for database (graphdb)
-- Elastic Search to store data (event, ...)
+- MongoDB for collections
 
 1.3 Security
 ------------
