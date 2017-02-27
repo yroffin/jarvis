@@ -28,7 +28,7 @@ import { JarvisPickerComponent } from '../../dialog/jarvis-picker/jarvis-picker.
 import { JarvisConfigurationService } from '../../service/jarvis-configuration.service';
 import { JarvisResourceLink } from '../../class/jarvis-resource-link';
 
-import { JarvisDataConnectorService } from '../../service/jarvis-data-connector.service';
+import { JarvisDataMeasureService } from '../../service/jarvis-data-measure.service';
 import { JarvisDataDatasourceService } from '../../service/jarvis-data-datasource.service';
 
 /**
@@ -43,7 +43,7 @@ import { NotifyCallback } from '../../class/jarvis-resource';
 import { ResourceBean } from '../../model/resource-bean';
 import { PickerBean } from '../../model/picker-bean';
 import { DataSourceBean } from '../../model/connector/datasource-bean';
-import { ConnectorBean } from '../../model/connector/connector-bean';
+import { MeasureBean } from '../../model/connector/measure-bean';
 
 @Component({
   selector: 'app-jarvis-resource-datasource',
@@ -53,7 +53,7 @@ import { ConnectorBean } from '../../model/connector/connector-bean';
 export class JarvisResourceDatasourceComponent extends JarvisResource<DataSourceBean> implements NotifyCallback<ResourceBean>, OnInit {
 
   @Input() myDataSource: DataSourceBean;
-  @ViewChild('pickConnectors') pickConnectors: JarvisPickerComponent;
+  @ViewChild('pickMeasures') pickMeasures: JarvisPickerComponent;
   @ViewChild('chart') chart: UIChart;
 
   date1: Date;
@@ -61,7 +61,7 @@ export class JarvisResourceDatasourceComponent extends JarvisResource<DataSource
   /**
    * internal
    */
-  private jarvisConnectorLink: JarvisResourceLink<ConnectorBean>;
+  private jarvisMeasureLink: JarvisResourceLink<MeasureBean>;
   private chartData: any;
   private beginDate: Date = new Date();
   private endDate: Date = new Date();
@@ -79,9 +79,9 @@ export class JarvisResourceDatasourceComponent extends JarvisResource<DataSource
     private _router: Router,
     private _jarvisConfigurationService: JarvisConfigurationService,
     private _datasourceService: JarvisDataDatasourceService,
-    private _connectorService: JarvisDataConnectorService) {
+    private _measureService: JarvisDataMeasureService) {
     super('/datasources', [], _datasourceService, _route, _router);
-    this.jarvisConnectorLink = new JarvisResourceLink<ConnectorBean>();
+    this.jarvisMeasureLink = new JarvisResourceLink<MeasureBean>();
   }
 
   /**
@@ -237,28 +237,30 @@ export class JarvisResourceDatasourceComponent extends JarvisResource<DataSource
   /**
    * drop link
    */
-  public dropConnectorLink(linked: ConnectorBean): void {
-    this.jarvisConnectorLink.dropLink(linked, this.myDataSource.id, this.myDataSource.connectors, this._datasourceService.allLinkedConnector);
+  public dropMeasureLink(linked: MeasureBean): void {
+    this.jarvisMeasureLink.dropLink(linked, this.myDataSource.id, this.myDataSource.measures, this._datasourceService.allLinkedMeasures);
   }
 
   /**
    * goto link
    */
-  public gotoConnectorLink(linked: ConnectorBean): void {
-    this._router.navigate(['/connectors/' + linked.id]);
+  public gotoMeasureLink(linked: MeasureBean): void {
+    this._router.navigate(['/measures/' + linked.id]);
   }
 
   /**
    * notify to add new resource
    */
   public notify(picker: PickerBean, resource: ResourceBean): void {
-    if( picker.action === 'connectors') {
-      this.jarvisConnectorLink.addLink(this.getResource().id, resource.id, this.getResource().connectors, {"order": "1", href: "HREF"}, this._datasourceService.allLinkedConnector);
+    if( picker.action === 'measures') {
+      this.jarvisMeasureLink.addLink(this.getResource().id, resource.id, this.getResource().measures, {"order": "1", href: "HREF"}, this._datasourceService.allLinkedMeasures);
     }
     if (picker.action === 'complete') {
       this.myDataSource = <DataSourceBean>resource;
-      this.myDataSource.connectors = [];
-      (new JarvisResourceLink<ConnectorBean>()).loadLinks(resource.id, this.myDataSource.connectors, this._datasourceService.allLinkedConnector);
+      this.myDataSource.measures = [];
+      (new JarvisResourceLink<MeasureBean>()).loadLinksWithCallback(resource.id, this.myDataSource.measures, this._datasourceService.allLinkedMeasures, (measures) => {
+        console.log("measures", measures);
+      });
     }
   }
 
@@ -267,10 +269,10 @@ export class JarvisResourceDatasourceComponent extends JarvisResource<DataSource
    */
   public pick(picker: PickerBean): void {
     /**
-     * find connectors
+     * find measures
      */
-    if (picker.action === 'connectors') {
-      this.pickConnectors.open(this, 'Connector');
+    if (picker.action === 'measures') {
+      this.pickMeasures.open(this, 'Measure');
     }
   }
 }

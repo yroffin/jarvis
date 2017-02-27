@@ -1,0 +1,58 @@
+<app-jarvis-toolbar-resource [notified]="this" [crud]="true" [tasks]="[{'task':'check','icon':'fa-bolt','label':'Check'}]" [pickers]="[{'label':'Lier un connecteur', 'icon': 'fa-podcast', 'action':'connectors', 'picker': pickConnectors}]"></app-jarvis-toolbar-resource>
+
+<div *ngIf="myMeasure">
+  <p-accordion>
+    <p-accordionTab header="Entête">
+      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Nom ({{checkName}})
+          </div>
+          <div class="ui-grid-col-8">
+            <input type="text" pInputText [(ngModel)]="myMeasure.name" placeholder="Nom" />
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Datetime ({{checkDatetime}})
+          </div>
+          <div class="ui-grid-col-8">
+            <input type="text" pInputText [(ngModel)]="myMeasure.datetime" placeholder="timestamp" />
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Valeur ({{checkValue}})
+          </div>
+          <div class="ui-grid-col-8">
+            <input type="text" pInputText [(ngModel)]="myMeasure.value" placeholder="value" />
+          </div>
+        </div>
+      </div>
+    </p-accordionTab>
+    <p-accordionTab header="Connecteurs">
+      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-12">
+            {{checkData | json}}
+          </div>
+        </div>
+      </div>
+      <p-dataTable [value]="myMeasure.connectors">
+        <header>Connecteurs</header>
+        <p-column field="extended.order" header="Ordre"></p-column>
+        <p-column field="id" header="Id"></p-column>
+        <p-column field="instance" header="Instance"></p-column>
+        <p-column field="name" header="Nom"></p-column>
+        <p-column header="Action">
+          <template let-connector="rowData" pTemplate type="body">
+            <app-jarvis-toolbar-resource [notified]="this" [tasks]="[{'task':'dropConnectorLink','args':[connector],'icon':'fa-trash','label':'Supprimer le lien'},{'task':'gotoConnectorLink','args':[connector],'icon':'fa-link','label':'Détail'}]" ></app-jarvis-toolbar-resource>
+          </template>
+        </p-column>
+      </p-dataTable>
+    </p-accordionTab>
+  </p-accordion>
+</div>
+
+<app-jarvis-picker #pickConnectors [resource]="{'service':'connectors','label':'Connectors'}"></app-jarvis-picker>
+<p-growl [value]="msgs"></p-growl>

@@ -18,7 +18,6 @@ package org.jarvis.core.resources.api.href;
 
 import javax.annotation.PostConstruct;
 
-import org.jarvis.core.model.bean.connector.ConnectorBean;
 import org.jarvis.core.model.bean.connector.DataSourceBean;
 import org.jarvis.core.model.bean.connector.MeasureBean;
 import org.jarvis.core.resources.api.mapper.ApiHrefMapper;
@@ -28,11 +27,11 @@ import org.springframework.stereotype.Component;
  * HREF handler
  */
 @Component
-public class ApiHrefConnectorResources extends ApiHrefMapper<MeasureBean,ConnectorBean> {
+public class ApiHrefMeasureResources extends ApiHrefMapper<DataSourceBean,MeasureBean> {
 
 	@PostConstruct
 	protected
 	void init() {
-		super.init(MeasureBean.class.getSimpleName(),ConnectorBean.class.getSimpleName(),"connectors");
+		super.init(DataSourceBean.class.getSimpleName(),MeasureBean.class.getSimpleName(),"measures");
 	}
 }

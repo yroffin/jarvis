@@ -32,6 +32,7 @@ import { JarvisDataScenarioService } from '../../service/jarvis-data-scenario.se
 import { JarvisDataNotificationService } from '../../service/jarvis-data-notification.service';
 import { JarvisDataDatasourceService } from '../../service/jarvis-data-datasource.service';
 import { JarvisDataConnectorService } from '../../service/jarvis-data-connector.service';
+import { JarvisDataMeasureService } from '../../service/jarvis-data-measure.service';
 
 /**
  * data model
@@ -67,6 +68,7 @@ export class JarvisPickerComponent implements OnInit {
     private _scenarioService: JarvisDataScenarioService,
     private _datasourceService: JarvisDataDatasourceService,
     private _connectorService: JarvisDataConnectorService,
+    private _measureService: JarvisDataMeasureService,
     private _notificationService: JarvisDataNotificationService
   ) {
   }
@@ -79,6 +81,9 @@ export class JarvisPickerComponent implements OnInit {
       this.resource.action = this.resource.service;
     }
     let service: JarvisDefaultResource<ResourceBean>;
+    if (this.resource.service === 'measures') {
+      service = this._measureService;
+    }
     if (this.resource.service === 'connectors') {
       service = this._connectorService;
     }

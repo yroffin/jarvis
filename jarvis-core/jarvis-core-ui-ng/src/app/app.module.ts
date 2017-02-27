@@ -70,6 +70,7 @@ import { JarvisDataViewService } from './service/jarvis-data-view.service';
 import { JarvisDataRawService } from './service/jarvis-data-raw.service';
 import { JarvisDataStoreService } from './service/jarvis-data-store.service';
 import { JarvisDataDatasourceService } from './service/jarvis-data-datasource.service';
+import { JarvisDataMeasureService } from './service/jarvis-data-measure.service';
 
 import { JarvisHomeComponent } from './component/jarvis-home/jarvis-home.component';
 import { JarvisResourcesComponent } from './component/jarvis-resources/jarvis-resources.component';
@@ -94,6 +95,7 @@ import { JarvisLoginComponent } from './component/jarvis-login/jarvis-login.comp
 import { JarvisResourceSnapshotComponent } from './component/jarvis-resource-snapshot/jarvis-resource-snapshot.component';
 import { JarvisDesktopComponent } from './component/jarvis-desktop/jarvis-desktop.component';
 import { JarvisResourceDatasourceComponent } from './component/jarvis-resource-datasource/jarvis-resource-datasource.component';
+import { JarvisMeasureComponent } from './component/jarvis-measure/jarvis-measure.component';
 
 /**
  * default route definition
@@ -127,6 +129,8 @@ const appRoutes: Routes = [
   { path: 'snapshots/:id', component: JarvisResourceSnapshotComponent },
   { path: 'datasources', component: JarvisResourcesComponent, data: { resource: 'datasources' } },
   { path: 'datasources/:id', component: JarvisResourceDatasourceComponent },
+  { path: 'measures', component: JarvisResourcesComponent, data: { resource: 'measures' } },
+  { path: 'measures/:id', component: JarvisMeasureComponent },
   { path: 'desktop', component: JarvisDesktopComponent },
   { path: 'login', component: JarvisLoginComponent },
   { path: '', component: JarvisHomeComponent },
@@ -157,7 +161,8 @@ const appRoutes: Routes = [
     JarvisLoginComponent,
     JarvisResourceSnapshotComponent,
     JarvisDesktopComponent,
-    JarvisResourceDatasourceComponent
+    JarvisResourceDatasourceComponent,
+    JarvisMeasureComponent
   ],
   entryComponents: [
     JarvisPickerComponent
@@ -230,7 +235,8 @@ const appRoutes: Routes = [
     JarvisDataViewService,
     JarvisDataSnapshotService,
     JarvisDataViewService,
-    JarvisDataDatasourceService
+    JarvisDataDatasourceService,
+    JarvisDataMeasureService
   ],
   bootstrap: [AppComponent]
 })

@@ -50,6 +50,10 @@ public abstract class ApiMapper {
 	 */
 	public static final String DATASOURCE_RESOURCE = "datasources";
 	/**
+	 * measures
+	 */
+	public static final String MEASURE_RESOURCE = "measures";
+	/**
 	 * devices
 	 */
 	public static final String DEVICE_RESOURCE = "devices";
@@ -82,6 +86,7 @@ public abstract class ApiMapper {
 	protected static final String TRIGGER = ":trigger";
 	protected static final String CRON = ":cron";
 	protected static final String CONNECTOR = ":connector";
+	protected static final String MEASURE = ":measure";
 	protected static final String ID = ":id";
 	protected static final String BLOCK = ":block";
 	protected static final String PARAM = ":param";

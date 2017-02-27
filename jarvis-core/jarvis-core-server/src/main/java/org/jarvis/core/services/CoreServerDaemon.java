@@ -16,12 +16,15 @@
 
 package org.jarvis.core.services;
 
+import java.util.Set;
+
 import javax.annotation.PostConstruct;
 
 import org.jarvis.core.SwaggerParser;
 import org.jarvis.core.model.bean.config.Oauth2Config;
 import org.jarvis.core.resources.CoreResources;
 import org.jarvis.core.resources.CoreWebsocket;
+import org.jarvis.core.resources.api.ApiResources;
 import org.jarvis.core.resources.api.config.ApiConfigResources;
 import org.jarvis.core.resources.api.config.ApiPropertyResources;
 import org.jarvis.core.resources.api.connectors.ApiConnectorResources;
@@ -46,9 +49,11 @@ import org.pac4j.core.client.Clients;
 import org.pac4j.core.config.Config;
 import org.pac4j.core.profile.UserProfile;
 import org.pac4j.sparkjava.DefaultHttpActionAdapter;
+import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.core.env.Environment;
@@ -56,6 +61,7 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.Contact;
 import io.swagger.annotations.Info;
 import io.swagger.annotations.SwaggerDefinition;
@@ -90,6 +96,8 @@ tags = { @Tag(name = "swagger") }
 public class CoreServerDaemon {
 	protected Logger logger = LoggerFactory.getLogger(CoreServerDaemon.class);
 
+	@Autowired private ApplicationContext applicationContext;
+	
 	@Autowired
 	Environment env;
 
@@ -268,34 +276,9 @@ public class CoreServerDaemon {
 		});
 
 		/**
-		 * zway resource
+		 * mount all standard resources
 		 */
-		apiZwayPluginResources.mount();
-
-		/**
-		 * mount plugin resources
-		 */
-		apiScenarioResources.mount();
-		apiBlockResources.mount();
-		apiDeviceResources.mount();
-		apiViewResources.mount();
-		/**
-		 * mount plugin resources
-		 */
-		apiScriptPluginResources.mount();
-		apiCommandResources.mount();
-		apiEventResources.mount();
-		apiTriggerResources.mount();
-		apiNotificationResources.mount();
-		/**
-		 * tools
-		 */
-		apiCronResources.mount();
-		apiToolResources.mount();
-		apiConnectorResources.mount();
-		apiConfigResources.mount();
-		apiPropertyResources.mount();
-		apiDataSourceResources.mount();
+		mountAllResources("org.jarvis.core.resources.api");
 
 		/**
 		 * Build swagger json description
@@ -307,6 +290,20 @@ public class CoreServerDaemon {
 		});
 
 		spark.Spark.after("/*", new JarvisAccessLogFilter());
+	}
+
+	/**
+	 * mount all resources in package
+	 * @param packageName
+	 */
+	protected void mountAllResources(String packageName) {
+		Reflections reflections = new Reflections(packageName);
+		Set<Class<?>> apiClasses = reflections.getTypesAnnotatedWith(Api.class);
+		for(Class<?> klass : apiClasses) {
+			ApiResources<?, ?> bean = (ApiResources<?, ?>) applicationContext.getBean(klass);
+			logger.info("Mount resource {}", bean);
+			bean.mount();
+		}
 	}
 	
 	protected final Logger accesslog = LoggerFactory.getLogger(JarvisAccessLogFilter.class);

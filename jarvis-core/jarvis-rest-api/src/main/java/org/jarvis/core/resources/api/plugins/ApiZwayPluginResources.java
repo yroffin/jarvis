@@ -35,6 +35,7 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import io.swagger.annotations.Api;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -42,6 +43,7 @@ import spark.Route;
 /**
  * zway resource
  */
+@Api(value = "zway")
 @Component
 public class ApiZwayPluginResources extends ApiResources<ZwayRest,ZwayBean> {
 	protected Logger logger = LoggerFactory.getLogger(ApiZwayPluginResources.class);

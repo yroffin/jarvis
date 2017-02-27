@@ -1,4 +1,4 @@
-<app-jarvis-toolbar-resource [notified]="this" [crud]="true" [tasks]="[{'task':'handleChange','icon':'fa-bolt','label':'Collect'}]" [pickers]="[{'label':'Lier un connecteur', 'icon': 'fa-podcast', 'action':'connectors', 'picker': pickConnectors}]"></app-jarvis-toolbar-resource>
+<app-jarvis-toolbar-resource [notified]="this" [crud]="true" [tasks]="[{'task':'handleChange','icon':'fa-bolt','label':'Collect'}]" [pickers]="[{'label':'Lier une mesure', 'icon': 'fa-podcast', 'action':'measures', 'picker': pickMeasures}]"></app-jarvis-toolbar-resource>
 
 <div *ngIf="myDataSource">
   <p-accordion>
@@ -22,16 +22,16 @@
         </div>
       </div>
     </p-accordionTab>
-    <p-accordionTab header="Connecteurs">
-      <p-dataTable [value]="myDataSource.connectors">
+    <p-accordionTab header="Mesures">
+      <p-dataTable [value]="myDataSource.measures">
         <header>Connecteurs</header>
         <p-column field="extended.order" header="Ordre"></p-column>
         <p-column field="id" header="Id"></p-column>
         <p-column field="instance" header="Instance"></p-column>
         <p-column field="name" header="Nom"></p-column>
         <p-column header="Action">
-          <template let-connector="rowData" pTemplate type="body">
-            <app-jarvis-toolbar-resource [notified]="this" [tasks]="[{'task':'dropConnectorLink','args':[connector],'icon':'fa-trash','label':'Supprimer le lien'},{'task':'gotoConnectorLink','args':[connector],'icon':'fa-link','label':'Détail'}]" ></app-jarvis-toolbar-resource>
+          <template let-measure="rowData" pTemplate type="body">
+            <app-jarvis-toolbar-resource [notified]="this" [tasks]="[{'task':'dropMeasureLink','args':[measure],'icon':'fa-trash','label':'Supprimer le lien'},{'task':'gotoMeasureLink','args':[measure],'icon':'fa-link','label':'Détail'}]" ></app-jarvis-toolbar-resource>
           </template>
         </p-column>
       </p-dataTable>
@@ -80,4 +80,4 @@
   </p-accordion>
 </div>
 
-<app-jarvis-picker #pickConnectors [resource]="{'service':'connectors','label':'Connectors'}"></app-jarvis-picker>
+<app-jarvis-picker #pickMeasures [resource]="{'service':'measures','label':'Measures'}"></app-jarvis-picker>

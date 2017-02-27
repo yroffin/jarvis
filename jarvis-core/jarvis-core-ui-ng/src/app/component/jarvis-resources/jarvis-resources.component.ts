@@ -41,6 +41,7 @@ import { JarvisDataConnectorService } from '../../service/jarvis-data-connector.
 import { JarvisDataNotificationService } from '../../service/jarvis-data-notification.service';
 import { JarvisDataSnapshotService } from '../../service/jarvis-data-snapshot.service';
 import { JarvisDataDatasourceService } from '../../service/jarvis-data-datasource.service';
+import { JarvisDataMeasureService } from '../../service/jarvis-data-measure.service';
 
 /**
  * data model
@@ -82,6 +83,7 @@ export class JarvisResourcesComponent implements OnInit {
     private _jarvisDataCronService: JarvisDataCronService,
     private _jarvisDataSnapshotService: JarvisDataSnapshotService,
     private _jarvisDataViewService: JarvisDataViewService,
+    private _jarvisDataMeasureService: JarvisDataMeasureService,
     private _jarvisDataDatasourceService: JarvisDataDatasourceService
   ) {
   }
@@ -94,6 +96,9 @@ export class JarvisResourcesComponent implements OnInit {
       .filter(event => event instanceof NavigationEnd)
       .subscribe((navigationEnd: NavigationEnd) => {
         // You only receive NavigationEnd events
+        if (navigationEnd.url === '/measures') {
+          this.load('measures', this._jarvisDataMeasureService);
+        }
         if (navigationEnd.url === '/notifications') {
           this.load('notifications', this._jarvisDataNotificationService);
         }

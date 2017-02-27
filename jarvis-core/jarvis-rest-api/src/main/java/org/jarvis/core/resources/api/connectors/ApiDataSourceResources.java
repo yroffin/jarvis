@@ -16,39 +16,25 @@
 
 package org.jarvis.core.resources.api.connectors;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
-import org.jarvis.core.exception.TechnicalException;
-import org.jarvis.core.exception.TechnicalHttpException;
-import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.connector.ConnectorBean;
 import org.jarvis.core.model.bean.connector.DataSourceBean;
-import org.jarvis.core.model.bean.connector.DataSourcePipeBean;
-import org.jarvis.core.model.bean.connector.DataSourceQueryBean;
-import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.model.rest.connector.ConnectorRest;
 import org.jarvis.core.model.rest.connector.DataSourceRest;
+import org.jarvis.core.model.rest.connector.MeasureRest;
 import org.jarvis.core.resources.api.ApiLinkedResources;
 import org.jarvis.core.resources.api.Declare;
 import org.jarvis.core.resources.api.DeclareHrefResource;
 import org.jarvis.core.resources.api.DeclareLinkedResource;
 import org.jarvis.core.resources.api.GenericValue;
-import org.jarvis.core.resources.api.href.ApiHrefConnectorResources;
+import org.jarvis.core.resources.api.href.ApiHrefMeasureResources;
 import org.jarvis.core.resources.api.mapper.ApiMapper;
 import org.jarvis.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
 
 import io.swagger.annotations.Api;
 
@@ -66,15 +52,15 @@ public class ApiDataSourceResources extends ApiLinkedResources<DataSourceRest,Da
 	 * link to another device
 	 */
 	@Autowired
-	@DeclareLinkedResource(role=ApiMapper.CONNECTOR_RESOURCE, param=ApiMapper.CONNECTOR, sortKey=ApiMapper.SORTKEY)
-	public ApiConnectorResources apiConnectorResources;
+	@DeclareLinkedResource(role=ApiMapper.MEASURE_RESOURCE, param=ApiMapper.MEASURE, sortKey=ApiMapper.SORTKEY)
+	public ApiMeasureResources apiMeasureResources;
 
 	/**
 	 * href handle
 	 */
 	@Autowired
-	@DeclareHrefResource(role=ApiMapper.CONNECTOR_RESOURCE, href=ApiMapper.HREF, target=ConnectorRest.class)
-	public ApiHrefConnectorResources apiHrefConnectorResources;
+	@DeclareHrefResource(role=ApiMapper.MEASURE_RESOURCE, href=ApiMapper.HREF, target=MeasureRest.class)
+	public ApiHrefMeasureResources apiHrefMeasureResources;
 	
 	/**
 	 * constructor
@@ -93,28 +79,6 @@ public class ApiDataSourceResources extends ApiLinkedResources<DataSourceRest,Da
 	public GenericValue doRealTask(DataSourceBean bean, GenericMap args, TaskType taskType) {
 		GenericMap result;
 		switch(taskType) {
-			case INDICATOR:
-				try {
-					result = indicators(bean, args);
-				} catch (Exception e) {
-					logger.error("Error {}", e);
-					throw new TechnicalException(e);
-				}
-				break;
-			case RENDER:
-				try {
-					return render(bean, args);
-				} catch (Exception e) {
-					logger.error("Error {}", e);
-					throw new TechnicalException(e);
-				}
-			case EXECUTE:
-				try {
-					return execute(bean, args);
-				} catch (Exception e) {
-					logger.error("Error {}", e);
-					throw new TechnicalException(e);
-				}
 			default:
 				result = new GenericMap();
 		}
@@ -127,6 +91,7 @@ public class ApiDataSourceResources extends ApiLinkedResources<DataSourceRest,Da
 	 * @param args
 	 * @return
 	 */
+	/*
 	private GenericMap indicators(DataSourceBean bean, GenericMap args) {
 		GenericMap result = new GenericMap();
 		List<GenericEntity> links = apiHrefConnectorResources.findAll(bean, ApiMapper.HREF);
@@ -147,13 +112,15 @@ public class ApiDataSourceResources extends ApiLinkedResources<DataSourceRest,Da
 		}
 		return result;
 	}
-
+*/
+	
 	/**
 	 * render indicators
 	 * @param bean
 	 * @param args
 	 * @return
 	 */
+	/*
 	private GenericValue render(DataSourceBean bean, GenericMap args) {
 		List<GenericEntity> links = apiHrefConnectorResources.findAll(bean, ApiMapper.HREF);
 		for(GenericEntity link: links) {
@@ -182,13 +149,14 @@ public class ApiDataSourceResources extends ApiLinkedResources<DataSourceRest,Da
 		}
 		return new GenericValue("[]");
 	}
-
+*/
 	/**
 	 * execute this datasource to render all connector
 	 * @param bean
 	 * @param args
 	 * @return
 	 */
+	/*
 	private GenericValue execute(DataSourceBean bean, GenericMap args) {
 		List<GenericEntity> links = apiHrefConnectorResources.findAll(bean, ApiMapper.HREF);
 		for(GenericEntity link: links) {
@@ -264,4 +232,5 @@ public class ApiDataSourceResources extends ApiLinkedResources<DataSourceRest,Da
 		}
 		return new GenericValue("[]");
 	}
+	*/
 }

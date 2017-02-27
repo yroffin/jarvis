@@ -15,8 +15,9 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-
+import { Http, Response, Headers } from '@angular/http';
+import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs/Observable';
 import { JarvisConfigurationService } from './jarvis-configuration.service';
 import { JarvisDefaultResource, JarvisDefaultLinkResource } from '../interface/jarvis-default-resource';
 import { JarvisDataCoreResource } from './jarvis-data-core-resource';
@@ -25,23 +26,23 @@ import { JarvisDataLinkedResource } from './jarvis-data-linked-resource';
 /**
  * data model
  */
-import { DataSourceBean } from './../model/connector/datasource-bean';
 import { MeasureBean } from './../model/connector/measure-bean';
+import { ConnectorBean } from './../model/connector/connector-bean';
+import { LinkBean } from './../model/link-bean';
 
 @Injectable()
-export class JarvisDataDatasourceService extends JarvisDataCoreResource<DataSourceBean> implements JarvisDefaultResource<DataSourceBean> {
+export class JarvisDataMeasureService extends JarvisDataCoreResource<MeasureBean> implements JarvisDefaultResource<MeasureBean> {
 
-    public allLinkedMeasures: JarvisDefaultLinkResource<MeasureBean>;
+    public allLinkedConnectors: JarvisDefaultLinkResource<ConnectorBean>;
 
     constructor(
         private _http: Http,
         private _configuration: JarvisConfigurationService
     ) {
-        super(_configuration.ServerWithApiUrl + 'datasources', _http);
+        super(_configuration.ServerWithApiUrl + 'measures', _http);
         /**
          * map linked elements
          */
-        this.allLinkedMeasures = new JarvisDataLinkedResource<MeasureBean>(this.actionUrl, '/measures', _http);
+        this.allLinkedConnectors = new JarvisDataLinkedResource<ConnectorBean>(this.actionUrl, '/connectors', _http);
     }
-
 }

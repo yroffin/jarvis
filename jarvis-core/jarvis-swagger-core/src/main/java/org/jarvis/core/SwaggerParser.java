@@ -97,6 +97,12 @@ public class SwaggerParser {
 	 */
 	private static void swagger(Swagger swagger, Class<ApiDefaultResources> klass) {
 		Api apiAnnotation = klass.getAnnotationsByType(Api.class)[0];
+		if(klass.getAnnotationsByType(Declare.class).length == 0) {
+			/**
+			 * not a standard resource
+			 */
+			return;
+		}
 		Declare declareAnnotation = klass.getAnnotationsByType(Declare.class)[0];
 
 		/**
