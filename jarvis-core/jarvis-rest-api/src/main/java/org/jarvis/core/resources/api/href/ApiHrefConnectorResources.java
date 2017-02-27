@@ -19,7 +19,6 @@ package org.jarvis.core.resources.api.href;
 import javax.annotation.PostConstruct;
 
 import org.jarvis.core.model.bean.connector.ConnectorBean;
-import org.jarvis.core.model.bean.connector.DataSourceBean;
 import org.jarvis.core.model.bean.connector.MeasureBean;
 import org.jarvis.core.resources.api.mapper.ApiHrefMapper;
 import org.springframework.stereotype.Component;

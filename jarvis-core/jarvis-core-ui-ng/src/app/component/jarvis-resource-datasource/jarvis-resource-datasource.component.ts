@@ -162,21 +162,10 @@ export class JarvisResourceDatasourceComponent extends JarvisResource<DataSource
     group["avg"] = { "$avg": "$"+base };
     this.myDataSource.body = JSON.stringify(
         {
-          "pipes": [
-            {
-              "$project": project
-            },
-            {
-              "$match": match
-            },
-            {
-              "$sort": sort
-            },
-            {
-              "$group": group
-            }
-          ]
-      }
+          "minDate": "2017-02-24T23:59:00.000Z",
+          "maxDate": "2017-02-25T01:00:00.000Z",
+          "truncate":16
+        }
     );
     this.execute(delta);
   }
@@ -187,7 +176,7 @@ export class JarvisResourceDatasourceComponent extends JarvisResource<DataSource
   public execute(delta: boolean): void {
     let myData = JSON.parse(this.myDataSource.body);
     let myOutputData = {}
-    this._datasourceService.Task(this.myDataSource.id, 'render', {"query": myData})
+    this._datasourceService.Task(this.myDataSource.id, 'execute', myData)
       .subscribe(
       (result: any) => this.myDataSource.resultset = result,
       error => console.log(error),

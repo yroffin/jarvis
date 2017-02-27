@@ -48,7 +48,7 @@ import io.swagger.annotations.Api;
 public class ApiMeasureResources extends ApiLinkedResources<MeasureRest,MeasureBean,ConnectorRest,ConnectorBean> {
 
 	/**
-	 * link to another device
+	 * link
 	 */
 	@Autowired
 	@DeclareLinkedResource(role=ApiMapper.CONNECTOR_RESOURCE, param=ApiMapper.CONNECTOR, sortKey=ApiMapper.SORTKEY)
