@@ -162,9 +162,9 @@ export class JarvisResourceDatasourceComponent extends JarvisResource<DataSource
     group["avg"] = { "$avg": "$"+base };
     this.myDataSource.body = JSON.stringify(
         {
-          "minDate": "2017-02-24T23:59:00.000Z",
-          "maxDate": "2017-02-25T01:00:00.000Z",
-          "truncate":16
+          "minDate": ldate,
+          "maxDate": rdate,
+          "truncate":trunc
         }
     );
     this.execute(delta);
