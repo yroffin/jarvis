@@ -144,27 +144,11 @@ export class JarvisResourceDatasourceComponent extends JarvisResource<DataSource
    * change action
    */
   private updateBody(delta: boolean, timestamp: string, base: string, ldate: Date, rdate: Date, trunc: number): void {
-    // project part
-    let project = {};
-    project[timestamp] = 1;
-    project[base] = 1;
-    project["hash"] = { "$substr": ["$" + timestamp, 0, trunc] };
-    // match part
-    let match = {};
-    match[timestamp] = { "$gte": "ISODate("+this.dateISODate(ldate)+")", "$lte": "ISODate("+this.dateISODate(rdate)+")" };
-    // sort part
-    let sort = {};
-    sort[timestamp] = -1;
-    // group part
-    let group = {};
-    group["_id"] = { "label": "$hash" };
-    group["max"] = { "$max": "$"+base };
-    group["avg"] = { "$avg": "$"+base };
+    // fix parameters
     this.myDataSource.body = JSON.stringify(
         {
           "minDate": ldate,
-          "maxDate": rdate,
-          "truncate":trunc
+          "maxDate": rdate
         }
     );
     this.execute(delta);
@@ -184,43 +168,26 @@ export class JarvisResourceDatasourceComponent extends JarvisResource<DataSource
         let labels = [];
         let avg = [];
         let max = [];
-        let refmax = -1
-        let refavg = -1
-        // sort resultset this.myDataSource.resultset
-        _.forEach(
-          _.sortBy(this.myDataSource.resultset, (sorted) => {
-          return sorted._id.label;
-        }),
+        let min = [];
         // then push in graph data
-        (element) => {
-          labels.push(element._id.label);
+        _.each(this.myDataSource.resultset, (element) => {
+          labels.push(element.label);
           if(delta) {
-            if(refmax === -1 ) {
-              max.push(0);
-              refmax = element.max;
-            } else {
-              max.push(element.max - refmax);
-              refmax = element.max;
-            }
-            if(refavg === -1 ) {
-              avg.push(0);
-              refavg = element.avg;
-            } else {
-              avg.push(element.avg - refavg);
-              refavg = element.avg;
-            }
-          } else {
               max.push(element.max);
+              min.push(element.min);
               avg.push(element.avg);
-          }
-        })
-        this.chartData.labels = labels;
-        this.chartData.datasets[0].data = max;
-        this.chartData.datasets[1].data = avg;
-        console.log("data", this.chartData)
-        this.chart.refresh();
-      }
-      );
+            } else {
+              max.push(element.maxref);
+              min.push(element.minref);
+              avg.push(element.avgref);
+            }
+          });
+          this.chartData.labels = labels;
+          this.chartData.datasets[0].data = max;
+          this.chartData.datasets[1].data = avg;
+          console.log("data", this.chartData)
+          this.chart.refresh();
+        });
   }
 
   /**

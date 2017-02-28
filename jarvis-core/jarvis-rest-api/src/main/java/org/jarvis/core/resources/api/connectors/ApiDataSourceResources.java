@@ -17,6 +17,8 @@
 package org.jarvis.core.resources.api.connectors;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -33,6 +35,7 @@ import org.jarvis.core.model.bean.connector.DataSourceBean;
 import org.jarvis.core.model.bean.connector.DataSourcePipeBean;
 import org.jarvis.core.model.bean.connector.DataSourceQueryBean;
 import org.jarvis.core.model.bean.connector.MeasureBean;
+import org.jarvis.core.model.bean.connector.MeasureDataBean;
 import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.model.rest.connector.ConnectorRest;
 import org.jarvis.core.model.rest.connector.DataSourceRest;
@@ -47,6 +50,7 @@ import org.jarvis.core.resources.api.href.ApiHrefMeasureResources;
 import org.jarvis.core.resources.api.mapper.ApiMapper;
 import org.jarvis.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -116,42 +120,6 @@ public class ApiDataSourceResources extends ApiLinkedResources<DataSourceRest,Da
 	}
 
 	/**
-	 * render indicators
-	 * @param bean
-	 * @param args
-	 * @return
-	 */
-	/*
-	private GenericValue render(DataSourceBean bean, GenericMap args) {
-		List<GenericEntity> links = apiHrefConnectorResources.findAll(bean, ApiMapper.HREF);
-		for(GenericEntity link: links) {
-			try {
-				ConnectorRest rest = apiConnectorResources.doGetByIdRest(link.id);
-				try {
-					GenericMap collects = apiConnectorResources.findCollectors(rest);
-					if(collects.get("collections") != null ) {
-						@SuppressWarnings({ "unchecked", "rawtypes" })
-						List<LinkedHashMap> indicators = (List<LinkedHashMap>) collects.get("collections");
-						if(indicators.get(0).get("name") != null) {
-							List<GenericMap> res = apiConnectorResources.pipes(rest, (String) indicators.get(0).get("name"), mapper.writeValueAsString(args.get("query")));
-							return new GenericValue(mapper.writeValueAsString(res));
-						}
-					}
-					throw new TechnicalException("Unable to find any collections");
-				} catch (TechnicalHttpException e) {
-					throw new TechnicalException(e);
-				} catch (JsonProcessingException e) {
-					throw new TechnicalException(e);
-				}
-			} catch (TechnicalNotFoundException e) {
-				logger.error("Error {}", e);
-				throw new TechnicalException(e);
-			}
-		}
-		return new GenericValue("[]");
-	}
-*/
-	/**
 	 * execute this datasource to render all connector
 	 * @param bean
 	 * @param args
@@ -166,6 +134,34 @@ public class ApiDataSourceResources extends ApiLinkedResources<DataSourceRest,Da
 			try {
 				MeasureBean measure = apiMeasureResources.doGetByIdBean(link.id);
 				try {
+					Boolean delta = true;
+					DateTime minDate = DateTime.now().minusHours(1);
+					DateTime maxDate = DateTime.now();
+					Integer truncate = 16;
+
+					// override values
+					if(args.containsKey("minDate")) {
+						minDate = DateTime.parse((String) args.get("minDate"));
+					}
+					if(args.containsKey("maxDate")) {
+						maxDate = DateTime.parse((String) args.get("maxDate"));
+					}
+					if(args.containsKey("truncate")) {
+						truncate = (Integer) args.get("truncate");
+					}
+					if(args.containsKey("delta")) {
+						delta = (Boolean) args.get("delta");
+					}
+					if(args.containsKey("minusDays")) {
+						minDate = minDate.minusDays((int) args.get("minusDays"));
+					}
+					if(args.containsKey("minusMinutes")) {
+						minDate = minDate.minusMinutes((int) args.get("minusMinutes"));
+					}
+					if(args.containsKey("minusSeconds")) {
+						minDate = minDate.minusSeconds((int) args.get("minusSeconds"));
+					}
+					
 					List<GenericEntity> connectors = apiHrefConnectorResources.findAll(measure, ApiMapper.HREF);
 					ConnectorRest connector = apiConnectorResources.doGetByIdRest(connectors.get(0).id);
 					// build datasource
@@ -179,15 +175,15 @@ public class ApiDataSourceResources extends ApiLinkedResources<DataSourceRest,Da
 					project.project.put(measure.value,1);
 					substr.add("$"+measure.datetime);
 					substr.add(0);
-					substr.add(args.get("truncate"));
+					substr.add(truncate);
 					hash.put("$substr", substr);
 					project.project.put("hash",hash);
 					// match
 					DataSourcePipeBean match = new DataSourcePipeBean();
 					match.match = new HashMap<String, Object>();
 					Map<String, Object> matchValue = new HashMap<String, Object>();
-					matchValue.put("$gte", "ISODate("+args.get("minDate")+")");
-					matchValue.put("$lte", "ISODate("+args.get("maxDate")+")");
+					matchValue.put("$gte", "ISODate("+minDate+")");
+					matchValue.put("$lte", "ISODate("+maxDate+")");
 					match.match.put(measure.datetime, matchValue);
 					// sort
 					DataSourcePipeBean sort = new DataSourcePipeBean();
@@ -215,7 +211,40 @@ public class ApiDataSourceResources extends ApiLinkedResources<DataSourceRest,Da
 					query.pipes.add(group);
 					//System.err.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(query));
 					List<GenericMap> res = apiConnectorResources.pipes(connector, measure.name, mapper.writeValueAsString(query));
-					return new GenericValue(mapper.writeValueAsString(res));
+					// compute delta on each value
+					List<MeasureDataBean> model = new ArrayList<MeasureDataBean>();
+					// add raw value
+					for(GenericMap value : res) {
+						model.add(new MeasureDataBean(
+								(String) ((LinkedHashMap<?,?>) value.get("_id")).get("label"),
+								convertToDouble(value.get("max")),
+								convertToDouble(value.get("min")),
+								convertToDouble(value.get("avg"))
+								));
+					}
+					// sort it (mongodb sort is strange)
+					Collections.sort(model, new Comparator<MeasureDataBean>() {
+
+						@Override
+						public int compare(MeasureDataBean i1, MeasureDataBean i2) {
+							return i1.label.compareTo(i2.label);
+						}
+						
+					});
+					// delta
+					if(delta) {
+						MeasureDataBean reference = null;
+						for(MeasureDataBean value : model) {
+							if(reference == null) {
+								reference = value;
+								reference.reset();
+							} else {
+								value.delta(reference);
+								reference = value;
+							}
+						}
+					}
+					return new GenericValue(mapper.writeValueAsString(model));
 				} catch (TechnicalHttpException e) {
 					throw new TechnicalException(e);
 				} catch (JsonProcessingException e) {
@@ -227,5 +256,20 @@ public class ApiDataSourceResources extends ApiLinkedResources<DataSourceRest,Da
 			}
 		}
 		return new GenericValue("[]");
+	}
+	
+	/**
+	 * short convert
+	 * @param value
+	 * @return
+	 */
+	private static double convertToDouble(Object value) {
+		if(value instanceof Double) {
+			return (double) value;
+		}
+		if(value instanceof Integer) {
+			return (double) ((Integer) value);
+		}
+		return 0;
 	}
 }
