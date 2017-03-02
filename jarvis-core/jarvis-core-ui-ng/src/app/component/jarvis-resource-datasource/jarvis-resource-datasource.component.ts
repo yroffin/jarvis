@@ -148,7 +148,8 @@ export class JarvisResourceDatasourceComponent extends JarvisResource<DataSource
     this.myDataSource.body = JSON.stringify(
         {
           "minDate": ldate,
-          "maxDate": rdate
+          "maxDate": rdate,
+          "truncate":trunc
         }
     );
     this.execute(delta);
