@@ -1,10 +1,10 @@
-import { MigrationCliPage } from './app.po';
+import { FakePage } from './app.po';
 
-describe('migration-cli App', function() {
-  let page: MigrationCliPage;
+describe('fake App', () => {
+  let page: FakePage;
 
   beforeEach(() => {
-    page = new MigrationCliPage();
+    page = new FakePage();
   });
 
   it('should display message saying app works', () => {

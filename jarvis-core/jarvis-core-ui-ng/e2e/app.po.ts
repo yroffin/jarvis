@@ -1,6 +1,6 @@
 import { browser, element, by } from 'protractor';
 
-export class MigrationCliPage {
+export class FakePage {
   navigateTo() {
     return browser.get('/');
   }
