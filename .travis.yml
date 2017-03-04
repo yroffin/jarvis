@@ -18,7 +18,12 @@ install:
   # Npm
   - node --version
   - npm --version
-  - npm install -g @angular/cli
+  # Cf. https://github.com/angular/angular-cli#updating-angular-cli
+  - npm uninstall -g angular-cli
+  - npm uninstall --save-dev angular-cli
+  - npm uninstall -g @angular/cli
+  - npm cache clean
+  - npm install -g @angular/cli@latest
   # Angular
   - cd $TRAVIS_BUILD_DIR/jarvis-core/jarvis-core-ui-ng
   - npm install
