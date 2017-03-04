@@ -7,6 +7,9 @@
 # dependencies
 /node_modules
 
+# ignore generated
+**/public/nui
+
 # IDEs and editors
 /.idea
 .project

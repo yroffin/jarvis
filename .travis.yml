@@ -28,7 +28,7 @@ install:
   - cd $TRAVIS_BUILD_DIR/jarvis-core/jarvis-core-ui-ng
   - npm install
   - npm update
-  - ng build --prod --base-href /nui/ --output-path=src/main/resources/public/nui
+  - ng build --aot --prod --base-href /nui/ --output-path=src/main/resources/public/nui
   - rm -f $TRAVIS_BUILD_DIR/jarvis-core/jarvis-core-ui-ng/src/main/resources/public/nui/*.map
   - rm -f $TRAVIS_BUILD_DIR/jarvis-core/jarvis-core-ui-ng/src/main/resources/public/nui/*.gz
   - ls -lrt $TRAVIS_BUILD_DIR/jarvis-core/jarvis-core-ui-ng/src/main/resources/public/nui
