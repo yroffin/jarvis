@@ -72,6 +72,8 @@ import { JarvisDataStoreService } from './service/jarvis-data-store.service';
 import { JarvisDataDatasourceService } from './service/jarvis-data-datasource.service';
 import { JarvisDataMeasureService } from './service/jarvis-data-measure.service';
 
+import { JarvisLayoutDirective } from './directive/jarvis-layout.directive';
+
 import { JarvisHomeComponent } from './component/jarvis-home/jarvis-home.component';
 import { JarvisResourcesComponent } from './component/jarvis-resources/jarvis-resources.component';
 import { JarvisResourceDeviceComponent } from './component/jarvis-resource-device/jarvis-resource-device.component';
@@ -140,6 +142,7 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
+    JarvisLayoutDirective,
     JarvisHomeComponent,
     JarvisResourceDeviceComponent,
     JarvisResourcesComponent,
