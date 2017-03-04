@@ -71,7 +71,7 @@ public class ApiConnectorResources extends ApiResources<ConnectorRest,ConnectorB
 		this.client = ClientBuilder.newClient();
 
 		// Fix timeout
-		client.property(ClientProperties.CONNECT_TIMEOUT, 2000);
+		client.property(ClientProperties.CONNECT_TIMEOUT, 5000);
 		client.property(ClientProperties.READ_TIMEOUT,    20000);
 	}
 
