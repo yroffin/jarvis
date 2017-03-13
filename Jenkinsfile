@@ -68,6 +68,8 @@ node {
             scp -o StrictHostKeyChecking=no jarvis-core/jarvis-core-server/target/*.jar pi@${MASTER_NODE}:/tmp/bundle
             ssh -o StrictHostKeyChecking=no -l pi ${MASTER_NODE} sudo mv -f /tmp/bundle /home/jarvis/jarvis-core-server-0.0.1-SNAPSHOT.jar.tmp
             ssh -o StrictHostKeyChecking=no -l pi ${MASTER_NODE} sudo chown jarvis:jarvis /home/jarvis/jarvis-core-server-0.0.1-SNAPSHOT.jar.tmp
+            ssh -o StrictHostKeyChecking=no -l pi ${MASTER_NODE} sudo mv -f /home/jarvis/jarvis-core-server-0.0.1-SNAPSHOT.jar.tmp /home/jarvis/jarvis-core-server-0.0.1-SNAPSHOT.jar
+            ssh -o StrictHostKeyChecking=no -l pi ${MASTER_NODE} sudo service jarvis-service restart
         '''
       }
   }
