@@ -17,6 +17,7 @@
 package org.jarvis.core.services;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -31,6 +32,8 @@ import org.springframework.stereotype.Component;
 import io.moquette.interception.AbstractInterceptHandler;
 import io.moquette.interception.InterceptHandler;
 import io.moquette.interception.messages.InterceptPublishMessage;
+import io.moquette.parser.proto.messages.PublishMessage;
+import io.moquette.parser.proto.messages.AbstractMessage.QOSType;
 import io.moquette.server.Server;
 import io.moquette.server.config.ClasspathResourceLoader;
 import io.moquette.server.config.IConfig;
@@ -71,34 +74,51 @@ public class CoreMoquette {
 
 		@Override
 		public void onPublish(InterceptPublishMessage msg) {
-			System.out.println(
+			logger.trace(
 					"Received on topic: " + msg.getTopicName() + " content: " + new String(msg.getPayload().array()));
 		}
 	}
 
+	private static Server mqttBroker;
+
 	/**
 	 * start moquette
+	 * 
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
 	public static void start() throws InterruptedException, IOException {
-        IResourceLoader classpathLoader = new ClasspathResourceLoader("moquette.conf");
-        final IConfig classPathConfig = new ResourceLoaderConfig(classpathLoader);
+		IResourceLoader classpathLoader = new ClasspathResourceLoader("moquette.conf");
+		final IConfig classPathConfig = new ResourceLoaderConfig(classpathLoader);
 
-        final Server mqttBroker = new Server();
-        List<? extends InterceptHandler> userHandlers = asList(new PublisherListener());
-        mqttBroker.startServer(classPathConfig, userHandlers);
+		mqttBroker = new Server();
+		List<? extends InterceptHandler> userHandlers = asList(new PublisherListener());
+		mqttBroker.startServer(classPathConfig, userHandlers);
 
-        /**
-         * hook
-         */
-        Runtime.getRuntime().addShutdownHook(new Thread() {
-            @Override
-            public void run() {
-                System.out.println("Stopping broker");
-                mqttBroker.stopServer();
-                System.out.println("Broker stopped");
-            }
-        });
-        }
+		/**
+		 * hook
+		 */
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+			@Override
+			public void run() {
+				System.out.println("Stopping broker");
+				mqttBroker.stopServer();
+				System.out.println("Broker stopped");
+			}
+		});
 	}
+
+	/**
+	 * publish a message
+	 * 
+	 * @param topicName
+	 * @param payload
+	 */
+	public void publish(String topicName, String payload) {
+		PublishMessage message = new PublishMessage();
+		message.setTopicName(topicName);
+		message.setPayload(ByteBuffer.wrap(payload.getBytes()));
+		message.setQos(QOSType.EXACTLY_ONCE);
+		mqttBroker.internalPublish(message);
+	}
+}

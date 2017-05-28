@@ -17,6 +17,7 @@
 		<jackson-asl.version>1.9.13</jackson-asl.version>
 		<commons-fileupload.version>1.3.1</commons-fileupload.version>
 
+		<jssc.version>2.8.0</jssc.version>
 		<moquette.version>0.9</moquette.version>
 		<jackson.version>2.8.4</jackson.version>
 		<spark.version>2.5.2</spark.version>
@@ -124,6 +125,11 @@
 			<dependency>
 				<groupId>${project.groupId}</groupId>
 				<artifactId>jarvis-rest-api-zway</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>jarvis-rflink</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
@@ -620,6 +626,11 @@
 				<artifactId>moquette-broker</artifactId>
 				<version>${moquette.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>org.scream3r</groupId>
+				<artifactId>jssc</artifactId>
+				<version>${jssc.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -670,6 +681,7 @@
 		<module>jarvis-bullet-journal-rest-api</module>
 		<module>jarvis-common-security</module>
 		<module>jarvis-broker</module>
+		<module>jarvis-rflink</module>
 	</modules>
 
 	<repositories>

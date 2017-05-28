@@ -31,6 +31,10 @@
 		</dependency>
 		<dependency>
 			<groupId>org.yroffin.com.jarvis</groupId>
+			<artifactId>jarvis-rflink</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.yroffin.com.jarvis</groupId>
 			<artifactId>jarvis-websocket</artifactId>
 		</dependency>
 		<dependency>
