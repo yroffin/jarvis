@@ -52,7 +52,7 @@ public class JarvisCoreServer {
 	    URL[] urls = ((URLClassLoader)cl).getURLs();
 
 	    for(URL url: urls){
-	    	logger.info("Classpath {}", url.getFile());
+	    	logger.trace("Classpath {}", url.getFile());
 	    }
 	    
 		/**
