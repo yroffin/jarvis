@@ -83,6 +83,7 @@ export class JarvisResourceCommandComponent extends JarvisResource<CommandBean> 
     this.types.push({ label: 'Command script', value: 'COMMAND' });
     this.types.push({ label: 'Groovy script', value: 'GROOVY' });
     this.types.push({ label: 'Zway command', value: 'ZWAY' });
+    this.types.push({ label: 'Chacon command', value: 'CHACON' });
   }
 
   /**
@@ -174,7 +175,9 @@ export class JarvisResourceCommandComponent extends JarvisResource<CommandBean> 
    * highlight source
    */
   public hightlight(body: string): void {
-    return Prism.highlight(body, Prism.languages.javascript);
+    if(body) {
+      return Prism.highlight(body, Prism.languages.javascript);
+    }
   }
 
   /**

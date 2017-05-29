@@ -38,6 +38,7 @@ import org.jarvis.core.resources.api.mapper.ApiMapper;
 import org.jarvis.core.resources.api.tools.ApiNotificationResources;
 import org.jarvis.core.services.CoreStatistics;
 import org.jarvis.core.services.groovy.PluginGroovyService;
+import org.jarvis.core.services.rflink.PluginRfLinkService;
 import org.jarvis.core.services.shell.PluginShellService;
 import org.jarvis.core.services.zway.PluginZWayService;
 import org.jarvis.core.type.GenericMap;
@@ -90,6 +91,9 @@ public class ApiCommandResources extends ApiLinkedResources<CommandRest,CommandB
 	@Autowired
 	PluginZWayService pluginZWayService;
 	
+	@Autowired
+	PluginRfLinkService pluginRfLinkService;
+
 	@Override
 	public void mount() {
 		/**
@@ -234,6 +238,9 @@ public class ApiCommandResources extends ApiLinkedResources<CommandRest,CommandB
 					break;
 				case ZWAY:
 					result = pluginZWayService.asObject(extractCommand(command), args);
+					break;
+				case CHACON:
+					result = pluginRfLinkService.asObject(extractCommand(command), args);
 					break;
 				default:
 			}

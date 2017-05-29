@@ -27,6 +27,10 @@
 		</dependency>
 		<dependency>
 			<groupId>org.yroffin.com.jarvis</groupId>
+			<artifactId>jarvis-rflink</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.yroffin.com.jarvis</groupId>
 			<artifactId>jarvis-rest-api-zway</artifactId>
 		</dependency>
 		<dependency>
@@ -51,20 +55,20 @@
 			<artifactId>plantuml</artifactId>
 		</dependency>
 		<dependency>
-		    <groupId>io.swagger</groupId>
-		    <artifactId>swagger-core</artifactId>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-core</artifactId>
 		</dependency>
 		<dependency>
-		    <groupId>io.swagger</groupId>
-		    <artifactId>swagger-jaxrs</artifactId>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-jaxrs</artifactId>
 		</dependency>
 		<dependency>
-		    <groupId>io.swagger</groupId>
-		    <artifactId>swagger-annotations</artifactId>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-annotations</artifactId>
 		</dependency>
 		<dependency>
-		    <groupId>org.hibernate</groupId>
-		    <artifactId>hibernate-validator</artifactId>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>

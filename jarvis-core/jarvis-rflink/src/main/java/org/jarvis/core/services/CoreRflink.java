@@ -157,7 +157,7 @@ public class CoreRflink {
 		
 		void flush() {
 			logger.trace("FLUSH {}", sb.toString());
-			broker.publish("rflink", sb.toString());
+			broker.publishExactlyOnce("rflink", sb.toString());
 			sb.setLength(0);
 		}
 		
@@ -188,5 +188,27 @@ public class CoreRflink {
 		 * async processing
 		 */
 		new Thread(new Consumer(coreMoquette, queue)).start();
+	}
+
+	/**
+	 * write chacon command
+	 * @param id
+	 * @param sw
+	 * @param command
+	 * @return String
+	 */
+	public String chacon(String id, String sw, String command) {
+		try {
+			String cmd = "10;NewKaku;" + id + ";" + sw + ";" + command + ";";
+			if(serialPort.writeBytes((cmd + "\r\n").getBytes())) {
+				coreMoquette.publishMostOne("rflink", cmd);
+				return cmd + " Ok";
+			} else {
+				return cmd + " Ko ...";
+			}
+		} catch (SerialPortException e) {
+			logger.error("SerialPortException {}", e);
+			return e.getMessage();
+		}
 	}
 }

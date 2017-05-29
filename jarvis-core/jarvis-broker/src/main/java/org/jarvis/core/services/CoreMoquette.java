@@ -114,11 +114,39 @@ public class CoreMoquette {
 	 * @param topicName
 	 * @param payload
 	 */
-	public void publish(String topicName, String payload) {
+	public void publishExactlyOnce(String topicName, String payload) {
 		PublishMessage message = new PublishMessage();
 		message.setTopicName(topicName);
 		message.setPayload(ByteBuffer.wrap(payload.getBytes()));
 		message.setQos(QOSType.EXACTLY_ONCE);
+		mqttBroker.internalPublish(message);
+	}
+
+	/**
+	 * publish a message
+	 * 
+	 * @param topicName
+	 * @param payload
+	 */
+	public void publishMostOne(String topicName, String payload) {
+		PublishMessage message = new PublishMessage();
+		message.setTopicName(topicName);
+		message.setPayload(ByteBuffer.wrap(payload.getBytes()));
+		message.setQos(QOSType.MOST_ONE);
+		mqttBroker.internalPublish(message);
+	}
+
+	/**
+	 * publish a message
+	 * 
+	 * @param topicName
+	 * @param payload
+	 */
+	public void publishLeastOne(String topicName, String payload) {
+		PublishMessage message = new PublishMessage();
+		message.setTopicName(topicName);
+		message.setPayload(ByteBuffer.wrap(payload.getBytes()));
+		message.setQos(QOSType.LEAST_ONE);
 		mqttBroker.internalPublish(message);
 	}
 }

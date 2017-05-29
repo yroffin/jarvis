@@ -14,30 +14,12 @@
  *   limitations under the License.
  */
 
-package org.jarvis.core.type;
+package org.jarvis.core.model.bean.plugin;
+
+import org.jarvis.core.model.bean.GenericBean;
 
 /**
- * command type
+ * RfLinkBean
  */
-public enum CommandType {
-	/**
-	 * shell or windows script
-	 */
-	SHELL, 
-	/**
-	 * direct local command
-	 */
-	COMMAND,
-	/**
-	 * groovy script
-	 */
-	GROOVY, 
-	/**
-	 * ZWAY
-	 */
-	ZWAY,
-	/**
-	 * CHACON
-	 */
-	CHACON
+public class RfLinkBean extends GenericBean {
 }
