@@ -185,11 +185,6 @@
 			</dependency>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>jarvis-core-ui</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>${project.groupId}</groupId>
 				<artifactId>jarvis-core-ui-ng</artifactId>
 				<version>${project.version}</version>
 			</dependency>
