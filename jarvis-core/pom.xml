@@ -677,7 +677,6 @@
 		<module>jarvis-common-security</module>
 		<module>jarvis-broker</module>
 		<module>jarvis-rflink</module>
-		<module>jarvis-api-rflink</module>
 	</modules>
 
 	<repositories>
