@@ -16,17 +16,6 @@
 
 package org.jarvis.core.resources;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-
-import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.services.cache.CoreEhcacheManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,64 +37,6 @@ public class CoreResources {
 	CoreEhcacheManager coreEhcacheManager;
 
 	/**
-	 * work dir
-	 */
-	private File resources = null;
-	
-	/**
-	 * create resource from classpath
-	 * @param sourcePath
-	 * @return
-	 * @throws URISyntaxException
-	 * @throws IOException
-	 */
-	private File copyFromClasspath(final String sourcePath) throws URISyntaxException, IOException {
-		/**
-		 * create empty work dir
-		 */
-		File workDir = File.createTempFile("jarvis", "resources");
-		workDir.delete();
-		workDir.mkdirs();
-
-		InputStream list = this.getClass().getClassLoader().getResourceAsStream(sourcePath);
-		
-		BufferedReader reader = new BufferedReader(new InputStreamReader(list));
-        String line;
-        while ((line = reader.readLine()) != null) {
-        	/**
-        	 * decode line
-        	 */
-            String directory = line.split(";")[0];
-            String file = line.split(";")[1];
-            
-            /**
-             * create directory
-             */
-            File created = new File(workDir.getAbsolutePath() + '/' + directory);
-            if(!created.exists()) {
-            	created.mkdirs();
-            }
-            
-            /**
-             * then copy file
-             */
-            InputStream resource = this.getClass().getClassLoader().getResourceAsStream(directory + "/" + file);
-            if(resource == null) {
-            	logger.error("No such resource {}", directory + "/" + file);
-            } else {
-	            Files.copy(resource, Paths.get(created.getAbsolutePath() + "/" + file),
-						StandardCopyOption.REPLACE_EXISTING);
-            	logger.info("Resource {} copied", directory + "/" + file);
-	            resource.close();
-            }
-        }
-        reader.close();
-        list.close();
-        
-        return workDir;
-	}
-
-	/**
 	 * mount local resource
 	 */
 	public void mountLocal() {
@@ -115,32 +46,6 @@ public class CoreResources {
 	}
 
 	/**
-	 * deltree
-	 * @param dir
-	 * @throws Exception
-	 */
-	private static void deltree(File dir) throws Exception {
-
-        String[] list = dir.list();
-        for (int i = 0; i < list.length; i++) {
-            String s = list[i];
-            File f = new File(dir, s);
-            if (f.isDirectory()) {
-            	deltree(f);
-            } else {
-                if (!f.delete()) {
-                    throw new TechnicalException("Unable to delete file "
-                                             + f.getAbsolutePath());
-                }
-            }
-        }
-        if (!dir.delete()) {
-            throw new TechnicalException("Unable to delete directory "
-                                     + dir.getAbsolutePath());
-        }
-    }
-
-	/**
 	 * mount local resource
 	 */
 	public void mountExternal() {
@@ -148,26 +53,5 @@ public class CoreResources {
 		 * mount resources
 		 */
 		spark.Spark.staticFiles.location("/public");
-		try {
-			resources = copyFromClasspath("public/ui.txt");
-			if(resources == null) {
-				throw new TechnicalException("No static files");
-			}
-			spark.Spark.staticFiles.externalLocation(resources.getAbsolutePath() + "/public");
-		} catch (URISyntaxException | IOException e) {
-			logger.error("While creating resources files {}", e);
-		}
-		
-		Runtime.getRuntime().addShutdownHook(new Thread() {
-	        @Override
-	        public void run() {
-	        	logger.warn("Delete resource {}", resources.getAbsolutePath());
-	        	try {
-	        		deltree(resources);
-				} catch (Exception e) {
-		        	logger.warn("While deleting {} {}", resources.getAbsolutePath(), e);
-				}
-	        }
-	    });
 	}
 }
