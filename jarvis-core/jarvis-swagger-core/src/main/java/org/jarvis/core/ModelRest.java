@@ -10,8 +10,11 @@ import org.slf4j.LoggerFactory;
 import io.swagger.models.AbstractModel;
 import io.swagger.models.ExternalDocs;
 import io.swagger.models.Model;
+import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.BooleanProperty;
 import io.swagger.models.properties.DateTimeProperty;
+import io.swagger.models.properties.IntegerProperty;
+import io.swagger.models.properties.ObjectProperty;
 import io.swagger.models.properties.Property;
 import io.swagger.models.properties.StringProperty;
 
@@ -45,7 +48,19 @@ public class ModelRest extends AbstractModel implements Model {
 					if(field.getGenericType().getTypeName().equals("boolean")) {
 						properties.put(field.getName(), new BooleanProperty());
 					} else {
-						logger.warn("No type conversion for {}", field.getGenericType());
+						if(field.getGenericType().getTypeName().equals("int")) {
+							properties.put(field.getName(), new IntegerProperty());
+						} else {
+							if(field.getGenericType().toString().startsWith("class org.jarvis")) {
+								properties.put(field.getName(), new ObjectProperty());
+							} else {
+								if(field.getGenericType().toString().startsWith("java.util.List")) {
+									properties.put(field.getName(), new ArrayProperty());
+								} else {
+									logger.warn("No type conversion for {}", field.getGenericType());
+								}
+							}
+						}
 					}
 				}
 			}

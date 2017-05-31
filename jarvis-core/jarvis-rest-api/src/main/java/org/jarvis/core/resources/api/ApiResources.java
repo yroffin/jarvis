@@ -878,7 +878,7 @@ public abstract class ApiResources<REST extends GenericEntity, BEAN extends Gene
 	 */
 	public void mount() {
 		for (Declare annotation : this.getClass().getAnnotationsByType(Declare.class)) {
-			logger.info("Annotated resource {}", annotation.resource());
+			logger.trace("Annotated resource {}", annotation.resource());
 			/**
 			 * declare resource
 			 */

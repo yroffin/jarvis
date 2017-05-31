@@ -168,7 +168,7 @@ public class CoreServerDaemon {
 				"jarvis.log.dir",
 				"jarvis.server.url",
 				"jarvis.neo4j.url",
-				"jarvis.elasticsearch.url",
+				"jarvis.rflink.comport",
 				"jarvis.sunset.sunrise.url")) {
 			logger.info("{} = {}", key, env.getProperty(key));
 		}

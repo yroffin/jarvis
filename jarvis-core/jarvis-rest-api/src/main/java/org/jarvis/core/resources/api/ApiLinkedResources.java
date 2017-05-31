@@ -200,7 +200,7 @@ public abstract class ApiLinkedResources<T extends GenericEntity, S extends Gene
 					for(Field hrefField : this.getClass().getDeclaredFields()) {
 						for(DeclareHrefResource hrefAnnotation : hrefField.getAnnotationsByType(DeclareHrefResource.class)) {
 							if(hrefAnnotation.role().equals(linkedAnnotation.role())) {
-								logger.info("Annotated link : param {} sortKey {} href {}", linkedAnnotation.param(), linkedAnnotation.sortKey(), hrefAnnotation.href());
+								logger.trace("Annotated link : param {} sortKey {} href {}", linkedAnnotation.param(), linkedAnnotation.sortKey(), hrefAnnotation.href());
 								/**
 								 * declare link
 								 */
