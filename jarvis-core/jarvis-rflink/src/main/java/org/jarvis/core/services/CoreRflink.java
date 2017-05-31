@@ -64,6 +64,7 @@ public class CoreRflink {
 	public void start() {
 		String[] portNames = SerialPortList.getPortNames();
 		for (int i = 0; i < portNames.length; i++) {
+			logger.warn("Checking COM port {}", portNames[i]);
 			if (env.getProperty("jarvis.rflink.comport") != null
 					&& env.getProperty("jarvis.rflink.comport").equals(portNames[i])) {
 				logger.warn("COM {} bind RFLINK driver", portNames[i]);
