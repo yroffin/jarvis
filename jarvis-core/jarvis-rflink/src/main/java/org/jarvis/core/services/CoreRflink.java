@@ -62,15 +62,10 @@ public class CoreRflink {
 	 * start rflink handler
 	 */
 	public void start() {
-		String[] portNames = SerialPortList.getPortNames(env.getProperty("jarvis.rflink.comport"));
-		logger.warn("Find {} COM port", portNames.length);
-		for (int i = 0; i < portNames.length; i++) {
-			logger.warn("Checking COM port {}", portNames[i]);
-			if (env.getProperty("jarvis.rflink.comport") != null
-					&& env.getProperty("jarvis.rflink.comport").equals(portNames[i])) {
-				logger.warn("COM {} bind RFLINK driver", portNames[i]);
-				startRflink(portNames[i]);
-			}
+		logger.warn("Check {} port", env.getProperty("jarvis.rflink.comport"));
+		if (env.getProperty("jarvis.rflink.comport") != null) {
+			logger.warn("bind {} to RFLINK driver", env.getProperty("jarvis.rflink.comport"));
+			startRflink(env.getProperty("jarvis.rflink.comport"));
 		}
 	}
 
@@ -124,7 +119,7 @@ public class CoreRflink {
 		protected Logger logger = LoggerFactory.getLogger(SerialPortReader.class);
 		private final BlockingQueue<String> queue;
 		private final CoreMoquette broker;
-		
+
 		StringBuffer sb = new StringBuffer();
 
 		Consumer(CoreMoquette cm, BlockingQueue<String> q) {
@@ -145,24 +140,24 @@ public class CoreRflink {
 
 		void consume(String x) {
 			String normalized = x.replace("\r", "");
-			for(int i = 0; i < normalized.length(); i++) {
-				switch(normalized.charAt(i)) {
-					case '\n':
-						flush();
-						break;
-					default:
-						store(normalized.charAt(i));
-						break;
+			for (int i = 0; i < normalized.length(); i++) {
+				switch (normalized.charAt(i)) {
+				case '\n':
+					flush();
+					break;
+				default:
+					store(normalized.charAt(i));
+					break;
 				}
 			}
 		}
-		
+
 		void flush() {
 			logger.trace("FLUSH {}", sb.toString());
 			broker.publishExactlyOnce("rflink", sb.toString());
 			sb.setLength(0);
 		}
-		
+
 		void store(char v) {
 			sb.append(v);
 		}
@@ -170,6 +165,7 @@ public class CoreRflink {
 
 	/**
 	 * RfLink driver
+	 * 
 	 * @param com
 	 */
 	private void startRflink(String com) {
@@ -194,6 +190,7 @@ public class CoreRflink {
 
 	/**
 	 * write chacon command
+	 * 
 	 * @param id
 	 * @param sw
 	 * @param command
@@ -202,7 +199,7 @@ public class CoreRflink {
 	public String chacon(String id, String sw, String command) {
 		try {
 			String cmd = "10;NewKaku;" + id + ";" + sw + ";" + command + ";";
-			if(serialPort.writeBytes((cmd + "\r\n").getBytes())) {
+			if (serialPort.writeBytes((cmd + "\r\n").getBytes())) {
 				coreMoquette.publishMostOne("rflink", cmd);
 				return cmd + " Ok";
 			} else {
