@@ -16,6 +16,8 @@
 
 package org.jarvis.core.services;
 
+import static java.util.Arrays.asList;
+
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.List;
@@ -32,14 +34,13 @@ import org.springframework.stereotype.Component;
 import io.moquette.interception.AbstractInterceptHandler;
 import io.moquette.interception.InterceptHandler;
 import io.moquette.interception.messages.InterceptPublishMessage;
-import io.moquette.parser.proto.messages.PublishMessage;
 import io.moquette.parser.proto.messages.AbstractMessage.QOSType;
+import io.moquette.parser.proto.messages.PublishMessage;
 import io.moquette.server.Server;
 import io.moquette.server.config.ClasspathResourceLoader;
 import io.moquette.server.config.IConfig;
 import io.moquette.server.config.IResourceLoader;
 import io.moquette.server.config.ResourceLoaderConfig;
-import static java.util.Arrays.asList;
 
 /**
  * main daemon

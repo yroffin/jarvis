@@ -75,6 +75,9 @@ public class ApiConnectorResources extends ApiResources<ConnectorRest,ConnectorB
 		client.property(ClientProperties.READ_TIMEOUT,    20000);
 	}
 
+	/**
+	 * listener on get rest
+	 */
 	class ResourceListenerImpl extends ResourceDefaultPostListenerImpl<ConnectorRest, ConnectorBean> implements ResourcePostListener<ConnectorRest, ConnectorBean> {
 
 		@Override
@@ -115,9 +118,9 @@ public class ApiConnectorResources extends ApiResources<ConnectorRest,ConnectorB
 	 * connectors registration is based on its name
 	 * if exist update it, else create it
 	 * @param args
-	 * @return
+	 * @return GenericMap
 	 */
-	private GenericMap register(GenericMap args) {
+	public GenericMap register(GenericMap args) {
 		/**
 		 * name is not mandatory
 		 */

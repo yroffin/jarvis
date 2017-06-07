@@ -16,8 +16,6 @@
 
 package org.jarvis.core.services.rflink;
 
-import java.util.Map.Entry;
-
 import javax.annotation.PostConstruct;
 
 import org.jarvis.core.exception.TechnicalException;

@@ -20,7 +20,13 @@ import java.util.Set;
 
 import javax.annotation.PostConstruct;
 
+import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
+import org.eclipse.paho.client.mqttv3.MqttCallback;
+import org.eclipse.paho.client.mqttv3.MqttClient;
+import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.jarvis.core.SwaggerParser;
+import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.model.bean.config.Oauth2Config;
 import org.jarvis.core.resources.CoreResources;
 import org.jarvis.core.resources.CoreWebsocket;
@@ -45,6 +51,7 @@ import org.jarvis.core.security.JarvisAccessLogFilter;
 import org.jarvis.core.security.JarvisAuthorizerUsers;
 import org.jarvis.core.security.JarvisCoreClient;
 import org.jarvis.core.security.JarvisTokenValidationFilter;
+import org.jarvis.core.type.GenericMap;
 import org.pac4j.core.client.Clients;
 import org.pac4j.core.config.Config;
 import org.pac4j.core.profile.UserProfile;
@@ -59,7 +66,9 @@ import org.springframework.context.annotation.PropertySources;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.joda.JodaModule;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.Contact;
@@ -75,35 +84,26 @@ import spark.Route;
  * main daemon
  */
 @Component
-@PropertySources({
-	@PropertySource(value = "classpath:server.properties", ignoreResourceNotFound = true),
-	@PropertySource(value = "file://${jarvis.user.dir}/config.properties", ignoreResourceNotFound = true)
-})
-@SwaggerDefinition(host = "192.168.1.12:8082",
-info = @Info(
-		description = "Jarvis",
-		version = "v1.0", //
-		title = "Jarvis core system",
-		contact = @Contact(
-				name = "Yannick Roffin", url = "https://yroffin.github.io"
-				)
-),
-schemes = { SwaggerDefinition.Scheme.HTTP, SwaggerDefinition.Scheme.HTTPS },
-consumes = { "application/json" },
-produces = { "application/json" },
-tags = { @Tag(name = "swagger") }
-)
-public class CoreServerDaemon {
+@PropertySources({ @PropertySource(value = "classpath:server.properties", ignoreResourceNotFound = true),
+		@PropertySource(value = "file://${jarvis.user.dir}/config.properties", ignoreResourceNotFound = true) })
+@SwaggerDefinition(host = "192.168.1.12:8082", info = @Info(description = "Jarvis", version = "v1.0", //
+		title = "Jarvis core system", contact = @Contact(name = "Yannick Roffin", url = "https://yroffin.github.io")), schemes = {
+				SwaggerDefinition.Scheme.HTTP, SwaggerDefinition.Scheme.HTTPS }, consumes = {
+						"application/json" }, produces = { "application/json" }, tags = { @Tag(name = "swagger") })
+public class CoreServerDaemon implements MqttCallback {
 	protected Logger logger = LoggerFactory.getLogger(CoreServerDaemon.class);
 
-	@Autowired private ApplicationContext applicationContext;
-	
+	@Autowired
+	private ApplicationContext applicationContext;
+
 	@Autowired
 	Environment env;
 
+	protected MqttClient client;
+
 	@Autowired
 	CoreResources coreResources;
-	
+
 	@Autowired
 	CoreWebsocket coreWebsocket;
 
@@ -156,28 +156,28 @@ public class CoreServerDaemon {
 	ApiPropertyResources apiPropertyResources;
 
 	protected ObjectMapper mapper = new ObjectMapper();
-	
+
 	/**
 	 * start component
 	 */
 	@PostConstruct
 	public void server() {
-		
-		for(String key : ImmutableList.of(
-				"jarvis.user.dir",
-				"jarvis.log.dir",
-				"jarvis.server.url",
-				"jarvis.neo4j.url",
-				"jarvis.rflink.comport",
-				"jarvis.sunset.sunrise.url")) {
+		/**
+		 * init mapper
+		 */
+		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		mapper.registerModule(new JodaModule());
+
+		for (String key : ImmutableList.of("jarvis.user.dir", "jarvis.log.dir", "jarvis.server.url", "jarvis.neo4j.url",
+				"jarvis.rflink.comport", "jarvis.sunset.sunrise.url")) {
 			logger.info("{} = {}", key, env.getProperty(key));
 		}
-		
+
 		String iface = env.getProperty("jarvis.server.interface");
 		int port = Integer.parseInt(env.getProperty("jarvis.server.port"));
 		spark.Spark.ipAddress(iface);
-		spark.Spark.threadPool(Integer.parseInt(env.getProperty("jarvis.server.pool.thread","32")));
-		
+		spark.Spark.threadPool(Integer.parseInt(env.getProperty("jarvis.server.pool.thread", "32")));
+
 		/**
 		 * port
 		 */
@@ -191,47 +191,48 @@ public class CoreServerDaemon {
 		/**
 		 * mount resources
 		 */
-		if(System.getProperty("profile") != null && System.getProperty("profile").equals("dev")) {
+		if (System.getProperty("profile") != null && System.getProperty("profile").equals("dev")) {
 			coreResources.mountLocal();
 			spark.Spark.staticFiles.expireTime(1);
 		} else {
 			coreResources.mountExternal();
 			spark.Spark.staticFiles.expireTime(1);
 		}
-		
+
 		/**
 		 * build security config
 		 */
 		final Clients clients = new Clients(new JarvisCoreClient());
 		final Config config = new Config(clients);
-		final String[] users = env.getProperty("jarvis.oauth2.users","empty").split(",");
+		final String[] users = env.getProperty("jarvis.oauth2.users", "empty").split(",");
 		config.addAuthorizer("usersCheck", new JarvisAuthorizerUsers(users));
 		config.setHttpActionAdapter(new DefaultHttpActionAdapter());
-		
+
 		/**
 		 * all api must be validated with token
 		 */
-		final String[] excludes = env.getProperty("jarvis.oauth2.excludes","").split(",");
-		spark.Spark.before("/api/*", new JarvisTokenValidationFilter(config, "JarvisCoreClient", "securityHeaders,csrfToken,usersCheck", excludes));
-		
+		final String[] excludes = env.getProperty("jarvis.oauth2.excludes", "").split(",");
+		spark.Spark.before("/api/*", new JarvisTokenValidationFilter(config, "JarvisCoreClient",
+				"securityHeaders,csrfToken,usersCheck", excludes));
+
 		/**
 		 * ident api
 		 */
 		spark.Spark.get("/api/profile/me", new Route() {
-		    @Override
+			@Override
 			public Object handle(Request request, Response response) throws Exception {
-		    	/**
-		    	 * in exclude mode return a fake profile
-		    	 */
-		        for(String exclude : excludes) {
-		        	if(request.ip().matches(exclude)) {
-		                return "{\"attributes\":{\"email\":\"-\"}}";
-		        	}
-		        }
+				/**
+				 * in exclude mode return a fake profile
+				 */
+				for (String exclude : excludes) {
+					if (request.ip().matches(exclude)) {
+						return "{\"attributes\":{\"email\":\"-\"}}";
+					}
+				}
 
-		        UserProfile userProfile = request.session().attribute("pac4jUserProfile");
+				UserProfile userProfile = request.session().attribute("pac4jUserProfile");
 				return mapper.writeValueAsString(userProfile);
-		    }
+			}
 		});
 
 		/**
@@ -240,16 +241,16 @@ public class CoreServerDaemon {
 		spark.Spark.get("/api/connect", new Route() {
 			@Override
 			public Object handle(Request request, Response response) throws Exception {
-		        /**
-		         * no protection on excluded ips
-		         */
-		        for(String exclude : excludes) {
-		        	if(request.ip().matches(exclude)) {
-		                return false;
-		        	}
-		        }
-		        return true;
-			}			
+				/**
+				 * no protection on excluded ips
+				 */
+				for (String exclude : excludes) {
+					if (request.ip().matches(exclude)) {
+						return false;
+					}
+				}
+				return true;
+			}
 		});
 
 		/**
@@ -258,21 +259,23 @@ public class CoreServerDaemon {
 		spark.Spark.get("/api/oauth2", new Route() {
 			@Override
 			public Object handle(Request request, Response response) throws Exception {
-		    	Oauth2Config oauth2Config = new Oauth2Config();
-		    	if(request.queryParamsValues("client")[0].equals("google")) {
-			    	oauth2Config.type = "google";
-			    	oauth2Config.redirect = request.queryParamsValues("oauth2_redirect_uri")[0];
-			    	oauth2Config.key = env.getProperty("jarvis.oauth2.google");
-			    	oauth2Config.url = "https://accounts.google.com/o/oauth2/auth?scope=email&client_id="+oauth2Config.key+"&response_type=token&redirect_uri="+oauth2Config.redirect;
-		    	}
-		    	if(request.queryParamsValues("client")[0].equals("facebook")) {
-			    	oauth2Config.type = "facebook";
-			    	oauth2Config.redirect = request.queryParamsValues("oauth2_redirect_uri")[0];
-			    	oauth2Config.key = env.getProperty("jarvis.oauth2.facebook");
-			    	oauth2Config.url = "https://www.facebook.com/dialog/oauth?scope=email&client_id="+oauth2Config.key+"&response_type=token&redirect_uri="+oauth2Config.redirect;
-		    	}
+				Oauth2Config oauth2Config = new Oauth2Config();
+				if (request.queryParamsValues("client")[0].equals("google")) {
+					oauth2Config.type = "google";
+					oauth2Config.redirect = request.queryParamsValues("oauth2_redirect_uri")[0];
+					oauth2Config.key = env.getProperty("jarvis.oauth2.google");
+					oauth2Config.url = "https://accounts.google.com/o/oauth2/auth?scope=email&client_id="
+							+ oauth2Config.key + "&response_type=token&redirect_uri=" + oauth2Config.redirect;
+				}
+				if (request.queryParamsValues("client")[0].equals("facebook")) {
+					oauth2Config.type = "facebook";
+					oauth2Config.redirect = request.queryParamsValues("oauth2_redirect_uri")[0];
+					oauth2Config.key = env.getProperty("jarvis.oauth2.facebook");
+					oauth2Config.url = "https://www.facebook.com/dialog/oauth?scope=email&client_id=" + oauth2Config.key
+							+ "&response_type=token&redirect_uri=" + oauth2Config.redirect;
+				}
 				return mapper.writeValueAsString(oauth2Config);
-		    }
+			}
 		});
 
 		/**
@@ -290,21 +293,78 @@ public class CoreServerDaemon {
 		});
 
 		spark.Spark.after("/*", new JarvisAccessLogFilter());
+
+		try {
+			services();
+		} catch (MqttException e) {
+			logger.error("Unable to set up services: {}", e);
+			throw new TechnicalException(e);
+		}
+	}
+
+	/**
+	 * services
+	 * @throws MqttException
+	 */
+	public void services() throws MqttException {
+		/**
+		 * declare a mqtt client for suscribe to event
+		 */
+		try {
+			// Construct an MQTT blocking mode client
+			this.client = new MqttClient(env.getProperty("jarvis.mqtt.url"), Thread.currentThread().getName());
+			client.connect();
+
+			// Set this wrapper as the callback handler
+			client.setCallback(this);
+		} catch (MqttException e) {
+			logger.error("Unable to set up client: {}", e);
+			throw new TechnicalException(e);
+		}
+		
+		/**
+		 * subscribers
+		 */
+		client.subscribe("/api/connectors/#");
+	}
+
+	@Override
+	public void connectionLost(Throwable cause) {
+		logger.warn("connectionLost: {}", cause);
+	}
+
+	@Override
+	public void messageArrived(String topic, MqttMessage message) throws Exception {
+		GenericMap value = mapper.readValue(message.getPayload(), GenericMap.class);
+		logger.warn("messageArrived: {} {}", topic, value);
+
+		/**
+		 * connectors topic
+		 */
+		if(topic.startsWith("/api/connectors")) {
+			apiConnectorResources.register(value);
+		}
+	}
+
+	@Override
+	public void deliveryComplete(IMqttDeliveryToken token) {
+		logger.warn("deliveryComplete: {}", token);
 	}
 
 	/**
 	 * mount all resources in package
+	 * 
 	 * @param packageName
 	 */
 	protected void mountAllResources(String packageName) {
 		Reflections reflections = new Reflections(packageName);
 		Set<Class<?>> apiClasses = reflections.getTypesAnnotatedWith(Api.class);
-		for(Class<?> klass : apiClasses) {
+		for (Class<?> klass : apiClasses) {
 			ApiResources<?, ?> bean = (ApiResources<?, ?>) applicationContext.getBean(klass);
 			logger.info("Mount resource {}", bean);
 			bean.mount();
 		}
 	}
-	
+
 	protected final Logger accesslog = LoggerFactory.getLogger(JarvisAccessLogFilter.class);
 }

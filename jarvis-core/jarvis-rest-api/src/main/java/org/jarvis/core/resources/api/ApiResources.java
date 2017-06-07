@@ -643,7 +643,7 @@ public abstract class ApiResources<REST extends GenericEntity, BEAN extends Gene
 		case ARRAY:
 			response.type("application/json");
 			res = result.asList();
-			response.header("X-Total-Count", res.size()+"");
+			response.header("X-Total-Count", res.size() + "");
 			return res;
 		case BOOLEAN:
 			response.type("application/json");
@@ -877,6 +877,9 @@ public abstract class ApiResources<REST extends GenericEntity, BEAN extends Gene
 	 * mount resource
 	 */
 	public void mount() {
+		/**
+		 * mount resources
+		 */
 		for (Declare annotation : this.getClass().getAnnotationsByType(Declare.class)) {
 			logger.trace("Annotated resource {}", annotation.resource());
 			/**

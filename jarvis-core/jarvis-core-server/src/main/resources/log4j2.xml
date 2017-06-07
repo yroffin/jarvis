@@ -24,6 +24,9 @@
     </Console>
   </Appenders>
   <Loggers>
+  	<Logger name="io.moquette" level="warn" additivity="false">
+      <AppenderRef ref="RollingFile"/>
+    </Logger>
   	<Logger name="org.jarvis.core.security" level="info" additivity="false">
       <AppenderRef ref="RollingSessionFile"/>
     </Logger>
