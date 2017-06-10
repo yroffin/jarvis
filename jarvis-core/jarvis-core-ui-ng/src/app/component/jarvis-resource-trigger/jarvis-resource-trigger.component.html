@@ -22,6 +22,28 @@
         </div>
       </div>
     </p-accordionTab>
+    <p-accordionTab header="Broker">
+      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4">
+            Souscription
+          </div>
+          <div class="ui-grid-col-8">
+            <input type="text" pInputText [(ngModel)]="myTrigger.topic" placeholder="Souscription" />
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-12">
+            <textarea style="width: 100%; height: 400px;" [(ngModel)]="myTrigger.body"></textarea>
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-12">
+            <pre><code [innerHtml]="hightlight(myTrigger.body)"></code></pre>
+          </div>
+        </div>
+      </div>
+    </p-accordionTab>
     <p-accordionTab header="Périodicité">
       <app-jarvis-toolbar-resource [notified]="this" [pickers]="[{'label':'Ajouter une crontab', 'icon': 'fa-bolt', 'action':'crons', 'picker': pickCrons}]"></app-jarvis-toolbar-resource>
       <p-dataTable [value]="myTrigger.crons">

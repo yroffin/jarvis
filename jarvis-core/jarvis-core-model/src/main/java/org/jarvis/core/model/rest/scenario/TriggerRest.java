@@ -49,4 +49,14 @@ public class TriggerRest extends GenericEntity {
 	 */
 	@JsonProperty("scenarii")
 	public List<ScenarioRest> scenarii;
+	/**
+	 * linked topic
+	 */
+	@JsonProperty("topic")
+	public String topic;
+	/**
+	 * linked topic body
+	 */
+	@JsonProperty("body")
+	public String body;
 }

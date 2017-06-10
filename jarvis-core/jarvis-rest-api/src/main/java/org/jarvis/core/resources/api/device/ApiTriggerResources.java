@@ -110,6 +110,9 @@ public class ApiTriggerResources extends ApiLinkedResources<TriggerRest,TriggerB
 		setBeanClass(TriggerBean.class);
 	}
 
+	/**
+	 * extend trigger data
+	 */
 	class ResourceListenerImpl extends ResourceDefaultPostListenerImpl<TriggerRest, TriggerBean> implements ResourcePostListener<TriggerRest, TriggerBean> {
 
 		@Override
@@ -132,6 +135,17 @@ public class ApiTriggerResources extends ApiLinkedResources<TriggerRest,TriggerB
 			}
 		}
 
+		@Override
+		public void postBean(TriggerBean bean) {
+			super.postBean(bean);
+			coreEventDaemon.create(bean);
+		}
+
+		@Override
+		public void putBean(TriggerBean bean) {
+			super.putBean(bean);
+			coreEventDaemon.update(bean);
+		}
 	}
 
 	@Override

@@ -17,6 +17,8 @@
 import { Component, Input, ViewChild, OnInit, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
+declare var Prism: any;
+
 import { JarvisPickerComponent } from '../../dialog/jarvis-picker/jarvis-picker.component';
 import { JarvisConfigurationService } from '../../service/jarvis-configuration.service';
 import { JarvisResourceLink } from '../../class/jarvis-resource-link';
@@ -74,6 +76,18 @@ export class JarvisResourceTriggerComponent extends JarvisResource<TriggerBean> 
    */
   ngOnInit() {
     this.init(this);
+  }
+
+  /**
+   * highlight source
+   */
+  public hightlight(body: string): void {
+    console.error(Prism.languages);
+    if(body) {
+      return Prism.highlight(body, Prism.languages.clike);
+    } else {
+      return Prism.highlight("// empty", Prism.languages.clike);
+    }
   }
 
   /**

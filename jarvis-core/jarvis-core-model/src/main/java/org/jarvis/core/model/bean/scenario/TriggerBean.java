@@ -14,4 +14,18 @@ public class TriggerBean extends GenericBean {
 	 * icon
 	 */
 	public String icon;
+	/**
+	 * linked topic
+	 */
+	public String topic;
+	/**
+	 * linked topic body
+	 */
+	public String body;
+	@Override
+	public String toString() {
+		return "TriggerBean [name=" + name + ", icon=" + icon + ", topic=" + topic + ", body=" + body + "]";
+	}
+	
+	
 }

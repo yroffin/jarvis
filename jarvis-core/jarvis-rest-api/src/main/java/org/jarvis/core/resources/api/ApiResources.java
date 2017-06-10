@@ -830,6 +830,7 @@ public abstract class ApiResources<REST extends GenericEntity, BEAN extends Gene
 	 */
 	public BEAN doUpdateBean(String id, BEAN bean) throws TechnicalNotFoundException {
 		BEAN updated = apiService.update(id, bean);
+		triggerAfterBean(TRIGGER_METHOD.PUT, updated);
 		return updated;
 	}
 

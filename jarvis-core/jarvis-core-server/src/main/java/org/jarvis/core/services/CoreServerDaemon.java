@@ -102,6 +102,9 @@ public class CoreServerDaemon implements MqttCallback {
 	protected MqttClient client;
 
 	@Autowired
+	CoreEventDaemon coreEventDaemon;
+
+	@Autowired
 	CoreResources coreResources;
 
 	@Autowired
@@ -304,6 +307,7 @@ public class CoreServerDaemon implements MqttCallback {
 
 	/**
 	 * services
+	 * 
 	 * @throws MqttException
 	 */
 	public void services() throws MqttException {
@@ -321,11 +325,17 @@ public class CoreServerDaemon implements MqttCallback {
 			logger.error("Unable to set up client: {}", e);
 			throw new TechnicalException(e);
 		}
-		
+
 		/**
 		 * subscribers
 		 */
 		client.subscribe("/api/connectors/#");
+		client.subscribe("/collect/#");
+
+		/**
+		 * init trigger subscription
+		 */
+		coreEventDaemon.triggers();
 	}
 
 	@Override
@@ -341,7 +351,7 @@ public class CoreServerDaemon implements MqttCallback {
 		/**
 		 * connectors topic
 		 */
-		if(topic.startsWith("/api/connectors")) {
+		if (topic.startsWith("/api/connectors")) {
 			apiConnectorResources.register(value);
 		}
 	}

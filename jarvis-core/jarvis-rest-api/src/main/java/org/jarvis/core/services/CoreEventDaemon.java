@@ -26,6 +26,7 @@ import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.device.DeviceBean;
 import org.jarvis.core.model.bean.device.EventBean;
 import org.jarvis.core.model.bean.scenario.ScenarioBean;
+import org.jarvis.core.model.bean.scenario.TriggerBean;
 import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.resources.api.device.ApiDeviceResources;
 import org.jarvis.core.resources.api.device.ApiTriggerResources;
@@ -81,6 +82,7 @@ public class CoreEventDaemon {
 	@Autowired
 	CoreStatistics coreStatistics;
 	
+	private List<MqttTrigger> triggers = new ArrayList<MqttTrigger>();
 	private InnerThread inner;
 	private LinkedBlockingQueue<EventBean> linked = new LinkedBlockingQueue<>();
 	protected MapperFactory mapperFactory = null;
@@ -97,6 +99,68 @@ public class CoreEventDaemon {
 		new Thread(inner).start();
 	}
 	
+	/**
+	 * init triggers
+	 */
+	public void triggers() {
+		/**
+		 * store spring component in MqttTrigger
+		 */
+		MqttTrigger.coreEventDaemon = this;
+
+		/**
+		 * start mqtt souscription on each trigger (if any mqtt souscription)
+		 */
+		List<TriggerBean> beans = apiTriggerResources.doFindAllBean();
+		for(TriggerBean trigger : beans) {
+			if(trigger.topic != null && trigger.topic.length() > 0) {
+				MqttTrigger mqTrigger = new MqttTrigger(trigger.id, trigger.name, trigger.topic, trigger.body, env.getProperty("jarvis.mqtt.url"));
+				triggers.add(mqTrigger);
+				mqTrigger.connect();
+			}
+		}
+		logger.info("Init {} mqtt triggers", triggers.size());
+	}
+	
+	/**
+	 * create it
+	 * @param trigger
+	 */
+	public void create(TriggerBean trigger) {
+		if(trigger.topic != null && trigger.topic.length() > 0) {
+			MqttTrigger mqTrigger = new MqttTrigger(trigger.id, trigger.name, trigger.topic, trigger.body, env.getProperty("jarvis.mqtt.url"));
+			triggers.add(mqTrigger);
+			mqTrigger.connect();
+			logger.info("Create {}", trigger.toString());
+		}
+	}
+
+	/**
+	 * update it
+	 * @param bean
+	 */
+	public void update(TriggerBean bean) {
+		MqttTrigger found = null;
+		for(MqttTrigger trigger : triggers) {
+			if(bean.id.equals(trigger.getId())) {
+				found = trigger;
+			}
+		}
+		/**
+		 * if found replace it
+		 */
+		if(found != null) {
+			triggers.remove(found);
+			found.close();
+			if(bean.topic != null && bean.topic.length() > 0) {
+				MqttTrigger mqTrigger = new MqttTrigger(bean.id, bean.name, bean.topic, bean.body, env.getProperty("jarvis.mqtt.url"));
+				triggers.add(mqTrigger);
+				mqTrigger.connect();
+				logger.info("Update {}", bean.toString());
+			}
+		}
+	}
+
 	/**
 	 * @param id 
 	 * @param name 

@@ -20,11 +20,20 @@
       <TimeBasedTriggeringPolicy />
     </RollingFile>
     <Console name="Console" target="SYSTEM_OUT">
-      <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger{36} - %msg%n"/>
+      <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %l - %msg%n"/>
     </Console>
   </Appenders>
   <Loggers>
   	<Logger name="io.moquette" level="warn" additivity="false">
+      <AppenderRef ref="RollingFile"/>
+    </Logger>
+  	<Logger name="org.reflections.Reflections" level="warn" additivity="false">
+      <AppenderRef ref="RollingFile"/>
+    </Logger>
+  	<Logger name="com.mongodb.diagnostics.logging" level="warn" additivity="false">
+      <AppenderRef ref="RollingFile"/>
+    </Logger>
+  	<Logger name="org.ehcache" level="warn" additivity="false">
       <AppenderRef ref="RollingFile"/>
     </Logger>
   	<Logger name="org.jarvis.core.security" level="info" additivity="false">
