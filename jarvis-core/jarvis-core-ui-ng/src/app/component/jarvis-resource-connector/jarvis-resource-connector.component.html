@@ -72,12 +72,12 @@
           <header>Collectes</header>
           <p-column field="name" header="Nom"></p-column>
           <p-column header="Detail">
-            <template let-detail="rowData.entity" let-keys="rowData.keys" pTemplate type="body">
+            <ng-template let-detail="rowData.entity" let-keys="rowData.keys" pTemplate="body">
               <ul>
                 <li *ngFor="let field of keys; let index=index">{{field}}</li>
               </ul>
               {{detail | json}}
-            </template>
+            </ng-template>
           </p-column>
         </p-dataTable>
       </div>

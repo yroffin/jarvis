@@ -47,9 +47,9 @@
         <p-column field="instance" header="Inst."></p-column>
         <p-column field="name" header="Nom"></p-column>
         <p-column header="Action">
-          <template let-trigger="rowData" pTemplate type="body">
+          <ng-template let-trigger="rowData" pTemplate="body">
             <app-jarvis-toolbar-resource [notified]="this" [tasks]="[{'task':'updateTriggerLink','args':[trigger],'icon':'fa-save','label':'Mettre à jour le lien'},{'task':'dropTriggerLink','args':[trigger],'icon':'fa-trash','label':'Supprimer le lien'},{'task':'gotoTriggerLink','args':[trigger],'icon':'fa-link','label':'Détail'}]" ></app-jarvis-toolbar-resource>
-          </template>
+          </ng-template>
         </p-column>
       </p-dataTable>
     </p-accordionTab>
@@ -62,9 +62,9 @@
         <p-column field="instance" header="Inst."></p-column>
         <p-column field="name" header="Nom"></p-column>
         <p-column header="Action">
-          <template let-device="rowData" pTemplate type="body">
+          <ng-template let-device="rowData" pTemplate="body">
             <app-jarvis-toolbar-resource [notified]="this" [tasks]="[{'task':'updateDeviceLink','args':[device],'icon':'fa-save','label':'Mettre à jour le lien'},{'task':'dropDeviceLink','args':[device],'icon':'fa-trash','label':'Supprimer le lien'},{'task':'gotoDeviceLink','args':[device],'icon':'fa-link','label':'Détail'}]" ></app-jarvis-toolbar-resource>
-          </template>
+          </ng-template>
         </p-column>
       </p-dataTable>
     </p-accordionTab>
@@ -73,17 +73,17 @@
       <p-dataTable [value]="myDevice.plugins">
         <header>Plugin</header>
         <p-column header="Ordre">
-          <template let-plugin="rowData" pTemplate>
+          <ng-template let-plugin="rowData" pTemplate>
             <input type="text" size="2" pInputText [(ngModel)]="plugin.extended.order" />
-          </template>
+          </ng-template>
         </p-column>
         <p-column field="id" header="Id"></p-column>
         <p-column field="instance" header="Instance"></p-column>
         <p-column field="name" header="Nom"></p-column>
         <p-column header="Action">
-          <template let-plugin="rowData" pTemplate type="body">
+          <ng-template let-plugin="rowData" pTemplate="body">
             <app-jarvis-toolbar-resource [notified]="this" [tasks]="[{'task':'updatePluginLink','args':[plugin],'icon':'fa-save','label':'Mettre à jour le lien'},{'task':'dropPluginLink','args':[plugin],'icon':'fa-trash','label':'Supprimer le lien'},{'task':'gotoPluginLink','args':[plugin],'icon':'fa-link','label':'Détail'}]" ></app-jarvis-toolbar-resource>
-          </template>
+          </ng-template>
         </p-column>
       </p-dataTable>
     </p-accordionTab>

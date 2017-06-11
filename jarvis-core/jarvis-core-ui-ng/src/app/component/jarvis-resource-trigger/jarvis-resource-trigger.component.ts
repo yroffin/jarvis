@@ -82,7 +82,6 @@ export class JarvisResourceTriggerComponent extends JarvisResource<TriggerBean> 
    * highlight source
    */
   public hightlight(body: string): void {
-    console.error(Prism.languages);
     if(body) {
       return Prism.highlight(body, Prism.languages.clike);
     } else {

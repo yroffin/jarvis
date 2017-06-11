@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jarvis.core.exception.TechnicalHttpException;
-import org.pac4j.core.client.BaseClient;
-import org.pac4j.core.client.ClientType;
 import org.pac4j.core.client.DirectClient;
 import org.pac4j.core.context.WebContext;
 import org.pac4j.core.exception.BadCredentialsException;
-import org.pac4j.core.exception.RequiresHttpAction;
+import org.pac4j.core.exception.HttpAction;
 
 /**
  * simple core client for pac4j
@@ -19,16 +17,11 @@ public class JarvisCoreClient extends DirectClient<JarvisCoreCredentials, Jarvis
 	List<Oauth2ApiClient> oauth2ApiClients = new ArrayList<Oauth2ApiClient>();
 
 	@Override
-	public JarvisCoreCredentials getCredentials(WebContext context) throws RequiresHttpAction {
+	protected JarvisCoreCredentials retrieveCredentials(WebContext context) throws HttpAction {
 		JarvisCoreCredentials credentials = new JarvisCoreCredentials();
 		credentials.setClientName("JarvisCoreClient");
 		setAuthorizationGenerator(new JarvisAuthorization());
 		return credentials;
-	}
-
-	@Override
-	protected BaseClient<JarvisCoreCredentials, JarvisCoreProfile> newClient() {
-		return new JarvisCoreClient();
 	}
 
 	@Override
@@ -69,11 +62,6 @@ public class JarvisCoreClient extends DirectClient<JarvisCoreCredentials, Jarvis
 	}
 
 	@Override
-	public ClientType getClientType() {
-		return ClientType.HEADER_BASED;
-	}
-
-	@Override
 	protected void internalInit(WebContext context) {
 		/**
 		 * define google api client to retrieve token
@@ -82,5 +70,4 @@ public class JarvisCoreClient extends DirectClient<JarvisCoreCredentials, Jarvis
 		oauth2ApiClients.add(new Oauth2ApiClient("https://www.googleapis.com/oauth2", "access_token", "/v3/tokeninfo"));
 		oauth2ApiClients.add(new Oauth2ApiClient("https://graph.facebook.com", "access_token", "/me"));
 	}
-
 }

@@ -1,6 +1,6 @@
 package org.jarvis.core.security;
 
-import org.pac4j.core.authorization.AuthorizationGenerator;
+import org.pac4j.core.authorization.generator.AuthorizationGenerator;
 
 /**
  * authorization

@@ -13,31 +13,26 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-		<jetty.version>9.3.7.v20160115</jetty.version>
-		<jackson-asl.version>1.9.13</jackson-asl.version>
-		<commons-fileupload.version>1.3.1</commons-fileupload.version>
-
 		<jssc.version>2.8.0</jssc.version>
 		<moquette.version>0.9</moquette.version>
 		<mqtt.paho.version>1.0.2</mqtt.paho.version>
-		<jackson.version>2.8.4</jackson.version>
-		<spark.version>2.5.2</spark.version>
-		<spring-boot.version>1.4.2.RELEASE</spring-boot.version>
-		<spring.version>4.3.3.RELEASE</spring.version>
-		<jersey.version>2.24</jersey.version>
-		<rs-api.version>2.1-m01</rs-api.version>
+		<jackson.version>2.8.8</jackson.version>
+		<spark.version>2.6.0</spark.version>
+		<spring-boot.version>1.4.7.RELEASE</spring-boot.version>
+		<spring.version>4.3.9.RELEASE</spring.version>
+		<jersey.version>2.25.1</jersey.version>
 		<mockito.version>1.10.19</mockito.version>
 		<marytts.version>5.1.2</marytts.version>
 		<swagger.version>1.5.10</swagger.version>
-		<spark-pac4j.version>1.1.0</spark-pac4j.version>
-		<pac4j.version>1.9.4</pac4j.version>
+		<spark-pac4j.version>1.3.0</spark-pac4j.version>
+		<pac4j.version>1.9.9</pac4j.version>
 		<slf4j.version>1.7.21</slf4j.version>
 		<log4j.version>2.5</log4j.version>
 		<mongodb.version>3.4.1</mongodb.version>
 		<reflections.version>0.9.10</reflections.version>
 		<rs-api.version>2.0.1</rs-api.version>
 		<hibernate-validator.version>5.2.2.Final</hibernate-validator.version>
-		<ehcache.version>3.0.0.m4</ehcache.version>
+		<ehcache.version>3.3.1</ehcache.version>
 	</properties>
 
 	<distributionManagement>
@@ -49,22 +44,6 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<!-- bullet journal -->
-			<dependency>
-				<groupId>${project.groupId}</groupId>
-				<artifactId>jarvis-bullet-journal</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>${project.groupId}</groupId>
-				<artifactId>jarvis-bullet-journal-model</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>${project.groupId}</groupId>
-				<artifactId>jarvis-bullet-journal-rest-api</artifactId>
-				<version>${project.version}</version>
-			</dependency>
 			<!-- common security -->
 			<dependency>
 				<groupId>${project.groupId}</groupId>
@@ -329,93 +308,6 @@
 				<version>1.0</version>
 			</dependency>
 
-			<!-- Jetty 9.3.7-SNAPSHOT -->
-			<dependency>
-				<groupId>org.eclipse.jetty</groupId>
-				<artifactId>jetty-alpn-client</artifactId>
-				<version>${jetty.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.eclipse.jetty</groupId>
-				<artifactId>jetty-http</artifactId>
-				<version>${jetty.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.eclipse.jetty.http2</groupId>
-				<artifactId>http2-client</artifactId>
-				<version>${jetty.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.eclipse.jetty.http2</groupId>
-				<artifactId>http2-http-client-transport</artifactId>
-				<version>${jetty.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.eclipse.jetty.http2</groupId>
-				<artifactId>http2-hpack</artifactId>
-				<version>${jetty.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.eclipse.jetty.http2</groupId>
-				<artifactId>http2-common</artifactId>
-				<version>${jetty.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.eclipse.jetty</groupId>
-				<artifactId>jetty-server</artifactId>
-				<version>${jetty.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.eclipse.jetty</groupId>
-				<artifactId>jetty-security</artifactId>
-				<version>${jetty.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.eclipse.jetty</groupId>
-				<artifactId>jetty-servlet</artifactId>
-				<version>${jetty.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.eclipse.jetty</groupId>
-				<artifactId>jetty-util</artifactId>
-				<version>${jetty.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.eclipse.jetty</groupId>
-				<artifactId>jetty-io</artifactId>
-				<version>${jetty.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.eclipse.jetty</groupId>
-				<artifactId>jetty-client</artifactId>
-				<version>${jetty.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>commons-fileupload</groupId>
-				<artifactId>commons-fileupload</artifactId>
-				<version>${commons-fileupload.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>javax.json</groupId>
-				<artifactId>javax.json-api</artifactId>
-				<version>1.1.0-M2</version>
-			</dependency>
-			<dependency>
-				<groupId>javazoom</groupId>
-				<artifactId>jlayer</artifactId>
-				<version>1.0.1</version>
-			</dependency>
-			<dependency>
-				<groupId>uk.co.caprica</groupId>
-				<artifactId>vlcj</artifactId>
-				<version>2.4.1</version>
-			</dependency>
-			<dependency>
-				<groupId>org.glassfish</groupId>
-				<artifactId>javax.json</artifactId>
-				<version>1.0.4</version>
-			</dependency>
-
 			<!-- common -->
 			<dependency>
 				<groupId>org.apache.commons</groupId>
@@ -678,9 +570,6 @@
 		<module>jarvis-swagger-core</module>
 		<module>jarvis-swagger-ui</module>
 		<module>jarvis-plantuml</module>
-		<module>jarvis-bullet-journal</module>
-		<module>jarvis-bullet-journal-model</module>
-		<module>jarvis-bullet-journal-rest-api</module>
 		<module>jarvis-common-security</module>
 		<module>jarvis-broker</module>
 		<module>jarvis-rflink</module>

@@ -19,8 +19,10 @@ import javax.annotation.PostConstruct;
 
 import org.ehcache.Cache;
 import org.ehcache.CacheManager;
-import org.ehcache.CacheManagerBuilder;
-import org.ehcache.config.CacheConfigurationBuilder;
+import org.ehcache.ValueSupplier;
+import org.ehcache.config.builders.CacheConfigurationBuilder;
+import org.ehcache.config.builders.CacheManagerBuilder;
+import org.ehcache.config.builders.ResourcePoolsBuilder;
 import org.ehcache.expiry.Duration;
 import org.ehcache.expiry.Expiry;
 import org.jarvis.core.resources.ResourceData;
@@ -39,42 +41,43 @@ public class CoreEhcacheManager {
 	protected CacheManager cacheManager;
 	protected Cache<String, Object> preConfigured;
 	protected Cache<String, Object> cache;
-	
+
 	/**
 	 * start component
 	 */
 	@PostConstruct
 	public void init() {
-		cacheManager = CacheManagerBuilder.newCacheManagerBuilder()
-				.withCache("preConfigured",
-						CacheConfigurationBuilder.newCacheConfigurationBuilder().buildConfig(String.class, Object.class))
-				.build(true);
+		cacheManager = CacheManagerBuilder.newCacheManagerBuilder().withCache("preConfigured",
+				CacheConfigurationBuilder.newCacheConfigurationBuilder(String.class, Object.class, ResourcePoolsBuilder.heap(10)))
+				.build();
+		cacheManager.init();
 
 		preConfigured = cacheManager.getCache("preConfigured", String.class, Object.class);
 
-		Expiry<String,Object> expiry = new Expiry<String,Object>() {
+		Expiry<String, Object> expiry = new Expiry<String, Object>() {
 
 			@Override
-			public Duration getExpiryForAccess(String arg0, Object arg1) {
-				return org.ehcache.expiry.Duration.FOREVER;
+			public Duration getExpiryForAccess(String key, ValueSupplier<? extends Object> value) {
+				return org.ehcache.expiry.Duration.INFINITE;
 			}
 
 			@Override
-			public Duration getExpiryForCreation(String arg0, Object arg1) {
-				return org.ehcache.expiry.Duration.FOREVER;
+			public Duration getExpiryForUpdate(String key, ValueSupplier<? extends Object> oldValue, Object newValue) {
+				return org.ehcache.expiry.Duration.INFINITE;
 			}
 
 			@Override
-			public Duration getExpiryForUpdate(String arg0, Object arg1, Object arg2) {
-				return org.ehcache.expiry.Duration.FOREVER;
+			public Duration getExpiryForCreation(String key, Object value) {
+				return org.ehcache.expiry.Duration.INFINITE;
 			}
-			
+
 		};
-		
+
+		/**
+		 * resource cache
+		 */
 		cache = cacheManager.createCache("resources",
-				CacheConfigurationBuilder.newCacheConfigurationBuilder()
-				.withExpiry(expiry)
-				.buildConfig(String.class, Object.class));
+				CacheConfigurationBuilder.newCacheConfigurationBuilder(String.class, Object.class, ResourcePoolsBuilder.heap(10)).withExpiry(expiry));
 	}
 
 	/**

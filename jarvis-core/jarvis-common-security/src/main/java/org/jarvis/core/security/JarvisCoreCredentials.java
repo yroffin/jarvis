@@ -13,11 +13,17 @@ public class JarvisCoreCredentials extends Credentials {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	public void clear() {
+	public String toString() {
+		return "JarvisCoreCredentials [getClientName()=" + getClientName() + "]";
 	}
 
 	@Override
-	public String toString() {
-		return "JarvisCoreCredentials [getClientName()=" + getClientName() + "]";
+	public boolean equals(Object o) {
+		return this.equals(o);
+	}
+
+	@Override
+	public int hashCode() {
+		return this.hashCode();
 	}
 }

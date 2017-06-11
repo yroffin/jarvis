@@ -16,10 +16,12 @@
 
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
 import { Message } from 'primeng/primeng';
 
 import * as _ from 'lodash';
 
+import { NavigationGuard } from '../../guard/navigation.service';
 import { JarvisConfigurationService } from '../../service/jarvis-configuration.service';
 import { JarvisDefaultResource, JarvisDefaultLinkResource } from '../../interface/jarvis-default-resource';
 import { JarvisDataCoreResource } from '../../service/jarvis-data-core-resource';
@@ -58,10 +60,10 @@ export class JarvisResourcesComponent implements OnInit {
   /**
    * members
    */
-  msgs: Message[] = [];
-  myResourceName: string = "default";
-  myResources: ResourceBean[];
-  myService: JarvisDefaultResource<ResourceBean>;
+  protected msgs: Message[] = [];
+  protected myResourceName: string = "default";
+  protected myResources: ResourceBean[];
+  protected myService: JarvisDefaultResource<ResourceBean>;
 
   /**
    * constructor
@@ -69,6 +71,7 @@ export class JarvisResourcesComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private navigationGuard: NavigationGuard,
     private _jarvisConfigurationService: JarvisConfigurationService,
     private _jarvisDataDeviceService: JarvisDataDeviceService,
     private _jarvisDataPluginService: JarvisDataPluginService,
@@ -89,59 +92,55 @@ export class JarvisResourcesComponent implements OnInit {
   }
 
   ngOnInit() {
-    /**
-     * listen on route change
-     */
-    this.router.events
-      .filter(event => event instanceof NavigationEnd)
-      .subscribe((navigationEnd: NavigationEnd) => {
-        // You only receive NavigationEnd events
-        if (navigationEnd.url === '/measures') {
-          this.load('measures', this._jarvisDataMeasureService);
-        }
-        if (navigationEnd.url === '/notifications') {
-          this.load('notifications', this._jarvisDataNotificationService);
-        }
-        if (navigationEnd.url === '/datasources') {
-          this.load('datasources', this._jarvisDataDatasourceService);
-        }
-        if (navigationEnd.url === '/views') {
-          this.load('views', this._jarvisDataViewService);
-        }
-        if (navigationEnd.url === '/configurations') {
-          this.load('configurations', this._jarvisDataConfigurationService);
-        }
-        if (navigationEnd.url === '/properties') {
-          this.load('properties', this._jarvisDataPropertyService);
-        }
-        if (navigationEnd.url === '/connectors') {
-          this.load('connectors', this._jarvisDataConnectorService);
-        }
-        if (navigationEnd.url === '/blocks') {
-          this.load('blocks', this._jarvisDataBlockService);
-        }
-        if (navigationEnd.url === '/scenarios') {
-          this.load('scenarios', this._jarvisDataScenarioService);
-        }
-        if (navigationEnd.url === '/devices') {
-          this.load('devices', this._jarvisDataDeviceService);
-        }
-        if (navigationEnd.url === '/plugins') {
-          this.load('plugins', this._jarvisDataPluginService);
-        }
-        if (navigationEnd.url === '/commands') {
-          this.load('commands', this._jarvisDataCommandService);
-        }
-        if (navigationEnd.url === '/triggers') {
-          this.load('triggers', this._jarvisDataTriggerService);
-        }
-        if (navigationEnd.url === '/crons') {
-          this.load('crons', this._jarvisDataCronService);
-        }
-        if (navigationEnd.url === '/snapshots') {
-          this.load('snapshots', this._jarvisDataSnapshotService);
-        }
-      });
+      let navigationEnd = {
+        url: '/' + this.navigationGuard.getUrl()
+      }
+
+      if (navigationEnd.url === '/measures') {
+        this.load('measures', this._jarvisDataMeasureService);
+      }
+      if (navigationEnd.url === '/notifications') {
+        this.load('notifications', this._jarvisDataNotificationService);
+      }
+      if (navigationEnd.url === '/datasources') {
+        this.load('datasources', this._jarvisDataDatasourceService);
+      }
+      if (navigationEnd.url === '/views') {
+        this.load('views', this._jarvisDataViewService);
+      }
+      if (navigationEnd.url === '/configurations') {
+        this.load('configurations', this._jarvisDataConfigurationService);
+      }
+      if (navigationEnd.url === '/properties') {
+        this.load('properties', this._jarvisDataPropertyService);
+      }
+      if (navigationEnd.url === '/connectors') {
+        this.load('connectors', this._jarvisDataConnectorService);
+      }
+      if (navigationEnd.url === '/blocks') {
+        this.load('blocks', this._jarvisDataBlockService);
+      }
+      if (navigationEnd.url === '/scenarios') {
+        this.load('scenarios', this._jarvisDataScenarioService);
+      }
+      if (navigationEnd.url === '/devices') {
+        this.load('devices', this._jarvisDataDeviceService);
+      }
+      if (navigationEnd.url === '/plugins') {
+        this.load('plugins', this._jarvisDataPluginService);
+      }
+      if (navigationEnd.url === '/commands') {
+        this.load('commands', this._jarvisDataCommandService);
+      }
+      if (navigationEnd.url === '/triggers') {
+        this.load('triggers', this._jarvisDataTriggerService);
+      }
+      if (navigationEnd.url === '/crons') {
+        this.load('crons', this._jarvisDataCronService);
+      }
+      if (navigationEnd.url === '/snapshots') {
+        this.load('snapshots', this._jarvisDataSnapshotService);
+      }
   }
 
   /**

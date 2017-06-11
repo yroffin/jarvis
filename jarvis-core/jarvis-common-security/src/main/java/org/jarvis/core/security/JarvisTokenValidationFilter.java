@@ -1,20 +1,23 @@
 package org.jarvis.core.security;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-import org.pac4j.core.authorization.AuthorizationChecker;
-import org.pac4j.core.authorization.DefaultAuthorizationChecker;
+import org.pac4j.core.authorization.checker.AuthorizationChecker;
+import org.pac4j.core.authorization.checker.DefaultAuthorizationChecker;
 import org.pac4j.core.client.Client;
-import org.pac4j.core.client.ClientFinder;
 import org.pac4j.core.client.Clients;
-import org.pac4j.core.client.DefaultClientFinder;
 import org.pac4j.core.client.DirectClient;
+import org.pac4j.core.client.finder.ClientFinder;
+import org.pac4j.core.client.finder.DefaultClientFinder;
 import org.pac4j.core.config.Config;
 import org.pac4j.core.context.HttpConstants;
 import org.pac4j.core.context.WebContext;
 import org.pac4j.core.credentials.Credentials;
-import org.pac4j.core.exception.RequiresHttpAction;
+import org.pac4j.core.exception.HttpAction;
 import org.pac4j.core.exception.TechnicalException;
+import org.pac4j.core.profile.CommonProfile;
 import org.pac4j.core.profile.ProfileManager;
 import org.pac4j.core.profile.UserProfile;
 import org.pac4j.core.util.CommonHelper;
@@ -94,60 +97,63 @@ public class JarvisTokenValidationFilter implements Filter {
 
         final boolean useSession = true;
         logger.debug("useSession: {}", useSession);
-        final ProfileManager<UserProfile> manager = new ProfileManager<UserProfile>(context);
-        UserProfile profile = manager.get(useSession);
+        final ProfileManager<CommonProfile> manager = new ProfileManager<CommonProfile>(context);
+        Optional<CommonProfile> profile = manager.get(useSession);
         logger.debug("profile: {}", profile);
 
         // no profile and some current clients
         if (profile == null && currentClients != null && currentClients.size() > 0) {
             // loop on all clients searching direct ones to perform authentication
-            for (final Client<Credentials, UserProfile> currentClient : currentClients) {
+            for (final Client<Credentials, CommonProfile> currentClient : currentClients) {
                 if (currentClient instanceof DirectClient) {
                     logger.debug("Performing authentication for client: {}", currentClient);
                     final Credentials credentials;
                     try {
                         credentials = currentClient.getCredentials(context);
                         logger.debug("credentials: {}", credentials);
-                    } catch (final RequiresHttpAction e) {
+                    } catch (final HttpAction e) {
                         logger.warn("Authentication for client failed: {}", e);
                         Spark.halt(401);
                         throw new TechnicalException("Unexpected HTTP action", e);
                     }
+                    CommonProfile userProfile = null;
                     try {
-	                    profile = currentClient.getUserProfile(credentials, context);
+	                    userProfile = currentClient.getUserProfile(credentials, context);
                     } catch (final Exception e) {
                         logger.warn("Profile for client failed: {}", e);
                         Spark.halt(401);
                         throw new TechnicalException("Forbidden action", e);
                     }
-                    logger.debug("profile: {}", profile);
-                    if (profile != null) {
-                        manager.save(useSession, profile);
+                    logger.debug("profile: {}", userProfile);
+                    if (userProfile != null) {
+                        manager.save(useSession, userProfile, false);
                         break;
                     }
                 }
             }
         }
 
-        if (profile != null) {
+        if (profile.isPresent()) {
             logger.debug("authorizerName: {}", authorizerName);
-            if (authorizationChecker.isAuthorized(context, profile, authorizerName, config.getAuthorizers())) {
+            List<CommonProfile> profiles = new ArrayList<CommonProfile>();
+            profiles.add(profile.get());
+            if (authorizationChecker.isAuthorized(context, profiles, authorizerName, config.getAuthorizers())) {
                 logger.info("authenticated and authorized -> grant access to {} for {}", context.getFullRequestURL(), request.ip());
             } else {
                 logger.warn("forbidden");
-                forbidden(context, currentClients, profile);
+                forbidden(context, currentClients, profile.get());
             }
         } else {
             unauthorized(context, currentClients);
         }
 	}
 	
-    @SuppressWarnings("rawtypes")
+    @SuppressWarnings({ "rawtypes", "unchecked" })
 	protected void forbidden(final WebContext context, final List<Client> currentClients, final UserProfile profile) {
         config.getHttpActionAdapter().adapt(HttpConstants.FORBIDDEN, context);
     }
 
-    @SuppressWarnings("rawtypes")
+    @SuppressWarnings({ "rawtypes", "unchecked" })
 	protected void unauthorized(final WebContext context, final List<Client> currentClients) {
         config.getHttpActionAdapter().adapt(HttpConstants.UNAUTHORIZED, context);
     }

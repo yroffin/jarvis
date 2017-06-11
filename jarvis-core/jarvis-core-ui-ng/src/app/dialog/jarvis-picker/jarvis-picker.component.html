@@ -6,9 +6,9 @@
       <p-column field="id" header="Id"></p-column>
       <p-column field="name" header="Nom"></p-column>
       <p-column header="Action">
-        <template let-resource="rowData" pTemplate type="body">
+        <ng-template let-resource="rowData" pTemplate="body">
           <button pButton type="button" icon="fa-hand-pointer-o" pTooltip="Selection" tooltipPosition="bottom" (click)="validate(resource)"></button>
-        </template>
+        </ng-template>
       </p-column>
     </p-dataTable>
   </div>

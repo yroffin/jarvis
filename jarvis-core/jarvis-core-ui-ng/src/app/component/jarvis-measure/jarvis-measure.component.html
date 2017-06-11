@@ -45,9 +45,9 @@
         <p-column field="instance" header="Instance"></p-column>
         <p-column field="name" header="Nom"></p-column>
         <p-column header="Action">
-          <template let-connector="rowData" pTemplate type="body">
+          <ng-template let-connector="rowData" pTemplate type="body">
             <app-jarvis-toolbar-resource [notified]="this" [tasks]="[{'task':'dropConnectorLink','args':[connector],'icon':'fa-trash','label':'Supprimer le lien'},{'task':'gotoConnectorLink','args':[connector],'icon':'fa-link','label':'Détail'}]" ></app-jarvis-toolbar-resource>
-          </template>
+          </ng-template>
         </p-column>
       </p-dataTable>
     </p-accordionTab>

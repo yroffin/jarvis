@@ -57,7 +57,7 @@
         <p-column field="id" header="Id"></p-column>
         <p-column field="name" header="Nom"></p-column>
         <p-column header="Dernière execution">
-          <template let-data="rowData" pTemplate type="body">{{data.lastExecution | date : 'yyyy-MM-dd HH:mm:ss Z' : timezone}}</template>
+          <ng-template let-data="rowData" pTemplate="body">{{data.lastExecution | date : 'yyyy-MM-dd HH:mm:ss Z' : timezone}}</ng-template>
         </p-column>
       </p-dataTable>
     </p-accordionTab>

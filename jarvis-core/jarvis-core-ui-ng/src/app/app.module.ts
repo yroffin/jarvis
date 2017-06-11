@@ -15,6 +15,8 @@
  */
 
 import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -52,6 +54,7 @@ import { SliderModule } from 'primeng/primeng';
 import { ToggleButtonModule } from 'primeng/primeng';
 
 import { WindowRef } from './service/jarvis-utils.service';
+import { NavigationGuard } from './guard/navigation.service';
 import { JarvisSecurityService } from './service/jarvis-security.service';
 import { JarvisConfigurationService } from './service/jarvis-configuration.service';
 import { JarvisDataDeviceService } from './service/jarvis-data-device.service';
@@ -103,36 +106,36 @@ import { JarvisMeasureComponent } from './component/jarvis-measure/jarvis-measur
  * default route definition
  */
 const appRoutes: Routes = [
-  { path: 'devices', component: JarvisResourcesComponent, data: { resource: 'devices' } },
+  { path: 'devices', component: JarvisResourcesComponent, canActivate: [NavigationGuard],  data: { resource: 'devices' } },
   { path: 'devices/:id', component: JarvisResourceDeviceComponent },
-  { path: 'plugins', component: JarvisResourcesComponent, data: { resource: 'plugins' } },
+  { path: 'plugins', component: JarvisResourcesComponent, canActivate: [NavigationGuard],  data: { resource: 'plugins' } },
   { path: 'plugins/:id', component: JarvisResourcePluginComponent },
-  { path: 'commands', component: JarvisResourcesComponent, data: { resource: 'commands' } },
+  { path: 'commands', component: JarvisResourcesComponent, canActivate: [NavigationGuard],  data: { resource: 'commands' } },
   { path: 'commands/:id', component: JarvisResourceCommandComponent },
-  { path: 'triggers', component: JarvisResourcesComponent, data: { resource: 'triggers' } },
+  { path: 'triggers', component: JarvisResourcesComponent, canActivate: [NavigationGuard],  data: { resource: 'triggers' } },
   { path: 'triggers/:id', component: JarvisResourceTriggerComponent },
-  { path: 'crons', component: JarvisResourcesComponent, data: { resource: 'crons' } },
+  { path: 'crons', component: JarvisResourcesComponent, canActivate: [NavigationGuard],  data: { resource: 'crons' } },
   { path: 'crons/:id', component: JarvisResourceCronComponent },
-  { path: 'scenarios', component: JarvisResourcesComponent, data: { resource: 'scenarios' } },
+  { path: 'scenarios', component: JarvisResourcesComponent, canActivate: [NavigationGuard],  data: { resource: 'scenarios' } },
   { path: 'scenarios/:id', component: JarvisResourceScenarioComponent },
-  { path: 'blocks', component: JarvisResourcesComponent, data: { resource: 'blocks' } },
+  { path: 'blocks', component: JarvisResourcesComponent, canActivate: [NavigationGuard],  data: { resource: 'blocks' } },
   { path: 'blocks/:id', component: JarvisResourceBlockComponent },
-  { path: 'configurations', component: JarvisResourcesComponent, data: { resource: 'configurations' } },
+  { path: 'configurations', component: JarvisResourcesComponent, canActivate: [NavigationGuard],  data: { resource: 'configurations' } },
   { path: 'configurations/:id', component: JarvisResourceConfigurationComponent },
-  { path: 'notifications', component: JarvisResourcesComponent, data: { resource: 'notifications' } },
+  { path: 'notifications', component: JarvisResourcesComponent, canActivate: [NavigationGuard],  data: { resource: 'notifications' } },
   { path: 'notifications/:id', component: JarvisResourceNotificationComponent },
-  { path: 'properties', component: JarvisResourcesComponent, data: { resource: 'properties' } },
+  { path: 'properties', component: JarvisResourcesComponent, canActivate: [NavigationGuard],  data: { resource: 'properties' } },
   { path: 'properties/:id', component: JarvisResourcePropertyComponent },
-  { path: 'connectors', component: JarvisResourcesComponent, data: { resource: 'connectors' } },
+  { path: 'connectors', component: JarvisResourcesComponent, canActivate: [NavigationGuard],  data: { resource: 'connectors' } },
   { path: 'connectors/:id', component: JarvisResourceConnectorComponent },
-  { path: 'views', component: JarvisResourcesComponent, data: { resource: 'views' } },
+  { path: 'views', component: JarvisResourcesComponent, canActivate: [NavigationGuard], data: { resource: 'views' } },
   { path: 'views/:id', component: JarvisResourceViewComponent },
-  { path: 'snapshots', component: JarvisResourcesComponent, data: { resource: 'snapshots' } },
+  { path: 'snapshots', component: JarvisResourcesComponent, canActivate: [NavigationGuard],  data: { resource: 'snapshots' } },
   { path: 'snapshots/:id', component: JarvisResourceSnapshotComponent },
-  { path: 'datasources', component: JarvisResourcesComponent, data: { resource: 'datasources' } },
+  { path: 'datasources', component: JarvisResourcesComponent, canActivate: [NavigationGuard],  data: { resource: 'datasources' } },
   { path: 'datasources/:id', component: JarvisResourceDatasourceComponent },
-  { path: 'measures', component: JarvisResourcesComponent, data: { resource: 'measures' } },
-  { path: 'measures/:id', component: JarvisMeasureComponent },
+  { path: 'measures', component: JarvisResourcesComponent, canActivate: [NavigationGuard],  data: { resource: 'measures' } },
+  { path: 'measures/:id', component: JarvisMeasureComponent, canActivate: [NavigationGuard] },
   { path: 'desktop', component: JarvisDesktopComponent },
   { path: 'login', component: JarvisLoginComponent },
   { path: '', component: JarvisHomeComponent },
@@ -171,7 +174,9 @@ const appRoutes: Routes = [
     JarvisPickerComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     HttpModule,
     /**
@@ -239,7 +244,11 @@ const appRoutes: Routes = [
     JarvisDataSnapshotService,
     JarvisDataViewService,
     JarvisDataDatasourceService,
-    JarvisDataMeasureService
+    JarvisDataMeasureService,
+    /**
+     * guards
+     */
+    NavigationGuard
   ],
   bootstrap: [AppComponent]
 })

@@ -43,17 +43,17 @@
   <p-dataTable [value]="myBlock.conditionnalPlugins">
     <header>Plugins</header>
     <p-column header="Ordre">
-      <template let-plugin="rowData" pTemplate>
+      <ng-template let-plugin="rowData" pTemplate>
         <input type="text" size="2" pInputText [(ngModel)]="plugin.extended.order" />
-      </template>
+      </ng-template>
     </p-column>
     <p-column field="id" header="Id"></p-column>
     <p-column field="instance" header="Instance"></p-column>
     <p-column field="name" header="Nom"></p-column>
     <p-column header="Action">
-      <template let-plugin="rowData" pTemplate type="body">
+      <ng-template let-plugin="rowData" pTemplate type="body">
         <app-jarvis-toolbar-resource [notified]="this" [tasks]="[{'task':'updatePluginLink','args':[plugin],'icon':'fa-save','label':'Mettre à jour le lien'},{'task':'dropPluginLink','args':[plugin, 'HREF_IF', myBlock.conditionnalPlugins],'icon':'fa-trash','label':'Supprimer le lien'},{'task':'viewPluginLink','args':[plugin],'icon':'fa-eye','label':'Voir'},{'task':'gotoPluginLink','args':[plugin],'icon':'fa-link','label':'Détail'}]" ></app-jarvis-toolbar-resource>
-      </template>
+      </ng-template>
     </p-column>
   </p-dataTable>
 </p-accordionTab>
@@ -62,33 +62,33 @@
   <p-dataTable [value]="myBlock.thenPlugins">
     <header>Plugins</header>
     <p-column header="Ordre">
-      <template let-plugin="rowData" pTemplate>
+      <ng-template let-plugin="rowData" pTemplate>
         <input type="text" size="2" pInputText [(ngModel)]="plugin.extended.order" />
-      </template>
+      </ng-template>
     </p-column>
     <p-column field="id" header="Id"></p-column>
     <p-column field="instance" header="Instance"></p-column>
     <p-column field="name" header="Nom"></p-column>
     <p-column header="Action">
-      <template let-plugin="rowData" pTemplate type="body">
+      <ng-template let-plugin="rowData" pTemplate="body">
         <app-jarvis-toolbar-resource [notified]="this" [tasks]="[{'task':'updatePluginLink','args':[plugin],'icon':'fa-save','label':'Mettre à jour le lien'},{'task':'dropPluginLink','args':[plugin, 'HREF_THEN', myBlock.thenPlugins],'icon':'fa-trash','label':'Supprimer le lien'},{'task':'gotoPluginLink','args':[plugin],'icon':'fa-link','label':'Détail'}]" ></app-jarvis-toolbar-resource>
-      </template>
+      </ng-template>
     </p-column>
   </p-dataTable>
   <p-dataTable [value]="myBlock.thenBlocks">
     <header>Blocks</header>
     <p-column header="Ordre">
-      <template let-block="rowData" pTemplate>
+      <ng-template let-block="rowData" pTemplate>
         <input type="text" size="2" pInputText [(ngModel)]="block.extended.order" />
-      </template>
+      </ng-template>
     </p-column>
     <p-column field="id" header="Id"></p-column>
     <p-column field="instance" header="Instance"></p-column>
     <p-column field="name" header="Nom"></p-column>
     <p-column header="Action">
-      <template let-block="rowData" pTemplate type="body">
+      <ng-template let-block="rowData" pTemplate="body">
         <app-jarvis-toolbar-resource [notified]="this" [tasks]="[{'task':'updateBlockLink','args':[block],'icon':'fa-save','label':'Mettre à jour le lien'},{'task':'dropBlockLink','args':[block, 'HREF_THEN', myBlock.thenBlocks],'icon':'fa-trash','label':'Supprimer le lien'},{'task':'gotoBlockLink','args':[block],'icon':'fa-link','label':'Détail'}]" ></app-jarvis-toolbar-resource>
-      </template>
+      </ng-template>
     </p-column>
   </p-dataTable>
 </p-accordionTab>
@@ -97,33 +97,33 @@
   <p-dataTable [value]="myBlock.elsePlugins">
     <header>Plugins</header>
     <p-column header="Ordre">
-      <template let-plugin="rowData" pTemplate>
+      <ng-template let-plugin="rowData" pTemplate>
         <input type="text" size="2" pInputText [(ngModel)]="plugin.extended.order" />
-      </template>
+      </ng-template>
     </p-column>
     <p-column field="id" header="Id"></p-column>
     <p-column field="instance" header="Instance"></p-column>
     <p-column field="name" header="Nom"></p-column>
     <p-column header="Action">
-      <template let-plugin="rowData" pTemplate type="body">
+      <ng-template let-plugin="rowData" pTemplate="body">
         <app-jarvis-toolbar-resource [notified]="this" [tasks]="[{'task':'updatePluginLink','args':[plugin],'icon':'fa-save','label':'Mettre à jour le lien'},{'task':'dropPluginLink','args':[plugin, 'HREF_ELSE', myBlock.elsePlugins],'icon':'fa-trash','label':'Supprimer le lien'},{'task':'gotoPluginLink','args':[plugin],'icon':'fa-link','label':'Détail'}]" ></app-jarvis-toolbar-resource>
-      </template>
+      </ng-template>
     </p-column>
   </p-dataTable>
   <p-dataTable [value]="myBlock.elseBlocks">
     <header>Blocks</header>
     <p-column header="Ordre">
-      <template let-block="rowData" pTemplate>
+      <ng-template let-block="rowData" pTemplate>
         <input type="text" size="2" pInputText [(ngModel)]="block.extended.order" />
-      </template>
+      </ng-template>
     </p-column>
     <p-column field="id" header="Id"></p-column>
     <p-column field="instance" header="Instance"></p-column>
     <p-column field="name" header="Nom"></p-column>
     <p-column header="Action">
-      <template let-block="rowData" pTemplate type="body">
+      <ng-template let-block="rowData" pTemplate="body">
         <app-jarvis-toolbar-resource [notified]="this" [tasks]="[{'task':'updateBlockLink','args':[block],'icon':'fa-save','label':'Mettre à jour le lien'},{'task':'dropBlockLink','args':[block, 'HREF_ELSE', myBlock.elseBlocks],'icon':'fa-trash','label':'Supprimer le lien'},{'task':'gotoBlockLink','args':[block],'icon':'fa-link','label':'Détail'}]" ></app-jarvis-toolbar-resource>
-      </template>
+      </ng-template>
     </p-column>
   </p-dataTable>
 </p-accordionTab>
