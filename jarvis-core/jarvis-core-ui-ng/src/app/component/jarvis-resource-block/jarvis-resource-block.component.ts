@@ -62,8 +62,8 @@ export class JarvisResourceBlockComponent extends JarvisResource<BlockBean> impl
 
   items: MenuItem[];
 
-  private myPlugin: PluginBean;
-  private viewCondition: boolean = false;
+  public myPlugin: PluginBean;
+  public viewCondition: boolean = false;
   
   /**
    * constructor

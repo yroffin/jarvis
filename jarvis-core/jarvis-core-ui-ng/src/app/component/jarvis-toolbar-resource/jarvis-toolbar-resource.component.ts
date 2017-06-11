@@ -41,12 +41,12 @@ export class JarvisToolbarResourceComponent implements OnInit {
    * members
    */
   msgs: Message[] = [];
-  @Input() private tasks: TaskBean[] = [];
-  @Input() private pickers: PickerTaskBean[] = [];
+  @Input() public tasks: TaskBean[] = [];
+  @Input() public pickers: PickerTaskBean[] = [];
 
   @Input() private actions: any[];
   @Input() private notified: JarvisToolbarAction;
-  @Input() private crud: boolean = false;
+  @Input() public crud: boolean = false;
 
   private items: MenuItem[] = [];
 

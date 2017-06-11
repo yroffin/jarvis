@@ -60,7 +60,7 @@ export class JarvisMeasureComponent extends JarvisResource<MeasureBean> implemen
    * internal
    */
   private jarvisConnectorLink: JarvisResourceLink<ConnectorBean>;
-  private msgs: Message[] = [];
+  public msgs: Message[] = [];
 
   constructor(
     private _route: ActivatedRoute,

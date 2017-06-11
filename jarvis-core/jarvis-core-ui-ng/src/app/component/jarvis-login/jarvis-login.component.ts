@@ -34,7 +34,7 @@ import { Oauth2Bean } from '../../model/security/oauth2-bean';
 })
 export class JarvisLoginComponent implements OnInit {
 
-  private display: boolean = false;
+  public display: boolean = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -48,7 +48,7 @@ export class JarvisLoginComponent implements OnInit {
     this.display = true;
   }
 
-  private google(): void {
+  public google(): void {
     this.display = false;
 
     /**
@@ -66,7 +66,7 @@ export class JarvisLoginComponent implements OnInit {
       });
   }
 
-  private facebook(): void {
+  public facebook(): void {
     this.display = false;
   }
 }

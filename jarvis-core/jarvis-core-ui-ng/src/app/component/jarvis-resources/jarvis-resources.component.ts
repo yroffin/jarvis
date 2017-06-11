@@ -61,8 +61,8 @@ export class JarvisResourcesComponent implements OnInit {
    * members
    */
   protected msgs: Message[] = [];
-  protected myResourceName: string = "default";
-  protected myResources: ResourceBean[];
+  public myResourceName: string = "default";
+  public myResources: ResourceBean[];
   protected myService: JarvisDefaultResource<ResourceBean>;
 
   /**

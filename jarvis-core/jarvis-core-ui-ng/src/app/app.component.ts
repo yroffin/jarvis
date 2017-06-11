@@ -62,7 +62,7 @@ export class AppComponent implements OnInit {
   /**
    * test if isMobile
    */
-  private isMobile(): boolean {
+  public isMobile(): boolean {
     if (window.matchMedia("(min-width: 400px)").matches) {
       /*
        * the view port is at least 400 pixels wide

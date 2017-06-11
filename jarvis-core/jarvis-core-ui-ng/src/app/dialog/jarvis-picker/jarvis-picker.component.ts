@@ -49,9 +49,9 @@ export class JarvisPickerComponent implements OnInit {
 
   @Input() resource: PickerBean;
 
-  private picked: any;
-  private show: boolean = false;
-  private jarvisPickerHelper: JarvisPicker<ResourceBean>;
+  public picked: any;
+  public show: boolean = false;
+  public jarvisPickerHelper: JarvisPicker<ResourceBean>;
 
   private target: NotifyCallback<ResourceBean>;
 
