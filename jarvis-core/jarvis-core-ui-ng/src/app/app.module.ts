@@ -38,6 +38,7 @@ import { TabViewModule } from 'primeng/primeng';
 import { DataGridModule } from 'primeng/primeng';
 import { PanelModule } from 'primeng/primeng';
 import { GrowlModule } from 'primeng/primeng';
+import { MessagesModule } from 'primeng/primeng';
 import { StepsModule } from 'primeng/primeng';
 import { PanelMenuModule } from 'primeng/primeng';
 import { DialogModule } from 'primeng/primeng';
@@ -196,6 +197,7 @@ const appRoutes: Routes = [
     DataGridModule,
     PanelModule,
     GrowlModule,
+    MessagesModule,
     StepsModule,
     ButtonModule,
     PanelMenuModule,
@@ -248,7 +250,8 @@ const appRoutes: Routes = [
     /**
      * guards
      */
-    NavigationGuard
+    NavigationGuard,
+    ConfirmationService
   ],
   bootstrap: [AppComponent]
 })

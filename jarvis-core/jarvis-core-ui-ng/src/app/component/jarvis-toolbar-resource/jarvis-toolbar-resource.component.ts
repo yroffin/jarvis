@@ -48,10 +48,28 @@ export class JarvisToolbarResourceComponent implements OnInit {
   @Input() private notified: JarvisToolbarAction;
   @Input() public crud: boolean = false;
 
+  public display: boolean = false;
+  public toDelete: ResourceBean;
+
   private items: MenuItem[] = [];
 
-  constructor() {
+  constructor(
+    ) {
+  }
 
+  /**
+   * protect dropping
+   */
+  dropResource() {
+    this.display = true;
+  }
+
+  /**
+   * confirmation
+   */
+  confirmedDropResource() {
+    this.display = false;
+    this.remove();
   }
 
   ngOnInit() {

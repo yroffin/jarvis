@@ -2,10 +2,13 @@
     <div class="ui-toolbar-group-left">
         <button *ngIf="crud" pButton type="button" icon="fa-reply" pTooltip="Retour" tooltipPosition="bottom" (click)="close()"></button>
         <button *ngIf="crud" pButton type="button" icon="fa-copy" pTooltip="Dupliquer" tooltipPosition="bottom" (click)="duplicate()"></button>
-        <button *ngIf="crud" pButton type="button" icon="fa-trash" pTooltip="Supprimer" tooltipPosition="bottom" (click)="remove()"></button>
+        <button *ngIf="crud" pButton type="button" icon="fa-trash" pTooltip="Supprimer" tooltipPosition="bottom" (click)="dropResource()"></button>
         <button *ngIf="crud" pButton type="button" icon="fa-save" pTooltip="Sauver" tooltipPosition="bottom" (click)="save()"></button>
         <button *ngFor="let task of tasks; let index = index" pButton type="button" icon="{{task.icon}}" pTooltip="{{task.label}}" tooltipPosition="right" (click)="taskCallback(task)"></button>
         <button *ngFor="let picker of pickers; let index = index" pButton type="button" icon="{{picker.icon}}" pTooltip="{{picker.label}}" tooltipPosition="right" (click)="pickerCallback(picker)"></button>
     </div>
 </p-toolbar>
 <p-growl [value]="msgs"></p-growl>
+<p-dialog modal=true header="Confirmation" [(visible)]="display">
+  Supression ? <button pButton type="button" icon="fa-trash" pTooltip="Supprimer" tooltipPosition="bottom" (click)="confirmedDropResource()"></button>
+</p-dialog>

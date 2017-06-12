@@ -12,7 +12,6 @@ export class NavigationGuard implements CanActivate {
 
   public canActivate(destination: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     this.current = destination;
-    console.info("dest:", this.current)
     return true;
   }
 

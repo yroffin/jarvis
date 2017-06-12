@@ -60,9 +60,15 @@ export class JarvisResourcesComponent implements OnInit {
   /**
    * members
    */
-  protected msgs: Message[] = [];
   public myResourceName: string = "default";
   public myResources: ResourceBean[];
+  public toDelete: ResourceBean;
+  public msgs: Message[] = [];
+  public display: boolean = false;
+
+  /**
+   * internal service
+   */
   protected myService: JarvisDefaultResource<ResourceBean>;
 
   /**
@@ -175,6 +181,7 @@ export class JarvisResourcesComponent implements OnInit {
    * add a new resource
    */
   public addNewResource(resource: ResourceBean) {
+    this.msgs = [];
     /**
      * create a single resource
      */
@@ -187,15 +194,26 @@ export class JarvisResourcesComponent implements OnInit {
       error => console.log(error),
       () => {
         this.myResources.push(created);
+        this.myResources = [...this.myResources];
         this.msgs.push({severity:'info', summary:'Création de la ressource', detail:created.name});
       }
       );
   }
 
   /**
+   * protect dropping
+   */
+  dropResource(resource: ResourceBean) {
+    this.msgs = [];
+    this.display = true;
+    this.toDelete = resource;
+  }
+
+  /**
    * delete resource
    */
-  public dropResource(resource: ResourceBean) {
+  public confirmedDropResource(resource: ResourceBean) {
+    this.display = false;
     /**
      * delete a single resource
      */
@@ -204,10 +222,12 @@ export class JarvisResourcesComponent implements OnInit {
       (data: ResourceBean) => resource = data,
       error => console.log(error),
       () => {
+        let that = this;
         _.remove(this.myResources, function(item) {
-          return item.id === resource.id;
+          return (item.id === resource.id);
         })
-        this.msgs.push({severity:'info', summary:'Supression de la ressource', detail:resource.name});
+        this.myResources = [...this.myResources];
+        that.msgs.push({severity:'info', summary:'Supression de la ressource', detail:resource.name});
       }
       );
   }
