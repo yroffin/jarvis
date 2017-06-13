@@ -696,7 +696,7 @@ public abstract class ApiResources<REST extends GenericEntity, BEAN extends Gene
 			bean = doGetByIdBean(id);
 			logger.info("TASK - CONTEXT {}\n{}", beanClass.getName(), writeValueAsString(bean));
 		} else {
-			logger.info("TASK - CONTEXT {}", "*");
+			logger.info("TASK - CONTEXT '*' {}", id);
 		}
 		logger.info("TASK - INPUT\n{}", writeValueAsString(body));
 		GenericValue result = null;
