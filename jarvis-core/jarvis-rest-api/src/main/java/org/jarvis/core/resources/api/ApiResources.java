@@ -721,9 +721,9 @@ public abstract class ApiResources<REST extends GenericEntity, BEAN extends Gene
 		switch (result.getType()) {
 		case OBJECT:
 			/**
-			 * do statictics on object
+			 * do statictics on object (when query is init from a single bean)
 			 */
-			if (bean.isLogged) {
+			if (bean != null && bean.isLogged) {
 				coreStatistics.write(result.asObject(), restClass.getPackage().getName(),
 						restClass.getSimpleName() + "." + id);
 			}
