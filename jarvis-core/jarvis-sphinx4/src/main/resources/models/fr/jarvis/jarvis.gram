@@ -1,0 +1,9 @@
+#JSGF V1.0;
+   
+grammar numbers;
+
+public <main> = <wake> | <command> | <others>;
+
+<wake> = jarvis;
+<command> = [(ouvre|ferme)] les [(stores|lumière)];
+<others> = (ouah|stop);

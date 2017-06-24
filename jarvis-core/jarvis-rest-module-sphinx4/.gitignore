@@ -1,0 +1,7 @@
+/.classpath
+/.project
+/target/
+/.settings/
+/jarvis-modules-*.log.gz
+/jarvis-modules.log
+/log/
