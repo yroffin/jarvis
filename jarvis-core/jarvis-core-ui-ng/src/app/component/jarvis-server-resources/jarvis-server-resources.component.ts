@@ -30,7 +30,7 @@ import { MessageBean } from '../../model/broker/message-bean';
 })
 export class JarvisServerResourcesComponent implements OnInit {
 
-  private data: any;
+  public data: any;
   @ViewChild('chart') chart: UIChart;
   private messageObservable: Observable<MessageBean> = new Observable<MessageBean>();
 
