@@ -32,7 +32,7 @@ export class JarvisServerResourcesComponent implements OnInit {
 
   public data: any;
   @ViewChild('chart') chart: UIChart;
-  private messageObservable: Observable<MessageBean> = new Observable<MessageBean>();
+  public messageObservable: Observable<MessageBean> = new Observable<MessageBean>();
 
   constructor(
     private store: Store<State<MessageBean>>,

@@ -18,14 +18,6 @@ import { Component, OnInit } from '@angular/core';
 
 import { JarvisMqttService } from '../../service/jarvis-mqtt.service';
 
-import { MessageBean } from '../../model/broker/message-bean';
-
-import {
-  MqttMessage,
-  MqttModule,
-  MqttService
-} from 'angular2-mqtt';
-
 @Component({
   selector: 'app-jarvis-home',
   templateUrl: './jarvis-home.component.html',
