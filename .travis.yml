@@ -27,7 +27,7 @@ install:
   # Angular
   - cd $TRAVIS_BUILD_DIR/jarvis-core/jarvis-core-ui-ng
   - rm -rf node_modules
-  - npm install @angular/cli@1.0.1
+  - npm install @angular/cli@latest
   - npm install
   - npm update
   - ng build --aot --prod --base-href /nui/ --output-path=src/main/resources/public/nui
