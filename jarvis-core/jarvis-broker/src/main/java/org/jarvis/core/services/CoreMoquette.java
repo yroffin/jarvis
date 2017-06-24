@@ -112,6 +112,11 @@ public class CoreMoquette {
 	/**
 	 * publish a message
 	 * 
+	 * QoS 2 The highest QoS is 2, it guarantees that each message is received
+	 * only once by the counterpart. It is the safest and also the slowest
+	 * quality of service level. The guarantee is provided by two flows there
+	 * and back between sender and receiver.
+	 * 
 	 * @param topicName
 	 * @param payload
 	 */
@@ -126,6 +131,11 @@ public class CoreMoquette {
 	/**
 	 * publish a message
 	 * 
+	 * QoS 0 – at most once The minimal level is zero and it guarantees a best
+	 * effort delivery. A message won’t be acknowledged by the receiver or
+	 * stored and redelivered by the sender. This is often called “fire and
+	 * forget” and provides the same guarantee as the underlying TCP protocol.
+	 * 
 	 * @param topicName
 	 * @param payload
 	 */
@@ -139,6 +149,10 @@ public class CoreMoquette {
 
 	/**
 	 * publish a message
+	 * 
+	 * QoS 1 – at least once When using QoS level 1, it is guaranteed that a
+	 * message will be delivered at least once to the receiver. But the message
+	 * can also be delivered more than once.
 	 * 
 	 * @param topicName
 	 * @param payload

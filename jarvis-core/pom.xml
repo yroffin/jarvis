@@ -155,6 +155,11 @@
 			</dependency>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
+				<artifactId>jarvis-sphinx4</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
 				<artifactId>jarvis-common</artifactId>
 				<version>${project.version}</version>
 			</dependency>
@@ -178,6 +183,13 @@
 				<groupId>org.eclipse.paho</groupId>
 				<artifactId>org.eclipse.paho.client.mqttv3</artifactId>
 				<version>${mqtt.paho.version}</version>
+			</dependency>
+
+			<!-- sphinx dependency -->
+			<dependency>
+				<groupId>edu.cmu.sphinx</groupId>
+				<artifactId>sphinx4-core</artifactId>
+				<version>5prealpha-SNAPSHOT</version>
 			</dependency>
 
 			<!-- https://mvnrepository.com/artifact/net.sourceforge.plantuml/plantuml -->
@@ -557,6 +569,7 @@
 		<module>jarvis-marytts</module>
 		<module>jarvis-marytts-voices</module>
 		<module>jarvis-rest-module-dio</module>
+		<module>jarvis-rest-module-sphinx4</module>
 		<module>jarvis-rest-module-aiml</module>
 		<module>jarvis-rest-module-voice</module>
 		<module>jarvis-rest-module-exec</module>
@@ -573,6 +586,7 @@
 		<module>jarvis-common-security</module>
 		<module>jarvis-broker</module>
 		<module>jarvis-rflink</module>
+		<module>jarvis-sphinx4</module>
 	</modules>
 
 	<repositories>

@@ -15,8 +15,10 @@
  */
 package org.jarvis.core;
 
-import org.jarvis.core.module.JarvisVoiceEngine;
+import org.jarvis.core.module.JarvisSphinx4Engine;
 import org.jarvis.core.services.CoreRestDaemon;
+import org.jarvis.core.services.CoreSphinxService;
+import org.jarvis.core.services.ModuleThreadPoolTaskScheduler;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
@@ -32,15 +34,13 @@ import org.springframework.context.annotation.FilterType;
 	    basePackages = {"org.jarvis.core.module, org.jarvis.core.services"}, 
 	    useDefaultFilters = false,
 	    includeFilters = {
-	        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = JarvisVoiceEngine.class),
+	        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = ModuleThreadPoolTaskScheduler.class),
+	        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = CoreSphinxService.class),
+	        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = JarvisSphinx4Engine.class),
 	        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = CoreRestDaemon.class)
 })
 public class JarvisCoreModule {
 	protected static String normalizedPath = JarvisStatic.normalizedPath;
-
-	private JarvisCoreModule() {
-		
-	}
 
 	/**
 	 * main entry

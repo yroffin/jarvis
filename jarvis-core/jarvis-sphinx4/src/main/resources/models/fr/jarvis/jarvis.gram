@@ -2,8 +2,8 @@
    
 grammar numbers;
 
-public <main> = <wake> | <command> | <others>;
+public <main> = (<wake> <command>) | <others>;
 
 <wake> = jarvis;
-<command> = [(ouvre|ferme)] les [(stores|lumière)];
+<command> = [(ouvre|ferme)] les [(stores|volets|lumières)];
 <others> = (ouah|stop);

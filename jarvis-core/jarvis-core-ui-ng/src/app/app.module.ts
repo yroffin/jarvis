@@ -21,6 +21,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
+import { StoreModule } from '@ngrx/store';
 
 import { AppComponent } from './app.component';
 
@@ -56,6 +57,8 @@ import { ToggleButtonModule } from 'primeng/primeng';
 
 import { WindowRef } from './service/jarvis-utils.service';
 import { NavigationGuard } from './guard/navigation.service';
+
+import { JarvisMqttService } from './service/jarvis-mqtt.service';
 import { JarvisSecurityService } from './service/jarvis-security.service';
 import { JarvisConfigurationService } from './service/jarvis-configuration.service';
 import { JarvisDataDeviceService } from './service/jarvis-data-device.service';
@@ -103,40 +106,44 @@ import { JarvisDesktopComponent } from './component/jarvis-desktop/jarvis-deskto
 import { JarvisResourceDatasourceComponent } from './component/jarvis-resource-datasource/jarvis-resource-datasource.component';
 import { JarvisMeasureComponent } from './component/jarvis-measure/jarvis-measure.component';
 
+import { BrokerStore } from './store/broker.store';
+import { JarvisServerResourcesComponent } from './component/jarvis-server-resources/jarvis-server-resources.component';
+
 /**
  * default route definition
  */
 const appRoutes: Routes = [
-  { path: 'devices', component: JarvisResourcesComponent, canActivate: [NavigationGuard],  data: { resource: 'devices' } },
+  { path: 'devices', component: JarvisResourcesComponent, canActivate: [NavigationGuard], data: { resource: 'devices' } },
   { path: 'devices/:id', component: JarvisResourceDeviceComponent },
-  { path: 'plugins', component: JarvisResourcesComponent, canActivate: [NavigationGuard],  data: { resource: 'plugins' } },
+  { path: 'plugins', component: JarvisResourcesComponent, canActivate: [NavigationGuard], data: { resource: 'plugins' } },
   { path: 'plugins/:id', component: JarvisResourcePluginComponent },
-  { path: 'commands', component: JarvisResourcesComponent, canActivate: [NavigationGuard],  data: { resource: 'commands' } },
+  { path: 'commands', component: JarvisResourcesComponent, canActivate: [NavigationGuard], data: { resource: 'commands' } },
   { path: 'commands/:id', component: JarvisResourceCommandComponent },
-  { path: 'triggers', component: JarvisResourcesComponent, canActivate: [NavigationGuard],  data: { resource: 'triggers' } },
+  { path: 'triggers', component: JarvisResourcesComponent, canActivate: [NavigationGuard], data: { resource: 'triggers' } },
   { path: 'triggers/:id', component: JarvisResourceTriggerComponent },
-  { path: 'crons', component: JarvisResourcesComponent, canActivate: [NavigationGuard],  data: { resource: 'crons' } },
+  { path: 'crons', component: JarvisResourcesComponent, canActivate: [NavigationGuard], data: { resource: 'crons' } },
   { path: 'crons/:id', component: JarvisResourceCronComponent },
-  { path: 'scenarios', component: JarvisResourcesComponent, canActivate: [NavigationGuard],  data: { resource: 'scenarios' } },
+  { path: 'scenarios', component: JarvisResourcesComponent, canActivate: [NavigationGuard], data: { resource: 'scenarios' } },
   { path: 'scenarios/:id', component: JarvisResourceScenarioComponent },
-  { path: 'blocks', component: JarvisResourcesComponent, canActivate: [NavigationGuard],  data: { resource: 'blocks' } },
+  { path: 'blocks', component: JarvisResourcesComponent, canActivate: [NavigationGuard], data: { resource: 'blocks' } },
   { path: 'blocks/:id', component: JarvisResourceBlockComponent },
-  { path: 'configurations', component: JarvisResourcesComponent, canActivate: [NavigationGuard],  data: { resource: 'configurations' } },
+  { path: 'configurations', component: JarvisResourcesComponent, canActivate: [NavigationGuard], data: { resource: 'configurations' } },
   { path: 'configurations/:id', component: JarvisResourceConfigurationComponent },
-  { path: 'notifications', component: JarvisResourcesComponent, canActivate: [NavigationGuard],  data: { resource: 'notifications' } },
+  { path: 'notifications', component: JarvisResourcesComponent, canActivate: [NavigationGuard], data: { resource: 'notifications' } },
   { path: 'notifications/:id', component: JarvisResourceNotificationComponent },
-  { path: 'properties', component: JarvisResourcesComponent, canActivate: [NavigationGuard],  data: { resource: 'properties' } },
+  { path: 'properties', component: JarvisResourcesComponent, canActivate: [NavigationGuard], data: { resource: 'properties' } },
   { path: 'properties/:id', component: JarvisResourcePropertyComponent },
-  { path: 'connectors', component: JarvisResourcesComponent, canActivate: [NavigationGuard],  data: { resource: 'connectors' } },
+  { path: 'connectors', component: JarvisResourcesComponent, canActivate: [NavigationGuard], data: { resource: 'connectors' } },
   { path: 'connectors/:id', component: JarvisResourceConnectorComponent },
   { path: 'views', component: JarvisResourcesComponent, canActivate: [NavigationGuard], data: { resource: 'views' } },
   { path: 'views/:id', component: JarvisResourceViewComponent },
-  { path: 'snapshots', component: JarvisResourcesComponent, canActivate: [NavigationGuard],  data: { resource: 'snapshots' } },
+  { path: 'snapshots', component: JarvisResourcesComponent, canActivate: [NavigationGuard], data: { resource: 'snapshots' } },
   { path: 'snapshots/:id', component: JarvisResourceSnapshotComponent },
-  { path: 'datasources', component: JarvisResourcesComponent, canActivate: [NavigationGuard],  data: { resource: 'datasources' } },
+  { path: 'datasources', component: JarvisResourcesComponent, canActivate: [NavigationGuard], data: { resource: 'datasources' } },
   { path: 'datasources/:id', component: JarvisResourceDatasourceComponent },
-  { path: 'measures', component: JarvisResourcesComponent, canActivate: [NavigationGuard],  data: { resource: 'measures' } },
+  { path: 'measures', component: JarvisResourcesComponent, canActivate: [NavigationGuard], data: { resource: 'measures' } },
   { path: 'measures/:id', component: JarvisMeasureComponent, canActivate: [NavigationGuard] },
+  { path: 'resources', component: JarvisServerResourcesComponent, canActivate: [NavigationGuard] },
   { path: 'desktop', component: JarvisDesktopComponent },
   { path: 'login', component: JarvisLoginComponent },
   { path: '', component: JarvisHomeComponent },
@@ -169,7 +176,8 @@ const appRoutes: Routes = [
     JarvisResourceSnapshotComponent,
     JarvisDesktopComponent,
     JarvisResourceDatasourceComponent,
-    JarvisMeasureComponent
+    JarvisMeasureComponent,
+    JarvisServerResourcesComponent
   ],
   entryComponents: [
     JarvisPickerComponent
@@ -217,7 +225,13 @@ const appRoutes: Routes = [
     /**
      * routes
      */
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    /**
+     * store
+     */
+    StoreModule.provideStore({
+      Broker: BrokerStore.brokerReducer
+    })
   ],
   providers: [
     /**
@@ -247,6 +261,7 @@ const appRoutes: Routes = [
     JarvisDataViewService,
     JarvisDataDatasourceService,
     JarvisDataMeasureService,
+    JarvisMqttService,
     /**
      * guards
      */
@@ -256,5 +271,5 @@ const appRoutes: Routes = [
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  
+
 }

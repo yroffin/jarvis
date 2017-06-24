@@ -19,7 +19,7 @@ package org.jarvis.core.model.bean.websocket;
 /**
  * simple shell for object stored on web socket channel
  */
-public class WebsocketDataBean {
+public class MqttDataBean {
 	/**
 	 * classname
 	 */
@@ -38,7 +38,7 @@ public class WebsocketDataBean {
 	 * @param instance
 	 * @param data
 	 */
-	public WebsocketDataBean(String instance, Object data) {
+	public MqttDataBean(String instance, Object data) {
 		super();
 		this.classname = data.getClass().getSimpleName();
 		this.instance = instance;

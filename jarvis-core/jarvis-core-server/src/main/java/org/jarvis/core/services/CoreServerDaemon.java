@@ -20,16 +20,10 @@ import java.util.Set;
 
 import javax.annotation.PostConstruct;
 
-import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
-import org.eclipse.paho.client.mqttv3.MqttCallback;
-import org.eclipse.paho.client.mqttv3.MqttClient;
-import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.jarvis.core.SwaggerParser;
-import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.model.bean.config.Oauth2Config;
+import org.jarvis.core.resources.CoreMqttSystem;
 import org.jarvis.core.resources.CoreResources;
-import org.jarvis.core.resources.CoreWebsocket;
 import org.jarvis.core.resources.api.ApiResources;
 import org.jarvis.core.resources.api.config.ApiConfigResources;
 import org.jarvis.core.resources.api.config.ApiPropertyResources;
@@ -51,7 +45,6 @@ import org.jarvis.core.security.JarvisAccessLogFilter;
 import org.jarvis.core.security.JarvisAuthorizerUsers;
 import org.jarvis.core.security.JarvisCoreClient;
 import org.jarvis.core.security.JarvisTokenValidationFilter;
-import org.jarvis.core.type.GenericMap;
 import org.pac4j.core.client.Clients;
 import org.pac4j.core.config.Config;
 import org.pac4j.core.profile.UserProfile;
@@ -90,7 +83,7 @@ import spark.Route;
 		title = "Jarvis core system", contact = @Contact(name = "Yannick Roffin", url = "https://yroffin.github.io")), schemes = {
 				SwaggerDefinition.Scheme.HTTP, SwaggerDefinition.Scheme.HTTPS }, consumes = {
 						"application/json" }, produces = { "application/json" }, tags = { @Tag(name = "swagger") })
-public class CoreServerDaemon implements MqttCallback {
+public class CoreServerDaemon {
 	protected Logger logger = LoggerFactory.getLogger(CoreServerDaemon.class);
 
 	@Autowired
@@ -99,16 +92,17 @@ public class CoreServerDaemon implements MqttCallback {
 	@Autowired
 	Environment env;
 
-	protected MqttClient client;
-
 	@Autowired
 	CoreEventDaemon coreEventDaemon;
 
 	@Autowired
+	CoreSphinxService coreSphinxService;
+	
+	@Autowired
 	CoreResources coreResources;
 
 	@Autowired
-	CoreWebsocket coreWebsocket;
+	CoreMqttSystem coreMqttSystem;
 
 	@Autowired
 	ApiScenarioResources apiScenarioResources;
@@ -185,11 +179,6 @@ public class CoreServerDaemon implements MqttCallback {
 		 * port
 		 */
 		spark.Spark.port(port);
-
-		/**
-		 * websockets
-		 */
-		coreWebsocket.mount();
 
 		/**
 		 * mount resources
@@ -297,68 +286,10 @@ public class CoreServerDaemon implements MqttCallback {
 
 		spark.Spark.after("/*", new JarvisAccessLogFilter());
 
-		try {
-			services();
-		} catch (MqttException e) {
-			logger.error("Unable to set up services: {}", e);
-			throw new TechnicalException(e);
-		}
-	}
-
-	/**
-	 * services
-	 * 
-	 * @throws MqttException
-	 */
-	public void services() throws MqttException {
-		/**
-		 * declare a mqtt client for suscribe to event
-		 */
-		try {
-			// Construct an MQTT blocking mode client
-			this.client = new MqttClient(env.getProperty("jarvis.mqtt.url"), Thread.currentThread().getName());
-			client.connect();
-
-			// Set this wrapper as the callback handler
-			client.setCallback(this);
-		} catch (MqttException e) {
-			logger.error("Unable to set up client: {}", e);
-			throw new TechnicalException(e);
-		}
-
-		/**
-		 * subscribers
-		 */
-		client.subscribe("/api/connectors/#");
-		client.subscribe("/collect/#");
-
 		/**
 		 * init trigger subscription
 		 */
 		coreEventDaemon.triggers();
-	}
-
-	@Override
-	public void connectionLost(Throwable cause) {
-		logger.warn("connectionLost: {}", cause);
-	}
-
-	@Override
-	public void messageArrived(String topic, MqttMessage message) throws Exception {
-		GenericMap value = mapper.readValue(message.getPayload(), GenericMap.class);
-		logger.warn("messageArrived: {} {}", topic, value);
-
-		/**
-		 * connectors topic
-		 */
-		if (topic.startsWith("/api/connectors")) {
-			apiConnectorResources.register(value);
-		}
-	}
-
-	@Override
-	public void deliveryComplete(IMqttDeliveryToken token) {
-		logger.warn("deliveryComplete: {}", token);
 	}
 
 	/**
@@ -371,7 +302,7 @@ public class CoreServerDaemon implements MqttCallback {
 		Set<Class<?>> apiClasses = reflections.getTypesAnnotatedWith(Api.class);
 		for (Class<?> klass : apiClasses) {
 			ApiResources<?, ?> bean = (ApiResources<?, ?>) applicationContext.getBean(klass);
-			logger.info("Mount resource {}", bean);
+			logger.debug("Mount resource {}", bean);
 			bean.mount();
 		}
 	}

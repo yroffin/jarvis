@@ -49,7 +49,7 @@ import spark.Response;
 @Produces("application/json")
 @Declare(resource=ApiMapper.CRON_RESOURCE, summary="Cron resource", rest=CronRest.class)
 public class ApiCronResources extends ApiResources<CronRest,CronBean> {
-
+	
 	@Autowired
 	CoreThreadPoolTaskScheduler jarvisThreadPoolTaskScheduler;
 	

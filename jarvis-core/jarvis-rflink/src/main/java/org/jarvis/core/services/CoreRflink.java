@@ -179,7 +179,14 @@ public class CoreRflink {
 			serialPort.addEventListener(new SerialPortReader());// Add
 																// SerialPortEventListener
 		} catch (SerialPortException ex) {
-			logger.error("SerialPortException {}", ex);
+			/**
+			 * ignore port not found stack
+			 */
+			if(!"Port not found".equals(ex.getExceptionType())) {
+				logger.error("SerialPortException {}", ex);
+			} else {
+				logger.error("SerialPortException {}", "Port not found");
+			}
 		}
 		/**
 		 * async processing

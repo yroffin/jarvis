@@ -1,0 +1,7 @@
+<p>
+  jarvis-server-resources works!
+</p>
+{{ (messageObservable | async)?.body | json }}
+{{ data.datasets[0].data | json }}
+
+<p-chart #chart type="line" [data]="data"></p-chart>

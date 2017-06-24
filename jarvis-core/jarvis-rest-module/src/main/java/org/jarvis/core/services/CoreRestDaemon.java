@@ -33,12 +33,9 @@ import java.util.concurrent.ScheduledFuture;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.MediaType;
 
-import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
+import org.eclipse.paho.client.mqttv3.MqttClient;
+import org.eclipse.paho.client.mqttv3.MqttException;
 import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.model.bean.connector.ConnectorBean;
 import org.jarvis.core.resources.SystemIndicator;
@@ -75,6 +72,11 @@ public class CoreRestDaemon {
 	 */
 	private ObjectMapper mapper = new ObjectMapper();
 
+	/**
+	 * mqtt client
+	 */
+	protected MqttClient client;
+
 	@Autowired
 	Environment env;
 
@@ -106,6 +108,20 @@ public class CoreRestDaemon {
 		SystemIndicator.init();
 		
 		/**
+		 * declare a mqtt client for suscribe to event
+		 */
+		try {
+			/**
+			 * Construct an MQTT blocking mode client
+			 */
+			this.client = new MqttClient(env.getProperty("jarvis.mqtt.url"), "rest-client-"+Thread.currentThread().getName());
+			client.connect();
+		} catch (MqttException e) {
+			logger.error("Unable to set up client: {}", e);
+			throw new TechnicalException(e);
+		}
+
+		/**
 		 * default api
 		 */
 		register(CoreMethod.GET, "/api/config", new JarvisConnectorImpl() {
@@ -131,16 +147,8 @@ public class CoreRestDaemon {
 		/**
 		 * create notifier thread if server interface is defined
 		 */
-		String serverUrl = env.getProperty("jarvis.server.url");
 		String serverNotify = env.getProperty("jarvis.server.notify", "0 * * * * *");
-		String serverUser = env.getProperty("jarvis.server.user", "default");
-		String serverPassword = env.getProperty("jarvis.server.password", "password");
-		if(serverUrl != null & serverNotify != null) {
-			/**
-			 * create rest client
-			 */
-			Client client = ClientBuilder.newClient();
-			
+		if(serverNotify != null) {
 			ConnectorBean bean = new ConnectorBean();
 			bean.name = connector.getName();
 
@@ -176,14 +184,9 @@ public class CoreRestDaemon {
 			bean.isSensor = connector.isSensor();
 
 			/**
-			 *  register auth feature if user is not null
+			 *  register health
 			 */
-			if(serverUser != null) {
-				HttpAuthenticationFeature feature = HttpAuthenticationFeature.basic(serverUser, serverPassword);
-				client.register(feature);
-			}
-
-			healthStatus(client, serverUrl, serverNotify, bean);
+			healthStatus(serverNotify, bean);
 		}
 	}
 
@@ -193,26 +196,11 @@ public class CoreRestDaemon {
 	 * @param serverUrl
 	 * @param bean
 	 */
-	private void handler(Client client, String serverUrl, ConnectorBean bean) {
-		javax.ws.rs.core.Response entity;
+	private void handler(ConnectorBean bean) {
 		try {
-			entity = client.target(serverUrl)
-			        .path("/api/connectors/*")
-			        .queryParam("task", "register")
-			        .request(MediaType.APPLICATION_JSON)
-			        .accept(MediaType.APPLICATION_JSON)
-			        .acceptEncoding("charset=UTF-8")
-			        .post(Entity.entity(mapper.writeValueAsString(bean),MediaType.APPLICATION_JSON));
-
-			/**
-			 * verify result
-			 */
-			if(entity.getStatus() == 200) {
-			} else {
-				throw new TechnicalException(serverUrl + "/connectors - " + entity.getStatus());
-			}
-		} catch (JsonProcessingException e) {
-			logger.warn("Error {}", e);
+			this.client.publish("/health/" + bean.name, mapper.writeValueAsString(bean).getBytes(), 0, false);
+		} catch (JsonProcessingException | MqttException e) {
+			logger.error("publish error {}", e);
 		}
 	}
 	
@@ -223,11 +211,11 @@ public class CoreRestDaemon {
 	 * @param cron
 	 * @param bean 
 	 */
-	private void healthStatus(Client client, String serverUrl, String cron, ConnectorBean bean) {
+	private void healthStatus(String cron, ConnectorBean bean) {
 		/**
 		 * initial call
 		 */
-		handler(client, serverUrl, bean);
+		handler(bean);
 
 		Trigger trigger = new CronTrigger(cron);
 
@@ -235,7 +223,7 @@ public class CoreRestDaemon {
 			
 			@Override
 			public void run() {
-				handler(client, serverUrl, bean);
+				handler(bean);
 			}
 			
 		}, trigger);

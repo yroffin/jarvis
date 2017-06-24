@@ -7,9 +7,9 @@
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
-	<artifactId>jarvis-rest-module-voice</artifactId>
+	<artifactId>jarvis-rest-module-sphinx4</artifactId>
 
-	<name>Rest module VOICE</name>
+	<name>Rest module SPHINX4</name>
 
 	<dependencies>
 		<!-- internal dependencies -->
@@ -19,15 +19,13 @@
 		</dependency>
 		<dependency>
 			<groupId>org.yroffin.com.jarvis</groupId>
-			<artifactId>jarvis-marytts</artifactId>
+			<artifactId>jarvis-sphinx4</artifactId>
 		</dependency>
+
+		<!-- technical dependencies -->
 		<dependency>
-			<groupId>org.yroffin.com.jarvis</groupId>
-			<artifactId>jarvis-marytts-voices</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>de.dfki.mary</groupId>
-			<artifactId>voice-enst-catherine-hsmm</artifactId>
+			<groupId>org.eclipse.paho</groupId>
+			<artifactId>org.eclipse.paho.client.mqttv3</artifactId>
 		</dependency>
 
 		<!-- technical dependencies -->
@@ -47,11 +45,8 @@
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>
 		</dependency>
+
 		<!-- technical dependencies -->
-		<dependency>
-			<groupId>us.monoid.web</groupId>
-			<artifactId>resty</artifactId>
-		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
@@ -79,7 +74,7 @@
 	</dependencies>
 
 	<properties>
-		<start-class>org.jarvis.core.JarvisDioModule</start-class>
+		<start-class>org.jarvis.core.JarvisSphinx4Engine</start-class>
 	</properties>
 
 	<build>
