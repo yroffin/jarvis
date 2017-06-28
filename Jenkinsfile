@@ -68,7 +68,7 @@ node {
             ssh -o StrictHostKeyChecking=no -l pi ${MASTER_NODE} uname -a
             scp -o StrictHostKeyChecking=no jarvis-scripts/jarvis-service pi@${MASTER_NODE}:/tmp/script
             ssh -o StrictHostKeyChecking=no -l pi ${MASTER_NODE} sudo mv -f /tmp/script /etc/init.d/jarvis-service
-            ssh -o StrictHostKeyChecking=no -l pi ${MASTER_NODE} sudo chmod 755 -f /tmp/script /etc/init.d/jarvis-service
+            ssh -o StrictHostKeyChecking=no -l pi ${MASTER_NODE} sudo chmod 755 -f /etc/init.d/jarvis-service
             ssh -o StrictHostKeyChecking=no -l pi ${MASTER_NODE} sudo update-rc.d -f jarvis-service defaults
             ssh -o StrictHostKeyChecking=no -l pi ${MASTER_NODE} sudo systemctl daemon-reload
             scp -o StrictHostKeyChecking=no jarvis-core/jarvis-core-server/target/*.jar pi@${MASTER_NODE}:/tmp/bundle
@@ -86,7 +86,7 @@ node {
             ssh -o StrictHostKeyChecking=no -l pi ${SHIRKA_NODE} uname -a
             scp -o StrictHostKeyChecking=no jarvis-scripts/jarvis-sphinx4-service pi@${SHIRKA_NODE}:/tmp/script
             ssh -o StrictHostKeyChecking=no -l pi ${SHIRKA_NODE} sudo mv -f /tmp/script /etc/init.d/jarvis-sphinx4-service
-            ssh -o StrictHostKeyChecking=no -l pi ${SHIRKA_NODE} sudo chmod 755 -f /tmp/script /etc/init.d/jarvis-sphinx4-service
+            ssh -o StrictHostKeyChecking=no -l pi ${SHIRKA_NODE} sudo chmod 755 -f /etc/init.d/jarvis-sphinx4-service
             ssh -o StrictHostKeyChecking=no -l pi ${SHIRKA_NODE} sudo update-rc.d -f jarvis-sphinx4-service defaults
             ssh -o StrictHostKeyChecking=no -l pi ${SHIRKA_NODE} sudo systemctl daemon-reload
             scp -o StrictHostKeyChecking=no jarvis/jarvis-core//jarvis-rest-module-sphinx4/target/*.jar pi@${MASTER_NODE}:/tmp/bundle
