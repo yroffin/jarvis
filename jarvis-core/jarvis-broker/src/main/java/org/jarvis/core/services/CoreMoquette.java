@@ -47,7 +47,7 @@ import io.moquette.server.config.ResourceLoaderConfig;
  */
 @Component
 public class CoreMoquette {
-	protected Logger logger = LoggerFactory.getLogger(CoreMoquette.class);
+	protected static Logger logger = LoggerFactory.getLogger(CoreMoquette.class);
 
 	@Autowired
 	ApplicationContext applicationContext;
@@ -81,6 +81,7 @@ public class CoreMoquette {
 	}
 
 	private static Server mqttBroker;
+	
 
 	/**
 	 * start moquette
@@ -95,6 +96,7 @@ public class CoreMoquette {
 		mqttBroker = new Server();
 		List<? extends InterceptHandler> userHandlers = asList(new PublisherListener());
 		mqttBroker.startServer(classPathConfig, userHandlers);
+		logger.info("Server MQTT started");
 
 		/**
 		 * hook
@@ -102,9 +104,7 @@ public class CoreMoquette {
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 			@Override
 			public void run() {
-				System.out.println("Stopping broker");
 				mqttBroker.stopServer();
-				System.out.println("Broker stopped");
 			}
 		});
 	}
