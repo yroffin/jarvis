@@ -89,7 +89,7 @@ node {
             ssh -o StrictHostKeyChecking=no -l pi ${SHIRKA_NODE} sudo chmod 755 -f /etc/init.d/jarvis-sphinx4-service
             ssh -o StrictHostKeyChecking=no -l pi ${SHIRKA_NODE} sudo update-rc.d -f jarvis-sphinx4-service defaults
             ssh -o StrictHostKeyChecking=no -l pi ${SHIRKA_NODE} sudo systemctl daemon-reload
-            scp -o StrictHostKeyChecking=no jarvis/jarvis-core//jarvis-rest-module-sphinx4/target/*.jar pi@${MASTER_NODE}:/tmp/bundle
+            scp -o StrictHostKeyChecking=no jarvis-core/jarvis-rest-module-sphinx4/target/*.jar pi@${MASTER_NODE}:/tmp/bundle
             ssh -o StrictHostKeyChecking=no -l pi ${SHIRKA_NODE} sudo mv -f /tmp/bundle /home/jarvis/jarvis-rest-module-sphinx4-0.0.1-SNAPSHOT.jar
             ssh -o StrictHostKeyChecking=no -l pi ${SHIRKA_NODE} sudo pkill -e -f jarvis
             ssh -o StrictHostKeyChecking=no -l pi ${SHIRKA_NODE} sudo service jarvis-sphinx4-service restart
