@@ -72,25 +72,16 @@ public class CoreMqttSystem {
 			 * Construct an MQTT blocking mode client
 			 */
 			this.client = new MqttClient(env.getProperty("jarvis.mqtt.url"), Thread.currentThread().getName());
-			client.connect();
 		} catch (MqttException e) {
 			logger.error("Unable to set up client: {}", e);
 			throw new TechnicalException(e);
-		}
-		/**
-		 * subscribers
-		 */
-		try {
-			client.subscribe("/api/connectors/#");
-			client.subscribe("/collect/#");
-		} catch (MqttException e) {
-			logger.error("Unable to subcribe: {}", e);
 		}
 
 		/**
 		 * internal runner
 		 */
 		CoreMqttSystemThread thread = new CoreMqttSystemThread();
+
 		/**
 		 * Set this wrapper as the callback handler
 		 */
@@ -135,6 +126,22 @@ public class CoreMqttSystem {
 				 * broadcast
 				 */
 				try {
+					/**
+					 * check connexion
+					 */
+					if(!client.isConnected()) {
+						client.connect();
+
+						/**
+						 * subscribers
+						 */
+						try {
+							client.subscribe("/api/connectors/#");
+							client.subscribe("/collect/#");
+						} catch (MqttException e) {
+							logger.error("Unable to subcribe: {}", e);
+						}
+					}
 					client.publish("/system/core", new MqttMessage(mapper.writeValueAsBytes(data)));
 				} catch (JsonProcessingException | MqttException e) {
 					logger.error("While processing {}", e);
