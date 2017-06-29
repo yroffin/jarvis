@@ -6,6 +6,9 @@
     </Console>
   </Appenders>
   <Loggers>
+  	<Logger name="default.config.edu.cmu" level="warn" additivity="false">
+      <AppenderRef ref="Console"/>
+    </Logger>
     <Root level="info">
       <AppenderRef ref="Console" level="info" />
     </Root>

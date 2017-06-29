@@ -193,8 +193,18 @@ public class CoreSphinxService {
 						try {
 							BrokerMsg b = new BrokerMsg(result);
 							client.publish("/sphinx4",  mapper.writeValueAsString(b).getBytes(), 0, false);
-						} catch (JsonProcessingException | MqttException e) {
+						} catch (JsonProcessingException e) {
+							logger.error("json parsesh error {}", e);
+						} catch (MqttException e) {
 							logger.error("publish error {}", e);
+							if(e.getReasonCode() == MqttException.REASON_CODE_CLIENT_NOT_CONNECTED) {
+								logger.info("trying to reconnect");
+								try {
+									client.connect();
+								} catch (MqttException e1) {
+									logger.error("connect error {}", e1);
+								}
+							}
 						}
 						/**
 						 * Get individual words and their times.
