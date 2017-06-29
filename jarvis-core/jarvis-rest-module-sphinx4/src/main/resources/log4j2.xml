@@ -25,11 +25,8 @@
   	<Logger name="org.ehcache" level="warn" additivity="false">
       <AppenderRef ref="RollingFile"/>
     </Logger>
-  	<Logger name="org.jarvis.core.security" level="info" additivity="false">
-      <AppenderRef ref="RollingSessionFile"/>
-    </Logger>
-  	<Logger name="org.jarvis.core.access" level="info" additivity="false">
-      <AppenderRef ref="RollingAccessFile"/>
+  	<Logger name="default.config.edu.cmu" level="warn" additivity="false">
+      <AppenderRef ref="RollingFile"/>
     </Logger>
     <Root level="info">
       <AppenderRef ref="Console" level="info" />

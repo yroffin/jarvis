@@ -5,3 +5,5 @@
 /jarvis-modules-*.log.gz
 /jarvis-modules.log
 /log/
+/jarvis.log
+/jarvis-access.log

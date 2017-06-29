@@ -69,12 +69,17 @@ public class CoreSphinxService {
 	 * stop threads
 	 */
 	public static boolean running = true;
+	/**
+	 * wake word
+	 */
+	public static String wakeWord = "default";
 
 	/**
 	 * @throws IOException
 	 */
 	@PostConstruct
 	public void init() throws IOException {
+		wakeWord = env.getProperty("jarvis.sphinx4.wakeword", "jarvis");
 		boolean enabled = Boolean.parseBoolean(env.getProperty("jarvis.sphinx4.enabled", "false"));
 		if (enabled) {
 			/**
@@ -85,7 +90,6 @@ public class CoreSphinxService {
 				 * Construct an MQTT blocking mode client
 				 */
 				this.client = new MqttClient(env.getProperty("jarvis.mqtt.url"), "sphinx-service-"+Thread.currentThread().getName());
-				client.connect();
 			} catch (MqttException e) {
 				logger.error("Unable to set up client: {}", e);
 				throw new TechnicalException(e);
@@ -192,19 +196,22 @@ public class CoreSphinxService {
 						logger.info("newResult: {}", result.getHypothesis());
 						try {
 							BrokerMsg b = new BrokerMsg(result);
-							client.publish("/sphinx4",  mapper.writeValueAsString(b).getBytes(), 0, false);
-						} catch (JsonProcessingException e) {
-							logger.error("json parsesh error {}", e);
-						} catch (MqttException e) {
-							logger.error("publish error {}", e);
-							if(e.getReasonCode() == MqttException.REASON_CODE_CLIENT_NOT_CONNECTED) {
-								logger.info("trying to reconnect");
-								try {
-									client.connect();
-								} catch (MqttException e1) {
-									logger.error("connect error {}", e1);
-								}
+							/**
+							 * check connexion
+							 */
+							if(!client.isConnected()) {
+								client.connect();
 							}
+							/**
+							 * only send sentence with wake word
+							 */
+							if(result.getHypothesis() != null && result.getHypothesis().startsWith(wakeWord)) {
+								client.publish("/sphinx4",  mapper.writeValueAsString(b).getBytes(), 0, false);
+							}
+						} catch (JsonProcessingException e) {
+							logger.error("json parse error {}", e);
+						} catch (MqttException e) {
+							logger.error("publish error {} - {}", e, e.getReasonCode());
 						}
 						/**
 						 * Get individual words and their times.

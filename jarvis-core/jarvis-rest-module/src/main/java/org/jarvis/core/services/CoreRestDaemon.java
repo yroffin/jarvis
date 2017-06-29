@@ -115,7 +115,6 @@ public class CoreRestDaemon {
 			 * Construct an MQTT blocking mode client
 			 */
 			this.client = new MqttClient(env.getProperty("jarvis.mqtt.url"), "rest-client-"+Thread.currentThread().getName());
-			client.connect();
 		} catch (MqttException e) {
 			logger.error("Unable to set up client: {}", e);
 			throw new TechnicalException(e);
@@ -198,9 +197,17 @@ public class CoreRestDaemon {
 	 */
 	private void handler(ConnectorBean bean) {
 		try {
+			/**
+			 * check connexion
+			 */
+			if(!client.isConnected()) {
+				client.connect();
+			}
 			this.client.publish("/health/" + bean.name, mapper.writeValueAsString(bean).getBytes(), 0, false);
-		} catch (JsonProcessingException | MqttException e) {
-			logger.error("publish error {}", e);
+		} catch (JsonProcessingException e) {
+			logger.error("json parse error {}", e);
+		} catch (MqttException e) {
+			logger.error("publish error {} - {}", e, e.getReasonCode());
 		}
 	}
 	
