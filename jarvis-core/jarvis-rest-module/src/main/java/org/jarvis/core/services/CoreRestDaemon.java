@@ -65,6 +65,7 @@ import spark.Response;
 	@PropertySource(value = "file://${jarvis.user.dir}/config.properties", ignoreResourceNotFound = true)
 })
 public class CoreRestDaemon {
+	
 	protected Logger logger = LoggerFactory.getLogger(CoreRestDaemon.class);
 
 	/**

@@ -2,6 +2,7 @@
 /.project
 /target/
 /.settings/
+/*.log.gz
 /jarvis-modules-*.log.gz
 /jarvis-modules.log
 /log/
