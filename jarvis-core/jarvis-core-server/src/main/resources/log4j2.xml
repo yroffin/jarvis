@@ -14,6 +14,11 @@
       <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger{36} - %msg%n"/>
       <TimeBasedTriggeringPolicy />
     </RollingFile>
+	<RollingCronFile name="RollingCronFile" fileName="${sys:jarvis.log.dir}/jarvis-crons.log" filePattern="${sys:jarvis.log.dir}/jarvis-crons-%d{MM-dd-yyyy}.log.gz"
+                 ignoreExceptions="false">
+      <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger{36} - %msg%n"/>
+      <TimeBasedTriggeringPolicy />
+    </RollingCronFile>
 	<RollingFile name="RollingAccessFile" fileName="${sys:jarvis.log.dir}/jarvis-access.log" filePattern="${sys:jarvis.log.dir}/jarvis-access-%d{MM-dd-yyyy}.log.gz"
                  ignoreExceptions="false">
       <PatternLayout pattern="%d{DEFAULT} %msg%n"/>
@@ -42,9 +47,13 @@
   	<Logger name="org.jarvis.core.access" level="info" additivity="false">
       <AppenderRef ref="RollingAccessFile"/>
     </Logger>
+  	<Logger name="org.jarvis.core.resources.api.tools.ApiCronResources" level="info" additivity="false">
+      <AppenderRef ref="RollingCronFile"/>
+    </Logger>
     <Root level="info">
       <AppenderRef ref="Console" level="info" />
       <AppenderRef ref="RollingFile" level="info" />
+      <AppenderRef ref="RollingCronFile" level="info" />
       <AppenderRef ref="MongoDbAppender" level="info" />
     </Root>
   </Loggers>
