@@ -69,11 +69,6 @@
 			</dependency>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>jarvis-swagger-ui</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>${project.groupId}</groupId>
 				<artifactId>jarvis-websocket</artifactId>
 				<version>${project.version}</version>
 			</dependency>
@@ -581,7 +576,6 @@
 		<module>jarvis-rest-api-zway</module>
 		<module>jarvis-rest-api-slack</module>
 		<module>jarvis-swagger-core</module>
-		<module>jarvis-swagger-ui</module>
 		<module>jarvis-plantuml</module>
 		<module>jarvis-common-security</module>
 		<module>jarvis-broker</module>

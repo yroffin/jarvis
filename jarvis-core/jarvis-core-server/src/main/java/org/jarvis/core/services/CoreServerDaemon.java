@@ -16,6 +16,7 @@
 
 package org.jarvis.core.services;
 
+import java.io.InputStream;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
@@ -72,6 +73,7 @@ import jersey.repackaged.com.google.common.collect.ImmutableList;
 import spark.Request;
 import spark.Response;
 import spark.Route;
+import spark.utils.IOUtils;
 
 /**
  * main daemon
@@ -282,6 +284,18 @@ public class CoreServerDaemon {
 		swaggerJson = SwaggerParser.getSwaggerJson("org.jarvis.core");
 		spark.Spark.get("/api/swagger", (req, res) -> {
 			return swaggerJson;
+		});
+
+		spark.Spark.get("/swagger-ui/*", (req, res) -> {
+			String resource = "public/swagger-ui" + req.uri().replace("/swagger-ui", "");
+			logger.info("uri: {}", resource);
+			InputStream is = this.getClass().getClassLoader().getResourceAsStream(resource);
+			if(is != null) {
+				return IOUtils.toByteArray(is);
+			} else {
+				res.status(404);
+				return "";
+			}
 		});
 
 		spark.Spark.after("/*", new JarvisAccessLogFilter());
