@@ -169,7 +169,11 @@ public class CoreMqttSystem {
 
 		@Override
 		public void deliveryComplete(IMqttDeliveryToken token) {
-			logger.warn("deliveryComplete: {}", token);
+			try {
+				logger.info("deliveryComplete: {}", token.getMessage());
+			} catch (MqttException e) {
+				logger.warn("deliveryComplete: {}", e);
+			}
 		}
 	}
 }

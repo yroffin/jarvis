@@ -81,7 +81,7 @@ import spark.utils.IOUtils;
 @Component
 @PropertySources({ @PropertySource(value = "classpath:server.properties", ignoreResourceNotFound = true),
 		@PropertySource(value = "file://${jarvis.user.dir}/config.properties", ignoreResourceNotFound = true) })
-@SwaggerDefinition(host = "192.168.1.12:8082", info = @Info(description = "Jarvis", version = "v1.0", //
+@SwaggerDefinition(info = @Info(description = "Jarvis", version = "v1.0", //
 		title = "Jarvis core system", contact = @Contact(name = "Yannick Roffin", url = "https://yroffin.github.io")), schemes = {
 				SwaggerDefinition.Scheme.HTTP, SwaggerDefinition.Scheme.HTTPS }, consumes = {
 						"application/json" }, produces = { "application/json" }, tags = { @Tag(name = "swagger") })

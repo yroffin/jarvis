@@ -50,9 +50,11 @@
   	<Logger name="org.jarvis.core.resources.api.tools.ApiCronResources" level="info" additivity="false">
       <AppenderRef ref="RollingCronFile"/>
     </Logger>
-    <Root level="info">
+    <Root level="warn">
       <AppenderRef ref="Console" level="info" />
-      <AppenderRef ref="RollingFile" level="info" />
+      <AppenderRef ref="RollingFile" level="warn" />
+      <AppenderRef ref="RollingAccessFile" level="info" />
+      <AppenderRef ref="RollingSessionFile" level="info" />
       <AppenderRef ref="RollingCronFile" level="info" />
       <AppenderRef ref="MongoDbAppender" level="info" />
     </Root>
