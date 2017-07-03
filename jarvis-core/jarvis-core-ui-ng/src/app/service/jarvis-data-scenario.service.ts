@@ -40,7 +40,7 @@ export class JarvisDataScenarioService extends JarvisDataCoreResource<ScenarioBe
         private _http: Http,
         private _configuration: JarvisConfigurationService
     ) {
-        super(_configuration.ServerWithApiUrl + 'scenarios', _http);
+        super(_configuration, _configuration.ServerWithApiUrl + 'scenarios', _http);
 
         /**
          * map linked elements

@@ -37,7 +37,7 @@ export class JarvisDataRawService extends JarvisDataCoreResource<ResourceBean> i
         private _http: Http,
         private _configuration: JarvisConfigurationService
     ) {
-        super(_configuration.ServerWithApiUrl, _http);
+        super(_configuration, _configuration.ServerWithApiUrl, _http);
     }
 
     /**

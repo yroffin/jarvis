@@ -40,20 +40,25 @@ export class JarvisDesktopComponent implements OnInit {
   myViews: ViewBean[];
 
   constructor(
-    private _jarvisDataDeviceService: JarvisDataDeviceService,
-    private _jarvisDataStoreService: JarvisDataStoreService,
-    private _jarvisDataViewService: JarvisDataViewService) {
+    private jarvisDataDeviceService: JarvisDataDeviceService,
+    private jarvisDataStoreService: JarvisDataStoreService,
+    private jarvisDataViewService: JarvisDataViewService) {
   }
 
   ngOnInit() {
     /**
      * get profile from store
      */
-    this.myViews = this._jarvisDataStoreService.getViews()
+    this.jarvisDataStoreService.loadViews();
+    this.myViews = this.jarvisDataStoreService.getViews();
   }
 
+  /**
+   * implement touch on device
+   * @param device 
+   */
   private touch(device: DeviceBean): void {
-    this._jarvisDataDeviceService.Task(device.id, "execute", {})
+    this.jarvisDataDeviceService.Task(device.id, "execute", {})
       .subscribe(
       (data: any) => this.msgs.push({severity:'info', summary:'Activation', detail:device.name})
       );

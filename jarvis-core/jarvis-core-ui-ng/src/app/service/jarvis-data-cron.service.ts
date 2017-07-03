@@ -35,6 +35,6 @@ export class JarvisDataCronService extends JarvisDataCoreResource<CronBean> impl
         private _http: Http,
         private _configuration: JarvisConfigurationService
     ) {
-        super(_configuration.ServerWithApiUrl + 'crons', _http);
+        super(_configuration, _configuration.ServerWithApiUrl + 'crons', _http);
     }
 }

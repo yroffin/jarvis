@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import { environment } from '../environments/environment';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -56,7 +57,9 @@ import { SliderModule } from 'primeng/primeng';
 import { ToggleButtonModule } from 'primeng/primeng';
 
 import { WindowRef } from './service/jarvis-utils.service';
+import { LoggerService } from './service/logger.service';
 import { NavigationGuard } from './guard/navigation.service';
+import { ProfileGuard } from './guard/profile.service';
 
 import { JarvisMqttService } from './service/jarvis-mqtt.service';
 import { JarvisSecurityService } from './service/jarvis-security.service';
@@ -78,6 +81,7 @@ import { JarvisDataRawService } from './service/jarvis-data-raw.service';
 import { JarvisDataStoreService } from './service/jarvis-data-store.service';
 import { JarvisDataDatasourceService } from './service/jarvis-data-datasource.service';
 import { JarvisDataMeasureService } from './service/jarvis-data-measure.service';
+import { JarvisLoaderService } from './service/jarvis-loader.service';
 
 import { JarvisLayoutDirective } from './directive/jarvis-layout.directive';
 
@@ -113,41 +117,41 @@ import { JarvisServerResourcesComponent } from './component/jarvis-server-resour
  * default route definition
  */
 const appRoutes: Routes = [
-  { path: 'devices', component: JarvisResourcesComponent, canActivate: [NavigationGuard], data: { resource: 'devices' } },
-  { path: 'devices/:id', component: JarvisResourceDeviceComponent },
-  { path: 'plugins', component: JarvisResourcesComponent, canActivate: [NavigationGuard], data: { resource: 'plugins' } },
-  { path: 'plugins/:id', component: JarvisResourcePluginComponent },
-  { path: 'commands', component: JarvisResourcesComponent, canActivate: [NavigationGuard], data: { resource: 'commands' } },
-  { path: 'commands/:id', component: JarvisResourceCommandComponent },
-  { path: 'triggers', component: JarvisResourcesComponent, canActivate: [NavigationGuard], data: { resource: 'triggers' } },
-  { path: 'triggers/:id', component: JarvisResourceTriggerComponent },
-  { path: 'crons', component: JarvisResourcesComponent, canActivate: [NavigationGuard], data: { resource: 'crons' } },
-  { path: 'crons/:id', component: JarvisResourceCronComponent },
-  { path: 'scenarios', component: JarvisResourcesComponent, canActivate: [NavigationGuard], data: { resource: 'scenarios' } },
-  { path: 'scenarios/:id', component: JarvisResourceScenarioComponent },
-  { path: 'blocks', component: JarvisResourcesComponent, canActivate: [NavigationGuard], data: { resource: 'blocks' } },
-  { path: 'blocks/:id', component: JarvisResourceBlockComponent },
-  { path: 'configurations', component: JarvisResourcesComponent, canActivate: [NavigationGuard], data: { resource: 'configurations' } },
-  { path: 'configurations/:id', component: JarvisResourceConfigurationComponent },
-  { path: 'notifications', component: JarvisResourcesComponent, canActivate: [NavigationGuard], data: { resource: 'notifications' } },
-  { path: 'notifications/:id', component: JarvisResourceNotificationComponent },
-  { path: 'properties', component: JarvisResourcesComponent, canActivate: [NavigationGuard], data: { resource: 'properties' } },
-  { path: 'properties/:id', component: JarvisResourcePropertyComponent },
-  { path: 'connectors', component: JarvisResourcesComponent, canActivate: [NavigationGuard], data: { resource: 'connectors' } },
-  { path: 'connectors/:id', component: JarvisResourceConnectorComponent },
-  { path: 'views', component: JarvisResourcesComponent, canActivate: [NavigationGuard], data: { resource: 'views' } },
-  { path: 'views/:id', component: JarvisResourceViewComponent },
-  { path: 'snapshots', component: JarvisResourcesComponent, canActivate: [NavigationGuard], data: { resource: 'snapshots' } },
-  { path: 'snapshots/:id', component: JarvisResourceSnapshotComponent },
-  { path: 'datasources', component: JarvisResourcesComponent, canActivate: [NavigationGuard], data: { resource: 'datasources' } },
-  { path: 'datasources/:id', component: JarvisResourceDatasourceComponent },
-  { path: 'measures', component: JarvisResourcesComponent, canActivate: [NavigationGuard], data: { resource: 'measures' } },
-  { path: 'measures/:id', component: JarvisMeasureComponent, canActivate: [NavigationGuard] },
-  { path: 'resources', component: JarvisServerResourcesComponent, canActivate: [NavigationGuard] },
-  { path: 'desktop', component: JarvisDesktopComponent },
-  { path: 'login', component: JarvisLoginComponent },
-  { path: '', component: JarvisHomeComponent },
-  { path: '**', component: JarvisHomeComponent }
+  { path: 'devices', component: JarvisResourcesComponent, canActivate: [ProfileGuard, NavigationGuard], data: { resource: 'devices' } },
+  { path: 'devices/:id', component: JarvisResourceDeviceComponent, canActivate: [ProfileGuard] },
+  { path: 'plugins', component: JarvisResourcesComponent, canActivate: [ProfileGuard, NavigationGuard], data: { resource: 'plugins' } },
+  { path: 'plugins/:id', component: JarvisResourcePluginComponent, canActivate: [ProfileGuard] },
+  { path: 'commands', component: JarvisResourcesComponent, canActivate: [ProfileGuard, NavigationGuard], data: { resource: 'commands' } },
+  { path: 'commands/:id', component: JarvisResourceCommandComponent, canActivate: [ProfileGuard] },
+  { path: 'triggers', component: JarvisResourcesComponent, canActivate: [ProfileGuard, NavigationGuard], data: { resource: 'triggers' } },
+  { path: 'triggers/:id', component: JarvisResourceTriggerComponent, canActivate: [ProfileGuard] },
+  { path: 'crons', component: JarvisResourcesComponent, canActivate: [ProfileGuard, NavigationGuard], data: { resource: 'crons' } },
+  { path: 'crons/:id', component: JarvisResourceCronComponent, canActivate: [ProfileGuard] },
+  { path: 'scenarios', component: JarvisResourcesComponent, canActivate: [ProfileGuard, NavigationGuard], data: { resource: 'scenarios' } },
+  { path: 'scenarios/:id', component: JarvisResourceScenarioComponent, canActivate: [ProfileGuard] },
+  { path: 'blocks', component: JarvisResourcesComponent, canActivate: [ProfileGuard, NavigationGuard], data: { resource: 'blocks' } },
+  { path: 'blocks/:id', component: JarvisResourceBlockComponent, canActivate: [ProfileGuard] },
+  { path: 'configurations', component: JarvisResourcesComponent, canActivate: [ProfileGuard, NavigationGuard], data: { resource: 'configurations' } },
+  { path: 'configurations/:id', component: JarvisResourceConfigurationComponent, canActivate: [ProfileGuard] },
+  { path: 'notifications', component: JarvisResourcesComponent, canActivate: [ProfileGuard, NavigationGuard], data: { resource: 'notifications' } },
+  { path: 'notifications/:id', component: JarvisResourceNotificationComponent, canActivate: [ProfileGuard] },
+  { path: 'properties', component: JarvisResourcesComponent, canActivate: [ProfileGuard, NavigationGuard], data: { resource: 'properties' } },
+  { path: 'properties/:id', component: JarvisResourcePropertyComponent, canActivate: [ProfileGuard] },
+  { path: 'connectors', component: JarvisResourcesComponent, canActivate: [ProfileGuard, NavigationGuard], data: { resource: 'connectors' } },
+  { path: 'connectors/:id', component: JarvisResourceConnectorComponent, canActivate: [ProfileGuard] },
+  { path: 'views', component: JarvisResourcesComponent, canActivate: [ProfileGuard, NavigationGuard], data: { resource: 'views' } },
+  { path: 'views/:id', component: JarvisResourceViewComponent, canActivate: [ProfileGuard] },
+  { path: 'snapshots', component: JarvisResourcesComponent, canActivate: [ProfileGuard, NavigationGuard], data: { resource: 'snapshots' } },
+  { path: 'snapshots/:id', component: JarvisResourceSnapshotComponent, canActivate: [ProfileGuard] },
+  { path: 'datasources', component: JarvisResourcesComponent, canActivate: [ProfileGuard, NavigationGuard], data: { resource: 'datasources' } },
+  { path: 'datasources/:id', component: JarvisResourceDatasourceComponent, canActivate: [ProfileGuard] },
+  { path: 'measures', component: JarvisResourcesComponent, canActivate: [ProfileGuard, NavigationGuard], data: { resource: 'measures' } },
+  { path: 'measures/:id', component: JarvisMeasureComponent, canActivate: [ProfileGuard, NavigationGuard] },
+  { path: 'resources', component: JarvisServerResourcesComponent, canActivate: [ProfileGuard, NavigationGuard] },
+  { path: 'desktop', component: JarvisDesktopComponent, canActivate: [ProfileGuard] },
+  { path: 'login', component: JarvisLoginComponent, canActivate: [NavigationGuard] },
+  { path: '', component: JarvisHomeComponent, canActivate: [ProfileGuard] },
+  { path: '**', component: JarvisHomeComponent, canActivate: [ProfileGuard] }
 ];
 
 @NgModule({
@@ -225,7 +229,7 @@ const appRoutes: Routes = [
     /**
      * routes
      */
-    RouterModule.forRoot(appRoutes),
+    RouterModule.forRoot(appRoutes, { enableTracing: environment.enableTracing }),
     /**
      * store
      */
@@ -266,6 +270,9 @@ const appRoutes: Routes = [
      * guards
      */
     NavigationGuard,
+    ProfileGuard,
+    LoggerService,
+    JarvisLoaderService,
     ConfirmationService
   ],
   bootstrap: [AppComponent]

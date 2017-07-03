@@ -38,6 +38,6 @@ export class JarvisDataSnapshotService extends JarvisDataCoreResource<SnapshotBe
     private _http: Http,
     private _configuration: JarvisConfigurationService,
   ) {
-    super(_configuration.ServerWithApiUrl + 'snapshots', _http);
+    super(_configuration, _configuration.ServerWithApiUrl + 'snapshots', _http);
   }
 }

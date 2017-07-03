@@ -42,7 +42,7 @@ export class JarvisSecurityService extends JarvisDataCoreResource<ResourceBean> 
     private _router: Router,
     private _windowService: WindowRef,
     private _jarvisConfigurationService: JarvisConfigurationService) {
-    super(_jarvisConfigurationService.ServerWithUrl, _http);
+    super(_jarvisConfigurationService, _jarvisConfigurationService.ServerWithUrl, _http);
   }
 
   /**

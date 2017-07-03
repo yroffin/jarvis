@@ -5,3 +5,5 @@
 /jarvis.log
 /jarvis*.log
 /jarvis*.log.gz
+main-*
+trigger-*

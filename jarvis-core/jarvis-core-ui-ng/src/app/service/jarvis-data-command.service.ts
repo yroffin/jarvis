@@ -39,7 +39,7 @@ export class JarvisDataCommandService extends JarvisDataCoreResource<CommandBean
         private _http: Http,
         private _configuration: JarvisConfigurationService
     ) {
-        super(_configuration.ServerWithApiUrl + 'commands', _http);
+        super(_configuration, _configuration.ServerWithApiUrl + 'commands', _http);
 
         /**
          * map linked elements

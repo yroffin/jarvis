@@ -16,22 +16,21 @@
 
 import { Injectable } from '@angular/core';
 
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
-
 @Injectable()
-export class NavigationGuard implements CanActivate {
-
-  protected current: ActivatedRouteSnapshot;
+export class LoggerService {
 
   constructor() {
   }
 
-  public canActivate(destination: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    this.current = destination;
-    return true;
+  public debug(message, ...args) {
+    console.debug(message, args);
   }
 
-  public getUrl(): string {
-    return this.current.url[0].path;
+  public info(message, ...args) {
+    console.info(message, args);
+  }
+
+  public error(message, ...args) {
+    console.error(message, args);
   }
 }

@@ -39,7 +39,7 @@ export class JarvisDataPluginService extends JarvisDataCoreResource<PluginBean> 
         private _http: Http,
         private _configuration: JarvisConfigurationService
     ) {
-        super(_configuration.ServerWithApiUrl + 'plugins/scripts', _http);
+        super(_configuration, _configuration.ServerWithApiUrl + 'plugins/scripts', _http);
 
         /**
          * map linked elements

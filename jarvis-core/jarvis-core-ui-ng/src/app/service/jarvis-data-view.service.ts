@@ -49,7 +49,7 @@ export class JarvisDataViewService extends JarvisDataCoreResource<ViewBean> impl
     private _jarvisSecurityService: JarvisSecurityService,
     private _jarvisDataDeviceService: JarvisDataDeviceService
   ) {
-    super(_configuration.ServerWithApiUrl + 'views', _http);
+    super(_configuration, _configuration.ServerWithApiUrl + 'views', _http);
 
     /**
      * map linked elements

@@ -42,7 +42,7 @@ export class JarvisDataDeviceService extends JarvisDataCoreResource<DeviceBean> 
         private _http: Http,
         private _configuration: JarvisConfigurationService
         ) {
-        super(_configuration.ServerWithApiUrl + 'devices', _http);
+        super(_configuration, _configuration.ServerWithApiUrl + 'devices', _http);
 
         /**
          * map linked elements

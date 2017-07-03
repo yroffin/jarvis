@@ -38,7 +38,7 @@ export class JarvisDataTriggerService extends JarvisDataCoreResource<TriggerBean
         private _http: Http,
         private _configuration: JarvisConfigurationService
     ) {
-        super(_configuration.ServerWithApiUrl + 'triggers', _http);
+        super(_configuration, _configuration.ServerWithApiUrl + 'triggers', _http);
 
         /**
          * map linked elements

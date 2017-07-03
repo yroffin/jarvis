@@ -32,6 +32,6 @@ export class JarvisDataPropertyService extends JarvisDataCoreResource<PropertyBe
         private _http: Http,
         private _configuration: JarvisConfigurationService
     ) {
-        super(_configuration.ServerWithApiUrl + 'properties', _http);
+        super(_configuration, _configuration.ServerWithApiUrl + 'properties', _http);
     }
 }

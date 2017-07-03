@@ -35,6 +35,6 @@ export class JarvisDataConnectorService extends JarvisDataCoreResource<Connector
         private _http: Http,
         private _configuration: JarvisConfigurationService
     ) {
-        super(_configuration.ServerWithApiUrl + 'connectors', _http);
+        super(_configuration, _configuration.ServerWithApiUrl + 'connectors', _http);
     }
 }

@@ -28,16 +28,25 @@ public class MeasureDataBean {
 	 * min
 	 */
 	public Double min;
+	/**
+	 * 
+	 */
 	public Double minref;
 	/**
 	 * max
 	 */
 	public Double max;
+	/**
+	 * 
+	 */
 	public Double maxref;
 	/**
 	 * avg
 	 */
 	public Double avg;
+	/**
+	 * 
+	 */
 	public Double avgref;
 	
 	/**

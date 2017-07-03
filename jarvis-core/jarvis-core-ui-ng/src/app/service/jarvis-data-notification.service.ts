@@ -36,6 +36,6 @@ export class JarvisDataNotificationService extends JarvisDataCoreResource<Notifi
         private _http: Http,
         private _configuration: JarvisConfigurationService
     ) {
-        super(_configuration.ServerWithApiUrl + 'notifications', _http);
+        super(_configuration, _configuration.ServerWithApiUrl + 'notifications', _http);
     }
 }

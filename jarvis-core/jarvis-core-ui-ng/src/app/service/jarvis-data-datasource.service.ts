@@ -37,7 +37,7 @@ export class JarvisDataDatasourceService extends JarvisDataCoreResource<DataSour
         private _http: Http,
         private _configuration: JarvisConfigurationService
     ) {
-        super(_configuration.ServerWithApiUrl + 'datasources', _http);
+        super(_configuration, _configuration.ServerWithApiUrl + 'datasources', _http);
         /**
          * map linked elements
          */

@@ -21,6 +21,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { WindowRef } from '../../service/jarvis-utils.service';
 import { JarvisSecurityService } from '../../service/jarvis-security.service';
 import { JarvisDataStoreService } from '../../service/jarvis-data-store.service';
+import { JarvisLoaderService } from '../../service/jarvis-loader.service';
 
 /**
  * model
@@ -38,14 +39,16 @@ export class JarvisLoginComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private _windowService: WindowRef,
-    private _jarvisSecurityService: JarvisSecurityService,
-    private _jarvisDataStoreService: JarvisDataStoreService) {
+    private windowService: WindowRef,
+    private jarvisSecurityService: JarvisSecurityService,
+    private jarvisDataStoreService: JarvisDataStoreService,
+    private jarvisLoaderService: JarvisLoaderService) {
 
   }
 
   ngOnInit() {
     this.display = true;
+    this.jarvisLoaderService.setLoaded();
   }
 
   public google(): void {
@@ -55,14 +58,14 @@ export class JarvisLoginComponent implements OnInit {
      * get profile
      */
     let profile: Oauth2Bean;
-    this._jarvisSecurityService.Oauth2('google')
+    this.jarvisSecurityService.Oauth2('google')
       .subscribe(
       (data: Oauth2Bean) => profile = data,
       (error: any) => {
         console.log('Oauth2 error', error);
       },
       () => {
-        this._windowService.setHref(profile.url);
+        this.windowService.setHref(profile.url);
       });
   }
 

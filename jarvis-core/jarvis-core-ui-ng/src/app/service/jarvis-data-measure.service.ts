@@ -39,7 +39,7 @@ export class JarvisDataMeasureService extends JarvisDataCoreResource<MeasureBean
         private _http: Http,
         private _configuration: JarvisConfigurationService
     ) {
-        super(_configuration.ServerWithApiUrl + 'measures', _http);
+        super(_configuration, _configuration.ServerWithApiUrl + 'measures', _http);
         /**
          * map linked elements
          */

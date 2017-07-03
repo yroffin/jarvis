@@ -1,6 +1,7 @@
 package org.jarvis.core.security;
 
 import org.pac4j.core.authorization.generator.AuthorizationGenerator;
+import org.pac4j.core.context.WebContext;
 
 /**
  * authorization
@@ -8,7 +9,8 @@ import org.pac4j.core.authorization.generator.AuthorizationGenerator;
 public class JarvisAuthorization implements AuthorizationGenerator<JarvisCoreProfile> {
 
 	@Override
-	public void generate(JarvisCoreProfile profile) {
+	public JarvisCoreProfile generate(WebContext context, JarvisCoreProfile profile) {
+		return profile;
 	}
 
 }

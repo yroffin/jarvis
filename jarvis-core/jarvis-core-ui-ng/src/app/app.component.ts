@@ -42,8 +42,7 @@ export class AppComponent implements OnInit {
    * constructor
    */
   constructor(
-    private _jarvisSecurityService: JarvisSecurityService,
-    private _jarvisDataStoreService: JarvisDataStoreService
+    private jarvisDataStoreService: JarvisDataStoreService
   ) {
   }
 
@@ -54,9 +53,7 @@ export class AppComponent implements OnInit {
     /**
      * get profile from store
      */
-    this._jarvisDataStoreService.getMe((data: MeBean) => {
-        this.loadMenu();
-    });
+    this.loadMenu();
   }
 
   /**

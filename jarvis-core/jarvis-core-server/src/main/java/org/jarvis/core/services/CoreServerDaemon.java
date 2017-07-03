@@ -17,6 +17,7 @@
 package org.jarvis.core.services;
 
 import java.io.InputStream;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
@@ -45,11 +46,16 @@ import org.jarvis.core.resources.api.views.ApiViewResources;
 import org.jarvis.core.security.JarvisAccessLogFilter;
 import org.jarvis.core.security.JarvisAuthorizerUsers;
 import org.jarvis.core.security.JarvisCoreClient;
+import org.jarvis.core.security.JarvisCoreProfile;
 import org.jarvis.core.security.JarvisTokenValidationFilter;
 import org.pac4j.core.client.Clients;
 import org.pac4j.core.config.Config;
+import org.pac4j.core.context.WebContext;
+import org.pac4j.core.profile.CommonProfile;
+import org.pac4j.core.profile.ProfileManager;
 import org.pac4j.core.profile.UserProfile;
 import org.pac4j.sparkjava.DefaultHttpActionAdapter;
+import org.pac4j.sparkjava.SparkWebContext;
 import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -224,8 +230,16 @@ public class CoreServerDaemon {
 					}
 				}
 
-				UserProfile userProfile = request.session().attribute("pac4jUserProfile");
-				return mapper.writeValueAsString(userProfile);
+				response.type("application/json");
+				
+				/**
+				 * retrieve profile from context
+				 */
+				WebContext context = new SparkWebContext(request, response);
+				ProfileManager<JarvisCoreProfile> manager = new ProfileManager<JarvisCoreProfile>(context);
+				Optional<JarvisCoreProfile> profile = manager.get(true);
+				
+				return mapper.writeValueAsString(profile.get());
 			}
 		});
 
