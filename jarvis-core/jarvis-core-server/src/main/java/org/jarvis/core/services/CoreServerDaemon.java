@@ -17,11 +17,17 @@
 package org.jarvis.core.services;
 
 import java.io.InputStream;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
 
+import org.commonmark.Extension;
+import org.commonmark.ext.gfm.tables.TablesExtension;
+import org.commonmark.node.Node;
+import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.HtmlRenderer;
 import org.jarvis.core.SwaggerParser;
 import org.jarvis.core.model.bean.config.Oauth2Config;
 import org.jarvis.core.resources.CoreMqttSystem;
@@ -51,9 +57,7 @@ import org.jarvis.core.security.JarvisTokenValidationFilter;
 import org.pac4j.core.client.Clients;
 import org.pac4j.core.config.Config;
 import org.pac4j.core.context.WebContext;
-import org.pac4j.core.profile.CommonProfile;
 import org.pac4j.core.profile.ProfileManager;
-import org.pac4j.core.profile.UserProfile;
 import org.pac4j.sparkjava.DefaultHttpActionAdapter;
 import org.pac4j.sparkjava.SparkWebContext;
 import org.reflections.Reflections;
@@ -105,7 +109,7 @@ public class CoreServerDaemon {
 
 	@Autowired
 	CoreSphinxService coreSphinxService;
-	
+
 	@Autowired
 	CoreResources coreResources;
 
@@ -231,14 +235,14 @@ public class CoreServerDaemon {
 				}
 
 				response.type("application/json");
-				
+
 				/**
 				 * retrieve profile from context
 				 */
 				WebContext context = new SparkWebContext(request, response);
 				ProfileManager<JarvisCoreProfile> manager = new ProfileManager<JarvisCoreProfile>(context);
 				Optional<JarvisCoreProfile> profile = manager.get(true);
-				
+
 				return mapper.writeValueAsString(profile.get());
 			}
 		});
@@ -300,12 +304,41 @@ public class CoreServerDaemon {
 			return swaggerJson;
 		});
 
+		/**
+		 * swagger ui resources
+		 */
 		spark.Spark.get("/swagger-ui/*", (req, res) -> {
 			String resource = "public/swagger-ui" + req.uri().replace("/swagger-ui", "");
 			logger.info("uri: {}", resource);
 			InputStream is = this.getClass().getClassLoader().getResourceAsStream(resource);
-			if(is != null) {
+			if (is != null) {
 				return IOUtils.toByteArray(is);
+			} else {
+				res.status(404);
+				return "";
+			}
+		});
+
+		Set<Extension> EXTENSIONS = Collections.singleton(TablesExtension.create());
+		Parser parser = Parser.builder().extensions(EXTENSIONS).build();
+		HtmlRenderer renderer = HtmlRenderer.builder().extensions(EXTENSIONS).build();
+
+		/**
+		 * swagger ui resources
+		 */
+		spark.Spark.get("/api/helps/*", (req, res) -> {
+			String resource = "public/helps" + req.uri().replace("/api/helps", "");
+			logger.info("uri: {}", resource);
+			InputStream is = this.getClass().getClassLoader().getResourceAsStream(resource);
+			if (is != null) {
+				if(resource.endsWith("markdown")) {
+					res.type("text/html;charset=UTF-8");
+				}
+				if(resource.endsWith("png")) {
+					res.type("image/x-png");
+				}
+				Node document = parser.parse(IOUtils.toString(is));
+				return renderer.render(document);
 			} else {
 				res.status(404);
 				return "";

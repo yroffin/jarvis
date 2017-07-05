@@ -58,6 +58,13 @@ export class ProfileGuard implements CanActivate {
   }
 
   /**
+   * retrieve me
+   */
+  public getMe(): MeBean {
+    return this.me;
+  }
+
+  /**
    * load profile and verify credentials
    * @param destination 
    * @param state 

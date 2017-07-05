@@ -26,6 +26,15 @@ import { StoreModule } from '@ngrx/store';
 
 import { AppComponent } from './app.component';
 
+/**
+ * material2
+ */
+import { MdSidenavModule } from '@angular/material';
+import { MdButtonModule } from '@angular/material';
+
+/**
+ * primeng
+ */
 import { ButtonModule } from 'primeng/primeng';
 import { ChartModule } from 'primeng/primeng';
 import { DataTableModule, SharedModule } from 'primeng/primeng';
@@ -192,6 +201,11 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     FormsModule,
     HttpModule,
+    /**
+     * material2
+     */
+    MdSidenavModule,
+    MdButtonModule,
     /**
      * primeface
      */

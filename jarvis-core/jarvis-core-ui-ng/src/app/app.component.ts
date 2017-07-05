@@ -14,12 +14,19 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Http, Response, Headers } from '@angular/http';
+import { Router } from '@angular/router';
+
+import { MdSidenav } from '@angular/material';
 
 import { MenuItem } from 'primeng/primeng';
 
+import { JarvisConfigurationService } from './service/jarvis-configuration.service';
 import { JarvisSecurityService } from './service/jarvis-security.service';
 import { JarvisDataStoreService } from './service/jarvis-data-store.service';
+import { ProfileGuard } from './guard/profile.service';
 
 /**
  * data model
@@ -33,17 +40,88 @@ import { Oauth2Bean, MeBean } from './model/security/oauth2-bean';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+
+   @ViewChild('sidenav') sidenav: MdSidenav;
+
   /**
    * global system menu
    */
   private items: MenuItem[];
+  public dispMe: boolean = false;
+  public dispHelp: boolean = false;
+
+  public me: MeBean;
+  public help: string;
 
   /**
    * constructor
    */
   constructor(
+    private profile: ProfileGuard,
+    private http: Http,
+    private router: Router,
+    private configuration: JarvisConfigurationService,
+    private jarvisSecurityService: JarvisSecurityService,
     private jarvisDataStoreService: JarvisDataStoreService
   ) {
+  }
+
+  /**
+   * show me
+   */
+  showMe() {
+    this.me = this.profile.getMe();
+    this.dispMe = true;
+  }
+
+  /**
+   * show help
+   */
+  showHelp() {
+    let text;
+    let id = 'help'+this.router.routerState.snapshot.url
+      .replace(/\//g, "-")
+      .replace(/0|1|2|3|4|5|6|7|8|9/g, "0")
+      .replace(/00/g, "0")
+      .replace(/00/g, "0")
+      .replace(/00/g, "0")
+      .replace(/00/g, "0")
+      .replace(/00/g, "0")
+      .replace(/00/g, "0")
+      .replace(/00/g, "0")
+      .replace(/00/g, "0")
+      .replace(/00/g, "0")
+      .replace(/0/g, "by-id");
+    this.GetHelp(id+'.markdown').subscribe(
+      (data) => {
+        text = data;
+      },
+      (error) => {
+        this.help = 'TODO';
+      },
+      () => {
+        this.help = text;
+      }
+    );
+    this.sidenav.open();
+  }
+
+  /**
+   * get single resource
+   */
+  public GetHelp = (id: string): Observable<string> => {
+    let headers = new Headers();
+    headers.append('JarvisAuthToken', this.configuration.getJarvisAuthToken());
+    return this.http.get(this.configuration.ServerWithApiUrl + 'helps/fr/' + id, { headers: headers })
+      .map((response: Response) => <string>response.text())
+      .catch(this.handleError);
+  }
+
+  /**
+   * error handler
+   */
+  protected handleError(error: Response) {
+    return Observable.throw(error || 'Server error');
   }
 
   /**
