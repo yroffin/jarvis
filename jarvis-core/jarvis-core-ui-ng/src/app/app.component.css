@@ -5,12 +5,8 @@
 
 .example-sidenav-content {
   display: flex;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
 }
 
 .example-sidenav {
   width: 80%;
-  padding: 20px;
 }

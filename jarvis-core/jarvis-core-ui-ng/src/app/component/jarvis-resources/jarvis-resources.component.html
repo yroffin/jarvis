@@ -15,6 +15,6 @@
       </ng-template>
     </p-column>
 </p-dataTable>
-<p-dialog modal=true header="Confirmation" [(visible)]="display">
+<p-dialog appendTo="body" modal=true header="Confirmation" [(visible)]="display">
   Supression de {{toDelete && toDelete.name}} ? <button pButton type="button" icon="fa-trash" pTooltip="Supprimer" tooltipPosition="bottom" (click)="confirmedDropResource(toDelete)"></button>
 </p-dialog>

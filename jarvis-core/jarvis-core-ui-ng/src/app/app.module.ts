@@ -31,6 +31,8 @@ import { AppComponent } from './app.component';
  */
 import { MdSidenavModule } from '@angular/material';
 import { MdButtonModule } from '@angular/material';
+import { MdGridListModule } from '@angular/material';
+import { MdInputModule } from '@angular/material';
 
 /**
  * primeng
@@ -206,6 +208,8 @@ const appRoutes: Routes = [
      */
     MdSidenavModule,
     MdButtonModule,
+    MdGridListModule,
+    MdInputModule,
     /**
      * primeface
      */

@@ -49,6 +49,7 @@ export class AppComponent implements OnInit {
   private items: MenuItem[];
   public dispMe: boolean = false;
   public dispHelp: boolean = false;
+  public dispMenu: boolean = false;
 
   public me: MeBean;
   public help: string;
@@ -72,6 +73,15 @@ export class AppComponent implements OnInit {
   showMe() {
     this.me = this.profile.getMe();
     this.dispMe = true;
+  }
+
+  /**
+   * show help
+   */
+  showMenu() {
+    this.dispMenu = true;
+    this.dispHelp = false;
+    this.sidenav.toggle();
   }
 
   /**
@@ -103,7 +113,9 @@ export class AppComponent implements OnInit {
         this.help = text;
       }
     );
-    this.sidenav.open();
+    this.dispMenu = false;
+    this.dispHelp = true;
+    this.sidenav.toggle();
   }
 
   /**

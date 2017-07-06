@@ -1,12 +1,10 @@
-<p-accordion>
-  <p-accordionTab *ngFor="let myView of myViews; let index=index" header="{{myView.name}}">
-    <p-dataGrid [value]="myView.devices" [paginator]="true" [rows]="20">
-      <ng-template let-myDevice pTemplate="body">
-        <div class="ui-g-2 ui-md-3 ui-lg-3 ui-sm-6">
-          <app-jarvis-tile (click)="touch(myDevice)" [myDevice]="myDevice" ></app-jarvis-tile>
-        </div>
-      </ng-template>
-    </p-dataGrid>
-  </p-accordionTab>
-</p-accordion>
-<p-growl [value]="msgs"></p-growl>
+<div *ngFor="let myView of myViews; let index=index">
+  <h3>{{myView.name}}</h3>
+  <md-grid-list cols="3" rowHeight="1:1">
+    <md-grid-tile [style.background]="myDeviceItem.tagColor" *ngFor="let myDeviceItem of myView.devices; let indexDevice=index">
+      <md-card>
+        <app-jarvis-tile (click)="touch(myDeviceItem)" [myDevice]="myDeviceItem"></app-jarvis-tile>
+      </md-card>
+    </md-grid-tile>
+  </md-grid-list>
+</div>

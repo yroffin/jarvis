@@ -1,8 +1,5 @@
-<p-panel [header]="'Device'" [style.textAlign]="'center'">
-  <div [style.background]="myDevice.tagColor">
-    <hr class="ui-widget-content" style="border-top:0">
-    <i class="fa {{myDevice.icon}}" aria-hidden="true"></i>
-    <div [innerHTML]="getTemplate(myDevice)"></div>
-    <hr class="ui-widget-content" style="border-top:0">
-  </div>
-</p-panel>
+<div class="btn" [style.background]="myDevice.tagColor">
+  <i class="fa fa-{{myDevice.icon}}" aria-hidden="true"></i>
+  <h4 [innerHTML]="myDevice.name"></h4>
+  <div [innerHTML]="getTemplate(myDevice)"></div>
+</div>
