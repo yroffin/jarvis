@@ -136,7 +136,7 @@
 <app-jarvis-picker #pickThenBlocks [resource]="{'service':'blocks', 'action':'thenBlocks', 'label':'Blocks'}"></app-jarvis-picker>
 <app-jarvis-picker #pickElseBlocks [resource]="{'service':'blocks', 'action':'elseBlocks', 'label':'Blocks'}"></app-jarvis-picker>
 
-<p-dialog header="Condition" [(visible)]="viewCondition" modal=true responsive=true width="700" resizable=false>
+<p-dialog appendTo="body" header="Condition" [(visible)]="viewCondition" modal=true responsive=true width="700" resizable=false>
   <div *ngIf="myPlugin">
     <p-fieldset legend="Entête" toggleable="true">
       <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">

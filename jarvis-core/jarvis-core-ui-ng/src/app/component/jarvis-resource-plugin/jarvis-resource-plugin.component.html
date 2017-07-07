@@ -97,7 +97,7 @@
 
 <app-jarvis-picker #pickCommands [resource]="{'service':'commands','label':'Commands'}"></app-jarvis-picker>
 
-<p-dialog header="Commande" [(visible)]="display" modal=true responsive=true width="700" resizable=false>
+<p-dialog appendTo="body" header="Commande" [(visible)]="display" modal=true responsive=true width="700" resizable=false>
   <div *ngIf="myCommand">
     <p-fieldset legend="Entête" toggleable="true">
       <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">

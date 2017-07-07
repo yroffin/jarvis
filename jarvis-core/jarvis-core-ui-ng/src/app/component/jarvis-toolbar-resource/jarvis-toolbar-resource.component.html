@@ -9,6 +9,6 @@
     </div>
 </p-toolbar>
 <p-growl [value]="msgs"></p-growl>
-<p-dialog modal=true header="Confirmation" [(visible)]="display">
+<p-dialog appendTo="body" modal=true header="Confirmation" [(visible)]="display">
   Supression ? <button pButton type="button" icon="fa-trash" pTooltip="Supprimer" tooltipPosition="bottom" (click)="confirmedDropResource()"></button>
 </p-dialog>
