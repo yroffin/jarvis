@@ -157,7 +157,9 @@ export class JarvisResourcePluginComponent extends JarvisResource<PluginBean> im
     if (picker.action === 'complete') {
       this.myPlugin = <PluginBean>resource;
       this.myPlugin.commands = [];
-      (new JarvisResourceLink<CommandBean>()).loadLinks(resource.id, this.myPlugin.commands, this._pluginService.allLinkedCommand);
+      (new JarvisResourceLink<CommandBean>()).loadLinksWithCallback(resource.id, this.myPlugin.commands, this._pluginService.allLinkedCommand, (elements) => {
+        this.myPlugin.commands = elements;
+      });
     }
   }
 

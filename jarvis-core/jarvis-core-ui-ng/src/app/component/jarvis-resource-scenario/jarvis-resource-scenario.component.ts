@@ -133,9 +133,13 @@ export class JarvisResourceScenarioComponent extends JarvisResource<ScenarioBean
     if(picker.action === 'complete') {
       this.myScenario = <ScenarioBean> resource;
       this.myScenario.triggers = [];
-      (new JarvisResourceLink<TriggerBean>()).loadLinks(resource.id, this.myScenario.triggers, this._scenarioService.allLinkedTrigger);
+      (new JarvisResourceLink<TriggerBean>()).loadLinksWithCallback(resource.id, this.myScenario.triggers, this._scenarioService.allLinkedTrigger, (elements) => {
+        this.myScenario.triggers = elements;
+      });
       this.myScenario.blocks = [];
-      (new JarvisResourceLink<BlockBean>()).loadLinks(resource.id, this.myScenario.blocks, this._scenarioService.allLinkedBlock);
+      (new JarvisResourceLink<BlockBean>()).loadLinksWithCallback(resource.id, this.myScenario.blocks, this._scenarioService.allLinkedBlock, (elements) => {
+        this.myScenario.blocks = elements;
+      });
     }
   }
 

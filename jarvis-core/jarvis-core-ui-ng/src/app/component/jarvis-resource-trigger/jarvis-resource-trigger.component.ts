@@ -95,7 +95,9 @@ export class JarvisResourceTriggerComponent extends JarvisResource<TriggerBean> 
   public complete(resource: TriggerBean): void {
     this.myTrigger = resource;
     this.myTrigger.crons = [];
-    (new JarvisResourceLink<CronBean>()).loadLinks(resource.id, resource.crons, this._triggerService.allLinkedCron);
+    (new JarvisResourceLink<CronBean>()).loadLinksWithCallback(resource.id, resource.crons, this._triggerService.allLinkedCron, (elements) => {
+        this.myTrigger.crons = elements;
+      });
   }
 
   /**
@@ -137,7 +139,9 @@ export class JarvisResourceTriggerComponent extends JarvisResource<TriggerBean> 
     if (picker.action === 'complete') {
       this.myTrigger = <TriggerBean>resource;
       this.myTrigger.crons = [];
-      (new JarvisResourceLink<CronBean>()).loadLinks(resource.id, this.myTrigger.crons, this._triggerService.allLinkedCron);
+      (new JarvisResourceLink<CronBean>()).loadLinksWithCallback(resource.id, this.myTrigger.crons, this._triggerService.allLinkedCron, (elements) => {
+        this.myTrigger.crons = elements;
+      });
     }
   }
 

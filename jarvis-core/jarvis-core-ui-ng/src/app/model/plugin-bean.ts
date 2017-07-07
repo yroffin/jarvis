@@ -8,4 +8,5 @@ export class PluginBean extends ResourceBean {
 }
 
 export class PluginScriptBean extends PluginBean {
+    public id: string
 }

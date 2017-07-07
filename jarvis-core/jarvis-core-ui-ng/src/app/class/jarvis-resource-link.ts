@@ -40,7 +40,8 @@ export class JarvisResourceLink<T extends ResourceBean> {
    * load link
    */
   public loadLinks(owner: string, elements: Array<T>, service: JarvisDefaultLinkResource<T>): void {
-    this.loadLinksWithCallback(owner, elements, service, (elements) => {
+    this.loadLinksWithCallback(owner, elements, service, (data) => {
+      elements = data;
     });
   }
 
@@ -57,10 +58,12 @@ export class JarvisResourceLink<T extends ResourceBean> {
     /**
      * then load it
      */
-    let element
     service.GetAll(owner)
       .subscribe(
-      (data: T[]) => element = data && _.merge(elements, data),
+      (data: T[]) => {
+        _.merge(elements, data)
+        elements = [...elements];
+      },
       error => console.log(error),
       () => {
         callback(elements);

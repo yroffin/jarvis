@@ -153,7 +153,9 @@ export class JarvisResourceCommandComponent extends JarvisResource<CommandBean> 
     if (picker.action === 'complete') {
       this.myCommand = <CommandBean>resource;
       this.myCommand.notifications = [];
-      (new JarvisResourceLink<NotificationBean>()).loadLinks(resource.id, this.myCommand.notifications, this._commandService.allLinkedNotification);
+      (new JarvisResourceLink<NotificationBean>()).loadLinksWithCallback(resource.id, this.myCommand.notifications, this._commandService.allLinkedNotification, (elements) => {
+        this.myCommand.notifications = elements;
+      });
     }
   }
 

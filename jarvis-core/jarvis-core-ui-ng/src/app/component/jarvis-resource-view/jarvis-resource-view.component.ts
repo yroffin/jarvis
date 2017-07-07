@@ -106,7 +106,9 @@ export class JarvisResourceViewComponent extends JarvisResource<ViewBean> implem
     if( picker.action === 'complete') {
       this.myView = <ViewBean> resource;
       this.myView.devices = [];
-      (new JarvisResourceLink<DeviceBean>()).loadLinks(resource.id, this.myView.devices, this._viewService.allLinkedDevice);
+      (new JarvisResourceLink<DeviceBean>()).loadLinksWithCallback(resource.id, this.myView.devices, this._viewService.allLinkedDevice, (elements) => {
+        this.myView.devices = elements;
+      });
     }
   }
 

@@ -73,7 +73,7 @@
       <p-dataTable [value]="myDevice.plugins">
         <header>Plugin</header>
         <p-column header="Ordre">
-          <ng-template let-plugin="rowData" pTemplate>
+          <ng-template let-plugin="rowData" pTemplate="body">
             <input type="text" size="2" pInputText [(ngModel)]="plugin.extended.order" />
           </ng-template>
         </p-column>

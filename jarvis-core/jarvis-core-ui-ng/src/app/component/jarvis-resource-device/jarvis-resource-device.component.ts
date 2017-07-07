@@ -36,7 +36,7 @@ import { NotifyCallback } from '../../class/jarvis-resource';
 import { ResourceBean } from '../../model/resource-bean';
 import { DeviceBean } from '../../model/device-bean';
 import { TriggerBean } from '../../model/trigger-bean';
-import { PluginBean } from '../../model/plugin-bean';
+import { PluginBean, PluginScriptBean } from '../../model/plugin-bean';
 import { PickerBean } from '../../model/picker-bean';
 import { LinkBean } from '../../model/link-bean';
 
@@ -48,6 +48,7 @@ import { LinkBean } from '../../model/link-bean';
 export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> implements NotifyCallback<ResourceBean>, OnInit {
 
   @Input() myDevice: DeviceBean;
+  public plugins: PluginScriptBean[];
 
   @ViewChild('pickDevices') pickDevices: JarvisPickerComponent;
   @ViewChild('pickTriggers') pickTriggers: JarvisPickerComponent;
@@ -135,11 +136,17 @@ export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> im
     if (picker.action === 'complete') {
       this.myDevice = <DeviceBean>resource;
       this.myDevice.devices = [];
-      (new JarvisResourceLink<DeviceBean>()).loadLinks(resource.id, this.myDevice.devices, this._deviceService.allLinkedDevice);
+      (new JarvisResourceLink<DeviceBean>()).loadLinksWithCallback(resource.id, this.myDevice.devices, this._deviceService.allLinkedDevice, (elements) => {
+        this.myDevice.devices = elements;
+      });
       this.myDevice.triggers = [];
-      (new JarvisResourceLink<TriggerBean>()).loadLinks(resource.id, this.myDevice.triggers, this._deviceService.allLinkedTrigger);
+      (new JarvisResourceLink<TriggerBean>()).loadLinksWithCallback(resource.id, this.myDevice.triggers, this._deviceService.allLinkedTrigger, (elements) => {
+        this.myDevice.triggers = elements;
+      });
       this.myDevice.plugins = [];
-      (new JarvisResourceLink<PluginBean>()).loadLinks(resource.id, this.myDevice.plugins, this._deviceService.allLinkedPlugin);
+      (new JarvisResourceLink<PluginBean>()).loadLinksWithCallback(resource.id, this.myDevice.plugins, this._deviceService.allLinkedPlugin, (elements) => {
+        this.myDevice.plugins = elements;
+      });
     }
   }
 
