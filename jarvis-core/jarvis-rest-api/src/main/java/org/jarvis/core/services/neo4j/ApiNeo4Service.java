@@ -59,7 +59,9 @@ public class ApiNeo4Service  {
 		graphDb = new CypherRestClient(
 				env.getProperty("jarvis.neo4j.url"),
 				env.getProperty("jarvis.neo4j.user"),
-				env.getProperty("jarvis.neo4j.password")
+				env.getProperty("jarvis.neo4j.password"),
+				env.getProperty("jarvis.neo4j.timeout.connect", "2000"),
+				env.getProperty("jarvis.neo4j.timeout.read", "2000")
 		);
 	}
 
