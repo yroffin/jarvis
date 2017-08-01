@@ -68,7 +68,7 @@
     </p-accordionTab>
     <p-accordionTab *ngIf="myConnector.collects" header="Collecte(s)">
       <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
-        <p-dataTable [value]="myConnector.collects.collections">
+        <p-dataTable [immutable]="false" [value]="myConnector.collects.collections">
           <header>Collectes</header>
           <p-column field="name" header="Nom"></p-column>
           <p-column header="Detail">

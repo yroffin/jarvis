@@ -40,7 +40,7 @@
 </p-accordionTab>
 <p-accordionTab header="Conditions">
   <app-jarvis-toolbar-resource [notified]="this" [pickers]="[{'label':'Ajouter un script de condition', 'icon': 'fa-bolt', 'action':'conditionnalPlugins', 'picker': pickConditionnalPlugins}]"></app-jarvis-toolbar-resource>
-  <p-dataTable [value]="myBlock.conditionnalPlugins">
+  <p-dataTable [immutable]="false" [value]="myBlock.conditionnalPlugins">
     <header>Plugins</header>
     <p-column header="Ordre">
       <ng-template let-plugin="rowData" pTemplate>
@@ -59,7 +59,7 @@
 </p-accordionTab>
 <p-accordionTab header="Then">
   <app-jarvis-toolbar-resource [notified]="this" [pickers]="[{'label':'Ajouter un script then', 'icon': 'fa-bolt', 'action':'thenPlugins', 'picker': pickThenPlugins},{'label':'Ajouter un block then', 'icon': 'fa-bolt', 'action':'thenBlocks', 'picker': pickThenBlocks}]"></app-jarvis-toolbar-resource>
-  <p-dataTable [value]="myBlock.thenPlugins">
+  <p-dataTable [immutable]="false" [value]="myBlock.thenPlugins">
     <header>Plugins</header>
     <p-column header="Ordre">
       <ng-template let-plugin="rowData" pTemplate>
@@ -75,7 +75,7 @@
       </ng-template>
     </p-column>
   </p-dataTable>
-  <p-dataTable [value]="myBlock.thenBlocks">
+  <p-dataTable [immutable]="false" [value]="myBlock.thenBlocks">
     <header>Blocks</header>
     <p-column header="Ordre">
       <ng-template let-block="rowData" pTemplate>
@@ -94,7 +94,7 @@
 </p-accordionTab>
 <p-accordionTab header="Else">
   <app-jarvis-toolbar-resource [notified]="this" [pickers]="[{'label':'Ajouter un script else', 'icon': 'fa-bolt', 'action':'elsePlugins', 'picker': pickElsePlugins},{'label':'Ajouter un block else', 'icon': 'fa-bolt', 'action':'elseBlocks', 'picker': pickElseBlocks}]"></app-jarvis-toolbar-resource>
-  <p-dataTable [value]="myBlock.elsePlugins">
+  <p-dataTable [immutable]="false" [value]="myBlock.elsePlugins">
     <header>Plugins</header>
     <p-column header="Ordre">
       <ng-template let-plugin="rowData" pTemplate>
@@ -110,7 +110,7 @@
       </ng-template>
     </p-column>
   </p-dataTable>
-  <p-dataTable [value]="myBlock.elseBlocks">
+  <p-dataTable [immutable]="false" [value]="myBlock.elseBlocks">
     <header>Blocks</header>
     <p-column header="Ordre">
       <ng-template let-block="rowData" pTemplate>

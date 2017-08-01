@@ -46,7 +46,7 @@
     </p-accordionTab>
     <p-accordionTab header="Périodicité">
       <app-jarvis-toolbar-resource [notified]="this" [pickers]="[{'label':'Ajouter une crontab', 'icon': 'fa-bolt', 'action':'crons', 'picker': pickCrons}]"></app-jarvis-toolbar-resource>
-      <p-dataTable [value]="myTrigger.crons">
+      <p-dataTable [immutable]="false" [value]="myTrigger.crons">
         <header>Crontab</header>
         <p-column header="Ordre">
           <ng-template let-cron="rowData" pTemplate>
@@ -64,14 +64,14 @@
       </p-dataTable>
     </p-accordionTab>
     <p-accordionTab header="Devices liés">
-      <p-dataTable [value]="myTrigger.devices">
+      <p-dataTable [immutable]="false" [value]="myTrigger.devices">
         <header>Devices</header>
         <p-column field="id" header="Id"></p-column>
         <p-column field="name" header="Nom"></p-column>
       </p-dataTable>
     </p-accordionTab>
     <p-accordionTab header="Scenarii liés">
-      <p-dataTable [value]="myTrigger.scenarii">
+      <p-dataTable [immutable]="false" [value]="myTrigger.scenarii">
         <header>Scenarii</header>
         <p-column field="id" header="Id"></p-column>
         <p-column field="name" header="Nom"></p-column>

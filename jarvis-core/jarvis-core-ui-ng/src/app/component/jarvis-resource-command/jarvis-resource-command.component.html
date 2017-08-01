@@ -40,7 +40,7 @@
 </p-accordionTab>
 <p-accordionTab header="Notifications">
   <app-jarvis-toolbar-resource [notified]="this" [pickers]="[{'label':'Ajouter une notification', 'icon': 'fa-bolt', 'action':'notifications', 'picker': pickNotifications}]"></app-jarvis-toolbar-resource>
-  <p-dataTable [value]="myCommand.notifications">
+  <p-dataTable [immutable]="false" [value]="myCommand.notifications">
     <header>Commande</header>
     <p-column header="Ordre">
       <ng-template let-notification="rowData" pTemplate>

@@ -33,6 +33,8 @@ import { MdSidenavModule } from '@angular/material';
 import { MdButtonModule } from '@angular/material';
 import { MdGridListModule } from '@angular/material';
 import { MdInputModule } from '@angular/material';
+import { MdCheckboxModule } from '@angular/material';
+import { MdTableModule } from '@angular/material';
 
 /**
  * primeng
@@ -210,6 +212,8 @@ const appRoutes: Routes = [
     MdButtonModule,
     MdGridListModule,
     MdInputModule,
+    MdCheckboxModule,
+    MdTableModule,
     /**
      * primeface
      */

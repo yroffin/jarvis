@@ -51,7 +51,7 @@
       </div>
     </p-accordionTab>
     <p-accordionTab header="Configuration du système">
-      <p-dataTable [value]="myConfiguration.system.scheduled">
+      <p-dataTable [immutable]="false" [value]="myConfiguration.system.scheduled">
         <header *ngIf="myConfiguration.system.events">Scheduled (actif)</header>
         <header *ngIf="!myConfiguration.system.events">Scheduled (inactif)</header>
         <p-column field="id" header="Id"></p-column>

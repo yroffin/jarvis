@@ -47,7 +47,7 @@
       </div>
     </p-accordionTab>
     <p-accordionTab header="Commands">
-      <p-dataTable [value]="myPlugin.commands">
+      <p-dataTable [immutable]="false" [value]="myPlugin.commands">
         <header>Commande</header>
         <p-column header="Ordre">
           <ng-template let-command="rowData" pTemplate>

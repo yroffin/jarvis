@@ -23,7 +23,7 @@
       </div>
     </p-accordionTab>
     <p-accordionTab header="Triggers">
-      <p-dataTable [value]="myScenario.triggers">
+      <p-dataTable [immutable]="false" [value]="myScenario.triggers">
         <header>Trigger</header>
         <p-column header="Ordre">
           <ng-template let-trigger="rowData" pTemplate>
@@ -41,7 +41,7 @@
       </p-dataTable>
     </p-accordionTab>
     <p-accordionTab header="Blocks">
-      <p-dataTable [value]="myScenario.blocks">
+      <p-dataTable [immutable]="false" [value]="myScenario.blocks">
         <header>Trigger</header>
         <p-column header="Ordre">
           <ng-template let-block="rowData" pTemplate>
@@ -62,7 +62,7 @@
       <div inlineSvg [resourceUrl]="'scenarios/'+myScenario.id+'/svg'" ></div>
     </p-accordionTab>
     <p-accordionTab header="Test">
-      <p-dataTable [value]="console">
+      <p-dataTable [immutable]="false" [value]="console">
         <p-column header="Résultat">
           <ng-template let-line="rowData" pTemplate="body">{{line}}</ng-template>
         </p-column>

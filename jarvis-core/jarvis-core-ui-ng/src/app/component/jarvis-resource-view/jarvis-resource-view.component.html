@@ -1,67 +1,54 @@
 <app-jarvis-toolbar-resource [notified]="this" [crud]="true"></app-jarvis-toolbar-resource>
 
 <div *ngIf="myView">
-  <p-accordion>
-    <p-accordionTab header="Entête">
-      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
-        <div class="ui-grid-row">
-          <div class="ui-grid-col-4">
-            Nom
-          </div>
-          <div class="ui-grid-col-8">
-            <input type="text" pInputText [(ngModel)]="myView.name" placeholder="Nom" />
-          </div>
-        </div>
-        <div class="ui-grid-row">
-          <div class="ui-grid-col-4">
-            Icône
-          </div>
-          <div class="ui-grid-col-8">
-            <input type="text" pInputText [(ngModel)]="myView.icon" placeholder="Icône" />
-          </div>
-        </div>
+  <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-6">
+        <md-input-container class="input-full-width">
+          <input mdInput placeholder="Nom" [(ngModel)]="myView.name">
+        </md-input-container>
       </div>
-    </p-accordionTab>
-    <p-accordionTab header="Paramètre">
-      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
-        <div class="ui-grid-row">
-          <div class="ui-grid-col-4">
-            Image de fond
-          </div>
-          <div class="ui-grid-col-8">
-            <input type="text" pInputText [(ngModel)]="myView.url" placeholder="todo" />
-          </div>
-        </div>
-        <div class="ui-grid-row">
-          <div class="ui-grid-col-4">
-            Vue principale
-          </div>
-          <div class="ui-grid-col-8">
-            <p-checkbox binary="true" label="Oui/Non" [(ngModel)]="myView.ishome"></p-checkbox>
-          </div>
-        </div>
+      <div class="ui-grid-col-6">
+        <md-input-container class="input-full-width">
+          <input mdInput placeholder="Icône" [(ngModel)]="myView.icon">
+        </md-input-container>
       </div>
-    </p-accordionTab>
-    <p-accordionTab header="Devices">
-      <app-jarvis-toolbar-resource [notified]="this" [pickers]="[{'label':'Ajouter des devices à la vue', 'icon': 'fa-server', 'action':'devices', 'picker': pickDevices}]"></app-jarvis-toolbar-resource>
-      <p-dataTable [value]="myView.devices">
-        <header>Devices à afficher</header>
-        <p-column header="Ordre">
-          <ng-template let-device="rowData" pTemplate>
-            <input type="text" size="2" pInputText [(ngModel)]="device.extended.order" />
-          </ng-template>
-        </p-column>
-        <p-column field="id" header="Id"></p-column>
-        <p-column field="instance" header="Instance"></p-column>
-        <p-column field="name" header="Nom"></p-column>
-        <p-column header="Action">
-          <ng-template let-device="rowData" pTemplate="body">
-            <app-jarvis-toolbar-resource [notified]="this" [tasks]="[{'task':'updateDeviceLink','args':[device],'icon':'fa-save','label':'Mettre à jour le lien'},{'task':'dropDeviceLink','args':[device],'icon':'fa-trash','label':'Supprimer le lien'},{'task':'gotoDeviceLink','args':[device],'icon':'fa-link','label':'Détail'}]" ></app-jarvis-toolbar-resource>
-          </ng-template>
-        </p-column>
-      </p-dataTable>
-    </p-accordionTab>
-  </p-accordion>
+    </div>
+  </div>
+  <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-6">
+        <md-input-container class="input-full-width">
+          <input mdInput placeholder="Image de fond: http://localhost/image.jpg" [(ngModel)]="myView.url">
+        </md-input-container>
+      </div>
+      <div class="ui-grid-col-1">
+        <md-checkbox [(ngModel)]="myView.ishome"></md-checkbox>
+      </div>
+      <div class="ui-grid-col-5">
+        <md-input-container class="input-full-width">
+          <input mdInput placeholder="Vue principale" [(ngModel)]="myView.ishome" disabled>
+        </md-input-container>
+      </div>
+    </div>
+  </div>
+  <app-jarvis-toolbar-resource [notified]="this" [pickers]="[{'label':'Ajouter des devices à la vue', 'icon': 'fa-server', 'action':'devices', 'picker': pickDevices}]"></app-jarvis-toolbar-resource>
+  <p-dataTable [immutable]="false" [value]="myView.devices">
+    <header>Devices à afficher</header>
+    <p-column header="Ordre">
+      <ng-template let-device="rowData" pTemplate>
+        <input type="text" size="2" pInputText [(ngModel)]="device.extended.order" />
+      </ng-template>
+    </p-column>
+    <p-column field="id" header="Id"></p-column>
+    <p-column field="instance" header="Instance"></p-column>
+    <p-column field="name" header="Nom"></p-column>
+    <p-column header="Action">
+      <ng-template let-device="rowData" pTemplate="body">
+        <app-jarvis-toolbar-resource [notified]="this" [tasks]="[{'task':'updateDeviceLink','args':[device],'icon':'fa-save','label':'Mettre à jour le lien'},{'task':'dropDeviceLink','args':[device],'icon':'fa-trash','label':'Supprimer le lien'},{'task':'gotoDeviceLink','args':[device],'icon':'fa-link','label':'Détail'}]"></app-jarvis-toolbar-resource>
+      </ng-template>
+    </p-column>
+  </p-dataTable>
 </div>
 
 <app-jarvis-picker #pickDevices [resource]="{'service':'devices','action':'devices','label':'Devices'}"></app-jarvis-picker>

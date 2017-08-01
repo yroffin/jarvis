@@ -105,6 +105,7 @@ export class JarvisResourceLink<T extends ResourceBean> {
          * add this element to current view
          */
         elements.push(created);
+        elements = [...elements];
       });
   }
 

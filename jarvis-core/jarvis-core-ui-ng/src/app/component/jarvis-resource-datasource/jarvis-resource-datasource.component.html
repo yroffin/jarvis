@@ -23,7 +23,7 @@
       </div>
     </p-accordionTab>
     <p-accordionTab header="Mesures">
-      <p-dataTable [value]="myDataSource.measures">
+      <p-dataTable [immutable]="false" [value]="myDataSource.measures">
         <header>Connecteurs</header>
         <p-column field="extended.order" header="Ordre"></p-column>
         <p-column field="id" header="Id"></p-column>

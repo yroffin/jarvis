@@ -40,7 +40,7 @@
     </p-accordionTab>
     <p-accordionTab header="Triggers">
       <app-jarvis-toolbar-resource [notified]="this" [pickers]="[{'action':'triggers','icon':'fa-send','label':'Ajouter un trigger','picker': pickTriggers}]"></app-jarvis-toolbar-resource>
-      <p-dataTable [value]="myDevice.triggers">
+      <p-dataTable [immutable]="false" [value]="myDevice.triggers">
         <header>Trigger</header>
         <p-column field="extended.order" header="Ordre"></p-column>
         <p-column field="id" header="Id"></p-column>
@@ -55,7 +55,7 @@
     </p-accordionTab>
     <p-accordionTab header="Devices">
       <app-jarvis-toolbar-resource [notified]="this" [pickers]="[{'action':'devices','icon':'fa-server','label':'Ajouter un device','picker': pickDevices}]"></app-jarvis-toolbar-resource>
-      <p-dataTable [value]="myDevice.devices">
+      <p-dataTable [immutable]="false" [value]="myDevice.devices">
         <header>Devices (container)</header>
         <p-column field="extended.order" header="Ordre"></p-column>
         <p-column field="id" header="Id"></p-column>
@@ -70,7 +70,7 @@
     </p-accordionTab>
     <p-accordionTab header="Plugins">
       <app-jarvis-toolbar-resource [notified]="this" [pickers]="[{'action':'plugins','icon':'fa-podcast','label':'Ajouter un plugin','picker': pickPlugins}]"></app-jarvis-toolbar-resource>
-      <p-dataTable [value]="myDevice.plugins">
+      <p-dataTable [immutable]="false" [value]="myDevice.plugins">
         <header>Plugin</header>
         <p-column header="Ordre">
           <ng-template let-plugin="rowData" pTemplate="body">

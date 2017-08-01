@@ -24,6 +24,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import * as _ from 'lodash';
 
 import { Observable } from 'rxjs/Observable';
+import { Subscriber } from 'rxjs/Subscriber';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
 
 import { WindowRef } from '../service/jarvis-utils.service';
@@ -82,7 +83,7 @@ export class ProfileGuard implements CanActivate {
         observer.next(true);
       } else {
         this.logger.info('Not logged on');
-        this.connect(observer);
+        this.connect(observer, state.url);
       }
     });
     return myObservable;
@@ -92,7 +93,7 @@ export class ProfileGuard implements CanActivate {
    * connect processus
    * @param observer 
    */
-  private connect(observer) {
+  private connect(observer: Subscriber<boolean>, currentRoute: string) {
       let connect: boolean;
       this.jarvisSecurityService.Connect()
         .subscribe(
@@ -102,7 +103,7 @@ export class ProfileGuard implements CanActivate {
           observer.next(false);
         },
         () => {
-          this.getMeFromApi(connect)
+          this.getMeFromApi(connect, currentRoute)
             .subscribe(
             (data: MeBean) => {
               this.me = data
@@ -123,7 +124,7 @@ export class ProfileGuard implements CanActivate {
   /**
    * get de from api
    */
-  private getMeFromApi(connect: boolean): Observable<MeBean> {
+  private getMeFromApi(connect: boolean, currentRoute: string): Observable<MeBean> {
     /**
      * find any token on url
      */
@@ -157,7 +158,7 @@ export class ProfileGuard implements CanActivate {
         () => {
           obs.next(profile);
           obs.complete();
-          this.router.navigate(["/desktop"]);
+          this.router.navigate([currentRoute]);
           this.jarvisLoaderService.setLoaded();
         });
       return;

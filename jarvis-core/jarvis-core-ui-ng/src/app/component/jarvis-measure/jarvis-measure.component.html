@@ -38,7 +38,7 @@
           </div>
         </div>
       </div>
-      <p-dataTable [value]="myMeasure.connectors">
+      <p-dataTable [immutable]="false" [value]="myMeasure.connectors">
         <header>Connecteurs</header>
         <p-column field="extended.order" header="Ordre"></p-column>
         <p-column field="id" header="Id"></p-column>
