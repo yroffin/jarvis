@@ -22,6 +22,8 @@ import javax.ws.rs.client.WebTarget;
 
 import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -32,6 +34,7 @@ import com.fasterxml.jackson.datatype.joda.JodaModule;
  * abstract client
  */
 public abstract class AbstractJerseyClient {
+	protected Logger logger = LoggerFactory.getLogger(AbstractJerseyClient.class);
 
 	protected String baseurl;
 	protected String user;
@@ -61,6 +64,7 @@ public abstract class AbstractJerseyClient {
 		// Fix timeout
 		client.property(ClientProperties.CONNECT_TIMEOUT, Integer.parseInt(connect));
 		client.property(ClientProperties.READ_TIMEOUT,    Integer.parseInt(read));
+		logger.warn("Jersey Client URL: {} Timeout Connect {} Timeout Read {}", this.baseurl, connect, read);
 
 		// register auth feature if user is not null
 		if(user != null) {

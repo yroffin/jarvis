@@ -56,6 +56,8 @@ public class CypherRestClient extends AbstractJerseyClient {
 	 * @param baseurl
 	 * @param user
 	 * @param password
+	 * @param connect 
+	 * @param read 
 	 */
 	public CypherRestClient(String baseurl, String user, String password, String connect, String read) {
 		/**
