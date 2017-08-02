@@ -1,91 +1,85 @@
-<app-jarvis-toolbar-resource [notified]="this" [crud]="true" [tasks]="[{'task':'execute','icon':'fa-play','label':'Simuler (execution)'},{'task':'render','icon':'fa-play-circle-o','label':'Simuler (rendu)'},{'task':'clear','icon':'fa-ban','label':'Effacer le contexte'}]" [pickers]="[{'label':'Ajouter une notification', 'icon': 'fa-bolt', 'action':'notifications', 'picker': pickNotifications}]"></app-jarvis-toolbar-resource>
+<app-jarvis-toolbar-resource [notified]="this" [crud]="true" [tasks]="[{'task':'execute','icon':'fa-play','label':'Simuler (execution)'},{'task':'render','icon':'fa-play-circle-o','label':'Simuler (rendu)'},{'task':'clear','icon':'fa-ban','label':'Effacer le contexte'}]"
+  [pickers]="[{'label':'Ajouter une notification', 'icon': 'fa-bolt', 'action':'notifications', 'picker': pickNotifications}]"></app-jarvis-toolbar-resource>
 
 <div *ngIf="myCommand">
-  <p-accordion>
-    <p-accordionTab header="Entête">
-      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px" >
-<div class="ui-grid-row">
-  <div class="ui-grid-col-4">
-    Nom du plugin
-  </div>
-  <div class="ui-grid-col-8">
-    <input type="text" pInputText [(ngModel)]="myCommand.name" placeholder="Nom du plugin" />
-  </div>
-</div>
-<div class="ui-grid-row">
-  <div class="ui-grid-col-4">
-    Catégorie
-  </div>
-  <div class="ui-grid-col-8">
-    <p-dropdown [options]="types" [(ngModel)]="myCommand.type"></p-dropdown>
-  </div>
-</div>
-<div class="ui-grid-row">
-  <div class="ui-grid-col-4">
-    Icône
-  </div>
-  <div class="ui-grid-col-8">
-    <input type="text" pInputText [(ngModel)]="myCommand.icon" placeholder="Icône" />
-  </div>
-</div>
-</div>
-</p-accordionTab>
-<p-accordionTab header="Script">
-  <p-fieldset legend="Source" toggleable="true">
-    <textarea style="width: 100%; height: 400px;" [(ngModel)]="myCommand.body"></textarea>
-</p-fieldset>
-<p-fieldset legend="Script" toggleable="true">
-  <pre><code [innerHtml]="hightlight(myCommand.body)"></code></pre>
-</p-fieldset>
-</p-accordionTab>
-<p-accordionTab header="Notifications">
-  <app-jarvis-toolbar-resource [notified]="this" [pickers]="[{'label':'Ajouter une notification', 'icon': 'fa-bolt', 'action':'notifications', 'picker': pickNotifications}]"></app-jarvis-toolbar-resource>
-  <p-dataTable [immutable]="false" [value]="myCommand.notifications">
-    <header>Commande</header>
-    <p-column header="Ordre">
-      <ng-template let-notification="rowData" pTemplate>
-        <input type="text" size="2" pInputText [(ngModel)]="notification.extended.order" />
-      </ng-template>
-    </p-column>
-    <p-column field="id" header="Id"></p-column>
-    <p-column field="instance" header="Instance"></p-column>
-    <p-column field="name" header="Nom"></p-column>
-    <p-column header="Action">
-      <ng-template let-notification="rowData" pTemplate="body">
-        <app-jarvis-toolbar-resource [notified]="this" [tasks]="[{'task':'updateNotificationLink','args':[notification],'icon':'fa-save','label':'Mettre à jour le lien'},{'task':'dropNotificationLink','args':[notification],'icon':'fa-trash','label':'Supprimer le lien'},{'task':'gotoNotificationLink','args':[notification],'icon':'fa-link','label':'Détail'}]" ></app-jarvis-toolbar-resource>
-      </ng-template>
-    </p-column>
-  </p-dataTable>
-</p-accordionTab>
-<p-accordionTab header="Mise au point">
-  <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
-<div class="ui-grid-row">
-  <div class="ui-grid-col-4">
-    Données de test (argument du plugin sous forme JSON)
-  </div>
-  <div class="ui-grid-col-8">
-    <input type="text" pInputText [(ngModel)]="myJsonData" placeholder="{}" />
-  </div>
-</div>
-<div class="ui-grid-row">
-  <div class="ui-grid-col-4">
-    Données de test (convertie)
-  </div>
-  <div class="ui-grid-col-8">
-    <pre><code [innerHtml]="pretty(myData)"></code></pre>
-  </div>
-</div>
-<div class="ui-grid-row">
-  <div class="ui-grid-col-4">
-    Données de test (résultat)
-  </div>
-  <div class="ui-grid-col-8">
-    <pre><code [innerHtml]="pretty(myOutputData)"></code></pre>
-  </div>
-</div>
-</div>
-</p-accordionTab>
-</p-accordion>
-</div>
+    <md-tab-group>
+    <md-tab label="Entête">
+      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-6">
+            <md-input-container class="input-full-width">
+              <input mdInput placeholder="Nom" [(ngModel)]="myCommand.name">
+            </md-input-container>
+          </div>
+          <div class="ui-grid-col-6">
+            <md-input-container class="input-full-width">
+              <input mdInput placeholder="Icône" [(ngModel)]="myCommand.icon">
+            </md-input-container>
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-8">
+            <md-select placeholder="Catégorie" [(ngModel)]="myCommand.type">
+              <md-option *ngFor="let item of types" [value]="item.value">
+                {{ item.label }}
+              </md-option>
+            </md-select>
+          </div>
+        </div>
+      </div>
+    </md-tab>
+    <md-tab label="Source">
+      <textarea style="width: 100%; height: 400px;" [(ngModel)]="myCommand.body"></textarea>
+    </md-tab>
+    <md-tab label="Script">
+      <pre><code [innerHtml]="hightlight(myCommand.body)"></code></pre>
+    </md-tab>
+    <md-tab label="Notifications">
+      <app-jarvis-toolbar-resource [notified]="this" [pickers]="[{'label':'Ajouter une notification', 'icon': 'fa-bolt', 'action':'notifications', 'picker': pickNotifications}]"></app-jarvis-toolbar-resource>
+      <p-dataTable [immutable]="false" [value]="myCommand.notifications">
+        <header>Commande</header>
+        <p-column header="Ordre">
+          <ng-template let-notification="rowData" pTemplate>
+            <input type="text" size="2" pInputText [(ngModel)]="notification.extended.order" />
+          </ng-template>
+        </p-column>
+        <p-column field="id" header="Id"></p-column>
+        <p-column field="instance" header="Instance"></p-column>
+        <p-column field="name" header="Nom"></p-column>
+        <p-column header="Action">
+          <ng-template let-notification="rowData" pTemplate="body">
+            <app-jarvis-toolbar-resource [notified]="this" [tasks]="[{'task':'updateNotificationLink','args':[notification],'icon':'fa-save','label':'Mettre à jour le lien'},{'task':'dropNotificationLink','args':[notification],'icon':'fa-trash','label':'Supprimer le lien'},{'task':'gotoNotificationLink','args':[notification],'icon':'fa-link','label':'Détail'}]"></app-jarvis-toolbar-resource>
+          </ng-template>
+        </p-column>
+      </p-dataTable>
+    </md-tab>
+    <md-tab label="Mise au point">
+      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-12">
+            <md-input-container class="input-full-width">
+              <input mdInput placeholder="Données de test (json)" [(ngModel)]="myJsonData">
+            </md-input-container>
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-3">
+            Données de test (convertie)
+          </div>
+          <div class="ui-grid-col-9">
+              <pre><code [innerHtml]="pretty(myData)"></code></pre>
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-3">
+            Données de test (résultat)
+          </div>
+          <div class="ui-grid-col-9">
+            <pre><code [innerHtml]="pretty(myOutputData)"></code></pre>
+          </div>
+        </div>
+      </div>
+    </md-tab>
+  </md-tab-group>
 
 <app-jarvis-picker #pickNotifications [resource]="{'service':'notifications','label':'Notifications'}"></app-jarvis-picker>

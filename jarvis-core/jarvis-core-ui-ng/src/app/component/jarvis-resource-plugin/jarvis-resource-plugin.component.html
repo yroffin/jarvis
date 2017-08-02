@@ -1,52 +1,40 @@
-<app-jarvis-toolbar-resource [notified]="this" [crud]="true" [tasks]="[{'task':'execute','icon':'fa-gear','label':'Simuler (execution)'},{'task':'render','icon':'fa-bolt','label':'Simuler (rendu)'},{'task':'clear','icon':'fa-ban','label':'Effacer le contexte'}]" [pickers]="[{'action':'devices','icon':'fa-plug','label':'Ajouter une commande','picker': pickCommands}]"></app-jarvis-toolbar-resource>
+<app-jarvis-toolbar-resource [notified]="this" [crud]="true" [tasks]="[{'task':'execute','icon':'fa-gear','label':'Simuler (execution)'},{'task':'render','icon':'fa-bolt','label':'Simuler (rendu)'},{'task':'clear','icon':'fa-ban','label':'Effacer le contexte'}]"
+  [pickers]="[{'action':'devices','icon':'fa-plug','label':'Ajouter une commande','picker': pickCommands}]"></app-jarvis-toolbar-resource>
 
 <div *ngIf="myPlugin">
-  <p-accordion>
-    <p-accordionTab header="Entête">
-      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+  <md-tab-group>
+    <md-tab label="Entête">
+      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
         <div class="ui-grid-row">
-          <div class="ui-grid-col-4">
-            Nom du plugin
+          <div class="ui-grid-col-6">
+            <md-input-container class="input-full-width">
+              <input mdInput placeholder="Nom" [(ngModel)]="myPlugin.name">
+            </md-input-container>
           </div>
-          <div class="ui-grid-col-8">
-            <input type="text" pInputText [(ngModel)]="myPlugin.name" placeholder="Nom du plugin" />
+          <div class="ui-grid-col-6">
+            <md-input-container class="input-full-width">
+              <input mdInput placeholder="Icône" [(ngModel)]="myPlugin.icon">
+            </md-input-container>
           </div>
         </div>
         <div class="ui-grid-row">
-          <div class="ui-grid-col-4">
-            Catégorie
-          </div>
           <div class="ui-grid-col-8">
-            <p-dropdown [options]="types" [(ngModel)]="myPlugin.type"></p-dropdown>
+            <md-select placeholder="Catégorie" [(ngModel)]="myPlugin.type">
+              <md-option *ngFor="let item of types" [value]="item.value">
+                {{ item.label }}
+              </md-option>
+            </md-select>
           </div>
-        </div>
-        <div class="ui-grid-row">
-          <div class="ui-grid-col-4">
-            Icône
+          <div class="ui-grid-col-2">
+            <md-checkbox [(ngModel)]="myPlugin.visible">Visible</md-checkbox>
           </div>
-          <div class="ui-grid-col-8">
-            <input type="text" pInputText [(ngModel)]="myPlugin.icon" placeholder="Icône" />
-          </div>
-        </div>
-        <div class="ui-grid-row">
-          <div class="ui-grid-col-4">
-            Visibilité
-          </div>
-          <div class="ui-grid-col-8">
-            <p-checkbox binary="true" label="Visible" [(ngModel)]="myPlugin.visible"></p-checkbox>
-          </div>
-        </div>
-        <div class="ui-grid-row">
-          <div class="ui-grid-col-4">
-            Actif
-          </div>
-          <div class="ui-grid-col-8">
-            <p-checkbox binary="true" label="Actif" [(ngModel)]="myPlugin.active"></p-checkbox>
+          <div class="ui-grid-col-2">
+            <md-checkbox [(ngModel)]="myPlugin.active">Actif</md-checkbox>
           </div>
         </div>
       </div>
-    </p-accordionTab>
-    <p-accordionTab header="Commands">
+    </md-tab>
+    <md-tab label="Commande">
       <p-dataTable [immutable]="false" [value]="myPlugin.commands">
         <header>Commande</header>
         <p-column header="Ordre">
@@ -59,41 +47,39 @@
         <p-column field="name" header="Nom"></p-column>
         <p-column header="Action">
           <ng-template let-command="rowData" pTemplate="body">
-            <app-jarvis-toolbar-resource [notified]="this" [tasks]="[{'task':'updateCommandLink','args':[command],'icon':'fa-save','label':'Mettre à jour le lien'},{'task':'dropCommandLink','args':[command],'icon':'fa-trash','label':'Supprimer le lien'},{'task':'viewCommandLink','args':[command],'icon':'fa-eye','label':'Visualiser'},{'task':'gotoCommandLink','args':[command],'icon':'fa-link','label':'Détail'}]" ></app-jarvis-toolbar-resource>
+            <app-jarvis-toolbar-resource [notified]="this" [tasks]="[{'task':'updateCommandLink','args':[command],'icon':'fa-save','label':'Mettre à jour le lien'},{'task':'dropCommandLink','args':[command],'icon':'fa-trash','label':'Supprimer le lien'},{'task':'viewCommandLink','args':[command],'icon':'fa-eye','label':'Visualiser'},{'task':'gotoCommandLink','args':[command],'icon':'fa-link','label':'Détail'}]"></app-jarvis-toolbar-resource>
           </ng-template>
         </p-column>
       </p-dataTable>
-    </p-accordionTab>
-    <p-accordionTab header="Mise au point">
-      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+    </md-tab>
+    <md-tab label="Mise au point">
+      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
         <div class="ui-grid-row">
-          <div class="ui-grid-col-4">
-            Données de test (argument du plugin sous forme JSON)
-          </div>
-          <div class="ui-grid-col-8">
-            <input type="text" pInputText [(ngModel)]="myJsonData" placeholder="{}" />
+          <div class="ui-grid-col-12">
+            <md-input-container class="input-full-width">
+              <input mdInput placeholder="Données de test (json)" [(ngModel)]="myJsonData">
+            </md-input-container>
           </div>
         </div>
         <div class="ui-grid-row">
-          <div class="ui-grid-col-4">
+          <div class="ui-grid-col-3">
             Données de test (convertie)
           </div>
-          <div class="ui-grid-col-8">
-            <pre><code [innerHtml]="pretty(myData)"></code></pre>
+          <div class="ui-grid-col-9">
+              <pre><code [innerHtml]="pretty(myData)"></code></pre>
           </div>
         </div>
         <div class="ui-grid-row">
-          <div class="ui-grid-col-4">
+          <div class="ui-grid-col-3">
             Données de test (résultat)
           </div>
-          <div class="ui-grid-col-8">
+          <div class="ui-grid-col-9">
             <pre><code [innerHtml]="pretty(myOutputData)"></code></pre>
           </div>
         </div>
       </div>
-    </p-accordionTab>
-  </p-accordion>
-</div>
+    </md-tab>
+  </md-tab-group>
 
 <app-jarvis-picker #pickCommands [resource]="{'service':'commands','label':'Commands'}"></app-jarvis-picker>
 
@@ -103,62 +89,47 @@
       <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
         <div class="ui-grid-row">
           <div class="ui-grid-col-4">
-            Identifiant de la commande
+            <md-input-container class="input-full-width">
+              <input mdInput placeholder="Identifiant de la commande" [(ngModel)]="myCommand.id" disabled>
+            </md-input-container>
           </div>
-          <div class="ui-grid-col-8">
-            <input type="text" pInputText [(ngModel)]="myCommand.id" placeholder="Identifiant de la commande" disabled />
+          <div class="ui-grid-col-4">
+            <md-input-container class="input-full-width">
+              <input mdInput placeholder="Instance de la commande" [(ngModel)]="myCommand.instance" disabled>
+            </md-input-container>
+          </div>
+          <div class="ui-grid-col-4">
+            <md-input-container class="input-full-width">
+              <input mdInput placeholder="Nom de la commande" [(ngModel)]="myCommand.name">
+            </md-input-container>
           </div>
         </div>
         <div class="ui-grid-row">
           <div class="ui-grid-col-4">
-            Instance de la commande
+            <md-input-container class="input-full-width">
+              <input mdInput placeholder="Name" [(ngModel)]="myCommand.extended.name">
+            </md-input-container>
           </div>
-          <div class="ui-grid-col-8">
-            <input type="text" pInputText [(ngModel)]="myCommand.instance" placeholder="Instance de la commande" disabled />
+          <div class="ui-grid-col-4">
+            <md-input-container class="input-full-width">
+              <input mdInput placeholder="Nature (json)" [(ngModel)]="myCommand.extended.nature">
+            </md-input-container>
+          </div>
+          <div class="ui-grid-col-4">
+            <md-input-container class="input-full-width">
+              <input mdInput placeholder="Type (action)" [(ngModel)]="myCommand.extended.type">
+            </md-input-container>
           </div>
         </div>
         <div class="ui-grid-row">
-          <div class="ui-grid-col-4">
-            Nom de la commande
-          </div>
-          <div class="ui-grid-col-8">
-            <input type="text" pInputText [(ngModel)]="myCommand.name" placeholder="Nom de la commande" />
-          </div>
-        </div>
-        <div class="ui-grid-row">
-          <div class="ui-grid-col-4">
-            Name
-          </div>
-          <div class="ui-grid-col-8">
-            <input type="text" pInputText [(ngModel)]="myCommand.extended.name" placeholder="Ordre" />
-          </div>
-        </div>
-        <div class="ui-grid-row">
-          <div class="ui-grid-col-4">
-            Paramètre(s) (json)
-          </div>
-          <div class="ui-grid-col-8">
-            <input type="text" pInputText [(ngModel)]="myCommand.extended.parameter" placeholder="Paramètre(s) (json)" />
-          </div>
-        </div>
-        <div class="ui-grid-row">
-          <div class="ui-grid-col-4">
-            Nature
-          </div>
-          <div class="ui-grid-col-8">
-            <input type="text" pInputText [(ngModel)]="myCommand.extended.nature" placeholder="Nature" />
-          </div>
-        </div>
-        <div class="ui-grid-row">
-          <div class="ui-grid-col-4">
-            Type
-          </div>
-          <div class="ui-grid-col-8">
-            <input type="text" pInputText [(ngModel)]="myCommand.extended.type" placeholder="Type" />
+          <div class="ui-grid-col-12">
+            <md-input-container class="input-full-width">
+              <input mdInput placeholder="Paramètre(s) (json)" [(ngModel)]="myCommand.extended.parameter">
+            </md-input-container>
           </div>
         </div>
       </div>
-      <app-jarvis-toolbar-resource [notified]="this" [tasks]="[{'task':'updateCommandLink','args':[myCommand],'icon':'fa-save','label':'Mettre à jour le lien'}]" ></app-jarvis-toolbar-resource>
+      <app-jarvis-toolbar-resource [notified]="this" [tasks]="[{'task':'updateCommandLink','args':[myCommand],'icon':'fa-save','label':'Mettre à jour le lien'}]"></app-jarvis-toolbar-resource>
     </p-fieldset>
     <p-fieldset legend="Source" toggleable="true">
       <pre><code [innerHtml]="hightlight(myCommand.body)"></code></pre>
