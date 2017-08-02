@@ -167,8 +167,8 @@ const appRoutes: Routes = [
   { path: 'resources', component: JarvisServerResourcesComponent, canActivate: [ProfileGuard, NavigationGuard] },
   { path: 'desktop', component: JarvisDesktopComponent, canActivate: [ProfileGuard] },
   { path: 'login', component: JarvisLoginComponent, canActivate: [NavigationGuard] },
-  { path: '', component: JarvisHomeComponent, canActivate: [ProfileGuard] },
-  { path: '**', component: JarvisHomeComponent, canActivate: [ProfileGuard] }
+  { path: '', component: JarvisDesktopComponent, canActivate: [ProfileGuard] },
+  { path: '**', component: JarvisDesktopComponent, canActivate: [ProfileGuard] }
 ];
 
 @NgModule({

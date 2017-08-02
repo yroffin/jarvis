@@ -1,72 +1,46 @@
 <app-jarvis-toolbar-resource [notified]="this" [crud]="true"></app-jarvis-toolbar-resource>
 
 <div *ngIf="myConnector">
-  <p-accordion>
-    <p-accordionTab header="Entête">
-      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+  <md-tab-group>
+    <md-tab label="Entête">
+      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
         <div class="ui-grid-row">
-          <div class="ui-grid-col-4">
-            Nom
+          <div class="ui-grid-col-6">
+            <md-input-container class="input-full-width">
+              <input mdInput placeholder="Nom" [(ngModel)]="myConnector.name">
+            </md-input-container>
           </div>
-          <div class="ui-grid-col-8">
-            <input type="text" pInputText [(ngModel)]="myConnector.name" placeholder="Nom" />
-          </div>
-        </div>
-        <div class="ui-grid-row">
-          <div class="ui-grid-col-4">
-            Icône
-          </div>
-          <div class="ui-grid-col-8">
-            <input type="text" pInputText [(ngModel)]="myConnector.icon" placeholder="Icône" />
+          <div class="ui-grid-col-6">
+            <md-input-container class="input-full-width">
+              <input mdInput placeholder="Icône" [(ngModel)]="myConnector.icon">
+            </md-input-container>
           </div>
         </div>
       </div>
-    </p-accordionTab>
-    <p-accordionTab header="Réseau">
-      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+    </md-tab>
+    <md-tab label="Réseau ({{myConnector.lastAdvertise | date:'yyyy-MM-dd HH:mm:ss Z'}})">
+      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
         <div class="ui-grid-row">
-          <div class="ui-grid-col-4">
-            Adresse réseau
-          </div>
-          <div class="ui-grid-col-8">
-            <input type="text" pInputText [(ngModel)]="myConnector.adress" placeholder="192.168.1.1" />
+          <div class="ui-grid-col-6">
+            <md-input-container class="input-full-width">
+              <input mdInput placeholder="Adresse (192.168.1.1)" [(ngModel)]="myConnector.adress">
+            </md-input-container>
           </div>
         </div>
         <div class="ui-grid-row">
-          <div class="ui-grid-col-4">
-            Dernier échange
+          <div class="ui-grid-col-3">
+            <md-checkbox [(ngModel)]="myConnector.isRenderer">Affichage</md-checkbox>
           </div>
-          <div class="ui-grid-col-8">
-            {{myConnector.lastAdvertise | date:'yyyy-MM-dd HH:mm:ss Z'}}
+          <div class="ui-grid-col-3">
+            <md-checkbox [(ngModel)]="myConnector.isSensor">Capteur</md-checkbox>
           </div>
-        </div>
-        <div class="ui-grid-row">
-          <div class="ui-grid-col-4">
-            Composant d'affichage
-          </div>
-          <div class="ui-grid-col-8">
-            <p-checkbox binary="true" label="Oui/Non" [(ngModel)]="myConnector.isRenderer"></p-checkbox>
-          </div>
-        </div>
-        <div class="ui-grid-row">
-          <div class="ui-grid-col-4">
-            Composant capteur
-          </div>
-          <div class="ui-grid-col-8">
-            <p-checkbox binary="true" label="Oui/Non" [(ngModel)]="myConnector.isSensor"></p-checkbox>
-          </div>
-        </div>
-        <div class="ui-grid-row">
-          <div class="ui-grid-col-4">
-            Composant intéractif
-          </div>
-          <div class="ui-grid-col-8">
-            <p-checkbox binary="true" label="Oui/Non" [(ngModel)]="myConnector.canAnswer"></p-checkbox>
+          <div class="ui-grid-col-3">
+            <md-checkbox [(ngModel)]="myConnector.canAnswer">Intéractif</md-checkbox>
           </div>
         </div>
       </div>
-    </p-accordionTab>
-    <p-accordionTab *ngIf="myConnector.collects" header="Collecte(s)">
+    </md-tab>
+    <md-tab *ngIf="myConnector.collects" label="Collecte(s)">
       <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
         <p-dataTable [immutable]="false" [value]="myConnector.collects.collections">
           <header>Collectes</header>
@@ -81,6 +55,7 @@
           </p-column>
         </p-dataTable>
       </div>
-    </p-accordionTab>
-  </p-accordion>
+    </md-tab>
+  </md-tab-group>
+
 </div>

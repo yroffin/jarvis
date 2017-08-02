@@ -2,8 +2,16 @@
   <h3>{{myView.name}}</h3>
   <md-grid-list cols="3" rowHeight="1:1">
     <md-grid-tile [style.background]="myDeviceItem.tagColor" *ngFor="let myDeviceItem of myView.devices; let indexDevice=index">
-      <md-card>
-        <app-jarvis-tile (click)="touch(myDeviceItem)" [myDevice]="myDeviceItem"></app-jarvis-tile>
+      <md-card [style.background]="myDeviceItem.tagColor">
+        <md-card-header>
+          <h4 [innerHTML]="myDeviceItem.name"></h4>
+        </md-card-header>
+        <md-card-content>
+          <app-jarvis-tile (click)="touch(myDeviceItem)" [myDevice]="myDeviceItem"></app-jarvis-tile>
+        </md-card-content>
+        <md-card-actions>
+          <i class="fa fa-{{myDeviceItem.icon}}" aria-hidden="true"></i>
+        </md-card-actions>
       </md-card>
     </md-grid-tile>
   </md-grid-list>
