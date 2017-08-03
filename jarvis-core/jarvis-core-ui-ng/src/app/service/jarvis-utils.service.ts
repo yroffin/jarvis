@@ -72,4 +72,11 @@ export class WindowRef {
     public setHref(ref: string): void {
         this._window.location.href = ref;
     }
+
+    /**
+     * get window
+     */
+    public getWindow(): any {
+        return this._window;
+    }
 }

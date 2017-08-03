@@ -83,7 +83,7 @@ export class JarvisResourceNotificationComponent extends JarvisResource<Notifica
    */
   public notify(picker: PickerBean, resource: ResourceBean): void {
     if(picker.action === 'complete') {
-      this.myNotification = resource;
+      this.myNotification = <NotificationBean> resource;
     }
   }
 }

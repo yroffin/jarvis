@@ -1,28 +1,24 @@
 <app-jarvis-toolbar-resource [notified]="this" [crud]="true" [tasks]="[{'task':'execute','icon':'fa-play','label':'Execute le scenario'}]" [pickers]="[{'label':'Ajouter un trigger', 'icon': 'fa-bolt', 'action':'triggers', 'picker': pickTriggers},{'label':'Ajouter un block', 'icon': 'fa-bolt', 'action':'blocks', 'picker': pickBlocks}]"></app-jarvis-toolbar-resource>
 
 <div *ngIf="myScenario">
-  <p-accordion>
-    <p-accordionTab header="Entête">
+  <md-tab-group>
+    <md-tab label="Entête">
       <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
         <div class="ui-grid-row">
-          <div class="ui-grid-col-4">
-            Nom
+          <div class="ui-grid-col-6">
+            <md-input-container class="input-full-width">
+              <input mdInput placeholder="Nom" [(ngModel)]="myScenario.name">
+            </md-input-container>
           </div>
-          <div class="ui-grid-col-8">
-            <input type="text" pInputText [(ngModel)]="myScenario.name" placeholder="Nom" />
-          </div>
-        </div>
-        <div class="ui-grid-row">
-          <div class="ui-grid-col-4">
-            Icône
-          </div>
-          <div class="ui-grid-col-8">
-            <input type="text" pInputText [(ngModel)]="myScenario.icon" placeholder="Icône" />
+          <div class="ui-grid-col-6">
+            <md-input-container class="input-full-width">
+              <input mdInput placeholder="Icône" [(ngModel)]="myScenario.icon">
+            </md-input-container>
           </div>
         </div>
       </div>
-    </p-accordionTab>
-    <p-accordionTab header="Triggers">
+    </md-tab>
+    <md-tab label="Triggers">
       <p-dataTable [immutable]="false" [value]="myScenario.triggers">
         <header>Trigger</header>
         <p-column header="Ordre">
@@ -39,8 +35,8 @@
           </ng-template>
         </p-column>
       </p-dataTable>
-    </p-accordionTab>
-    <p-accordionTab header="Blocks">
+    </md-tab>
+    <md-tab label="Blocks">
       <p-dataTable [immutable]="false" [value]="myScenario.blocks">
         <header>Trigger</header>
         <p-column header="Ordre">
@@ -57,18 +53,18 @@
           </ng-template>
         </p-column>
       </p-dataTable>
-    </p-accordionTab>
-    <p-accordionTab header="Graphe">
+    </md-tab>
+    <md-tab label="Graphe">
       <div inlineSvg [resourceUrl]="'scenarios/'+myScenario.id+'/svg'" ></div>
-    </p-accordionTab>
-    <p-accordionTab header="Test">
+    </md-tab>
+    <md-tab label="Test">
       <p-dataTable [immutable]="false" [value]="console">
         <p-column header="Résultat">
           <ng-template let-line="rowData" pTemplate="body">{{line}}</ng-template>
         </p-column>
       </p-dataTable>
-    </p-accordionTab>
-  </p-accordion>
+    </md-tab>
+  </md-tab-group>
 </div>
 
 <app-jarvis-picker #pickTriggers [resource]="{'service':'triggers','label':'Triggers'}"></app-jarvis-picker>

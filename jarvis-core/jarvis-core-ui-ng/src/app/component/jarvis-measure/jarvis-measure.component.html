@@ -1,36 +1,28 @@
-<app-jarvis-toolbar-resource [notified]="this" [crud]="true" [tasks]="[{'task':'check','icon':'fa-bolt','label':'Check'}]" [pickers]="[{'label':'Lier un connecteur', 'icon': 'fa-podcast', 'action':'connectors', 'picker': pickConnectors}]"></app-jarvis-toolbar-resource>
+<app-jarvis-toolbar-resource [notified]="this" [crud]="true" [tasks]="[{'task':'check','icon':'fa-bolt','label':'Check'}]"
+  [pickers]="[{'label':'Lier un connecteur', 'icon': 'fa-podcast', 'action':'connectors', 'picker': pickConnectors}]"></app-jarvis-toolbar-resource>
 
 <div *ngIf="myMeasure">
-  <p-accordion>
-    <p-accordionTab header="Entête">
+  <md-tab-group>
+    <md-tab label="Entête">
       <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
         <div class="ui-grid-row">
           <div class="ui-grid-col-4">
-            Nom ({{checkName}})
+            <md-input-container class="input-full-width">
+              <input mdInput placeholder="Nom ({{checkName}})" [(ngModel)]="myMeasure.name">
+            </md-input-container>
           </div>
-          <div class="ui-grid-col-8">
-            <input type="text" pInputText [(ngModel)]="myMeasure.name" placeholder="Nom" />
-          </div>
-        </div>
-        <div class="ui-grid-row">
           <div class="ui-grid-col-4">
-            Datetime ({{checkDatetime}})
+            <md-input-container class="input-full-width">
+              <input mdInput placeholder="Datetime ({{checkDatetime}})" [(ngModel)]="myMeasure.datetime">
+            </md-input-container>
           </div>
-          <div class="ui-grid-col-8">
-            <input type="text" pInputText [(ngModel)]="myMeasure.datetime" placeholder="timestamp" />
-          </div>
-        </div>
-        <div class="ui-grid-row">
           <div class="ui-grid-col-4">
-            Valeur ({{checkValue}})
-          </div>
-          <div class="ui-grid-col-8">
-            <input type="text" pInputText [(ngModel)]="myMeasure.value" placeholder="value" />
+            <md-input-container class="input-full-width">
+              <input mdInput placeholder="Valeur ({{checkValue}})" [(ngModel)]="myMeasure.value">
+            </md-input-container>
           </div>
         </div>
       </div>
-    </p-accordionTab>
-    <p-accordionTab header="Connecteurs">
       <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
         <div class="ui-grid-row">
           <div class="ui-grid-col-12">
@@ -46,12 +38,12 @@
         <p-column field="name" header="Nom"></p-column>
         <p-column header="Action">
           <ng-template let-connector="rowData" pTemplate type="body">
-            <app-jarvis-toolbar-resource [notified]="this" [tasks]="[{'task':'dropConnectorLink','args':[connector],'icon':'fa-trash','label':'Supprimer le lien'},{'task':'gotoConnectorLink','args':[connector],'icon':'fa-link','label':'Détail'}]" ></app-jarvis-toolbar-resource>
+            <app-jarvis-toolbar-resource [notified]="this" [tasks]="[{'task':'dropConnectorLink','args':[connector],'icon':'fa-trash','label':'Supprimer le lien'},{'task':'gotoConnectorLink','args':[connector],'icon':'fa-link','label':'Détail'}]"></app-jarvis-toolbar-resource>
           </ng-template>
         </p-column>
       </p-dataTable>
-    </p-accordionTab>
-  </p-accordion>
+    </md-tab>
+  </md-tab-group>
 </div>
 
 <app-jarvis-picker #pickConnectors [resource]="{'service':'connectors','label':'Connectors'}"></app-jarvis-picker>

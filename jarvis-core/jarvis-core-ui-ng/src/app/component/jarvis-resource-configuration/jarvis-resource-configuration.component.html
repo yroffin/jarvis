@@ -1,56 +1,45 @@
 <app-jarvis-toolbar-resource [notified]="this" [crud]="true"></app-jarvis-toolbar-resource>
 
 <div *ngIf="myConfiguration">
-  <p-accordion>
-    <p-accordionTab header="Entête">
+  <md-tab-group>
+    <md-tab label="Entête">
       <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
         <div class="ui-grid-row">
-          <div class="ui-grid-col-4">
-            Nom
+          <div class="ui-grid-col-6">
+            <md-input-container class="input-full-width">
+              <input mdInput placeholder="Nom" [(ngModel)]="myConfiguration.name">
+            </md-input-container>
           </div>
-          <div class="ui-grid-col-8">
-            <input type="text" pInputText [(ngModel)]="myConfiguration.name" placeholder="Nom" />
-          </div>
-        </div>
-        <div class="ui-grid-row">
-          <div class="ui-grid-col-4">
-            Icône
-          </div>
-          <div class="ui-grid-col-8">
-            <input type="text" pInputText [(ngModel)]="myConfiguration.icon" placeholder="Icône" />
+          <div class="ui-grid-col-6">
+            <md-input-container class="input-full-width">
+              <input mdInput placeholder="Icône" [(ngModel)]="myConfiguration.icon">
+            </md-input-container>
           </div>
         </div>
         <div class="ui-grid-row">
-          <div class="ui-grid-col-4">
-            Active
-          </div>
-          <div class="ui-grid-col-8">
-            <p-checkbox binary="true" label="Active" [(ngModel)]="myConfiguration.active"></p-checkbox>
+          <div class="ui-grid-col-12">
+            <md-checkbox binary="true" [(ngModel)]="myConfiguration.active">Active</md-checkbox>
           </div>
         </div>
       </div>
-    </p-accordionTab>
-    <p-accordionTab header="Présentation">
+    </md-tab>
+    <md-tab label="Présentation">
       <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
         <div class="ui-grid-row">
-          <div class="ui-grid-col-4">
-            Opacité
+          <div class="ui-grid-col-6">
+            <md-input-container class="input-full-width">
+              <input mdInput placeholder="Opacité: 0" [(ngModel)]="myConfiguration.opacity">
+            </md-input-container>
           </div>
-          <div class="ui-grid-col-8">
-            <input type="text" pInputText [(ngModel)]="myConfiguration.opacity" placeholder="0" />
-          </div>
-        </div>
-        <div class="ui-grid-row">
-          <div class="ui-grid-col-4">
-            Image de fond
-          </div>
-          <div class="ui-grid-col-8">
-            <input type="text" pInputText [(ngModel)]="myConfiguration.backgroundUrl" placeholder="todo" />
+          <div class="ui-grid-col-6">
+            <md-input-container class="input-full-width">
+              <input mdInput placeholder="Image de fond" [(ngModel)]="myConfiguration.backgroundUrl">
+            </md-input-container>
           </div>
         </div>
       </div>
-    </p-accordionTab>
-    <p-accordionTab header="Configuration du système">
+    </md-tab>
+    <md-tab label="Configuration du système">
       <p-dataTable [immutable]="false" [value]="myConfiguration.system.scheduled">
         <header *ngIf="myConfiguration.system.events">Scheduled (actif)</header>
         <header *ngIf="!myConfiguration.system.events">Scheduled (inactif)</header>
@@ -58,6 +47,7 @@
         <p-column field="name" header="Nom"></p-column>
         <p-column field="lastExecution" header="Dernière execution"></p-column>
       </p-dataTable>
-    </p-accordionTab>
-  </p-accordion>
+    </md-tab>
+  </md-tab-group>
+
 </div>

@@ -1,6 +1,6 @@
 .example-container {
   width: 100%;
-  height: auto;
+  height: 100vh;
 }
 
 .example-sidenav-content {

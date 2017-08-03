@@ -1,35 +1,31 @@
-<app-jarvis-toolbar-resource [notified]="this" [crud]="true" [tasks]="[{'task':'execute','icon':'fa-play','label':'Simuler (execution)'}]" [pickers]="[{'label':'Ajouter une crontab', 'icon': 'fa-bolt', 'action':'crons', 'picker': pickCrons}]"></app-jarvis-toolbar-resource>
+<app-jarvis-toolbar-resource [notified]="this" [crud]="true" [tasks]="[{'task':'execute','icon':'fa-play','label':'Simuler (execution)'}]"
+  [pickers]="[{'label':'Ajouter une crontab', 'icon': 'fa-bolt', 'action':'crons', 'picker': pickCrons}]"></app-jarvis-toolbar-resource>
 
 <div *ngIf="myTrigger">
-  <p-accordion>
-    <p-accordionTab header="Entête">
-      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+  <md-tab-group>
+    <md-tab label="Entête">
+      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
         <div class="ui-grid-row">
-          <div class="ui-grid-col-4">
-            Nom du plugin
+          <div class="ui-grid-col-6">
+            <md-input-container class="input-full-width">
+              <input mdInput placeholder="Nom" [(ngModel)]="myTrigger.name">
+            </md-input-container>
           </div>
-          <div class="ui-grid-col-8">
-            <input type="text" pInputText [(ngModel)]="myTrigger.name" placeholder="Nom du plugin" />
-          </div>
-        </div>
-        <div class="ui-grid-row">
-          <div class="ui-grid-col-4">
-            Icône
-          </div>
-          <div class="ui-grid-col-8">
-            <input type="text" pInputText [(ngModel)]="myTrigger.icon" placeholder="Icône" />
+          <div class="ui-grid-col-6">
+            <md-input-container class="input-full-width">
+              <input mdInput placeholder="Icône" [(ngModel)]="myTrigger.icon">
+            </md-input-container>
           </div>
         </div>
       </div>
-    </p-accordionTab>
-    <p-accordionTab header="Broker">
-      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+    </md-tab>
+    <md-tab label="Broker">
+      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
         <div class="ui-grid-row">
-          <div class="ui-grid-col-4">
-            Souscription
-          </div>
-          <div class="ui-grid-col-8">
-            <input type="text" pInputText [(ngModel)]="myTrigger.topic" placeholder="Souscription" />
+          <div class="ui-grid-col-6">
+            <md-input-container class="input-full-width">
+              <input mdInput placeholder="Souscription" [(ngModel)]="myTrigger.topic">
+            </md-input-container>
           </div>
         </div>
         <div class="ui-grid-row">
@@ -43,8 +39,8 @@
           </div>
         </div>
       </div>
-    </p-accordionTab>
-    <p-accordionTab header="Périodicité">
+    </md-tab>
+    <md-tab label="Périodicité">
       <app-jarvis-toolbar-resource [notified]="this" [pickers]="[{'label':'Ajouter une crontab', 'icon': 'fa-bolt', 'action':'crons', 'picker': pickCrons}]"></app-jarvis-toolbar-resource>
       <p-dataTable [immutable]="false" [value]="myTrigger.crons">
         <header>Crontab</header>
@@ -58,26 +54,27 @@
         <p-column field="name" header="Nom"></p-column>
         <p-column header="Action">
           <ng-template let-cron="rowData" pTemplate="body">
-            <app-jarvis-toolbar-resource [notified]="this" [tasks]="[{'task':'updateCronLink','args':[cron],'icon':'fa-save','label':'Mettre à jour le lien'},{'task':'dropCronLink','args':[cron],'icon':'fa-trash','label':'Supprimer le lien'},{'task':'gotoCronLink','args':[cron],'icon':'fa-link','label':'Détail'}]" ></app-jarvis-toolbar-resource>
+            <app-jarvis-toolbar-resource [notified]="this" [tasks]="[{'task':'updateCronLink','args':[cron],'icon':'fa-save','label':'Mettre à jour le lien'},{'task':'dropCronLink','args':[cron],'icon':'fa-trash','label':'Supprimer le lien'},{'task':'gotoCronLink','args':[cron],'icon':'fa-link','label':'Détail'}]"></app-jarvis-toolbar-resource>
           </ng-template>
         </p-column>
       </p-dataTable>
-    </p-accordionTab>
-    <p-accordionTab header="Devices liés">
+    </md-tab>
+    <md-tab label="Devices liés">
       <p-dataTable [immutable]="false" [value]="myTrigger.devices">
         <header>Devices</header>
         <p-column field="id" header="Id"></p-column>
         <p-column field="name" header="Nom"></p-column>
       </p-dataTable>
-    </p-accordionTab>
-    <p-accordionTab header="Scenarii liés">
+    </md-tab>
+    <md-tab label="Scenarii liés">
       <p-dataTable [immutable]="false" [value]="myTrigger.scenarii">
         <header>Scenarii</header>
         <p-column field="id" header="Id"></p-column>
         <p-column field="name" header="Nom"></p-column>
       </p-dataTable>
-    </p-accordionTab>
-  </p-accordion>
+    </md-tab>
+  </md-tab-group>
+
 </div>
 
 <app-jarvis-picker #pickCrons [resource]="{'service':'crons','label':'Crontabs'}"></app-jarvis-picker>

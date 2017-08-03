@@ -23,6 +23,7 @@ import { MdSidenav } from '@angular/material';
 
 import { MenuItem } from 'primeng/primeng';
 
+import { WindowRef } from './service/jarvis-utils.service';
 import { JarvisConfigurationService } from './service/jarvis-configuration.service';
 import { JarvisSecurityService } from './service/jarvis-security.service';
 import { JarvisDataStoreService } from './service/jarvis-data-store.service';
@@ -42,6 +43,7 @@ import { Oauth2Bean, MeBean } from './model/security/oauth2-bean';
 export class AppComponent implements OnInit {
 
    @ViewChild('sidenav') sidenav: MdSidenav;
+   myInnerHeight: any;
 
   /**
    * global system menu
@@ -61,10 +63,12 @@ export class AppComponent implements OnInit {
     private profile: ProfileGuard,
     private http: Http,
     private router: Router,
+    private windowRef: WindowRef,
     private configuration: JarvisConfigurationService,
     private jarvisSecurityService: JarvisSecurityService,
     private jarvisDataStoreService: JarvisDataStoreService
   ) {
+    this.myInnerHeight = windowRef.getWindow();
   }
 
   /**
