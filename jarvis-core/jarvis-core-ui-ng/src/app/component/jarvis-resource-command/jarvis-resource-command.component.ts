@@ -162,14 +162,14 @@ export class JarvisResourceCommandComponent extends JarvisResource<CommandBean> 
   /**
    * drop notification link
    */
-  public dropNotificationLink(linked: CommandBean): void {
+  public dropNotificationLink(linked: NotificationBean): void {
     this.jarvisNotificationLink.dropLink(linked, this.myCommand.id, this.myCommand.notifications, this._commandService.allLinkedNotification);
   }
 
   /**
    * drop notification link
    */
-  public updateNotificationLink(linked: CommandBean): void {
+  public updateNotificationLink(linked: NotificationBean): void {
     this.jarvisNotificationLink.updateLink(linked, this.myCommand.id, this._commandService.allLinkedNotification);
   }
 
