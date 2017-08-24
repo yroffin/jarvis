@@ -54,6 +54,11 @@ public class CronRest extends GenericEntity {
 	@JsonProperty("longitude")
 	public String longitude;
 	/**
+	 * shift
+	 */
+	@JsonProperty("shift")
+	public long shift;
+	/**
 	 * cron
 	 */
 	@JsonProperty("cron")

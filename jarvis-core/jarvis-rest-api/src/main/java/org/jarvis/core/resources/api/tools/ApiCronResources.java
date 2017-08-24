@@ -271,7 +271,7 @@ public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 			/**
 			 * wait for next sunrise
 			 */
-			long millis = coreSunsetSunrise.getNextSunrise(bean.latitude, bean.longitude) + 60000;
+			long millis = coreSunsetSunrise.getNextSunrise(bean.latitude, bean.longitude) + bean.shift * 60 * 1000;
 			logger.warn("Sleep until next sunrise {}", DateTime.now().plus(millis));
 			try {
 				Thread.sleep(millis);
@@ -319,7 +319,7 @@ public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 			/**
 			 * wait for next sunset
 			 */
-			long millis = coreSunsetSunrise.getNextSunset(bean.latitude, bean.longitude) + 60000;
+			long millis = coreSunsetSunrise.getNextSunset(bean.latitude, bean.longitude) + bean.shift * 60 * 1000;
 			logger.warn("Sleep until next sunset {}", DateTime.now().plus(millis));
 			try {
 				Thread.sleep(millis);
@@ -370,12 +370,16 @@ public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 	 * @throws InterruptedException 
 	 */
 	private void fire(CronBean bean) throws InterruptedException {
+		boolean fired = false;
 		for(TriggerBean trigger : apiTriggerResources.doFindAllBean()) {
 			for(GenericEntity cron : apiHrefTriggerCronResources.findAll(trigger)) {
 				if(cron.id.equals(bean.id)) {
 					coreEventDaemon.post(trigger.id, bean.name);
 				}
 			}
+		}
+		if(!fired) {
+			logger.warn("[EVENT] no trigger for {}", bean);
 		}
 	}
 

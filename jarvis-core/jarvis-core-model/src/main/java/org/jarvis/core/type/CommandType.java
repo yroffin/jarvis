@@ -25,6 +25,10 @@ public enum CommandType {
 	 */
 	SHELL, 
 	/**
+	 * slack notification
+	 */
+	SLACK,
+	/**
 	 * direct local command
 	 */
 	COMMAND,

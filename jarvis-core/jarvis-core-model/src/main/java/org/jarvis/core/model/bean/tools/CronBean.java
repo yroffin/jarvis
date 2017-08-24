@@ -43,6 +43,10 @@ public class CronBean extends GenericBean {
 	 */
 	public String longitude;
 	/**
+	 * shift
+	 */
+	public long shift;
+	/**
 	 * cron
 	 */
 	public String cron;

@@ -14,6 +14,7 @@ import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.BooleanProperty;
 import io.swagger.models.properties.DateTimeProperty;
 import io.swagger.models.properties.IntegerProperty;
+import io.swagger.models.properties.LongProperty;
 import io.swagger.models.properties.ObjectProperty;
 import io.swagger.models.properties.Property;
 import io.swagger.models.properties.StringProperty;
@@ -51,13 +52,17 @@ public class ModelRest extends AbstractModel implements Model {
 						if(field.getGenericType().getTypeName().equals("int")) {
 							properties.put(field.getName(), new IntegerProperty());
 						} else {
-							if(field.getGenericType().toString().startsWith("class org.jarvis")) {
-								properties.put(field.getName(), new ObjectProperty());
+							if(field.getGenericType().getTypeName().equals("long")) {
+								properties.put(field.getName(), new LongProperty());
 							} else {
-								if(field.getGenericType().toString().startsWith("java.util.List")) {
-									properties.put(field.getName(), new ArrayProperty());
+								if(field.getGenericType().toString().startsWith("class org.jarvis")) {
+									properties.put(field.getName(), new ObjectProperty());
 								} else {
-									logger.warn("No type conversion for {}", field.getGenericType());
+									if(field.getGenericType().toString().startsWith("java.util.List")) {
+										properties.put(field.getName(), new ArrayProperty());
+									} else {
+										logger.warn("No type conversion for {}", field.getGenericType());
+									}
 								}
 							}
 						}

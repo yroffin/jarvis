@@ -43,4 +43,10 @@ public class CommandBean extends GenericBean {
 	 * body
 	 */
 	public String body;
+
+	@Override
+	public String toString() {
+		return "CommandBean [name=" + name + ", type=" + type + ", icon=" + icon + ", mode=" + mode + ", body=" + body
+				+ "]";
+	}
 }

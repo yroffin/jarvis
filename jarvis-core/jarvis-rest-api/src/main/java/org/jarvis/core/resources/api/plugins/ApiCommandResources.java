@@ -40,6 +40,7 @@ import org.jarvis.core.services.CoreStatistics;
 import org.jarvis.core.services.groovy.PluginGroovyService;
 import org.jarvis.core.services.rflink.PluginRfLinkService;
 import org.jarvis.core.services.shell.PluginShellService;
+import org.jarvis.core.services.slack.PluginSlackService;
 import org.jarvis.core.services.zway.PluginZWayService;
 import org.jarvis.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
@@ -84,6 +85,9 @@ public class ApiCommandResources extends ApiLinkedResources<CommandRest,CommandB
 
 	@Autowired
 	PluginShellService pluginShellService;
+
+	@Autowired
+	PluginSlackService pluginSlackService;
 
 	@Autowired
 	PluginGroovyService pluginGroovyService;
@@ -227,6 +231,11 @@ public class ApiCommandResources extends ApiLinkedResources<CommandRest,CommandB
 		}
 		try {
 			switch(command.type) {
+				case SLACK:
+					PayloadBean payloadBean = new PayloadBean();
+					payloadBean.text = command.toString();
+					result = pluginSlackService.asObject(extractCommand(command), payloadBean);
+					break;
 				case COMMAND:
 					result = pluginShellService.asObject(extractCommand(command), args);
 					break;
