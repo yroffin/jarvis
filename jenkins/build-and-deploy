@@ -1,4 +1,6 @@
 node {
-	git credentialsId: 'github-yroffin', url: 'https://github.com/yroffin/jarvis.git'
+	// load external resources
 	def buildJenkinsFile = load 'jenkins/include/build-jenkinsfile'
+	// prepare job
+	prepare()
 }
