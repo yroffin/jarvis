@@ -1,0 +1,3 @@
+node {
+	def request = libraryResource 'include/build.jenkinsfile'
+}
