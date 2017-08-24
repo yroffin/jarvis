@@ -24,3 +24,5 @@ def prepare {
         '''
   }
 }
+
+return this
