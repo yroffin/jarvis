@@ -1,6 +1,6 @@
 node {
 	// load external resources
-	def buildJenkinsFile = load 'jenkins/include/build-jenkinsfile'
+	def buildJenkinsFile = load '${projectWorkspace}@jenkins/include/build-jenkinsfile'
 	// prepare job
 	buildJenkinsFile.prepare()
 }

@@ -25,4 +25,4 @@ def prepare() {
   }
 }
 
-return this
+return this;
