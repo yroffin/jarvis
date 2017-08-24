@@ -2,5 +2,5 @@ node {
 	// load external resources
 	def buildJenkinsFile = load 'jenkins/include/build-jenkinsfile'
 	// prepare job
-	prepare()
+	buildJenkinsFile.prepare()
 }
