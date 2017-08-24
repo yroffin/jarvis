@@ -101,7 +101,7 @@ export class JarvisMeasureComponent extends JarvisResource<MeasureBean> implemen
         () => {
           if(loaded.collects.collections.length == 1) {
             // one collect ... but now check the field
-            _.each(loaded.collects.collections, (collect) => {
+            _.each(loaded.collects.collections, (collect: any) => {
               this.checkData = collect;
               this.checkName = collect.name;
               this.checkDatetime = collect.entity[this.myMeasure.datetime];

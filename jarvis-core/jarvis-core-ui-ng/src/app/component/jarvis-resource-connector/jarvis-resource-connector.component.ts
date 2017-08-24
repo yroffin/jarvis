@@ -80,7 +80,7 @@ export class JarvisResourceConnectorComponent extends JarvisResource<ConnectorBe
       this.myConnector = <ConnectorBean> resource;
       if(this.myConnector.collects) {
         // load keys
-        _.each(this.myConnector.collects.collections, function(item) {
+        _.each(this.myConnector.collects.collections, (item : any) => {
           item.keys = Object.keys(item.entity);
         });
       }
