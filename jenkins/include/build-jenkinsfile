@@ -1,4 +1,4 @@
-def prepare {
+def prepare() {
   env.MASTER_NODE = '192.168.1.111';
   env.SLAVE_NODE  = '192.168.1.73';
   env.SHIRKA_NODE  = '192.168.1.38';
