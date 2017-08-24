@@ -6,8 +6,8 @@ node {
     externalMethod.lookAtThis("Steve")
 
 	// load external resources
-	def buildJenkinsFile = load("jenkins/include/build-jenkinsfile.groovy")
+	//def buildJenkinsFile = load("jenkins/include/build-jenkinsfile.groovy")
 	// prepare job
-	print buildJenkinsFile
-	buildJenkinsFile.prepare("todo")
+	//print buildJenkinsFile
+	//buildJenkinsFile.prepare("todo")
 }
