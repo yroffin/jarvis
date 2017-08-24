@@ -1,12 +1,12 @@
 node {
 	// Load the file 'externalMethod.groovy' from the current directory, into a variable called "externalMethod".
-    def externalMethod = load("jenkins/include/build-jenkinsfile")
+    def externalMethod = load("jenkins/include/build-jenkinsfile.groovy")
 
     // Call the method we defined in externalMethod.
     externalMethod.lookAtThis("Steve")
 
 	// load external resources
-	def buildJenkinsFile = load("jenkins/include/build-jenkinsfile")
+	def buildJenkinsFile = load("jenkins/include/build-jenkinsfile.groovy")
 	// prepare job
 	print buildJenkinsFile
 	buildJenkinsFile.prepare("todo")
