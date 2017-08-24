@@ -1,3 +1,3 @@
 node {
-	def build-jenkinsfile = load 'include/build-jenkinsfile'
+	def buildJenkinsFile = load 'include/build-jenkinsfile'
 }
