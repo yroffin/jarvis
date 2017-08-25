@@ -3,7 +3,10 @@ def lookAtThis(String whoAreYou) {
     echo "Look !!! at this, ${whoAreYou}! You loaded this from another file!"
 }
 
-def prepare(String body) {
+/**
+ * prepare tools
+ */
+def prepare() {
       echo "Prepare with ${body}"
 
       env.MASTER_NODE = '192.168.1.111';
@@ -24,12 +27,17 @@ def prepare(String body) {
       }
 
       stage('git') {
-            // Get some code from a GitHub repository
-            git credentialsId: 'github-yroffin', url: 'https://github.com/yroffin/jarvis.git'
             sh '''
-            mkdir -p ${WORKSPACE}/logs
+                  mkdir -p ${WORKSPACE}/logs
             '''
       }
+}
+
+/**
+ * check
+ */
+def check() {
+      print env.MASTER_NODE
 }
 
 return this;
