@@ -62,7 +62,7 @@ def buildGUI() {
             sh '''
                   npm install >> ${WORKSPACE}/logs/ui.stdout 2>> ${WORKSPACE}/logs/ui.stderr
                   npm update >> ${WORKSPACE}/logs/ui.stdout 2>> ${WORKSPACE}/logs/ui.stderr
-                  ng build --aot --prod --base-href /nui/ --output-path=src/main/resources/public/nui  >>${WORKSPACE}/logs/ui.stdout 2>>${WORKSPACE}/logs/ui.stderr
+                  ng build --sourcemap=false --aot --prod --base-href /nui/ --output-path=src/main/resources/public/nui  >>${WORKSPACE}/logs/ui.stdout 2>>${WORKSPACE}/logs/ui.stderr
                   ls -lrt src/main/resources/public/nui >>${WORKSPACE}/logs/ui.stdout 2>>${WORKSPACE}/logs/ui.stderr
             '''
             }
@@ -77,7 +77,7 @@ def buildSRV() {
       stage('SRV') {
             dir('jarvis-core') {
                   if (isUnix()) {
-                        sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean install > ${WORKSPACE}/logs/server.stdout 2> ${WORKSPACE}/logs/server.stderr"
+                        sh "'${mvnHome}/bin/mvn' -T 4 -Dmaven.test.failure.ignore clean install > ${WORKSPACE}/logs/server.stdout 2> ${WORKSPACE}/logs/server.stderr"
                   } else {
                         bat(/"${mvnHome}\bin\mvn" -Dmaven.test.failure.ignore clean install/)
                   }
@@ -99,13 +99,13 @@ def archive() {
 /**
  * deploy
  */
-def deploy() {
+def deploy(Boolean copy) {
       parallel(
             "master": {
-                  deployOnMaster()
+                  deployOnMaster(copy)
             },
             "shirka": {
-                  deployOnShirka()
+                  deployOnShirka(copy)
             }
       )
 }
@@ -113,13 +113,15 @@ def deploy() {
 /**
  * deployOnMaster
  */
-def deployOnMaster() {
+def deployOnMaster(Boolean copy) {
       input message: 'Déployer la version sur le master ?', ok: 'Oui'
-      step ([
-            $class: 'CopyArtifact',
-            projectName: 'jarvis-build',
-            filter: 'jarvis-core/jarvis-core-server/target/*.jar'
-      ]);
+      if(copy) {
+            step ([
+                  $class: 'CopyArtifact',
+                  projectName: 'jarvis-build',
+                  filter: 'jarvis-core/jarvis-core-server/target/*.jar'
+            ]);
+      }
       stage('Deploy on master') {
             sshagent (credentials: ['17e272eb-6f45-4dbf-97ae-06e9aba27806']) {
                   sh '''
@@ -143,13 +145,15 @@ def deployOnMaster() {
 /**
  * deployOnShirka
  */
-def deployOnShirka() {
+def deployOnShirka(Boolean copy) {
       input message: 'Déployer la version sur shirka ?', ok: 'Oui'
-      step ([
-            $class: 'CopyArtifact',
-            projectName: 'jarvis-build',
-            filter: 'jarvis-core/jarvis-rest-module-sphinx4/target/*.jar'
-      ]);
+      if(copy) {
+            step ([
+                  $class: 'CopyArtifact',
+                  projectName: 'jarvis-build',
+                  filter: 'jarvis-core/jarvis-rest-module-sphinx4/target/*.jar'
+            ]);
+      }
       stage('Deploy on shirka') {
             sshagent (credentials: ['17e272eb-6f45-4dbf-97ae-06e9aba27806']) {
                   sh '''
