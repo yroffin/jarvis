@@ -49,24 +49,24 @@ def prepare() {
 /**
  * buildBackOffice
  */
-def build() {
-      parallel {
-        dir('jarvis-core/jarvis-core-ui-ng') {
-            sh '''
-                npm install > ${WORKSPACE}/logs/ui.stdout 2> ${WORKSPACE}/logs/ui.stderr
-                npm update > ${WORKSPACE}/logs/ui.stdout 2> ${WORKSPACE}/logs/ui.stderr
-                ng build --aot --prod --base-href /nui/ --output-path=src/main/resources/public/nui  > ${WORKSPACE}/logs/ui.stdout 2> ${WORKSPACE}/logs/ui.stderr
-                ls -lrt src/main/resources/public/nui > ${WORKSPACE}/logs/ui.stdout 2> ${WORKSPACE}/logs/ui.stderr
-            '''
-        }
-        dir('jarvis-core') {
-            // Run the maven build
+def buildGUI() {
+      dir('jarvis-core/jarvis-core-ui-ng') {
+      sh '''
+            npm install > ${WORKSPACE}/logs/ui.stdout 2> ${WORKSPACE}/logs/ui.stderr
+            npm update > ${WORKSPACE}/logs/ui.stdout 2> ${WORKSPACE}/logs/ui.stderr
+            ng build --aot --prod --base-href /nui/ --output-path=src/main/resources/public/nui  > ${WORKSPACE}/logs/ui.stdout 2> ${WORKSPACE}/logs/ui.stderr
+            ls -lrt src/main/resources/public/nui > ${WORKSPACE}/logs/ui.stdout 2> ${WORKSPACE}/logs/ui.stderr
+      '''
+      }
+}
+
+def buildSRV() {
+      dir('jarvis-core') {
             if (isUnix()) {
-                sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean install > ${WORKSPACE}/logs/server.stdout 2> ${WORKSPACE}/logs/server.stderr"
+                  sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean install > ${WORKSPACE}/logs/server.stdout 2> ${WORKSPACE}/logs/server.stderr"
             } else {
-                bat(/"${mvnHome}\bin\mvn" -Dmaven.test.failure.ignore clean install/)
+                  bat(/"${mvnHome}\bin\mvn" -Dmaven.test.failure.ignore clean install/)
             }
-        }
       }
 }
 
