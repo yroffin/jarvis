@@ -40,7 +40,7 @@ def prepare() {
                   node --version
                   npm --version
                   npm config get cache
-                  npm install -g @angular/cli@latest
+                  //npm install -g @angular/cli@latest
                   ng --version
             '''
       }
