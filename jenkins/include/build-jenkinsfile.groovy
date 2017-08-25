@@ -50,6 +50,7 @@ def prepare() {
  * buildBackOffice
  */
 def buildGUI() {
+      print "GUI build"
       stage('GUI') {
             dir('jarvis-core/jarvis-core-ui-ng') {
             sh '''
@@ -63,6 +64,7 @@ def buildGUI() {
 }
 
 def buildSRV() {
+      print "SRV build"
       stage('SRV') {
             dir('jarvis-core') {
                   if (isUnix()) {
