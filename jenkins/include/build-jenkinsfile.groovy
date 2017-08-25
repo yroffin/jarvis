@@ -90,8 +90,8 @@ def buildSRV() {
  */
 def archive() {
   stage('archives') {
-        stash includes: 'jarvis-core/jarvis-core-server/target/*.jar', name: 'server'
         archiveArtifacts artifacts: 'jarvis-core/jarvis-core-server/target/*.jar', fingerprint: true, onlyIfSuccessful: true
+        archiveArtifacts artifacts: 'jarvis-core/jarvis-rest-module-sphinx4/target/*.jar', fingerprint: true, onlyIfSuccessful: true
         junit '**/target/surefire-reports/*.xml'
   }
 }
