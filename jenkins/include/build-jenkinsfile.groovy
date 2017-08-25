@@ -33,7 +33,7 @@ def prepare() {
             '''
       }
 
-      stage('@angular/cli') {
+      stage('Setup angular/cli') {
             // NodeJS
             tool name: 'angular-cli', type: 'com.cloudbees.jenkins.plugins.customtools.CustomTool'
             sh '''
@@ -47,7 +47,7 @@ def prepare() {
 }
 
 /**
- * buildBackOffice
+ * build gui
  */
 def buildGUI() {
       print "GUI build"
@@ -63,6 +63,9 @@ def buildGUI() {
       }
 }
 
+/**
+ * build SRV
+ */
 def buildSRV() {
       print "SRV build"
       stage('SRV') {
@@ -74,6 +77,28 @@ def buildSRV() {
                   }
             }
       }
+}
+
+/**
+ * archive
+ */
+def archive() {
+  stage('archives') {
+        stash includes: 'jarvis-core/jarvis-core-server/target/*.jar', name: 'server'
+        archiveArtifacts artifacts: 'jarvis-core/jarvis-core-server/target/*.jar', fingerprint: true, onlyIfSuccessful: true
+        junit '**/target/surefire-reports/*.xml'
+  }
+}
+
+/**
+ * deploy
+ */
+def deploy() {
+  stage('deploy') {
+      // unstash previous build
+      unstash name: 'server'
+      input message: 'Déployer la version ?', ok: 'Oui'
+  }
 }
 
 return this;
