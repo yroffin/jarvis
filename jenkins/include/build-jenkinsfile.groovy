@@ -100,14 +100,72 @@ def archive() {
  * deploy
  */
 def deploy() {
-  stage('deploy') {
+      parallel(
+            "master": {
+                  deployOnMaster()
+            },
+            "shirka": {
+                  deployOnShirka()
+            }
+      )
+}
+
+/**
+ * deployOnMaster
+ */
+def deployOnMaster() {
+      input message: 'Déployer la version sur le master ?', ok: 'Oui'
       step ([
             $class: 'CopyArtifact',
             projectName: 'jarvis-build',
             filter: 'jarvis-core/jarvis-core-server/target/*.jar'
-            ]);
-      input message: 'Déployer la version ?', ok: 'Oui'
-  }
+      ]);
+      stage('Deploy on master') {
+            sshagent (credentials: ['17e272eb-6f45-4dbf-97ae-06e9aba27806']) {
+                  sh '''
+                  ssh -o StrictHostKeyChecking=no -l pi ${MASTER_NODE} uname -a
+                  scp -o StrictHostKeyChecking=no jarvis-scripts/jarvis-service pi@${MASTER_NODE}:/tmp/script
+                  ssh -o StrictHostKeyChecking=no -l pi ${MASTER_NODE} sudo mv -f /tmp/script /etc/init.d/jarvis-service
+                  ssh -o StrictHostKeyChecking=no -l pi ${MASTER_NODE} sudo chmod 755 -f /etc/init.d/jarvis-service
+                  ssh -o StrictHostKeyChecking=no -l pi ${MASTER_NODE} sudo update-rc.d -f jarvis-service defaults
+                  ssh -o StrictHostKeyChecking=no -l pi ${MASTER_NODE} sudo systemctl daemon-reload
+                  scp -o StrictHostKeyChecking=no jarvis-core/jarvis-core-server/target/*.jar pi@${MASTER_NODE}:/tmp/bundle
+                  ssh -o StrictHostKeyChecking=no -l pi ${MASTER_NODE} sudo mv -f /tmp/bundle /home/jarvis/jarvis-core-server-0.0.1-SNAPSHOT.jar.tmp
+                  ssh -o StrictHostKeyChecking=no -l pi ${MASTER_NODE} sudo chown jarvis:jarvis /home/jarvis/jarvis-core-server-0.0.1-SNAPSHOT.jar.tmp
+                  ssh -o StrictHostKeyChecking=no -l pi ${MASTER_NODE} sudo mv -f /home/jarvis/jarvis-core-server-0.0.1-SNAPSHOT.jar.tmp /home/jarvis/jarvis-core-server-0.0.1-SNAPSHOT.jar
+                  ssh -o StrictHostKeyChecking=no -l pi ${MASTER_NODE} sudo pkill -e -f jarvis
+                  ssh -o StrictHostKeyChecking=no -l pi ${MASTER_NODE} sudo service jarvis-service restart
+                  '''
+            }
+      }
+}
+
+/**
+ * deployOnShirka
+ */
+def deployOnShirka() {
+      input message: 'Déployer la version sur shirka ?', ok: 'Oui'
+      step ([
+            $class: 'CopyArtifact',
+            projectName: 'jarvis-build',
+            filter: 'jarvis-core/jarvis-rest-module-sphinx4/target/*.jar'
+      ]);
+      stage('Deploy on shirka') {
+            sshagent (credentials: ['17e272eb-6f45-4dbf-97ae-06e9aba27806']) {
+                  sh '''
+                  ssh -o StrictHostKeyChecking=no -l pi ${SHIRKA_NODE} uname -a
+                  scp -o StrictHostKeyChecking=no jarvis-scripts/jarvis-sphinx4-service pi@${SHIRKA_NODE}:/tmp/script
+                  ssh -o StrictHostKeyChecking=no -l pi ${SHIRKA_NODE} sudo mv -f /tmp/script /etc/init.d/jarvis-sphinx4-service
+                  ssh -o StrictHostKeyChecking=no -l pi ${SHIRKA_NODE} sudo chmod 755 -f /etc/init.d/jarvis-sphinx4-service
+                  ssh -o StrictHostKeyChecking=no -l pi ${SHIRKA_NODE} sudo update-rc.d -f jarvis-sphinx4-service defaults
+                  ssh -o StrictHostKeyChecking=no -l pi ${SHIRKA_NODE} sudo systemctl daemon-reload
+                  scp -o StrictHostKeyChecking=no jarvis-core/jarvis-rest-module-sphinx4/target/*.jar pi@${SHIRKA_NODE}:/tmp/bundle
+                  ssh -o StrictHostKeyChecking=no -l pi ${SHIRKA_NODE} sudo mv -f /tmp/bundle /home/jarvis/jarvis-rest-module-sphinx4-0.0.1-SNAPSHOT.jar
+                  ssh -o StrictHostKeyChecking=no -l pi ${SHIRKA_NODE} sudo pkill -e -f jarvis
+                  ssh -o StrictHostKeyChecking=no -l pi ${SHIRKA_NODE} sudo service jarvis-sphinx4-service restart
+                  '''
+            }
+      }
 }
 
 return this;
