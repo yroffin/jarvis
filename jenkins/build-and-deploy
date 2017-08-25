@@ -1,5 +1,23 @@
 node {
 	stage "Build and deploy jarvis"
+	checkout(
+		[
+			$class: 'GitSCM',
+			branches: [[name: 'master]],
+			doGenerateSubmoduleConfigurations: false,
+			extensions: [
+				[$class: 'LocalBranch', localBranch: branchName],
+				[$class: 'CleanBeforeCheckout'],
+				[$class: 'CloneOption', depth: 1, noTags: false, reference: '', shallow: true, timeout: 10]
+				],
+			submoduleCfg: [],
+			userRemoteConfigs: [
+					[
+						credentialsId: 'github-yroffin',
+						url: 'https://github.com/yroffin/jarvis.git'
+					]
+				]
+			])
 	sh "find `pwd`"
 	// Load the file 'externalMethod.groovy' from the current directory, into a variable called "externalMethod".
     def externalMethod = load("jenkins/include/build-jenkinsfile.groovy")

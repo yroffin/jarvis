@@ -31,3 +31,5 @@ def prepare(String body) {
             '''
       }
 }
+
+return this;
