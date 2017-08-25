@@ -15,23 +15,29 @@ def configure() {
  * prepare tools
  */
 def prepare() {
-      stage('Prepare NodeJS Suite') {
-            // NodeJS
-            tool name: 'NodeJS', type: 'com.cloudbees.jenkins.plugins.customtools.CustomTool'
-            env.PATH='/usr/bin:/bin:/var/jenkins_home/tools/com.cloudbees.jenkins.plugins.customtools.CustomTool/NodeJS/node-v6.10.0-linux-x64/bin'
-      }
-
-      stage('Prepare maven tools') {
-            // Maven
-            tool name: 'M3', type: 'maven'
-            mvnHome = tool 'M3'
-      }
-
-      stage('Create logs') {
-            sh '''
-                  mkdir -p ${WORKSPACE}/logs
-            '''
-      }
+      parallel(
+            "NodeJS": {
+                  stage('Prepare NodeJS Suite') {
+                        // NodeJS
+                        tool name: 'NodeJS', type: 'com.cloudbees.jenkins.plugins.customtools.CustomTool'
+                        env.PATH='/usr/bin:/bin:/var/jenkins_home/tools/com.cloudbees.jenkins.plugins.customtools.CustomTool/NodeJS/node-v6.10.0-linux-x64/bin'
+                  }
+            },
+            "Maven": {
+                  stage('Prepare maven tools') {
+                        // Maven
+                        tool name: 'M3', type: 'maven'
+                        mvnHome = tool 'M3'
+                  }
+            },
+            "Logs": {
+                  stage('Create logs') {
+                        sh '''
+                              mkdir -p ${WORKSPACE}/logs
+                        '''
+                  }
+            }
+      )
 
       stage('Setup angular/cli') {
             // NodeJS
@@ -40,7 +46,7 @@ def prepare() {
                   node --version
                   npm --version
                   npm config get cache
-                  #npm install -g @angular/cli@latest
+                  npm install -g @angular/cli@latest
                   ng --version
             '''
       }
@@ -54,10 +60,10 @@ def buildGUI() {
       stage('GUI') {
             dir('jarvis-core/jarvis-core-ui-ng') {
             sh '''
-                  npm install > ${WORKSPACE}/logs/ui.stdout 2> ${WORKSPACE}/logs/ui.stderr
-                  npm update > ${WORKSPACE}/logs/ui.stdout 2> ${WORKSPACE}/logs/ui.stderr
-                  ng build --aot --prod --base-href /nui/ --output-path=src/main/resources/public/nui  > ${WORKSPACE}/logs/ui.stdout 2> ${WORKSPACE}/logs/ui.stderr
-                  ls -lrt src/main/resources/public/nui > ${WORKSPACE}/logs/ui.stdout 2> ${WORKSPACE}/logs/ui.stderr
+                  npm install >> ${WORKSPACE}/logs/ui.stdout 2>> ${WORKSPACE}/logs/ui.stderr
+                  npm update >> ${WORKSPACE}/logs/ui.stdout 2>> ${WORKSPACE}/logs/ui.stderr
+                  ng build --aot --prod --base-href /nui/ --output-path=src/main/resources/public/nui  >>${WORKSPACE}/logs/ui.stdout 2>>${WORKSPACE}/logs/ui.stderr
+                  ls -lrt src/main/resources/public/nui >>${WORKSPACE}/logs/ui.stdout 2>>${WORKSPACE}/logs/ui.stderr
             '''
             }
       }
@@ -95,8 +101,11 @@ def archive() {
  */
 def deploy() {
   stage('deploy') {
-      // unstash previous build
-      unstash name: 'server'
+      step ([
+            $class: 'CopyArtifact',
+            projectName: 'jarvis-build',
+            filter: 'jarvis-core/jarvis-core-server/target/*.jar'
+            ]);
       input message: 'Déployer la version ?', ok: 'Oui'
   }
 }
