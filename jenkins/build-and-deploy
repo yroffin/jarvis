@@ -1,6 +1,6 @@
 node {
 	stage "Build and deploy jarvis"
-	sh "find *"
+	sh "find `pwd`"
 	// Load the file 'externalMethod.groovy' from the current directory, into a variable called "externalMethod".
     def externalMethod = load("jenkins/include/build-jenkinsfile.groovy")
 
