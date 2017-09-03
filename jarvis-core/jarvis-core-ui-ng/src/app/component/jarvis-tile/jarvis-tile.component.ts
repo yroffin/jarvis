@@ -1,6 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import * as _ from 'lodash';
 
+import { JarvisDataDeviceService } from '../../service/jarvis-data-device.service';
+import { JarvisMessageService } from '../../service/jarvis-message.service';
+import { Message } from 'primeng/primeng';
+
 /**
  * data model
  */
@@ -14,7 +18,11 @@ import { DeviceBean } from '../../model/device-bean';
 export class JarvisTileComponent implements OnInit {
   @Input() myDevice: DeviceBean;
 
-  constructor() { }
+  constructor(
+    private jarvisDataDeviceService: JarvisDataDeviceService,
+    private jarvisMessageService: JarvisMessageService
+  ) {
+  }
 
   ngOnInit() {
   }
@@ -80,5 +88,16 @@ export class JarvisTileComponent implements OnInit {
       }
     });
     return template;
+  }
+
+  /**
+   * implement touch on device
+   * @param device 
+   */
+  private touch(device: DeviceBean): void {
+    this.jarvisDataDeviceService.Task(device.id, "execute", {})
+      .subscribe(
+      (data: any) => this.jarvisMessageService.push({severity: 'info', summary: 'Activation', detail: device.name})
+      );
   }
 }

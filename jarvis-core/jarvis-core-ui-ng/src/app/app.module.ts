@@ -99,6 +99,7 @@ import { JarvisDataStoreService } from './service/jarvis-data-store.service';
 import { JarvisDataDatasourceService } from './service/jarvis-data-datasource.service';
 import { JarvisDataMeasureService } from './service/jarvis-data-measure.service';
 import { JarvisLoaderService } from './service/jarvis-loader.service';
+import { JarvisMessageService } from './service/jarvis-message.service';
 
 import { JarvisLayoutDirective } from './directive/jarvis-layout.directive';
 
@@ -128,6 +129,7 @@ import { JarvisResourceDatasourceComponent } from './component/jarvis-resource-d
 import { JarvisMeasureComponent } from './component/jarvis-measure/jarvis-measure.component';
 
 import { BrokerStore } from './store/broker.store';
+import { MessageStore } from './store/message.store';
 import { JarvisServerResourcesComponent } from './component/jarvis-server-resources/jarvis-server-resources.component';
 
 /**
@@ -264,7 +266,8 @@ const appRoutes: Routes = [
      * store
      */
     StoreModule.provideStore({
-      Broker: BrokerStore.brokerReducer
+      Broker: BrokerStore.brokerReducer,
+      Message: MessageStore.messageReducer
     })
   ],
   providers: [
@@ -303,6 +306,7 @@ const appRoutes: Routes = [
     ProfileGuard,
     LoggerService,
     JarvisLoaderService,
+    JarvisMessageService,
     ConfirmationService
   ],
   bootstrap: [AppComponent]

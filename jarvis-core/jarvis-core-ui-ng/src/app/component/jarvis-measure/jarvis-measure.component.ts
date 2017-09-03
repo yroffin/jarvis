@@ -23,6 +23,7 @@ import { JarvisPickerComponent } from '../../dialog/jarvis-picker/jarvis-picker.
 import { JarvisConfigurationService } from '../../service/jarvis-configuration.service';
 import { JarvisResourceLink } from '../../class/jarvis-resource-link';
 
+import { JarvisMessageService } from '../../service/jarvis-message.service';
 import { JarvisDataMeasureService } from '../../service/jarvis-data-measure.service';
 import { JarvisDataConnectorService } from '../../service/jarvis-data-connector.service';
 
@@ -60,13 +61,13 @@ export class JarvisMeasureComponent extends JarvisResource<MeasureBean> implemen
    * internal
    */
   private jarvisConnectorLink: JarvisResourceLink<ConnectorBean>;
-  public msgs: Message[] = [];
 
   constructor(
     private _route: ActivatedRoute,
     private _router: Router,
     private _measureService: JarvisDataMeasureService,
-    private _connectorService: JarvisDataConnectorService
+    private _connectorService: JarvisDataConnectorService,
+    private jarvisMessageService: JarvisMessageService
   ) {
     super('/measures', [], _measureService, _route, _router);
     this.jarvisConnectorLink = new JarvisResourceLink<ConnectorBean>();
@@ -83,14 +84,13 @@ export class JarvisMeasureComponent extends JarvisResource<MeasureBean> implemen
    * change action
    */
   public check(): void {
-    this.msgs = [];
     /**
      * assert that measure data are correct
      */
     if(this.myMeasure.connectors.length > 1) {
-      this.msgs.push({severity:'warn', summary:'Trop de connecteur', detail:'Une mesure ne doit avoir qu\'un seul connecteur'});
+      this.jarvisMessageService.push({severity:'warn', summary:'Trop de connecteur', detail:'Une mesure ne doit avoir qu\'un seul connecteur'});
     } else {
-      this.msgs.push({severity:'info', summary:'Contrôle', detail:'Contrôle du connecteur ' + this.myMeasure.connectors[0].id});
+      this.jarvisMessageService.push({severity:'info', summary:'Contrôle', detail:'Contrôle du connecteur ' + this.myMeasure.connectors[0].id});
       let loaded;
       this._connectorService.GetSingle(this.myMeasure.connectors[0].id).subscribe(
         (data) => {
@@ -108,7 +108,7 @@ export class JarvisMeasureComponent extends JarvisResource<MeasureBean> implemen
               this.checkValue = collect.entity[this.myMeasure.value];
             });
           } else {
-            this.msgs.push({severity:'warn', summary:'Contrôle', detail:'Pas de collecte active ' + loaded.collects.collections.length});
+            this.jarvisMessageService.push({severity:'warn', summary:'Contrôle', detail:'Pas de collecte active ' + loaded.collects.collections.length});
           }
         }
       )

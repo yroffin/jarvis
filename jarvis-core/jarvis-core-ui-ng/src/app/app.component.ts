@@ -18,6 +18,8 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Http, Response, Headers } from '@angular/http';
 import { Router } from '@angular/router';
+import { State, Store } from '@ngrx/store';
+import { Message } from 'primeng/primeng';
 
 import { MdSidenav } from '@angular/material';
 
@@ -42,8 +44,8 @@ import { Oauth2Bean, MeBean } from './model/security/oauth2-bean';
 })
 export class AppComponent implements OnInit {
 
-   @ViewChild('sidenav') sidenav: MdSidenav;
-   myInnerHeight: any;
+  @ViewChild('sidenav') sidenav: MdSidenav;
+  myInnerHeight: any;
 
   /**
    * global system menu
@@ -52,6 +54,9 @@ export class AppComponent implements OnInit {
   public dispMe: boolean = false;
   public dispHelp: boolean = false;
   public dispMenu: boolean = false;
+
+  public msgs: Message[] = <Message[]> [];
+  public messageObservable: Observable<Message> = new Observable<Message>();
 
   public me: MeBean;
   public help: string;
@@ -66,9 +71,34 @@ export class AppComponent implements OnInit {
     private windowRef: WindowRef,
     private configuration: JarvisConfigurationService,
     private jarvisSecurityService: JarvisSecurityService,
-    private jarvisDataStoreService: JarvisDataStoreService
+    private jarvisDataStoreService: JarvisDataStoreService,
+    private store: Store<State<Message>>
   ) {
     this.myInnerHeight = windowRef.getWindow();
+
+    /**
+      * register to store
+      */
+    this.messageObservable = this.store.select<Message>('Message');
+    console.info("messageObservable:", this.messageObservable);
+    /**
+     * register to store update
+     */
+    this.messageObservable
+      .filter(item => {
+        if (item) {
+          if (item.detail && item.severity && item.summary) {
+            return true;
+          }
+          return false
+        } else {
+          return false
+        }
+      })
+      .subscribe((item) => {
+        this.msgs.splice(0,this.msgs.length);
+        this.msgs.push(item);
+      });
   }
 
   /**
@@ -93,7 +123,7 @@ export class AppComponent implements OnInit {
    */
   showHelp() {
     let text;
-    let id = 'help'+this.router.routerState.snapshot.url
+    let id = 'help' + this.router.routerState.snapshot.url
       .replace(/\//g, "-")
       .replace(/0|1|2|3|4|5|6|7|8|9/g, "0")
       .replace(/00/g, "0")
@@ -106,7 +136,7 @@ export class AppComponent implements OnInit {
       .replace(/00/g, "0")
       .replace(/00/g, "0")
       .replace(/0/g, "by-id");
-    this.GetHelp(id+'.markdown').subscribe(
+    this.GetHelp(id + '.markdown').subscribe(
       (data) => {
         text = data;
       },

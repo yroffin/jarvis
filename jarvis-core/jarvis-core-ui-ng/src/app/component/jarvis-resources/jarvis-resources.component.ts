@@ -29,6 +29,7 @@ import { JarvisDataCoreResource } from '../../service/jarvis-data-core-resource'
 /**
  * core resource
  */
+import { JarvisMessageService } from '../../service/jarvis-message.service';
 import { JarvisDataDeviceService } from '../../service/jarvis-data-device.service';
 import { JarvisDataViewService } from '../../service/jarvis-data-view.service';
 import { JarvisDataPluginService } from '../../service/jarvis-data-plugin.service';
@@ -63,7 +64,6 @@ export class JarvisResourcesComponent implements OnInit {
   public myResourceName: string = "default";
   public myResources: ResourceBean[];
   public toDelete: ResourceBean;
-  public msgs: Message[] = [];
   public display: boolean = false;
 
   /**
@@ -78,6 +78,7 @@ export class JarvisResourcesComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private navigationGuard: NavigationGuard,
+    private jarvisMessageService: JarvisMessageService,
     private _jarvisConfigurationService: JarvisConfigurationService,
     private _jarvisDataDeviceService: JarvisDataDeviceService,
     private _jarvisDataPluginService: JarvisDataPluginService,
@@ -181,7 +182,6 @@ export class JarvisResourcesComponent implements OnInit {
    * add a new resource
    */
   public addNewResource(resource: ResourceBean) {
-    this.msgs = [];
     /**
      * create a single resource
      */
@@ -195,7 +195,7 @@ export class JarvisResourcesComponent implements OnInit {
       () => {
         this.myResources.push(created);
         this.myResources = [...this.myResources];
-        this.msgs.push({severity:'info', summary:'Création de la ressource', detail:created.name});
+        this.jarvisMessageService.push({severity:'info', summary:'Création de la ressource', detail:created.name});
       }
       );
   }
@@ -204,7 +204,6 @@ export class JarvisResourcesComponent implements OnInit {
    * protect dropping
    */
   dropResource(resource: ResourceBean) {
-    this.msgs = [];
     this.display = true;
     this.toDelete = resource;
   }
@@ -227,7 +226,7 @@ export class JarvisResourcesComponent implements OnInit {
           return (item.id === resource.id);
         })
         this.myResources = [...this.myResources];
-        that.msgs.push({severity:'info', summary:'Supression de la ressource', detail:resource.name});
+        that.jarvisMessageService.push({severity:'info', summary:'Supression de la ressource', detail:resource.name});
       }
       );
   }

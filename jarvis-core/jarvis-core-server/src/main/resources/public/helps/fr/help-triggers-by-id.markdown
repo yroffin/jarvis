@@ -2,26 +2,42 @@
 
 | Action                                 | Description               |
 | -------------------------------------- |:-------------------------:|
-| <i class="help-icons">clear</i>        | Retour au menu précédent  |
-| <i class="help-icons">content_copy</i> | Dupliquer la ressource    |
-| <i class="help-icons">delete</i>       | Supprimer la ressource    |
-| <i class="help-icons">save</i>         | Sauver la ressource       |
-| <i class="help-icons">local_offer</i>   | Ajouter une crontab |
+| <i class="fa fa-reply" aria-hidden="true"></i> | Retour au menu précédent  |
+| <i class="fa fa-copy" aria-hidden="true"></i> | Dupliquer la ressource    |
+| <i class="fa fa-trash" aria-hidden="true"></i>       | Supprimer la ressource    |
+| <i class="fa fa-save" aria-hidden="true"></i>         | Sauver la ressource       |
+| <i class="fa fa-play" aria-hidden="true"></i>   | Simuler (execution) |
+| <i class="fa fa-bolt" aria-hidden="true"></i>   | Ajouter une crontab |
 
 ### Données
 
 Un déclencheur contient les champs suivants :
 
-#### Général
+#### Entête
 
-- Nom du déclencheur
+- Nom : Nom du déclencheur
 - Icône : icône du déclencheur
+
+#### Broker
+
+- Topic : le topic de souscription
+- Body
+	- le texte groovy a executer pour valider le body (doit retourner un booleen)
+	- l'objet mqtt reçu est stocker dans un champ 'json', ex: json.hypothesis == "true"
 
 #### Périodicité (liste)
 
 - Identifiant : identifiant de l'association avec la crontab
 - Ordre : ordre d'affichage
 - Nom : nom de la crontab
+
+#### Devices liés
+
+Les devices déclenchés pas ce trigger
+
+#### Scenarii liés
+
+Les scénarii déclenchés pas ce trigger
 
 ### Données de démonstration
 

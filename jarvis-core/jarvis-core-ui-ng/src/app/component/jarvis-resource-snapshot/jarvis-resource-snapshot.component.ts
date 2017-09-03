@@ -28,6 +28,7 @@ import { JarvisResourceLink } from '../../class/jarvis-resource-link';
 
 import { WindowRef } from '../../service/jarvis-utils.service';
 import { JarvisDataSnapshotService } from '../../service/jarvis-data-snapshot.service';
+import { JarvisMessageService } from '../../service/jarvis-message.service';
 
 /**
  * class
@@ -51,7 +52,6 @@ export class JarvisResourceSnapshotComponent extends JarvisResource<SnapshotBean
 
   @Input() mySnapshot: SnapshotBean;
   @ViewChild('fileInput') fileInput: ElementRef;
-  msgs: Message[] = [];
 
   /**
    * constructor
@@ -62,6 +62,7 @@ export class JarvisResourceSnapshotComponent extends JarvisResource<SnapshotBean
     private _windowRef: WindowRef,
     private _router: Router,
     private _jarvisConfigurationService: JarvisConfigurationService,
+    private jarvisMessageService: JarvisMessageService,
     private _snapshotService: JarvisDataSnapshotService) {
     super('/snapshots', [], _snapshotService, _route, _router);
   }
@@ -113,7 +114,7 @@ export class JarvisResourceSnapshotComponent extends JarvisResource<SnapshotBean
         a.href = fileURL;
         a.download = fileName;
         a.click();
-        this.msgs.push({ severity: 'info', summary: 'Téléchargement', detail: this.mySnapshot.name });
+        this.jarvisMessageService.push({ severity: 'info', summary: 'Téléchargement', detail: this.mySnapshot.name });
       }
       );
   }
@@ -125,7 +126,7 @@ export class JarvisResourceSnapshotComponent extends JarvisResource<SnapshotBean
     let event = new MouseEvent('click', { bubbles: true });
     this._renderer.invokeElementMethod(
       this.fileInput.nativeElement, 'dispatchEvent', [event]);
-    this.msgs.push({ severity: 'info', summary: 'Chargement', detail: this.mySnapshot.name });
+    this.jarvisMessageService.push({ severity: 'info', summary: 'Chargement', detail: this.mySnapshot.name });
   }
 
   /**
@@ -139,7 +140,7 @@ export class JarvisResourceSnapshotComponent extends JarvisResource<SnapshotBean
       (result: any) => myOutputData = result,
       error => console.log(error),
       () => {
-        this.msgs.push({ severity: 'info', summary: 'Restoration', detail: this.mySnapshot.name });
+        this.jarvisMessageService.push({ severity: 'info', summary: 'Restoration', detail: this.mySnapshot.name });
       }
       );
   }

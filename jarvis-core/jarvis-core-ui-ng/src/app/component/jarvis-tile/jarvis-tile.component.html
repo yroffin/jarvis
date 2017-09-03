@@ -1,1 +1,11 @@
-<div [innerHTML]="getTemplate(myDevice)"></div>
+<md-card [style.background]="myDevice.tagColor" (click)="touch(myDevice)">
+    <md-card-header>
+        <h4 [innerHTML]="myDevice.name"></h4>
+    </md-card-header>
+    <md-card-content>
+        <div [innerHTML]="getTemplate(myDevice)"></div>
+    </md-card-content>
+    <md-card-actions>
+        <i class="fa fa-{{myDevice.icon}}" aria-hidden="true"></i>
+    </md-card-actions>
+</md-card>

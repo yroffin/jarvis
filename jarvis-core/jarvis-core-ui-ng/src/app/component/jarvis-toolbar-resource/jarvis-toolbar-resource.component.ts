@@ -22,6 +22,7 @@ import * as _ from 'lodash';
 
 import { NotifyCallback } from '../../class/jarvis-resource';
 import { JarvisToolbarAction } from '../../interface/jarvis-toolbar-action';
+import { JarvisMessageService } from '../../service/jarvis-message.service';
 
 /**
  * data model
@@ -40,7 +41,6 @@ export class JarvisToolbarResourceComponent implements OnInit {
   /**
    * members
    */
-  msgs: Message[] = [];
   @Input() public tasks: TaskBean[] = [];
   @Input() public pickers: PickerTaskBean[] = [];
 
@@ -54,7 +54,8 @@ export class JarvisToolbarResourceComponent implements OnInit {
   private items: MenuItem[] = [];
 
   constructor(
-    ) {
+    private jarvisMessageService: JarvisMessageService
+  ) {
   }
 
   /**
@@ -99,7 +100,7 @@ export class JarvisToolbarResourceComponent implements OnInit {
    */
   private taskCallback(task: TaskBean): void {
     eval("this.notified."+task.task).apply(this.notified, task.args);
-    this.msgs.push({severity:'info', summary:'Tâche', detail:task.label});
+    this.jarvisMessageService.push({severity:'info', summary:'Tâche', detail:task.label});
   }
 
   /**
@@ -136,7 +137,7 @@ export class JarvisToolbarResourceComponent implements OnInit {
    */
   public save(): void {
     this.notified.save();
-    this.msgs.push({severity:'info', summary:'Action', detail:"sauvegarde"});
+    this.jarvisMessageService.push({severity:'info', summary:'Action', detail:"sauvegarde"});
   }
 
   /**
@@ -144,7 +145,7 @@ export class JarvisToolbarResourceComponent implements OnInit {
    */
   public remove(): void {
     this.notified.remove();
-    this.msgs.push({severity:'info', summary:'Action', detail:"suppression"});
+    this.jarvisMessageService.push({severity:'info', summary:'Action', detail:"suppression"});
   }
 
   /**
@@ -152,6 +153,6 @@ export class JarvisToolbarResourceComponent implements OnInit {
    */
   public duplicate(): void {
     this.notified.duplicate();
-    this.msgs.push({severity:'info', summary:'Action', detail:"duplication"});
+    this.jarvisMessageService.push({severity:'info', summary:'Action', detail:"duplication"});
   }
 }

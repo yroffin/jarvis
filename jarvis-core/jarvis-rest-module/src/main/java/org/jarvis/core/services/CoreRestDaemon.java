@@ -208,6 +208,7 @@ public class CoreRestDaemon {
 		} catch (JsonProcessingException e) {
 			logger.error("json parse error {}", e);
 		} catch (MqttException e) {
+			logger.error("publish error while publish on {}", client.getServerURI());
 			logger.error("publish error {} - {}", e, e.getReasonCode());
 		}
 	}

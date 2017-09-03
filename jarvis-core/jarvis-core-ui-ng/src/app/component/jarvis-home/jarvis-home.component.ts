@@ -26,7 +26,7 @@ import { JarvisMqttService } from '../../service/jarvis-mqtt.service';
 export class JarvisHomeComponent implements OnInit {
 
   constructor(
-    private _mqttService: JarvisMqttService,
+    private _mqttService: JarvisMqttService
   ) {
   }
 
