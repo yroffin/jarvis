@@ -232,6 +232,7 @@ export class AppComponent implements OnInit {
               { label: 'Trigger', icon: 'fa-paper-plane', routerLink: ['/triggers'] },
               { label: 'Cron', icon: 'fa-inbox', routerLink: ['/crons'] },
               { label: 'Notification', icon: 'fa-bolt', routerLink: ['/notifications'] },
+              { label: 'Broker', icon: 'fa-exchange', routerLink: ['/broker'] },
             ]
           },
           {

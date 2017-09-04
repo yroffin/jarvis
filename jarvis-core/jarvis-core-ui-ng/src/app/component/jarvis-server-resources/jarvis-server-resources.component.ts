@@ -111,7 +111,6 @@ export class JarvisServerResourcesComponent implements OnInit {
         }
       })
       .subscribe((item) => {
-        console.info("broker:", item);
         this.data.datasets[0].data.push(item.body.data.committedVirtualMemorySize);
         this.data.datasets[0].data.shift();
         this.data.datasets[1].data.push(item.body.data.freePhysicalMemorySize);

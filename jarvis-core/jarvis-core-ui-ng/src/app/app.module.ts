@@ -131,6 +131,7 @@ import { JarvisMeasureComponent } from './component/jarvis-measure/jarvis-measur
 import { BrokerStore } from './store/broker.store';
 import { MessageStore } from './store/message.store';
 import { JarvisServerResourcesComponent } from './component/jarvis-server-resources/jarvis-server-resources.component';
+import { JarvisBrokerComponent } from './component/jarvis-broker/jarvis-broker.component';
 
 /**
  * default route definition
@@ -167,6 +168,7 @@ const appRoutes: Routes = [
   { path: 'measures', component: JarvisResourcesComponent, canActivate: [ProfileGuard, NavigationGuard], data: { resource: 'measures' } },
   { path: 'measures/:id', component: JarvisMeasureComponent, canActivate: [ProfileGuard, NavigationGuard] },
   { path: 'resources', component: JarvisServerResourcesComponent, canActivate: [ProfileGuard, NavigationGuard] },
+  { path: 'broker', component: JarvisBrokerComponent, canActivate: [ProfileGuard, NavigationGuard] },
   { path: 'desktop', component: JarvisDesktopComponent, canActivate: [ProfileGuard] },
   { path: 'login', component: JarvisLoginComponent, canActivate: [NavigationGuard] },
   { path: '', component: JarvisDesktopComponent, canActivate: [ProfileGuard] },
@@ -200,7 +202,8 @@ const appRoutes: Routes = [
     JarvisDesktopComponent,
     JarvisResourceDatasourceComponent,
     JarvisMeasureComponent,
-    JarvisServerResourcesComponent
+    JarvisServerResourcesComponent,
+    JarvisBrokerComponent
   ],
   entryComponents: [
     JarvisPickerComponent
