@@ -17,6 +17,7 @@
 import { Component, Input, ViewChild, OnInit, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
+import { LoggerService } from '../../service/logger.service';
 import { JarvisPickerComponent } from '../../dialog/jarvis-picker/jarvis-picker.component';
 import { JarvisConfigurationService } from '../../service/jarvis-configuration.service';
 import { JarvisDataDeviceService } from '../../service/jarvis-data-device.service';
@@ -67,12 +68,13 @@ export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> im
     private _jarvisConfigurationService: JarvisConfigurationService,
     private _deviceService: JarvisDataDeviceService,
     private _triggerService: JarvisDataTriggerService,
-    private _pluginService: JarvisDataPluginService
+    private _pluginService: JarvisDataPluginService,
+    private logger: LoggerService
   ) {
     super('/devices', ['render'], _deviceService, _route, _router);
-    this.jarvisDeviceLink = new JarvisResourceLink<DeviceBean>();
-    this.jarvisTriggerLink = new JarvisResourceLink<TriggerBean>();
-    this.jarvisPluginLink = new JarvisResourceLink<PluginBean>();
+    this.jarvisDeviceLink = new JarvisResourceLink<DeviceBean>(this.logger);
+    this.jarvisTriggerLink = new JarvisResourceLink<TriggerBean>(this.logger);
+    this.jarvisPluginLink = new JarvisResourceLink<PluginBean>(this.logger);
   }
 
   /**
@@ -136,15 +138,15 @@ export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> im
     if (picker.action === 'complete') {
       this.myDevice = <DeviceBean>resource;
       this.myDevice.devices = [];
-      (new JarvisResourceLink<DeviceBean>()).loadLinksWithCallback(resource.id, this.myDevice.devices, this._deviceService.allLinkedDevice, (elements) => {
+      (new JarvisResourceLink<DeviceBean>(this.logger)).loadLinksWithCallback(resource.id, this.myDevice.devices, this._deviceService.allLinkedDevice, (elements) => {
         this.myDevice.devices = elements;
       });
       this.myDevice.triggers = [];
-      (new JarvisResourceLink<TriggerBean>()).loadLinksWithCallback(resource.id, this.myDevice.triggers, this._deviceService.allLinkedTrigger, (elements) => {
+      (new JarvisResourceLink<TriggerBean>(this.logger)).loadLinksWithCallback(resource.id, this.myDevice.triggers, this._deviceService.allLinkedTrigger, (elements) => {
         this.myDevice.triggers = elements;
       });
       this.myDevice.plugins = [];
-      (new JarvisResourceLink<PluginBean>()).loadLinksWithCallback(resource.id, this.myDevice.plugins, this._deviceService.allLinkedPlugin, (elements) => {
+      (new JarvisResourceLink<PluginBean>(this.logger)).loadLinksWithCallback(resource.id, this.myDevice.plugins, this._deviceService.allLinkedPlugin, (elements) => {
         this.myDevice.plugins = elements;
       });
     }

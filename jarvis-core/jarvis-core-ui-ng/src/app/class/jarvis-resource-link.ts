@@ -17,6 +17,7 @@
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import * as _ from 'lodash';
 
+import { LoggerService } from '../service/logger.service';
 import { JarvisDefaultResource, JarvisDefaultLinkResource } from '../interface/jarvis-default-resource';
 
 /**
@@ -33,6 +34,7 @@ export class JarvisResourceLink<T extends ResourceBean> {
    * constructor
    */
   constructor(
+    private logger: LoggerService
   ) {
   }
 
@@ -64,7 +66,7 @@ export class JarvisResourceLink<T extends ResourceBean> {
         _.merge(elements, data)
         elements = [...elements];
       },
-      error => console.log(error),
+      error => this.logger.error("GetAll", error),
       () => {
         callback(elements);
       });
@@ -86,7 +88,7 @@ export class JarvisResourceLink<T extends ResourceBean> {
     service.FindAll(owner, filters)
       .subscribe(
       (data: T[]) => _.merge(elements, data),
-      error => console.log(error),
+      error => this.logger.error("FindAll", error),
       () => {
       });
   }
@@ -99,7 +101,7 @@ export class JarvisResourceLink<T extends ResourceBean> {
     service.Add(owner, linked, value)
       .subscribe(
       (data: T) => created = data,
-      error => console.log(error),
+      error => this.logger.error("addLink", error),
       () => {
         /**
          * add this element to current view
@@ -117,7 +119,7 @@ export class JarvisResourceLink<T extends ResourceBean> {
     service.Delete(owner, linked.id, linked.instance)
       .subscribe(
       (data: T) => deleted = data,
-      error => console.log(error),
+      error => this.logger.error("dropLink", error),
       () => {
         _.remove(elements, function (element) {
           return element.id === linked.id && element.instance === linked.instance;
@@ -133,7 +135,7 @@ export class JarvisResourceLink<T extends ResourceBean> {
     service.DeleteWithFilter(owner, linked.id, linked.instance, 'href=' + href)
       .subscribe(
       (data: T) => deleted = data,
-      error => console.log(error),
+      error => this.logger.error("dropHrefLink", error),
       () => {
         _.remove(elements, function (element) {
           return element.id === linked.id && element.instance === linked.instance;
@@ -149,7 +151,7 @@ export class JarvisResourceLink<T extends ResourceBean> {
     service.Update(owner, linked.id, linked.instance, linked.extended)
       .subscribe(
       (data: T) => deleted = data,
-      error => console.log(error),
+      error => this.logger.error("updateLink", error),
       () => {
       });
   }

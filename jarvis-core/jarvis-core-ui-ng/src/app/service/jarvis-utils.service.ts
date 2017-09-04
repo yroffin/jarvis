@@ -79,4 +79,11 @@ export class WindowRef {
     public getWindow(): any {
         return this._window;
     }
+
+    /**
+     * get window
+     */
+    public getHostname(): any {
+        return this._window.location.hostname;
+    }
 }

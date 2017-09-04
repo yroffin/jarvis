@@ -21,6 +21,7 @@ import * as _ from 'lodash';
 
 import { JarvisDefaultResource } from '../interface/jarvis-default-resource';
 import { JarvisDataNotificationService } from '../service/jarvis-data-notification.service';
+import { LoggerService } from '../service/logger.service';
 
 /**
  * data model
@@ -43,6 +44,7 @@ export class JarvisPicker<T extends ResourceBean> {
    */
   constructor(
     _notificationService: JarvisDefaultResource<T>,
+    private logger: LoggerService,
     _config: PickerBean
   ) {
     this.myJarvisResource = _notificationService;
@@ -57,7 +59,7 @@ export class JarvisPicker<T extends ResourceBean> {
     this.myJarvisResource.GetAll()
       .subscribe(
       (data: T[]) => all = data,
-      error => console.log(error),
+      error => this.logger.error("In loadResource", error),
       () => {
         this.metadata = {
           elements: []

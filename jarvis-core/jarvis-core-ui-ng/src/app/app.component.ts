@@ -80,7 +80,6 @@ export class AppComponent implements OnInit {
       * register to store
       */
     this.messageObservable = this.store.select<Message>('Message');
-    console.info("messageObservable:", this.messageObservable);
     /**
      * register to store update
      */
