@@ -62,6 +62,7 @@ def buildGUI() {
             sh '''
                   npm install >> ${WORKSPACE}/logs/ui.stdout 2>> ${WORKSPACE}/logs/ui.stderr
                   npm update >> ${WORKSPACE}/logs/ui.stdout 2>> ${WORKSPACE}/logs/ui.stderr
+                  mkdir -p src/main/resources/public/nui
                   ng build --sourcemap=false --aot --prod --base-href /nui/ --output-path=src/main/resources/public/nui  >>${WORKSPACE}/logs/ui.stdout 2>>${WORKSPACE}/logs/ui.stderr
                   ls -lrt src/main/resources/public/nui >>${WORKSPACE}/logs/ui.stdout 2>>${WORKSPACE}/logs/ui.stderr
             '''
