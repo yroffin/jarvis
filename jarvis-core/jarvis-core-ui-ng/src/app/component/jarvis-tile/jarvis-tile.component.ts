@@ -94,7 +94,7 @@ export class JarvisTileComponent implements OnInit {
    * implement touch on device
    * @param device 
    */
-  private touch(device: DeviceBean): void {
+  public touch(device: DeviceBean): void {
     this.jarvisDataDeviceService.Task(device.id, "execute", {})
       .subscribe(
       (data: any) => this.jarvisMessageService.push({severity: 'info', summary: 'Activation', detail: device.name})
