@@ -10,7 +10,6 @@ import javax.ws.rs.Produces;
 import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.exception.TechnicalHttpException;
 import org.jarvis.core.model.bean.tools.SnapshotBean;
-import org.jarvis.core.model.rest.tools.NotificationRest;
 import org.jarvis.core.model.rest.tools.SnapshotRest;
 import org.jarvis.core.resources.api.ApiResources;
 import org.jarvis.core.resources.api.Declare;

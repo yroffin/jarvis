@@ -270,7 +270,7 @@ public class CoreEventDaemon {
 				}
 			}
 
-			logger.info("Trigger activate {} devices and  {} scenario", checkDevice, checkScenario);
+			logger.warn("Trigger activate {} devices and  {} scenario", checkDevice, checkScenario);
 		}
 
 		/**

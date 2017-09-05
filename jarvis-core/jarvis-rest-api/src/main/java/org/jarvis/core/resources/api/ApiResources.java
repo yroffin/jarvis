@@ -34,12 +34,14 @@ import javax.annotation.PostConstruct;
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletException;
 import javax.servlet.http.Part;
+import javax.ws.rs.Path;
 
 import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.GenericBean;
 import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.services.ApiService;
+import org.jarvis.core.services.CoreMoquette;
 import org.jarvis.core.services.CoreStatistics;
 import org.jarvis.core.services.neo4j.ApiNeo4Service;
 import org.jarvis.core.type.GenericMap;
@@ -71,6 +73,9 @@ public abstract class ApiResources<REST extends GenericEntity, BEAN extends Gene
 
 	@Autowired
 	CoreStatistics coreStatistics;
+
+	@Autowired
+	CoreMoquette coreMoquette;
 
 	/**
 	 * mapper
@@ -239,6 +244,8 @@ public abstract class ApiResources<REST extends GenericEntity, BEAN extends Gene
 	 * rest class
 	 */
 	private Class<REST> restClass;
+
+	private String path;
 
 	/**
 	 * spring init
@@ -664,6 +671,13 @@ public abstract class ApiResources<REST extends GenericEntity, BEAN extends Gene
 	 * @throws TechnicalNotFoundException
 	 */
 	public Object doExecute(String id, GenericMap body, TaskType taskType) throws TechnicalNotFoundException {
+		/**
+		 * publish on MQTT a simple notification
+		 */
+		coreMoquette.publishMostOne(this.getPath() + '/' + id + "?task=" + taskType.name().toLowerCase(), body.toString());
+		/**
+		 * execute job
+		 */
 		GenericValue result = rawExecute(id, body, taskType);
 		switch (result.getType()) {
 		case OBJECT:
@@ -878,6 +892,9 @@ public abstract class ApiResources<REST extends GenericEntity, BEAN extends Gene
 	 * mount resource
 	 */
 	public void mount() {
+		Path path = this.getClass().getAnnotation(javax.ws.rs.Path.class);
+		this.setPath(path.value());
+
 		/**
 		 * mount resources
 		 */
@@ -888,5 +905,21 @@ public abstract class ApiResources<REST extends GenericEntity, BEAN extends Gene
 			 */
 			declare(annotation.resource());
 		}
+	}
+
+	/**
+	 * fix path value
+	 * @param value
+	 */
+	private void setPath(String value) {
+		this.path = value;
+	}
+	
+	/**
+	 * getter
+	 * @return String
+	 */
+	public String getPath() {
+		return this.path;
 	}
 }
