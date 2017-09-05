@@ -20,6 +20,7 @@ import { SelectItem } from 'primeng/primeng';
 
 declare var Prism: any;
 
+import { LoggerService } from '../../service/logger.service';
 import { JarvisPickerComponent } from '../../dialog/jarvis-picker/jarvis-picker.component';
 import { JarvisConfigurationService } from '../../service/jarvis-configuration.service';
 import { JarvisDataDeviceService } from '../../service/jarvis-data-device.service';
@@ -76,9 +77,10 @@ export class JarvisResourcePluginComponent extends JarvisResource<PluginBean> im
     private _router: Router,
     private _jarvisConfigurationService: JarvisConfigurationService,
     private _pluginService: JarvisDataPluginService,
+    private logger: LoggerService,    
     private _commandService: JarvisDataCommandService) {
     super('/plugins', ['execute', 'render', 'clear'], _pluginService, _route, _router);
-    this.jarvisCommandLink = new JarvisResourceLink<CommandBean>();
+    this.jarvisCommandLink = new JarvisResourceLink<CommandBean>(this.logger);
     this.types = [];
     this.types.push({ label: 'Select type', value: null });
     this.types.push({ label: 'Plugin Script', value: 'script' });
@@ -157,7 +159,7 @@ export class JarvisResourcePluginComponent extends JarvisResource<PluginBean> im
     if (picker.action === 'complete') {
       this.myPlugin = <PluginBean>resource;
       this.myPlugin.commands = [];
-      (new JarvisResourceLink<CommandBean>()).loadLinksWithCallback(resource.id, this.myPlugin.commands, this._pluginService.allLinkedCommand, (elements) => {
+      (new JarvisResourceLink<CommandBean>(this.logger)).loadLinksWithCallback(resource.id, this.myPlugin.commands, this._pluginService.allLinkedCommand, (elements) => {
         this.myPlugin.commands = elements;
       });
     }

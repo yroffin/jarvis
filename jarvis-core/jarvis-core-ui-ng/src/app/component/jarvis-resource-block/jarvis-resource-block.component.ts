@@ -18,6 +18,7 @@ import { Component, Input, ViewChild, OnInit, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { MenuItem } from 'primeng/primeng';
 
+import { LoggerService } from '../../service/logger.service';
 import { JarvisPickerComponent } from '../../dialog/jarvis-picker/jarvis-picker.component';
 import { JarvisConfigurationService } from '../../service/jarvis-configuration.service';
 import { JarvisDataScenarioService } from '../../service/jarvis-data-scenario.service';
@@ -72,11 +73,12 @@ export class JarvisResourceBlockComponent extends JarvisResource<BlockBean> impl
     private _route: ActivatedRoute,
     private _router: Router,
     private _jarvisConfigurationService: JarvisConfigurationService,
+    private logger: LoggerService,
     private _blockService: JarvisDataBlockService
   ) {
     super('/blocks', ['execute','test'], _blockService, _route, _router);
-    this.jarvisBlockLink = new JarvisResourceLink<BlockBean>();
-    this.jarvisPluginLink = new JarvisResourceLink<PluginBean>();
+    this.jarvisBlockLink = new JarvisResourceLink<BlockBean>(this.logger);
+    this.jarvisPluginLink = new JarvisResourceLink<PluginBean>(this.logger);
   }
 
   /**
@@ -190,15 +192,15 @@ export class JarvisResourceBlockComponent extends JarvisResource<BlockBean> impl
     if(picker.action === 'complete') {
       this.myBlock = <BlockBean> resource;
       this.myBlock.thenBlocks = [];
-      (new JarvisResourceLink<BlockBean>()).loadFilteredLinks(resource.id, this.myBlock.thenBlocks, this._blockService.allLinkedBlock, "href=HREF_THEN");
+      (new JarvisResourceLink<BlockBean>(this.logger)).loadFilteredLinks(resource.id, this.myBlock.thenBlocks, this._blockService.allLinkedBlock, "href=HREF_THEN");
       this.myBlock.elseBlocks = [];
-      (new JarvisResourceLink<BlockBean>()).loadFilteredLinks(resource.id, this.myBlock.elseBlocks, this._blockService.allLinkedBlock, "href=HREF_ELSE");
+      (new JarvisResourceLink<BlockBean>(this.logger)).loadFilteredLinks(resource.id, this.myBlock.elseBlocks, this._blockService.allLinkedBlock, "href=HREF_ELSE");
       this.myBlock.conditionnalPlugins = [];
-      (new JarvisResourceLink<PluginBean>()).loadFilteredLinks(resource.id, this.myBlock.conditionnalPlugins, this._blockService.allLinkedPlugin, "href=HREF_IF");
+      (new JarvisResourceLink<PluginBean>(this.logger)).loadFilteredLinks(resource.id, this.myBlock.conditionnalPlugins, this._blockService.allLinkedPlugin, "href=HREF_IF");
       this.myBlock.thenPlugins = [];
-      (new JarvisResourceLink<PluginBean>()).loadFilteredLinks(resource.id, this.myBlock.thenPlugins, this._blockService.allLinkedPlugin, "href=HREF_THEN");
+      (new JarvisResourceLink<PluginBean>(this.logger)).loadFilteredLinks(resource.id, this.myBlock.thenPlugins, this._blockService.allLinkedPlugin, "href=HREF_THEN");
       this.myBlock.elsePlugins = [];
-      (new JarvisResourceLink<PluginBean>()).loadFilteredLinks(resource.id, this.myBlock.elsePlugins, this._blockService.allLinkedPlugin, "href=HREF_ELSE");
+      (new JarvisResourceLink<PluginBean>(this.logger)).loadFilteredLinks(resource.id, this.myBlock.elsePlugins, this._blockService.allLinkedPlugin, "href=HREF_ELSE");
     }
   }
 

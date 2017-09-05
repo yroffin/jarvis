@@ -21,6 +21,7 @@ import { ConfirmationService } from 'primeng/primeng';
 
 declare var Prism: any;
 
+import { LoggerService } from '../../service/logger.service';
 import { JarvisPickerComponent } from '../../dialog/jarvis-picker/jarvis-picker.component';
 import { JarvisConfigurationService } from '../../service/jarvis-configuration.service';
 import { JarvisDataNotificationService } from '../../service/jarvis-data-notification.service';
@@ -73,10 +74,11 @@ export class JarvisResourceCommandComponent extends JarvisResource<CommandBean> 
     private _router: Router,
     private _jarvisConfigurationService: JarvisConfigurationService,
     private _commandService: JarvisDataCommandService,
+    private logger: LoggerService,
     private _notificationService: JarvisDataNotificationService
   ) {
     super('/commands', ['execute', 'test', 'clear'], _commandService, _route, _router);
-    this.jarvisNotificationLink = new JarvisResourceLink<NotificationBean>();
+    this.jarvisNotificationLink = new JarvisResourceLink<NotificationBean>(this.logger);
     this.types = [];
     this.types.push({ label: 'Select type', value: null });
     this.types.push({ label: 'Shell script', value: 'SHELL' });
@@ -154,7 +156,7 @@ export class JarvisResourceCommandComponent extends JarvisResource<CommandBean> 
     if (picker.action === 'complete') {
       this.myCommand = <CommandBean>resource;
       this.myCommand.notifications = [];
-      (new JarvisResourceLink<NotificationBean>()).loadLinksWithCallback(resource.id, this.myCommand.notifications, this._commandService.allLinkedNotification, (elements) => {
+      (new JarvisResourceLink<NotificationBean>(this.logger)).loadLinksWithCallback(resource.id, this.myCommand.notifications, this._commandService.allLinkedNotification, (elements) => {
         this.myCommand.notifications = elements;
       });
     }

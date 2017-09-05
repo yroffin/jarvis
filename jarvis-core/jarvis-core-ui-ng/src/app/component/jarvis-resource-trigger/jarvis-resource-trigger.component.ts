@@ -19,6 +19,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 
 declare var Prism: any;
 
+import { LoggerService } from '../../service/logger.service';
 import { JarvisPickerComponent } from '../../dialog/jarvis-picker/jarvis-picker.component';
 import { JarvisConfigurationService } from '../../service/jarvis-configuration.service';
 import { JarvisResourceLink } from '../../class/jarvis-resource-link';
@@ -66,9 +67,10 @@ export class JarvisResourceTriggerComponent extends JarvisResource<TriggerBean> 
     private _router: Router,
     private _jarvisConfigurationService: JarvisConfigurationService,
     private _triggerService: JarvisDataTriggerService,
+    private logger: LoggerService,
     private _cronService: JarvisDataCronService) {
     super('/triggers', ['execute'], _triggerService, _route, _router);
-    this.jarvisCronLink = new JarvisResourceLink<CronBean>();
+    this.jarvisCronLink = new JarvisResourceLink<CronBean>(this.logger);
   }
 
   /**
@@ -95,7 +97,7 @@ export class JarvisResourceTriggerComponent extends JarvisResource<TriggerBean> 
   public complete(resource: TriggerBean): void {
     this.myTrigger = resource;
     this.myTrigger.crons = [];
-    (new JarvisResourceLink<CronBean>()).loadLinksWithCallback(resource.id, resource.crons, this._triggerService.allLinkedCron, (elements) => {
+    (new JarvisResourceLink<CronBean>(this.logger)).loadLinksWithCallback(resource.id, resource.crons, this._triggerService.allLinkedCron, (elements) => {
         this.myTrigger.crons = elements;
       });
   }
@@ -139,7 +141,7 @@ export class JarvisResourceTriggerComponent extends JarvisResource<TriggerBean> 
     if (picker.action === 'complete') {
       this.myTrigger = <TriggerBean>resource;
       this.myTrigger.crons = [];
-      (new JarvisResourceLink<CronBean>()).loadLinksWithCallback(resource.id, this.myTrigger.crons, this._triggerService.allLinkedCron, (elements) => {
+      (new JarvisResourceLink<CronBean>(this.logger)).loadLinksWithCallback(resource.id, this.myTrigger.crons, this._triggerService.allLinkedCron, (elements) => {
         this.myTrigger.crons = elements;
       });
     }

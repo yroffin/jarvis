@@ -18,6 +18,7 @@ import { Component, Input, ViewChild, OnInit, AfterViewInit } from '@angular/cor
 import { TreeNode, TREE_ACTIONS, KEYS, IActionMapping } from 'angular2-tree-component';
 import * as _ from 'lodash';
 
+import { LoggerService } from '../../service/logger.service';
 import { JarvisPicker } from '../../class/jarvis-pickers';
 import { JarvisDefaultResource } from '../../interface/jarvis-default-resource';
 import { NotifyCallback } from '../../class/jarvis-resource';
@@ -69,7 +70,8 @@ export class JarvisPickerComponent implements OnInit {
     private _datasourceService: JarvisDataDatasourceService,
     private _connectorService: JarvisDataConnectorService,
     private _measureService: JarvisDataMeasureService,
-    private _notificationService: JarvisDataNotificationService
+    private _notificationService: JarvisDataNotificationService,
+    private logger: LoggerService
   ) {
   }
 
@@ -117,7 +119,7 @@ export class JarvisPickerComponent implements OnInit {
     /**
      * create helper
      */
-    this.jarvisPickerHelper = new JarvisPicker<ResourceBean>(service, this.resource);
+    this.jarvisPickerHelper = new JarvisPicker<ResourceBean>(service, this.logger, this.resource);
   }
 
   /**

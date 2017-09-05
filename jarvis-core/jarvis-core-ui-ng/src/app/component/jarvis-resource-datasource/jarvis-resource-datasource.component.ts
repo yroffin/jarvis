@@ -30,6 +30,7 @@ import { JarvisResourceLink } from '../../class/jarvis-resource-link';
 
 import { JarvisDataMeasureService } from '../../service/jarvis-data-measure.service';
 import { JarvisDataDatasourceService } from '../../service/jarvis-data-datasource.service';
+import { LoggerService } from '../../service/logger.service';
 
 /**
  * class
@@ -79,9 +80,10 @@ export class JarvisResourceDatasourceComponent extends JarvisResource<DataSource
     private _router: Router,
     private _jarvisConfigurationService: JarvisConfigurationService,
     private _datasourceService: JarvisDataDatasourceService,
+    private logger: LoggerService,    
     private _measureService: JarvisDataMeasureService) {
     super('/datasources', [], _datasourceService, _route, _router);
-    this.jarvisMeasureLink = new JarvisResourceLink<MeasureBean>();
+    this.jarvisMeasureLink = new JarvisResourceLink<MeasureBean>(this.logger);
   }
 
   /**
@@ -215,7 +217,7 @@ export class JarvisResourceDatasourceComponent extends JarvisResource<DataSource
     if (picker.action === 'complete') {
       this.myDataSource = <DataSourceBean>resource;
       this.myDataSource.measures = [];
-      (new JarvisResourceLink<MeasureBean>()).loadLinksWithCallback(resource.id, this.myDataSource.measures, this._datasourceService.allLinkedMeasures, (measures) => {
+      (new JarvisResourceLink<MeasureBean>(this.logger)).loadLinksWithCallback(resource.id, this.myDataSource.measures, this._datasourceService.allLinkedMeasures, (measures) => {
         console.log("measures", measures);
       });
     }

@@ -25,6 +25,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 declare var Prism: any;
 
+import { LoggerService } from '../../service/logger.service';
 import { JarvisPickerComponent } from '../../dialog/jarvis-picker/jarvis-picker.component';
 import { JarvisConfigurationService } from '../../service/jarvis-configuration.service';
 import { JarvisDataDeviceService } from '../../service/jarvis-data-device.service';
@@ -70,9 +71,10 @@ export class JarvisResourceViewComponent extends JarvisResource<ViewBean> implem
     private _router: Router,
     private _jarvisConfigurationService: JarvisConfigurationService,
     private _viewService: JarvisDataViewService,
+    private logger: LoggerService,    
     private _deviceService: JarvisDataDeviceService) {
     super('/views', [], _viewService, _route, _router);
-    this.jarvisDeviceLink = new JarvisResourceLink<DeviceBean>();
+    this.jarvisDeviceLink = new JarvisResourceLink<DeviceBean>(this.logger);
   }
 
   /**
@@ -110,7 +112,7 @@ export class JarvisResourceViewComponent extends JarvisResource<ViewBean> implem
     if( picker.action === 'complete') {
       this.myView = <ViewBean> resource;
       this.myView.devices = [];
-      (new JarvisResourceLink<DeviceBean>()).loadLinksWithCallback(resource.id, this.myView.devices, this._viewService.allLinkedDevice, (elements) => {
+      (new JarvisResourceLink<DeviceBean>(this.logger)).loadLinksWithCallback(resource.id, this.myView.devices, this._viewService.allLinkedDevice, (elements) => {
         this.myView.devices = elements;
       });
     }

@@ -17,6 +17,7 @@
 import { Component, Input, ViewChild, OnInit, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
+import { LoggerService } from '../../service/logger.service';
 import { JarvisPickerComponent } from '../../dialog/jarvis-picker/jarvis-picker.component';
 import { JarvisConfigurationService } from '../../service/jarvis-configuration.service';
 import { JarvisDataScenarioService } from '../../service/jarvis-data-scenario.service';
@@ -71,10 +72,11 @@ export class JarvisResourceScenarioComponent extends JarvisResource<ScenarioBean
     private _jarvisConfigurationService: JarvisConfigurationService,
     private _scenarioService: JarvisDataScenarioService,
     private _blockService: JarvisDataBlockService,
+    private logger: LoggerService,
     private _triggerService: JarvisDataTriggerService) {
     super('/scenarios', ['execute'], _scenarioService, _route, _router);
-    this.jarvisTriggerLink = new JarvisResourceLink<TriggerBean>();
-    this.jarvisBlockLink = new JarvisResourceLink<BlockBean>();
+    this.jarvisTriggerLink = new JarvisResourceLink<TriggerBean>(this.logger);
+    this.jarvisBlockLink = new JarvisResourceLink<BlockBean>(this.logger);
   }
 
   /**
@@ -133,11 +135,11 @@ export class JarvisResourceScenarioComponent extends JarvisResource<ScenarioBean
     if(picker.action === 'complete') {
       this.myScenario = <ScenarioBean> resource;
       this.myScenario.triggers = [];
-      (new JarvisResourceLink<TriggerBean>()).loadLinksWithCallback(resource.id, this.myScenario.triggers, this._scenarioService.allLinkedTrigger, (elements) => {
+      (new JarvisResourceLink<TriggerBean>(this.logger)).loadLinksWithCallback(resource.id, this.myScenario.triggers, this._scenarioService.allLinkedTrigger, (elements) => {
         this.myScenario.triggers = elements;
       });
       this.myScenario.blocks = [];
-      (new JarvisResourceLink<BlockBean>()).loadLinksWithCallback(resource.id, this.myScenario.blocks, this._scenarioService.allLinkedBlock, (elements) => {
+      (new JarvisResourceLink<BlockBean>(this.logger)).loadLinksWithCallback(resource.id, this.myScenario.blocks, this._scenarioService.allLinkedBlock, (elements) => {
         this.myScenario.blocks = elements;
       });
     }

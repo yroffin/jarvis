@@ -19,6 +19,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Message } from 'primeng/primeng';
 import * as _ from 'lodash';
 
+import { LoggerService } from '../../service/logger.service';
 import { JarvisPickerComponent } from '../../dialog/jarvis-picker/jarvis-picker.component';
 import { JarvisConfigurationService } from '../../service/jarvis-configuration.service';
 import { JarvisResourceLink } from '../../class/jarvis-resource-link';
@@ -67,10 +68,11 @@ export class JarvisMeasureComponent extends JarvisResource<MeasureBean> implemen
     private _router: Router,
     private _measureService: JarvisDataMeasureService,
     private _connectorService: JarvisDataConnectorService,
+    private logger: LoggerService,    
     private jarvisMessageService: JarvisMessageService
   ) {
     super('/measures', [], _measureService, _route, _router);
-    this.jarvisConnectorLink = new JarvisResourceLink<ConnectorBean>();
+    this.jarvisConnectorLink = new JarvisResourceLink<ConnectorBean>(this.logger);
   }
 
   /**
@@ -139,7 +141,7 @@ export class JarvisMeasureComponent extends JarvisResource<MeasureBean> implemen
     if(picker.action === 'complete') {
       this.myMeasure = <MeasureBean> resource;
       this.myMeasure.connectors = [];
-      (new JarvisResourceLink<ConnectorBean>()).loadLinksWithCallback(resource.id, this.myMeasure.connectors, this._measureService.allLinkedConnectors, (connectors) => {
+      (new JarvisResourceLink<ConnectorBean>(this.logger)).loadLinksWithCallback(resource.id, this.myMeasure.connectors, this._measureService.allLinkedConnectors, (connectors) => {
         this.check();
       });
     }
