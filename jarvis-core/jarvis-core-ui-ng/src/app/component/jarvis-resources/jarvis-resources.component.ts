@@ -62,7 +62,7 @@ export class JarvisResourcesComponent implements OnInit {
    * members
    */
   public myResourceName: string = "default";
-  public myResources: ResourceBean[];
+  public myResources: ResourceBean[] = <ResourceBean[]>[];
   public toDelete: ResourceBean;
   public display: boolean = false;
 
@@ -166,6 +166,7 @@ export class JarvisResourcesComponent implements OnInit {
     /**
      * get all resource
      */
+    this.myService = jarvisDataService;
     jarvisDataService.GetAll()
       .subscribe(
       (data: ResourceBean[]) => this.myResources = data,
@@ -173,7 +174,6 @@ export class JarvisResourcesComponent implements OnInit {
          console.log(error)
       },
       () => {
-        this.myService = jarvisDataService;
       }
       );
   }
