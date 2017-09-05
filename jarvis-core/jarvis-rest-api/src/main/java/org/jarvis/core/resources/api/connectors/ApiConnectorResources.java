@@ -159,6 +159,7 @@ public class ApiConnectorResources extends ApiResources<ConnectorRest,ConnectorB
 			bean.canAnswer = (boolean) copy(args.get("canAnswer"), false);
 			bean.isRenderer = (boolean) copy(args.get("isRenderer"), false);
 			bean.isSensor = (boolean) copy(args.get("isSensor"), false);
+			bean.lastAdvertise = DateTime.now();
 			doCreateBean(bean);
 		}
 		return args;

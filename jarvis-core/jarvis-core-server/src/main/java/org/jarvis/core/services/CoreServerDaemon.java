@@ -22,7 +22,6 @@ import java.util.Optional;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
-import javax.ws.rs.Path;
 
 import org.commonmark.Extension;
 import org.commonmark.ext.gfm.tables.TablesExtension;

@@ -3,23 +3,19 @@
 <input #fileInput style="display:none" type="file" (change)="onChange($event)">
 
 <div *ngIf="mySnapshot">
-  <p-accordion>
-    <p-accordionTab header="Entête">
+  <md-tab-group>
+    <md-tab label="Entête">
       <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
         <div class="ui-grid-row">
-          <div class="ui-grid-col-4">
-            Nom
+          <div class="ui-grid-col-6">
+            <md-input-container class="input-full-width">
+              <input mdInput placeholder="Nom" [(ngModel)]="mySnapshot.name">
+            </md-input-container>
           </div>
-          <div class="ui-grid-col-8">
-            <input type="text" pInputText [(ngModel)]="mySnapshot.name" placeholder="Nom" />
-          </div>
-        </div>
-        <div class="ui-grid-row">
-          <div class="ui-grid-col-4">
-            Icône
-          </div>
-          <div class="ui-grid-col-8">
-            <input type="text" pInputText [(ngModel)]="mySnapshot.icon" placeholder="Icône" />
+          <div class="ui-grid-col-6">
+            <md-input-container class="input-full-width">
+              <input mdInput placeholder="Icône" [(ngModel)]="mySnapshot.icon">
+            </md-input-container>
           </div>
         </div>
         <div class="ui-grid-row">
@@ -28,6 +24,6 @@
           </div>
         </div>
       </div>
-    </p-accordionTab>
-  </p-accordion>
+    </md-tab>
+  </md-tab-group>
 </div>

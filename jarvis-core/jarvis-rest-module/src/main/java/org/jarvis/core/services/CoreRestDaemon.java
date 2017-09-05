@@ -204,7 +204,10 @@ public class CoreRestDaemon {
 			if(!client.isConnected()) {
 				client.connect();
 			}
-			this.client.publish("/health/" + bean.name, mapper.writeValueAsString(bean).getBytes(), 0, false);
+			/**
+			 * register health status
+			 */
+			this.client.publish("/api/connectors", mapper.writeValueAsString(bean).getBytes(), 0, false);
 		} catch (JsonProcessingException e) {
 			logger.error("json parse error {}", e);
 		} catch (MqttException e) {
