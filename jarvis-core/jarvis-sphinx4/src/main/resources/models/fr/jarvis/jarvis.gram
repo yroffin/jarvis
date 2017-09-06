@@ -1,9 +1,12 @@
 #JSGF V1.0;
-   
+
+// https://www.w3.org/TR/jsgf
+
 grammar numbers;
 
-public <main> = (<wake> <command>) | <others>;
+public <main> = [<wake> <command> | <others>];
 
 <wake> = jarvis;
-<command> = [(ouvre|ferme)] les [(stores|volets|lumières)];
-<others> = (ouah|stop);
+<command> = (ouvre|ferme) les (stores|volets|lumières);
+
+<others> = <NULL> *;

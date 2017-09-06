@@ -127,7 +127,7 @@ public class MqttTrigger implements MqttCallback {
 				logger.info("messageArrived: {} {}\n{}\nresult: {}", topic, this.script.getContext().getVariables(), this.body, result);
 				coreEventDaemon.post(this.triggerId, topic + " " + str);
 			} else {
-				logger.warn("messageArrived: {} {}\n{}\nresult: {}", topic, this.script.getContext().getVariables(), this.body, result);
+				logger.info("messageArrived: {} {}\n{}\nresult: {}", topic, this.script.getContext().getVariables(), this.body, result);
 			}
 		} catch(Exception e) {
 			logger.warn("messageArrived with error: {} {}", topic, e);
