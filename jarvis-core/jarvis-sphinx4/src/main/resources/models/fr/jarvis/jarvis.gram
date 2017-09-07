@@ -7,6 +7,8 @@ grammar numbers;
 public <main> = [<wake> <command> | <others>];
 
 <wake> = jarvis;
-<command> = (ouvre|ferme) les (stores|volets|lumières);
+<command> = <action> <objet>;
+<action> = (ou|fer|ouvre|ferme);
+<objet> = (un objet|les stores|les volets|les lumières);
 
 <others> = <NULL> *;

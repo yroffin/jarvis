@@ -59,12 +59,12 @@ public class CoreSphinxService {
 	 * simple json mapper
 	 */
 	private ObjectMapper mapper = new ObjectMapper();
-	
+
 	/**
 	 * mqtt client
 	 */
 	protected MqttClient client;
-	
+
 	/**
 	 * stop threads
 	 */
@@ -89,7 +89,8 @@ public class CoreSphinxService {
 				/**
 				 * Construct an MQTT blocking mode client
 				 */
-				this.client = new MqttClient(env.getProperty("jarvis.mqtt.url"), "sphinx-service-"+Thread.currentThread().getName());
+				this.client = new MqttClient(env.getProperty("jarvis.mqtt.url"),
+						"sphinx-service-" + Thread.currentThread().getName());
 			} catch (MqttException e) {
 				logger.error("Unable to set up client: {}", e);
 				throw new TechnicalException(e);
@@ -163,7 +164,7 @@ public class CoreSphinxService {
 				}
 			}
 		}.start();
-		
+
 		/**
 		 * simple class to publish result
 		 */
@@ -176,6 +177,7 @@ public class CoreSphinxService {
 			public String bestPronunciationResult;
 			@SuppressWarnings("unused")
 			public String bestResultNoFiller;
+
 			public BrokerMsg(SpeechResult r) {
 				hypothesis = r.getHypothesis();
 				bestFinalResultNoFiller = r.getResult().getBestFinalResultNoFiller();
@@ -193,20 +195,23 @@ public class CoreSphinxService {
 				try {
 					while (running) {
 						SpeechResult result = queue.take();
-						logger.info("newResult: {}", result.getHypothesis());
+						if (result.getHypothesis() != null && !result.getHypothesis().trim().equals("<unk>")
+								&& !result.getHypothesis().trim().equals("")) {
+							logger.info("newResult: {}", result.getHypothesis());
+						}
 						try {
 							BrokerMsg b = new BrokerMsg(result);
 							/**
 							 * check connexion
 							 */
-							if(!client.isConnected()) {
+							if (!client.isConnected()) {
 								client.connect();
 							}
 							/**
 							 * only send sentence with wake word
 							 */
-							if(result.getHypothesis() != null && result.getHypothesis().startsWith(wakeWord)) {
-								client.publish("/sphinx4",  mapper.writeValueAsString(b).getBytes(), 0, false);
+							if (result.getHypothesis() != null && result.getHypothesis().startsWith(wakeWord)) {
+								client.publish("/sphinx4", mapper.writeValueAsString(b).getBytes(), 0, false);
 							}
 						} catch (JsonProcessingException e) {
 							logger.error("json parse error {}", e);
