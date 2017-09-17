@@ -8,7 +8,7 @@ public <main> = [<wake> <command> | <others>];
 
 <wake> = jarvis;
 <command> = <action> <objet>;
-<action> = (ou|fer|ouvre|ferme);
-<objet> = (un objet|les stores|les volets|les lumières);
+<action> = (/10/ ou|/10/ fer|/1/ ouvre|/1/ ferme);
+<objet> = (/10/ un objet|/1/ les stores|/1/ les volets|/1/ les lumières);
 
 <others> = <NULL> *;

@@ -186,7 +186,7 @@ public class CoreRestDaemon {
 			/**
 			 *  register health
 			 */
-			healthStatus(serverNotify, bean);
+			healthStatus(serverNotify, bean, false);
 		}
 	}
 
@@ -196,7 +196,8 @@ public class CoreRestDaemon {
 	 * @param serverUrl
 	 * @param bean
 	 */
-	private void handler(ConnectorBean bean) {
+	private void handler(ConnectorBean bean, boolean health) {
+		if(health) return;
 		try {
 			/**
 			 * check connexion
@@ -223,11 +224,11 @@ public class CoreRestDaemon {
 	 * @param cron
 	 * @param bean 
 	 */
-	private void healthStatus(String cron, ConnectorBean bean) {
+	private void healthStatus(String cron, ConnectorBean bean, boolean mqtt) {
 		/**
 		 * initial call
 		 */
-		handler(bean);
+		handler(bean, mqtt);
 
 		Trigger trigger = new CronTrigger(cron);
 
@@ -235,7 +236,7 @@ public class CoreRestDaemon {
 			
 			@Override
 			public void run() {
-				handler(bean);
+				handler(bean, mqtt);
 			}
 			
 		}, trigger);

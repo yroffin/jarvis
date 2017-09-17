@@ -27,8 +27,17 @@
     <Console name="Console" target="SYSTEM_OUT">
       <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %l - %msg%n"/>
     </Console>
+    <Console name="ConsoleBpmn" target="SYSTEM_ERR">
+      <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %l - %msg%n"/>
+    </Console>
   </Appenders>
   <Loggers>
+  	<Logger name="org.camunda" level="debug" additivity="false">
+      <AppenderRef ref="ConsoleBpmn"/>
+    </Logger>
+  	<Logger name="org.springframework" level="warn" additivity="false">
+      <AppenderRef ref="ConsoleBpmn"/>
+    </Logger>
   	<Logger name="io.moquette" level="warn" additivity="false">
       <AppenderRef ref="RollingFile"/>
     </Logger>

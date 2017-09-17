@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" packages="org.jarvis.core.log4j2">
+  <Appenders>
+	<RollingFile name="RollingFile" fileName="jarvis-tests.log" filePattern="${sys:jarvis.log.dir}/jarvis-%d{MM-dd-yyyy}.log.gz"
+                 ignoreExceptions="false">
+      <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger{36} - %msg%n"/>
+      <TimeBasedTriggeringPolicy />
+    </RollingFile>
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %l - %msg%n"/>
+    </Console>
+  </Appenders>
+  <Loggers>
+  	<Logger name="org.camunda" level="debug" additivity="false">
+      <AppenderRef ref="RollingFile"/>
+    </Logger>
+  	<Logger name="io.moquette" level="warn" additivity="false">
+      <AppenderRef ref="RollingFile"/>
+    </Logger>
+  	<Logger name="org.reflections.Reflections" level="warn" additivity="false">
+      <AppenderRef ref="RollingFile"/>
+    </Logger>
+  	<Logger name="com.mongodb.diagnostics.logging" level="warn" additivity="false">
+      <AppenderRef ref="RollingFile"/>
+    </Logger>
+  	<Logger name="org.ehcache" level="warn" additivity="false">
+      <AppenderRef ref="RollingFile"/>
+    </Logger>
+  	<Logger name="org.jarvis.core.security" level="info" additivity="false">
+      <AppenderRef ref="RollingFile"/>
+    </Logger>
+  	<Logger name="org.jarvis.core.access" level="info" additivity="false">
+      <AppenderRef ref="RollingFile"/>
+    </Logger>
+  	<Logger name="org.jarvis.core.resources.api.tools.ApiCronResources" level="info" additivity="false">
+      <AppenderRef ref="RollingFile"/>
+    </Logger>
+    <Root level="debug">
+      <AppenderRef ref="Console" level="debug" />
+      <AppenderRef ref="RollingFile" level="debug" />
+    </Root>
+  </Loggers>
+</Configuration>

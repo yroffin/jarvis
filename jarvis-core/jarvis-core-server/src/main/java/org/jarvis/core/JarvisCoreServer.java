@@ -22,10 +22,12 @@ import java.net.URLClassLoader;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 
 /**
  * simple bootstrap for rest bootstrap
@@ -37,11 +39,14 @@ public class JarvisCoreServer {
 	protected static String normalizedPath = JarvisStatic.normalizedPath;
 	protected static Logger logger = LoggerFactory.getLogger(JarvisCoreServer.class);
 
+	@Autowired
+	Environment env;
+
 	/**
 	 * main entry
 	 * 
 	 * @param args
-	 * @throws MalformedURLException 
+	 * @throws MalformedURLException
 	 */
 	public static void main(String[] args) throws MalformedURLException {
 		/**
@@ -49,12 +54,12 @@ public class JarvisCoreServer {
 		 */
 		ClassLoader cl = ClassLoader.getSystemClassLoader();
 
-	    URL[] urls = ((URLClassLoader)cl).getURLs();
+		URL[] urls = ((URLClassLoader) cl).getURLs();
 
-	    for(URL url: urls){
-	    	logger.trace("Classpath {}", url.getFile());
-	    }
-	    
+		for (URL url : urls) {
+			logger.trace("Classpath {}", url.getFile());
+		}
+
 		/**
 		 * start application
 		 */

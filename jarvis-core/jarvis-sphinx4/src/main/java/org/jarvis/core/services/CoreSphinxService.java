@@ -106,8 +106,8 @@ public class CoreSphinxService {
 			configuration.setLanguageModelPath("resource:/models/fr/jarvis/jarvis.lm");
 			configuration.setGrammarPath("resource:/models/fr/jarvis");
 			configuration.setGrammarName("jarvis");
-			configuration.setSampleRate(16000);
-			configuration.setUseGrammar(true);
+			configuration.setSampleRate(8000);
+			configuration.setUseGrammar(false);
 
 			recognizer = new LiveSpeechLocalRecording(configuration);
 
