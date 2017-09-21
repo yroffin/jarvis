@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.yroffin.com.jarvis</groupId>
+	<groupId>org.yroffin.jarvis</groupId>
 	<artifactId>jarvis</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
@@ -47,42 +47,13 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<!-- commonmark -->
+			<!-- common -->
 			<dependency>
-				<groupId>com.atlassian.commonmark</groupId>
-				<artifactId>commonmark</artifactId>
-				<version>${commonmark.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.atlassian.commonmark</groupId>
-				<artifactId>commonmark-ext-gfm-tables</artifactId>
-				<version>${commonmark.version}</version>
-			</dependency>
-			<!-- camunda -->
-			<dependency>
-				<groupId>org.camunda.bpm.extension.springboot</groupId>
-				<artifactId>camunda-bpm-spring-boot-starter-bom</artifactId>
-				<version>${camunda-spring-boot.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-			<!-- persistence -->
-			<dependency>
-			    <groupId>org.apache.openjpa</groupId>
-			    <artifactId>openjpa-persistence</artifactId>
-			    <version>2.4.2</version>
-			</dependency>
-			<dependency>
-				<groupId>com.h2database</groupId>
-				<artifactId>h2</artifactId>
-				<version>1.4.196</version>
-			</dependency>
-			<!-- common security -->
-			<dependency>
-				<groupId>${project.groupId}</groupId>
-				<artifactId>jarvis-common-security</artifactId>
+				<groupId>org.yroffin.common</groupId>
+				<artifactId>commons-rest-client</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+
 			<!-- internal/app -->
 			<dependency>
 				<groupId>${project.groupId}</groupId>
@@ -122,11 +93,6 @@
 			</dependency>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>jarvis-rest-client</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>${project.groupId}</groupId>
 				<artifactId>jarvis-broker</artifactId>
 				<version>${project.version}</version>
 			</dependency>
@@ -154,6 +120,42 @@
 				<groupId>${project.groupId}</groupId>
 				<artifactId>jarvis-rest-module</artifactId>
 				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>jarvis-common-security</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<!-- commonmark -->
+			<dependency>
+				<groupId>com.atlassian.commonmark</groupId>
+				<artifactId>commonmark</artifactId>
+				<version>${commonmark.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.atlassian.commonmark</groupId>
+				<artifactId>commonmark-ext-gfm-tables</artifactId>
+				<version>${commonmark.version}</version>
+			</dependency>
+			<!-- camunda -->
+			<dependency>
+				<groupId>org.camunda.bpm.extension.springboot</groupId>
+				<artifactId>camunda-bpm-spring-boot-starter-bom</artifactId>
+				<version>${camunda-spring-boot.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<!-- persistence -->
+			<dependency>
+			    <groupId>org.apache.openjpa</groupId>
+			    <artifactId>openjpa-persistence</artifactId>
+			    <version>2.4.2</version>
+			</dependency>
+			<dependency>
+				<groupId>com.h2database</groupId>
+				<artifactId>h2</artifactId>
+				<version>1.4.196</version>
 			</dependency>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
@@ -610,7 +612,6 @@
 		<module>jarvis-core-statistics</module>
 
 		<module>jarvis-core-ui-ng</module>
-		<module>jarvis-rest-client</module>
 		<module>jarvis-rest-api-zway</module>
 		<module>jarvis-rest-api-slack</module>
 		<module>jarvis-swagger-core</module>

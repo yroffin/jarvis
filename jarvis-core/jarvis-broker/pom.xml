@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.yroffin.com.jarvis</groupId>
+		<groupId>org.yroffin.jarvis</groupId>
 		<artifactId>jarvis</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
@@ -14,11 +14,11 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.yroffin.com.jarvis</groupId>
+			<groupId>org.yroffin.jarvis</groupId>
 			<artifactId>jarvis-common</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.yroffin.com.jarvis</groupId>
+			<groupId>org.yroffin.jarvis</groupId>
 			<artifactId>jarvis-core-model</artifactId>
 		</dependency>
 		<dependency>

@@ -8,8 +8,14 @@ import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.spring.ProcessEngineFactoryBean;
 import org.camunda.bpm.engine.spring.SpringProcessEngineConfiguration;
+import org.camunda.bpm.engine.spring.application.SpringProcessApplication;
+import org.camunda.bpm.engine.spring.container.ManagedProcessEngineFactoryBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.support.PersistenceExceptionTranslator;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -21,7 +27,10 @@ import org.springframework.transaction.PlatformTransactionManager;
  * Camunda configuration
  */
 @Configuration
+@EnableAutoConfiguration 
+@ComponentScan
 public class BpmProcessEngineConfiguration {
+	protected Logger logger = LoggerFactory.getLogger(BpmProcessEngineConfiguration.class);
 
 	/**
 	 * @return PersistenceExceptionTranslator
@@ -90,7 +99,7 @@ public class BpmProcessEngineConfiguration {
 	 */
 	@Bean
 	public ProcessEngineFactoryBean processEngine() {
-		ProcessEngineFactoryBean factoryBean = new ProcessEngineFactoryBean();
+		ManagedProcessEngineFactoryBean factoryBean = new ManagedProcessEngineFactoryBean();
 		factoryBean.setProcessEngineConfiguration(processEngineConfiguration());
 		return factoryBean;
 	}
@@ -120,5 +129,15 @@ public class BpmProcessEngineConfiguration {
 	@Bean
 	public TaskService taskService(ProcessEngine processEngine) {
 		return processEngine.getTaskService();
+	}
+
+	/**
+	 * @param processEngine
+	 * @return SpringProcessApplication
+	 */
+	@Bean
+	public SpringProcessApplication springProcessApplication(ProcessEngine processEngine) {
+		SpringProcessApplication processApplication = new SpringProcessApplication();
+		return processApplication;
 	}
 }

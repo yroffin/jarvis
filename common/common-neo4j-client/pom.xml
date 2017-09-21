@@ -2,27 +2,19 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.yroffin.com.jarvis</groupId>
-		<artifactId>jarvis</artifactId>
+		<groupId>org.yroffin.common</groupId>
+		<artifactId>commons</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
-	<artifactId>jarvis-core-neo4j-client</artifactId>
-	<name>Core neo4j client</name>
-	<description>Neo4j REST API client</description>
+	<artifactId>common-neo4j-client</artifactId>
+	<name>Common neo4j client</name>
+	<description>Common neo4j client</description>
 
 	<dependencies>
 		<dependency>
-			<groupId>org.yroffin.com.jarvis</groupId>
-			<artifactId>jarvis-common</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.yroffin.com.jarvis</groupId>
-			<artifactId>jarvis-core-model</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.yroffin.com.jarvis</groupId>
-			<artifactId>jarvis-rest-client</artifactId>
+			<groupId>org.yroffin.common</groupId>
+			<artifactId>common-rest-client</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>

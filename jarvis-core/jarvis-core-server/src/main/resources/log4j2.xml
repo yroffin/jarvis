@@ -24,6 +24,11 @@
       <PatternLayout pattern="%d{DEFAULT} %msg%n"/>
       <TimeBasedTriggeringPolicy />
     </RollingFile>
+	<RollingFile name="RollingBpmFile" fileName="${sys:jarvis.log.dir}/jarvis-bpm.log" filePattern="${sys:jarvis.log.dir}/jarvis-bpm-%d{MM-dd-yyyy}.log.gz"
+                 ignoreExceptions="false">
+      <PatternLayout pattern="%d{DEFAULT} %msg%n"/>
+      <TimeBasedTriggeringPolicy />
+    </RollingFile>
     <Console name="Console" target="SYSTEM_OUT">
       <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %l - %msg%n"/>
     </Console>
@@ -34,9 +39,10 @@
   <Loggers>
   	<Logger name="org.camunda" level="debug" additivity="false">
       <AppenderRef ref="ConsoleBpmn"/>
+      <AppenderRef ref="RollingBpmFile"/>
     </Logger>
   	<Logger name="org.springframework" level="warn" additivity="false">
-      <AppenderRef ref="ConsoleBpmn"/>
+      <AppenderRef ref="RollingFile"/>
     </Logger>
   	<Logger name="io.moquette" level="warn" additivity="false">
       <AppenderRef ref="RollingFile"/>
