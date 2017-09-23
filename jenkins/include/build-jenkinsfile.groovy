@@ -76,6 +76,13 @@ def buildGUI() {
 def buildSRV() {
       print "SRV build"
       stage('SRV') {
+            dir('common') {
+                  if (isUnix()) {
+                        sh "'${mvnHome}/bin/mvn' -T 4 -Dmaven.test.failure.ignore clean install > ${WORKSPACE}/logs/server.stdout 2> ${WORKSPACE}/logs/server.stderr"
+                  } else {
+                        bat(/"${mvnHome}\bin\mvn" -Dmaven.test.failure.ignore clean install/)
+                  }
+            }
             dir('jarvis-core') {
                   if (isUnix()) {
                         sh "'${mvnHome}/bin/mvn' -T 4 -Dmaven.test.failure.ignore clean install > ${WORKSPACE}/logs/server.stdout 2> ${WORKSPACE}/logs/server.stderr"
