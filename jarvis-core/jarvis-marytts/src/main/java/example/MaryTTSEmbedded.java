@@ -6,8 +6,6 @@ import javax.sound.sampled.AudioInputStream;
 
 import marytts.LocalMaryInterface;
 import marytts.MaryInterface;
-import marytts.htsengine.HMMVoice;
-import marytts.modules.synthesis.Voice;
 import marytts.util.data.audio.AudioPlayer;
 
 

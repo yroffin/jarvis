@@ -1,25 +1,7 @@
 package org.jarvis.core.security;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import org.pac4j.core.authorization.checker.AuthorizationChecker;
-import org.pac4j.core.authorization.checker.DefaultAuthorizationChecker;
-import org.pac4j.core.client.Client;
-import org.pac4j.core.client.Clients;
-import org.pac4j.core.client.DirectClient;
-import org.pac4j.core.client.finder.ClientFinder;
-import org.pac4j.core.client.finder.DefaultClientFinder;
 import org.pac4j.core.config.Config;
-import org.pac4j.core.context.HttpConstants;
 import org.pac4j.core.context.WebContext;
-import org.pac4j.core.credentials.Credentials;
-import org.pac4j.core.exception.HttpAction;
-import org.pac4j.core.exception.TechnicalException;
-import org.pac4j.core.profile.CommonProfile;
-import org.pac4j.core.profile.ProfileManager;
-import org.pac4j.core.profile.UserProfile;
 import org.pac4j.core.util.CommonHelper;
 import org.pac4j.sparkjava.SecurityFilter;
 import org.pac4j.sparkjava.SparkWebContext;
@@ -29,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import spark.Filter;
 import spark.Request;
 import spark.Response;
-import spark.Spark;
 
 /**
  * basic filter for token validation
