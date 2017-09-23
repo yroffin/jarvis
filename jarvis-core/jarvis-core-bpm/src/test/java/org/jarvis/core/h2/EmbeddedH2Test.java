@@ -26,8 +26,7 @@ public class EmbeddedH2Test {
 	@Before
 	public void setUp() {
 		// db = new EmbeddedDatabaseBuilder().addDefaultScripts().build();
-		db = new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2).setName("camunda").addScript("db/sql/create-db.sql")
-				.addScript("db/sql/insert-data.sql").build();
+		db = new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2).setName("camunda").build();
 	}
 
 	/**
