@@ -6,9 +6,9 @@ import java.util.Map;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.jarvis.core.AbstractJerseyClient;
-import org.jarvis.core.exception.TechnicalException;
-import org.jarvis.core.exception.TechnicalHttpException;
+import org.common.core.exception.TechnicalException;
+import org.common.core.exception.TechnicalHttpException;
+import org.common.jersey.AbstractJerseyClient;
 
 /**
  * simple oauth2 api client

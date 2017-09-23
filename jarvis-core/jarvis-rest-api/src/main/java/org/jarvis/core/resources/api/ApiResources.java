@@ -36,15 +36,15 @@ import javax.servlet.ServletException;
 import javax.servlet.http.Part;
 import javax.ws.rs.Path;
 
-import org.jarvis.core.exception.TechnicalException;
-import org.jarvis.core.exception.TechnicalNotFoundException;
+import org.common.core.exception.TechnicalException;
+import org.common.core.exception.TechnicalNotFoundException;
+import org.common.core.type.GenericMap;
 import org.jarvis.core.model.bean.GenericBean;
 import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.services.ApiService;
 import org.jarvis.core.services.CoreMoquette;
 import org.jarvis.core.services.CoreStatistics;
 import org.jarvis.core.services.neo4j.ApiNeo4Service;
-import org.jarvis.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

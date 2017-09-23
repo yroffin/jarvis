@@ -21,9 +21,9 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import javax.annotation.PostConstruct;
 
+import org.common.core.exception.TechnicalException;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.sphinx4.LiveSpeechLocalRecording;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

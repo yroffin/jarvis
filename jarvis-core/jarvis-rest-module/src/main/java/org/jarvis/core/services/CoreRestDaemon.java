@@ -34,9 +34,9 @@ import java.util.concurrent.ScheduledFuture;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletResponse;
 
+import org.common.core.exception.TechnicalException;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.jarvis.core.exception.TechnicalException;
 import org.jarvis.core.model.bean.connector.ConnectorBean;
 import org.jarvis.core.resources.SystemIndicator;
 import org.jarvis.rest.services.impl.JarvisModuleException;

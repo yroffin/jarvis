@@ -18,7 +18,7 @@ package org.jarvis.core.services;
 
 import java.util.List;
 
-import org.jarvis.core.exception.TechnicalNotFoundException;
+import org.common.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.GenericBean;
 import org.jarvis.core.services.neo4j.ApiNeo4Service;
 import org.jarvis.core.services.neo4j.Neo4jService;

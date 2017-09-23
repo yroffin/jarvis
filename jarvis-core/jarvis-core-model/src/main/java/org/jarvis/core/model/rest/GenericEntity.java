@@ -19,7 +19,7 @@ package org.jarvis.core.model.rest;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.jarvis.core.type.GenericMap;
+import org.common.core.type.GenericMap;
 import org.joda.time.DateTime;
 
 import com.fasterxml.jackson.annotation.JsonProperty;

@@ -22,7 +22,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.sound.sampled.AudioInputStream;
 
-import org.jarvis.core.exception.TechnicalException;
+import org.common.core.exception.TechnicalException;
 import org.jarvis.core.services.CoreMethod;
 import org.jarvis.core.services.CoreRestDaemon;
 import org.jarvis.core.services.JarvisConnector;

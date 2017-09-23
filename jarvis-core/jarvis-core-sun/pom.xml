@@ -13,6 +13,15 @@
 	<name>Core sunset sunrise module</name>
 
 	<dependencies>
+		<!-- common dependencies -->
+		<dependency>
+			<groupId>org.yroffin.common</groupId>
+			<artifactId>common-services</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.yroffin.common</groupId>
+			<artifactId>common-rest-client</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.yroffin.jarvis</groupId>
 			<artifactId>jarvis-core-model</artifactId>
@@ -20,10 +29,6 @@
 		<dependency>
 			<groupId>org.yroffin.jarvis</groupId>
 			<artifactId>jarvis-common</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.yroffin.common</groupId>
-			<artifactId>common-rest-client</artifactId>
 		</dependency>
 		<!-- external dependencies -->
 		<dependency>

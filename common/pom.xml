@@ -45,6 +45,21 @@
 			<!-- modules -->
 			<dependency>
 				<groupId>${project.groupId}</groupId>
+				<artifactId>common-model</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>common-services</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>common-neo4j-client</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
 				<artifactId>common-rest-client</artifactId>
 				<version>${project.version}</version>
 			</dependency>

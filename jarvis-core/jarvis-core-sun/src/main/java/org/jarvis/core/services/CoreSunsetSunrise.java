@@ -22,8 +22,8 @@ import javax.annotation.PostConstruct;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.jarvis.core.AbstractJerseyClient;
-import org.jarvis.core.exception.TechnicalException;
+import org.common.core.exception.TechnicalException;
+import org.common.jersey.AbstractJerseyClient;
 import org.jarvis.core.model.rest.sun.SunApiRest;
 import org.jarvis.core.model.rest.sun.SunApiResultRest;
 import org.joda.time.DateTime;

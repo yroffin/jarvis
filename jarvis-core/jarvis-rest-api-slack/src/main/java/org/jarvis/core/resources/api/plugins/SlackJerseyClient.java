@@ -3,8 +3,8 @@ package org.jarvis.core.resources.api.plugins;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 
-import org.jarvis.core.AbstractJerseyClient;
-import org.jarvis.core.exception.TechnicalException;
+import org.common.core.exception.TechnicalException;
+import org.common.jersey.AbstractJerseyClient;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 

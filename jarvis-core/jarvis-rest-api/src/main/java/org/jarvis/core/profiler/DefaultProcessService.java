@@ -2,7 +2,7 @@ package org.jarvis.core.profiler;
 
 import java.util.List;
 
-import org.jarvis.core.exception.TechnicalException;
+import org.common.core.exception.TechnicalException;
 import org.jarvis.core.profiler.element.ActivityNode;
 import org.jarvis.core.profiler.element.BooleanGatewayNode;
 import org.jarvis.core.profiler.element.CallActivityNode;

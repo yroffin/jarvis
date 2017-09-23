@@ -3,8 +3,8 @@ package org.jarvis.core.resources.api;
 import java.io.IOException;
 import java.util.List;
 
-import org.jarvis.core.exception.TechnicalException;
-import org.jarvis.core.type.GenericMap;
+import org.common.core.exception.TechnicalException;
+import org.common.core.type.GenericMap;
 import org.jarvis.core.type.ResultType;
 
 import com.fasterxml.jackson.core.JsonProcessingException;

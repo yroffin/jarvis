@@ -22,12 +22,12 @@ import java.util.Map.Entry;
 
 import javax.annotation.PostConstruct;
 
-import org.jarvis.core.exception.TechnicalException;
+import org.common.core.exception.TechnicalException;
+import org.common.core.type.GenericMap;
 import org.jarvis.core.model.bean.config.PropertyBean;
 import org.jarvis.core.resources.api.config.ApiPropertyResources;
 import org.jarvis.core.services.PluginService;
 import org.jarvis.core.services.helper.PluginConnectorHelper;
-import org.jarvis.core.type.GenericMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

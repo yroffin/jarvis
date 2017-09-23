@@ -34,8 +34,8 @@ import javax.ws.rs.Produces;
 
 import java.util.Set;
 
-import org.jarvis.core.exception.TechnicalException;
-import org.jarvis.core.exception.TechnicalNotFoundException;
+import org.common.core.exception.TechnicalException;
+import org.common.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.scenario.BlockBean;
 import org.jarvis.core.model.bean.scenario.ScenarioBean;
 import org.jarvis.core.model.bean.scenario.TriggerBean;
@@ -54,7 +54,7 @@ import org.jarvis.core.resources.api.device.ApiTriggerResources;
 import org.jarvis.core.resources.api.href.ApiHrefScenarioBlockResources;
 import org.jarvis.core.resources.api.href.ApiHrefScenarioTriggerResources;
 import org.jarvis.core.resources.api.mapper.ApiMapper;
-import org.jarvis.core.type.GenericMap;
+import org.common.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;

@@ -21,7 +21,7 @@ import java.lang.reflect.Field;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
-import org.jarvis.core.exception.TechnicalException;
+import org.common.core.exception.TechnicalException;
 import org.jarvis.core.model.bean.device.DeviceBean;
 import org.jarvis.core.model.bean.plugin.CommandBean;
 import org.jarvis.core.model.bean.plugin.PluginBean;
@@ -42,7 +42,7 @@ import org.jarvis.core.services.rflink.PluginRfLinkService;
 import org.jarvis.core.services.shell.PluginShellService;
 import org.jarvis.core.services.slack.PluginSlackService;
 import org.jarvis.core.services.zway.PluginZWayService;
-import org.jarvis.core.type.GenericMap;
+import org.common.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

@@ -19,14 +19,14 @@ package org.jarvis.core.resources.api.config;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
-import org.jarvis.core.exception.TechnicalException;
+import org.common.core.exception.TechnicalException;
 import org.jarvis.core.model.bean.config.PropertyBean;
 import org.jarvis.core.model.rest.config.PropertyRest;
 import org.jarvis.core.resources.api.ApiResources;
 import org.jarvis.core.resources.api.Declare;
 import org.jarvis.core.resources.api.GenericValue;
 import org.jarvis.core.resources.api.mapper.ApiMapper;
-import org.jarvis.core.type.GenericMap;
+import org.common.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
 import org.springframework.stereotype.Component;
 

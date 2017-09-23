@@ -20,6 +20,8 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 
+import org.common.core.runtime.CaptureResult;
+import org.common.core.runtime.ProcessExec;
 import org.junit.Test;
 
 /**

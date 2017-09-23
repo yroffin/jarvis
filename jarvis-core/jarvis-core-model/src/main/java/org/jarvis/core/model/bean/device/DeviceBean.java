@@ -16,8 +16,8 @@
 
 package org.jarvis.core.model.bean.device;
 
+import org.common.core.type.GenericMap;
 import org.jarvis.core.model.bean.GenericBean;
-import org.jarvis.core.type.GenericMap;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 

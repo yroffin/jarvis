@@ -20,7 +20,7 @@ import org.jarvis.core.services.ApiService;
 import org.jarvis.core.services.groovy.PluginGroovyService;
 import org.jarvis.core.services.neo4j.ApiNeo4Service;
 import org.jarvis.core.test.JsonTestFactory;
-import org.jarvis.core.type.GenericMap;
+import org.common.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
 import org.junit.After;
 import org.junit.AfterClass;

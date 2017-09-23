@@ -9,13 +9,19 @@
 	</parent>
 	<artifactId>jarvis-rest-api-slack</artifactId>
 
-	<name>slack api</name>
-
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
+	<name>Slack Api</name>
 
 	<dependencies>
+		<!-- common -->
+		<dependency>
+			<groupId>org.yroffin.common</groupId>
+			<artifactId>common-rest-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.yroffin.common</groupId>
+			<artifactId>common-services</artifactId>
+		</dependency>
+
 		<!-- internal dependencies -->
 		<dependency>
 			<groupId>org.yroffin.jarvis</groupId>
@@ -25,10 +31,7 @@
 			<groupId>org.yroffin.jarvis</groupId>
 			<artifactId>jarvis-common</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.yroffin.common</groupId>
-			<artifactId>common-rest-client</artifactId>
-		</dependency>
+
 		<!-- dependencies -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -41,10 +44,6 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>

@@ -23,7 +23,7 @@ import java.util.List;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
-import org.jarvis.core.exception.TechnicalException;
+import org.common.core.exception.TechnicalException;
 import org.jarvis.core.model.bean.device.DeviceBean;
 import org.jarvis.core.model.bean.scenario.ScenarioBean;
 import org.jarvis.core.model.bean.scenario.TriggerBean;
@@ -45,7 +45,7 @@ import org.jarvis.core.resources.api.mapper.ApiMapper;
 import org.jarvis.core.resources.api.scenario.ApiScenarioResources;
 import org.jarvis.core.resources.api.tools.ApiCronResources;
 import org.jarvis.core.services.CoreEventDaemon;
-import org.jarvis.core.type.GenericMap;
+import org.common.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

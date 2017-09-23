@@ -21,13 +21,13 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
-import org.jarvis.core.exception.TechnicalHttpException;
-import org.jarvis.core.exception.TechnicalNotFoundException;
-import org.jarvis.core.type.GenericMap;
-import org.jarvis.neo4j.client.CypherRestClient;
-import org.jarvis.neo4j.client.Entities;
-import org.jarvis.neo4j.client.Node;
-import org.jarvis.neo4j.client.Transaction;
+import org.common.core.exception.TechnicalHttpException;
+import org.common.core.exception.TechnicalNotFoundException;
+import org.common.core.type.GenericMap;
+import org.common.neo4j.client.CypherRestClient;
+import org.common.neo4j.client.Entities;
+import org.common.neo4j.client.Node;
+import org.common.neo4j.client.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

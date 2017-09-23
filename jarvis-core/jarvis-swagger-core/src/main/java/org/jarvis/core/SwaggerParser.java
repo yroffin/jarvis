@@ -10,12 +10,12 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.function.Consumer;
 
-import org.jarvis.core.exception.TechnicalException;
+import org.common.core.exception.TechnicalException;
 import org.jarvis.core.resources.api.ApiDefaultResources;
 import org.jarvis.core.resources.api.Declare;
 import org.jarvis.core.resources.api.DeclareHrefResource;
 import org.jarvis.core.resources.api.DeclareLinkedResource;
-import org.jarvis.core.type.GenericMap;
+import org.common.core.type.GenericMap;
 import org.reflections.Reflections;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;

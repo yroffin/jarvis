@@ -18,6 +18,7 @@
 		<camunda-spring-boot.version>2.2.0</camunda-spring-boot.version>
 
 		<jssc.version>2.8.0</jssc.version>
+		<groovy.version>2.4.5</groovy.version>
 		<moquette.version>0.9</moquette.version>
 		<mqtt.paho.version>1.0.2</mqtt.paho.version>
 		<jackson.version>2.8.8</jackson.version>
@@ -50,7 +51,17 @@
 			<!-- common -->
 			<dependency>
 				<groupId>org.yroffin.common</groupId>
-				<artifactId>commons-rest-client</artifactId>
+				<artifactId>common-rest-client</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.yroffin.common</groupId>
+				<artifactId>common-services</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.yroffin.common</groupId>
+				<artifactId>common-neo4j-client</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
@@ -176,11 +187,6 @@
 			<dependency>
 				<groupId>${project.groupId}</groupId>
 				<artifactId>jarvis-ehcache</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>${project.groupId}</groupId>
-				<artifactId>jarvis-core-neo4j-client</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
@@ -492,7 +498,7 @@
 			<dependency>
 				<groupId>org.codehaus.groovy</groupId>
 				<artifactId>groovy-all</artifactId>
-				<version>2.4.5</version>
+				<version>${groovy.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.codehaus.groovy.modules.http-builder</groupId>
@@ -593,7 +599,6 @@
 		<module>jarvis-aiml</module>
 		<module>jarvis-common</module>
 		<module>jarvis-core-model</module>
-		<module>jarvis-core-neo4j-client</module>
 		<module>jarvis-dio</module>
 		<module>jarvis-rest-module</module>
 		<module>jarvis-rest-api</module>

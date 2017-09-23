@@ -19,7 +19,7 @@ package org.jarvis.core.resources.api.config;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
-import org.jarvis.core.exception.TechnicalException;
+import org.common.core.exception.TechnicalException;
 import org.jarvis.core.model.bean.config.ConfigBean;
 import org.jarvis.core.model.rest.config.ConfigRest;
 import org.jarvis.core.model.rest.config.ConfigSystemRest;
@@ -31,7 +31,7 @@ import org.jarvis.core.resources.api.ResourcePostListener;
 import org.jarvis.core.resources.api.mapper.ApiMapper;
 import org.jarvis.core.resources.api.tools.ApiCronResources;
 import org.jarvis.core.services.CoreEventDaemon;
-import org.jarvis.core.type.GenericMap;
+import org.common.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

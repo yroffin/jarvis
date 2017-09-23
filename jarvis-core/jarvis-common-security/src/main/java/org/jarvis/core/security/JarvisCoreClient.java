@@ -3,7 +3,7 @@ package org.jarvis.core.security;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jarvis.core.exception.TechnicalHttpException;
+import org.common.core.exception.TechnicalHttpException;
 import org.pac4j.core.client.DirectClient;
 import org.pac4j.core.context.WebContext;
 import org.pac4j.core.credentials.authenticator.Authenticator;

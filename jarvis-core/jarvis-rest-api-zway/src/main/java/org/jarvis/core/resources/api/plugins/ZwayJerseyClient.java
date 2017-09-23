@@ -5,8 +5,8 @@ import java.util.LinkedHashMap;
 
 import javax.ws.rs.core.MediaType;
 
-import org.jarvis.core.AbstractJerseyClient;
-import org.jarvis.core.exception.TechnicalException;
+import org.common.core.exception.TechnicalException;
+import org.common.jersey.AbstractJerseyClient;
 import org.jarvis.core.model.rest.plugin.ZwayRest;
 
 /**

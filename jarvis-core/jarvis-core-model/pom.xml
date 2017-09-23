@@ -12,6 +12,12 @@
 	<description>Core model</description>
 	
 	<dependencies>
+		<!-- common dependencies -->
+		<dependency>
+			<groupId>org.yroffin.common</groupId>
+			<artifactId>common-services</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>

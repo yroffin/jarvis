@@ -19,14 +19,14 @@ package org.jarvis.core.services;
 import javax.annotation.PostConstruct;
 
 import org.bson.Document;
-import org.jarvis.core.exception.TechnicalException;
+import org.common.core.exception.TechnicalException;
+import org.common.core.type.GenericMap;
 import org.jarvis.core.model.bean.GenericBean;
 import org.jarvis.core.model.bean.device.EventBean;
 import org.jarvis.core.model.bean.plugin.CommandBean;
 import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.model.rest.device.EventRest;
 import org.jarvis.core.model.rest.plugin.CommandRest;
-import org.jarvis.core.type.GenericMap;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

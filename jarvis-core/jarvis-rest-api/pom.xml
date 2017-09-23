@@ -12,6 +12,20 @@
 	<description>Rest core api</description>
 
 	<dependencies>
+		<!-- common -->
+		<dependency>
+			<groupId>org.yroffin.common</groupId>
+			<artifactId>common-services</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.yroffin.common</groupId>
+			<artifactId>common-rest-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.yroffin.common</groupId>
+			<artifactId>common-neo4j-client</artifactId>
+		</dependency>
+
 		<!-- internal dependencies -->
 		<dependency>
 			<groupId>org.yroffin.jarvis</groupId>
@@ -20,10 +34,6 @@
 		<dependency>
 			<groupId>org.yroffin.jarvis</groupId>
 			<artifactId>jarvis-common</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.yroffin.jarvis</groupId>
-			<artifactId>jarvis-core-neo4j-client</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.yroffin.jarvis</groupId>
@@ -77,10 +87,6 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.codehaus.groovy</groupId>
-			<artifactId>groovy-all</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>

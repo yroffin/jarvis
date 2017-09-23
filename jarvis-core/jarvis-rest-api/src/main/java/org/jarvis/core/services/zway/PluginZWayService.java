@@ -18,12 +18,12 @@ package org.jarvis.core.services.zway;
 
 import javax.annotation.PostConstruct;
 
-import org.jarvis.core.exception.TechnicalException;
+import org.common.core.exception.TechnicalException;
 import org.jarvis.core.model.rest.plugin.ZwayRest;
 import org.jarvis.core.resources.api.config.ApiPropertyResources;
 import org.jarvis.core.resources.api.plugins.ZwayJerseyClient;
 import org.jarvis.core.services.PluginService;
-import org.jarvis.core.type.GenericMap;
+import org.common.core.type.GenericMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -21,12 +21,12 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
+import org.common.core.runtime.ProcessExec;
 import org.jarvis.core.services.CoreMethod;
 import org.jarvis.core.services.CoreRestDaemon;
 import org.jarvis.core.services.JarvisConnector;
 import org.jarvis.core.services.JarvisConnectorImpl;
 import org.jarvis.rest.services.impl.JarvisModuleException;
-import org.jarvis.runtime.ProcessExec;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

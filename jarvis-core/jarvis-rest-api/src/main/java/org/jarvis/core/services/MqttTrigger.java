@@ -5,8 +5,8 @@ import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
-import org.jarvis.core.exception.TechnicalException;
-import org.jarvis.core.type.GenericMap;
+import org.common.core.exception.TechnicalException;
+import org.common.core.type.GenericMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

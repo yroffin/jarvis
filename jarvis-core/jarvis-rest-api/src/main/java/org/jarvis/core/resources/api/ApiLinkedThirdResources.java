@@ -8,11 +8,11 @@ import static spark.Spark.put;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jarvis.core.exception.TechnicalNotFoundException;
+import org.common.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.GenericBean;
 import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.resources.api.mapper.ApiHrefMapper;
-import org.jarvis.core.type.GenericMap;
+import org.common.core.type.GenericMap;
 
 import spark.Request;
 import spark.Response;

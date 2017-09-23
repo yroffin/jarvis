@@ -20,12 +20,12 @@ import static spark.Spark.get;
 
 import javax.annotation.PostConstruct;
 
-import org.jarvis.core.exception.TechnicalException;
+import org.common.core.exception.TechnicalException;
 import org.jarvis.core.model.bean.plugin.ZwayBean;
 import org.jarvis.core.model.rest.plugin.ZwayRest;
 import org.jarvis.core.resources.api.ApiResources;
 import org.jarvis.core.resources.api.GenericValue;
-import org.jarvis.core.type.GenericMap;
+import org.common.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

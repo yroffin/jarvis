@@ -16,6 +16,16 @@
 	</properties>
 
 	<dependencies>
+		<!-- common -->
+		<dependency>
+			<groupId>org.yroffin.common</groupId>
+			<artifactId>common-rest-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.yroffin.common</groupId>
+			<artifactId>common-services</artifactId>
+		</dependency>
+
 		<!-- internal dependencies -->
 		<dependency>
 			<groupId>org.yroffin.jarvis</groupId>
@@ -41,10 +51,6 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>

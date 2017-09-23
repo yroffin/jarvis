@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.io.StringWriter;
 
 import org.apache.commons.io.IOUtils;
-import org.jarvis.core.exception.TechnicalException;
+import org.common.core.exception.TechnicalException;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.DeserializationFeature;

@@ -22,7 +22,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import javax.annotation.PostConstruct;
 
-import org.jarvis.core.exception.TechnicalNotFoundException;
+import org.common.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.device.DeviceBean;
 import org.jarvis.core.model.bean.device.EventBean;
 import org.jarvis.core.model.bean.scenario.ScenarioBean;
@@ -35,7 +35,7 @@ import org.jarvis.core.resources.api.href.ApiHrefScenarioBlockResources;
 import org.jarvis.core.resources.api.href.ApiHrefScenarioTriggerResources;
 import org.jarvis.core.resources.api.scenario.ApiBlockResources;
 import org.jarvis.core.resources.api.scenario.ApiScenarioResources;
-import org.jarvis.core.type.GenericMap;
+import org.common.core.type.GenericMap;
 import org.jarvis.core.type.TaskType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

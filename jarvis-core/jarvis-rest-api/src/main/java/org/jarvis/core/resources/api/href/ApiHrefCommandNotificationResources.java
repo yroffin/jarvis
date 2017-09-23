@@ -21,8 +21,8 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
-import org.jarvis.core.exception.TechnicalException;
-import org.jarvis.core.exception.TechnicalNotFoundException;
+import org.common.core.exception.TechnicalException;
+import org.common.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.plugin.CommandBean;
 import org.jarvis.core.model.bean.tools.NotificationBean;
 import org.jarvis.core.model.rest.GenericEntity;

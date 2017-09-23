@@ -20,8 +20,8 @@ import java.io.IOException;
 import java.util.TreeMap;
 
 import org.jarvis.core.services.PluginService;
-import org.jarvis.core.type.GenericMap;
-import org.jarvis.runtime.ProcessExec;
+import org.common.core.runtime.ProcessExec;
+import org.common.core.type.GenericMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;

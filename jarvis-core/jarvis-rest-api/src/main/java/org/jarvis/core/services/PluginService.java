@@ -2,9 +2,9 @@ package org.jarvis.core.services;
 
 import java.util.Map.Entry;
 
-import org.jarvis.core.exception.TechnicalException;
+import org.common.core.exception.TechnicalException;
+import org.common.core.type.GenericMap;
 import org.jarvis.core.resources.api.plugins.PayloadBean;
-import org.jarvis.core.type.GenericMap;
 
 /**
  * default plugin service interface

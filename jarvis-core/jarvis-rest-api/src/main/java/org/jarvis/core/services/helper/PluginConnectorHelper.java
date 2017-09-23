@@ -2,7 +2,7 @@ package org.jarvis.core.services.helper;
 
 import java.net.URISyntaxException;
 
-import org.jarvis.core.exception.TechnicalNotFoundException;
+import org.common.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.rest.connector.ConnectorRest;
 import org.jarvis.core.resources.api.connectors.ApiConnectorResources;
 import org.springframework.beans.factory.annotation.Autowired;

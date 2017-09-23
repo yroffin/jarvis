@@ -5,15 +5,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.jarvis.core.exception.TechnicalException;
-import org.jarvis.core.exception.TechnicalNotFoundException;
+import org.common.core.exception.TechnicalException;
+import org.common.core.exception.TechnicalNotFoundException;
+import org.common.core.type.GenericMap;
+import org.common.neo4j.client.Entities;
+import org.common.neo4j.client.Node;
+import org.common.neo4j.client.Transaction;
 import org.jarvis.core.model.bean.GenericBean;
 import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.services.neo4j.ApiNeo4Service;
-import org.jarvis.core.type.GenericMap;
-import org.jarvis.neo4j.client.Entities;
-import org.jarvis.neo4j.client.Node;
-import org.jarvis.neo4j.client.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
