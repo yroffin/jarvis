@@ -35,8 +35,10 @@ install:
   - rm -f $TRAVIS_BUILD_DIR/jarvis-core/jarvis-core-ui-ng/src/main/resources/public/nui/*.gz
   - ls -lrt $TRAVIS_BUILD_DIR/jarvis-core/jarvis-core-ui-ng/src/main/resources/public/nui
   # Java
-  - cd $TRAVIS_BUILD_DIR/jarvis-core
   - java -version
+  - cd $TRAVIS_BUILD_DIR/common
+  - mvn -q install
+  - cd $TRAVIS_BUILD_DIR/jarvis-core
   - mvn -q install
 cache:
   directories:
