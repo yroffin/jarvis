@@ -135,7 +135,11 @@ public class PluginGroovyService extends PluginService {
 				result.put((String) key, exec.get(key));
 			}
 		} else {
-			logger.warn("SCRIPT - output is null");
+			if(raw instanceof Boolean) {
+				result.put((String) "result", raw);
+			} else {
+				logger.warn("SCRIPT - output is null");
+			}
 		}
 		return result;
 	}

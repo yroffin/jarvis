@@ -30,7 +30,10 @@ public class MqttTrigger implements MqttCallback {
 	
 	protected static ObjectMapper mapper;
 	protected static CoreEventDaemon coreEventDaemon;
-	
+
+	/**
+	 * static init
+	 */
 	{
 		MqttTrigger.mapper = new ObjectMapper();
 		MqttTrigger.mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);

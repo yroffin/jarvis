@@ -3,7 +3,6 @@ package org.jarvis.core.resources.api;
 import org.common.core.exception.TechnicalException;
 import org.jarvis.core.resources.api.mapper.ApiMapper;
 import org.common.core.type.GenericMap;
-import org.jarvis.core.type.TaskType;
 
 /**
  * default api resources
@@ -20,6 +19,6 @@ public abstract class ApiGenericResources extends ApiMapper {
 	 * @return String
 	 * @throws TechnicalException 
 	 */
-	public abstract GenericValue doRealTask(GenericMap args, TaskType taskType);
+	public abstract GenericValue doRealTask(GenericMap args, String taskType);
 
 }

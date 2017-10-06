@@ -1,0 +1,59 @@
+<app-jarvis-toolbar-resource [notified]="this" [crud]="true" [tasks]="[{'task':'deploy','icon':'fa-play','label':'Deployer'},{'task':'test','icon':'fa-play-circle-o','label':'Executer'}]"
+[pickers]="[{'label':'Ajouter un trigger', 'icon': 'fa-bolt', 'action':'triggers', 'picker': pickTriggers}]"></app-jarvis-toolbar-resource>
+
+<div *ngIf="myProcess">
+  <md-tab-group>
+    <md-tab label="Entête">
+      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-3">
+            <md-input-container class="input-full-width">
+              <input mdInput placeholder="Nom" [(ngModel)]="myProcess.name" disabled>
+            </md-input-container>
+          </div>
+          <div class="ui-grid-col-3">
+            <md-input-container class="input-full-width">
+              <input mdInput placeholder="Icône" [(ngModel)]="myProcess.icon">
+            </md-input-container>
+          </div>
+          <div class="ui-grid-col-3">
+            <md-input-container class="input-full-width">
+              <input mdInput placeholder="Bpm ID" [(ngModel)]="myProcess.bpmnId" disabled>
+            </md-input-container>
+          </div>
+          <div class="ui-grid-col-3">
+            <md-input-container class="input-full-width">
+              <input mdInput placeholder="Deploy" [(ngModel)]="myProcess.deploymentTime" disabled>
+            </md-input-container>
+          </div>
+        </div>
+      </div>
+    </md-tab>
+    <md-tab label="Triggers">
+      <p-dataTable [immutable]="false" [value]="myProcess.triggers">
+        <header>Trigger</header>
+        <p-column header="Ordre">
+          <ng-template let-trigger="rowData" pTemplate>
+            <input type="text" size="2" pInputText [(ngModel)]="trigger.extended.order" />
+          </ng-template>
+        </p-column>
+        <p-column field="id" header="Id"></p-column>
+        <p-column field="instance" header="Instance"></p-column>
+        <p-column field="name" header="Nom"></p-column>
+        <p-column header="Action">
+          <ng-template let-trigger="rowData" pTemplate="body">
+            <app-jarvis-toolbar-resource [notified]="this" [tasks]="[{'task':'updateTriggerLink','args':[trigger],'icon':'fa-save','label':'Mettre à jour le lien'},{'task':'dropTriggerLink','args':[trigger],'icon':'fa-trash','label':'Supprimer le lien'},{'task':'gotoTriggerLink','args':[trigger],'icon':'fa-link','label':'Détail'}]" ></app-jarvis-toolbar-resource>
+          </ng-template>
+        </p-column>
+      </p-dataTable>
+    </md-tab>
+  <md-tab label="Source">
+      <textarea style="width: 100%; height: 400px;" [(ngModel)]="myProcess.bpmn"></textarea>
+    </md-tab>
+    <md-tab label="Script">
+      <pre><code [innerHtml]="hightlight(myProcess.bpmn)"></code></pre>
+    </md-tab>
+  </md-tab-group>
+
+  <app-jarvis-picker #pickTriggers [resource]="{'service':'triggers','label':'Triggers'}"></app-jarvis-picker>
+  

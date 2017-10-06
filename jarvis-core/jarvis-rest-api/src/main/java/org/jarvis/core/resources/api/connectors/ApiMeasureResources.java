@@ -31,7 +31,6 @@ import org.jarvis.core.resources.api.GenericValue;
 import org.jarvis.core.resources.api.href.ApiHrefConnectorResources;
 import org.jarvis.core.resources.api.mapper.ApiMapper;
 import org.common.core.type.GenericMap;
-import org.jarvis.core.type.TaskType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -75,7 +74,7 @@ public class ApiMeasureResources extends ApiLinkedResources<MeasureRest,MeasureB
 	}
 
 	@Override
-	public GenericValue doRealTask(MeasureBean bean, GenericMap args, TaskType taskType) {
+	public GenericValue doRealTask(MeasureBean bean, GenericMap args, String taskType) {
 		GenericMap result = new GenericMap();
 		return new GenericValue(result);
 	}

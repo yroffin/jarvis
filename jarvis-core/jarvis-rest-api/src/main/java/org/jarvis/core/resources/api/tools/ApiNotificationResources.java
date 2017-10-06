@@ -16,7 +16,6 @@ import org.jarvis.core.resources.api.plugins.PayloadBean;
 import org.jarvis.core.resources.api.plugins.PayloadBeanAttachement;
 import org.jarvis.core.services.slack.PluginSlackService;
 import org.common.core.type.GenericMap;
-import org.jarvis.core.type.TaskType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -51,10 +50,10 @@ public class ApiNotificationResources extends ApiResources<NotificationRest,Noti
 	}
 
 	@Override
-	public GenericValue doRealTask(NotificationBean bean, GenericMap args, TaskType taskType) throws TechnicalException {
+	public GenericValue doRealTask(NotificationBean bean, GenericMap args, String taskType) throws TechnicalException {
 		GenericMap result;
 		switch(taskType) {
-			case TEST:
+			case "test":
 				try {
 					return doTest(bean, args);
 				} catch (InterruptedException e) {

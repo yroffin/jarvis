@@ -45,7 +45,6 @@ import org.jarvis.core.services.ApiService;
 import org.jarvis.core.services.CoreMoquette;
 import org.jarvis.core.services.CoreStatistics;
 import org.jarvis.core.services.neo4j.ApiNeo4Service;
-import org.jarvis.core.type.TaskType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -534,7 +533,7 @@ public abstract class ApiResources<REST extends GenericEntity, BEAN extends Gene
 	 * @return String
 	 * @throws TechnicalException
 	 */
-	public abstract GenericValue doRealTask(BEAN bean, GenericMap args, TaskType taskType);
+	public abstract GenericValue doRealTask(BEAN bean, GenericMap args, String taskType);
 
 	/**
 	 * execute real task on all resources, all task must be overridden in each
@@ -545,7 +544,7 @@ public abstract class ApiResources<REST extends GenericEntity, BEAN extends Gene
 	 * @return String
 	 * @throws TechnicalException
 	 */
-	public GenericValue doRealTask(GenericMap args, TaskType taskType) {
+	public GenericValue doRealTask(GenericMap args, String taskType) {
 		return null;
 	}
 
@@ -581,8 +580,11 @@ public abstract class ApiResources<REST extends GenericEntity, BEAN extends Gene
 			}
 		}
 		try {
+			/**
+			 * task is always to lowercase
+			 */
 			Object result = doExecute(response, request.params(id), body,
-					TaskType.valueOf(request.queryParams(task).toUpperCase()));
+					request.queryParams(task).toLowerCase());
 			/**
 			 * task can return String, Boolean, Object or list
 			 */
@@ -639,7 +641,7 @@ public abstract class ApiResources<REST extends GenericEntity, BEAN extends Gene
 	 * @return GenericMap
 	 * @throws TechnicalNotFoundException
 	 */
-	public Object doExecute(Response response, String id, GenericMap body, TaskType taskType)
+	public Object doExecute(Response response, String id, GenericMap body, String taskType)
 			throws TechnicalNotFoundException {
 		GenericValue result = rawExecute(id, body, taskType);
 		List<?> res;
@@ -670,11 +672,11 @@ public abstract class ApiResources<REST extends GenericEntity, BEAN extends Gene
 	 * @return GenericMap
 	 * @throws TechnicalNotFoundException
 	 */
-	public Object doExecute(String id, GenericMap body, TaskType taskType) throws TechnicalNotFoundException {
+	public Object doExecute(String id, GenericMap body, String taskType) throws TechnicalNotFoundException {
 		/**
 		 * publish on MQTT a simple notification
 		 */
-		coreMoquette.publishMostOne(this.getPath() + '/' + id + "?task=" + taskType.name().toLowerCase(), body.toString());
+		coreMoquette.publishMostOne(this.getPath() + '/' + id + "?task=" + taskType.toLowerCase(), body.toString());
 		/**
 		 * execute job
 		 */
@@ -694,14 +696,13 @@ public abstract class ApiResources<REST extends GenericEntity, BEAN extends Gene
 	}
 
 	/**
-	 * @param response
 	 * @param id
 	 * @param body
 	 * @param taskType
 	 * @return GenericMap
 	 * @throws TechnicalNotFoundException
 	 */
-	private GenericValue rawExecute(String id, GenericMap body, TaskType taskType) throws TechnicalNotFoundException {
+	public GenericValue rawExecute(String id, GenericMap body, String taskType) throws TechnicalNotFoundException {
 		/**
 		 * read object by id
 		 */

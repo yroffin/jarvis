@@ -61,7 +61,11 @@ public class ModelRest extends AbstractModel implements Model {
 									if(field.getGenericType().toString().startsWith("java.util.List")) {
 										properties.put(field.getName(), new ArrayProperty());
 									} else {
-										logger.warn("No type conversion for {}", field.getGenericType());
+										if(field.getGenericType().toString().startsWith("class org.common.core.type.GenericMap")) {
+											properties.put(field.getName(), new ObjectProperty());
+										} else {
+											logger.warn("No type conversion for {}", field.getGenericType().toString());
+										}
 									}
 								}
 							}

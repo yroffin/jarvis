@@ -17,7 +17,6 @@ import org.jarvis.core.resources.api.GenericValue;
 import org.jarvis.core.resources.api.mapper.ApiMapper;
 import org.common.core.type.GenericMap;
 import org.jarvis.core.type.ResultType;
-import org.jarvis.core.type.TaskType;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -48,14 +47,14 @@ public class ApiToolResources extends ApiResources<SnapshotRest,SnapshotBean> {
 	}
 
 	@Override
-	public GenericValue doRealTask(SnapshotBean bean, GenericMap args, TaskType taskType) throws TechnicalException {
+	public GenericValue doRealTask(SnapshotBean bean, GenericMap args, String taskType) throws TechnicalException {
 		GenericMap result;
 		switch(taskType) {
-			case DOWNLOAD:
+			case "download":
 				return new GenericValue(ResultType.FILE_STREAM, download(bean, args, new GenericMap()));
-			case UPLOAD:
+			case "upload":
 				return new GenericValue(upload(bean, args, new GenericMap()));
-			case RESTORE:
+			case "restore":
 				return new GenericValue(restore(bean, args, new GenericMap()));
 			default:
 				result = new GenericMap();

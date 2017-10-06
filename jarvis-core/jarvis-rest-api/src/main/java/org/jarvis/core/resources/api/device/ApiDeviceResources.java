@@ -29,11 +29,11 @@ import org.common.core.exception.TechnicalException;
 import org.common.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.model.bean.device.DeviceBean;
 import org.jarvis.core.model.bean.plugin.ScriptPluginBean;
-import org.jarvis.core.model.bean.scenario.TriggerBean;
+import org.jarvis.core.model.bean.trigger.TriggerBean;
 import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.model.rest.device.DeviceRest;
 import org.jarvis.core.model.rest.plugin.ScriptPluginRest;
-import org.jarvis.core.model.rest.scenario.TriggerRest;
+import org.jarvis.core.model.rest.trigger.TriggerRest;
 import org.jarvis.core.resources.api.ApiLinkedThirdResources;
 import org.jarvis.core.resources.api.Declare;
 import org.jarvis.core.resources.api.DeclareHrefResource;
@@ -45,7 +45,6 @@ import org.jarvis.core.resources.api.href.ApiHrefDeviceTriggerResources;
 import org.jarvis.core.resources.api.mapper.ApiMapper;
 import org.jarvis.core.resources.api.plugins.ApiScriptPluginResources;
 import org.common.core.type.GenericMap;
-import org.jarvis.core.type.TaskType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -154,10 +153,10 @@ public class ApiDeviceResources extends ApiLinkedThirdResources<DeviceRest,Devic
 	}
 
 	@Override
-	public GenericValue doRealTask(DeviceBean device, GenericMap args, TaskType taskType) throws TechnicalException {
+	public GenericValue doRealTask(DeviceBean device, GenericMap args, String taskType) throws TechnicalException {
 		GenericMap result;
 		switch(taskType) {
-			case RENDER:
+			case "render":
 				try {
 					result = render(device, args);
 				} catch (Exception e) {
@@ -165,7 +164,7 @@ public class ApiDeviceResources extends ApiLinkedThirdResources<DeviceRest,Devic
 					throw new TechnicalException(e);
 				}
 				break;
-			case EXECUTE:
+			case "execute":
 				try {
 					result = execute(device, args);
 				} catch (Exception e) {

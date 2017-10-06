@@ -12,8 +12,14 @@ import org.jarvis.main.model.parser.IAimlCategory;
 import org.jarvis.main.model.transform.IDebugTable;
 import org.jarvis.main.model.transform.ITransformedItem;
 
+/**
+ * DebugTableImpl
+ */
 public class DebugTableImpl implements IDebugTable {
 
+	/**
+	 * instance
+	 */
 	public static IDebugTable instance = new DebugTableImpl();
 
 	private List<List<IAimlCategory>> listTableCats = new ArrayList<List<IAimlCategory>>();

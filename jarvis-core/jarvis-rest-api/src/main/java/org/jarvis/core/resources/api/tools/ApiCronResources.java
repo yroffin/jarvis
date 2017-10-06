@@ -11,8 +11,8 @@ import javax.ws.rs.Produces;
 
 import org.common.core.exception.TechnicalException;
 import org.common.core.exception.TechnicalNotFoundException;
-import org.jarvis.core.model.bean.scenario.TriggerBean;
 import org.jarvis.core.model.bean.tools.CronBean;
+import org.jarvis.core.model.bean.trigger.TriggerBean;
 import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.model.rest.tools.CronRest;
 import org.jarvis.core.resources.api.ApiResources;
@@ -27,7 +27,6 @@ import org.jarvis.core.services.CoreEventDaemon;
 import org.jarvis.core.services.CoreSunsetSunrise;
 import org.jarvis.core.services.CoreThreadPoolTaskScheduler;
 import org.common.core.type.GenericMap;
-import org.jarvis.core.type.TaskType;
 import org.jarvis.core.type.TriggerType;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,12 +106,12 @@ public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 	}
 
 	@Override
-	public GenericValue doRealTask(CronBean bean, GenericMap args, TaskType taskType) throws TechnicalException {
+	public GenericValue doRealTask(CronBean bean, GenericMap args, String taskType) throws TechnicalException {
 		GenericMap result;
 		switch(taskType) {
-			case TOGGLE:
+			case "toggle":
 				return doToggle(bean, args);
-			case TEST:
+			case "test":
 				try {
 					return doTest(bean);
 				} catch (InterruptedException e) {

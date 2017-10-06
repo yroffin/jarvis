@@ -32,12 +32,15 @@
     <Console name="Console" target="SYSTEM_OUT">
       <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %l - %msg%n"/>
     </Console>
-    <Console name="ConsoleBpmn" target="SYSTEM_ERR">
+    <Console name="ConsoleBpmn" target="SYSTEM_OUT">
       <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %l - %msg%n"/>
     </Console>
   </Appenders>
   <Loggers>
-  	<Logger name="org.camunda" level="debug" additivity="false">
+  	<Logger name="org.jarvis.core.bpm" level="info" additivity="false">
+      <AppenderRef ref="RollingBpmFile"/>
+    </Logger>
+  	<Logger name="org.camunda" level="info" additivity="false">
       <AppenderRef ref="ConsoleBpmn"/>
       <AppenderRef ref="RollingBpmFile"/>
     </Logger>

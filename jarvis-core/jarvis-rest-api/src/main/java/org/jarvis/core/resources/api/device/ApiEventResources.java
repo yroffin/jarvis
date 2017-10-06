@@ -16,10 +16,15 @@
 
 package org.jarvis.core.resources.api.device;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
+import org.camunda.bpm.engine.RuntimeService;
 import org.common.core.exception.TechnicalException;
+import org.common.core.type.GenericMap;
 import org.jarvis.core.model.bean.device.EventBean;
 import org.jarvis.core.model.rest.device.EventRest;
 import org.jarvis.core.resources.api.ApiResources;
@@ -29,8 +34,6 @@ import org.jarvis.core.resources.api.ResourceDefaultPostListenerImpl;
 import org.jarvis.core.resources.api.ResourcePostListener;
 import org.jarvis.core.resources.api.mapper.ApiMapper;
 import org.jarvis.core.services.CoreEventDaemon;
-import org.common.core.type.GenericMap;
-import org.jarvis.core.type.TaskType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -47,6 +50,9 @@ import spark.Response;
 @Component
 @Declare(resource=ApiMapper.EVENT_RESOURCE, summary="Event resource", rest=EventRest.class)
 public class ApiEventResources extends ApiResources<EventRest,EventBean> {
+
+	@Autowired
+	RuntimeService runtimeService;
 
 	@Autowired
 	CoreEventDaemon coreEventDaemon;
@@ -70,7 +76,15 @@ public class ApiEventResources extends ApiResources<EventRest,EventBean> {
 					throw new TechnicalException(e);
 				}
 			} else {
-				coreEventDaemon.handle(mapRestToBean(event));
+				/**
+				 * sync call
+				 */
+				/**
+				 * start message processus
+				 */
+				Map<String, Object> variables = new HashMap<String, Object>();
+				variables.put("message", event);
+				runtimeService.startProcessInstanceByMessage("Message_MQTT", variables);
 			}
 		}
 
@@ -86,7 +100,7 @@ public class ApiEventResources extends ApiResources<EventRest,EventBean> {
 	}
 
 	@Override
-	public GenericValue doRealTask(EventBean Event, GenericMap args, TaskType taskType) throws TechnicalException {
+	public GenericValue doRealTask(EventBean Event, GenericMap args, String taskType) throws TechnicalException {
 		throw new TechnicalException("Not implemented");
 	}
 }

@@ -165,11 +165,10 @@ public class CypherRestClient extends AbstractJerseyClient {
 		/**
 		 * resources
 		 */
-		resources.add("BlockBean");
+		resources.add("ProcessBean");
 		resources.add("CommandBean");
 		resources.add("EventBean");
 		resources.add("DeviceBean");
-		resources.add("ScenarioBean");
 		resources.add("ScriptPluginBean");
 		resources.add("TriggerBean");
 		resources.add("ViewBean");

@@ -24,13 +24,14 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
 import org.common.core.exception.TechnicalException;
+import org.common.core.type.GenericMap;
 import org.jarvis.core.model.bean.device.DeviceBean;
-import org.jarvis.core.model.bean.scenario.ScenarioBean;
-import org.jarvis.core.model.bean.scenario.TriggerBean;
 import org.jarvis.core.model.bean.tools.CronBean;
+import org.jarvis.core.model.bean.process.ProcessBean;
+import org.jarvis.core.model.bean.trigger.TriggerBean;
 import org.jarvis.core.model.rest.GenericEntity;
-import org.jarvis.core.model.rest.scenario.TriggerRest;
 import org.jarvis.core.model.rest.tools.CronRest;
+import org.jarvis.core.model.rest.trigger.TriggerRest;
 import org.jarvis.core.resources.api.ApiLinkedResources;
 import org.jarvis.core.resources.api.Declare;
 import org.jarvis.core.resources.api.DeclareHrefResource;
@@ -39,14 +40,12 @@ import org.jarvis.core.resources.api.GenericValue;
 import org.jarvis.core.resources.api.ResourceDefaultPostListenerImpl;
 import org.jarvis.core.resources.api.ResourcePostListener;
 import org.jarvis.core.resources.api.href.ApiHrefDeviceTriggerResources;
-import org.jarvis.core.resources.api.href.ApiHrefScenarioTriggerResources;
+import org.jarvis.core.resources.api.href.ApiHrefProcessTriggerResources;
 import org.jarvis.core.resources.api.href.ApiHrefTriggerCronResources;
 import org.jarvis.core.resources.api.mapper.ApiMapper;
-import org.jarvis.core.resources.api.scenario.ApiScenarioResources;
+import org.jarvis.core.resources.api.process.ApiProcessResources;
 import org.jarvis.core.resources.api.tools.ApiCronResources;
 import org.jarvis.core.services.CoreEventDaemon;
-import org.common.core.type.GenericMap;
-import org.jarvis.core.type.TaskType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -97,10 +96,10 @@ public class ApiTriggerResources extends ApiLinkedResources<TriggerRest,TriggerB
 	ApiHrefDeviceTriggerResources apiHrefDeviceTriggerResources;
 	
 	@Autowired
-	ApiScenarioResources apiScenarioResources;
+	ApiProcessResources apiProcessResources;
 
 	@Autowired
-	ApiHrefScenarioTriggerResources apiHrefDeviceScenarioResources;
+	ApiHrefProcessTriggerResources apiHrefProcessTriggerResources;
 
 	/**
 	 * constructor
@@ -125,11 +124,11 @@ public class ApiTriggerResources extends ApiLinkedResources<TriggerRest,TriggerB
 					}
 				}
 			}
-			trigger.scenarii = new ArrayList<>();
-			for(ScenarioBean scenario : apiScenarioResources.doFindAllBean()) {
-				for(GenericEntity href : apiHrefDeviceScenarioResources.findAll(scenario)) {
+			trigger.processes = new ArrayList<>();
+			for(ProcessBean process : apiProcessResources.doFindAllBean()) {
+				for(GenericEntity href : apiHrefProcessTriggerResources.findAll(process)) {
 					if(href.id.equals(trigger.id)) {
-						trigger.scenarii.add(apiScenarioResources.mapBeanToRest(scenario));
+						trigger.processes.add(apiProcessResources.mapBeanToRest(process));
 					}
 				}
 			}
@@ -201,10 +200,10 @@ public class ApiTriggerResources extends ApiLinkedResources<TriggerRest,TriggerB
 	}
 
 	@Override
-	public GenericValue doRealTask(TriggerBean trigger, GenericMap args, TaskType taskType) throws TechnicalException {
+	public GenericValue doRealTask(TriggerBean trigger, GenericMap args, String taskType) throws TechnicalException {
 		GenericMap result = args;
 		switch(taskType) {
-			case EXECUTE:
+			case "execute":
 				try {
 					return new GenericValue(mapper.writeValueAsString(execute(trigger, result)));
 				} catch (JsonProcessingException e) {

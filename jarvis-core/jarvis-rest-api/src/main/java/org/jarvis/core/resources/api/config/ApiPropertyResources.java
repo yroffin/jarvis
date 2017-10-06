@@ -27,7 +27,6 @@ import org.jarvis.core.resources.api.Declare;
 import org.jarvis.core.resources.api.GenericValue;
 import org.jarvis.core.resources.api.mapper.ApiMapper;
 import org.common.core.type.GenericMap;
-import org.jarvis.core.type.TaskType;
 import org.springframework.stereotype.Component;
 
 import io.swagger.annotations.Api;
@@ -56,7 +55,7 @@ public class ApiPropertyResources extends ApiResources<PropertyRest,PropertyBean
 	}
 
 	@Override
-	public GenericValue doRealTask(PropertyBean bean, GenericMap args, TaskType taskType) throws TechnicalException {
-		return null;
+	public GenericValue doRealTask(PropertyBean bean, GenericMap args, String taskType) throws TechnicalException {
+		return new GenericValue("{}");
 	}
 }

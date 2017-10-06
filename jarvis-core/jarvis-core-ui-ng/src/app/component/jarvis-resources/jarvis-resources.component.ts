@@ -34,10 +34,9 @@ import { JarvisDataDeviceService } from '../../service/jarvis-data-device.servic
 import { JarvisDataViewService } from '../../service/jarvis-data-view.service';
 import { JarvisDataPluginService } from '../../service/jarvis-data-plugin.service';
 import { JarvisDataCommandService } from '../../service/jarvis-data-command.service';
+import { JarvisDataProcessService } from '../../service/jarvis-data-process.service';
 import { JarvisDataTriggerService } from '../../service/jarvis-data-trigger.service';
 import { JarvisDataCronService } from '../../service/jarvis-data-cron.service';
-import { JarvisDataScenarioService } from '../../service/jarvis-data-scenario.service';
-import { JarvisDataBlockService } from '../../service/jarvis-data-block.service';
 import { JarvisDataConfigurationService } from '../../service/jarvis-data-configuration.service';
 import { JarvisDataPropertyService } from '../../service/jarvis-data-property.service';
 import { JarvisDataConnectorService } from '../../service/jarvis-data-connector.service';
@@ -84,8 +83,7 @@ export class JarvisResourcesComponent implements OnInit {
     private _jarvisDataPluginService: JarvisDataPluginService,
     private _jarvisDataCommandService: JarvisDataCommandService,
     private _jarvisDataTriggerService: JarvisDataTriggerService,
-    private _jarvisDataScenarioService: JarvisDataScenarioService,
-    private _jarvisDataBlockService: JarvisDataBlockService,
+    private _jarvisDataProcessService: JarvisDataProcessService,
     private _jarvisDataConfigurationService: JarvisDataConfigurationService,
     private _jarvisDataPropertyService: JarvisDataPropertyService,
     private _jarvisDataConnectorService: JarvisDataConnectorService,
@@ -124,11 +122,8 @@ export class JarvisResourcesComponent implements OnInit {
       if (navigationEnd.url === '/connectors') {
         this.load('connectors', this._jarvisDataConnectorService);
       }
-      if (navigationEnd.url === '/blocks') {
-        this.load('blocks', this._jarvisDataBlockService);
-      }
-      if (navigationEnd.url === '/scenarios') {
-        this.load('scenarios', this._jarvisDataScenarioService);
+      if (navigationEnd.url === '/processes') {
+        this.load('processes', this._jarvisDataProcessService);
       }
       if (navigationEnd.url === '/devices') {
         this.load('devices', this._jarvisDataDeviceService);

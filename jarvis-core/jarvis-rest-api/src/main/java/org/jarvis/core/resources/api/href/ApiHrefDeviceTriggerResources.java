@@ -21,7 +21,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import org.jarvis.core.model.bean.device.DeviceBean;
-import org.jarvis.core.model.bean.scenario.TriggerBean;
+import org.jarvis.core.model.bean.trigger.TriggerBean;
 import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.resources.api.mapper.ApiHrefMapper;
 import org.springframework.stereotype.Component;

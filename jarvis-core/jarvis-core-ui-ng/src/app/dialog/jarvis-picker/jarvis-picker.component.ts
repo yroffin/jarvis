@@ -28,12 +28,11 @@ import { JarvisDataTriggerService } from '../../service/jarvis-data-trigger.serv
 import { JarvisDataCronService } from '../../service/jarvis-data-cron.service';
 import { JarvisDataCommandService } from '../../service/jarvis-data-command.service';
 import { JarvisDataPluginService } from '../../service/jarvis-data-plugin.service';
-import { JarvisDataBlockService } from '../../service/jarvis-data-block.service';
-import { JarvisDataScenarioService } from '../../service/jarvis-data-scenario.service';
 import { JarvisDataNotificationService } from '../../service/jarvis-data-notification.service';
 import { JarvisDataDatasourceService } from '../../service/jarvis-data-datasource.service';
 import { JarvisDataConnectorService } from '../../service/jarvis-data-connector.service';
 import { JarvisDataMeasureService } from '../../service/jarvis-data-measure.service';
+import { JarvisDataProcessService } from '../../service/jarvis-data-process.service';
 
 /**
  * data model
@@ -64,9 +63,8 @@ export class JarvisPickerComponent implements OnInit {
     private _triggerService: JarvisDataTriggerService,
     private _pluginService: JarvisDataPluginService,
     private _commandService: JarvisDataCommandService,
+    private _processService: JarvisDataProcessService,
     private _cronService: JarvisDataCronService,
-    private _blockService: JarvisDataBlockService,
-    private _scenarioService: JarvisDataScenarioService,
     private _datasourceService: JarvisDataDatasourceService,
     private _connectorService: JarvisDataConnectorService,
     private _measureService: JarvisDataMeasureService,
@@ -89,6 +87,9 @@ export class JarvisPickerComponent implements OnInit {
     if (this.resource.service === 'connectors') {
       service = this._connectorService;
     }
+    if (this.resource.service === 'processes') {
+      service = this._processService;
+    }
     if (this.resource.service === 'crons') {
       service = this._cronService;
     }
@@ -106,12 +107,6 @@ export class JarvisPickerComponent implements OnInit {
     }
     if (this.resource.service === 'commands') {
       service = this._commandService;
-    }
-    if (this.resource.service === 'blocks') {
-      service = this._blockService;
-    }
-    if (this.resource.service === 'scenarios') {
-      service = this._scenarioService;
     }
     if (this.resource.service === 'datasources') {
       service = this._datasourceService;

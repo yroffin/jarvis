@@ -40,7 +40,6 @@ import org.jarvis.core.resources.api.device.ApiDeviceResources;
 import org.jarvis.core.resources.api.href.ApiHrefViewResources;
 import org.jarvis.core.resources.api.mapper.ApiMapper;
 import org.common.core.type.GenericMap;
-import org.jarvis.core.type.TaskType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -93,9 +92,9 @@ public class ApiViewResources extends ApiLinkedResources<ViewRest, ViewBean, Dev
 	}
 
 	@Override
-	public GenericValue doRealTask(GenericMap args, TaskType taskType) {
+	public GenericValue doRealTask(GenericMap args, String taskType) {
 		switch (taskType) {
-		case GET:
+		case "get":
 			try {
 				return new GenericValue(get(args));
 			} catch (Exception e) {
@@ -108,9 +107,9 @@ public class ApiViewResources extends ApiLinkedResources<ViewRest, ViewBean, Dev
 	}
 
 	@Override
-	public GenericValue doRealTask(ViewBean bean, GenericMap args, TaskType taskType) throws TechnicalException {
+	public GenericValue doRealTask(ViewBean bean, GenericMap args, String taskType) throws TechnicalException {
 		switch (taskType) {
-		case GET:
+		case "get":
 			try {
 				return new GenericValue(get(bean, args));
 			} catch (Exception e) {

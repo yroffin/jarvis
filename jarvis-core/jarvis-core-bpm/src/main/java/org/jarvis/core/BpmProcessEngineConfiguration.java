@@ -1,3 +1,19 @@
+/**
+ *  Copyright 2017 Yannick Roffin
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package org.jarvis.core;
 
 import javax.sql.DataSource;
@@ -10,6 +26,13 @@ import org.camunda.bpm.engine.spring.ProcessEngineFactoryBean;
 import org.camunda.bpm.engine.spring.SpringProcessEngineConfiguration;
 import org.camunda.bpm.engine.spring.application.SpringProcessApplication;
 import org.camunda.bpm.engine.spring.container.ManagedProcessEngineFactoryBean;
+import org.camunda.bpm.extension.reactor.CamundaReactor;
+import org.camunda.bpm.extension.reactor.bus.CamundaEventBus;
+import org.jarvis.core.bpm.BpmGenericExecutionListener;
+import org.jarvis.core.bpm.listener.BpmServiceTaskEndExecutionListener;
+import org.jarvis.core.bpm.listener.BpmServiceTaskStartExecutionListener;
+import org.jarvis.core.bpm.listener.BpmStartEventEndExecutionListener;
+import org.jarvis.core.bpm.listener.BpmStartEventStartExecutionListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -90,7 +113,9 @@ public class BpmProcessEngineConfiguration {
 		config.setDatabaseSchemaUpdate("true");
 		config.setHistory("audit");
 		config.setJobExecutorActivate(true);
-
+		
+		config.getProcessEnginePlugins().add(CamundaReactor.plugin());
+		
 		return config;
 	}
 
@@ -137,7 +162,17 @@ public class BpmProcessEngineConfiguration {
 	 */
 	@Bean
 	public SpringProcessApplication springProcessApplication(ProcessEngine processEngine) {
+		/**
+		 * register all listener
+		 */
+		CamundaEventBus eventBus = CamundaReactor.eventBus();
+		eventBus.register(new BpmGenericExecutionListener());
+		eventBus.register(new BpmServiceTaskStartExecutionListener());
+		eventBus.register(new BpmServiceTaskEndExecutionListener());
+		eventBus.register(new BpmStartEventStartExecutionListener());
+		eventBus.register(new BpmStartEventEndExecutionListener());
+
 		SpringProcessApplication processApplication = new SpringProcessApplication();
-		return processApplication;
+	    return processApplication;
 	}
 }

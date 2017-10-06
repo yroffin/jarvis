@@ -59,6 +59,13 @@
 			<groupId>org.yroffin.jarvis</groupId>
 			<artifactId>jarvis-test-tools</artifactId>
 		</dependency>
+
+		<!-- camunda -->
+		<dependency>
+			<groupId>org.camunda.bpm</groupId>
+			<artifactId>camunda-engine</artifactId>
+		</dependency>
+
 		<!-- external dependencies -->
 		<dependency>
 			<groupId>org.eclipse.paho</groupId>

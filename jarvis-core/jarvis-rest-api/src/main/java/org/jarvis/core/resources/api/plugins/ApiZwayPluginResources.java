@@ -26,7 +26,6 @@ import org.jarvis.core.model.rest.plugin.ZwayRest;
 import org.jarvis.core.resources.api.ApiResources;
 import org.jarvis.core.resources.api.GenericValue;
 import org.common.core.type.GenericMap;
-import org.jarvis.core.type.TaskType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,7 +95,7 @@ public class ApiZwayPluginResources extends ApiResources<ZwayRest,ZwayBean> {
 	 * default task
 	 */
 	@Override
-	public GenericValue doRealTask(ZwayBean bean, GenericMap args, TaskType taskType) throws TechnicalException {
+	public GenericValue doRealTask(ZwayBean bean, GenericMap args, String taskType) throws TechnicalException {
 		return new GenericValue(new GenericMap());
 	}
 }

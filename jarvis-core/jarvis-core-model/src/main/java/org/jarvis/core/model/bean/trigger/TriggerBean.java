@@ -1,4 +1,4 @@
-package org.jarvis.core.model.bean.scenario;
+package org.jarvis.core.model.bean.trigger;
 
 import org.jarvis.core.model.bean.GenericBean;
 

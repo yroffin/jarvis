@@ -43,7 +43,6 @@ import org.jarvis.core.services.shell.PluginShellService;
 import org.jarvis.core.services.slack.PluginSlackService;
 import org.jarvis.core.services.zway.PluginZWayService;
 import org.common.core.type.GenericMap;
-import org.jarvis.core.type.TaskType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -118,17 +117,17 @@ public class ApiCommandResources extends ApiLinkedResources<CommandRest,CommandB
 	 * @return String
 	 */
 	@Override
-	public GenericValue doRealTask(CommandBean command, GenericMap args, TaskType taskType) throws TechnicalException {
+	public GenericValue doRealTask(CommandBean command, GenericMap args, String taskType) throws TechnicalException {
 		GenericMap result = args;
 		switch(taskType) {
-			case EXECUTE:
+			case "execute":
 				try {
 					return new GenericValue(mapper.writeValueAsString(execute(command, result)));
 				} catch (JsonProcessingException e) {
 					logger.error("Error {}", e);
 					throw new TechnicalException(e);
 				}
-			case TEST:
+			case "test":
 				try {
 					return new GenericValue(mapper.writeValueAsString(test(command, result)));
 				} catch (JsonProcessingException e) {

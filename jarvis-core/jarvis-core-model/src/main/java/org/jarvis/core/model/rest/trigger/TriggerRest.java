@@ -14,12 +14,13 @@
  *   limitations under the License.
  */
 
-package org.jarvis.core.model.rest.scenario;
+package org.jarvis.core.model.rest.trigger;
 
 import java.util.List;
 
 import org.jarvis.core.model.rest.GenericEntity;
 import org.jarvis.core.model.rest.device.DeviceRest;
+import org.jarvis.core.model.rest.process.ProcessRest;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -45,10 +46,10 @@ public class TriggerRest extends GenericEntity {
 	@JsonProperty("devices")
 	public List<DeviceRest> devices;
 	/**
-	 * linked scenarii
+	 * linked processes
 	 */
-	@JsonProperty("scenarii")
-	public List<ScenarioRest> scenarii;
+	@JsonProperty("processes")
+	public List<ProcessRest> processes;
 	/**
 	 * linked topic
 	 */

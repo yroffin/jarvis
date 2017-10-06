@@ -49,7 +49,6 @@ import org.jarvis.core.resources.api.href.ApiHrefConnectorResources;
 import org.jarvis.core.resources.api.href.ApiHrefMeasureResources;
 import org.jarvis.core.resources.api.mapper.ApiMapper;
 import org.common.core.type.GenericMap;
-import org.jarvis.core.type.TaskType;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -108,10 +107,10 @@ public class ApiDataSourceResources extends ApiLinkedResources<DataSourceRest,Da
 	}
 
 	@Override
-	public GenericValue doRealTask(DataSourceBean bean, GenericMap args, TaskType taskType) {
+	public GenericValue doRealTask(DataSourceBean bean, GenericMap args, String taskType) {
 		GenericMap result;
 		switch(taskType) {
-			case EXECUTE:
+			case "execute":
 				return execute(bean, args);
 			default:
 				result = new GenericMap();

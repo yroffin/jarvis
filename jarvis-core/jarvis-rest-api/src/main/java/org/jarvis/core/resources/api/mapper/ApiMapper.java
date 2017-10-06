@@ -23,13 +23,9 @@ public abstract class ApiMapper {
 	 */
 	public static final String COMMAND_RESOURCE = "commands";
 	/**
-	 * scenarios
+	 * processes
 	 */
-	public static final String SCENARIO_RESOURCE = "scenarios";
-	/**
-	 * blocks
-	 */
-	public static final String BLOCK_RESOURCE = "blocks";
+	public static final String PROCESS_RESOURCE = "processes";
 	/**
 	 * views
 	 */
@@ -90,6 +86,7 @@ public abstract class ApiMapper {
 	protected static final String MEASURE = ":measure";
 	protected static final String ID = ":id";
 	protected static final String BLOCK = ":block";
+	protected static final String PROCESS = ":process";
 	protected static final String PARAM = ":param";
 	protected static final String ASYNC = ":async";
 	

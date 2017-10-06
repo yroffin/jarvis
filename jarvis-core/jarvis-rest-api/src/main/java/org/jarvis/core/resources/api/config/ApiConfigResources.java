@@ -32,7 +32,6 @@ import org.jarvis.core.resources.api.mapper.ApiMapper;
 import org.jarvis.core.resources.api.tools.ApiCronResources;
 import org.jarvis.core.services.CoreEventDaemon;
 import org.common.core.type.GenericMap;
-import org.jarvis.core.type.TaskType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -87,7 +86,7 @@ public class ApiConfigResources extends ApiResources<ConfigRest,ConfigBean> {
 	}
 
 	@Override
-	public GenericValue doRealTask(ConfigBean bean, GenericMap args, TaskType taskType) throws TechnicalException {
-		return null;
+	public GenericValue doRealTask(ConfigBean bean, GenericMap args, String taskType) throws TechnicalException {
+		return new GenericValue("{}");
 	}
 }

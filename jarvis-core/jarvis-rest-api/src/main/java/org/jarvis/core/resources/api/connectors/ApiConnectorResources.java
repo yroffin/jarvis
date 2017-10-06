@@ -41,7 +41,6 @@ import org.jarvis.core.resources.api.ResourceDefaultPostListenerImpl;
 import org.jarvis.core.resources.api.ResourcePostListener;
 import org.jarvis.core.resources.api.mapper.ApiMapper;
 import org.common.core.type.GenericMap;
-import org.jarvis.core.type.TaskType;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Component;
 
@@ -102,10 +101,10 @@ public class ApiConnectorResources extends ApiResources<ConnectorRest,ConnectorB
 	}
 
 	@Override
-	public GenericValue doRealTask(GenericMap args, TaskType taskType) throws TechnicalException {
+	public GenericValue doRealTask(GenericMap args, String taskType) throws TechnicalException {
 		GenericMap result;
 		switch(taskType) {
-			case REGISTER:
+			case "register":
 				result = register(args);
 				break;
 			default:
@@ -180,10 +179,10 @@ public class ApiConnectorResources extends ApiResources<ConnectorRest,ConnectorB
 	}
 
 	@Override
-	public GenericValue doRealTask(ConnectorBean bean, GenericMap args, TaskType taskType) throws TechnicalException {
+	public GenericValue doRealTask(ConnectorBean bean, GenericMap args, String taskType) throws TechnicalException {
 		GenericMap result;
 		switch(taskType) {
-			case PING:
+			case "ping":
 			try {
 				result = ping(bean, args, new GenericMap());
 			} catch (TechnicalNotFoundException | TechnicalHttpException e) {

@@ -43,8 +43,6 @@ import org.jarvis.core.resources.api.device.ApiTriggerResources;
 import org.jarvis.core.resources.api.plugins.ApiCommandResources;
 import org.jarvis.core.resources.api.plugins.ApiScriptPluginResources;
 import org.jarvis.core.resources.api.plugins.ApiZwayPluginResources;
-import org.jarvis.core.resources.api.scenario.ApiBlockResources;
-import org.jarvis.core.resources.api.scenario.ApiScenarioResources;
 import org.jarvis.core.resources.api.tools.ApiCronResources;
 import org.jarvis.core.resources.api.tools.ApiNotificationResources;
 import org.jarvis.core.resources.api.tools.ApiToolResources;
@@ -117,16 +115,10 @@ public class CoreServerDaemon {
 	CoreMqttSystem coreMqttSystem;
 
 	@Autowired
-	ApiScenarioResources apiScenarioResources;
-
-	@Autowired
 	ApiDataSourceResources apiDataSourceResources;
 
 	@Autowired
 	ApiZwayPluginResources apiZwayPluginResources;
-
-	@Autowired
-	ApiBlockResources apiBlockResources;
 
 	@Autowired
 	ApiDeviceResources apiDeviceResources;
@@ -163,7 +155,7 @@ public class CoreServerDaemon {
 
 	@Autowired
 	ApiPropertyResources apiPropertyResources;
-
+	
 	protected ObjectMapper mapper = new ObjectMapper();
 
 	/**
@@ -346,11 +338,6 @@ public class CoreServerDaemon {
 		});
 
 		spark.Spark.after("/*", new JarvisAccessLogFilter());
-
-		/**
-		 * init trigger subscription
-		 */
-		coreEventDaemon.triggers();
 	}
 
 	/**

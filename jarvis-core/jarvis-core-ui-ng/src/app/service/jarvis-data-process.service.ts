@@ -26,25 +26,23 @@ import { JarvisDataLinkedResource } from './jarvis-data-linked-resource';
 /**
  * data model
  */
-import { BlockBean } from './../model/block-bean';
-import { PluginBean } from './../model/plugin-bean';
+import { ProcessBean } from './../model/code/process-bean';
+import { TriggerBean } from './../model/trigger-bean';
 
 @Injectable()
-export class JarvisDataBlockService extends JarvisDataCoreResource<BlockBean> implements JarvisDefaultResource<BlockBean> {
+export class JarvisDataProcessService extends JarvisDataCoreResource<ProcessBean> implements JarvisDefaultResource<ProcessBean> {
 
-    public allLinkedBlock: JarvisDefaultLinkResource<BlockBean>;
-    public allLinkedPlugin: JarvisDefaultLinkResource<PluginBean>;
+    public allLinkedTrigger: JarvisDefaultLinkResource<TriggerBean>;
 
     constructor(
         private _http: Http,
         private _configuration: JarvisConfigurationService
     ) {
-        super(_configuration, _configuration.ServerWithApiUrl + 'blocks', _http);
+        super(_configuration, _configuration.ServerWithApiUrl + 'processes', _http);
 
         /**
          * map linked elements
          */
-        this.allLinkedBlock = new JarvisDataLinkedResource<BlockBean>(this.actionUrl, '/blocks', _http);
-        this.allLinkedPlugin = new JarvisDataLinkedResource<PluginBean>(this.actionUrl, '/plugins/scripts', _http);
+        this.allLinkedTrigger = new JarvisDataLinkedResource<TriggerBean>(this.actionUrl, '/triggers', _http);
     }
 }

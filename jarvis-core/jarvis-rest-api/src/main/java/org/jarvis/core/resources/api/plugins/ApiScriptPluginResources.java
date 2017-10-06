@@ -38,7 +38,6 @@ import org.jarvis.core.resources.api.GenericValue;
 import org.jarvis.core.resources.api.href.ApiHrefPluginCommandResources;
 import org.jarvis.core.resources.api.mapper.ApiMapper;
 import org.common.core.type.GenericMap;
-import org.jarvis.core.type.TaskType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,10 +87,10 @@ public class ApiScriptPluginResources extends ApiLinkedResources<ScriptPluginRes
 	 * all script have two phase : a render (data) phase and an execute (action) phase
 	 */
 	@Override
-	public GenericValue doRealTask(ScriptPluginBean bean, GenericMap args, TaskType taskType) throws TechnicalException {
+	public GenericValue doRealTask(ScriptPluginBean bean, GenericMap args, String taskType) throws TechnicalException {
 		GenericMap result;
 		switch(taskType) {
-			case RENDER:
+			case "render":
 				try {
 					result = renderOrExecute(null, bean, args, new GenericMap(), true);
 				} catch (TechnicalNotFoundException e) {
@@ -99,7 +98,7 @@ public class ApiScriptPluginResources extends ApiLinkedResources<ScriptPluginRes
 					throw new TechnicalException(e);
 				}
 				break;
-			case EXECUTE:
+			case "execute":
 				try {
 					result = renderOrExecute(null, bean, args, new GenericMap(), false);
 				} catch (TechnicalNotFoundException e) {

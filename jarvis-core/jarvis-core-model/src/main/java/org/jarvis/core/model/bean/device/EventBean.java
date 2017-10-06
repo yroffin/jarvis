@@ -23,8 +23,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 /**
  * Event object
  */
+@SuppressWarnings("serial")
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class EventBean extends GenericBean {
+public class EventBean extends GenericBean implements java.io.Serializable {
 	/**
 	 * resource trigger
 	 */

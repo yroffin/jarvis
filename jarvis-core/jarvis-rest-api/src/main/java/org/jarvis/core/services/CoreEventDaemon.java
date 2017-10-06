@@ -17,26 +17,19 @@
 package org.jarvis.core.services;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import javax.annotation.PostConstruct;
 
-import org.common.core.exception.TechnicalNotFoundException;
-import org.jarvis.core.model.bean.device.DeviceBean;
+import org.camunda.bpm.engine.RuntimeService;
 import org.jarvis.core.model.bean.device.EventBean;
-import org.jarvis.core.model.bean.scenario.ScenarioBean;
-import org.jarvis.core.model.bean.scenario.TriggerBean;
-import org.jarvis.core.model.rest.GenericEntity;
+import org.jarvis.core.model.bean.trigger.TriggerBean;
 import org.jarvis.core.resources.api.device.ApiDeviceResources;
 import org.jarvis.core.resources.api.device.ApiTriggerResources;
 import org.jarvis.core.resources.api.href.ApiHrefDeviceTriggerResources;
-import org.jarvis.core.resources.api.href.ApiHrefScenarioBlockResources;
-import org.jarvis.core.resources.api.href.ApiHrefScenarioTriggerResources;
-import org.jarvis.core.resources.api.scenario.ApiBlockResources;
-import org.jarvis.core.resources.api.scenario.ApiScenarioResources;
-import org.common.core.type.GenericMap;
-import org.jarvis.core.type.TaskType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +50,7 @@ public class CoreEventDaemon {
 
 	@Autowired
 	Environment env;
-	
+
 	@Autowired
 	ApiDeviceResources apiDeviceResources;
 	
@@ -65,22 +58,13 @@ public class CoreEventDaemon {
 	ApiHrefDeviceTriggerResources apiHrefDeviceTriggerResources;
 
 	@Autowired
-	ApiScenarioResources apiScenarioResources;
-
-	@Autowired
-	ApiHrefScenarioBlockResources apiHrefScenarioBlockResources;
-
-	@Autowired
-	ApiBlockResources apiBlockResources;
-
-	@Autowired
-	ApiHrefScenarioTriggerResources apiHrefScenarioTriggerResources;
-
+	CoreStatistics coreStatistics;
+	
 	@Autowired
 	ApiTriggerResources apiTriggerResources;
 
 	@Autowired
-	CoreStatistics coreStatistics;
+	RuntimeService runtimeService;
 	
 	private List<MqttTrigger> triggers = new ArrayList<MqttTrigger>();
 	private InnerThread inner;
@@ -192,13 +176,6 @@ public class CoreEventDaemon {
 	}
 	
 	/**
-	 * @param event
-	 */
-	public void handle(EventBean event) {
-		inner.handle(event);
-	}
-
-	/**
 	 * is inner thread active ?
 	 * @return boolean
 	 */
@@ -222,7 +199,12 @@ public class CoreEventDaemon {
 				while ((event  = linked.take()) != null) {
 					logger.warn("[EVENT] {}/{}", event.toString(), linked.size());
 					try {
-						handle(event);
+						/**
+						 * start message processus
+						 */
+						Map<String, Object> variables = new HashMap<String, Object>();
+						variables.put("message", event);
+						runtimeService.startProcessInstanceByMessage("Message_MQTT", variables);
 					} catch (Exception e) {
 						logger.error("[EVENT] - Exception {}", e);
 					}
@@ -236,92 +218,5 @@ public class CoreEventDaemon {
 			interrupted = true;
 			logger.warn("[EVENT] - thread shutdown");
 		}
-
-		private void handle(EventBean event) {
-			/**
-			 * store event in stats
-			 */
-			coreStatistics.write(event);
-
-			int checkDevice = 0;
-			int checkScenario = 0;
-			
-			/**
-			 * execute it
-			 */
-			for(ScenarioBean scenario : scenarioToExecute(event)) {
-				try {
-					apiScenarioResources.doExecute(null,scenario.id, new GenericMap(), TaskType.EXECUTE);
-					checkScenario++;
-				} catch (TechnicalNotFoundException e) {
-					logger.warn(e.getMessage());
-				}
-			}
-
-			/**
-			 * execute it
-			 */
-			for(DeviceBean device : deviceToExecute(event)) {
-				try {
-					apiDeviceResources.doExecute(device.id, new GenericMap(), TaskType.EXECUTE);
-					checkDevice++;
-				} catch (TechnicalNotFoundException e) {
-					logger.warn(e.getMessage());
-				}
-			}
-
-			logger.warn("Trigger activate {} devices and  {} scenario", checkDevice, checkScenario);
-		}
-
-		/**
-		 * find scenario
-		 * @param event
-		 * @return
-		 */
-		private List<ScenarioBean> scenarioToExecute(EventBean event) {
-			List<ScenarioBean> scenarioToExecute = new ArrayList<ScenarioBean>();
-			/**
-			 * find any scenario with this trigger
-			 */
-			for(ScenarioBean sce : apiScenarioResources.doFindAllBean()) {
-				for(GenericEntity link : apiHrefScenarioTriggerResources.findAll(sce)) {
-					try {
-						if(event.trigger != null && event.trigger.equals(link.id)) {
-							apiTriggerResources.doGetByIdRest(link.id);
-							scenarioToExecute.add(sce);
-						}
-					} catch (TechnicalNotFoundException e) {
-						logger.warn(e.getMessage());
-					}
-				}
-			}
-			return scenarioToExecute;
-		}
-
-		/**
-		 * find device
-		 * @param event
-		 * @return
-		 */
-		private List<DeviceBean> deviceToExecute(EventBean event) {
-			List<DeviceBean> deviceToExecute = new ArrayList<DeviceBean>();
-			/**
-			 * find any scenario with this trigger
-			 */
-			for(DeviceBean deviceBean : apiDeviceResources.doFindAllBean()) {
-				for(GenericEntity link : apiHrefDeviceTriggerResources.findAll(deviceBean)) {
-					try {
-						if(event.trigger != null && event.trigger.equals(link.id)) {
-							apiTriggerResources.doGetByIdRest(link.id);
-							deviceToExecute.add(deviceBean);
-						}
-					} catch (TechnicalNotFoundException e) {
-						logger.warn(e.getMessage());
-					}
-				}
-			}
-			return deviceToExecute;
-		}
-		
 	}
 }

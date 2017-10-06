@@ -90,8 +90,7 @@ import { JarvisDataPropertyService } from './service/jarvis-data-property.servic
 import { JarvisDataConnectorService } from './service/jarvis-data-connector.service';
 import { JarvisDataNotificationService } from './service/jarvis-data-notification.service';
 import { JarvisDataCronService } from './service/jarvis-data-cron.service';
-import { JarvisDataScenarioService } from './service/jarvis-data-scenario.service';
-import { JarvisDataBlockService } from './service/jarvis-data-block.service';
+import { JarvisDataProcessService } from './service/jarvis-data-process.service';
 import { JarvisDataSnapshotService } from './service/jarvis-data-snapshot.service';
 import { JarvisDataViewService } from './service/jarvis-data-view.service';
 import { JarvisDataRawService } from './service/jarvis-data-raw.service';
@@ -110,8 +109,6 @@ import { JarvisResourcePluginComponent } from './component/jarvis-resource-plugi
 import { JarvisResourceCommandComponent } from './component/jarvis-resource-command/jarvis-resource-command.component';
 import { JarvisResourceTriggerComponent } from './component/jarvis-resource-trigger/jarvis-resource-trigger.component';
 import { JarvisResourceCronComponent } from './component/jarvis-resource-cron/jarvis-resource-cron.component';
-import { JarvisResourceScenarioComponent } from './component/jarvis-resource-scenario/jarvis-resource-scenario.component';
-import { JarvisResourceBlockComponent } from './component/jarvis-resource-block/jarvis-resource-block.component';
 import { JarvisResourceConfigurationComponent } from './component/jarvis-resource-configuration/jarvis-resource-configuration.component';
 import { JarvisResourceNotificationComponent } from './component/jarvis-resource-notification/jarvis-resource-notification.component';
 import { JarvisResourcePropertyComponent } from './component/jarvis-resource-property/jarvis-resource-property.component';
@@ -132,6 +129,7 @@ import { BrokerStore } from './store/broker.store';
 import { MessageStore } from './store/message.store';
 import { JarvisServerResourcesComponent } from './component/jarvis-server-resources/jarvis-server-resources.component';
 import { JarvisBrokerComponent } from './component/jarvis-broker/jarvis-broker.component';
+import { JarvisResourceProcessComponent } from './component/jarvis-resource-process/jarvis-resource-process.component';
 
 /**
  * default route definition
@@ -147,10 +145,8 @@ const appRoutes: Routes = [
   { path: 'triggers/:id', component: JarvisResourceTriggerComponent, canActivate: [ProfileGuard] },
   { path: 'crons', component: JarvisResourcesComponent, canActivate: [ProfileGuard, NavigationGuard], data: { resource: 'crons' } },
   { path: 'crons/:id', component: JarvisResourceCronComponent, canActivate: [ProfileGuard] },
-  { path: 'scenarios', component: JarvisResourcesComponent, canActivate: [ProfileGuard, NavigationGuard], data: { resource: 'scenarios' } },
-  { path: 'scenarios/:id', component: JarvisResourceScenarioComponent, canActivate: [ProfileGuard] },
-  { path: 'blocks', component: JarvisResourcesComponent, canActivate: [ProfileGuard, NavigationGuard], data: { resource: 'blocks' } },
-  { path: 'blocks/:id', component: JarvisResourceBlockComponent, canActivate: [ProfileGuard] },
+  { path: 'processes', component: JarvisResourcesComponent, canActivate: [ProfileGuard, NavigationGuard], data: { resource: 'processes' } },
+  { path: 'processes/:id', component: JarvisResourceProcessComponent, canActivate: [ProfileGuard] },
   { path: 'configurations', component: JarvisResourcesComponent, canActivate: [ProfileGuard, NavigationGuard], data: { resource: 'configurations' } },
   { path: 'configurations/:id', component: JarvisResourceConfigurationComponent, canActivate: [ProfileGuard] },
   { path: 'notifications', component: JarvisResourcesComponent, canActivate: [ProfileGuard, NavigationGuard], data: { resource: 'notifications' } },
@@ -191,8 +187,6 @@ const appRoutes: Routes = [
     JarvisResourceTriggerComponent,
     JarvisResourceConnectorComponent,
     JarvisResourceCronComponent,
-    JarvisResourceScenarioComponent,
-    JarvisResourceBlockComponent,
     JarvisResourceConfigurationComponent,
     JarvisResourceNotificationComponent,
     JarvisResourcePropertyComponent,
@@ -203,7 +197,8 @@ const appRoutes: Routes = [
     JarvisResourceDatasourceComponent,
     JarvisMeasureComponent,
     JarvisServerResourcesComponent,
-    JarvisBrokerComponent
+    JarvisBrokerComponent,
+    JarvisResourceProcessComponent
   ],
   entryComponents: [
     JarvisPickerComponent
@@ -292,8 +287,7 @@ const appRoutes: Routes = [
     JarvisDataConnectorService,
     JarvisDataCronService,
     JarvisDataNotificationService,
-    JarvisDataScenarioService,
-    JarvisDataBlockService,
+    JarvisDataProcessService,
     JarvisDataStoreService,
     JarvisDataRawService,
     JarvisDataViewService,
