@@ -19,24 +19,30 @@ package org.jarvis.core.bpm.listener;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.ExecutionListener;
 import org.camunda.bpm.extension.reactor.bus.CamundaSelector;
+import org.jarvis.core.bpm.BpmDeviceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * BpmServiceTaskStartExecutionListener
  */
-@CamundaSelector(type = "serviceTask", event = ExecutionListener.EVENTNAME_START)
-public class BpmServiceTaskStartExecutionListener extends BpmListener implements ExecutionListener {
-	protected Logger logger = LoggerFactory.getLogger(BpmServiceTaskStartExecutionListener.class);
+@CamundaSelector(type = "scriptTask", event = ExecutionListener.EVENTNAME_START)
+public class BpmScriptTaskStartExecutionListener extends BpmListener implements ExecutionListener {
+	protected Logger logger = LoggerFactory.getLogger(BpmScriptTaskStartExecutionListener.class);
 
 	@Override
 	public void notify(DelegateExecution execution) throws Exception {
-		logger.info("[ServiceTask:STR] {} {}\n\tVariables {}\n\tLocales {}", 
+		/**
+		 * fix process variables
+		 */
+		execution.setVariable("device", new BpmDeviceService());
+
+		logger.info("[ScripTask:STR] {} {}\n\tVariables {}\n\tLocales {}", 
 				execution.getCurrentActivityName(),
 				execution.getActivityInstanceId(),
 				execution.getVariables(),
 				execution.getVariablesLocal());
-		this.publish("/system/bpm/"+execution.getProcessDefinitionId()+"/service/"+execution.getActivityInstanceId()+"/start", execution.getVariableNames().toString());
+		this.publish("/system/bpm/"+execution.getProcessDefinitionId()+"/script/"+execution.getActivityInstanceId()+"/start", execution.getVariableNames().toString());
 	}
 
 }

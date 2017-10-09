@@ -35,6 +35,7 @@ import org.camunda.bpm.engine.RepositoryService;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.repository.Deployment;
 import org.camunda.bpm.engine.repository.DeploymentBuilder;
+import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.common.core.exception.TechnicalException;
 import org.common.core.exception.TechnicalNotFoundException;
 import org.common.core.type.GenericMap;
@@ -234,7 +235,8 @@ public class ApiProcessResources extends ApiLinkedResources<ProcessRest, Process
 	 * @return GenericValue
 	 */
 	private GenericValue execute(ProcessBean bean, GenericMap args) {
-		runtimeService.startProcessInstanceByKey(bean.bpmnId);
+		ProcessInstance process = runtimeService.startProcessInstanceByKey(bean.bpmnId);
+		logger.warn("Start of {} successfull", process.getProcessDefinitionId());
 		return new GenericValue(bean);
 	}
 

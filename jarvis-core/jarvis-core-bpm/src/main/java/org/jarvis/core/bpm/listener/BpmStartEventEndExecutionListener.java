@@ -26,13 +26,17 @@ import org.slf4j.LoggerFactory;
  * EndEvent
  */
 @CamundaSelector(type = "endEvent", event = ExecutionListener.EVENTNAME_END)
-public class BpmStartEventEndExecutionListener implements ExecutionListener {
+public class BpmStartEventEndExecutionListener extends BpmListener implements ExecutionListener {
 	protected Logger logger = LoggerFactory.getLogger(BpmStartEventEndExecutionListener.class);
 
 	@Override
 	public void notify(DelegateExecution execution) throws Exception {
-		logger.info("[EndEvent] {}", 
-				execution.getActivityInstanceId());
+		logger.info("[END] {} {}\n\tVariables {}\n\tLocales {}", 
+				execution.getCurrentActivityName(),
+				execution.getActivityInstanceId(),
+				execution.getVariables(),
+				execution.getVariablesLocal());
+		this.publish("/system/bpm/"+execution.getProcessDefinitionId()+"/event/"+execution.getActivityInstanceId()+"/end", execution.getVariableNames().toString());
 	}
 
 }

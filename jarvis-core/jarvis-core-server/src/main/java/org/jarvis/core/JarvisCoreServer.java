@@ -16,14 +16,14 @@
 
 package org.jarvis.core;
 
-import java.io.PrintStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 
+import org.jarvis.core.services.CoreStderrConsole;
+import org.jarvis.core.services.CoreStdoutConsole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.event.Level;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -50,12 +50,13 @@ public class JarvisCoreServer {
 	 * @param args
 	 * @throws MalformedURLException
 	 */
+	@SuppressWarnings("resource")
 	public static void main(String[] args) throws MalformedURLException {
 		/**
 		 * fix output
 		 */
-		System.setErr(new PrintStream(new CustomOutputStream(logger, Level.ERROR)));
-		System.setOut(new PrintStream(new CustomOutputStream(logger, Level.WARN)));
+		new CoreStdoutConsole();
+		new CoreStderrConsole();
 
 		/**
 		 * dump classpath

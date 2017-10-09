@@ -26,13 +26,17 @@ import org.slf4j.LoggerFactory;
  * StartEvent
  */
 @CamundaSelector(type = "startEvent", event = ExecutionListener.EVENTNAME_START)
-public class BpmStartEventStartExecutionListener implements ExecutionListener {
+public class BpmStartEventStartExecutionListener extends BpmListener implements ExecutionListener {
 	protected Logger logger = LoggerFactory.getLogger(BpmStartEventStartExecutionListener.class);
 
 	@Override
 	public void notify(DelegateExecution execution) throws Exception {
-		logger.info("[StartEvent] {}",
-				execution.getActivityInstanceId());
+		logger.info("[STR] {} {}\n\tVariables {}\n\tLocales {}", 
+				execution.getCurrentActivityName(),
+				execution.getActivityInstanceId(),
+				execution.getVariables(),
+				execution.getVariablesLocal());
+		this.publish("/system/bpm/"+execution.getProcessDefinitionId()+"/event/"+execution.getActivityInstanceId()+"/start", execution.getVariableNames().toString());
 	}
 
 }

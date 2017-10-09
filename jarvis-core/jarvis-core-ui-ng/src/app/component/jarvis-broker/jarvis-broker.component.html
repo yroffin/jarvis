@@ -2,7 +2,7 @@
   <p-dataTable [immutable]="false" [value]="myMessages">
     <header>Messages</header>
     <p-column field="id" header="Id"></p-column>
-    <p-column field="topic" header="Topic"></p-column>
+    <p-column field="topic" [filter]="true" header="Topic"></p-column>
     <p-column field="body" header="Body"></p-column>
   </p-dataTable>
 </div>

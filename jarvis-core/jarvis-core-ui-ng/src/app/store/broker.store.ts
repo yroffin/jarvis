@@ -40,7 +40,11 @@ export class BrokerStore {
                 {
                     let newState = new MessageBean();
                     newState.topic = action.payload.topic;
-                    newState.body = JSON.parse(action.payload.body);
+                    try {
+                        newState.body = JSON.parse(action.payload.body);
+                    } catch(Exc) {
+                        newState.body = action.payload.body;
+                    }
                     return newState;
                 }
 

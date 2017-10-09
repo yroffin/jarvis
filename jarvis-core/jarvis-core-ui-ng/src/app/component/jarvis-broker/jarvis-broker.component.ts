@@ -63,11 +63,15 @@ export class JarvisBrokerComponent implements OnInit {
           let msg = new MessageBean();
           msg.id = ''+(this.ids++);
           msg.topic = item.topic;
-          msg.body = JSON.stringify(item.body, null, '  ');
-          if(this.myMessages.length > 10) {
-            this.myMessages.splice(-1,1)
+          try {
+            msg.body = JSON.stringify(item.body, null, '  ');
+          } catch (Exc) {
+            msg.body = item.body;
           }
-          this.myMessages.unshift(msg);
+          if(this.myMessages.length > 20) {
+            this.myMessages.shift()
+          }
+          this.myMessages.push(msg);
         });
     }
 

@@ -155,7 +155,7 @@ public class CoreServerDaemon {
 
 	@Autowired
 	ApiPropertyResources apiPropertyResources;
-	
+
 	protected ObjectMapper mapper = new ObjectMapper();
 
 	/**
@@ -323,10 +323,10 @@ public class CoreServerDaemon {
 			logger.info("uri: {}", resource);
 			InputStream is = this.getClass().getClassLoader().getResourceAsStream(resource);
 			if (is != null) {
-				if(resource.endsWith("markdown")) {
+				if (resource.endsWith("markdown")) {
 					res.type("text/html;charset=UTF-8");
 				}
-				if(resource.endsWith("png")) {
+				if (resource.endsWith("png")) {
 					res.type("image/x-png");
 				}
 				Node document = parser.parse(IOUtils.toString(is));

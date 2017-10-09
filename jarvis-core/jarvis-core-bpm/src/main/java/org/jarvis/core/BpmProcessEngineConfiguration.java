@@ -29,6 +29,8 @@ import org.camunda.bpm.engine.spring.container.ManagedProcessEngineFactoryBean;
 import org.camunda.bpm.extension.reactor.CamundaReactor;
 import org.camunda.bpm.extension.reactor.bus.CamundaEventBus;
 import org.jarvis.core.bpm.BpmGenericExecutionListener;
+import org.jarvis.core.bpm.listener.BpmScriptTaskEndExecutionListener;
+import org.jarvis.core.bpm.listener.BpmScriptTaskStartExecutionListener;
 import org.jarvis.core.bpm.listener.BpmServiceTaskEndExecutionListener;
 import org.jarvis.core.bpm.listener.BpmServiceTaskStartExecutionListener;
 import org.jarvis.core.bpm.listener.BpmStartEventEndExecutionListener;
@@ -51,7 +53,7 @@ import org.springframework.transaction.PlatformTransactionManager;
  */
 @Configuration
 @EnableAutoConfiguration 
-@ComponentScan
+@ComponentScan(basePackages = { "org.jarvis.core.bpm" })
 public class BpmProcessEngineConfiguration {
 	protected Logger logger = LoggerFactory.getLogger(BpmProcessEngineConfiguration.class);
 
@@ -167,6 +169,8 @@ public class BpmProcessEngineConfiguration {
 		 */
 		CamundaEventBus eventBus = CamundaReactor.eventBus();
 		eventBus.register(new BpmGenericExecutionListener());
+		eventBus.register(new BpmScriptTaskStartExecutionListener());
+		eventBus.register(new BpmScriptTaskEndExecutionListener());
 		eventBus.register(new BpmServiceTaskStartExecutionListener());
 		eventBus.register(new BpmServiceTaskEndExecutionListener());
 		eventBus.register(new BpmStartEventStartExecutionListener());

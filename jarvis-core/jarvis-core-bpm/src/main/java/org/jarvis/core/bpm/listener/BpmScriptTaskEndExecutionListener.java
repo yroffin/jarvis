@@ -23,20 +23,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * BpmServiceTaskStartExecutionListener
+ * BpmServiceTaskEndExecutionListener
  */
-@CamundaSelector(type = "serviceTask", event = ExecutionListener.EVENTNAME_START)
-public class BpmServiceTaskStartExecutionListener extends BpmListener implements ExecutionListener {
-	protected Logger logger = LoggerFactory.getLogger(BpmServiceTaskStartExecutionListener.class);
+@CamundaSelector(type = "scriptTask", event = ExecutionListener.EVENTNAME_END)
+public class BpmScriptTaskEndExecutionListener extends BpmListener implements ExecutionListener {
+	protected Logger logger = LoggerFactory.getLogger(BpmScriptTaskEndExecutionListener.class);
 
 	@Override
 	public void notify(DelegateExecution execution) throws Exception {
-		logger.info("[ServiceTask:STR] {} {}\n\tVariables {}\n\tLocales {}", 
+		logger.info("[ScripTask:END] {} {}\n\tVariables {}\n\tLocales {}", 
 				execution.getCurrentActivityName(),
 				execution.getActivityInstanceId(),
 				execution.getVariables(),
 				execution.getVariablesLocal());
-		this.publish("/system/bpm/"+execution.getProcessDefinitionId()+"/service/"+execution.getActivityInstanceId()+"/start", execution.getVariableNames().toString());
+		this.publish("/system/bpm/"+execution.getProcessDefinitionId()+"/script/"+execution.getActivityInstanceId()+"/end", execution.getVariableNames().toString());
 	}
 
 }

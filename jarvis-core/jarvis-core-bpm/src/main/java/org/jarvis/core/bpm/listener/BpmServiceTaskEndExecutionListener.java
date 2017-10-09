@@ -26,14 +26,17 @@ import org.slf4j.LoggerFactory;
  * BpmServiceTaskEndExecutionListener
  */
 @CamundaSelector(type = "serviceTask", event = ExecutionListener.EVENTNAME_END)
-public class BpmServiceTaskEndExecutionListener implements ExecutionListener {
+public class BpmServiceTaskEndExecutionListener extends BpmListener implements ExecutionListener {
 	protected Logger logger = LoggerFactory.getLogger(BpmServiceTaskEndExecutionListener.class);
 
 	@Override
 	public void notify(DelegateExecution execution) throws Exception {
-		logger.info("[ServiceTask] end {} {}", 
+		logger.info("[ServiceTask:END] {} {}\n\tVariables {}\n\tLocales {}", 
 				execution.getCurrentActivityName(),
-				execution.getActivityInstanceId());
+				execution.getActivityInstanceId(),
+				execution.getVariables(),
+				execution.getVariablesLocal());
+		this.publish("/system/bpm/"+execution.getProcessDefinitionId()+"/service/"+execution.getActivityInstanceId()+"/end", execution.getVariableNames().toString());
 	}
 
 }

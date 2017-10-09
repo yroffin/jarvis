@@ -36,13 +36,16 @@ import org.camunda.bpm.engine.impl.persistence.entity.AuthorizationEntity;
 import org.camunda.bpm.spring.boot.starter.property.AdminUserProperty;
 import org.jarvis.core.bpm.execution.BpmPluginBehaviour;
 import org.jarvis.core.bpm.execution.BpmServiceTaskBehaviour;
+import org.jarvis.core.bpm.listener.BpmListener;
 import org.jarvis.core.model.bean.process.ProcessBean;
 import org.jarvis.core.resources.api.process.ApiProcessResources;
+import org.jarvis.core.services.CoreMoquette;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.SpringApplicationRunListener;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.ConfigurableEnvironment;
 
@@ -51,6 +54,16 @@ import org.springframework.core.env.ConfigurableEnvironment;
  */
 public class BpmRunListener implements SpringApplicationRunListener {
 	protected Logger logger = LoggerFactory.getLogger(BpmRunListener.class);
+
+	private static ConfigurableApplicationContext context;
+
+	/**
+	 * get context
+	 * @return ApplicationContext
+	 */
+	public static ApplicationContext getContext() {
+		return BpmRunListener.context;
+	}
 
 	/**
 	 * @param application
@@ -73,6 +86,7 @@ public class BpmRunListener implements SpringApplicationRunListener {
 
 	@Override
 	public void contextLoaded(ConfigurableApplicationContext context) {
+		BpmRunListener.context = context;
 		BpmPluginBehaviour.setContext(context);
 		BpmServiceTaskBehaviour.setContext(context);
 	}
@@ -82,6 +96,8 @@ public class BpmRunListener implements SpringApplicationRunListener {
 		if (exception != null) {
 			return;
 		}
+
+		BpmListener.coreMoquette = context.getBean(CoreMoquette.class);
 
 		/**
 		 * setup

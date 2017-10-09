@@ -142,7 +142,7 @@ public class CoreMqttSystem {
 							logger.error("Unable to subcribe: {}", e);
 						}
 					}
-					client.publish("/system/core", new MqttMessage(mapper.writeValueAsBytes(data)));
+					coreMoquette.publishMostOne("/system/core", mapper.writeValueAsString(data));
 				} catch (JsonProcessingException | MqttException e) {
 					logger.error("While processing {}", e);
 				}
