@@ -58,6 +58,12 @@ public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 	@Autowired
 	CoreSunsetSunrise coreSunsetSunrise;
 	
+	@Autowired
+	ApiTriggerResources apiTriggerResources;
+	
+	@Autowired
+	ApiHrefTriggerCronResources apiHrefTriggerCronResources;
+
 	/**
 	 * internal cron registry
 	 */
@@ -357,12 +363,6 @@ public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 		return new GenericValue("{}");
 	}
 
-	@Autowired
-	ApiTriggerResources apiTriggerResources;
-	
-	@Autowired
-	ApiHrefTriggerCronResources apiHrefTriggerCronResources;
-	
 	/**
 	 * fire cron
 	 * @param bean
@@ -374,6 +374,7 @@ public class ApiCronResources extends ApiResources<CronRest,CronBean> {
 			for(GenericEntity cron : apiHrefTriggerCronResources.findAll(trigger)) {
 				if(cron.id.equals(bean.id)) {
 					coreEventDaemon.post(trigger.id, bean.name);
+					fired = true;
 				}
 			}
 		}

@@ -22,10 +22,14 @@ import static org.camunda.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT
 import static org.camunda.bpm.engine.authorization.Groups.CAMUNDA_ADMIN;
 import static org.camunda.bpm.engine.authorization.Permissions.ALL;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Optional;
 
+import org.apache.commons.io.IOUtils;
 import org.camunda.bpm.engine.AuthorizationService;
 import org.camunda.bpm.engine.IdentityService;
+import org.camunda.bpm.engine.RepositoryService;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.authorization.Groups;
 import org.camunda.bpm.engine.authorization.Resource;
@@ -33,7 +37,11 @@ import org.camunda.bpm.engine.authorization.Resources;
 import org.camunda.bpm.engine.identity.Group;
 import org.camunda.bpm.engine.identity.User;
 import org.camunda.bpm.engine.impl.persistence.entity.AuthorizationEntity;
+import org.camunda.bpm.engine.repository.Deployment;
+import org.camunda.bpm.engine.repository.DeploymentBuilder;
 import org.camunda.bpm.spring.boot.starter.property.AdminUserProperty;
+import org.common.core.exception.TechnicalException;
+import org.common.core.exception.TechnicalNotFoundException;
 import org.jarvis.core.bpm.execution.BpmPluginBehaviour;
 import org.jarvis.core.bpm.execution.BpmServiceTaskBehaviour;
 import org.jarvis.core.bpm.listener.BpmListener;
@@ -59,6 +67,7 @@ public class BpmRunListener implements SpringApplicationRunListener {
 
 	/**
 	 * get context
+	 * 
 	 * @return ApplicationContext
 	 */
 	public static ApplicationContext getContext() {
@@ -111,6 +120,17 @@ public class BpmRunListener implements SpringApplicationRunListener {
 		 * start main process
 		 */
 		logger.info("Spring Application configuration finished");
+		try {
+			logger.info("Deploy system process");
+			deploy(context);
+		} catch (TechnicalNotFoundException e) {
+			logger.error("Error {}", e);
+			throw new TechnicalException(e);
+		} catch (IOException e) {
+			logger.error("Error {}", e);
+			throw new TechnicalException(e);
+		}
+		logger.info("Start system process");
 		runtimeService.startProcessInstanceByKey("ProcessJarvis");
 
 		/**
@@ -129,6 +149,7 @@ public class BpmRunListener implements SpringApplicationRunListener {
 
 	/**
 	 * load admin setup
+	 * 
 	 * @param context
 	 */
 	public void postProcessEngineBuild(ConfigurableApplicationContext context) {
@@ -188,5 +209,28 @@ public class BpmRunListener implements SpringApplicationRunListener {
 		BeanUtils.copyProperties(adminUser, newUser);
 		identityService.saveUser(newUser);
 		return newUser;
+	}
+
+	/**
+	 * deploy it
+	 * @param context
+	 * @throws TechnicalNotFoundException
+	 * @throws IOException
+	 */
+	private void deploy(ConfigurableApplicationContext context)
+			throws TechnicalNotFoundException, IOException {
+		InputStream is = this.getClass().getClassLoader().getResourceAsStream("processes/diagram-jarvis.bpmn");
+		String xml = IOUtils.toString(is);
+		is.close();
+		
+		/**
+		 * deploy this process
+		 */
+		DeploymentBuilder deploymentBuilder = context.getBean(RepositoryService.class).createDeployment()
+				.enableDuplicateFiltering(true).source("internal").name("ProcessJarvis");
+		deploymentBuilder.addString("ProcessJarvis.bpmn", xml);
+		Deployment res = deploymentBuilder.deploy();
+
+		logger.warn("Deployment of {} successfull in {}", "ProcessJarvis", res.getDeploymentTime());
 	}
 }

@@ -24,6 +24,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import javax.annotation.PostConstruct;
 
+import org.camunda.bpm.engine.MismatchingMessageCorrelationException;
 import org.camunda.bpm.engine.RuntimeService;
 import org.jarvis.core.model.bean.device.EventBean;
 import org.jarvis.core.model.bean.trigger.TriggerBean;
@@ -205,6 +206,8 @@ public class CoreEventDaemon {
 						Map<String, Object> variables = new HashMap<String, Object>();
 						variables.put("message", event);
 						runtimeService.startProcessInstanceByMessage("Message_MQTT", variables);
+					} catch (MismatchingMessageCorrelationException e) {
+						logger.warn("[EVENT] - MismatchingMessageCorrelationException {}", e);
 					} catch (Exception e) {
 						logger.error("[EVENT] - Exception {}", e);
 					}
