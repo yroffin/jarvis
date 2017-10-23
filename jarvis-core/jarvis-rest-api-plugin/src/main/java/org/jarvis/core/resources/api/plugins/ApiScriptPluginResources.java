@@ -56,6 +56,9 @@ import io.swagger.annotations.Api;
 public class ApiScriptPluginResources extends ApiLinkedResources<ScriptPluginRest,ScriptPluginBean,CommandRest,CommandBean> {
 	protected Logger logger = LoggerFactory.getLogger(ApiScriptPluginResources.class);
 	
+	@Autowired
+	JarvisPlantUmlServerDaemon jarvisPlantUmlServerDaemon;
+	
 	/**
 	 * commands link
 	 */
@@ -90,6 +93,14 @@ public class ApiScriptPluginResources extends ApiLinkedResources<ScriptPluginRes
 	public GenericValue doRealTask(ScriptPluginBean bean, GenericMap args, String taskType) throws TechnicalException {
 		GenericMap result;
 		switch(taskType) {
+			case "uml":
+				try {
+					result = plantuml(bean, args);
+				} catch (TechnicalNotFoundException e) {
+					logger.error("Error {}", e);
+					throw new TechnicalException(e);
+				}
+				break;
 			case "render":
 				try {
 					result = renderOrExecute(null, bean, args, new GenericMap(), true);
@@ -110,6 +121,16 @@ public class ApiScriptPluginResources extends ApiLinkedResources<ScriptPluginRes
 				result = new GenericMap();
 		}
 		return new GenericValue(result);
+	}
+
+	/**
+	 * render plantuml
+	 * @param bean
+	 * @param args
+	 * @return
+	 */
+	private GenericMap plantuml(ScriptPluginBean bean, GenericMap args) {
+		return args;
 	}
 
 	/**

@@ -73,11 +73,10 @@ public class ApiToolResources extends ApiResources<SnapshotRest,SnapshotBean> {
 	private String restore(SnapshotBean bean, GenericMap args, GenericMap genericMap) {
 		 try {
 			GenericMap repository = mapper.readValue(bean.json, GenericMap.class);
-			apiNeo4Service.restore(repository);
+			return mapper.writeValueAsString(apiNeo4Service.restore(repository));
 		} catch (IOException e) {
 			throw new TechnicalException(e);
 		}
-		 return "{}";
 	}
 
 	/**
