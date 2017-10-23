@@ -660,6 +660,9 @@ public abstract class ApiResources<REST extends GenericEntity, BEAN extends Gene
 		case FILE_STREAM:
 			response.type("application/octet-stream");
 			return result.asFileStream();
+		case SVG:
+			response.type("image/svg+xml");
+			return result.asSvg();
 		default:
 			return result.asString();
 		}

@@ -14,7 +14,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<spring-boot.version>1.5.4.RELEASE</spring-boot.version>
-		<spring.version>4.3.9.RELEASE</spring.version>
+		<spring.version>5.0.0.RELEASE</spring.version>
+
 		<camunda.version>7.7.0</camunda.version>
 		<camunda-spring-boot.version>2.2.0</camunda-spring-boot.version>
 		<camunda-reactor.version>1.2</camunda-reactor.version>
@@ -26,7 +27,7 @@
 		<jackson.version>2.8.8</jackson.version>
 		<spark.version>2.6.0</spark.version>
 		<jersey.version>2.25.1</jersey.version>
-		<mockito.version>1.10.19</mockito.version>
+		<mockito.version>2.11.0</mockito.version>
 		<marytts.version>5.2</marytts.version>
 		<swagger.version>1.5.10</swagger.version>
 		<spark-pac4j.version>2.0.0</spark-pac4j.version>
@@ -83,6 +84,11 @@
 				<artifactId>jarvis-test-tools</artifactId>
 				<version>${project.version}</version>
 				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>jarvis-plantuml</artifactId>
+				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
@@ -417,7 +423,7 @@
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
-				<version>4.11</version>
+				<version>4.12</version>
 				<scope>test</scope>
 			</dependency>
 

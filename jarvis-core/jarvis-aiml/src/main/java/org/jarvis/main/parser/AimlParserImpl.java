@@ -489,7 +489,7 @@ public class AimlParserImpl extends aimlParser implements IAimlParser {
 	/**
 	 * parse this document
 	 * 
-	 * @return
+	 * @return IAimlRepository
 	 * @throws AimlParsingError
 	 */
 	public static IAimlRepository parse(File filename) throws AimlParsingError {

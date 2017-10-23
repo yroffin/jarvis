@@ -17,6 +17,9 @@
 import { Component, Input, ViewChild, OnInit, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
+import { SecurityContext, Sanitizer } from '@angular/core'
+import { DomSanitizer } from '@angular/platform-browser';
+
 import { LoggerService } from '../../service/logger.service';
 import { JarvisPickerComponent } from '../../dialog/jarvis-picker/jarvis-picker.component';
 import { JarvisConfigurationService } from '../../service/jarvis-configuration.service';
@@ -59,11 +62,15 @@ export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> im
   private jarvisTriggerLink: JarvisResourceLink<TriggerBean>;
   private jarvisPluginLink: JarvisResourceLink<PluginBean>;
 
+  private myData: any = {};
+  private myDetail: string = "";
+
   /**
    * constructor
    */
   constructor(
     private _route: ActivatedRoute,
+    private sanitizer:DomSanitizer,
     private _router: Router,
     private _jarvisConfigurationService: JarvisConfigurationService,
     private _deviceService: JarvisDataDeviceService,
@@ -82,6 +89,13 @@ export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> im
    */
   ngOnInit() {
     this.init(this);
+  }
+
+  /**
+   * pretty
+   */
+  private sanitize(html: string): any {
+    return this.sanitizer.bypassSecurityTrustHtml(html);
   }
 
   /**
@@ -148,7 +162,15 @@ export class JarvisResourceDeviceComponent extends JarvisResource<DeviceBean> im
       this.myDevice.plugins = [];
       (new JarvisResourceLink<PluginBean>(this.logger)).loadLinksWithCallback(resource.id, this.myDevice.plugins, this._deviceService.allLinkedPlugin, (elements) => {
         this.myDevice.plugins = elements;
-      });
+        this._deviceService.TaskAsXml(this.myDevice.id, 'uml', this.myData)
+        .subscribe(
+        (result: any) => this.myDetail = result,
+        error => console.log(error),
+        () => {
+          console.log(this.myDetail);
+        }
+        );
+    });
     }
   }
 

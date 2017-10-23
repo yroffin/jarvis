@@ -6,6 +6,10 @@ import java.util.List;
 import org.jarvis.main.engine.IAimlCoreTransaction;
 import org.jarvis.main.engine.IAimlCoreTransactionMonitor;
 
+/**
+ * @author kazoar
+ *
+ */
 public class AimlCoreTransactionMonitorImpl implements
 		IAimlCoreTransactionMonitor {
 

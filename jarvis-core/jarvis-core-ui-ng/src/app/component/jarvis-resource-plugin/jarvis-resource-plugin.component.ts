@@ -18,6 +18,9 @@ import { Component, Input, ViewChild, OnInit, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { SelectItem } from 'primeng/primeng';
 
+import { SecurityContext, Sanitizer } from '@angular/core'
+import { DomSanitizer } from '@angular/platform-browser';
+
 declare var Prism: any;
 
 import { LoggerService } from '../../service/logger.service';
@@ -57,6 +60,7 @@ export class JarvisResourcePluginComponent extends JarvisResource<PluginBean> im
 
   private myData: any = {};
   private myOutputData: any = {};
+  private myDetail: string = "";
   private types: SelectItem[];
 
   @ViewChild('pickCommands') pickCommands;
@@ -74,10 +78,11 @@ export class JarvisResourcePluginComponent extends JarvisResource<PluginBean> im
    */
   constructor(
     private _route: ActivatedRoute,
+    private sanitizer:DomSanitizer,
     private _router: Router,
     private _jarvisConfigurationService: JarvisConfigurationService,
     private _pluginService: JarvisDataPluginService,
-    private logger: LoggerService,    
+    private logger: LoggerService,
     private _commandService: JarvisDataCommandService) {
     super('/plugins', ['execute', 'render', 'clear'], _pluginService, _route, _router);
     this.jarvisCommandLink = new JarvisResourceLink<CommandBean>(this.logger);
@@ -96,9 +101,22 @@ export class JarvisResourcePluginComponent extends JarvisResource<PluginBean> im
   /**
    * pretty
    */
+  private sanitize(html: string): any {
+    return this.sanitizer.bypassSecurityTrustHtml(html);
+  }
+
+  /**
+   * pretty
+   */
   private pretty(val) {
     let body = JSON.stringify(val, null, 2);
     return Prism.highlight(body, Prism.languages.javascript);
+  }
+
+  /**
+   * task action
+   */
+  public clear(): void {
   }
 
   /**
@@ -161,6 +179,14 @@ export class JarvisResourcePluginComponent extends JarvisResource<PluginBean> im
       this.myPlugin.commands = [];
       (new JarvisResourceLink<CommandBean>(this.logger)).loadLinksWithCallback(resource.id, this.myPlugin.commands, this._pluginService.allLinkedCommand, (elements) => {
         this.myPlugin.commands = elements;
+        this._pluginService.TaskAsXml(this.myPlugin.id, 'uml', this.myData)
+          .subscribe(
+          (result: any) => this.myDetail = result,
+          error => console.log(error),
+          () => {
+            console.log(this.myDetail);
+          }
+          );
       });
     }
   }

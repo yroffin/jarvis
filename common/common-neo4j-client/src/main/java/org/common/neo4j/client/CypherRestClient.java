@@ -18,6 +18,7 @@ package org.common.neo4j.client;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -233,12 +234,16 @@ public class CypherRestClient extends AbstractJerseyClient {
 	 * 
 	 * @param repository
 	 *            a GenericMap storing all resources
+	 * @return Collection<String>
 	 */
-	public void restore(GenericMap repository) {
+	public Collection<String> restore(GenericMap repository) {
 		/**
 		 * internal index for old id and new id
 		 */
 		Map<String, String> index = new HashMap<String, String>();
+		Collection<String> output = new ArrayList<String>();
+
+		output.add("Restore "+resources+" resources ...");
 
 		/**
 		 * recreate resources
@@ -260,6 +265,7 @@ public class CypherRestClient extends AbstractJerseyClient {
 			for (Entry<String, LinkedHashMap<String, Object>> raw : elements.entrySet()) {
 				LinkedHashMap<String, Object> node = raw.getValue();
 				Node toCreate = new Node(node);
+				output.add("Restore "+toCreate.toString());
 				try {
 					Node created = createNode(resource, toCreate);
 					index.put((String) raw.getKey(), created.getId());
@@ -269,6 +275,9 @@ public class CypherRestClient extends AbstractJerseyClient {
 				}
 			}
 		}
+
+		output.add("Restore "+resources+" resources ok");
+		output.add("Restore "+relations+" relations ...");
 
 		/**
 		 * recreate relations
@@ -293,12 +302,16 @@ public class CypherRestClient extends AbstractJerseyClient {
 					logger.info("Restore {} => {} with {}", from, to, properties.toString());
 					try {
 						createRelationship(from, to, relation, properties);
+						output.add("Restore relation "+from+" => "+to+" with "+properties.toString());
 					} catch (TechnicalHttpException e) {
 						throw new TechnicalException(e);
 					}
 				}
 			}
 		}
+		
+		output.add("Restore "+relations+" relations ok");
+		return output;
 	}
 
 	/**

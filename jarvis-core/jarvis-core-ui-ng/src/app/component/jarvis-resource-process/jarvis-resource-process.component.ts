@@ -101,18 +101,25 @@ export class JarvisResourceProcessComponent extends JarvisResource<ProcessBean> 
    * task action
    */
   public deploy(): void {
-    this.logger.info("Deploy", this.myProcess);
-    /**
-     * execute this plugin
-     */
-    let myOutputData;
-    this._processService.Task(this.myProcess.id, 'deploy', {})
+    this._processService.Update(this.myProcess.id, this.myProcess)
       .subscribe(
-      (result: any) => myOutputData = result,
+      (data: ProcessBean) => data,
       error => console.log(error),
       () => {
-      }
-      );
+        this.logger.info("Save", this.myProcess);
+        /**
+         * execute this plugin
+         */
+        let myOutputData;
+        this._processService.Task(this.myProcess.id, 'deploy', {})
+          .subscribe(
+          (result: any) => myOutputData = result,
+          error => console.log(error),
+          () => {
+            this.logger.info("Deploy", this.myProcess);
+          }
+          );
+      });
   }
 
   /**
@@ -140,8 +147,8 @@ export class JarvisResourceProcessComponent extends JarvisResource<ProcessBean> 
     if (picker.action === 'triggers') {
       this.jarvisTriggerLink.addLink(this.getResource().id, resource.id, this.getResource().triggers, { "order": "1", href: "HREF" }, this._processService.allLinkedTrigger);
     }
-    if(picker.action === 'complete') {
-      this.myProcess = <ProcessBean> resource;
+    if (picker.action === 'complete') {
+      this.myProcess = <ProcessBean>resource;
       this.myProcess.triggers = [];
       (new JarvisResourceLink<TriggerBean>(this.logger)).loadLinksWithCallback(resource.id, this.myProcess.triggers, this._processService.allLinkedTrigger, (elements) => {
         this.myProcess.triggers = elements;

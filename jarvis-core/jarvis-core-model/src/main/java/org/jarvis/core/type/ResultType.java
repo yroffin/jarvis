@@ -37,6 +37,10 @@ public enum ResultType {
 	 */
 	ARRAY,
 	/**
+	 * svg
+	 */
+	SVG,
+	/**
 	 * boolean
 	 */
 	BOOLEAN

@@ -52,6 +52,9 @@
         </p-column>
       </p-dataTable>
     </md-tab>
+    <md-tab label="Détails">
+      <div [innerHtml]="sanitize(myDetail)"></div>
+    </md-tab>
     <md-tab label="Mise au point">
       <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
         <div class="ui-grid-row">
@@ -66,7 +69,7 @@
             Données de test (convertie)
           </div>
           <div class="ui-grid-col-9">
-              <pre><code [innerHtml]="pretty(myData)"></code></pre>
+            <pre><code [innerHtml]="pretty(myData)"></code></pre>
           </div>
         </div>
         <div class="ui-grid-row">
@@ -81,58 +84,58 @@
     </md-tab>
   </md-tab-group>
 
-<app-jarvis-picker #pickCommands [resource]="{'service':'commands','label':'Commands'}"></app-jarvis-picker>
+  <app-jarvis-picker #pickCommands [resource]="{'service':'commands','label':'Commands'}"></app-jarvis-picker>
 
-<p-dialog appendTo="body" header="Commande" [(visible)]="display" modal=true responsive=true width="700" resizable=false>
-  <div *ngIf="myCommand">
-    <p-fieldset legend="Entête" toggleable="true">
-      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
-        <div class="ui-grid-row">
-          <div class="ui-grid-col-4">
-            <md-input-container class="input-full-width">
-              <input mdInput placeholder="Identifiant de la commande" [(ngModel)]="myCommand.id" disabled>
-            </md-input-container>
+  <p-dialog appendTo="body" header="Commande" [(visible)]="display" modal=true responsive=true width="700" resizable=false>
+    <div *ngIf="myCommand">
+      <p-fieldset legend="Entête" toggleable="true">
+        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+          <div class="ui-grid-row">
+            <div class="ui-grid-col-4">
+              <md-input-container class="input-full-width">
+                <input mdInput placeholder="Identifiant de la commande" [(ngModel)]="myCommand.id" disabled>
+              </md-input-container>
+            </div>
+            <div class="ui-grid-col-4">
+              <md-input-container class="input-full-width">
+                <input mdInput placeholder="Instance de la commande" [(ngModel)]="myCommand.instance" disabled>
+              </md-input-container>
+            </div>
+            <div class="ui-grid-col-4">
+              <md-input-container class="input-full-width">
+                <input mdInput placeholder="Nom de la commande" [(ngModel)]="myCommand.name">
+              </md-input-container>
+            </div>
           </div>
-          <div class="ui-grid-col-4">
-            <md-input-container class="input-full-width">
-              <input mdInput placeholder="Instance de la commande" [(ngModel)]="myCommand.instance" disabled>
-            </md-input-container>
+          <div class="ui-grid-row">
+            <div class="ui-grid-col-4">
+              <md-input-container class="input-full-width">
+                <input mdInput placeholder="Name" [(ngModel)]="myCommand.extended.name">
+              </md-input-container>
+            </div>
+            <div class="ui-grid-col-4">
+              <md-input-container class="input-full-width">
+                <input mdInput placeholder="Nature (json)" [(ngModel)]="myCommand.extended.nature">
+              </md-input-container>
+            </div>
+            <div class="ui-grid-col-4">
+              <md-input-container class="input-full-width">
+                <input mdInput placeholder="Type (action)" [(ngModel)]="myCommand.extended.type">
+              </md-input-container>
+            </div>
           </div>
-          <div class="ui-grid-col-4">
-            <md-input-container class="input-full-width">
-              <input mdInput placeholder="Nom de la commande" [(ngModel)]="myCommand.name">
-            </md-input-container>
+          <div class="ui-grid-row">
+            <div class="ui-grid-col-12">
+              <md-input-container class="input-full-width">
+                <input mdInput placeholder="Paramètre(s) (json)" [(ngModel)]="myCommand.extended.parameter">
+              </md-input-container>
+            </div>
           </div>
         </div>
-        <div class="ui-grid-row">
-          <div class="ui-grid-col-4">
-            <md-input-container class="input-full-width">
-              <input mdInput placeholder="Name" [(ngModel)]="myCommand.extended.name">
-            </md-input-container>
-          </div>
-          <div class="ui-grid-col-4">
-            <md-input-container class="input-full-width">
-              <input mdInput placeholder="Nature (json)" [(ngModel)]="myCommand.extended.nature">
-            </md-input-container>
-          </div>
-          <div class="ui-grid-col-4">
-            <md-input-container class="input-full-width">
-              <input mdInput placeholder="Type (action)" [(ngModel)]="myCommand.extended.type">
-            </md-input-container>
-          </div>
-        </div>
-        <div class="ui-grid-row">
-          <div class="ui-grid-col-12">
-            <md-input-container class="input-full-width">
-              <input mdInput placeholder="Paramètre(s) (json)" [(ngModel)]="myCommand.extended.parameter">
-            </md-input-container>
-          </div>
-        </div>
-      </div>
-      <app-jarvis-toolbar-resource [notified]="this" [tasks]="[{'task':'updateCommandLink','args':[myCommand],'icon':'fa-save','label':'Mettre à jour le lien'}]"></app-jarvis-toolbar-resource>
-    </p-fieldset>
-    <p-fieldset legend="Source" toggleable="true">
-      <pre><code [innerHtml]="hightlight(myCommand.body)"></code></pre>
-    </p-fieldset>
-  </div>
-</p-dialog>
+        <app-jarvis-toolbar-resource [notified]="this" [tasks]="[{'task':'updateCommandLink','args':[myCommand],'icon':'fa-save','label':'Mettre à jour le lien'}]"></app-jarvis-toolbar-resource>
+      </p-fieldset>
+      <p-fieldset legend="Source" toggleable="true">
+        <pre><code [innerHtml]="hightlight(myCommand.body)"></code></pre>
+      </p-fieldset>
+    </div>
+  </p-dialog>

@@ -35,6 +35,9 @@
         </div>
       </div>
     </md-tab>
+    <md-tab label="Détails">
+      <div [innerHtml]="sanitize(myDetail)"></div>
+    </md-tab>
     <md-tab label="Triggers">
       <app-jarvis-toolbar-resource [notified]="this" [pickers]="[{'action':'triggers','icon':'fa-send','label':'Ajouter un trigger','picker': pickTriggers}]"></app-jarvis-toolbar-resource>
       <p-dataTable [immutable]="false" [value]="myDevice.triggers">

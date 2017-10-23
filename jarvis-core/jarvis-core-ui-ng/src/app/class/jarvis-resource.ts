@@ -108,12 +108,15 @@ export class JarvisResource<T extends ResourceBean> {
     /**
      * save it
      */
-    public save(): void {
+    public save(callback: any): void {
         this.myJarvisResource.Update(this.myResource.id, this.myResource)
             .subscribe(
             (data: T) => data,
             error => console.log(error),
             () => {
+                if(callback) {
+                    callback();
+                }
             });
     }
 

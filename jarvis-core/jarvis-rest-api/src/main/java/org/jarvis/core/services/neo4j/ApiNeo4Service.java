@@ -17,6 +17,7 @@
 package org.jarvis.core.services.neo4j;
 
 import java.net.MalformedURLException;
+import java.util.Collection;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -219,8 +220,9 @@ public class ApiNeo4Service  {
 	/**
 	 * restore db with rom this repository
 	 * @param repository
+	 * @return Collection<String>
 	 */
-	public void restore(GenericMap repository) {
-		graphDb.restore(repository);	
+	public Collection<String> restore(GenericMap repository) {
+		return graphDb.restore(repository);	
 	}
 }

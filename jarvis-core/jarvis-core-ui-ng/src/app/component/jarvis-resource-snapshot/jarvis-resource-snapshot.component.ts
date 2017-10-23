@@ -133,13 +133,14 @@ export class JarvisResourceSnapshotComponent extends JarvisResource<SnapshotBean
    * task action
    */
   public restore(): void {
-    let that = this;
     let myOutputData: string;
     this._snapshotService.Task(this.mySnapshot.id, 'restore', {})
       .subscribe(
       (result: any) => myOutputData = result,
       error => console.log(error),
       () => {
+        this.mySnapshot.output = myOutputData;
+        console.log("result:", myOutputData);
         this.jarvisMessageService.push({ severity: 'info', summary: 'Restoration', detail: this.mySnapshot.name });
       }
       );
@@ -157,7 +158,11 @@ export class JarvisResourceSnapshotComponent extends JarvisResource<SnapshotBean
   /**
    * highlight source
    */
-  public hightlight(body: string): void {
-    return Prism.highlight(body, Prism.languages.javascript);
+  public hightlight(body: string): string {
+    if(body) {
+      return Prism.highlight(body, Prism.languages.javascript);
+    } else {
+      return "";
+    }
   }
 }

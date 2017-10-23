@@ -10,6 +10,10 @@ import org.jarvis.main.model.parser.IAimlResult;
 import org.jarvis.main.model.parser.category.IAimlBot;
 import org.jarvis.main.model.parser.history.IAimlHistory;
 
+/**
+ * @author kazoar
+ *
+ */
 public class AimlBotImpl extends AimlElementContainer implements IAimlBot {
 
 	public AimlBotImpl() {
