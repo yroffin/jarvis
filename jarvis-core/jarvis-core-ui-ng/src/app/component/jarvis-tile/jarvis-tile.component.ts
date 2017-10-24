@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+
+import { MdSnackBar } from '@angular/material';
 import * as _ from 'lodash';
 
 import { JarvisDataDeviceService } from '../../service/jarvis-data-device.service';
@@ -19,6 +21,7 @@ export class JarvisTileComponent implements OnInit {
   @Input() myDevice: DeviceBean;
 
   constructor(
+    private snackBar: MdSnackBar,
     private jarvisDataDeviceService: JarvisDataDeviceService,
     private jarvisMessageService: JarvisMessageService
   ) {
@@ -97,7 +100,14 @@ export class JarvisTileComponent implements OnInit {
   public touch(device: DeviceBean): void {
     this.jarvisDataDeviceService.Task(device.id, "execute", {})
       .subscribe(
-      (data: any) => this.jarvisMessageService.push({severity: 'info', summary: 'Activation', detail: device.name})
+      (data: any) => {
+        /**
+         * notify snackbar
+         */
+        this.snackBar.open('Touch', device.name, {
+          duration: 2000,
+        });
+      }
       );
   }
 }

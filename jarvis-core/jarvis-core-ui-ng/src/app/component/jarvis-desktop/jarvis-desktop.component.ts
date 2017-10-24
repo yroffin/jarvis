@@ -16,6 +16,7 @@
 
 import { Component, Input, OnInit } from '@angular/core';
 
+import { MdSnackBar } from '@angular/material';
 import { Message } from 'primeng/primeng';
 
 import { JarvisDataDeviceService } from '../../service/jarvis-data-device.service';
@@ -36,10 +37,10 @@ import { Oauth2Bean, MeBean } from '../../model/security/oauth2-bean';
 })
 export class JarvisDesktopComponent implements OnInit {
 
-  msgs: Message[] = [];
   myViews: ViewBean[];
 
   constructor(
+    private snackBar: MdSnackBar,
     private jarvisDataDeviceService: JarvisDataDeviceService,
     private jarvisDataStoreService: JarvisDataStoreService,
     private jarvisDataViewService: JarvisDataViewService) {
@@ -60,7 +61,14 @@ export class JarvisDesktopComponent implements OnInit {
   private touch(device: DeviceBean): void {
     this.jarvisDataDeviceService.Task(device.id, "execute", {})
       .subscribe(
-      (data: any) => this.msgs.push({severity:'info', summary:'Activation', detail:device.name})
+      (data: any) => {
+        /**
+         * notify snackbar
+         */
+        this.snackBar.open('Touch', device.name, {
+          duration: 2000,
+        });
+      }
       );
   }
 }

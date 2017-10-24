@@ -39,6 +39,7 @@ import { MdTabsModule } from '@angular/material';
 import { MdSelectModule } from '@angular/material';
 import { MdOptionModule } from '@angular/material';
 import { MdCardModule } from '@angular/material';
+import { MdSnackBarModule } from '@angular/material';
 
 /**
  * primeng
@@ -222,6 +223,7 @@ const appRoutes: Routes = [
     MdOptionModule,
     MdSelectModule,
     MdCardModule,
+    MdSnackBarModule,
     /**
      * primeface
      */
