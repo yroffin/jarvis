@@ -36,7 +36,8 @@
     <bpmn:textAnnotation id="TextAnnotation_1ksb934">    <bpmn:text>Message handler</bpmn:text>
 </bpmn:textAnnotation>
     <bpmn:association id="Association_0g1jqmk" sourceRef="TaskMessage" targetRef="TextAnnotation_1ksb934" />
-    <bpmn:textAnnotation id="TextAnnotation_1h45apq">    <bpmn:text>MQTT triggers init</bpmn:text>
+    <bpmn:textAnnotation id="TextAnnotation_1h45apq">    <bpmn:text><![CDATA[MQTT triggers init
+Scan all trigger in repository and subscribe any MQTT topic if any]]></bpmn:text>
 </bpmn:textAnnotation>
     <bpmn:association id="Association_0t7th2s" sourceRef="TaskInit" targetRef="TextAnnotation_1h45apq" />
     <bpmn:textAnnotation id="TextAnnotation_0tm0rsg">    <bpmn:text>Message_MQTT</bpmn:text>
@@ -117,11 +118,11 @@
         <dc:Bounds x="481" y="314" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_1h45apq_di" bpmnElement="TextAnnotation_1h45apq">
-        <dc:Bounds x="272" y="303" width="100" height="42" />
+        <dc:Bounds x="272" y="303" width="185" height="70" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Association_0t7th2s_di" bpmnElement="Association_0t7th2s">
-        <di:waypoint xsi:type="dc:Point" x="241" y="343" />
-        <di:waypoint xsi:type="dc:Point" x="272" y="335" />
+        <di:waypoint xsi:type="dc:Point" x="241" y="350" />
+        <di:waypoint xsi:type="dc:Point" x="272" y="346" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="TextAnnotation_0tm0rsg_di" bpmnElement="TextAnnotation_0tm0rsg">
         <dc:Bounds x="465" y="49" width="131" height="30" />

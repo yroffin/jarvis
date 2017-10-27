@@ -2,24 +2,24 @@
   [pickers]="[{'label':'Lier une mesure', 'icon': 'fa-podcast', 'action':'measures', 'picker': pickMeasures}]"></app-jarvis-toolbar-resource>
 
 <div *ngIf="myDataSource">
-  <md-tab-group>
-    <md-tab label="Entête">
+  <mat-tab-group>
+    <mat-tab label="Entête">
       <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
         <div class="ui-grid-row">
           <div class="ui-grid-col-6">
-            <md-input-container class="input-full-width">
-              <input mdInput placeholder="Nom" [(ngModel)]="myDataSource.name">
-            </md-input-container>
+            <mat-input-container class="input-full-width">
+              <input matInput placeholder="Nom" [(ngModel)]="myDataSource.name">
+            </mat-input-container>
           </div>
           <div class="ui-grid-col-6">
-            <md-input-container class="input-full-width">
-              <input mdInput placeholder="Icône" [(ngModel)]="myDataSource.icon">
-            </md-input-container>
+            <mat-input-container class="input-full-width">
+              <input matInput placeholder="Icône" [(ngModel)]="myDataSource.icon">
+            </mat-input-container>
           </div>
         </div>
       </div>
-    </md-tab>
-    <md-tab label="Mesures">
+    </mat-tab>
+    <mat-tab label="Mesures">
       <p-dataTable [immutable]="false" [value]="myDataSource.measures">
         <header>Connecteurs</header>
         <p-column field="extended.order" header="Ordre"></p-column>
@@ -32,8 +32,8 @@
           </ng-template>
         </p-column>
       </p-dataTable>
-    </md-tab>
-    <md-tab label="Requête">
+    </mat-tab>
+    <mat-tab label="Requête">
       <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
         <div class="ui-grid-row">
           <div class="ui-grid-col-12">
@@ -68,8 +68,8 @@
       <p-fieldset legend="Query" toggleable="true">
         {{myDataSource.body|json}}
       </p-fieldset>
-    </md-tab>
-  </md-tab-group>
+    </mat-tab>
+  </mat-tab-group>
   <p-chart #chart type="line" [data]="chartData" (onDataSelect)="selectData($event)"></p-chart>
 </div>
 

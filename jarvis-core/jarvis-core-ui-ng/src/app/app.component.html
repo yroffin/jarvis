@@ -1,5 +1,5 @@
 <p-growl [(value)]="msgs"></p-growl>
-<md-sidenav-container [style.height.px]="myInnerHeight" class="example-container">
+<mat-sidenav-container [style.height.px]="myInnerHeight" class="example-container">
     <p-toolbar>
         <div class="ui-toolbar-group-right">
             <button pButton (click)="showMenu()" type="button" icon="fa-bars"></button>
@@ -10,12 +10,12 @@
     <div>
         <router-outlet></router-outlet>
     </div>
-    <md-sidenav #sidenav class="example-sidenav">
+    <mat-sidenav #sidenav class="example-sidenav">
         <div *ngIf="dispHelp" [innerHTML]="help"></div>
         <p-panelMenu *ngIf="dispMenu" [model]="items"></p-panelMenu>
-    </md-sidenav>
+    </mat-sidenav>
     <p-dialog appendTo="body" header="Me" [(visible)]="dispMe" modal="true">
         Email
         <input type="text" pInputText [(ngModel)]="me && me.attributes.email" disabled/>
     </p-dialog>
-</md-sidenav-container>
+</mat-sidenav-container>

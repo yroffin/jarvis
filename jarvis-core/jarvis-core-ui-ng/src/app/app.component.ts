@@ -21,7 +21,7 @@ import { Router } from '@angular/router';
 import { State, Store } from '@ngrx/store';
 import { Message } from 'primeng/primeng';
 
-import { MdSidenav } from '@angular/material';
+import { MatSidenav } from '@angular/material';
 
 import { MenuItem } from 'primeng/primeng';
 
@@ -44,7 +44,7 @@ import { Oauth2Bean, MeBean } from './model/security/oauth2-bean';
 })
 export class AppComponent implements OnInit {
 
-  @ViewChild('sidenav') sidenav: MdSidenav;
+  @ViewChild('sidenav') sidenav: MatSidenav;
   myInnerHeight: any;
 
   /**

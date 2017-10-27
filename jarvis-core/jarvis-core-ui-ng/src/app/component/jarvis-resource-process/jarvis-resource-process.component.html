@@ -2,34 +2,34 @@
 [pickers]="[{'label':'Ajouter un trigger', 'icon': 'fa-bolt', 'action':'triggers', 'picker': pickTriggers}]"></app-jarvis-toolbar-resource>
 
 <div *ngIf="myProcess">
-  <md-tab-group>
-    <md-tab label="Entête">
+  <mat-tab-group>
+    <mat-tab label="Entête">
       <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
         <div class="ui-grid-row">
           <div class="ui-grid-col-3">
-            <md-input-container class="input-full-width">
-              <input mdInput placeholder="Nom" [(ngModel)]="myProcess.name" disabled>
-            </md-input-container>
+            <mat-input-container class="input-full-width">
+              <input matInput placeholder="Nom" [(ngModel)]="myProcess.name" disabled>
+            </mat-input-container>
           </div>
           <div class="ui-grid-col-3">
-            <md-input-container class="input-full-width">
-              <input mdInput placeholder="Icône" [(ngModel)]="myProcess.icon">
-            </md-input-container>
+            <mat-input-container class="input-full-width">
+              <input matInput placeholder="Icône" [(ngModel)]="myProcess.icon">
+            </mat-input-container>
           </div>
           <div class="ui-grid-col-3">
-            <md-input-container class="input-full-width">
-              <input mdInput placeholder="Bpm ID" [(ngModel)]="myProcess.bpmnId" disabled>
-            </md-input-container>
+            <mat-input-container class="input-full-width">
+              <input matInput placeholder="Bpm ID" [(ngModel)]="myProcess.bpmnId" disabled>
+            </mat-input-container>
           </div>
           <div class="ui-grid-col-3">
-            <md-input-container class="input-full-width">
-              <input mdInput placeholder="Deploy" [(ngModel)]="myProcess.deploymentTime" disabled>
-            </md-input-container>
+            <mat-input-container class="input-full-width">
+              <input matInput placeholder="Deploy" [(ngModel)]="myProcess.deploymentTime" disabled>
+            </mat-input-container>
           </div>
         </div>
       </div>
-    </md-tab>
-    <md-tab label="Triggers">
+    </mat-tab>
+    <mat-tab label="Triggers">
       <p-dataTable [immutable]="false" [value]="myProcess.triggers">
         <header>Trigger</header>
         <p-column header="Ordre">
@@ -46,14 +46,14 @@
           </ng-template>
         </p-column>
       </p-dataTable>
-    </md-tab>
-  <md-tab label="Source">
+    </mat-tab>
+  <mat-tab label="Source">
       <textarea style="width: 100%; height: 400px;" [(ngModel)]="myProcess.bpmn"></textarea>
-    </md-tab>
-    <md-tab label="Script">
+    </mat-tab>
+    <mat-tab label="Script">
       <pre><code [innerHtml]="hightlight(myProcess.bpmn)"></code></pre>
-    </md-tab>
-  </md-tab-group>
+    </mat-tab>
+  </mat-tab-group>
 
   <app-jarvis-picker #pickTriggers [resource]="{'service':'triggers','label':'Triggers'}"></app-jarvis-picker>
   

@@ -19,7 +19,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { SelectItem } from 'primeng/primeng';
 import { ConfirmationService } from 'primeng/primeng';
 
-import { DataSource } from '@angular/cdk';
+import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 

@@ -1,5 +1,6 @@
 package org.jarvis.core.resources;
 
+import java.util.Collection;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ScheduledFuture;
 
@@ -138,6 +139,7 @@ public class CoreMqttSystem {
 						try {
 							client.subscribe("/api/connectors/#");
 							client.subscribe("/collect/#");
+							client.subscribe("#");
 						} catch (MqttException e) {
 							logger.error("Unable to subcribe: {}", e);
 						}
@@ -156,14 +158,29 @@ public class CoreMqttSystem {
 
 		@Override
 		public void messageArrived(String topic, MqttMessage message) throws Exception {
-			GenericMap value = mapper.readValue(message.getPayload(), GenericMap.class);
-			logger.warn("messageArrived: {} {}", topic, value);
-
-			/**
-			 * connectors topic
-			 */
-			if (topic.startsWith("/api/connectors")) {
-				apiConnectorResources.register(value);
+			if(message.getPayload().length > 0) {
+				switch(message.getPayload()[0]) {
+					case '{':
+						GenericMap objectValue = mapper.readValue(message.getPayload(), GenericMap.class);
+						logger.warn("messageArrived: OBJECT {} {}", topic, objectValue);
+						/**
+						 * connectors topic
+						 */
+						if (topic.startsWith("/api/connectors")) {
+							apiConnectorResources.register(objectValue);
+						}
+						break;
+					case '[':
+						Collection<?> listValue = mapper.readValue(message.getPayload(), Collection.class);
+						logger.warn("messageArrived: LIST {} {}", topic, listValue);
+						break;
+					default:
+						String stringValue = new String(message.getPayload());
+						logger.warn("messageArrived: STRING {} {}", topic, stringValue);
+						break;
+				}
+			} else {
+				logger.warn("messageArrived: with zero length {} {}", topic, message);
 			}
 		}
 

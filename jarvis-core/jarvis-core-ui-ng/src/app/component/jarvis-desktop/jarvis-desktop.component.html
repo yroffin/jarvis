@@ -1,8 +1,8 @@
 <div *ngFor="let myView of myViews; let index=index">
   <h3>{{myView.name}}</h3>
-  <md-grid-list cols="3" rowHeight="1:1">
-    <md-grid-tile [style.background]="myDeviceItem.tagColor" *ngFor="let myDeviceItem of myView.devices; let indexDevice=index">
+  <mat-grid-list cols="3" rowHeight="1:1">
+    <mat-grid-tile [style.background]="myDeviceItem.tagColor" *ngFor="let myDeviceItem of myView.devices; let indexDevice=index">
       <app-jarvis-tile [myDevice]="myDeviceItem"></app-jarvis-tile>
-    </md-grid-tile>
-  </md-grid-list>
+    </mat-grid-tile>
+  </mat-grid-list>
 </div>

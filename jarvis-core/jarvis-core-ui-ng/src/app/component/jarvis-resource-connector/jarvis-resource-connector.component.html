@@ -1,46 +1,46 @@
 <app-jarvis-toolbar-resource [notified]="this" [crud]="true"></app-jarvis-toolbar-resource>
 
 <div *ngIf="myConnector">
-  <md-tab-group>
-    <md-tab label="Entête">
+  <mat-tab-group>
+    <mat-tab label="Entête">
       <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
         <div class="ui-grid-row">
           <div class="ui-grid-col-6">
-            <md-input-container class="input-full-width">
-              <input mdInput placeholder="Nom" [(ngModel)]="myConnector.name">
-            </md-input-container>
+            <mat-input-container class="input-full-width">
+              <input matInput placeholder="Nom" [(ngModel)]="myConnector.name">
+            </mat-input-container>
           </div>
           <div class="ui-grid-col-6">
-            <md-input-container class="input-full-width">
-              <input mdInput placeholder="Icône" [(ngModel)]="myConnector.icon">
-            </md-input-container>
+            <mat-input-container class="input-full-width">
+              <input matInput placeholder="Icône" [(ngModel)]="myConnector.icon">
+            </mat-input-container>
           </div>
         </div>
       </div>
-    </md-tab>
-    <md-tab label="Réseau ({{myConnector.lastAdvertise | date:'yyyy-MM-dd HH:mm:ss Z'}})">
+    </mat-tab>
+    <mat-tab label="Réseau ({{myConnector.lastAdvertise | date:'yyyy-MM-dd HH:mm:ss Z'}})">
       <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
         <div class="ui-grid-row">
           <div class="ui-grid-col-6">
-            <md-input-container class="input-full-width">
-              <input mdInput placeholder="Adresse (192.168.1.1)" [(ngModel)]="myConnector.adress">
-            </md-input-container>
+            <mat-input-container class="input-full-width">
+              <input matInput placeholder="Adresse (192.168.1.1)" [(ngModel)]="myConnector.adress">
+            </mat-input-container>
           </div>
         </div>
         <div class="ui-grid-row">
           <div class="ui-grid-col-3">
-            <md-checkbox [(ngModel)]="myConnector.isRenderer">Affichage</md-checkbox>
+            <mat-checkbox [(ngModel)]="myConnector.isRenderer">Affichage</mat-checkbox>
           </div>
           <div class="ui-grid-col-3">
-            <md-checkbox [(ngModel)]="myConnector.isSensor">Capteur</md-checkbox>
+            <mat-checkbox [(ngModel)]="myConnector.isSensor">Capteur</mat-checkbox>
           </div>
           <div class="ui-grid-col-3">
-            <md-checkbox [(ngModel)]="myConnector.canAnswer">Intéractif</md-checkbox>
+            <mat-checkbox [(ngModel)]="myConnector.canAnswer">Intéractif</mat-checkbox>
           </div>
         </div>
       </div>
-    </md-tab>
-    <md-tab *ngIf="myConnector.collects" label="Collecte(s)">
+    </mat-tab>
+    <mat-tab *ngIf="myConnector.collects" label="Collecte(s)">
       <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
         <p-dataTable [immutable]="false" [value]="myConnector.collects.collections">
           <header>Collectes</header>
@@ -55,7 +55,7 @@
           </p-column>
         </p-dataTable>
       </div>
-    </md-tab>
-  </md-tab-group>
+    </mat-tab>
+  </mat-tab-group>
 
 </div>

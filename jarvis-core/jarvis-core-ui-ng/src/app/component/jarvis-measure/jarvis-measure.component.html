@@ -2,24 +2,24 @@
   [pickers]="[{'label':'Lier un connecteur', 'icon': 'fa-podcast', 'action':'connectors', 'picker': pickConnectors}]"></app-jarvis-toolbar-resource>
 
 <div *ngIf="myMeasure">
-  <md-tab-group>
-    <md-tab label="Entête">
+  <mat-tab-group>
+    <mat-tab label="Entête">
       <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
         <div class="ui-grid-row">
           <div class="ui-grid-col-4">
-            <md-input-container class="input-full-width">
-              <input mdInput placeholder="Nom ({{checkName}})" [(ngModel)]="myMeasure.name">
-            </md-input-container>
+            <mat-input-container class="input-full-width">
+              <input matInput placeholder="Nom ({{checkName}})" [(ngModel)]="myMeasure.name">
+            </mat-input-container>
           </div>
           <div class="ui-grid-col-4">
-            <md-input-container class="input-full-width">
-              <input mdInput placeholder="Datetime ({{checkDatetime}})" [(ngModel)]="myMeasure.datetime">
-            </md-input-container>
+            <mat-input-container class="input-full-width">
+              <input matInput placeholder="Datetime ({{checkDatetime}})" [(ngModel)]="myMeasure.datetime">
+            </mat-input-container>
           </div>
           <div class="ui-grid-col-4">
-            <md-input-container class="input-full-width">
-              <input mdInput placeholder="Valeur ({{checkValue}})" [(ngModel)]="myMeasure.value">
-            </md-input-container>
+            <mat-input-container class="input-full-width">
+              <input matInput placeholder="Valeur ({{checkValue}})" [(ngModel)]="myMeasure.value">
+            </mat-input-container>
           </div>
         </div>
       </div>
@@ -42,8 +42,8 @@
           </ng-template>
         </p-column>
       </p-dataTable>
-    </md-tab>
-  </md-tab-group>
+    </mat-tab>
+  </mat-tab-group>
 </div>
 
 <app-jarvis-picker #pickConnectors [resource]="{'service':'connectors','label':'Connectors'}"></app-jarvis-picker>

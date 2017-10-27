@@ -2,39 +2,39 @@
   [pickers]="[{'label':'Ajouter une notification', 'icon': 'fa-bolt', 'action':'notifications', 'picker': pickNotifications}]"></app-jarvis-toolbar-resource>
 
 <div *ngIf="myCommand">
-  <md-tab-group>
-    <md-tab label="Entête">
+  <mat-tab-group>
+    <mat-tab label="Entête">
       <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
         <div class="ui-grid-row">
           <div class="ui-grid-col-6">
-            <md-input-container class="input-full-width">
-              <input mdInput placeholder="Nom" [(ngModel)]="myCommand.name">
-            </md-input-container>
+            <mat-input-container class="input-full-width">
+              <input matInput placeholder="Nom" [(ngModel)]="myCommand.name">
+            </mat-input-container>
           </div>
           <div class="ui-grid-col-6">
-            <md-input-container class="input-full-width">
-              <input mdInput placeholder="Icône" [(ngModel)]="myCommand.icon">
-            </md-input-container>
+            <mat-input-container class="input-full-width">
+              <input matInput placeholder="Icône" [(ngModel)]="myCommand.icon">
+            </mat-input-container>
           </div>
         </div>
         <div class="ui-grid-row">
           <div class="ui-grid-col-8">
-            <md-select placeholder="Catégorie" [(ngModel)]="myCommand.type">
-              <md-option *ngFor="let item of types" [value]="item.value">
+            <mat-select placeholder="Catégorie" [(ngModel)]="myCommand.type">
+              <mat-option *ngFor="let item of types" [value]="item.value">
                 {{ item.label }}
-              </md-option>
-            </md-select>
+              </mat-option>
+            </mat-select>
           </div>
         </div>
       </div>
-    </md-tab>
-    <md-tab label="Source">
+    </mat-tab>
+    <mat-tab label="Source">
       <textarea style="width: 100%; height: 400px;" [(ngModel)]="myCommand.body"></textarea>
-    </md-tab>
-    <md-tab label="Script">
+    </mat-tab>
+    <mat-tab label="Script">
       <pre><code [innerHtml]="hightlight(myCommand.body)"></code></pre>
-    </md-tab>
-    <md-tab label="Notifications">
+    </mat-tab>
+    <mat-tab label="Notifications">
       <app-jarvis-toolbar-resource [notified]="this" [pickers]="[{'label':'Ajouter une notification', 'icon': 'fa-bolt', 'action':'notifications', 'picker': pickNotifications}]"></app-jarvis-toolbar-resource>
       <p-dataTable [immutable]="false" [value]="myCommand.notifications">
         <header>Commande</header>
@@ -52,14 +52,14 @@
           </ng-template>
         </p-column>
       </p-dataTable>
-    </md-tab>
-    <md-tab label="Mise au point">
+    </mat-tab>
+    <mat-tab label="Mise au point">
       <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
         <div class="ui-grid-row">
           <div class="ui-grid-col-12">
-            <md-input-container class="input-full-width">
-              <input mdInput placeholder="Données de test (json)" [(ngModel)]="myJsonData">
-            </md-input-container>
+            <mat-input-container class="input-full-width">
+              <input matInput placeholder="Données de test (json)" [(ngModel)]="myJsonData">
+            </mat-input-container>
           </div>
         </div>
         <div class="ui-grid-row">
@@ -79,7 +79,7 @@
           </div>
         </div>
       </div>
-    </md-tab>
-  </md-tab-group>
+    </mat-tab>
+  </mat-tab-group>
 
   <app-jarvis-picker #pickNotifications [resource]="{'service':'notifications','label':'Notifications'}"></app-jarvis-picker>

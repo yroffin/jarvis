@@ -3,42 +3,42 @@
 
 <div *ngIf="myDevice">
 
-  <md-tab-group>
-    <md-tab label="Entête">
+  <mat-tab-group>
+    <mat-tab label="Entête">
       <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
         <div class="ui-grid-row">
           <div class="ui-grid-col-6">
-            <md-input-container class="input-full-width">
-              <input mdInput placeholder="Nom" [(ngModel)]="myDevice.name">
-            </md-input-container>
+            <mat-input-container class="input-full-width">
+              <input matInput placeholder="Nom" [(ngModel)]="myDevice.name">
+            </mat-input-container>
           </div>
           <div class="ui-grid-col-6">
-            <md-input-container class="input-full-width">
-              <input mdInput placeholder="Icône" [(ngModel)]="myDevice.icon">
-            </md-input-container>
+            <mat-input-container class="input-full-width">
+              <input matInput placeholder="Icône" [(ngModel)]="myDevice.icon">
+            </mat-input-container>
           </div>
         </div>
         <div class="ui-grid-row">
           <div class="ui-grid-col-6">
-            <md-input-container class="input-full-width">
-              <input mdInput placeholder="Paramètres" [(ngModel)]="myDevice.parameters">
-            </md-input-container>
+            <mat-input-container class="input-full-width">
+              <input matInput placeholder="Paramètres" [(ngModel)]="myDevice.parameters">
+            </mat-input-container>
           </div>
           <div class="ui-grid-col-1">
-            <md-checkbox [(ngModel)]="myDevice.visible"></md-checkbox>
+            <mat-checkbox [(ngModel)]="myDevice.visible"></mat-checkbox>
           </div>
           <div class="ui-grid-col-5">
-            <md-input-container class="input-full-width">
-              <input mdInput placeholder="Visibilité" [(ngModel)]="myDevice.visible" disabled>
-            </md-input-container>
+            <mat-input-container class="input-full-width">
+              <input matInput placeholder="Visibilité" [(ngModel)]="myDevice.visible" disabled>
+            </mat-input-container>
           </div>
         </div>
       </div>
-    </md-tab>
-    <md-tab label="Détails">
+    </mat-tab>
+    <mat-tab label="Détails">
       <div [innerHtml]="sanitize(myDetail)"></div>
-    </md-tab>
-    <md-tab label="Triggers">
+    </mat-tab>
+    <mat-tab label="Triggers">
       <app-jarvis-toolbar-resource [notified]="this" [pickers]="[{'action':'triggers','icon':'fa-send','label':'Ajouter un trigger','picker': pickTriggers}]"></app-jarvis-toolbar-resource>
       <p-dataTable [immutable]="false" [value]="myDevice.triggers">
         <header>Trigger</header>
@@ -52,8 +52,8 @@
           </ng-template>
         </p-column>
       </p-dataTable>
-    </md-tab>
-    <md-tab label="Devices">
+    </mat-tab>
+    <mat-tab label="Devices">
       <app-jarvis-toolbar-resource [notified]="this" [pickers]="[{'action':'devices','icon':'fa-server','label':'Ajouter un device','picker': pickDevices}]"></app-jarvis-toolbar-resource>
       <p-dataTable [immutable]="false" [value]="myDevice.devices">
         <header>Devices (container)</header>
@@ -67,8 +67,8 @@
           </ng-template>
         </p-column>
       </p-dataTable>
-    </md-tab>
-    <md-tab label="Plugins">
+    </mat-tab>
+    <mat-tab label="Plugins">
       <app-jarvis-toolbar-resource [notified]="this" [pickers]="[{'action':'plugins','icon':'fa-podcast','label':'Ajouter un plugin','picker': pickPlugins}]"></app-jarvis-toolbar-resource>
       <p-dataTable [immutable]="false" [value]="myDevice.plugins">
         <header>Plugin</header>
@@ -86,50 +86,50 @@
           </ng-template>
         </p-column>
       </p-dataTable>
-    </md-tab>
-    <md-tab label="Rendu">
+    </mat-tab>
+    <mat-tab label="Rendu">
       <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
         <div class="ui-grid-row">
           <div class="ui-grid-col-3">
-            <md-input-container class="input-full-width">
-              <input mdInput placeholder="Couleur de la cellule" [(ngModel)]="myDevice.tagColor">
-            </md-input-container>
+            <mat-input-container class="input-full-width">
+              <input matInput placeholder="Couleur de la cellule" [(ngModel)]="myDevice.tagColor">
+            </mat-input-container>
           </div>
           <div class="ui-grid-col-3">
-            <md-input-container class="input-full-width">
-              <input mdInput placeholder="Opacité de la cellule" [(ngModel)]="myDevice.tagOpacity">
-            </md-input-container>
+            <mat-input-container class="input-full-width">
+              <input matInput placeholder="Opacité de la cellule" [(ngModel)]="myDevice.tagOpacity">
+            </mat-input-container>
           </div>
           <div class="ui-grid-col-3">
-            <md-input-container class="input-full-width">
-              <input mdInput placeholder="Couleur du texte de la cellule" [(ngModel)]="myDevice.tagTextColor">
-            </md-input-container>
+            <mat-input-container class="input-full-width">
+              <input matInput placeholder="Couleur du texte de la cellule" [(ngModel)]="myDevice.tagTextColor">
+            </mat-input-container>
           </div>
           <div class="ui-grid-col-3">
-            <md-input-container class="input-full-width">
-              <input mdInput placeholder="Icône" [(ngModel)]="myDevice.icon">
-            </md-input-container>
+            <mat-input-container class="input-full-width">
+              <input matInput placeholder="Icône" [(ngModel)]="myDevice.icon">
+            </mat-input-container>
           </div>
         </div>
         <div class="ui-grid-row">
           <div class="ui-grid-col-6">
-            <md-input-container class="input-full-width">
-              <input mdInput placeholder="myDevice.rowSpan" [(ngModel)]="myDevice.rowSpan">
-            </md-input-container>
+            <mat-input-container class="input-full-width">
+              <input matInput placeholder="myDevice.rowSpan" [(ngModel)]="myDevice.rowSpan">
+            </mat-input-container>
           </div>
           <div class="ui-grid-col-6">
-            <md-input-container class="input-full-width">
-              <input mdInput placeholder="Nombre de colonne de la cellule" [(ngModel)]="myDevice.colSpan">
-            </md-input-container>
+            <mat-input-container class="input-full-width">
+              <input matInput placeholder="Nombre de colonne de la cellule" [(ngModel)]="myDevice.colSpan">
+            </mat-input-container>
           </div>
         </div>
       </div>
       <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
         <div class="ui-grid-row">
           <div class="ui-grid-col-12">
-            <md-input-container class="input-full-width">
-              <textarea mdInput placeholder="Paramétrage de la tuile" [(ngModel)]="myDevice.template"></textarea>
-            </md-input-container>
+            <mat-input-container class="input-full-width">
+              <textarea matInput placeholder="Paramétrage de la tuile" [(ngModel)]="myDevice.template"></textarea>
+            </mat-input-container>
           </div>
         </div>
         <div class="ui-grid-row">
@@ -143,8 +143,8 @@
           </div>
         </div>
       </div>
-    </md-tab>
-  </md-tab-group>
+    </mat-tab>
+  </mat-tab-group>
 
 </div>
 

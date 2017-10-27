@@ -2,39 +2,39 @@
   [pickers]="[{'action':'devices','icon':'fa-plug','label':'Ajouter une commande','picker': pickCommands}]"></app-jarvis-toolbar-resource>
 
 <div *ngIf="myPlugin">
-  <md-tab-group>
-    <md-tab label="Entête">
+  <mat-tab-group>
+    <mat-tab label="Entête">
       <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
         <div class="ui-grid-row">
           <div class="ui-grid-col-6">
-            <md-input-container class="input-full-width">
-              <input mdInput placeholder="Nom" [(ngModel)]="myPlugin.name">
-            </md-input-container>
+            <mat-input-container class="input-full-width">
+              <input matInput placeholder="Nom" [(ngModel)]="myPlugin.name">
+            </mat-input-container>
           </div>
           <div class="ui-grid-col-6">
-            <md-input-container class="input-full-width">
-              <input mdInput placeholder="Icône" [(ngModel)]="myPlugin.icon">
-            </md-input-container>
+            <mat-input-container class="input-full-width">
+              <input matInput placeholder="Icône" [(ngModel)]="myPlugin.icon">
+            </mat-input-container>
           </div>
         </div>
         <div class="ui-grid-row">
           <div class="ui-grid-col-8">
-            <md-select placeholder="Catégorie" [(ngModel)]="myPlugin.type">
-              <md-option *ngFor="let item of types" [value]="item.value">
+            <mat-select placeholder="Catégorie" [(ngModel)]="myPlugin.type">
+              <mat-option *ngFor="let item of types" [value]="item.value">
                 {{ item.label }}
-              </md-option>
-            </md-select>
+              </mat-option>
+            </mat-select>
           </div>
           <div class="ui-grid-col-2">
-            <md-checkbox [(ngModel)]="myPlugin.visible">Visible</md-checkbox>
+            <mat-checkbox [(ngModel)]="myPlugin.visible">Visible</mat-checkbox>
           </div>
           <div class="ui-grid-col-2">
-            <md-checkbox [(ngModel)]="myPlugin.active">Actif</md-checkbox>
+            <mat-checkbox [(ngModel)]="myPlugin.active">Actif</mat-checkbox>
           </div>
         </div>
       </div>
-    </md-tab>
-    <md-tab label="Commande">
+    </mat-tab>
+    <mat-tab label="Commande">
       <p-dataTable [immutable]="false" [value]="myPlugin.commands">
         <header>Commande</header>
         <p-column header="Ordre">
@@ -51,17 +51,17 @@
           </ng-template>
         </p-column>
       </p-dataTable>
-    </md-tab>
-    <md-tab label="Détails">
+    </mat-tab>
+    <mat-tab label="Détails">
       <div [innerHtml]="sanitize(myDetail)"></div>
-    </md-tab>
-    <md-tab label="Mise au point">
+    </mat-tab>
+    <mat-tab label="Mise au point">
       <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
         <div class="ui-grid-row">
           <div class="ui-grid-col-12">
-            <md-input-container class="input-full-width">
-              <input mdInput placeholder="Données de test (json)" [(ngModel)]="myJsonData">
-            </md-input-container>
+            <mat-input-container class="input-full-width">
+              <input matInput placeholder="Données de test (json)" [(ngModel)]="myJsonData">
+            </mat-input-container>
           </div>
         </div>
         <div class="ui-grid-row">
@@ -81,8 +81,8 @@
           </div>
         </div>
       </div>
-    </md-tab>
-  </md-tab-group>
+    </mat-tab>
+  </mat-tab-group>
 
   <app-jarvis-picker #pickCommands [resource]="{'service':'commands','label':'Commands'}"></app-jarvis-picker>
 
@@ -92,43 +92,43 @@
         <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
           <div class="ui-grid-row">
             <div class="ui-grid-col-4">
-              <md-input-container class="input-full-width">
-                <input mdInput placeholder="Identifiant de la commande" [(ngModel)]="myCommand.id" disabled>
-              </md-input-container>
+              <mat-input-container class="input-full-width">
+                <input matInput placeholder="Identifiant de la commande" [(ngModel)]="myCommand.id" disabled>
+              </mat-input-container>
             </div>
             <div class="ui-grid-col-4">
-              <md-input-container class="input-full-width">
-                <input mdInput placeholder="Instance de la commande" [(ngModel)]="myCommand.instance" disabled>
-              </md-input-container>
+              <mat-input-container class="input-full-width">
+                <input matInput placeholder="Instance de la commande" [(ngModel)]="myCommand.instance" disabled>
+              </mat-input-container>
             </div>
             <div class="ui-grid-col-4">
-              <md-input-container class="input-full-width">
-                <input mdInput placeholder="Nom de la commande" [(ngModel)]="myCommand.name">
-              </md-input-container>
+              <mat-input-container class="input-full-width">
+                <input matInput placeholder="Nom de la commande" [(ngModel)]="myCommand.name">
+              </mat-input-container>
             </div>
           </div>
           <div class="ui-grid-row">
             <div class="ui-grid-col-4">
-              <md-input-container class="input-full-width">
-                <input mdInput placeholder="Name" [(ngModel)]="myCommand.extended.name">
-              </md-input-container>
+              <mat-input-container class="input-full-width">
+                <input matInput placeholder="Name" [(ngModel)]="myCommand.extended.name">
+              </mat-input-container>
             </div>
             <div class="ui-grid-col-4">
-              <md-input-container class="input-full-width">
-                <input mdInput placeholder="Nature (json)" [(ngModel)]="myCommand.extended.nature">
-              </md-input-container>
+              <mat-input-container class="input-full-width">
+                <input matInput placeholder="Nature (json)" [(ngModel)]="myCommand.extended.nature">
+              </mat-input-container>
             </div>
             <div class="ui-grid-col-4">
-              <md-input-container class="input-full-width">
-                <input mdInput placeholder="Type (action)" [(ngModel)]="myCommand.extended.type">
-              </md-input-container>
+              <mat-input-container class="input-full-width">
+                <input matInput placeholder="Type (action)" [(ngModel)]="myCommand.extended.type">
+              </mat-input-container>
             </div>
           </div>
           <div class="ui-grid-row">
             <div class="ui-grid-col-12">
-              <md-input-container class="input-full-width">
-                <input mdInput placeholder="Paramètre(s) (json)" [(ngModel)]="myCommand.extended.parameter">
-              </md-input-container>
+              <mat-input-container class="input-full-width">
+                <input matInput placeholder="Paramètre(s) (json)" [(ngModel)]="myCommand.extended.parameter">
+              </mat-input-container>
             </div>
           </div>
         </div>

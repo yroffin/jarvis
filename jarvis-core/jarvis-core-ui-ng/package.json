@@ -38,8 +38,8 @@
     "ng2-mqtt": "^0.1.2",
     "chart.js": "2.1.0",
     "typings":"2.1.1",
-    "@angular/material": "2.0.0-beta.8",
-    "@angular/cdk": "2.0.0-beta.8",
+    "@angular/material": "2.0.0-beta.12",
+    "@angular/cdk": "2.0.0-beta.12",
     "bpmn-js": "0.22.1",
     "bpmn-js-properties-panel": "0.16.1"
   },

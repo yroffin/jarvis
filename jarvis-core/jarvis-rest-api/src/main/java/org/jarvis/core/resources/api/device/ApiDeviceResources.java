@@ -31,8 +31,8 @@ import javax.ws.rs.Produces;
 
 import org.common.core.exception.TechnicalException;
 import org.common.core.exception.TechnicalNotFoundException;
+import org.common.core.type.GenericMap;
 import org.jarvis.core.model.bean.device.DeviceBean;
-import org.jarvis.core.model.bean.plugin.CommandBean;
 import org.jarvis.core.model.bean.plugin.ScriptPluginBean;
 import org.jarvis.core.model.bean.trigger.TriggerBean;
 import org.jarvis.core.model.rest.GenericEntity;
@@ -50,7 +50,6 @@ import org.jarvis.core.resources.api.href.ApiHrefDeviceTriggerResources;
 import org.jarvis.core.resources.api.mapper.ApiMapper;
 import org.jarvis.core.resources.api.plugins.ApiScriptPluginResources;
 import org.jarvis.core.type.ResultType;
-import org.common.core.type.GenericMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

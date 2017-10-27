@@ -46,7 +46,7 @@ import ma.glasnost.orika.impl.DefaultMapperFactory;
  */
 @Component
 public class CoreEventDaemon {
-	
+
 	protected Logger logger = LoggerFactory.getLogger(CoreEventDaemon.class);
 
 	@Autowired
@@ -54,19 +54,19 @@ public class CoreEventDaemon {
 
 	@Autowired
 	ApiDeviceResources apiDeviceResources;
-	
+
 	@Autowired
 	ApiHrefDeviceTriggerResources apiHrefDeviceTriggerResources;
 
 	@Autowired
 	CoreStatistics coreStatistics;
-	
+
 	@Autowired
 	ApiTriggerResources apiTriggerResources;
 
 	@Autowired
 	RuntimeService runtimeService;
-	
+
 	private List<MqttTrigger> triggers = new ArrayList<MqttTrigger>();
 	private InnerThread inner;
 	private LinkedBlockingQueue<EventBean> linked = new LinkedBlockingQueue<>();
@@ -79,11 +79,11 @@ public class CoreEventDaemon {
 	public void init() {
 		mapperFactory = new DefaultMapperFactory.Builder().build();
 		mapperFactory.getConverterFactory().registerConverter(new PassThroughConverter(org.joda.time.DateTime.class));
-		
+
 		inner = new InnerThread();
 		new Thread(inner).start();
 	}
-	
+
 	/**
 	 * init triggers
 	 */
@@ -97,23 +97,28 @@ public class CoreEventDaemon {
 		 * start mqtt souscription on each trigger (if any mqtt souscription)
 		 */
 		List<TriggerBean> beans = apiTriggerResources.doFindAllBean();
-		for(TriggerBean trigger : beans) {
-			if(trigger.topic != null && trigger.topic.length() > 0) {
-				MqttTrigger mqTrigger = new MqttTrigger(trigger.id, trigger.name, trigger.topic, trigger.body, env.getProperty("jarvis.mqtt.url"));
+		for (TriggerBean trigger : beans) {
+			if (trigger.topic != null && trigger.topic.length() > 0) {
+				MqttTrigger mqTrigger = new MqttTrigger(trigger.id, trigger.name, trigger.topic, trigger.body,
+						env.getProperty("jarvis.mqtt.url"));
 				triggers.add(mqTrigger);
 				mqTrigger.connect();
+			} else {
+				logger.warn("No topic for trigger {}", trigger.name);
 			}
 		}
 		logger.info("Init {} mqtt triggers", triggers.size());
 	}
-	
+
 	/**
 	 * create it
+	 * 
 	 * @param trigger
 	 */
 	public void create(TriggerBean trigger) {
-		if(trigger.topic != null && trigger.topic.length() > 0) {
-			MqttTrigger mqTrigger = new MqttTrigger(trigger.id, trigger.name, trigger.topic, trigger.body, env.getProperty("jarvis.mqtt.url"));
+		if (trigger.topic != null && trigger.topic.length() > 0) {
+			MqttTrigger mqTrigger = new MqttTrigger(trigger.id, trigger.name, trigger.topic, trigger.body,
+					env.getProperty("jarvis.mqtt.url"));
 			triggers.add(mqTrigger);
 			mqTrigger.connect();
 			logger.info("Create {}", trigger.toString());
@@ -122,34 +127,36 @@ public class CoreEventDaemon {
 
 	/**
 	 * update it
+	 * 
 	 * @param bean
 	 */
 	public void update(TriggerBean bean) {
 		MqttTrigger found = null;
-		for(MqttTrigger trigger : triggers) {
-			if(bean.id.equals(trigger.getId())) {
+		for (MqttTrigger trigger : triggers) {
+			if (bean.id.equals(trigger.getId())) {
 				found = trigger;
 			}
 		}
 		/**
 		 * if found replace it
 		 */
-		if(found != null) {
+		if (found != null) {
 			triggers.remove(found);
 			found.close();
-			if(bean.topic != null && bean.topic.length() > 0) {
-				MqttTrigger mqTrigger = new MqttTrigger(bean.id, bean.name, bean.topic, bean.body, env.getProperty("jarvis.mqtt.url"));
-				triggers.add(mqTrigger);
-				mqTrigger.connect();
-				logger.info("Update {}", bean.toString());
-			}
+		}
+		if (bean.topic != null && bean.topic.length() > 0) {
+			MqttTrigger mqTrigger = new MqttTrigger(bean.id, bean.name, bean.topic, bean.body,
+					env.getProperty("jarvis.mqtt.url"));
+			triggers.add(mqTrigger);
+			mqTrigger.connect();
+			logger.info("Update {}", bean.toString());
 		}
 	}
 
 	/**
-	 * @param id 
-	 * @param name 
-	 * @throws InterruptedException 
+	 * @param id
+	 * @param name
+	 * @throws InterruptedException
 	 */
 	public void post(String id, String name) throws InterruptedException {
 		EventBean event = new EventBean();
@@ -165,7 +172,7 @@ public class CoreEventDaemon {
 
 	/**
 	 * @param event
-	 * @throws InterruptedException 
+	 * @throws InterruptedException
 	 */
 	public void post(EventBean event) throws InterruptedException {
 		try {
@@ -175,9 +182,10 @@ public class CoreEventDaemon {
 			throw e;
 		}
 	}
-	
+
 	/**
 	 * is inner thread active ?
+	 * 
 	 * @return boolean
 	 */
 	public boolean isInterrupted() {
@@ -197,7 +205,7 @@ public class CoreEventDaemon {
 			interrupted = false;
 			EventBean event = null;
 			try {
-				while ((event  = linked.take()) != null) {
+				while ((event = linked.take()) != null) {
 					logger.warn("[EVENT] {}/{}", event.toString(), linked.size());
 					try {
 						/**

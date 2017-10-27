@@ -16,7 +16,7 @@
 
 import { Component, Input, OnInit } from '@angular/core';
 
-import { MdSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 import { Message } from 'primeng/primeng';
 
 import { JarvisDataDeviceService } from '../../service/jarvis-data-device.service';
@@ -40,7 +40,7 @@ export class JarvisDesktopComponent implements OnInit {
   myViews: ViewBean[];
 
   constructor(
-    private snackBar: MdSnackBar,
+    private snackBar: MatSnackBar,
     private jarvisDataDeviceService: JarvisDataDeviceService,
     private jarvisDataStoreService: JarvisDataStoreService,
     private jarvisDataViewService: JarvisDataViewService) {

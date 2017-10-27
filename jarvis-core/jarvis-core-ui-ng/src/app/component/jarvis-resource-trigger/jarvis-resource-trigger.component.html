@@ -2,35 +2,42 @@
   [pickers]="[{'label':'Ajouter une crontab', 'icon': 'fa-bolt', 'action':'crons', 'picker': pickCrons}]"></app-jarvis-toolbar-resource>
 
 <div *ngIf="myTrigger">
-  <md-tab-group>
-    <md-tab label="Entête">
+  <mat-tab-group>
+    <mat-tab label="Entête">
       <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
         <div class="ui-grid-row">
           <div class="ui-grid-col-6">
-            <md-input-container class="input-full-width">
-              <input mdInput placeholder="Nom" [(ngModel)]="myTrigger.name">
-            </md-input-container>
+            <mat-input-container class="input-full-width">
+              <input matInput placeholder="Nom" [(ngModel)]="myTrigger.name">
+              <mat-hint align="start"><strong>Nom du trigger</strong></mat-hint>
+            </mat-input-container>
           </div>
           <div class="ui-grid-col-6">
-            <md-input-container class="input-full-width">
-              <input mdInput placeholder="Icône" [(ngModel)]="myTrigger.icon">
-            </md-input-container>
+            <mat-input-container class="input-full-width">
+              <input matInput placeholder="Icône" [(ngModel)]="myTrigger.icon">
+              <mat-hint align="start"><strong>Awesome icône</strong></mat-hint>
+            </mat-input-container>
           </div>
         </div>
       </div>
-    </md-tab>
-    <md-tab label="Broker">
+    </mat-tab>
+    <mat-tab label="Broker">
       <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
         <div class="ui-grid-row">
           <div class="ui-grid-col-6">
-            <md-input-container class="input-full-width">
-              <input mdInput placeholder="Souscription" [(ngModel)]="myTrigger.topic">
-            </md-input-container>
+            <mat-input-container class="input-full-width">
+              <input matInput placeholder="Souscription" [(ngModel)]="myTrigger.topic">
+              <mat-hint align="start"><strong>Topic de souscription (rflink ...)</strong></mat-hint>
+            </mat-input-container>
           </div>
         </div>
         <div class="ui-grid-row">
-          <div class="ui-grid-col-12">
-            <textarea style="width: 100%; height: 400px;" [(ngModel)]="myTrigger.body"></textarea>
+          <div class="ui-grid-col-6">
+            <mat-form-field style="display: inline;">
+              <textarea matInput [(ngModel)]="myTrigger.body" maxlength="1024" placeholder="Script"></textarea>
+              <mat-hint align="start"><strong>Script groovy avec en entrée l'objet message (disponible comme une variable)</strong></mat-hint>
+              <mat-hint align="end">{{myTrigger.body.length}} / 1024</mat-hint>
+            </mat-form-field>
           </div>
         </div>
         <div class="ui-grid-row">
@@ -39,9 +46,10 @@
           </div>
         </div>
       </div>
-    </md-tab>
-    <md-tab label="Périodicité">
+    </mat-tab>
+    <mat-tab label="Périodicité">
       <app-jarvis-toolbar-resource [notified]="this" [pickers]="[{'label':'Ajouter une crontab', 'icon': 'fa-bolt', 'action':'crons', 'picker': pickCrons}]"></app-jarvis-toolbar-resource>
+
       <p-dataTable [immutable]="false" [value]="myTrigger.crons">
         <header>Crontab</header>
         <p-column header="Ordre">
@@ -58,22 +66,22 @@
           </ng-template>
         </p-column>
       </p-dataTable>
-    </md-tab>
-    <md-tab label="Devices liés">
+    </mat-tab>
+    <mat-tab label="Devices liés">
       <p-dataTable [immutable]="false" [value]="myTrigger.devices">
         <header>Devices</header>
         <p-column field="id" header="Id"></p-column>
         <p-column field="name" header="Nom"></p-column>
       </p-dataTable>
-    </md-tab>
-    <md-tab label="Processus liés">
+    </mat-tab>
+    <mat-tab label="Processus liés">
       <p-dataTable [immutable]="false" [value]="myTrigger.processes">
         <header>Processus</header>
         <p-column field="id" header="Id"></p-column>
         <p-column field="name" header="Nom"></p-column>
       </p-dataTable>
-    </md-tab>
-  </md-tab-group>
+    </mat-tab>
+  </mat-tab-group>
 
 </div>
 

@@ -29,17 +29,18 @@ import { AppComponent } from './app.component';
 /**
  * material2
  */
-import { MdSidenavModule } from '@angular/material';
-import { MdButtonModule } from '@angular/material';
-import { MdGridListModule } from '@angular/material';
-import { MdInputModule } from '@angular/material';
-import { MdCheckboxModule } from '@angular/material';
-import { MdTableModule } from '@angular/material';
-import { MdTabsModule } from '@angular/material';
-import { MdSelectModule } from '@angular/material';
-import { MdOptionModule } from '@angular/material';
-import { MdCardModule } from '@angular/material';
-import { MdSnackBarModule } from '@angular/material';
+import { MatSidenavModule } from '@angular/material';
+import { MatCheckboxModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material';
+import { MatGridListModule } from '@angular/material';
+import { MatInputModule } from '@angular/material';
+import { MatTableModule } from '@angular/material';
+import { MatTabsModule } from '@angular/material';
+import { MatSelectModule } from '@angular/material';
+import { MatOptionModule } from '@angular/material';
+import { MatCardModule } from '@angular/material';
+import { MatSnackBarModule } from '@angular/material';
+import { MatFormFieldModule } from '@angular/material';
 
 /**
  * primeng
@@ -213,17 +214,18 @@ const appRoutes: Routes = [
     /**
      * material2
      */
-    MdSidenavModule,
-    MdButtonModule,
-    MdGridListModule,
-    MdInputModule,
-    MdCheckboxModule,
-    MdTableModule,
-    MdTabsModule,
-    MdOptionModule,
-    MdSelectModule,
-    MdCardModule,
-    MdSnackBarModule,
+    MatSidenavModule,
+    MatButtonModule,
+    MatGridListModule,
+    MatInputModule,
+    MatCheckboxModule,
+    MatTableModule,
+    MatTabsModule,
+    MatOptionModule,
+    MatSelectModule,
+    MatCardModule,
+    MatSnackBarModule,
+    MatFormFieldModule,
     /**
      * primeface
      */

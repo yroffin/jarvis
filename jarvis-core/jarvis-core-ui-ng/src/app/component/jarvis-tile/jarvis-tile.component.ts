@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import { MdSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 import * as _ from 'lodash';
 
 import { JarvisDataDeviceService } from '../../service/jarvis-data-device.service';
@@ -21,7 +21,7 @@ export class JarvisTileComponent implements OnInit {
   @Input() myDevice: DeviceBean;
 
   constructor(
-    private snackBar: MdSnackBar,
+    private snackBar: MatSnackBar,
     private jarvisDataDeviceService: JarvisDataDeviceService,
     private jarvisMessageService: JarvisMessageService
   ) {
