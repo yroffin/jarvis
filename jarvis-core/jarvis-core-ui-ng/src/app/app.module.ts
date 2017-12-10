@@ -80,6 +80,7 @@ import { LoggerService } from './service/logger.service';
 import { NavigationGuard } from './guard/navigation.service';
 import { ProfileGuard } from './guard/profile.service';
 
+import { JarvisCanvasService } from './service/jarvis-canvas.service';
 import { JarvisMqttService } from './service/jarvis-mqtt.service';
 import { JarvisSecurityService } from './service/jarvis-security.service';
 import { JarvisConfigurationService } from './service/jarvis-configuration.service';
@@ -99,6 +100,7 @@ import { JarvisDataRawService } from './service/jarvis-data-raw.service';
 import { JarvisDataStoreService } from './service/jarvis-data-store.service';
 import { JarvisDataDatasourceService } from './service/jarvis-data-datasource.service';
 import { JarvisDataMeasureService } from './service/jarvis-data-measure.service';
+import { JarvisDataModelService } from './service/jarvis-data-model.service';
 import { JarvisLoaderService } from './service/jarvis-loader.service';
 import { JarvisMessageService } from './service/jarvis-message.service';
 
@@ -132,6 +134,8 @@ import { MessageStore } from './store/message.store';
 import { JarvisServerResourcesComponent } from './component/jarvis-server-resources/jarvis-server-resources.component';
 import { JarvisBrokerComponent } from './component/jarvis-broker/jarvis-broker.component';
 import { JarvisResourceProcessComponent } from './component/jarvis-resource-process/jarvis-resource-process.component';
+import { JarvisResourceModelComponent } from './component/jarvis-resource-model/jarvis-resource-model.component';
+import { JarvisSceneEditorComponent } from './component/jarvis-scene-editor/jarvis-scene-editor.component';
 
 /**
  * default route definition
@@ -165,6 +169,8 @@ const appRoutes: Routes = [
   { path: 'datasources/:id', component: JarvisResourceDatasourceComponent, canActivate: [ProfileGuard] },
   { path: 'measures', component: JarvisResourcesComponent, canActivate: [ProfileGuard, NavigationGuard], data: { resource: 'measures' } },
   { path: 'measures/:id', component: JarvisMeasureComponent, canActivate: [ProfileGuard, NavigationGuard] },
+  { path: 'models', component: JarvisResourcesComponent, canActivate: [ProfileGuard, NavigationGuard], data: { resource: 'models' } },
+  { path: 'models/:id', component: JarvisResourceModelComponent, canActivate: [ProfileGuard, NavigationGuard] },
   { path: 'resources', component: JarvisServerResourcesComponent, canActivate: [ProfileGuard, NavigationGuard] },
   { path: 'broker', component: JarvisBrokerComponent, canActivate: [ProfileGuard, NavigationGuard] },
   { path: 'desktop', component: JarvisDesktopComponent, canActivate: [ProfileGuard] },
@@ -200,7 +206,9 @@ const appRoutes: Routes = [
     JarvisMeasureComponent,
     JarvisServerResourcesComponent,
     JarvisBrokerComponent,
-    JarvisResourceProcessComponent
+    JarvisResourceProcessComponent,
+    JarvisResourceModelComponent,
+    JarvisSceneEditorComponent
   ],
   entryComponents: [
     JarvisPickerComponent
@@ -299,7 +307,9 @@ const appRoutes: Routes = [
     JarvisDataViewService,
     JarvisDataDatasourceService,
     JarvisDataMeasureService,
+    JarvisDataModelService,
     JarvisMqttService,
+    JarvisCanvasService,
     /**
      * guards
      */

@@ -1,0 +1,47 @@
+<div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+  <div class="ui-grid-row">
+    <div class="ui-grid-col-6">
+      <canvas id="{{threejsId}}" style="width: 100%; height: 100%;">
+        <!-- ThreeJS here -->
+      </canvas>
+    </div>
+    <div class="ui-grid-col-6">
+      <button mat-button (click)="dictionnary()">
+        load
+      </button>
+
+      <p-treeTable [value]="world" selectionMode="single" [(selection)]="selectedItem">
+        <p-column field="id" header="Id"></p-column>
+        <p-column field="type" header="Type"></p-column>
+        <p-column field="uuid" header="Uuid"></p-column>
+        <p-column field="name" header="Name"></p-column>
+      </p-treeTable>
+
+      <div *ngIf="isMesh()">
+        <mat-input-container>
+          <input matInput placeholder="X" [(ngModel)]="selectedItem.data.datasource.position.x">
+        </mat-input-container>
+        <mat-input-container>
+          <input matInput placeholder="y" [(ngModel)]="selectedItem.data.datasource.position.y">
+        </mat-input-container>
+        <mat-input-container>
+          <input matInput placeholder="z" [(ngModel)]="selectedItem.data.datasource.position.z">
+        </mat-input-container>
+      </div>
+      <div *ngIf="isGroup()">
+          <mat-input-container>
+            <input matInput placeholder="X" [(ngModel)]="selectedItem.data.datasource.position.x">
+          </mat-input-container>
+          <mat-input-container>
+            <input matInput placeholder="y" [(ngModel)]="selectedItem.data.datasource.position.y">
+          </mat-input-container>
+          <mat-input-container>
+            <input matInput placeholder="z" [(ngModel)]="selectedItem.data.datasource.position.z">
+          </mat-input-container>
+        </div>
+        <div *ngIf="isCamera()">
+        <input matInput placeholder="Type" [(ngModel)]="selectedItem.type">
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+<app-jarvis-toolbar-resource [notified]="this" [crud]="true"></app-jarvis-toolbar-resource>
+
+<div *ngIf="myModel">
+
+  <mat-tab-group>
+    <mat-tab label="Scene">
+      <app-jarvis-scene-editor></app-jarvis-scene-editor>
+    </mat-tab>
+    <mat-tab label="Entête">
+      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-6">
+            <mat-input-container class="input-full-width">
+              <input matInput placeholder="Nom" [(ngModel)]="myModel.name">
+            </mat-input-container>
+          </div>
+          <div class="ui-grid-col-6">
+            <mat-input-container class="input-full-width">
+              <input matInput placeholder="Icône" [(ngModel)]="myModel.icon">
+            </mat-input-container>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

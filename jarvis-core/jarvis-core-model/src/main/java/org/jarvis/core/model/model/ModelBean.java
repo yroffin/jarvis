@@ -14,45 +14,23 @@
  *   limitations under the License.
  */
 
-package org.common.core.exception;
+package org.jarvis.core.model.model;
+
+import org.jarvis.core.model.bean.GenericBean;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
- * technical errors
+ * device object
  */
-public class TechnicalException extends RuntimeException {
-
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class ModelBean extends GenericBean {
 	/**
-	 * @param e
+	 * name of this device
 	 */
-	public TechnicalException(InstantiationException e) {
-		super(e);
+	public String name;
+	@Override
+	public String toString() {
+		return "ModelBean [name=" + name + "]";
 	}
-
-	/**
-	 * @param e
-	 */
-	public TechnicalException(IllegalAccessException e) {
-		super(e);
-	}
-
-	/**
-	 * @param e
-	 */
-	public TechnicalException(Exception e) {
-		super(e);
-		setStackTrace(e.getStackTrace());
-	}
-
-	/**
-	 * @param message
-	 */
-	public TechnicalException(String message) {
-		super(message);
-	}
-
-	/**
-	 * default serialVersionUID
-	 */
-	private static final long serialVersionUID = 8605302097434223980L;
-
 }

@@ -238,7 +238,8 @@ export class AppComponent implements OnInit {
             label: 'Code',
             icon: 'fa-code-fork',
             items: [
-              { label: 'Process', icon: 'fa-flash', routerLink: ['/processes'] }
+              { label: 'Process', icon: 'fa-flash', routerLink: ['/processes'] },
+              { label: 'Model', icon: 'fa-briefcase', routerLink: ['/models'] }
             ]
           },
           {
