@@ -25,6 +25,7 @@ install:
   - npm cache clean
   - npm install -g @angular/cli@latest
   # Angular
+  - mkdir -p $TRAVIS_BUILD_DIR/jarvis-core/jarvis-core-ui-ng/src/main/resources/public/nui
   - cd $TRAVIS_BUILD_DIR/jarvis-core/jarvis-core-ui-ng
   - rm -rf node_modules
   - npm install @angular/cli@latest
