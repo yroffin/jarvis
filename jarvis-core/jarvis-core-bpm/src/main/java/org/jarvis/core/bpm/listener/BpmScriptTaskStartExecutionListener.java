@@ -42,7 +42,7 @@ public class BpmScriptTaskStartExecutionListener extends BpmListener implements 
 				execution.getActivityInstanceId(),
 				execution.getVariables(),
 				execution.getVariablesLocal());
-		this.publish("/system/bpm/"+execution.getProcessDefinitionId()+"/script/"+execution.getActivityInstanceId()+"/start", execution.getVariableNames().toString());
+		this.publish("/system/bpm/"+execution.getProcessDefinitionId()+"/script/"+execution.getActivityInstanceId()+"/start", mapper.writeValueAsString(execution.getVariableNames()));
 	}
 
 }

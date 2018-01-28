@@ -39,10 +39,10 @@ public class CoreMqttSystem {
 
 	@Autowired
 	Environment env;
-	
+
 	@Autowired
 	ApiConnectorResources apiConnectorResources;
-	
+
 	@Autowired
 	CoreMoquette coreMoquette;
 
@@ -88,7 +88,7 @@ public class CoreMqttSystem {
 		 */
 		client.setCallback(thread);
 		runner = new Thread(thread);
-		
+
 		SystemIndicator.init();
 		Trigger trigger = new CronTrigger("0,10,20,30,40,50 * * * * *");
 		ScheduledFuture<?> sch = jarvisThreadPoolStatisticsScheduler.schedule(new Runnable() {
@@ -98,7 +98,7 @@ public class CoreMqttSystem {
 			}
 		}, trigger);
 		logger.info("Statistics {}", sch);
-		
+
 		runner.start();
 	}
 
@@ -130,7 +130,7 @@ public class CoreMqttSystem {
 					/**
 					 * check connexion
 					 */
-					if(!client.isConnected()) {
+					if (!client.isConnected()) {
 						client.connect();
 
 						/**
@@ -158,8 +158,9 @@ public class CoreMqttSystem {
 
 		@Override
 		public void messageArrived(String topic, MqttMessage message) throws Exception {
-			if(message.getPayload().length > 0) {
-				switch(message.getPayload()[0]) {
+			if (message.getPayload().length > 0) {
+				try {
+					switch (message.getPayload()[0]) {
 					case '{':
 						GenericMap objectValue = mapper.readValue(message.getPayload(), GenericMap.class);
 						logger.warn("messageArrived: OBJECT {} {}", topic, objectValue);
@@ -178,6 +179,9 @@ public class CoreMqttSystem {
 						String stringValue = new String(message.getPayload());
 						logger.warn("messageArrived: STRING {} {}", topic, stringValue);
 						break;
+					}
+				} catch (Exception e) {
+					logger.warn("messageArrived: unable to handle {} {}", topic, message);
 				}
 			} else {
 				logger.warn("messageArrived: with zero length {} {}", topic, message);

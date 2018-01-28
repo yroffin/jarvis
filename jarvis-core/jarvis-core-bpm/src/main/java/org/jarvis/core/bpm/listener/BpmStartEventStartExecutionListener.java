@@ -36,7 +36,7 @@ public class BpmStartEventStartExecutionListener extends BpmListener implements 
 				execution.getActivityInstanceId(),
 				execution.getVariables(),
 				execution.getVariablesLocal());
-		this.publish("/system/bpm/"+execution.getProcessDefinitionId()+"/event/"+execution.getActivityInstanceId()+"/start", execution.getVariableNames().toString());
+		this.publish("/system/bpm/"+execution.getProcessDefinitionId()+"/event/"+execution.getActivityInstanceId()+"/start", mapper.writeValueAsString(execution.getVariableNames()));
 	}
 
 }

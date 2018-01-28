@@ -1,10 +1,10 @@
 {
    "/api": {
-      "target": "http://192.168.1.12:8082",
+      "target": "http://192.168.1.15:8082",
       "secure": false
    },
    "/oauth2": {
-      "target": "http://192.168.1.12:8082",
+      "target": "http://192.168.1.15:8082",
       "secure": false
    }
 }

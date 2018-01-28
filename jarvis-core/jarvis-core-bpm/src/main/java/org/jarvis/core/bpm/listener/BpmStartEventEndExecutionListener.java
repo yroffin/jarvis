@@ -36,7 +36,7 @@ public class BpmStartEventEndExecutionListener extends BpmListener implements Ex
 				execution.getActivityInstanceId(),
 				execution.getVariables(),
 				execution.getVariablesLocal());
-		this.publish("/system/bpm/"+execution.getProcessDefinitionId()+"/event/"+execution.getActivityInstanceId()+"/end", execution.getVariableNames().toString());
+		this.publish("/system/bpm/"+execution.getProcessDefinitionId()+"/event/"+execution.getActivityInstanceId()+"/end", mapper.writeValueAsString(execution.getVariableNames()));
 	}
 
 }

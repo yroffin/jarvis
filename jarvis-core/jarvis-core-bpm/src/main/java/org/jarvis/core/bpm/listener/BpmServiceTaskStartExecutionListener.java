@@ -36,7 +36,7 @@ public class BpmServiceTaskStartExecutionListener extends BpmListener implements
 				execution.getActivityInstanceId(),
 				execution.getVariables(),
 				execution.getVariablesLocal());
-		this.publish("/system/bpm/"+execution.getProcessDefinitionId()+"/service/"+execution.getActivityInstanceId()+"/start", execution.getVariableNames().toString());
+		this.publish("/system/bpm/"+execution.getProcessDefinitionId()+"/service/"+execution.getActivityInstanceId()+"/start", mapper.writeValueAsString(execution.getVariableNames()));
 	}
 
 }

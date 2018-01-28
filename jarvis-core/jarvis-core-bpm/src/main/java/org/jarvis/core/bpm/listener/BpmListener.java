@@ -2,6 +2,8 @@ package org.jarvis.core.bpm.listener;
 
 import org.jarvis.core.services.CoreMoquette;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 /**
  * listener
  */
@@ -10,6 +12,7 @@ public abstract class BpmListener {
 	 * MQTT broker
 	 */
 	public static CoreMoquette coreMoquette;
+	protected static ObjectMapper mapper = new ObjectMapper();
 	
 	/**
 	 * publish

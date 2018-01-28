@@ -36,7 +36,7 @@ public class BpmScriptTaskEndExecutionListener extends BpmListener implements Ex
 				execution.getActivityInstanceId(),
 				execution.getVariables(),
 				execution.getVariablesLocal());
-		this.publish("/system/bpm/"+execution.getProcessDefinitionId()+"/script/"+execution.getActivityInstanceId()+"/end", execution.getVariableNames().toString());
+		this.publish("/system/bpm/"+execution.getProcessDefinitionId()+"/script/"+execution.getActivityInstanceId()+"/end", mapper.writeValueAsString(execution.getVariableNames()));
 	}
 
 }

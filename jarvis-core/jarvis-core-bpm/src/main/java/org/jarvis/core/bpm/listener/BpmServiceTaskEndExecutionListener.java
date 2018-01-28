@@ -36,7 +36,7 @@ public class BpmServiceTaskEndExecutionListener extends BpmListener implements E
 				execution.getActivityInstanceId(),
 				execution.getVariables(),
 				execution.getVariablesLocal());
-		this.publish("/system/bpm/"+execution.getProcessDefinitionId()+"/service/"+execution.getActivityInstanceId()+"/end", execution.getVariableNames().toString());
+		this.publish("/system/bpm/"+execution.getProcessDefinitionId()+"/service/"+execution.getActivityInstanceId()+"/end", mapper.writeValueAsString(execution.getVariableNames()));
 	}
 
 }
