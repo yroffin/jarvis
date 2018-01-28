@@ -33,7 +33,7 @@ export class Scene {
     private mouse: THREE.Vector2 = new THREE.Vector2();
     protected _logger: LoggerService;
     protected controls: OrbitControls;
-    private world: TreeNode[] = [];
+    public world: TreeNode[] = [];
     
     /**
      * build a new scene
@@ -177,7 +177,7 @@ export class Scene {
    /**
    * dictionnary
    */
-  private dictionnary(): void {
+  public dictionnary(): void {
     /**
      * retrieve root
      */

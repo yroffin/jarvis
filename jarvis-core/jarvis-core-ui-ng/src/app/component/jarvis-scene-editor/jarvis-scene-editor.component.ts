@@ -36,9 +36,9 @@ export class JarvisSceneEditorComponent extends CANVAS.Scene implements OnInit {
   /**
    * internal
    */
-  private threejsId: string;
+  public threejsId: string;
   private el: HTMLElement;
-  private selectedItem: TreeNode;
+  public selectedItem: TreeNode;
 
   constructor(
     @Inject(ElementRef) elementRef: ElementRef,
