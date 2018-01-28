@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.jarvis.core.sphinx4.ConfigurationFactory;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import edu.cmu.sphinx.api.Configuration;
@@ -68,6 +69,7 @@ public class CoreSphinxServiceTest {
 	 * @throws IOException
 	 */
 	@Test
+	@Ignore
 	public void testFrench() throws MalformedURLException, IOException {
 		Configuration configuration = ConfigurationFactory.createConfigurationFrenchPtm();
 		readStream(configuration, "/wav/serbe.wav");
